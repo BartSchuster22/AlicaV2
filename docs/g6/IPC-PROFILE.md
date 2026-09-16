@@ -1,92 +1,88 @@
-# Proposed G6 IPC profile — wire/state rules
+# G6 R2 — IPC profile and state rules
 
-**SUPERSEDED REVIEW DRAFT — not approved for implementation.** The owner approved a bounded-concurrency/reentrancy revision; the single-active target below is historical, not the G6 exit target. See [revision requirements](CONCURRENCY-REVISION.md). The existing frame schemas remain structural drafts and also require revision.
+Status: **complete review candidate; not implementation or runtime qualification**. [ADR-013 R2](../adr/ADR-013.md) and the schemas in `draft/` are one proposal. The old single-active profile is superseded. Frozen G1 schemas/specifications are unchanged.
 
-**Review draft, not implemented transport.** ADR-013 and `draft/frames.schema.json` form one proposal. The schema is intentionally stored outside frozen G1 specifications. Each definition is closed except explicitly typed ACAP values. JSON Schema validates shapes; it cannot authenticate a peer or enforce protocol state.
+## Wire formats and channels
 
-## Framing and strict data boundary
+- Control and invocation streams: 4-byte unsigned big-endian UTF-8 body length, then exactly one canonical JSON object. Bounds apply before allocation; reject zero/oversize length, malformed UTF-8/JSON, duplicate keys, unsupported numeric forms, depth beyond 32, unknown fields and non-ACAP values. Reuse existing public ACAP validators and canonical value semantics.
+- Native carrier: one AF_UNIX/SOCK_SEQPACKET packet containing the same 4-byte length plus the closed `context-offer.schema.json` JSON body, and **exactly one SCM_RIGHTS descriptor**. Total packet <=4096 bytes including prefix. A single sendmsg must transmit the whole packet; no fragmentation/retry of a partial logical offer. Receive the whole packet with recvmsg, sufficient ancillary space, MSG_CMSG_CLOEXEC and explicit MSG_TRUNC/MSG_CTRUNC checks. Reject and close all received rights on error. Reject other ancillary types and non-stream sockets. Never use a stream prefix-reader for the packet carrier.
+- The carrier belongs exclusively to the native transport layer. Ordinary Node stream reads must not race it or silently discard ancillary data. Application data remains ACAP JSON; the descriptor is not serialized as an integer or delivered to consumer logic.
+- Each stream has independent direction sequence numbers and an immutable receiver-side context identity. `contextId` in JSON is an equality check, not authentication or routing authority. Work IDs are never reused within a session; counters never wrap.
 
-UDS stream, 4-byte unsigned network-order body length, then exactly that many UTF-8 bytes. Body length 1..1048576, excluding prefix. Reject zero/oversized prefixes before allocating a body. Accumulate split reads and consume coalesced frames without assuming socket reads match messages. One partial body per direction; fixed partial-frame deadline 2000 ms from first byte, not extended by trickle traffic. Handshake deadline 3000 ms from launch. EOF in prefix/body is a failed session, not a partial value.
+Hello/accepted bind the exact launched process/package and expected capability **and event** descriptor digests. Capability versions/features and canonical event descriptor digests must match broker-accepted metadata. Reject logical duplicate IDs even when array elements differ. `wire.contexts` is mandatory for R2; never fall back to the old single-active/parent-ID protocol. The schema remains a proposed IPC v1 schema because the superseded draft was never an implemented/approved wire contract.
 
-Use the existing constrained canonical JSON parser/serializer: strict UTF-8, duplicate-key rejection, printable-ASCII object keys, valid Unicode strings, safe integers only, depth <=32. No floats/exponents/negative-zero lexical forms, nonfinite values, host objects, functions or prototypes as authority. `__proto__`/`constructor` are ordinary own data keys, not object mutation mechanisms. Validate descriptor-specific inputs, outputs and events with the existing ACAP contracts package in addition to frame shape validation.
+## Channel dispatch table
 
-The entire encoded frame must fit the limit. The equivalence factories must apply the same declared encoded-envelope/depth profile to both transports; a 1 MiB payload does not automatically fit a 1 MiB framed message. Do not assert equivalence by running unlike admission limits.
-
-## Session state and replay
-
-`LAUNCHED -> PEER_VERIFIED -> HELLO_VERIFIED -> ACCEPTED -> ACTIVATING -> ACTIVE -> QUIESCING -> CLOSED/FAILED` is a transport session state machine, not a replacement for G1 lifecycle states. Only the supervisor/native verifier can establish PEER_VERIFIED. One hello and accepted exchange; both have sequence zero. Thereafter, sequence numbers start at one and strictly increase independently in each direction. Every message binds the fixed session ID and generation. Session/generation mismatch, duplicate/reordered sequence, unexpected direction/tag or disallowed-state traffic closes the session with a sanitized failure. No downgrade or authentication retry on the same connection.
-
-Hello claims must equal the recorded Cell, physical instance, package and accepted descriptor/version/feature vector. A fresh single-use launch challenge and observed peer credentials are mandatory. Verify numeric version components through existing G1 validators; enforce unique capability IDs, exact digest association and disjoint required/optional feature sets. Reject missing required features or incompatible schema/protocol versions. Optional features are explicitly intersected, never inferred. Package digest also binds signed event declarations; their digests are checked on each publication/subscription.
-
-Wire feature vocabulary proposed: `wire.unary`, `wire.stream`, `wire.events`, `wire.outbound`, `wire.lifecycle`, `wire.scopes`, `wire.secrets`, `wire.logging`. Required features are derived from the chosen package/runtime profile, not just the peer's preferences. A frame whose feature was not negotiated is rejected. Features never issue grants.
-
-## Directions and authority
-
-Validate the channel's actual direction against `toBroker`/`toProvider`. There is no caller-supplied `sender` field. A syntactically valid broker frame arriving from a provider remains invalid.
-
-| Message | Meaning and checks |
+| Channel | Allowed traffic |
 |---|---|
-| hello / accepted | Provider proposal / broker acceptance; native authentication and launch-record equality precede activation. |
-| request: invoke | Broker-to-provider only. Immutable registration reference, public G1 call, broker-minted observational caller tuple, remaining monotonic budget. Grant IDs in the tuple are references, not transferable credentials. |
-| request: outbound | Provider-to-broker only. No caller tuple. Broker derives provider authority from the authenticated instance plus an owned bound handle. `parentWireId` supplies causality/deadline association, never upstream caller authority. |
-| request: bind | Index into the signed manifest's required or optional requirements; broker derives the requirement and uses existing require/optional semantics. Optional absence alone returns absent; permission, compatibility and lifecycle failures remain errors. |
-| request: register / withdraw | Register proxy handlers only for signed, accepted descriptors and a permitted instance context scope. No code/function crosses the wire. Visibility follows activation, disposal and dependency-quiescence rules. |
-| request: scope-create | Child of a context scope already associated with this instance. Creating a scope does not grant capability, secret or event permission. |
-| request: secret | Reference only. Broker verifies the separate secret grant for this exact instance/scope/generation. No inherited host secrets or paths. |
-| request: subscribe / unsubscribe | Event descriptors and separate event grants; opaque subscription references remain session/instance-bound. |
-| request: log | Closed SDK level/event vocabulary, no arbitrary text or object fields. |
-| request: lifecycle | Broker-to-provider only: activate, quiesce, dispose, with bounded budgets. Provider reports do not override supervisor observations. |
-| response | Must match a live wire ID, expected response kind, public request ID and descriptor. Control replies have closed variants; reference ownership is checked independently of shape. |
-| error | Session failure, not a route to caller impersonation. Normalize code and broker correlation; do not forward provider messages/stacks/raw diagnostics. |
-| cancel | Only the owner of the corresponding live directional call can cancel it. Local cancellation completes once without waiting indefinitely for a remote acknowledgement. |
-| stream-item / credit / end | Bound to a live streaming call, correct producer/receiver direction and strictly increasing item sequence. Unary calls cannot receive stream frames. |
-| event: publish | Provider proposal with wire ID, permitted scope, declared event type/digest and ACAP data only. Broker derives source identity, generation, sequence, time and event ID. Reply acknowledges broker admission, not subscriber completion. |
-| event: deliver / request: event-ack | Broker sends the complete G1 envelope to an owned subscription. Receiver acknowledges its event ID; wrong ownership/unknown acknowledgements fail. Bound in-flight deliveries and handler acknowledgement time. |
-| ping / pong | Fresh correlated liveness nonce; arbitrary traffic or unsolicited/stale pong is not a heartbeat response. |
+| Control, provider→broker | hello before acceptance; then ping/pong, sanitized session error, `context-ready`, `task-open` |
+| Control, broker→provider | accepted, ping/pong, session error, responses to allowed control requests |
+| Work, broker→provider | initial invoke/lifecycle/event dispatch matching offered purpose; responses to scoped requests; stream/cancel traffic matching pending state |
+| Work, provider→broker | invoke/lifecycle replies; scoped bind/register/withdraw/secret/subscription/log/scope operations; outbound calls; event publication/acknowledgement; stream/cancel traffic matching pending state |
 
-Revalidate grants/expiry/revocation at admission and each consumer-visible delivery, including buffered stream items. Recheck before writing protected data to a worker. Bytes already delivered cannot be revoked retroactively. Provider data and reported identity never modify the broker's authority tables.
+Use `controlToBroker`, `controlToProvider`, `workToBroker` and `workToProvider` schema selections. Structural validity is not sufficient: direction, offered purpose, lifecycle phase, pending request kind, scope/handle ownership and current authorization are also checked. No business outbound call is accepted on the control channel. Session errors do not carry arbitrary provider stacks/messages to consumers.
 
-Wire request counters strictly increase per origin and are separate from the public G1 request IDs. Keep bounded pending maps and high-water marks; late terminal replies are discarded without unbounded tombstone storage or request-ID reuse. A response cannot attach to another request merely by naming an old public request ID. Shared request/response frame tags do not remove role-specific pending-call checks.
+Responses refer to the requester's outstanding wire ID on that endpoint; stream items/end travel producer→consumer, credit/cancel consumer→producer. Distinguish request-origin maps so equal numeric IDs in opposite directions cannot collide. Validate operation-specific result shapes and expected descriptor digests; do not treat a well-shaped response as authority.
 
-## Deadlines, reentrancy and errors
+## Context and descriptor state machine
 
-Broker tracks monotonic deadlines from original admission, including time spent queued. Provider receives remaining budget, not a fresh full timeout; responses and cancellation cannot extend it. UTC deadline metadata remains available for compatibility, but backwards wall-clock movement cannot renew execution time. Control and lifecycle operations have independent fixed budgets.
+`RESERVED → OFFER_PENDING → READY → RUNNING → TERMINAL → RELEASED`.
 
-Initial proposed profile permits **one active inbound invocation per worker**, with bounded broker admission queues. This makes an outbound call's parent unambiguous: `parentWireId` must be the sole current inbound invocation. Unsolicited background outbound calls are not supported by this profile. Causal cycles back into a busy worker must fail boundedly with `RESOURCE_EXHAUSTED`, not deadlock; apply the same profile to the inproc equivalence route. This is an explicit qualification limit, not a claim that all possible inproc concurrency/reentrancy behavior is reproduced. Raising concurrency requires a separately reviewed causal-budget design; the worker must not select a more privileged or longer-lived caller by assertion.
+Reservation starts the budget before endpoint allocation. Context records bind physical session/generation, provider identity and permitted scope, registration/handle, parent/depth, deadline, descendant cancellation and resource accounting. Broker native leases are not raw fd numbers. Dispatch occurs only after readiness; provider-task contexts have no inbound consumer invocation to impersonate.
 
-First terminal outcome wins. Peer loss yields UNAVAILABLE unless cancellation, revocation or deadline already committed its specific outcome. Remote error messages are replaced by safe normalized messages; stacks, arbitrary fields and process identity assertions never become public error content. No automatic mutation replay, including on timeout with unknown side effects.
+The offer has a fresh unpredictable 256-bit nonce, disclosed **only in its carrier packet**, plus session, generation, context, purpose and one-descriptor count. A matching acknowledgement on the authenticated control channel establishes packet consumption, not a new authority grant or proof of business execution. Reject duplicates/replays, wrong session/context/instance, truncated carriers and malformed acknowledgement. Failure from one instance must never consume another instance's offer or cancel its unrelated context.
 
-## Proposed resource profile
+An original call may expire before the offer is acknowledged. Its endpoint becomes unusable immediately and it can never be dispatched or revived. However, the in-flight descriptor reservation and slot remain charged until the authenticated nonce acknowledgement proves the carrier packet was consumed, or the physical process/carrier is destroyed. A late valid acknowledgement retires the expired offer, not the call. After 1000 ms without consumption, fail the physical session and apply bounded termination; retain unreaped resources rather than pretending queued SCM_RIGHTS can be recalled. This is an explicitly shared failure, not cross-call deadline inheritance. A worker may retain a consumed dead endpoint, but that grants no live authority and remains subject to its OS fd limit.
 
-| Resource | Bound |
+Completed child records must be removed from production active maps. Use bounded pending maps, monotonic IDs/watermarks and late-frame discard; do not accumulate unlimited terminal histories. The test model retains terminal records solely for inspection and must not be copied as a production ledger.
+
+## Scheduling and accounting
+
+| Limit | R2 proposal |
 |---|---:|
-| Encoded body | 1048576 bytes |
-| Canonical nesting | 32 |
-| Application frames queued per connection | 64 |
-| Application bytes queued per connection | 8388608 |
-| Reserved control queue | 16 frames / 65536 bytes |
-| Pending calls per connection | 64 |
-| Active inbound invocation per worker | 1 |
-| Outstanding stream credit | 256 items |
-| Stream buffered bytes | 1048576 per stream; also charged to connection bound |
-| Event in-flight deliveries | 64 per subscription; also charged to connection bound |
-| Event acknowledgement budget | 2000 ms |
-| Active subscriptions / worker-owned scopes | 64 each |
-| Bound handles / registrations | 256 each |
-| Frame-start rate | 1024 per monotonic second per connection |
-| Parsing work per event-loop turn | at most 16 frames, then yield |
-| Handshake / partial frame | 3000 / 2000 ms |
-| Maximum invocation budget in this profile | 30000 ms |
-| Heartbeat / loss threshold | 5000 ms / 3 missed correlated responses |
-| Cooperative dispose / TERM grace / reap observation | 500 / 500 / 500 ms |
-| Reconnects | at most 4; backoffs 1, 2, 4, 8 seconds |
+| Ordinary active/offer-reserved work per worker | 4 |
+| Reserved nested/reentrant work | 4 |
+| Total application contexts | 8 |
+| Additional lifecycle context | 1 |
+| Maximum causal depth | 8 |
+| Pending ordinary calls | 64 |
+| Outstanding offers, including retired/unconsumed | 9 |
+| Encoded application frames/bytes, per worker across **all** channels | 64 / 8 MiB |
+| Control reserve | 64 KiB |
+| Maximum stream frame body | 1 MiB |
+| Carrier packet, including prefix | 4096 bytes |
+| Per-stream buffered encoded bytes | 1 MiB |
+| Maximum cumulative stream item credit | 256 |
+| Frame processing burst / sustained rate | 16 per turn / 1024 per second per worker |
+| Handshake / partial-frame / offer-consumption deadlines | 3000 / 2000 / 1000 ms |
+| Call/root provider-task ceiling | 30000 ms |
+| Event callback budget | 2000 ms, also charged to ordinary slots |
+| Heartbeat interval / missed responses | 5000 ms / 3 |
+| Cooperative unload / TERM grace / reap observation | 500 / 500 / 500 ms |
+| Reconnect attempts after initial launch | 4 |
 
-These are proposed qualification bounds, not measured runtime performance. Counters include encoded objects, receive assembly, queued writes and in-flight application data; do not advertise a byte bound while omitting another buffer. Socket-buffer sizes must be inspected and included in the implementation report. Reserve control capacity without reordering bytes inside a frame. Overflow must not grow memory or drop silently: fail admission with RESOURCE_EXHAUSTED, or close a violating/stalled session when safe control delivery is impossible.
+Every admission must satisfy every applicable bound; these maxima do not guarantee simultaneous full capacity. Ordinary work queues FIFO with the original deadline. Nested calls use reserved capacity first, then available ordinary capacity, and never queue behind their ancestors: exhaustion/depth limit produces RESOURCE_EXHAUSTED promptly. Repeated provider visits are allowed within limits. Provider application lock deadlocks still expire under their original budgets.
 
-Streams begin with zero credit. Receiver reserves bounded item/byte capacity before granting credit. Producer never sends beyond credit; consuming an item returns capacity explicitly. Oversized individual items fail before enqueue. A stalled receiver cannot keep a call alive beyond its original deadline; no heartbeat extends an invocation. Terminal delivery releases all reservations exactly once.
+Contexts awaiting offers count toward their slot. An expired but unconsumed offer still occupies that slot. Received descriptors, unsent offers, in-flight rights, retired endpoints, decoder assemblies and write buffers all need bounded ownership. With at most nine context endpoints, the final 64-fd process limit leaves a defined bootstrap/runtime reserve; measure actual runtime descriptors and refuse startup if the worst-case layout cannot fit. Four workers is a supervisor-wide cap, including unreaped/quarantined workers.
 
-Heartbeat loss is detected at the third missed interval, plus measured scheduling delay. Monotonic timers must report overshoot; there is no hard-real-time guarantee while the supervisor itself is descheduled. Test a healthy supervisor with a blocked worker, and record actual detection/kill/reap times. Failure to meet the accepted test bounds is not reported as success.
+Reserve encoded byte and frame capacity before allocating/reading queued application bodies or granting stream credit. If a descriptor cannot prove a smaller encoded item bound, reserve the full permitted frame size. Aggregate reservations can reduce effective credit below 256. Account for framing/metadata as well as values, and for partial receive/write buffers; credit cannot multiply budgets across contexts. A stream must not produce an item without credit. Close/cancel releases its reservations once. Event deliveries use bounded callback contexts and acknowledgements; they do not obtain unlimited independent queues.
 
-## Evidence boundary
+Encoded byte bounds are not an exact V8 heap/RSS or kernel socket-buffer measurement. The native build must measure those resources and qualify the separate OS process limits. Control traffic has its own reserve and cannot be starved by ordinary saturation. Partial-frame/stalled-peer detection remains active while application queues are paused. Numeric counters saturate/fail before wrap.
 
-Current evidence contains schema checks and disposable platform probes only. It does not demonstrate replay resistance, grant revocation, queue enforcement, reconnect behavior, equivalence or production forced termination. Those are mandatory executable tests in `QUALIFICATION.md` after design approval.
+## Invocation context and authority
+
+The receiver's endpoint record supplies parentage and monotonic budget. `outbound` contains bound handle, request and a requested upper budget, but no parent or caller assertion. The result cannot exceed the selected provider scope/handle/grant or the original parent deadline. Recheck authorization before starting work, exposing buffered data and delivering final results; already delivered information cannot be recalled.
+
+Do not combine unrelated deadlines or cancellation. Parent termination cancels outstanding descendants. Normally cooperative cancellation closes only applicable contexts; an uncooperative or broken process can require whole-worker termination, which fails siblings honestly. No mutation replay or implicit rebind follows disconnect.
+
+`task-open` is a separately admitted provider-owned root budget, not a substitute for an expired inbound context. SDK routing must retain an expired invocation marker and reject its delayed calls instead of silently opening a fresh task. A compromised process can intentionally use a different live context or request provider-owned background work; the broker enforces the context actually used, not unverifiable semantic intent. Its previous consumer invocation still cannot be revived, extended or answered twice. This threat boundary is part of review, not a claim of per-request OS isolation.
+
+## Failure and recovery
+
+First terminal outcome wins. Invalid provider protocol closes the offending session, not a victim's unrelated session. Broker diagnostics may distinguish framing, authentication, version, digest and resource faults; outstanding valid consumer calls receive UNAVAILABLE on peer loss unless an earlier specific result has committed. Provider-supplied diagnostic messages/correlation IDs are normalized, not trusted.
+
+A new process requires fresh identity/challenge, generation, trust/grant/digest validation and registration. Backoff is 1/2/4/8 seconds; successful hello/pong does not reset the per-instance restart budget. Unload cancels queued reconnect timers. No replay of in-flight work and no rebinding of old handles. A failed reap is reported as unreaped/quarantined and retains capacity; SIGKILL issuance alone is not DISPOSED evidence.
+
+## Qualification boundary
+
+Apply identical logical scheduling, request/value admission and lifecycle rules to both factories; IPC cannot quietly impose a smaller accepted value domain. The same consumer test source must exercise overlap, independent deadlines, shared mutable provider state, A→B→A success, streams/events and the declared failure codes. Actual native authentication, complete confinement, worker death/revocation, stalls, fd accounting and bounded forced cleanup are separate required runtime tests. Current model/schema/primitive results do not close G6.

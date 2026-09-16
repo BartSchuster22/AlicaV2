@@ -1,51 +1,42 @@
-# G6 qualification plan and current evidence boundary
+# G6 R2 qualification and evidence boundary
 
-Status: **revision required; bounded-concurrency direction approved, implementation and G6 exit qualification not complete**.
+Status: **design candidate only; G6 runtime qualification incomplete**.
 
-The owner decision in [G6-CONCURRENCY-DIRECTION.md](../gates/G6-CONCURRENCY-DIRECTION.md) supersedes the single-active qualification target. The earlier evidence remains historical evidence only.
+## Evidence levels
 
-## Required implementation artifacts after approval
+1. `tools/check-g6-design.py`: JSON schema, closed-body, directional/control/work-lane and carrier metadata checks. Correctly shaped identity claims still do not authenticate anything.
+2. `tools/test-g6-context-model.py`: deterministic abstract broker model. Opaque Python objects stand in for native endpoint/descriptor leases; there is no PID authentication or production socket implementation. It checks overlap, shared state records, A→B→A success, budgets, provider-owned grants, reentrant capacity/depth, queues, cancellation/revocation, offer replay/swap, foreign acknowledgements, in-flight descriptor reservations and shared failure. Retained terminal histories are test inspection state, not a production memory design.
+3. `tools/probe-g6-carrier.py`: real disposable Linux Python subprocess/SCM_RIGHTS feasibility. Two pending contexts use shared process state; extra descriptors and a regular-file descriptor are rejected/closed, received sockets are close-on-exec and the synthetic parent marker is absent. The initial prototype used a stream reader on seqpacket acknowledgements and timed out; the corrected packet-aware reader passed. This is a trusted Python fixture, not the production Node/native transport, full offer protocol, authentication or final seccomp profile.
+4. Existing G1/G3/G4/G5 checks protect the frozen/runtime/SDK baseline. They do not become G6 runtime evidence merely because they pass again.
 
-1. Native Linux peer-credential/launch/confinement bridge with locked compiler provenance and reviewed syscall policy.
-2. TypeScript authenticated IPC adapter integrated with existing Kernel admission, grant, lifecycle, contracts and SDK paths.
-3. Signed synthetic out-of-process provider and identical public-import-only parameterized consumer suite for inproc/IPC.
-4. Executed isolation, authority, transport-equivalence, failure and cleanup reports, including process observations and byte/item maxima.
+New execution receipts belong in `evidence/g6-r2-design/`; earlier `evidence/g6-design/` reports describe the superseded single-active candidate. The compiler lock contains retrieved official download metadata, not a downloaded/validated compiler or successful native build.
 
-## Required test matrix
+## Required implementation after review
 
-| Area | Required executed assertion | Current status |
-|---|---|---|
-| Identity | Wrong PID/UID/GID or claimed provider rejected against launch record; no PID supplied by wire used for signalling | Peer-credential feasibility only; adapter test pending |
-| Package/contracts | Wrong package/descriptor digest, incompatible version, missing required feature rejected before activation | Shape validation only; matching/handshake test pending |
-| Replay | Captured hello, reused challenge, stale generation, duplicate/reordered sequence and second handshake rejected | Pending runtime implementation |
-| Framing | Split/coalesced/truncated frames, invalid UTF-8, duplicate keys, oversized prefix, oversize body, depth and integer limits | Schema fixtures only; stream decoder tests pending |
-| Authority | Provider-origin caller injection, foreign handle/scope, undeclared registration, unauthorized secret/event/outbound request rejected | Direction/shape checks only; real grants pending |
-| Equivalence | Same consumer function/source hash, input cases and declared profile; transport selected only by factory | Not run |
-| Streams | Zero initial credit, no excess credit/items, per-stream/connection byte bounds, stalled receiver and cancellation | Shape checks only; live backpressure pending |
-| Revocation | Grant revoked with buffered stream/event data; no later unauthorized consumer delivery | Not run |
-| Disconnect | Killed process, EOF and mid-mutation loss invalidate old handles and fail outstanding calls; execution counter proves no replay | Not run |
-| Reconnect | Four-attempt lifetime budget, correct backoffs, fresh generation/nonce/physical instance, no counter reset via hello/pong | Not run |
-| Cleanup | Normal unload, ignored abort, hanging disposer, CPU loop, SIGTERM refusal, bounded SIGKILL/reap, honest cleanup report | Disposable probes only; lifecycle tests pending |
-| Isolation | Outside reads/writes, symlink escape, network, inherited secrets/FDs, fork/exec, ptrace/signal/prlimit attacks, io_uring bypass | Basic FS/network/environment probe passed; final hostile suite pending |
-| Resource bounds | Record peak frames/bytes, handles/scopes/subscriptions, event acks, parser work and output draining under hostile traffic | Not run |
-| Containers | Same provider qualified inside any selected container runtime | NOT SELECTED; no qualification claimed |
+- Private pinned native bridge/launcher, authenticated child-connected stream, inherited packet carrier, sealed launch/package association, Landlock/seccomp and fixed FD/thread/process budgets.
+- TypeScript IPC adapter/dispatcher with actual receiver-owned context records, broker authorization, endpoint lifetimes, monotonic budgets, first-terminal outcomes and shared accounting.
+- One out-of-process synthetic Node provider using the public SDK; no per-call module replica or mocked in-process substitute.
+- One unchanged consumer test function parameterized over in-process and IPC factories. Record its source hash and exercise the same expected results, not per-transport test branching that hides missing semantics.
 
-The revised equivalence target must exercise successful concurrent and reentrant work within declared bounds using the same consumer function on both routes, and deterministic capacity/depth failures only when those bounds are exceeded. Blanket rejection of reentrancy or a single-active-only suite cannot satisfy this target. See CONCURRENCY-REVISION.md for additional causal-budget and isolation tests.
+## Mandatory runtime matrix (all still pending)
 
-## Design checks
+| Area | Required evidence |
+|---|---|
+| Authentication | Genuine launched PID/UID/GID/pidfd/package/descriptor match; forged name, wrong process/publisher/digest, stale challenge/generation and replay rejected |
+| Offer/endpoint binding | Correct atomic packet/SCM transfer; wrong nonce/context/instance, duplicate/truncated/multiple/unsolicited descriptors, wrong socket type and FD reuse rejected with observed cleanup |
+| Concurrency/state | Slow and fast overlapping calls, independent deadlines/cancellation, one shared mutable provider instance and stable activation/disposal semantics |
+| Reentrancy | Successful A→B→A and bounded deeper nesting; exhausted slots/depth fail promptly without admission deadlock |
+| Authority | No upstream consumer-grant inheritance; no asserted parent/caller retargeting, scoped handle widening or old-context revival while another call remains live |
+| Calls/streams/events | Same values/errors/metadata over both transports, schema enforcement, cumulative credit and shared reservations, event callback acknowledgement and overload |
+| Revocation | Live grant/scope invalidation before buffered delivery; descendant cancellation while healthy unrelated contexts remain independent |
+| Death/stalls | Actual worker death, partial-frame/read/write/stream stall, missing heartbeat/offer consumption, malformed messages and deterministic first-terminal failure |
+| Recovery | Bounded retries with fresh trust/session/registration; old handles invalid; no mutation replay or automatic caller rebinding |
+| Resource accounting | Queue/byte/frame/FD bounds across all active, pending and retired contexts, including rights still queued in the carrier; actual memory/socket-buffer observations |
+| Confinement | Final pinned Node/native filter denies outside reads/writes, symlink escape, network and bypass syscalls, process/thread/exec escape, ptrace/FD theft and attacks on other processes; no inherited credentials |
+| Cleanup | Uncooperative provider forced down through owned pidfd; actual exit/reap, no orphan endpoints/processes; overshoots/unreaped state reported, never marked disposed from an acknowledgement |
 
-Run from a bootstrapped repository:
+Do not claim per-call fault isolation when the shared process must be killed. Do not claim semantic provenance merely from possession of a different live context capability. Any tighter isolation requirement requires a separately reviewed design that still explains stateful semantics.
 
-```sh
-python3 -S tools/check-g6-design.py
-```
+## Exit gate
 
-It resolves public frozen G1 schemas, validates every frame tag and supported control shape, rejects additional authority fields and direction misuse, and checks finite ACAP values. Intentionally well-formed false identity/digest fixtures remain schema-valid: only a real authenticated state machine can reject their false claims. This distinction is tested, not hidden.
-
-The disposable `tools/probe-g6-host.py` is a target-host feasibility collector, not an IPC adapter or sandbox certification. Its output distinguishes namespace failure, the initial OpenSSL restriction failure and a successful constrained Node run. It applies restrictions only in child processes. The final native policy must be materially stronger than its socket-only seccomp probe and broad library-directory read rules.
-
-## Approval and completion
-
-ADR-013, IPC-PROFILE.md and draft frames require the previously retained owner review before implementation. Approval must explicitly include the native component/build-tool policy addition and the proposed profile/limits. G5 acceptance and baseline approval remain valid; they are not being requested again.
-
-After that approval, G6 completion still requires actual adapter/provider artifacts and all runtime tests above, a clean-checkout report, exact-candidate foundation CI success and owner acceptance under the existing private-repository manual controls. No passing schema count or platform probe substitutes for G6 exit.
+A production adapter and synthetic provider must actually run, the unchanged consumer suite must pass on both routes, every hostile/lifecycle case must have real evidence, and bounded cleanup/resource claims must be measured. Apply the existing exact-candidate CI/owner acceptance controls. Until then G6 is not complete.

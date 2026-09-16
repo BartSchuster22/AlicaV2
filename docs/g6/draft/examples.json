@@ -22,10 +22,13 @@
         }
       ],
       "requiredFeatures": [
-        "wire.unary"
+        "wire.unary",
+        "wire.contexts"
       ],
-      "optionalFeatures": []
-    }
+      "optionalFeatures": [],
+      "events": []
+    },
+    "contextId": "control"
   },
   "accepted": {
     "schemaVersion": "acap.ipc/v1",
@@ -49,7 +52,8 @@
         }
       ],
       "negotiatedFeatures": [
-        "wire.unary"
+        "wire.unary",
+        "wire.contexts"
       ],
       "rootScopeId": "scope1",
       "scopeGeneration": 1,
@@ -58,7 +62,7 @@
         "maxQueuedFrames": 64,
         "maxQueuedBytes": 8388608,
         "maxPendingCalls": 64,
-        "maxActiveInboundCalls": 1,
+        "maxActiveInboundCalls": 8,
         "maxStreamCredit": 256,
         "maxStreamBufferedBytes": 1048576,
         "handshakeMs": 3000,
@@ -68,9 +72,19 @@
         "cleanupMs": 500,
         "termGraceMs": 500,
         "reapMs": 500,
-        "maxReconnects": 4
-      }
-    }
+        "maxReconnects": 4,
+        "maxOrdinaryActive": 4,
+        "reservedNestedSlots": 4,
+        "maxCausalDepth": 8,
+        "maxWorkContexts": 8,
+        "reservedLifecycleContexts": 1,
+        "maxPendingOffers": 9,
+        "offerTimeoutMs": 1000,
+        "carrierPacketBytes": 4096
+      },
+      "events": []
+    },
+    "contextId": "control"
   },
   "request": {
     "schemaVersion": "acap.ipc/v1",
@@ -101,7 +115,8 @@
         "grantRevision": 1
       },
       "remainingMs": 1000
-    }
+    },
+    "contextId": "ctx1"
   },
   "response": {
     "schemaVersion": "acap.ipc/v1",
@@ -121,7 +136,8 @@
           }
         }
       }
-    }
+    },
+    "contextId": "ctx1"
   },
   "error": {
     "schemaVersion": "acap.ipc/v1",
@@ -136,7 +152,8 @@
         "retryable": false,
         "correlationId": "c1"
       }
-    }
+    },
+    "contextId": "control"
   },
   "cancel": {
     "schemaVersion": "acap.ipc/v1",
@@ -147,7 +164,8 @@
     "body": {
       "wireId": 1,
       "reason": "CANCELLED"
-    }
+    },
+    "contextId": "ctx1"
   },
   "stream-item": {
     "schemaVersion": "acap.ipc/v1",
@@ -159,7 +177,8 @@
       "wireId": 1,
       "itemSequence": 0,
       "value": "item"
-    }
+    },
+    "contextId": "ctx1"
   },
   "stream-credit": {
     "schemaVersion": "acap.ipc/v1",
@@ -170,7 +189,8 @@
     "body": {
       "wireId": 1,
       "items": 1
-    }
+    },
+    "contextId": "ctx1"
   },
   "stream-end": {
     "schemaVersion": "acap.ipc/v1",
@@ -182,7 +202,8 @@
       "wireId": 1,
       "itemSequence": 1,
       "outcome": "complete"
-    }
+    },
+    "contextId": "ctx1"
   },
   "event": {
     "schemaVersion": "acap.ipc/v1",
@@ -197,7 +218,8 @@
       "eventType": "org.example.changed",
       "descriptorDigest": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
       "data": "example"
-    }
+    },
+    "contextId": "ctx1"
   },
   "ping": {
     "schemaVersion": "acap.ipc/v1",
@@ -207,7 +229,8 @@
     "sequence": 1,
     "body": {
       "nonce": "heartbeat1"
-    }
+    },
+    "contextId": "control"
   },
   "pong": {
     "schemaVersion": "acap.ipc/v1",
@@ -217,6 +240,7 @@
     "sequence": 1,
     "body": {
       "nonce": "heartbeat1"
-    }
+    },
+    "contextId": "control"
   }
 }

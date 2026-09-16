@@ -1,0 +1,22 @@
+{
+  "level": "NATIVE-PRIMITIVE-ONLY",
+  "runtimeQualification": false,
+  "acceptedContexts": 2,
+  "rejectedOffers": 2,
+  "rejectedDescriptorsClosed": 3,
+  "cloexec": true,
+  "requestsAdmittedBeforeReplies": 2,
+  "sharedCounter": 2,
+  "inheritedSentinel": false,
+  "replies": [
+    {
+      "contextId": "a",
+      "counter": 1
+    },
+    {
+      "contextId": "b",
+      "counter": 2
+    }
+  ],
+  "passed": true
+}

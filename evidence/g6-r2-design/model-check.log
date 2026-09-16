@@ -1,0 +1,36 @@
+G6 R2 DESIGN MODEL ONLY; runtime qualification=False; tests=30
+test_bytes_aggregate_across_contexts (__main__.Design.test_bytes_aggregate_across_contexts) ... ok
+test_caller_identity_not_inherited (__main__.Design.test_caller_identity_not_inherited) ... ok
+test_cancel_descendants_not_unrelated (__main__.Design.test_cancel_descendants_not_unrelated) ... ok
+test_capacity_exhaustion_not_queued_deadlock (__main__.Design.test_capacity_exhaustion_not_queued_deadlock) ... ok
+test_child_budget_charged_at_admission (__main__.Design.test_child_budget_charged_at_admission) ... ok
+test_claimed_parent_and_caller_rejected (__main__.Design.test_claimed_parent_and_caller_rejected) ... ok
+test_consumer_grant_does_not_authorize_provider (__main__.Design.test_consumer_grant_does_not_authorize_provider) ... ok
+test_descriptor_offer_success_then_replay (__main__.Design.test_descriptor_offer_success_then_replay) ... ok
+test_descriptor_offer_swap_extra_and_truncation (__main__.Design.test_descriptor_offer_swap_extra_and_truncation) ... ok
+test_endpoint_cannot_be_retargeted_by_header (__main__.Design.test_endpoint_cannot_be_retargeted_by_header) ... ok
+test_expired_a_not_renewed_by_live_b (__main__.Design.test_expired_a_not_renewed_by_live_b) ... ok
+test_expired_pending_offer_retains_slot_until_consumed (__main__.Design.test_expired_pending_offer_retains_slot_until_consumed) ... ok
+test_foreign_offer_ack_cannot_cancel_victims_context (__main__.Design.test_foreign_offer_ack_cannot_cancel_victims_context) ... ok
+test_foreign_scoped_handle_rejected (__main__.Design.test_foreign_scoped_handle_rejected) ... ok
+test_frame_budget_and_exactly_once_release (__main__.Design.test_frame_budget_and_exactly_once_release) ... ok
+test_lifecycle_reserved_capacity (__main__.Design.test_lifecycle_reserved_capacity) ... ok
+test_max_depth (__main__.Design.test_max_depth) ... ok
+test_nested_reserve_survives_ordinary_saturation (__main__.Design.test_nested_reserve_survives_ordinary_saturation) ... ok
+test_offer_timeout_releases_slot (__main__.Design.test_offer_timeout_releases_slot) ... ok
+test_one_offer_per_context (__main__.Design.test_one_offer_per_context) ... ok
+test_overlap_and_independent_deadlines (__main__.Design.test_overlap_and_independent_deadlines) ... ok
+test_process_failure_shared_not_per_call_isolation (__main__.Design.test_process_failure_shared_not_per_call_isolation) ... ok
+test_queue_bound (__main__.Design.test_queue_bound) ... ok
+test_queue_fifo_and_original_deadline (__main__.Design.test_queue_fifo_and_original_deadline) ... ok
+test_restart_does_not_rebind_old_endpoint (__main__.Design.test_restart_does_not_rebind_old_endpoint) ... ok
+test_revocation_before_delivery_cascades (__main__.Design.test_revocation_before_delivery_cascades) ... ok
+test_shared_process_valid_other_capability_is_not_intent_proof (__main__.Design.test_shared_process_valid_other_capability_is_not_intent_proof) ... ok
+test_state_is_shared_not_replicated (__main__.Design.test_state_is_shared_not_replicated) ... ok
+test_successful_a_b_a_reentry (__main__.Design.test_successful_a_b_a_reentry) ... ok
+test_unconsumed_offer_fails_shared_session_at_hard_timeout (__main__.Design.test_unconsumed_offer_fails_shared_session_at_hard_timeout) ... ok
+
+----------------------------------------------------------------------
+Ran 30 tests in 0.002s
+
+OK

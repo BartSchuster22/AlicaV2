@@ -27,7 +27,7 @@
     "alicac": "node packages/alicac/dist/index.js",
     "test:isolated": "node tools/test-isolated.mjs",
     "test:external": "node tools/test-external-sdk.mjs",
-    "test:g6-design": "python3 -S tools/check-g6-design.py"
+    "test:g6-design": "python3 -S tools/check-g6-design.py && python3 -S tools/test-g6-context-model.py"
   },
   "devDependencies": {
     "typescript": "6.0.3",

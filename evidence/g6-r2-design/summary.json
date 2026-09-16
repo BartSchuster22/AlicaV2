@@ -1,0 +1,29 @@
+{
+  "level": "DESIGN-REVIEW-ONLY",
+  "runtimeQualification": false,
+  "capturedAtUtc": "2026-09-16T20:53:25.422808+00:00",
+  "sourceBaseCommit": "72674bdc8ae47d4e0335a8cf12d3858d932452a0",
+  "testedWorkingCandidateBeforeReceiptCommit": true,
+  "fullCheckExitCode": 0,
+  "schemaChecksPassed": 135,
+  "modelTestsPassed": 30,
+  "nativePrimitivePassed": true,
+  "frozenSpecsRuntimeSdkAndToolchainUnchanged": true,
+  "nativeCompilerInstalled": false,
+  "files": {
+    "docs/adr/ADR-013.md": "fd21f511dd2ca55f2a72999bf25a6c5b9f00890d3a152f919364fd2708649cf9",
+    "docs/g6/CONCURRENCY-REVISION.md": "61df276e27c47cc17312b1ba5f6016a9173272127726a9b9b93b61cce1c22540",
+    "docs/g6/IPC-PROFILE.md": "f9592e1e0d0446a1ef54de6a70a43305769d08e325d3343dc52989991c61bed6",
+    "docs/g6/QUALIFICATION.md": "197bc515f7febed7d97fb2abd1b71d14a4522ac145772d21051c39bce85f745b",
+    "docs/g6/draft/context-offer.example.json": "9a981c6f9172b674d4405e9b256ee6536f071476f9914617cc1f1448972fb1bb",
+    "docs/g6/draft/context-offer.schema.json": "bd2815fff4c280cd2a1156dbdaef139a497dcd7e696506361f5c4e5a82556d5c",
+    "docs/g6/draft/examples.json": "39397599b16ea2b60822e1735543cdccdec99b4978c0a7b50caf4bf20f849fe7",
+    "docs/g6/draft/frames.schema.json": "4299f8367a165eaaa10c6d74d6e88399df04e705d970b2e9e0f4797d9c5add36",
+    "docs/g6/draft/native-build.lock.json": "4f92a75dbe08da11bde985fcb1c04b0a1c5b37d34ed0faaed9f0a865ab27f564",
+    "package.json": "846593bd8ab412511863167481120ac0aee0f3258510b7551621e4427571db29",
+    "tools/check-g6-design.py": "66166199d9befb4e8c3c848bbf1ed17c1323e6283c419a5f893d5e0609a26a47",
+    "tools/g6_context_model.py": "d010417d8384d61c0def97e6ad0245d96c16132c03344879d539690a68197740",
+    "tools/probe-g6-carrier.py": "05a569102957a2f9f9dd9f87c8bf031dea64a0f3f138ed4fe00afa143f494463",
+    "tools/test-g6-context-model.py": "4c444c383d7043b21f15c16c46e9c7526e84b02e905dde28b6d0ad349f4cb02e"
+  }
+}
