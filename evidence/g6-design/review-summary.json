@@ -1,0 +1,34 @@
+{
+  "level": "DESIGN-REVIEW-CANDIDATE",
+  "runtimeQualification": false,
+  "recordedAt": "2026-09-16T19:01:19.422500+00:00",
+  "baseCommit": "9f8a3af4a36be5f2de52ce2b218b64488b465e30",
+  "testedTree": "Working design candidate before documentation/evidence commit; runtime/spec/API sources unchanged from base.",
+  "checks": {
+    "nodeTests": [
+      169
+    ],
+    "existingDesignTests": [
+      193
+    ],
+    "newSchemaChecks": 95,
+    "fullPipeline": "Passed in recorded tool execution; log retained",
+    "frozenG1RuntimeAndSDKUnchanged": true
+  },
+  "compilerDiscovery": {
+    "gcc": null,
+    "cc": null,
+    "gcc-13": null,
+    "clang": null,
+    "clang-18": null,
+    "tcc": null,
+    "zig": null
+  },
+  "limitations": [
+    "Owner review required for ADR-013 and frame schemas before implementation.",
+    "Native bridge and locked C toolchain require dependency-policy approval.",
+    "Single-active-invocation profile is not unrestricted inproc concurrency equivalence.",
+    "No IPC adapter, native production launcher, transport-equivalence or complete hostile-process report exists yet.",
+    "Private GitHub Actions status not independently verified."
+  ]
+}

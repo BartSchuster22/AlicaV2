@@ -1,0 +1,2838 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://alica.invalid/drafts/g6/frames.schema.json",
+  "$comment": "PROPOSED G6 profile: review required; schema validity does not authenticate a process or enforce state/resource bounds.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/hello"
+    },
+    {
+      "$ref": "#/$defs/accepted"
+    },
+    {
+      "$ref": "#/$defs/request"
+    },
+    {
+      "$ref": "#/$defs/response"
+    },
+    {
+      "$ref": "#/$defs/error"
+    },
+    {
+      "$ref": "#/$defs/cancel"
+    },
+    {
+      "$ref": "#/$defs/stream-item"
+    },
+    {
+      "$ref": "#/$defs/stream-credit"
+    },
+    {
+      "$ref": "#/$defs/stream-end"
+    },
+    {
+      "$ref": "#/$defs/event"
+    },
+    {
+      "$ref": "#/$defs/ping"
+    },
+    {
+      "$ref": "#/$defs/pong"
+    }
+  ],
+  "$defs": {
+    "value": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        {
+          "type": "string",
+          "maxLength": 1048576,
+          "pattern": "^[^\ud800-\udfff]*$"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/value"
+          },
+          "maxItems": 1048576
+        },
+        {
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^[ -~]*$"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/value"
+          }
+        }
+      ]
+    },
+    "contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "capabilityId": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-z][a-z0-9]*(?:\\.[a-z][a-z0-9]*)+$"
+        },
+        "descriptorDigest": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"
+        },
+        "features": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 128,
+            "pattern": "^[a-z][a-z0-9]*(?:\\.[a-z][a-z0-9]*)+$"
+          },
+          "maxItems": 128,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "capabilityId",
+        "descriptorDigest",
+        "version",
+        "features"
+      ]
+    },
+    "caller": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "principal": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-z][a-z0-9]*(?:\\.[a-z][a-z0-9]*)+$"
+        },
+        "instanceId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+        },
+        "scope": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+        },
+        "scopeGeneration": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "grantId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+        },
+        "grantRevision": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "principal",
+        "instanceId",
+        "scope",
+        "scopeGeneration",
+        "grantId",
+        "grantRevision"
+      ]
+    },
+    "limits": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "maxFrameBytes": {
+          "const": 1048576
+        },
+        "maxQueuedFrames": {
+          "const": 64
+        },
+        "maxQueuedBytes": {
+          "const": 8388608
+        },
+        "maxPendingCalls": {
+          "const": 64
+        },
+        "maxActiveInboundCalls": {
+          "const": 1
+        },
+        "maxStreamCredit": {
+          "const": 256
+        },
+        "maxStreamBufferedBytes": {
+          "const": 1048576
+        },
+        "handshakeMs": {
+          "const": 3000
+        },
+        "partialFrameMs": {
+          "const": 2000
+        },
+        "heartbeatMs": {
+          "const": 5000
+        },
+        "missedHeartbeats": {
+          "const": 3
+        },
+        "cleanupMs": {
+          "const": 500
+        },
+        "termGraceMs": {
+          "const": 500
+        },
+        "reapMs": {
+          "const": 500
+        },
+        "maxReconnects": {
+          "const": 4
+        }
+      },
+      "required": [
+        "maxFrameBytes",
+        "maxQueuedFrames",
+        "maxQueuedBytes",
+        "maxPendingCalls",
+        "maxActiveInboundCalls",
+        "maxStreamCredit",
+        "maxStreamBufferedBytes",
+        "handshakeMs",
+        "partialFrameMs",
+        "heartbeatMs",
+        "missedHeartbeats",
+        "cleanupMs",
+        "termGraceMs",
+        "reapMs",
+        "maxReconnects"
+      ]
+    },
+    "call": {
+      "allOf": [
+        {
+          "$ref": "https://alica.invalid/specs/call.schema.json"
+        },
+        {
+          "properties": {
+            "payload": {
+              "$ref": "#/$defs/value"
+            }
+          }
+        }
+      ]
+    },
+    "reply": {
+      "allOf": [
+        {
+          "$ref": "https://alica.invalid/specs/response.schema.json"
+        },
+        {
+          "properties": {
+            "result": {
+              "properties": {
+                "value": {
+                  "$ref": "#/$defs/value"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "eventEnvelope": {
+      "allOf": [
+        {
+          "$ref": "https://alica.invalid/specs/event.schema.json"
+        },
+        {
+          "properties": {
+            "data": {
+              "$ref": "#/$defs/value"
+            }
+          }
+        }
+      ]
+    },
+    "cleanup": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "state": {
+          "enum": [
+            "DISPOSED",
+            "FAILED"
+          ]
+        },
+        "completedDisposers": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "failedDisposers": {
+          "type": "array",
+          "items": {
+            "$ref": "https://alica.invalid/specs/error.schema.json#/properties/code"
+          },
+          "maxItems": 256
+        },
+        "timedOutResources": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "restartRequired": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "state",
+        "completedDisposers",
+        "failedDisposers",
+        "timedOutResources",
+        "restartRequired"
+      ]
+    },
+    "hello": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "acap.ipc/v1"
+        },
+        "tag": {
+          "const": "hello"
+        },
+        "sessionId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "sequence": {
+          "const": 0
+        },
+        "body": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "protocolMajor": {
+              "const": 1
+            },
+            "protocolMinor": {
+              "const": 0
+            },
+            "cellId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            },
+            "providerId": {
+              "type": "string",
+              "maxLength": 128,
+              "pattern": "^[a-z][a-z0-9]*(?:\\.[a-z][a-z0-9]*)+$"
+            },
+            "instanceId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            },
+            "packageDigest": {
+              "type": "string",
+              "pattern": "^sha256:[0-9a-f]{64}$"
+            },
+            "challenge": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "contracts": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/contract"
+              },
+              "maxItems": 128,
+              "uniqueItems": true
+            },
+            "requiredFeatures": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "maxLength": 128,
+                "pattern": "^[a-z][a-z0-9]*(?:\\.[a-z][a-z0-9]*)+$"
+              },
+              "maxItems": 128,
+              "uniqueItems": true
+            },
+            "optionalFeatures": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "maxLength": 128,
+                "pattern": "^[a-z][a-z0-9]*(?:\\.[a-z][a-z0-9]*)+$"
+              },
+              "maxItems": 128,
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "protocolMajor",
+            "protocolMinor",
+            "cellId",
+            "providerId",
+            "instanceId",
+            "packageDigest",
+            "challenge",
+            "contracts",
+            "requiredFeatures",
+            "optionalFeatures"
+          ]
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "tag",
+        "sessionId",
+        "generation",
+        "sequence",
+        "body"
+      ]
+    },
+    "accepted": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "acap.ipc/v1"
+        },
+        "tag": {
+          "const": "accepted"
+        },
+        "sessionId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "sequence": {
+          "const": 0
+        },
+        "body": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "protocolMajor": {
+              "const": 1
+            },
+            "protocolMinor": {
+              "const": 0
+            },
+            "cellId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            },
+            "providerId": {
+              "type": "string",
+              "maxLength": 128,
+              "pattern": "^[a-z][a-z0-9]*(?:\\.[a-z][a-z0-9]*)+$"
+            },
+            "instanceId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            },
+            "packageDigest": {
+              "type": "string",
+              "pattern": "^sha256:[0-9a-f]{64}$"
+            },
+            "contracts": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/contract"
+              },
+              "maxItems": 128,
+              "uniqueItems": true
+            },
+            "negotiatedFeatures": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "maxLength": 128,
+                "pattern": "^[a-z][a-z0-9]*(?:\\.[a-z][a-z0-9]*)+$"
+              },
+              "maxItems": 128,
+              "uniqueItems": true
+            },
+            "rootScopeId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            },
+            "scopeGeneration": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "limits": {
+              "$ref": "#/$defs/limits"
+            }
+          },
+          "required": [
+            "protocolMajor",
+            "protocolMinor",
+            "cellId",
+            "providerId",
+            "instanceId",
+            "packageDigest",
+            "contracts",
+            "negotiatedFeatures",
+            "rootScopeId",
+            "scopeGeneration",
+            "limits"
+          ]
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "tag",
+        "sessionId",
+        "generation",
+        "sequence",
+        "body"
+      ]
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "acap.ipc/v1"
+        },
+        "tag": {
+          "const": "request"
+        },
+        "sessionId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "body": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "invoke"
+                },
+                "wireId": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "registrationId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+                },
+                "call": {
+                  "$ref": "#/$defs/call"
+                },
+                "caller": {
+                  "$ref": "#/$defs/caller"
+                },
+                "remainingMs": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 30000
+                }
+              },
+              "required": [
+                "kind",
+                "wireId",
+                "registrationId",
+                "call",
+                "caller",
+                "remainingMs"
+              ]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "lifecycle"
+                },
+                "wireId": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "action": {
+                  "enum": [
+                    "activate",
+                    "quiesce",
+                    "dispose"
+                  ]
+                },
+                "remainingMs": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 30000
+                }
+              },
+              "required": [
+                "kind",
+                "wireId",
+                "action",
+                "remainingMs"
+              ]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "event-ack"
+                },
+                "wireId": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "subscriptionId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+                },
+                "eventId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+                }
+              },
+              "required": [
+                "kind",
+                "wireId",
+                "subscriptionId",
+                "eventId"
+              ]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "outbound"
+                },
+                "wireId": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "handleId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+                },
+                "parentWireId": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "call": {
+                  "$ref": "#/$defs/call"
+                }
+              },
+              "required": [
+                "kind",
+                "wireId",
+                "handleId",
+                "parentWireId",
+                "call"
+              ]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "bind"
+                },
+                "wireId": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "scopeId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+                },
+                "requirementIndex": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 255
+                },
+                "optional": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "kind",
+                "wireId",
+                "scopeId",
+                "requirementIndex",
+                "optional"
+              ]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "register"
+                },
+                "wireId": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "scopeId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+                },
+                "capabilityId": {
+                  "type": "string",
+                  "maxLength": 128,
+                  "pattern": "^[a-z][a-z0-9]*(?:\\.[a-z][a-z0-9]*)+$"
+                },
+                "descriptorDigest": {
+                  "type": "string",
+                  "pattern": "^sha256:[0-9a-f]{64}$"
+                }
+              },
+              "required": [
+                "kind",
+                "wireId",
+                "scopeId",
+                "capabilityId",
+                "descriptorDigest"
+              ]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "withdraw"
+                },
+                "wireId": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "registrationId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+                }
+              },
+              "required": [
+                "kind",
+                "wireId",
+                "registrationId"
+              ]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "secret"
+                },
+                "wireId": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "scopeId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+                },
+                "reference": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,127}$"
+                }
+              },
+              "required": [
+                "kind",
+                "wireId",
+                "scopeId",
+                "reference"
+              ]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "subscribe"
+                },
+                "wireId": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "scopeId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+                },
+                "eventType": {
+                  "type": "string",
+                  "maxLength": 128,
+                  "pattern": "^[a-z][a-z0-9]*(?:\\.[a-z][a-z0-9]*)+$"
+                },
+                "descriptorDigest": {
+                  "type": "string",
+                  "pattern": "^sha256:[0-9a-f]{64}$"
+                }
+              },
+              "required": [
+                "kind",
+                "wireId",
+                "scopeId",
+                "eventType",
+                "descriptorDigest"
+              ]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "unsubscribe"
+                },
+                "wireId": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "subscriptionId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+                }
+              },
+              "required": [
+                "kind",
+                "wireId",
+                "subscriptionId"
+              ]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "scope-create"
+                },
+                "wireId": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "parentScopeId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+                }
+              },
+              "required": [
+                "kind",
+                "wireId",
+                "parentScopeId"
+              ]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "log"
+                },
+                "wireId": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "record": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "level": {
+                      "enum": [
+                        "debug",
+                        "info",
+                        "warn",
+                        "error"
+                      ]
+                    },
+                    "event": {
+                      "enum": [
+                        "checkpoint",
+                        "warning",
+                        "failure"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "level",
+                    "event"
+                  ]
+                }
+              },
+              "required": [
+                "kind",
+                "wireId",
+                "record"
+              ]
+            }
+          ]
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "tag",
+        "sessionId",
+        "generation",
+        "sequence",
+        "body"
+      ]
+    },
+    "response": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "acap.ipc/v1"
+        },
+        "tag": {
+          "const": "response"
+        },
+        "sessionId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "body": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "invoke"
+                },
+                "wireId": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "response": {
+                  "$ref": "#/$defs/reply"
+                }
+              },
+              "required": [
+                "kind",
+                "wireId",
+                "response"
+              ]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "control"
+                },
+                "wireId": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "value": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "kind": {
+                          "const": "bound"
+                        },
+                        "handleId": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 128,
+                          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+                        },
+                        "descriptorDigest": {
+                          "type": "string",
+                          "pattern": "^sha256:[0-9a-f]{64}$"
+                        },
+                        "negotiatedFeatures": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "maxLength": 128,
+                            "pattern": "^[a-z][a-z0-9]*(?:\\.[a-z][a-z0-9]*)+$"
+                          },
+                          "maxItems": 128,
+                          "uniqueItems": true
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "handleId",
+                        "descriptorDigest",
+                        "negotiatedFeatures"
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "kind": {
+                          "const": "absent"
+                        }
+                      },
+                      "required": [
+                        "kind"
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "kind": {
+                          "const": "registered"
+                        },
+                        "registrationId": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 128,
+                          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "registrationId"
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "kind": {
+                          "const": "secret"
+                        },
+                        "value": {
+                          "type": "string",
+                          "maxLength": 1048576,
+                          "pattern": "^[^\ud800-\udfff]*$"
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "value"
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "kind": {
+                          "const": "subscribed"
+                        },
+                        "subscriptionId": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 128,
+                          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "subscriptionId"
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "kind": {
+                          "const": "scope"
+                        },
+                        "scopeId": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 128,
+                          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+                        },
+                        "scopeGeneration": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 9007199254740991
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "scopeId",
+                        "scopeGeneration"
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "kind": {
+                          "const": "ack"
+                        }
+                      },
+                      "required": [
+                        "kind"
+                      ]
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "kind",
+                "wireId",
+                "value"
+              ]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "control-error"
+                },
+                "wireId": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "error": {
+                  "$ref": "https://alica.invalid/specs/error.schema.json"
+                }
+              },
+              "required": [
+                "kind",
+                "wireId",
+                "error"
+              ]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "activated"
+                },
+                "wireId": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                }
+              },
+              "required": [
+                "kind",
+                "wireId"
+              ]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "quiesced"
+                },
+                "wireId": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                }
+              },
+              "required": [
+                "kind",
+                "wireId"
+              ]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "disposed"
+                },
+                "wireId": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "report": {
+                  "$ref": "#/$defs/cleanup"
+                }
+              },
+              "required": [
+                "kind",
+                "wireId",
+                "report"
+              ]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "lifecycle-error"
+                },
+                "wireId": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "error": {
+                  "$ref": "https://alica.invalid/specs/error.schema.json"
+                }
+              },
+              "required": [
+                "kind",
+                "wireId",
+                "error"
+              ]
+            }
+          ]
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "tag",
+        "sessionId",
+        "generation",
+        "sequence",
+        "body"
+      ]
+    },
+    "error": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "acap.ipc/v1"
+        },
+        "tag": {
+          "const": "error"
+        },
+        "sessionId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "body": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "error": {
+              "$ref": "https://alica.invalid/specs/error.schema.json"
+            }
+          },
+          "required": [
+            "error"
+          ]
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "tag",
+        "sessionId",
+        "generation",
+        "sequence",
+        "body"
+      ]
+    },
+    "cancel": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "acap.ipc/v1"
+        },
+        "tag": {
+          "const": "cancel"
+        },
+        "sessionId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "body": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "wireId": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "reason": {
+              "enum": [
+                "CANCELLED",
+                "DEADLINE_EXCEEDED",
+                "PERMISSION_DENIED",
+                "UNAVAILABLE"
+              ]
+            }
+          },
+          "required": [
+            "wireId",
+            "reason"
+          ]
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "tag",
+        "sessionId",
+        "generation",
+        "sequence",
+        "body"
+      ]
+    },
+    "stream-item": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "acap.ipc/v1"
+        },
+        "tag": {
+          "const": "stream-item"
+        },
+        "sessionId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "body": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "wireId": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "itemSequence": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "value": {
+              "$ref": "#/$defs/value"
+            }
+          },
+          "required": [
+            "wireId",
+            "itemSequence",
+            "value"
+          ]
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "tag",
+        "sessionId",
+        "generation",
+        "sequence",
+        "body"
+      ]
+    },
+    "stream-credit": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "acap.ipc/v1"
+        },
+        "tag": {
+          "const": "stream-credit"
+        },
+        "sessionId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "body": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "wireId": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "items": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 256
+            }
+          },
+          "required": [
+            "wireId",
+            "items"
+          ]
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "tag",
+        "sessionId",
+        "generation",
+        "sequence",
+        "body"
+      ]
+    },
+    "stream-end": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "acap.ipc/v1"
+        },
+        "tag": {
+          "const": "stream-end"
+        },
+        "sessionId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "body": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "wireId": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "itemSequence": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "outcome": {
+                  "const": "complete"
+                }
+              },
+              "required": [
+                "wireId",
+                "itemSequence",
+                "outcome"
+              ]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "wireId": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "itemSequence": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "outcome": {
+                  "const": "error"
+                },
+                "error": {
+                  "$ref": "https://alica.invalid/specs/error.schema.json"
+                }
+              },
+              "required": [
+                "wireId",
+                "itemSequence",
+                "outcome",
+                "error"
+              ]
+            }
+          ]
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "tag",
+        "sessionId",
+        "generation",
+        "sequence",
+        "body"
+      ]
+    },
+    "event": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "acap.ipc/v1"
+        },
+        "tag": {
+          "const": "event"
+        },
+        "sessionId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "body": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "publish"
+                },
+                "wireId": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "scopeId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+                },
+                "eventType": {
+                  "type": "string",
+                  "maxLength": 128,
+                  "pattern": "^[a-z][a-z0-9]*(?:\\.[a-z][a-z0-9]*)+$"
+                },
+                "descriptorDigest": {
+                  "type": "string",
+                  "pattern": "^sha256:[0-9a-f]{64}$"
+                },
+                "data": {
+                  "$ref": "#/$defs/value"
+                }
+              },
+              "required": [
+                "kind",
+                "wireId",
+                "scopeId",
+                "eventType",
+                "descriptorDigest",
+                "data"
+              ]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "deliver"
+                },
+                "subscriptionId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+                },
+                "envelope": {
+                  "$ref": "#/$defs/eventEnvelope"
+                }
+              },
+              "required": [
+                "kind",
+                "subscriptionId",
+                "envelope"
+              ]
+            }
+          ]
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "tag",
+        "sessionId",
+        "generation",
+        "sequence",
+        "body"
+      ]
+    },
+    "ping": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "acap.ipc/v1"
+        },
+        "tag": {
+          "const": "ping"
+        },
+        "sessionId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "body": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "nonce": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            }
+          },
+          "required": [
+            "nonce"
+          ]
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "tag",
+        "sessionId",
+        "generation",
+        "sequence",
+        "body"
+      ]
+    },
+    "pong": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "acap.ipc/v1"
+        },
+        "tag": {
+          "const": "pong"
+        },
+        "sessionId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "body": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "nonce": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            }
+          },
+          "required": [
+            "nonce"
+          ]
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "tag",
+        "sessionId",
+        "generation",
+        "sequence",
+        "body"
+      ]
+    },
+    "toProvider": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/error"
+        },
+        {
+          "$ref": "#/$defs/cancel"
+        },
+        {
+          "$ref": "#/$defs/stream-item"
+        },
+        {
+          "$ref": "#/$defs/stream-credit"
+        },
+        {
+          "$ref": "#/$defs/stream-end"
+        },
+        {
+          "$ref": "#/$defs/ping"
+        },
+        {
+          "$ref": "#/$defs/pong"
+        },
+        {
+          "$ref": "#/$defs/accepted"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "schemaVersion": {
+              "const": "acap.ipc/v1"
+            },
+            "tag": {
+              "const": "request"
+            },
+            "sessionId": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "generation": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "sequence": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "body": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "kind": {
+                      "const": "invoke"
+                    },
+                    "wireId": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 9007199254740991
+                    },
+                    "registrationId": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128,
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+                    },
+                    "call": {
+                      "$ref": "#/$defs/call"
+                    },
+                    "caller": {
+                      "$ref": "#/$defs/caller"
+                    },
+                    "remainingMs": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 30000
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "wireId",
+                    "registrationId",
+                    "call",
+                    "caller",
+                    "remainingMs"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "kind": {
+                      "const": "lifecycle"
+                    },
+                    "wireId": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 9007199254740991
+                    },
+                    "action": {
+                      "enum": [
+                        "activate",
+                        "quiesce",
+                        "dispose"
+                      ]
+                    },
+                    "remainingMs": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 30000
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "wireId",
+                    "action",
+                    "remainingMs"
+                  ]
+                }
+              ]
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "tag",
+            "sessionId",
+            "generation",
+            "sequence",
+            "body"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "schemaVersion": {
+              "const": "acap.ipc/v1"
+            },
+            "tag": {
+              "const": "response"
+            },
+            "sessionId": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "generation": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "sequence": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "body": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "kind": {
+                      "const": "invoke"
+                    },
+                    "wireId": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 9007199254740991
+                    },
+                    "response": {
+                      "$ref": "#/$defs/reply"
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "wireId",
+                    "response"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "kind": {
+                      "const": "control"
+                    },
+                    "wireId": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 9007199254740991
+                    },
+                    "value": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "properties": {
+                            "kind": {
+                              "const": "bound"
+                            },
+                            "handleId": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 128,
+                              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+                            },
+                            "descriptorDigest": {
+                              "type": "string",
+                              "pattern": "^sha256:[0-9a-f]{64}$"
+                            },
+                            "negotiatedFeatures": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "maxLength": 128,
+                                "pattern": "^[a-z][a-z0-9]*(?:\\.[a-z][a-z0-9]*)+$"
+                              },
+                              "maxItems": 128,
+                              "uniqueItems": true
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "handleId",
+                            "descriptorDigest",
+                            "negotiatedFeatures"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "properties": {
+                            "kind": {
+                              "const": "absent"
+                            }
+                          },
+                          "required": [
+                            "kind"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "properties": {
+                            "kind": {
+                              "const": "registered"
+                            },
+                            "registrationId": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 128,
+                              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "registrationId"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "properties": {
+                            "kind": {
+                              "const": "secret"
+                            },
+                            "value": {
+                              "type": "string",
+                              "maxLength": 1048576,
+                              "pattern": "^[^\ud800-\udfff]*$"
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "value"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "properties": {
+                            "kind": {
+                              "const": "subscribed"
+                            },
+                            "subscriptionId": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 128,
+                              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "subscriptionId"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "properties": {
+                            "kind": {
+                              "const": "scope"
+                            },
+                            "scopeId": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 128,
+                              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+                            },
+                            "scopeGeneration": {
+                              "type": "integer",
+                              "minimum": 1,
+                              "maximum": 9007199254740991
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "scopeId",
+                            "scopeGeneration"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "properties": {
+                            "kind": {
+                              "const": "ack"
+                            }
+                          },
+                          "required": [
+                            "kind"
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "wireId",
+                    "value"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "kind": {
+                      "const": "control-error"
+                    },
+                    "wireId": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 9007199254740991
+                    },
+                    "error": {
+                      "$ref": "https://alica.invalid/specs/error.schema.json"
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "wireId",
+                    "error"
+                  ]
+                }
+              ]
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "tag",
+            "sessionId",
+            "generation",
+            "sequence",
+            "body"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "schemaVersion": {
+              "const": "acap.ipc/v1"
+            },
+            "tag": {
+              "const": "event"
+            },
+            "sessionId": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "generation": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "sequence": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "body": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "deliver"
+                },
+                "subscriptionId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+                },
+                "envelope": {
+                  "$ref": "#/$defs/eventEnvelope"
+                }
+              },
+              "required": [
+                "kind",
+                "subscriptionId",
+                "envelope"
+              ]
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "tag",
+            "sessionId",
+            "generation",
+            "sequence",
+            "body"
+          ]
+        }
+      ]
+    },
+    "toBroker": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/error"
+        },
+        {
+          "$ref": "#/$defs/cancel"
+        },
+        {
+          "$ref": "#/$defs/stream-item"
+        },
+        {
+          "$ref": "#/$defs/stream-credit"
+        },
+        {
+          "$ref": "#/$defs/stream-end"
+        },
+        {
+          "$ref": "#/$defs/ping"
+        },
+        {
+          "$ref": "#/$defs/pong"
+        },
+        {
+          "$ref": "#/$defs/hello"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "schemaVersion": {
+              "const": "acap.ipc/v1"
+            },
+            "tag": {
+              "const": "request"
+            },
+            "sessionId": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "generation": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "sequence": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "body": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "kind": {
+                      "const": "event-ack"
+                    },
+                    "wireId": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 9007199254740991
+                    },
+                    "subscriptionId": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128,
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+                    },
+                    "eventId": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128,
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "wireId",
+                    "subscriptionId",
+                    "eventId"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "kind": {
+                      "const": "outbound"
+                    },
+                    "wireId": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 9007199254740991
+                    },
+                    "handleId": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128,
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+                    },
+                    "parentWireId": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 9007199254740991
+                    },
+                    "call": {
+                      "$ref": "#/$defs/call"
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "wireId",
+                    "handleId",
+                    "parentWireId",
+                    "call"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "kind": {
+                      "const": "bind"
+                    },
+                    "wireId": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 9007199254740991
+                    },
+                    "scopeId": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128,
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+                    },
+                    "requirementIndex": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 255
+                    },
+                    "optional": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "wireId",
+                    "scopeId",
+                    "requirementIndex",
+                    "optional"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "kind": {
+                      "const": "register"
+                    },
+                    "wireId": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 9007199254740991
+                    },
+                    "scopeId": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128,
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+                    },
+                    "capabilityId": {
+                      "type": "string",
+                      "maxLength": 128,
+                      "pattern": "^[a-z][a-z0-9]*(?:\\.[a-z][a-z0-9]*)+$"
+                    },
+                    "descriptorDigest": {
+                      "type": "string",
+                      "pattern": "^sha256:[0-9a-f]{64}$"
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "wireId",
+                    "scopeId",
+                    "capabilityId",
+                    "descriptorDigest"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "kind": {
+                      "const": "withdraw"
+                    },
+                    "wireId": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 9007199254740991
+                    },
+                    "registrationId": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128,
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "wireId",
+                    "registrationId"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "kind": {
+                      "const": "secret"
+                    },
+                    "wireId": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 9007199254740991
+                    },
+                    "scopeId": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128,
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+                    },
+                    "reference": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,127}$"
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "wireId",
+                    "scopeId",
+                    "reference"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "kind": {
+                      "const": "subscribe"
+                    },
+                    "wireId": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 9007199254740991
+                    },
+                    "scopeId": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128,
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+                    },
+                    "eventType": {
+                      "type": "string",
+                      "maxLength": 128,
+                      "pattern": "^[a-z][a-z0-9]*(?:\\.[a-z][a-z0-9]*)+$"
+                    },
+                    "descriptorDigest": {
+                      "type": "string",
+                      "pattern": "^sha256:[0-9a-f]{64}$"
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "wireId",
+                    "scopeId",
+                    "eventType",
+                    "descriptorDigest"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "kind": {
+                      "const": "unsubscribe"
+                    },
+                    "wireId": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 9007199254740991
+                    },
+                    "subscriptionId": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128,
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "wireId",
+                    "subscriptionId"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "kind": {
+                      "const": "scope-create"
+                    },
+                    "wireId": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 9007199254740991
+                    },
+                    "parentScopeId": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128,
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "wireId",
+                    "parentScopeId"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "kind": {
+                      "const": "log"
+                    },
+                    "wireId": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 9007199254740991
+                    },
+                    "record": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "level": {
+                          "enum": [
+                            "debug",
+                            "info",
+                            "warn",
+                            "error"
+                          ]
+                        },
+                        "event": {
+                          "enum": [
+                            "checkpoint",
+                            "warning",
+                            "failure"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "level",
+                        "event"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "wireId",
+                    "record"
+                  ]
+                }
+              ]
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "tag",
+            "sessionId",
+            "generation",
+            "sequence",
+            "body"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "schemaVersion": {
+              "const": "acap.ipc/v1"
+            },
+            "tag": {
+              "const": "response"
+            },
+            "sessionId": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "generation": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "sequence": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "body": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "kind": {
+                      "const": "invoke"
+                    },
+                    "wireId": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 9007199254740991
+                    },
+                    "response": {
+                      "$ref": "#/$defs/reply"
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "wireId",
+                    "response"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "kind": {
+                      "const": "activated"
+                    },
+                    "wireId": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 9007199254740991
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "wireId"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "kind": {
+                      "const": "quiesced"
+                    },
+                    "wireId": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 9007199254740991
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "wireId"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "kind": {
+                      "const": "disposed"
+                    },
+                    "wireId": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 9007199254740991
+                    },
+                    "report": {
+                      "$ref": "#/$defs/cleanup"
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "wireId",
+                    "report"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "kind": {
+                      "const": "lifecycle-error"
+                    },
+                    "wireId": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 9007199254740991
+                    },
+                    "error": {
+                      "$ref": "https://alica.invalid/specs/error.schema.json"
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "wireId",
+                    "error"
+                  ]
+                }
+              ]
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "tag",
+            "sessionId",
+            "generation",
+            "sequence",
+            "body"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "schemaVersion": {
+              "const": "acap.ipc/v1"
+            },
+            "tag": {
+              "const": "event"
+            },
+            "sessionId": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "generation": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "sequence": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "body": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "publish"
+                },
+                "wireId": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "scopeId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+                },
+                "eventType": {
+                  "type": "string",
+                  "maxLength": 128,
+                  "pattern": "^[a-z][a-z0-9]*(?:\\.[a-z][a-z0-9]*)+$"
+                },
+                "descriptorDigest": {
+                  "type": "string",
+                  "pattern": "^sha256:[0-9a-f]{64}$"
+                },
+                "data": {
+                  "$ref": "#/$defs/value"
+                }
+              },
+              "required": [
+                "kind",
+                "wireId",
+                "scopeId",
+                "eventType",
+                "descriptorDigest",
+                "data"
+              ]
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "tag",
+            "sessionId",
+            "generation",
+            "sequence",
+            "body"
+          ]
+        }
+      ]
+    }
+  }
+}

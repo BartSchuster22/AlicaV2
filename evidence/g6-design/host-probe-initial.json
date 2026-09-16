@@ -1,0 +1,36 @@
+{
+  "level": "DESIGN-FEASIBILITY-NOT-G6-QUALIFICATION",
+  "kernel": "6.8.0-139-generic",
+  "architecture": "x86_64",
+  "uid": 1000,
+  "gid": 1000,
+  "landlock": {
+    "value": 4,
+    "errno": 0
+  },
+  "node": "/home/alica-dev/AlicaV2/.tools/node-v24.21.0-linux-x64/bin/node",
+  "unprivilegedNamespaces": {
+    "returncode": 1,
+    "stderr": "unshare: write failed /proc/self/uid_map: Operation not permitted"
+  },
+  "peerCredentials": {
+    "actualPid": 24879,
+    "spawnPid": 24879,
+    "uid": 1000,
+    "gid": 1000,
+    "pidMatchesLaunchedChild": true,
+    "claimedName": "forged-provider-name",
+    "pidfdOpened": true,
+    "socketMode": "0o600"
+  },
+  "restrictedNode": {
+    "returncode": 13,
+    "stdout": "",
+    "stderr": "/home/alica-dev/AlicaV2/.tools/node-v24.21.0-linux-x64/bin/node: OpenSSL configuration error:\n407DDF4C3B770000:error:8000000D:system library:BIO_new_file:Permission denied:../deps/openssl/openssl/crypto/bio/bss_file.c:67:calling fopen(/etc/ssl/openssl.cnf, rb)"
+  },
+  "limitations": [
+    "Feature probes only; no production adapter, final syscall policy, transport equivalence or hostile-provider qualification.",
+    "Probe library-directory read permissions are broader than the proposed final runtime dependency closure.",
+    "No host-wide settings changed; confinement applied only to disposable child processes."
+  ]
+}

@@ -1,0 +1,222 @@
+{
+  "hello": {
+    "schemaVersion": "acap.ipc/v1",
+    "tag": "hello",
+    "sessionId": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "generation": 1,
+    "sequence": 0,
+    "body": {
+      "protocolMajor": 1,
+      "protocolMinor": 0,
+      "cellId": "cell1",
+      "providerId": "org.example.provider",
+      "instanceId": "instance1",
+      "packageDigest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "challenge": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "contracts": [
+        {
+          "capabilityId": "org.example.echo",
+          "descriptorDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "version": "1.0.0",
+          "features": []
+        }
+      ],
+      "requiredFeatures": [
+        "wire.unary"
+      ],
+      "optionalFeatures": []
+    }
+  },
+  "accepted": {
+    "schemaVersion": "acap.ipc/v1",
+    "tag": "accepted",
+    "sessionId": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "generation": 1,
+    "sequence": 0,
+    "body": {
+      "protocolMajor": 1,
+      "protocolMinor": 0,
+      "cellId": "cell1",
+      "providerId": "org.example.provider",
+      "instanceId": "instance1",
+      "packageDigest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "contracts": [
+        {
+          "capabilityId": "org.example.echo",
+          "descriptorDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "version": "1.0.0",
+          "features": []
+        }
+      ],
+      "negotiatedFeatures": [
+        "wire.unary"
+      ],
+      "rootScopeId": "scope1",
+      "scopeGeneration": 1,
+      "limits": {
+        "maxFrameBytes": 1048576,
+        "maxQueuedFrames": 64,
+        "maxQueuedBytes": 8388608,
+        "maxPendingCalls": 64,
+        "maxActiveInboundCalls": 1,
+        "maxStreamCredit": 256,
+        "maxStreamBufferedBytes": 1048576,
+        "handshakeMs": 3000,
+        "partialFrameMs": 2000,
+        "heartbeatMs": 5000,
+        "missedHeartbeats": 3,
+        "cleanupMs": 500,
+        "termGraceMs": 500,
+        "reapMs": 500,
+        "maxReconnects": 4
+      }
+    }
+  },
+  "request": {
+    "schemaVersion": "acap.ipc/v1",
+    "tag": "request",
+    "sessionId": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "generation": 1,
+    "sequence": 1,
+    "body": {
+      "kind": "invoke",
+      "wireId": 1,
+      "registrationId": "reg1",
+      "call": {
+        "requestId": "r1",
+        "capabilityId": "org.example.echo",
+        "descriptorDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "operation": "echo",
+        "deadlineMs": 10000,
+        "payload": {
+          "text": "example"
+        }
+      },
+      "caller": {
+        "principal": "org.example.consumer",
+        "instanceId": "consumer1",
+        "scope": "scope1",
+        "scopeGeneration": 1,
+        "grantId": "grant1",
+        "grantRevision": 1
+      },
+      "remainingMs": 1000
+    }
+  },
+  "response": {
+    "schemaVersion": "acap.ipc/v1",
+    "tag": "response",
+    "sessionId": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "generation": 1,
+    "sequence": 1,
+    "body": {
+      "kind": "invoke",
+      "wireId": 1,
+      "response": {
+        "requestId": "r1",
+        "result": {
+          "kind": "success",
+          "value": {
+            "text": "example"
+          }
+        }
+      }
+    }
+  },
+  "error": {
+    "schemaVersion": "acap.ipc/v1",
+    "tag": "error",
+    "sessionId": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "generation": 1,
+    "sequence": 1,
+    "body": {
+      "error": {
+        "code": "UNAVAILABLE",
+        "message": "UNAVAILABLE",
+        "retryable": false,
+        "correlationId": "c1"
+      }
+    }
+  },
+  "cancel": {
+    "schemaVersion": "acap.ipc/v1",
+    "tag": "cancel",
+    "sessionId": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "generation": 1,
+    "sequence": 1,
+    "body": {
+      "wireId": 1,
+      "reason": "CANCELLED"
+    }
+  },
+  "stream-item": {
+    "schemaVersion": "acap.ipc/v1",
+    "tag": "stream-item",
+    "sessionId": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "generation": 1,
+    "sequence": 1,
+    "body": {
+      "wireId": 1,
+      "itemSequence": 0,
+      "value": "item"
+    }
+  },
+  "stream-credit": {
+    "schemaVersion": "acap.ipc/v1",
+    "tag": "stream-credit",
+    "sessionId": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "generation": 1,
+    "sequence": 1,
+    "body": {
+      "wireId": 1,
+      "items": 1
+    }
+  },
+  "stream-end": {
+    "schemaVersion": "acap.ipc/v1",
+    "tag": "stream-end",
+    "sessionId": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "generation": 1,
+    "sequence": 1,
+    "body": {
+      "wireId": 1,
+      "itemSequence": 1,
+      "outcome": "complete"
+    }
+  },
+  "event": {
+    "schemaVersion": "acap.ipc/v1",
+    "tag": "event",
+    "sessionId": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "generation": 1,
+    "sequence": 1,
+    "body": {
+      "kind": "publish",
+      "wireId": 1,
+      "scopeId": "scope1",
+      "eventType": "org.example.changed",
+      "descriptorDigest": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      "data": "example"
+    }
+  },
+  "ping": {
+    "schemaVersion": "acap.ipc/v1",
+    "tag": "ping",
+    "sessionId": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "generation": 1,
+    "sequence": 1,
+    "body": {
+      "nonce": "heartbeat1"
+    }
+  },
+  "pong": {
+    "schemaVersion": "acap.ipc/v1",
+    "tag": "pong",
+    "sessionId": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "generation": 1,
+    "sequence": 1,
+    "body": {
+      "nonce": "heartbeat1"
+    }
+  }
+}
