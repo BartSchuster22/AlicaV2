@@ -264,7 +264,11 @@ export function requirement(r: Requirement): void {
   check(r.maxMinor === undefined || r.maxMinor >= r.minMinor);
   check(!r.features.some((f) => r.optionalFeatures?.includes(f)));
 }
+const payloadShape = ajv.compile({
+  $ref: schemas.capability.$id + '#/$defs/payload',
+});
 export function payloadSchema(s: PayloadSchema): void {
+  check(payloadShape(s));
   const allowed: Record<string, string[]> = {
     object: ['properties', 'required', 'additionalProperties'],
     array: ['items', 'minItems', 'maxItems'],
@@ -307,8 +311,57 @@ export function payloadSchema(s: PayloadSchema): void {
 }
 export function payload(s: PayloadSchema, v: unknown): void {
   canonical(v);
-  const validate = ajv.compile(s);
-  check(validate(v));
+  // Interpret the frozen finite payload vocabulary with own-key semantics.
+  // JSON names such as __proto__ are data, not JavaScript prototype operations.
+  const walk = (shape: PayloadSchema, value: unknown): void => {
+    switch (shape.type) {
+      case 'null':
+        check(value === null);
+        break;
+      case 'boolean':
+        check(typeof value === 'boolean');
+        break;
+      case 'integer':
+        check(typeof value === 'number' && Number.isSafeInteger(value));
+        check(shape.minimum === undefined || value >= shape.minimum);
+        check(shape.maximum === undefined || value <= shape.maximum);
+        break;
+      case 'string':
+        check(typeof value === 'string');
+        {
+          const length = Array.from(value).length;
+          check(shape.minLength === undefined || length >= shape.minLength);
+          check(shape.maxLength === undefined || length <= shape.maxLength);
+        }
+        break;
+      case 'array':
+        check(Array.isArray(value));
+        check(shape.minItems === undefined || value.length >= shape.minItems);
+        check(shape.maxItems === undefined || value.length <= shape.maxItems);
+        for (const item of value) walk(shape.items!, item);
+        break;
+      case 'object':
+        check(
+          value !== null && typeof value === 'object' && !Array.isArray(value),
+        );
+        check((shape.required ?? []).every((k) => Object.hasOwn(value, k)));
+        for (const key of Object.keys(value)) {
+          check(Object.hasOwn(shape.properties!, key));
+          walk(
+            shape.properties![key]!,
+            Object.getOwnPropertyDescriptor(value, key)!.value,
+          );
+        }
+        break;
+      default:
+        fail('INVALID_ARGUMENT');
+    }
+    if (shape.enum)
+      check(shape.enum.some((item) => canonical(item) === canonical(value)));
+    if (Object.hasOwn(shape, 'const'))
+      check(canonical(shape.const) === canonical(value));
+  };
+  walk(s, v);
 }
 export function manifest(bytes: string | Uint8Array): Manifest {
   const m = document<Manifest>('plugin', bytes);

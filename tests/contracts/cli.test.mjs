@@ -225,3 +225,37 @@ test('stream-only provider passes conformance without unary assumptions', (t) =>
   assert.equal(p.status, 0, p.stdout);
   assert.equal(JSON.parse(p.stdout).passed, true);
 });
+
+test('generated descriptor preserves prototype-named keys as JSON data', (t) => {
+  const e = env(t);
+  const d = structuredClone(echo);
+  d.operations[0].input = {
+    type: 'object',
+    properties: JSON.parse('{"__proto__":{"type":"string"}}'),
+    required: ['__proto__'],
+    additionalProperties: false,
+  };
+  e.write('cap.json', d);
+  assert.equal(
+    e.run(
+      'capability',
+      'generate-provider',
+      'cap.json',
+      '--out',
+      'provider.mjs',
+    ).status,
+    0,
+  );
+  const child = spawnSync(
+    process.execPath,
+    [
+      '--input-type=module',
+      '-e',
+      "import {descriptor} from './provider.mjs';console.log(JSON.stringify(descriptor));",
+    ],
+    { cwd: e.dir, encoding: 'utf8' },
+  );
+  assert.equal(child.status, 0, child.stderr);
+  assert.deepEqual(JSON.parse(child.stdout), d);
+  assert(generateClient(d).includes('JSON.parse'));
+});

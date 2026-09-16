@@ -7,6 +7,7 @@ import {
   ContractProvider,
   ContractSession,
   BoundedChannel,
+  payload,
   descriptor,
   digest,
   canonical,
@@ -789,5 +790,56 @@ test('stream decoder rejects missing terminal, bad sequence, and unknown fields'
     await assert.rejects(
       readStreamOutcomes('q', source)[Symbol.asyncIterator]().next(),
     );
+  }
+});
+
+test('prototype-named JSON properties remain data through descriptor and invocation', async (t) => {
+  const d = copy(echo);
+  const shape = {
+    type: 'object',
+    properties: JSON.parse(
+      '{"__proto__":{"type":"string"},"constructor":{"type":"string"}}',
+    ),
+    required: ['__proto__', 'constructor'],
+    additionalProperties: false,
+  };
+  d.operations[0].input = shape;
+  d.operations[0].output = copy(shape);
+  const { session, q } = setup(t, { d });
+  const input = JSON.parse('{"__proto__":"value","constructor":"data"}');
+  const result = await session.invoke(q(input));
+  assert.equal(result.result.kind, 'success');
+  assert(Object.hasOwn(result.result.value, '__proto__'));
+  assert.equal(result.result.value.__proto__, 'value');
+  const bad = copy(d);
+  bad.operations[0].input.properties.__proto__.maxLength = '5';
+  assert.throws(() => descriptor(canonical(bad)));
+});
+test('finite payload interpreter enforces all G1 type constraints without coercion', () => {
+  const cases = [
+    [{ type: 'null' }, null, false],
+    [{ type: 'boolean' }, false, 0],
+    [{ type: 'integer', minimum: 1, maximum: 3 }, 2, 4],
+    [{ type: 'string', minLength: 1, maxLength: 1 }, '💫', 'ab'],
+    [
+      { type: 'array', items: { type: 'integer' }, minItems: 1, maxItems: 2 },
+      [1],
+      [1, 2, 3],
+    ],
+    [{ type: 'string', enum: ['a', 'b'], const: 'a' }, 'a', 'b'],
+    [
+      {
+        type: 'object',
+        properties: { x: { type: 'integer' } },
+        required: ['x'],
+        additionalProperties: false,
+      },
+      { x: 1 },
+      { x: 1, y: 2 },
+    ],
+  ];
+  for (const [s, valid, invalid] of cases) {
+    payload(s, valid);
+    assert.throws(() => payload(s, invalid), is('INVALID_ARGUMENT'));
   }
 });
