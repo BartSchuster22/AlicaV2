@@ -1,20 +1,22 @@
 {
-  "name": "@alica/kernel",
+  "name": "@alica/acap-contracts",
   "version": "0.0.0",
   "private": true,
-  "license": "UNLICENSED",
   "type": "module",
+  "license": "UNLICENSED",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
-    }
+    },
+    "./schemas/*": "./schemas/*"
   },
   "files": [
-    "dist"
+    "dist",
+    "schemas"
   ],
   "dependencies": {
     "@alica/acap-types": "0.0.0",
-    "@alica/acap-contracts": "0.0.0"
+    "ajv": "8.20.0"
   }
 }

@@ -436,6 +436,12 @@ export class Trust {
       check(raw, 'CONTRACT_MISMATCH');
       const d = descriptor(raw);
       check(
+        !d.operations.some(
+          (o) => o.idempotencyPolicy?.persistence === 'durable',
+        ),
+        'FAILED_PRECONDITION',
+      );
+      check(
         d.id === b.capabilityId &&
           d.version === b.version &&
           digest(d) === b.descriptorDigest,

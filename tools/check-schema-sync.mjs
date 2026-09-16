@@ -2,7 +2,7 @@ import { readFileSync, readdirSync } from 'node:fs';
 import assert from 'node:assert/strict';
 import { runInNewContext } from 'node:vm';
 // Parse the generated data declaration, not a Kernel-private import.
-const text = readFileSync('packages/kernel/src/schema-data.ts', 'utf8');
+const text = readFileSync('packages/acap-contracts/src/schema-data.ts', 'utf8');
 const embedded = JSON.parse(
   runInNewContext(
     text.replace('export const schemas', 'const schemas') +

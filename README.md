@@ -4,7 +4,7 @@ A new, lean capability-oriented substrate: **Kernel → ACAP → SDK**.
 
 ## Current stage
 
-G3 minimal trusted Kernel and synthetic Echo implementation is delivered as an acceptance candidate. See [G3 scope, evidence and limitations](docs/gates/G3.md). G2 progression uses the [owner-approved manual gate](docs/gates/G2-OWNER-DISPOSITION.md); GitHub remains private. No higher-level ALICA services are integrated. Existing V1 artifacts are references, not runtime dependencies.
+G3 is [accepted by the owner](docs/gates/G3-OWNER-ACCEPTANCE.md). G4 ACAP contract runtime and compiler tooling is delivered as a technical acceptance candidate: see [G4 delivery, commands, tests and limitations](docs/gates/G4.md). G2 progression uses the [owner-approved manual gate](docs/gates/G2-OWNER-DISPOSITION.md); GitHub remains private. No higher-level ALICA services are integrated. Existing V1 artifacts are references, not runtime dependencies.
 
 - [Initiation assessment and building plan](docs/planning/ALICA_V2_Assessment_and_Step1_Building_Plan.md)
 - [Gate status](docs/gates/STATUS.md)

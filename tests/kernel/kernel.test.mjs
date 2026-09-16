@@ -132,7 +132,7 @@ for (const mutation of [
   'unknown-manifest',
   'duplicate-json',
   'untrusted-key',
-  'unsupported-stream',
+  'invalid-stream-idempotency',
 ])
   test(`verification rejects ${mutation} before evaluation`, async (t) => {
     const e = environment(t);
@@ -152,9 +152,14 @@ for (const mutation of [
       });
     }
     if (mutation === 'untrusted-key') p = fixture(keyPair());
-    if (mutation === 'unsupported-stream') {
+    if (mutation === 'invalid-stream-idempotency') {
       const d = structuredClone(echo);
       d.operations[0].kind = 'stream';
+      d.operations[0].idempotency = 'provider';
+      d.operations[0].idempotencyPolicy = {
+        retentionMs: 1000,
+        persistence: 'instance',
+      };
       p = fixture(e.publisher, { provides: [d] });
     }
     assert.throws(() => e.host.discover(p));
@@ -496,7 +501,7 @@ test('provider errors and invalid output normalized without value leakage', asyn
   const h = await e.host.context(c).optional(requirement);
   await assert.rejects(
     h.call('echo', { text: 'x' }, { deadlineMs: e.now() + 1000 }),
-    err('INVALID_ARGUMENT'),
+    err('CONTRACT_MISMATCH'),
   );
 });
 test('secret access requires declaration and separate grant; inspection redacts values', async (t) => {

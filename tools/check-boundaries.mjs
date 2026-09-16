@@ -6,6 +6,13 @@ export function violations(file, source, root) {
   const errors = [];
   const sf = ts.createSourceFile(file, source, ts.ScriptTarget.Latest, true);
   function check(spec) {
+    // Only the operator-selected, trusted provider loader may use a computed import.
+    if (
+      path.relative(root, file).replaceAll('\\', '/') ===
+        'packages/alicac/src/provider-loader.ts' &&
+      spec?.getText(sf) === 'pathToFileURL(realpathSync(providerPath)).href'
+    )
+      return;
     if (!spec || !ts.isStringLiteralLike(spec)) {
       errors.push('computed import');
       return;
@@ -17,17 +24,24 @@ export function violations(file, source, root) {
     const kernel = path
       .relative(root, file)
       .startsWith('packages' + path.sep + 'kernel' + path.sep);
+    const contract = path
+      .relative(root, file)
+      .startsWith('packages' + path.sep + 'acap-contracts' + path.sep);
+    const cli = path
+      .relative(root, file)
+      .startsWith('packages' + path.sep + 'alicac' + path.sep);
     if (
       packageSource &&
-      ((!kernel && name.startsWith('node:')) || name === 'typescript')
+      ((!kernel && !contract && !cli && name.startsWith('node:')) ||
+        name === 'typescript')
     )
       errors.push(
         'foundation packages cannot depend on host or developer tooling',
       );
     if (name.startsWith('@alica/')) {
       const allowed = packageSource
-        ? ['@alica/acap-types']
-        : ['@alica/acap-types', '@alica/kernel'];
+        ? ['@alica/acap-types', '@alica/acap-contracts']
+        : ['@alica/acap-types', '@alica/acap-contracts', '@alica/kernel'];
       if (!allowed.includes(name))
         errors.push('non-public or undeclared package import');
     } else if (name.startsWith('.') || path.isAbsolute(name)) {
@@ -50,7 +64,7 @@ export function violations(file, source, root) {
     } else if (
       !name.startsWith('node:') &&
       name !== 'typescript' &&
-      !(kernel && ['ajv', 'ajv/dist/2020.js'].includes(name))
+      !(contract && ['ajv', 'ajv/dist/2020.js'].includes(name))
     )
       errors.push('undeclared external import');
   }

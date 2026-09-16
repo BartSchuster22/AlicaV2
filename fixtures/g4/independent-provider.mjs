@@ -1,0 +1,5 @@
+// Independently authored qualification provider. No Kernel or workspace imports.
+export const descriptor={schemaVersion:'acap.capability/v1',id:'org.independent.arithmetic',version:'1.0.0',features:['counting'],operations:[{name:'add',kind:'unary',idempotency:'provider',idempotencyPolicy:{retentionMs:1000,persistence:'instance'},input:{type:'object',properties:{left:{type:'integer',minimum:-100,maximum:100},right:{type:'integer',minimum:-100,maximum:100}},required:['left','right'],additionalProperties:false},output:{type:'integer',minimum:-200,maximum:200}},{name:'count',kind:'stream',idempotency:'none',input:{type:'integer',minimum:0,maximum:5},output:{type:'integer',minimum:0,maximum:4}}]};
+let invocations=0;
+export const handlers={add:async(input,context)=>{if(context.signal.aborted)throw {code:'CANCELLED'};invocations++;return input.left+input.right},count:async function*(n,context){for(let i=0;i<n;i++){if(context.signal.aborted)throw {code:'CANCELLED'};yield i}}};
+export const invocationCount=()=>invocations;

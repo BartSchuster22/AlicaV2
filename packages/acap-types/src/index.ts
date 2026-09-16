@@ -118,6 +118,8 @@ export interface OperationContext {
   readonly requestId: string;
   readonly deadlineMs: number;
   readonly signal: AbortSignal;
+  readonly idempotencyKey?: string;
+  readonly scopeGeneration?: number;
   readonly caller: Readonly<{
     principal: string;
     instanceId: string;
@@ -128,11 +130,21 @@ export type UnaryHandler = (
   input: Value,
   context: OperationContext,
 ) => Promise<Value>;
+export type StreamHandler = (
+  input: Value,
+  context: OperationContext,
+) => AsyncIterable<Value>;
+export type Handler = UnaryHandler | StreamHandler;
 export type Disposer = () => Promise<void>;
 export interface BoundCapability {
   readonly descriptorDigest: string;
   readonly negotiatedFeatures: readonly string[];
   call(operation: string, input: Value, options: CallOptions): Promise<Value>;
+  stream(
+    operation: string,
+    input: Value,
+    options: CallOptions,
+  ): AsyncIterable<Value>;
 }
 export interface EventEnvelope {
   eventId: string;
@@ -151,10 +163,7 @@ export interface KernelContext {
   readonly instanceId: string;
   readonly scope: string;
   readonly scopeGeneration: number;
-  provide(
-    descriptor: Descriptor,
-    handlers: Record<string, UnaryHandler>,
-  ): Disposer;
+  provide(descriptor: Descriptor, handlers: Record<string, Handler>): Disposer;
   require(requirement: Requirement): Promise<BoundCapability>;
   optional(requirement: Requirement): Promise<BoundCapability | null>;
   effect<T>(

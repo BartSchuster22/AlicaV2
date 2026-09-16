@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto';
 import { SourceTextModule } from 'node:vm';
-import { AsyncLocalStorage } from 'node:async_hooks';
+import { ContractProvider, ContractSession } from '@alica/acap-contracts';
 import type {
   Value,
   Manifest,
@@ -12,7 +12,7 @@ import type {
   Disposer,
   KernelContext,
   BoundCapability,
-  UnaryHandler,
+  Handler,
   CallOptions,
   CleanupReport,
   EventEnvelope,
@@ -100,7 +100,8 @@ interface Registration {
   instance: Instance;
   scope: Scope;
   descriptor: Descriptor;
-  handlers: Record<string, UnaryHandler>;
+  handlers: Record<string, Handler>;
+  provider?: ContractProvider;
   live: boolean;
 }
 interface StoredGrant {
@@ -198,10 +199,6 @@ export class Host {
   #auditUnavailable = false;
   #closed = false;
   #trustTimer: ReturnType<typeof setTimeout> | undefined;
-  #parents = new AsyncLocalStorage<{
-    deadlineMs: number;
-    signal: AbortSignal;
-  }>();
   constructor(configText: string, options: BootstrapOptions) {
     const c = parse(configText) as unknown as Config;
     check(
@@ -1042,7 +1039,7 @@ export class Host {
           'PLUGIN_' + v.event.toUpperCase(),
         );
       },
-      provide: (d: Descriptor, h: Record<string, UnaryHandler>) =>
+      provide: (d: Descriptor, h: Record<string, Handler>) =>
         this.provide(i, s, d, h),
       require: async (r: Requirement) => {
         this.live(i, s, true);
@@ -1140,7 +1137,7 @@ export class Host {
     i: Instance,
     s: Scope,
     input: Descriptor,
-    handlers: Record<string, UnaryHandler>,
+    handlers: Record<string, Handler>,
   ): Disposer {
     this.live(i, s, true);
     const d = detach(input);
@@ -1167,10 +1164,12 @@ export class Host {
       scope: s,
       descriptor: bound,
       handlers: Object.freeze({ ...handlers }),
+      provider: new ContractProvider(bound, handlers),
       live: false,
     };
     const disposer = this.own(i, s, async () => {
       i.staged = i.staged.filter((x) => x !== r);
+      r.provider?.close();
       this.remove(r);
     });
     if (i.state === 'ACTIVATING') i.staged.push(r);
@@ -1188,7 +1187,47 @@ export class Host {
     grant: BoundGrant,
   ): BoundCapability {
     req = freeze(detach(req));
-    const expectedScope = s.generation;
+    const generation = s.generation;
+    check(r.provider, 'FAILED_PRECONDITION');
+    const session = new ContractSession(r.provider, {
+      caller: { principal: i.pkg.manifest.id, instanceId: i.id, scope: s.id },
+      scopeGeneration: generation,
+      maxCallMs: this.#config.maxCallMs,
+      maxPending: this.#config.maxCalls,
+      streamCapacity: this.#config.eventQueue,
+      now: this.#now,
+      authorize: (operation?: string) => {
+        this.live(i, s);
+        check(s.generation === generation, 'FAILED_PRECONDITION');
+        check(r.live && r.instance.state === 'ACTIVE', 'UNAVAILABLE');
+        this.fresh(r.instance);
+        if (operation)
+          check(req.operations.includes(operation), 'PERMISSION_DENIED');
+        this.authorize(
+          i,
+          s,
+          'acap.grant/v1',
+          req.capabilityId,
+          operation ? [operation] : req.operations,
+          grant,
+        );
+      },
+      admit: (cancel) => {
+        check(this.#pending.size < this.#config.maxCalls, 'RESOURCE_EXHAUSTED');
+        this.record(i.pkg.manifest.id, req.capabilityId, s.id, 'ALLOW', 'CALL');
+        const pending: Pending = {
+          caller: i,
+          provider: r.instance,
+          scope: s,
+          cancel,
+        };
+        this.#pending.add(pending);
+        return () => {
+          this.#pending.delete(pending);
+        };
+      },
+      track: <T>(promise: Promise<T>) => this.track(r.instance, promise),
+    });
     return Object.freeze({
       descriptorDigest: digest(r.descriptor),
       negotiatedFeatures: Object.freeze(
@@ -1197,140 +1236,10 @@ export class Host {
           .sort(),
       ),
       call: (operation: string, input: Value, options: CallOptions) =>
-        this.call(
-          i,
-          s,
-          expectedScope,
-          r,
-          req,
-          grant,
-          operation,
-          input,
-          options,
-        ),
+        session.call(operation, input, options),
+      stream: (operation: string, input: Value, options: CallOptions) =>
+        session.openStream(operation, input, options),
     });
-  }
-  private async call(
-    i: Instance,
-    s: Scope,
-    generation: number,
-    r: Registration,
-    req: Requirement,
-    g: BoundGrant,
-    operation: string,
-    input: Value,
-    options: CallOptions,
-  ): Promise<Value> {
-    this.live(i, s);
-    check(generation === s.generation, 'FAILED_PRECONDITION');
-    check(r.live && r.instance.state === 'ACTIVE', 'UNAVAILABLE');
-    this.fresh(r.instance);
-    check(req.operations.includes(operation), 'PERMISSION_DENIED');
-    this.authorize(i, s, 'acap.grant/v1', req.capabilityId, [operation], g);
-    check(
-      options &&
-        Object.keys(options).every((k) =>
-          ['deadlineMs', 'signal', 'idempotencyKey'].includes(k),
-        ),
-    );
-    check(Number.isSafeInteger(options.deadlineMs));
-    check(options.idempotencyKey === undefined, 'INVALID_ARGUMENT');
-    check(
-      options.signal === undefined || options.signal instanceof AbortSignal,
-    );
-    const op = r.descriptor.operations.find((x) => x.name === operation);
-    check(op, 'NOT_FOUND');
-    const body = detach(input);
-    payload(op.input, body);
-    const parent = this.#parents.getStore();
-    const deadline = Math.min(
-      options.deadlineMs,
-      this.#now() + this.#config.maxCallMs,
-      parent?.deadlineMs ?? Infinity,
-    );
-    check(deadline > this.#now(), 'DEADLINE_EXCEEDED');
-    check(!options.signal?.aborted && !parent?.signal.aborted, 'CANCELLED');
-    check(this.#pending.size < this.#config.maxCalls, 'RESOURCE_EXHAUSTED');
-    this.record(i.pkg.manifest.id, req.capabilityId, s.id, 'ALLOW', 'CALL');
-    const controller = new AbortController();
-    let timer: ReturnType<typeof setTimeout> | undefined;
-    let settled = false;
-    let pending: Pending;
-    let rejectExternal: (e: AcapError) => void = () => {};
-    const cancel = (code: ErrorCode) => {
-      if (!settled) {
-        settled = true;
-        controller.abort(code);
-        rejectExternal(new AcapError(code));
-      }
-    };
-    const abort = () => cancel('CANCELLED');
-    const cancelled = new Promise<never>((_, reject) => {
-      rejectExternal = reject;
-    });
-    pending = { caller: i, provider: r.instance, scope: s, cancel };
-    this.#pending.add(pending);
-    options.signal?.addEventListener('abort', abort, { once: true });
-    parent?.signal.addEventListener('abort', abort, { once: true });
-    timer = setTimeout(
-      () => cancel('DEADLINE_EXCEEDED'),
-      deadline - this.#now(),
-    );
-    try {
-      const result = await Promise.race([
-        cancelled,
-        this.track(
-          r.instance,
-          this.#parents.run(
-            { deadlineMs: deadline, signal: controller.signal },
-            async () => {
-              check(!settled, 'CANCELLED');
-              check(this.#now() < deadline, 'DEADLINE_EXCEEDED');
-              this.authorize(
-                i,
-                s,
-                'acap.grant/v1',
-                req.capabilityId,
-                [operation],
-                g,
-              );
-              return r.handlers[operation]!(
-                body,
-                Object.freeze({
-                  requestId: randomUUID(),
-                  deadlineMs: deadline,
-                  signal: controller.signal,
-                  caller: freeze({
-                    principal: i.pkg.manifest.id,
-                    instanceId: i.id,
-                    scope: s.id,
-                  }),
-                }),
-              );
-            },
-          ),
-        ),
-      ]);
-      check(!settled, 'CANCELLED');
-      this.live(i, s);
-      check(r.live && r.instance.state === 'ACTIVE', 'UNAVAILABLE');
-      this.fresh(r.instance);
-      this.authorize(i, s, 'acap.grant/v1', req.capabilityId, [operation], g);
-      check(this.#now() < deadline, 'DEADLINE_EXCEEDED');
-      const value = detach(result);
-      payload(op.output, value);
-      settled = true;
-      return value;
-    } catch (e) {
-      settled = true;
-      controller.abort(normalized(e).code);
-      throw normalized(e);
-    } finally {
-      if (timer) clearTimeout(timer);
-      options.signal?.removeEventListener('abort', abort);
-      parent?.signal.removeEventListener('abort', abort);
-      this.#pending.delete(pending);
-    }
   }
   private async secret(i: Instance, s: Scope, ref: string): Promise<string> {
     this.live(i, s, true);
