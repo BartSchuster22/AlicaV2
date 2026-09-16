@@ -7,8 +7,9 @@
 | G2 | Owner explicitly authorized progression under the manual control alternative | G2-OWNER-DISPOSITION.md; host/CI evidence attributed to owner outputs |
 | G3 | ACCEPTED by owner for candidate 9323a5c | G3-OWNER-ACCEPTANCE.md; exact-candidate foundation CI success confirmed by owner; documented limitations retained |
 | G4 | ACCEPTED by owner for a0bd08d | G4-OWNER-ACCEPTANCE.md; exact-candidate foundation success confirmed by owner |
-| G5 | Technical acceptance candidate; exact-candidate CI and owner acceptance pending | G5.md; SDK/testkit API snapshots; external tutorial and execution evidence |
-| G6–G8 | NOT STARTED | No IPC/process isolation, service integration or installer/recovery qualification claimed |
+| G5 | ACCEPTED by owner for db74818 | G5-OWNER-ACCEPTANCE.md; exact-candidate foundation success confirmed by owner |
+| G6 | IPC baseline approved for design preparation; ADR and frame-schema approval pending | G6-BASELINE-APPROVAL.md; no IPC implementation or qualification claimed |
+| G7–G8 | NOT STARTED | No service integration or installer/recovery qualification claimed |
 
 GitHub stays private. Required-check enforcement is unavailable on the current plan.
 The approved process is clean-checkout checks, successful CI for the exact candidate,
