@@ -1,0 +1,387 @@
+{
+  "technicalStatus": "PASS",
+  "gateExitStatus": "OWNER_ACCEPTANCE_PENDING",
+  "command": "python3 tests/reference/verify_g0.py --online",
+  "completedUtc": "2026-09-16T12:47:03.718992+00:00",
+  "checks": [
+    {
+      "check": "pinned-reference-metadata",
+      "status": "PASS",
+      "detail": 43
+    },
+    {
+      "check": "preserved-owner-source-hashes",
+      "status": "PASS",
+      "detail": 2
+    },
+    {
+      "check": "manifest-snapshot-hash",
+      "status": "PASS",
+      "detail": "e45624bd2c123405ca407f12755a71874c36d994330d419b4a4d46a7443b7c18"
+    },
+    {
+      "check": "distribution-inventory-and-declared-artifact-bindings",
+      "status": "PASS",
+      "detail": 12
+    },
+    {
+      "check": "manifest-bound-sbom-provenance-hashes",
+      "status": "PASS",
+      "detail": 24
+    },
+    {
+      "check": "g0-deliverables-and-adr-register",
+      "status": "PASS",
+      "detail": 12
+    },
+    {
+      "check": "repository-reference-design-only-boundary",
+      "status": "PASS",
+      "detail": {
+        "filesChecked": 73,
+        "limitations": "Category/UTF-8/private-key-marker checks; not a semantic detector of arbitrary data or comprehensive security scan. No production source tree exists."
+      }
+    },
+    {
+      "check": "independent-online-reretrieval",
+      "status": "PASS",
+      "detail": [
+        {
+          "path": ".github/workflows/d6-independent-acceptance.yml",
+          "sha256": "2f1d933bc1d34f7ac340f399300fe8c3ffc2ffd71a6641f04dc642cd5549988c",
+          "bytes": 11174,
+          "retrievedUtc": "2026-09-16T12:47:03.256048+00:00"
+        },
+        {
+          "path": "README.md",
+          "sha256": "e94d9a9f7d4a5ecea0ee4412b3f7de8729a2c48c76c3da9fd4417a62d0e7548b",
+          "bytes": 1130,
+          "retrievedUtc": "2026-09-16T12:47:03.256447+00:00"
+        },
+        {
+          "path": "SECURITY.md",
+          "sha256": "cec5814d6b19cdb77214971c6981c308798e32644ee1894a43e2183897595ada",
+          "bytes": 1389,
+          "retrievedUtc": "2026-09-16T12:47:03.221169+00:00"
+        },
+        {
+          "path": "SUPPORT.md",
+          "sha256": "12836384a02127053b1ee0303fd245831852eb3292155d16a92260623cfc5165",
+          "bytes": 1534,
+          "retrievedUtc": "2026-09-16T12:47:03.258301+00:00"
+        },
+        {
+          "path": "docs/D6-INDEPENDENT-ACCEPTANCE.md",
+          "sha256": "b7158382b243a1c374e2e7d3cecb7f8fd9c7c29e3e4be2e95c75a4e977ba3b53",
+          "bytes": 892,
+          "retrievedUtc": "2026-09-16T12:47:03.222665+00:00"
+        },
+        {
+          "path": "docs/DATA-PRIVACY.md",
+          "sha256": "7ac25581f147570d505b894e6182c7c53db283bfb66303a594c8f5689fecd2e9",
+          "bytes": 1369,
+          "retrievedUtc": "2026-09-16T12:47:03.257403+00:00"
+        },
+        {
+          "path": "docs/OPERATOR.md",
+          "sha256": "0b38bbae321533208a10c621f7560396f7f8144573e3aa0fc6b747adfe55cbe4",
+          "bytes": 1385,
+          "retrievedUtc": "2026-09-16T12:47:03.276120+00:00"
+        },
+        {
+          "path": "release/d6-candidate/acceptance-matrix.json",
+          "sha256": "368c8e039a15af642d6b017ba62bff43f996254563c3adfe9cb79cce69a9b3ea",
+          "bytes": 1272,
+          "retrievedUtc": "2026-09-16T12:47:03.280020+00:00"
+        },
+        {
+          "path": "release/d6-candidate/evidence/provenance/ainba-anchor.intoto.json",
+          "sha256": "dd3c42f816718df732fdc724e9f795c7e6dd28efa5582204d702d9b08a12507e",
+          "bytes": 1271,
+          "retrievedUtc": "2026-09-16T12:47:03.308887+00:00"
+        },
+        {
+          "path": "release/d6-candidate/evidence/provenance/alica-runtime.intoto.json",
+          "sha256": "e2b4c0d492f8e8541e318cbadf4b02ed46e3f1bd8d87f2ffcd1d618f1d0e7265",
+          "bytes": 1280,
+          "retrievedUtc": "2026-09-16T12:47:03.309643+00:00"
+        },
+        {
+          "path": "release/d6-candidate/evidence/provenance/alicactl.intoto.json",
+          "sha256": "1e474a13071fe0c1a64277e0517a7b4fbf97c6565f63057b66de673f2e43f527",
+          "bytes": 1207,
+          "retrievedUtc": "2026-09-16T12:47:03.311418+00:00"
+        },
+        {
+          "path": "release/d6-candidate/evidence/provenance/caddy.intoto.json",
+          "sha256": "9a83f532815a0e4b63931666e8fc9596b2176e4c428efff30595951fa9bd36cd",
+          "bytes": 1254,
+          "retrievedUtc": "2026-09-16T12:47:03.313300+00:00"
+        },
+        {
+          "path": "release/d6-candidate/evidence/provenance/doghouse-node.intoto.json",
+          "sha256": "8be84687bc485f48ed938955dbadc805dffca3ab74e2ca4b03ad876430c7f700",
+          "bytes": 1272,
+          "retrievedUtc": "2026-09-16T12:47:03.329819+00:00"
+        },
+        {
+          "path": "release/d6-candidate/evidence/provenance/herman-runtime.intoto.json",
+          "sha256": "6ddb8ca6be63356c04ca062f3c5338ee4cf7d50900586704c260abaa3cb962a5",
+          "bytes": 1281,
+          "retrievedUtc": "2026-09-16T12:47:03.332050+00:00"
+        },
+        {
+          "path": "release/d6-candidate/evidence/provenance/keycloak.intoto.json",
+          "sha256": "ad869eec4362faf86a063760924e31faecc32d2d68a750b4294a0f271528b35f",
+          "bytes": 1263,
+          "retrievedUtc": "2026-09-16T12:47:03.364167+00:00"
+        },
+        {
+          "path": "release/d6-candidate/evidence/provenance/memory-v4.intoto.json",
+          "sha256": "cccb052dc229e2ece9616c3a2e0d0e178b1861262b78412e27dbc5753cb41d21",
+          "bytes": 1266,
+          "retrievedUtc": "2026-09-16T12:47:03.365655+00:00"
+        },
+        {
+          "path": "release/d6-candidate/evidence/provenance/operations-jobs.intoto.json",
+          "sha256": "9ef3b3621155a81f67b7512c22ac130270cb053922394a18fe9a7afc647081b4",
+          "bytes": 1214,
+          "retrievedUtc": "2026-09-16T12:47:03.367144+00:00"
+        },
+        {
+          "path": "release/d6-candidate/evidence/provenance/postgresql.intoto.json",
+          "sha256": "e9b9935a13daeefef2ec859f31419789e4cbecb45a9171da581f6985969070cd",
+          "bytes": 1265,
+          "retrievedUtc": "2026-09-16T12:47:03.371437+00:00"
+        },
+        {
+          "path": "release/d6-candidate/evidence/provenance/unify-core.intoto.json",
+          "sha256": "a763656dd1be9a2e325d83ef3e4a1f32505a6b2275eb4a8a343701c4ec3585f7",
+          "bytes": 1269,
+          "retrievedUtc": "2026-09-16T12:47:03.383147+00:00"
+        },
+        {
+          "path": "release/d6-candidate/evidence/provenance/uniui.intoto.json",
+          "sha256": "9a2dce2c30e58972d64146be5ad2d33fb46dd0e335f0120da737d37d4c649b72",
+          "bytes": 1254,
+          "retrievedUtc": "2026-09-16T12:47:03.387599+00:00"
+        },
+        {
+          "path": "release/d6-candidate/evidence/sbom/ainba-anchor.cdx.json",
+          "sha256": "3bf8bd0bd1363873162cb4ff472d8319a295fb6128f326c78dc17e79e074a965",
+          "bytes": 498351,
+          "retrievedUtc": "2026-09-16T12:47:03.470662+00:00"
+        },
+        {
+          "path": "release/d6-candidate/evidence/sbom/alica-runtime.cdx.json",
+          "sha256": "66cace8be5a6c4e5f74a50f7f6b93f731d72ff19f46758fcacad2106457c7bb4",
+          "bytes": 1158,
+          "retrievedUtc": "2026-09-16T12:47:03.419468+00:00"
+        },
+        {
+          "path": "release/d6-candidate/evidence/sbom/alicactl.cdx.json",
+          "sha256": "01e2e4df865875bbd5c25af119f4f0bac8881ef6f5372a585a78e6f2ae14c059",
+          "bytes": 2933,
+          "retrievedUtc": "2026-09-16T12:47:03.424200+00:00"
+        },
+        {
+          "path": "release/d6-candidate/evidence/sbom/caddy.cdx.json",
+          "sha256": "0759160ce74b72040f2bdfb7d8d53ea3bba9d83066ef7f3ab9170593f8124dd0",
+          "bytes": 285082,
+          "retrievedUtc": "2026-09-16T12:47:03.471990+00:00"
+        },
+        {
+          "path": "release/d6-candidate/evidence/sbom/doghouse-node.cdx.json",
+          "sha256": "3bf8bd0bd1363873162cb4ff472d8319a295fb6128f326c78dc17e79e074a965",
+          "bytes": 498351,
+          "retrievedUtc": "2026-09-16T12:47:03.492380+00:00"
+        },
+        {
+          "path": "release/d6-candidate/evidence/sbom/herman-runtime.cdx.json",
+          "sha256": "66cace8be5a6c4e5f74a50f7f6b93f731d72ff19f46758fcacad2106457c7bb4",
+          "bytes": 1158,
+          "retrievedUtc": "2026-09-16T12:47:03.441866+00:00"
+        },
+        {
+          "path": "release/d6-candidate/evidence/sbom/keycloak.cdx.json",
+          "sha256": "beaaa599ef94ad711302a006e146a50eb024eac4e0c3a13b8d80b47c173ea860",
+          "bytes": 2210774,
+          "retrievedUtc": "2026-09-16T12:47:03.560932+00:00"
+        },
+        {
+          "path": "release/d6-candidate/evidence/sbom/memory-v4.cdx.json",
+          "sha256": "2507127c9b5015f75d36a00fd441f8f981a590594f67725401ff2919604a5934",
+          "bytes": 1009320,
+          "retrievedUtc": "2026-09-16T12:47:03.547415+00:00"
+        },
+        {
+          "path": "release/d6-candidate/evidence/sbom/operations-jobs.cdx.json",
+          "sha256": "01e2e4df865875bbd5c25af119f4f0bac8881ef6f5372a585a78e6f2ae14c059",
+          "bytes": 2933,
+          "retrievedUtc": "2026-09-16T12:47:03.498707+00:00"
+        },
+        {
+          "path": "release/d6-candidate/evidence/sbom/postgresql.cdx.json",
+          "sha256": "61baeea8565c782a126270d2326accd3c15d50fb0d429fbbb8604c8a560ee34d",
+          "bytes": 257659,
+          "retrievedUtc": "2026-09-16T12:47:03.571908+00:00"
+        },
+        {
+          "path": "release/d6-candidate/evidence/sbom/unify-core.cdx.json",
+          "sha256": "3bf8bd0bd1363873162cb4ff472d8319a295fb6128f326c78dc17e79e074a965",
+          "bytes": 498351,
+          "retrievedUtc": "2026-09-16T12:47:03.584016+00:00"
+        },
+        {
+          "path": "release/d6-candidate/evidence/sbom/uniui.cdx.json",
+          "sha256": "c6d612bf8c031806508d1d345baa03a0db6225b3a1e449dc3367d412ced46324",
+          "bytes": 366815,
+          "retrievedUtc": "2026-09-16T12:47:03.597121+00:00"
+        },
+        {
+          "path": "release/d6-candidate/manifest.json",
+          "sha256": "e45624bd2c123405ca407f12755a71874c36d994330d419b4a4d46a7443b7c18",
+          "bytes": 28295,
+          "retrievedUtc": "2026-09-16T12:47:03.560072+00:00"
+        },
+        {
+          "path": "release/d6-candidate/manifest.signature.json",
+          "sha256": "e49c06d11c45c54aba7788caea03a27421b1f23b44d35f2c868144a918a5e529",
+          "bytes": 325,
+          "retrievedUtc": "2026-09-16T12:47:03.602240+00:00"
+        },
+        {
+          "path": "release/d6-candidate/public-key.json",
+          "sha256": "13997de5c1a62066bfd35da5c2f5227a3f89d54f35077732b1bb42aeefa86327",
+          "bytes": 177,
+          "retrievedUtc": "2026-09-16T12:47:03.614891+00:00"
+        },
+        {
+          "path": "release/d6-candidate/publication-source-map.json",
+          "sha256": "e845dfd50bf70c67da5223eb343cb2099805a42abcfdf3a9ccd3c827bdf9ce92",
+          "bytes": 2765,
+          "retrievedUtc": "2026-09-16T12:47:03.626607+00:00"
+        },
+        {
+          "path": "release/d6-candidate/root.json",
+          "sha256": "6bcbf874c47b95181759d834e314ec2292641b96684462dbd6db9d243fbe484a",
+          "bytes": 3627,
+          "retrievedUtc": "2026-09-16T12:47:03.629159+00:00"
+        },
+        {
+          "path": "release/d6-candidate/snapshot.json",
+          "sha256": "2904711ba59a44f5ba5f45ce74dc009bf3340b1b4b237512196a3c6392b6d899",
+          "bytes": 548,
+          "retrievedUtc": "2026-09-16T12:47:03.641402+00:00"
+        },
+        {
+          "path": "release/d6-candidate/targets.json",
+          "sha256": "7406ba4b529bd85831f663c0c0846bcd746ac374c5f91f75dc76dd033c432210",
+          "bytes": 1060,
+          "retrievedUtc": "2026-09-16T12:47:03.653349+00:00"
+        },
+        {
+          "path": "release/d6-candidate/timestamp.json",
+          "sha256": "d85a8095a2ee409a487ff65aa72c1d3664b7967494611652552f10f9bfc0dde5",
+          "bytes": 549,
+          "retrievedUtc": "2026-09-16T12:47:03.662084+00:00"
+        },
+        {
+          "path": "scripts/build-d6-candidate.py",
+          "sha256": "e68ad54cd85b386566eb39f02a9cfbd686288f5eb0d20c568203200af78c0478",
+          "bytes": 9993,
+          "retrievedUtc": "2026-09-16T12:47:03.669652+00:00"
+        },
+        {
+          "path": "scripts/build-d6-offline-bundle.sh",
+          "sha256": "900ae12209a0c5d49f49f50d5e7e452468c4a99419b85ace00ae00f6365d7559",
+          "bytes": 4014,
+          "retrievedUtc": "2026-09-16T12:47:03.680247+00:00"
+        },
+        {
+          "path": "scripts/d6-independent-operator-acceptance.sh",
+          "sha256": "5236d621f0781b430573fc25d309f80a1945eda9945dcec94005578ddf4f7586",
+          "bytes": 14136,
+          "retrievedUtc": "2026-09-16T12:47:03.685921+00:00"
+        }
+      ]
+    }
+  ],
+  "inputSha256": {
+    "specs/ACAP-SECURITY-v1.md": "2ede1039e43e3045bfd0c33c0fbe5506f82933a941ca06294368e24843e96461",
+    "specs/ALICA-PROFILE-v1.md": "27f61cfad4158c256afe2ff2d8f84e2316f93aaa02b8a2a7d749a5b9dea91d8b",
+    "specs/ALICA-TRUST-POLICY-v1.md": "9faa764f302900d94fc2520fb758e7f8ff35f24eaa7935e767c6eeef16587541",
+    "specs/ALICA-BUNDLE-v1.md": "5002a59cc5f388a407d14de1c1c2a67f9f0ec6d27adcf41c55a6196fcacaa56b",
+    "specs/ACAP-ERRORS-v1.md": "99df1fe69e5c98bd92b15ca5f7b0d385047f4cfaa1103a8ac49f962c3e3b02df",
+    "specs/ALICA-SDK-CONFORMANCE-v1.md": "fa89183bcfd8c99f0ca2bd4d7d795f2027e06e3fa945ae1e7c1acbf2f6b9b621",
+    "specs/ACAP-TRANSPORT-INPROC-v1.md": "8b6de52376ea92d616f6c1266840bcc2fbcdadb2b6a5f15f53fe9d5b5b61f2d5",
+    "specs/ACAP-SCOPES-v1.md": "a25790306ff1cd425cc4f46e83af104c825709d08c85261e8cda846d4a73a706",
+    "specs/ALICA-PLUGIN-MANIFEST-v1.md": "38c130aea687af9b21ee76fb52721cd51936a2fd414778a6dec7c772095535e2",
+    "specs/ACAP-TRANSPORT-IPC-v1.md": "df12b5d84d76a69d119e8eea00e92254c46570802cbe8ca2e12bc6e570bcfab7",
+    "specs/README.md": "4e825968021ade69c2bad5e3a9e073fd7fb7d2b534c7ce3ca7eb18e0f2622834",
+    "specs/ALICA-KERNEL-API-v1.md": "52db5c2aa16df6891941a51c09ee45c67724834bb636811e3d90c2e5edfde7cb",
+    "specs/ACAP-EVENTS-v1.md": "a9bc196f673be3c794256409fcd88872dc75fb4e8c91d1659a9aeacbbaa5ddf2",
+    "specs/ACAP-CORE-v1.md": "6705c0c6c479a4c56eabb4f78a4e382c2c024752df091f80e1d045c14e22d9fc",
+    "specs/examples/event.valid.json": "6598ae7441ecafe0f037d503299a4ef8849a9b8240856dcdc9fea3a790b48597",
+    "specs/examples/grant.valid.json": "cac987c1b71a1ef144c00f860fb5cbc457642a524652eab9cff6fb3ec1ba0d5e",
+    "specs/examples/bundle.valid.json": "b83d6fd046b4954d2ce78efd94173b188893f2deb0d2a0d827e7840932e23c26",
+    "specs/examples/error.valid.json": "32edd4d3fdadabba0cfb051b3e39dce06a88745b7a90286af896b7d4c1583c2c",
+    "specs/examples/call.valid.json": "199289c34d233fd19c8be212a5d55e23705f53b0c6d4420f05016c9f99e165ed",
+    "specs/examples/resolution-lock.valid.json": "2edcf211d68418300f7cbc84abc073c924292073221d35295ee1c4dab26a2fd8",
+    "specs/examples/README.md": "8f51511af0f8fe76d7ca4da0134a1e7334e161674ad182cbc9c83eefba784916",
+    "specs/examples/trust-policy.valid.json": "171af24dde7e6bac8e614d4a5acb4db75158dc3b202f18d09b2628843e251fa0",
+    "specs/examples/plugin.valid.json": "5c65f4193f64dd44fffca63f3d8d300cc705d9f6fdf0a7f182d773e7e3c6b376",
+    "specs/examples/signature.valid.json": "50ca3aac7d8d3f2f11da29ebf50de2295283e73b25da731d43f888b61f9882f8",
+    "specs/examples/profile.valid.json": "6f3fd4d614cca99d35a43876624ee524c38dd4e2eef9807dc4821d86b81b9b67",
+    "specs/examples/capability.valid.json": "069cff3007254f9a32372bc8352dc712cf315e88f4167adb75621874b32fbe06",
+    "specs/schemas/plugin.schema.json": "15fc77901055b3919ddfa819a6a8cd5877916e2c374da0c9b8c37d7a83f98e78",
+    "specs/schemas/grant.schema.json": "88e43597037757c936c663add600062d9b2f556837c95b51defbe4e7400119e3",
+    "specs/schemas/signature.schema.json": "e4e5e6022e4899583c152f66e70c5521efc35b95c97027c8ffb214a6aa559dc3",
+    "specs/schemas/bundle.schema.json": "e2ab69db5d00a430bd6b2988710550425a34049c5b10e66c56520ecd2aa86fc8",
+    "specs/schemas/call.schema.json": "25df22d8f6a5b5703e7aae83a1069603888000ac9dd5a21965120bb04e8abf19",
+    "specs/schemas/capability.schema.json": "bebe14e4b118350ed87870935cb4865928916ca5cb04c0b90500c8be4184cbc5",
+    "specs/schemas/trust-policy.schema.json": "c926ed44f5df9613b6999bd144091163f7c674e645a0029fd51d9d5efc303bd9",
+    "specs/schemas/error.schema.json": "19e33e88b2e3c155d3bcef78efbfedcaaa87d5d3e9574acb12b6893b1692ae79",
+    "specs/schemas/resolution-lock.schema.json": "7bf0fef078b36638c49aa18b712271e8c2d381ffd3c0242f5977fb514d27bde7",
+    "specs/schemas/event.schema.json": "f722da0b4ed0cb58d1a3f505b02da7c4d00390f2f4e6a7f53febb9e98595ef1d",
+    "specs/schemas/profile.schema.json": "94a639e0f68883d50dde9120546fcf127b4473cb299302ae27164c91a53979db",
+    "tests/design/test_specifications.py": "dc7382f5bb21b1b897836ca18711f8374ce381a06cfa01ff3e59aef492055f1e",
+    "tests/reference/verify_g0.py": "14942a5cc41863556113164fc9db124ebd1c00a9b7c4ee117c7697251491db71",
+    "docs/gates/G1-REVIEW.md": "652bbce1757988bd161afb6ddd62b9780a0536da64a684a265af6aa7ff52ddf2",
+    "docs/gates/STATUS.md": "0c353ebd2afc3715f0aaab620d732eebb89bc67165a7cb5bf49a0afd17145f56",
+    "docs/gates/G0.md": "98c0a14de92b18bc4c2889f3c75ec404e9c891551f0a6e29dcd3cb550b229d17",
+    "docs/gates/G1.md": "dece808ae949d7912bf5c0b43f9607a0634052a04f467064ad5a3c6444517561",
+    "docs/decisions/IMPLEMENTATION-AUTHORIZATION.md": "85857de4a108a9e73207e5889b7fba063581994be8e99a0583ef99a4f263a832",
+    "docs/decisions/G0-SCOPE-AND-INPUTS.md": "a7aa10084a3b928a797ae889bd473b3c9c5e4f990b95cb9186d30be7ee838cef",
+    "docs/adr/ADR-009.md": "2c64b98ae47018ba62a56d17c7b9386ee88705f42c6b8fe4645b031def0f91cb",
+    "docs/adr/ADR-005.md": "e48a142b860a1b4f7d4a4ea304943aee5eda9d430424faea86039133dff339d0",
+    "docs/adr/ADR-012.md": "59d8405ef95402cd9077d5e2bc95177805b96e211ce9ae6b77c4cb2e50f4b45b",
+    "docs/adr/ADR-004.md": "1d44bd71535ac53c2425a4189f6b4a68d48082a8bbe83c7fcb75b98e1612406c",
+    "docs/adr/ADR-011.md": "727564d4ca5ec66b536b91cafd70dc9fb73dc89ca3dacb9e78c455c979cb1268",
+    "docs/adr/ADR-003.md": "ceba6a62e613b87e22262f3f2eaddda9fc6a005172e806d6ee4ccda711f21e28",
+    "docs/adr/ADR-006.md": "6ff919cdea2e4653a39f785bb5713edd3d1d29ad47cf2eeb5fb237b540fecf5d",
+    "docs/adr/ADR-010.md": "380c9ccf71c4dca8a88b0f2638377d4813b39d5aad246757903fad2f3d62fbcd",
+    "docs/adr/ADR-007.md": "5c25683bc6e09c439f22dc70cf665028fbc5acba60f4434760501876ce6e8fb8",
+    "docs/adr/ADR-002.md": "38ded8189caf95c1a8f0a0b7b2c9909f8c89011f7cd19adc977dee32766d9a75",
+    "docs/adr/README.md": "873d95c5555a4976e569fda32525ce45c21e06649b3f2a9fb9c6da1749bb2fa5",
+    "docs/adr/ADR-001.md": "01e1f53c23573225c08a04ffeb198d69120e52c0b1357c4fca6ea80e52265659",
+    "docs/adr/ADR-008.md": "512e3b63e246da0bd84cc0d12be52a42507b8d81ba1d654bd8a76b2ab5854d0e",
+    "docs/planning/ALICA_V2_G1_Normative_Review_Package.md": "3da6828c2f3ada516d48f8869de1c2a79d88b9c57b7720d64557a1d7b6bed31a",
+    "docs/planning/ALICA_V2_Assessment_and_Step1_Building_Plan.md": "6959c48b8f128fdf266abdb570506d7173d5597c5af5e1379244c4d0924e78fb",
+    "docs/architecture/THREAT-MODEL.md": "b99755061016237bed6bf563c428a71acaaaccd9527c62d6dd55308a449c763c",
+    "docs/references/v1-artifact-index.json": "f51a49f769b785a6859f7b285b4265b07fe75672ccaa6ed74010740e50569504",
+    "docs/references/v1-baseline.lock.json": "0c102d63cffa3db5af573ab1ea83615482dc4abb3a885e57342ab872acc0c618",
+    "docs/references/v1-manifest.reference.json": "e45624bd2c123405ca407f12755a71874c36d994330d419b4a4d46a7443b7c18",
+    "docs/references/user-source-provenance.json": "ea291201be16c46d32dbb50b49e45248b6121b73a1c2001199961ad856fe219f",
+    "docs/references/ALICA_V2_Kernel_ACAP_SDK_Step1_Building_Plan.original.md": "d0286a3f861f60ef84cff94eb7fc82422aff418ce3ff98c11850114fb93ad12f",
+    "docs/references/ALICA_V2_Initial_Project_Directive.original.txt": "375d7d0a66b3eb176de8676862b59add1f56f2842bbd1d5a34a6b6f73f92132e",
+    "docs/references/README.md": "afb735759e17ca31d84c030426d60e27afd1a57c0f4ee62f4571e8d8fab444a8",
+    "docs/references/v1-inventory.json": "c7fb89d7081639719a1fef231003ceebaa6a135c7cbaa5f7d41003f3038e698f"
+  },
+  "limitations": [
+    "No V1 runtime/OCI binaries executed or reconstructed",
+    "No signature-chain verification",
+    "No production state inspected/copied",
+    "Unknown owner/source/operational facts explicitly retained"
+  ]
+}

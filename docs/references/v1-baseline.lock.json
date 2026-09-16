@@ -4,82 +4,362 @@
   "releaseVersion": "1.0.0-d6.independent-candidate.1",
   "files": [
     {
+      "path": ".github/workflows/d6-independent-acceptance.yml",
+      "url": "https://raw.githubusercontent.com/BartSchuster22/Alica-DSH/d3feafa9c03a0175ae3d702413f97e0e8f1634c9/.github/workflows/d6-independent-acceptance.yml",
+      "bytes": 11174,
+      "sha256": "2f1d933bc1d34f7ac340f399300fe8c3ffc2ffd71a6641f04dc642cd5549988c",
+      "lastVerifiedRetrievalUtc": "2026-09-16T12:45:53.885030+00:00",
+      "originalRetrievalUtc": null,
+      "originalRetrievalNote": "Not recorded by initial pass; not retrospectively invented."
+    },
+    {
       "path": "README.md",
       "url": "https://raw.githubusercontent.com/BartSchuster22/Alica-DSH/d3feafa9c03a0175ae3d702413f97e0e8f1634c9/README.md",
       "bytes": 1130,
-      "sha256": "e94d9a9f7d4a5ecea0ee4412b3f7de8729a2c48c76c3da9fd4417a62d0e7548b"
+      "sha256": "e94d9a9f7d4a5ecea0ee4412b3f7de8729a2c48c76c3da9fd4417a62d0e7548b",
+      "lastVerifiedRetrievalUtc": "2026-09-16T12:45:53.598171+00:00",
+      "originalRetrievalUtc": null,
+      "originalRetrievalNote": "Not recorded by initial pass; not retrospectively invented."
     },
     {
       "path": "SECURITY.md",
       "url": "https://raw.githubusercontent.com/BartSchuster22/Alica-DSH/d3feafa9c03a0175ae3d702413f97e0e8f1634c9/SECURITY.md",
       "bytes": 1389,
-      "sha256": "cec5814d6b19cdb77214971c6981c308798e32644ee1894a43e2183897595ada"
+      "sha256": "cec5814d6b19cdb77214971c6981c308798e32644ee1894a43e2183897595ada",
+      "lastVerifiedRetrievalUtc": "2026-09-16T12:45:53.634348+00:00",
+      "originalRetrievalUtc": null,
+      "originalRetrievalNote": "Not recorded by initial pass; not retrospectively invented."
     },
     {
       "path": "SUPPORT.md",
       "url": "https://raw.githubusercontent.com/BartSchuster22/Alica-DSH/d3feafa9c03a0175ae3d702413f97e0e8f1634c9/SUPPORT.md",
       "bytes": 1534,
-      "sha256": "12836384a02127053b1ee0303fd245831852eb3292155d16a92260623cfc5165"
-    },
-    {
-      "path": "docs/OPERATOR.md",
-      "url": "https://raw.githubusercontent.com/BartSchuster22/Alica-DSH/d3feafa9c03a0175ae3d702413f97e0e8f1634c9/docs/OPERATOR.md",
-      "bytes": 1385,
-      "sha256": "0b38bbae321533208a10c621f7560396f7f8144573e3aa0fc6b747adfe55cbe4"
-    },
-    {
-      "path": "docs/DATA-PRIVACY.md",
-      "url": "https://raw.githubusercontent.com/BartSchuster22/Alica-DSH/d3feafa9c03a0175ae3d702413f97e0e8f1634c9/docs/DATA-PRIVACY.md",
-      "bytes": 1369,
-      "sha256": "7ac25581f147570d505b894e6182c7c53db283bfb66303a594c8f5689fecd2e9"
+      "sha256": "12836384a02127053b1ee0303fd245831852eb3292155d16a92260623cfc5165",
+      "lastVerifiedRetrievalUtc": "2026-09-16T12:45:53.601015+00:00",
+      "originalRetrievalUtc": null,
+      "originalRetrievalNote": "Not recorded by initial pass; not retrospectively invented."
     },
     {
       "path": "docs/D6-INDEPENDENT-ACCEPTANCE.md",
       "url": "https://raw.githubusercontent.com/BartSchuster22/Alica-DSH/d3feafa9c03a0175ae3d702413f97e0e8f1634c9/docs/D6-INDEPENDENT-ACCEPTANCE.md",
       "bytes": 892,
-      "sha256": "b7158382b243a1c374e2e7d3cecb7f8fd9c7c29e3e4be2e95c75a4e977ba3b53"
+      "sha256": "b7158382b243a1c374e2e7d3cecb7f8fd9c7c29e3e4be2e95c75a4e977ba3b53",
+      "lastVerifiedRetrievalUtc": "2026-09-16T12:45:53.665015+00:00",
+      "originalRetrievalUtc": null,
+      "originalRetrievalNote": "Not recorded by initial pass; not retrospectively invented."
     },
     {
-      "path": "release/d6-candidate/manifest.json",
-      "url": "https://raw.githubusercontent.com/BartSchuster22/Alica-DSH/d3feafa9c03a0175ae3d702413f97e0e8f1634c9/release/d6-candidate/manifest.json",
-      "bytes": 28295,
-      "sha256": "e45624bd2c123405ca407f12755a71874c36d994330d419b4a4d46a7443b7c18"
+      "path": "docs/DATA-PRIVACY.md",
+      "url": "https://raw.githubusercontent.com/BartSchuster22/Alica-DSH/d3feafa9c03a0175ae3d702413f97e0e8f1634c9/docs/DATA-PRIVACY.md",
+      "bytes": 1369,
+      "sha256": "7ac25581f147570d505b894e6182c7c53db283bfb66303a594c8f5689fecd2e9",
+      "lastVerifiedRetrievalUtc": "2026-09-16T12:45:53.630733+00:00",
+      "originalRetrievalUtc": null,
+      "originalRetrievalNote": "Not recorded by initial pass; not retrospectively invented."
+    },
+    {
+      "path": "docs/OPERATOR.md",
+      "url": "https://raw.githubusercontent.com/BartSchuster22/Alica-DSH/d3feafa9c03a0175ae3d702413f97e0e8f1634c9/docs/OPERATOR.md",
+      "bytes": 1385,
+      "sha256": "0b38bbae321533208a10c621f7560396f7f8144573e3aa0fc6b747adfe55cbe4",
+      "lastVerifiedRetrievalUtc": "2026-09-16T12:45:53.630445+00:00",
+      "originalRetrievalUtc": null,
+      "originalRetrievalNote": "Not recorded by initial pass; not retrospectively invented."
     },
     {
       "path": "release/d6-candidate/acceptance-matrix.json",
       "url": "https://raw.githubusercontent.com/BartSchuster22/Alica-DSH/d3feafa9c03a0175ae3d702413f97e0e8f1634c9/release/d6-candidate/acceptance-matrix.json",
       "bytes": 1272,
-      "sha256": "368c8e039a15af642d6b017ba62bff43f996254563c3adfe9cb79cce69a9b3ea"
+      "sha256": "368c8e039a15af642d6b017ba62bff43f996254563c3adfe9cb79cce69a9b3ea",
+      "lastVerifiedRetrievalUtc": "2026-09-16T12:45:53.825233+00:00",
+      "originalRetrievalUtc": null,
+      "originalRetrievalNote": "Not recorded by initial pass; not retrospectively invented."
+    },
+    {
+      "path": "release/d6-candidate/evidence/provenance/ainba-anchor.intoto.json",
+      "url": "https://raw.githubusercontent.com/BartSchuster22/Alica-DSH/d3feafa9c03a0175ae3d702413f97e0e8f1634c9/release/d6-candidate/evidence/provenance/ainba-anchor.intoto.json",
+      "bytes": 1271,
+      "sha256": "dd3c42f816718df732fdc724e9f795c7e6dd28efa5582204d702d9b08a12507e",
+      "originalRetrievalUtc": "2026-09-16T12:45:54.310734+00:00",
+      "lastVerifiedRetrievalUtc": "2026-09-16T12:45:54.310734+00:00"
+    },
+    {
+      "path": "release/d6-candidate/evidence/provenance/alica-runtime.intoto.json",
+      "url": "https://raw.githubusercontent.com/BartSchuster22/Alica-DSH/d3feafa9c03a0175ae3d702413f97e0e8f1634c9/release/d6-candidate/evidence/provenance/alica-runtime.intoto.json",
+      "bytes": 1280,
+      "sha256": "e2b4c0d492f8e8541e318cbadf4b02ed46e3f1bd8d87f2ffcd1d618f1d0e7265",
+      "originalRetrievalUtc": "2026-09-16T12:45:54.303192+00:00",
+      "lastVerifiedRetrievalUtc": "2026-09-16T12:45:54.303192+00:00"
+    },
+    {
+      "path": "release/d6-candidate/evidence/provenance/alicactl.intoto.json",
+      "url": "https://raw.githubusercontent.com/BartSchuster22/Alica-DSH/d3feafa9c03a0175ae3d702413f97e0e8f1634c9/release/d6-candidate/evidence/provenance/alicactl.intoto.json",
+      "bytes": 1207,
+      "sha256": "1e474a13071fe0c1a64277e0517a7b4fbf97c6565f63057b66de673f2e43f527",
+      "originalRetrievalUtc": "2026-09-16T12:45:54.338773+00:00",
+      "lastVerifiedRetrievalUtc": "2026-09-16T12:45:54.338773+00:00"
+    },
+    {
+      "path": "release/d6-candidate/evidence/provenance/caddy.intoto.json",
+      "url": "https://raw.githubusercontent.com/BartSchuster22/Alica-DSH/d3feafa9c03a0175ae3d702413f97e0e8f1634c9/release/d6-candidate/evidence/provenance/caddy.intoto.json",
+      "bytes": 1254,
+      "sha256": "9a83f532815a0e4b63931666e8fc9596b2176e4c428efff30595951fa9bd36cd",
+      "originalRetrievalUtc": "2026-09-16T12:45:54.346440+00:00",
+      "lastVerifiedRetrievalUtc": "2026-09-16T12:45:54.346440+00:00"
+    },
+    {
+      "path": "release/d6-candidate/evidence/provenance/doghouse-node.intoto.json",
+      "url": "https://raw.githubusercontent.com/BartSchuster22/Alica-DSH/d3feafa9c03a0175ae3d702413f97e0e8f1634c9/release/d6-candidate/evidence/provenance/doghouse-node.intoto.json",
+      "bytes": 1272,
+      "sha256": "8be84687bc485f48ed938955dbadc805dffca3ab74e2ca4b03ad876430c7f700",
+      "originalRetrievalUtc": "2026-09-16T12:45:54.380792+00:00",
+      "lastVerifiedRetrievalUtc": "2026-09-16T12:45:54.380792+00:00"
+    },
+    {
+      "path": "release/d6-candidate/evidence/provenance/herman-runtime.intoto.json",
+      "url": "https://raw.githubusercontent.com/BartSchuster22/Alica-DSH/d3feafa9c03a0175ae3d702413f97e0e8f1634c9/release/d6-candidate/evidence/provenance/herman-runtime.intoto.json",
+      "bytes": 1281,
+      "sha256": "6ddb8ca6be63356c04ca062f3c5338ee4cf7d50900586704c260abaa3cb962a5",
+      "originalRetrievalUtc": "2026-09-16T12:45:54.359823+00:00",
+      "lastVerifiedRetrievalUtc": "2026-09-16T12:45:54.359823+00:00"
+    },
+    {
+      "path": "release/d6-candidate/evidence/provenance/keycloak.intoto.json",
+      "url": "https://raw.githubusercontent.com/BartSchuster22/Alica-DSH/d3feafa9c03a0175ae3d702413f97e0e8f1634c9/release/d6-candidate/evidence/provenance/keycloak.intoto.json",
+      "bytes": 1263,
+      "sha256": "ad869eec4362faf86a063760924e31faecc32d2d68a750b4294a0f271528b35f",
+      "originalRetrievalUtc": "2026-09-16T12:45:54.571052+00:00",
+      "lastVerifiedRetrievalUtc": "2026-09-16T12:45:54.571052+00:00"
+    },
+    {
+      "path": "release/d6-candidate/evidence/provenance/memory-v4.intoto.json",
+      "url": "https://raw.githubusercontent.com/BartSchuster22/Alica-DSH/d3feafa9c03a0175ae3d702413f97e0e8f1634c9/release/d6-candidate/evidence/provenance/memory-v4.intoto.json",
+      "bytes": 1266,
+      "sha256": "cccb052dc229e2ece9616c3a2e0d0e178b1861262b78412e27dbc5753cb41d21",
+      "originalRetrievalUtc": "2026-09-16T12:45:54.582132+00:00",
+      "lastVerifiedRetrievalUtc": "2026-09-16T12:45:54.582132+00:00"
+    },
+    {
+      "path": "release/d6-candidate/evidence/provenance/operations-jobs.intoto.json",
+      "url": "https://raw.githubusercontent.com/BartSchuster22/Alica-DSH/d3feafa9c03a0175ae3d702413f97e0e8f1634c9/release/d6-candidate/evidence/provenance/operations-jobs.intoto.json",
+      "bytes": 1214,
+      "sha256": "9ef3b3621155a81f67b7512c22ac130270cb053922394a18fe9a7afc647081b4",
+      "originalRetrievalUtc": "2026-09-16T12:45:54.602562+00:00",
+      "lastVerifiedRetrievalUtc": "2026-09-16T12:45:54.602562+00:00"
+    },
+    {
+      "path": "release/d6-candidate/evidence/provenance/postgresql.intoto.json",
+      "url": "https://raw.githubusercontent.com/BartSchuster22/Alica-DSH/d3feafa9c03a0175ae3d702413f97e0e8f1634c9/release/d6-candidate/evidence/provenance/postgresql.intoto.json",
+      "bytes": 1265,
+      "sha256": "e9b9935a13daeefef2ec859f31419789e4cbecb45a9171da581f6985969070cd",
+      "originalRetrievalUtc": "2026-09-16T12:45:54.588188+00:00",
+      "lastVerifiedRetrievalUtc": "2026-09-16T12:45:54.588188+00:00"
+    },
+    {
+      "path": "release/d6-candidate/evidence/provenance/unify-core.intoto.json",
+      "url": "https://raw.githubusercontent.com/BartSchuster22/Alica-DSH/d3feafa9c03a0175ae3d702413f97e0e8f1634c9/release/d6-candidate/evidence/provenance/unify-core.intoto.json",
+      "bytes": 1269,
+      "sha256": "a763656dd1be9a2e325d83ef3e4a1f32505a6b2275eb4a8a343701c4ec3585f7",
+      "originalRetrievalUtc": "2026-09-16T12:45:54.647817+00:00",
+      "lastVerifiedRetrievalUtc": "2026-09-16T12:45:54.647817+00:00"
+    },
+    {
+      "path": "release/d6-candidate/evidence/provenance/uniui.intoto.json",
+      "url": "https://raw.githubusercontent.com/BartSchuster22/Alica-DSH/d3feafa9c03a0175ae3d702413f97e0e8f1634c9/release/d6-candidate/evidence/provenance/uniui.intoto.json",
+      "bytes": 1254,
+      "sha256": "9a2dce2c30e58972d64146be5ad2d33fb46dd0e335f0120da737d37d4c649b72",
+      "originalRetrievalUtc": "2026-09-16T12:45:54.674921+00:00",
+      "lastVerifiedRetrievalUtc": "2026-09-16T12:45:54.674921+00:00"
+    },
+    {
+      "path": "release/d6-candidate/evidence/sbom/ainba-anchor.cdx.json",
+      "url": "https://raw.githubusercontent.com/BartSchuster22/Alica-DSH/d3feafa9c03a0175ae3d702413f97e0e8f1634c9/release/d6-candidate/evidence/sbom/ainba-anchor.cdx.json",
+      "bytes": 498351,
+      "sha256": "3bf8bd0bd1363873162cb4ff472d8319a295fb6128f326c78dc17e79e074a965",
+      "originalRetrievalUtc": "2026-09-16T12:45:54.910038+00:00",
+      "lastVerifiedRetrievalUtc": "2026-09-16T12:45:54.910038+00:00"
+    },
+    {
+      "path": "release/d6-candidate/evidence/sbom/alica-runtime.cdx.json",
+      "url": "https://raw.githubusercontent.com/BartSchuster22/Alica-DSH/d3feafa9c03a0175ae3d702413f97e0e8f1634c9/release/d6-candidate/evidence/sbom/alica-runtime.cdx.json",
+      "bytes": 1158,
+      "sha256": "66cace8be5a6c4e5f74a50f7f6b93f731d72ff19f46758fcacad2106457c7bb4",
+      "originalRetrievalUtc": "2026-09-16T12:45:54.861808+00:00",
+      "lastVerifiedRetrievalUtc": "2026-09-16T12:45:54.861808+00:00"
+    },
+    {
+      "path": "release/d6-candidate/evidence/sbom/alicactl.cdx.json",
+      "url": "https://raw.githubusercontent.com/BartSchuster22/Alica-DSH/d3feafa9c03a0175ae3d702413f97e0e8f1634c9/release/d6-candidate/evidence/sbom/alicactl.cdx.json",
+      "bytes": 2933,
+      "sha256": "01e2e4df865875bbd5c25af119f4f0bac8881ef6f5372a585a78e6f2ae14c059",
+      "originalRetrievalUtc": "2026-09-16T12:45:54.848392+00:00",
+      "lastVerifiedRetrievalUtc": "2026-09-16T12:45:54.848392+00:00"
+    },
+    {
+      "path": "release/d6-candidate/evidence/sbom/caddy.cdx.json",
+      "url": "https://raw.githubusercontent.com/BartSchuster22/Alica-DSH/d3feafa9c03a0175ae3d702413f97e0e8f1634c9/release/d6-candidate/evidence/sbom/caddy.cdx.json",
+      "bytes": 285082,
+      "sha256": "0759160ce74b72040f2bdfb7d8d53ea3bba9d83066ef7f3ab9170593f8124dd0",
+      "originalRetrievalUtc": "2026-09-16T12:45:54.915140+00:00",
+      "lastVerifiedRetrievalUtc": "2026-09-16T12:45:54.915140+00:00"
+    },
+    {
+      "path": "release/d6-candidate/evidence/sbom/doghouse-node.cdx.json",
+      "url": "https://raw.githubusercontent.com/BartSchuster22/Alica-DSH/d3feafa9c03a0175ae3d702413f97e0e8f1634c9/release/d6-candidate/evidence/sbom/doghouse-node.cdx.json",
+      "bytes": 498351,
+      "sha256": "3bf8bd0bd1363873162cb4ff472d8319a295fb6128f326c78dc17e79e074a965",
+      "originalRetrievalUtc": "2026-09-16T12:45:54.961352+00:00",
+      "lastVerifiedRetrievalUtc": "2026-09-16T12:45:54.961352+00:00"
+    },
+    {
+      "path": "release/d6-candidate/evidence/sbom/herman-runtime.cdx.json",
+      "url": "https://raw.githubusercontent.com/BartSchuster22/Alica-DSH/d3feafa9c03a0175ae3d702413f97e0e8f1634c9/release/d6-candidate/evidence/sbom/herman-runtime.cdx.json",
+      "bytes": 1158,
+      "sha256": "66cace8be5a6c4e5f74a50f7f6b93f731d72ff19f46758fcacad2106457c7bb4",
+      "originalRetrievalUtc": "2026-09-16T12:45:54.925977+00:00",
+      "lastVerifiedRetrievalUtc": "2026-09-16T12:45:54.925977+00:00"
+    },
+    {
+      "path": "release/d6-candidate/evidence/sbom/keycloak.cdx.json",
+      "url": "https://raw.githubusercontent.com/BartSchuster22/Alica-DSH/d3feafa9c03a0175ae3d702413f97e0e8f1634c9/release/d6-candidate/evidence/sbom/keycloak.cdx.json",
+      "bytes": 2210774,
+      "sha256": "beaaa599ef94ad711302a006e146a50eb024eac4e0c3a13b8d80b47c173ea860",
+      "originalRetrievalUtc": "2026-09-16T12:45:55.256254+00:00",
+      "lastVerifiedRetrievalUtc": "2026-09-16T12:45:55.256254+00:00"
+    },
+    {
+      "path": "release/d6-candidate/evidence/sbom/memory-v4.cdx.json",
+      "url": "https://raw.githubusercontent.com/BartSchuster22/Alica-DSH/d3feafa9c03a0175ae3d702413f97e0e8f1634c9/release/d6-candidate/evidence/sbom/memory-v4.cdx.json",
+      "bytes": 1009320,
+      "sha256": "2507127c9b5015f75d36a00fd441f8f981a590594f67725401ff2919604a5934",
+      "originalRetrievalUtc": "2026-09-16T12:45:55.256953+00:00",
+      "lastVerifiedRetrievalUtc": "2026-09-16T12:45:55.256953+00:00"
+    },
+    {
+      "path": "release/d6-candidate/evidence/sbom/operations-jobs.cdx.json",
+      "url": "https://raw.githubusercontent.com/BartSchuster22/Alica-DSH/d3feafa9c03a0175ae3d702413f97e0e8f1634c9/release/d6-candidate/evidence/sbom/operations-jobs.cdx.json",
+      "bytes": 2933,
+      "sha256": "01e2e4df865875bbd5c25af119f4f0bac8881ef6f5372a585a78e6f2ae14c059",
+      "originalRetrievalUtc": "2026-09-16T12:45:55.165682+00:00",
+      "lastVerifiedRetrievalUtc": "2026-09-16T12:45:55.165682+00:00"
+    },
+    {
+      "path": "release/d6-candidate/evidence/sbom/postgresql.cdx.json",
+      "url": "https://raw.githubusercontent.com/BartSchuster22/Alica-DSH/d3feafa9c03a0175ae3d702413f97e0e8f1634c9/release/d6-candidate/evidence/sbom/postgresql.cdx.json",
+      "bytes": 257659,
+      "sha256": "61baeea8565c782a126270d2326accd3c15d50fb0d429fbbb8604c8a560ee34d",
+      "originalRetrievalUtc": "2026-09-16T12:45:55.231069+00:00",
+      "lastVerifiedRetrievalUtc": "2026-09-16T12:45:55.231069+00:00"
+    },
+    {
+      "path": "release/d6-candidate/evidence/sbom/unify-core.cdx.json",
+      "url": "https://raw.githubusercontent.com/BartSchuster22/Alica-DSH/d3feafa9c03a0175ae3d702413f97e0e8f1634c9/release/d6-candidate/evidence/sbom/unify-core.cdx.json",
+      "bytes": 498351,
+      "sha256": "3bf8bd0bd1363873162cb4ff472d8319a295fb6128f326c78dc17e79e074a965",
+      "originalRetrievalUtc": "2026-09-16T12:45:55.290560+00:00",
+      "lastVerifiedRetrievalUtc": "2026-09-16T12:45:55.290560+00:00"
+    },
+    {
+      "path": "release/d6-candidate/evidence/sbom/uniui.cdx.json",
+      "url": "https://raw.githubusercontent.com/BartSchuster22/Alica-DSH/d3feafa9c03a0175ae3d702413f97e0e8f1634c9/release/d6-candidate/evidence/sbom/uniui.cdx.json",
+      "bytes": 366815,
+      "sha256": "c6d612bf8c031806508d1d345baa03a0db6225b3a1e449dc3367d412ced46324",
+      "originalRetrievalUtc": "2026-09-16T12:45:55.275303+00:00",
+      "lastVerifiedRetrievalUtc": "2026-09-16T12:45:55.275303+00:00"
+    },
+    {
+      "path": "release/d6-candidate/manifest.json",
+      "url": "https://raw.githubusercontent.com/BartSchuster22/Alica-DSH/d3feafa9c03a0175ae3d702413f97e0e8f1634c9/release/d6-candidate/manifest.json",
+      "bytes": 28295,
+      "sha256": "e45624bd2c123405ca407f12755a71874c36d994330d419b4a4d46a7443b7c18",
+      "lastVerifiedRetrievalUtc": "2026-09-16T12:45:53.842040+00:00",
+      "originalRetrievalUtc": null,
+      "originalRetrievalNote": "Not recorded by initial pass; not retrospectively invented."
+    },
+    {
+      "path": "release/d6-candidate/manifest.signature.json",
+      "url": "https://raw.githubusercontent.com/BartSchuster22/Alica-DSH/d3feafa9c03a0175ae3d702413f97e0e8f1634c9/release/d6-candidate/manifest.signature.json",
+      "bytes": 325,
+      "sha256": "e49c06d11c45c54aba7788caea03a27421b1f23b44d35f2c868144a918a5e529",
+      "originalRetrievalUtc": "2026-09-16T12:45:55.508015+00:00",
+      "lastVerifiedRetrievalUtc": "2026-09-16T12:45:55.508015+00:00"
+    },
+    {
+      "path": "release/d6-candidate/public-key.json",
+      "url": "https://raw.githubusercontent.com/BartSchuster22/Alica-DSH/d3feafa9c03a0175ae3d702413f97e0e8f1634c9/release/d6-candidate/public-key.json",
+      "bytes": 177,
+      "sha256": "13997de5c1a62066bfd35da5c2f5227a3f89d54f35077732b1bb42aeefa86327",
+      "originalRetrievalUtc": "2026-09-16T12:45:55.581231+00:00",
+      "lastVerifiedRetrievalUtc": "2026-09-16T12:45:55.581231+00:00"
     },
     {
       "path": "release/d6-candidate/publication-source-map.json",
       "url": "https://raw.githubusercontent.com/BartSchuster22/Alica-DSH/d3feafa9c03a0175ae3d702413f97e0e8f1634c9/release/d6-candidate/publication-source-map.json",
       "bytes": 2765,
-      "sha256": "e845dfd50bf70c67da5223eb343cb2099805a42abcfdf3a9ccd3c827bdf9ce92"
+      "sha256": "e845dfd50bf70c67da5223eb343cb2099805a42abcfdf3a9ccd3c827bdf9ce92",
+      "lastVerifiedRetrievalUtc": "2026-09-16T12:45:53.862438+00:00",
+      "originalRetrievalUtc": null,
+      "originalRetrievalNote": "Not recorded by initial pass; not retrospectively invented."
     },
     {
-      "path": ".github/workflows/d6-independent-acceptance.yml",
-      "url": "https://raw.githubusercontent.com/BartSchuster22/Alica-DSH/d3feafa9c03a0175ae3d702413f97e0e8f1634c9/.github/workflows/d6-independent-acceptance.yml",
-      "bytes": 11174,
-      "sha256": "2f1d933bc1d34f7ac340f399300fe8c3ffc2ffd71a6641f04dc642cd5549988c"
+      "path": "release/d6-candidate/root.json",
+      "url": "https://raw.githubusercontent.com/BartSchuster22/Alica-DSH/d3feafa9c03a0175ae3d702413f97e0e8f1634c9/release/d6-candidate/root.json",
+      "bytes": 3627,
+      "sha256": "6bcbf874c47b95181759d834e314ec2292641b96684462dbd6db9d243fbe484a",
+      "originalRetrievalUtc": "2026-09-16T12:45:55.499443+00:00",
+      "lastVerifiedRetrievalUtc": "2026-09-16T12:45:55.499443+00:00"
+    },
+    {
+      "path": "release/d6-candidate/snapshot.json",
+      "url": "https://raw.githubusercontent.com/BartSchuster22/Alica-DSH/d3feafa9c03a0175ae3d702413f97e0e8f1634c9/release/d6-candidate/snapshot.json",
+      "bytes": 548,
+      "sha256": "2904711ba59a44f5ba5f45ce74dc009bf3340b1b4b237512196a3c6392b6d899",
+      "originalRetrievalUtc": "2026-09-16T12:45:55.567344+00:00",
+      "lastVerifiedRetrievalUtc": "2026-09-16T12:45:55.567344+00:00"
+    },
+    {
+      "path": "release/d6-candidate/targets.json",
+      "url": "https://raw.githubusercontent.com/BartSchuster22/Alica-DSH/d3feafa9c03a0175ae3d702413f97e0e8f1634c9/release/d6-candidate/targets.json",
+      "bytes": 1060,
+      "sha256": "7406ba4b529bd85831f663c0c0846bcd746ac374c5f91f75dc76dd033c432210",
+      "originalRetrievalUtc": "2026-09-16T12:45:55.569758+00:00",
+      "lastVerifiedRetrievalUtc": "2026-09-16T12:45:55.569758+00:00"
+    },
+    {
+      "path": "release/d6-candidate/timestamp.json",
+      "url": "https://raw.githubusercontent.com/BartSchuster22/Alica-DSH/d3feafa9c03a0175ae3d702413f97e0e8f1634c9/release/d6-candidate/timestamp.json",
+      "bytes": 549,
+      "sha256": "d85a8095a2ee409a487ff65aa72c1d3664b7967494611652552f10f9bfc0dde5",
+      "originalRetrievalUtc": "2026-09-16T12:45:55.570995+00:00",
+      "lastVerifiedRetrievalUtc": "2026-09-16T12:45:55.570995+00:00"
     },
     {
       "path": "scripts/build-d6-candidate.py",
       "url": "https://raw.githubusercontent.com/BartSchuster22/Alica-DSH/d3feafa9c03a0175ae3d702413f97e0e8f1634c9/scripts/build-d6-candidate.py",
       "bytes": 9993,
-      "sha256": "e68ad54cd85b386566eb39f02a9cfbd686288f5eb0d20c568203200af78c0478"
+      "sha256": "e68ad54cd85b386566eb39f02a9cfbd686288f5eb0d20c568203200af78c0478",
+      "lastVerifiedRetrievalUtc": "2026-09-16T12:45:53.846985+00:00",
+      "originalRetrievalUtc": null,
+      "originalRetrievalNote": "Not recorded by initial pass; not retrospectively invented."
     },
     {
       "path": "scripts/build-d6-offline-bundle.sh",
       "url": "https://raw.githubusercontent.com/BartSchuster22/Alica-DSH/d3feafa9c03a0175ae3d702413f97e0e8f1634c9/scripts/build-d6-offline-bundle.sh",
       "bytes": 4014,
-      "sha256": "900ae12209a0c5d49f49f50d5e7e452468c4a99419b85ace00ae00f6365d7559"
+      "sha256": "900ae12209a0c5d49f49f50d5e7e452468c4a99419b85ace00ae00f6365d7559",
+      "lastVerifiedRetrievalUtc": "2026-09-16T12:45:53.873486+00:00",
+      "originalRetrievalUtc": null,
+      "originalRetrievalNote": "Not recorded by initial pass; not retrospectively invented."
     },
     {
       "path": "scripts/d6-independent-operator-acceptance.sh",
       "url": "https://raw.githubusercontent.com/BartSchuster22/Alica-DSH/d3feafa9c03a0175ae3d702413f97e0e8f1634c9/scripts/d6-independent-operator-acceptance.sh",
       "bytes": 14136,
-      "sha256": "5236d621f0781b430573fc25d309f80a1945eda9945dcec94005578ddf4f7586"
+      "sha256": "5236d621f0781b430573fc25d309f80a1945eda9945dcec94005578ddf4f7586",
+      "lastVerifiedRetrievalUtc": "2026-09-16T12:45:54.026989+00:00",
+      "originalRetrievalUtc": null,
+      "originalRetrievalNote": "Not recorded by initial pass; not retrospectively invented."
     }
-  ]
+  ],
+  "verificationBoundary": "HTTPS bytes at pinned Git commit; raw SHA-256 and manifest-bound SBOM/provenance digests verified. No cryptographic trust-root/signature verification or OCI/binary reconstruction claimed."
 }

@@ -2,8 +2,8 @@
 
 | Gate | Status | Evidence |
 |---|---|---|
-| G0 | PASS — scoped distribution reference | G0.md, pinned lock and inventory |
-| G1 | DESIGN DELIVERED; NOT PASS pending owner acceptance | specifications, schemas, ADRs, review and actual design-test execution record |
-| G2–G8 | NOT STARTED | production implementation blocked on G1 acceptance |
+| G0 | Technical closure delivered; EXIT owner acceptance pending | G0.md, reference index, provenance, inventory, ADR register and repeatable verification |
+| G1 | Proposed design already delivered; NOT PASS | No owner acceptance inferred from G0 work |
+| G2–G8 | NOT STARTED | No production implementation |
 
-Each phase is committed/pushed separately. G1's commit delivers design work; it does not assert that its approval gate has passed. SCHEMA/DESIGN results are not runtime conformance.
+Earlier G0 PASS wording is superseded by the explicit technical/owner-acceptance split. Phase commits remain in history. Executed checks, not plans, determine technical evidence; only the owner supplies owner acceptance.

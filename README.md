@@ -4,7 +4,7 @@ A new, lean capability-oriented substrate: **Kernel → ACAP → SDK**.
 
 ## Current stage
 
-Step-1 implementation authorized. G0 reference baseline is committed; G1 normative design is delivered and awaits owner acceptance. No higher-level ALICA services are integrated. Existing V1 artifacts are references, not runtime dependencies.
+Step-1 implementation authorized. G0 technical reference closure is delivered with owner EXIT acceptance pending; existing G1 design remains proposed. No higher-level ALICA services are integrated. Existing V1 artifacts are references, not runtime dependencies.
 
 - [Initiation assessment and building plan](docs/planning/ALICA_V2_Assessment_and_Step1_Building_Plan.md)
 - [Gate status](docs/gates/STATUS.md)

@@ -1,0 +1,71 @@
+ALICA V2 — Initial Project Directive
+Based on the provided architecture documents, we are starting a new project to design and build ALICA V2 from scratch.
+ALICA V2 is a new-generation architecture and must not be treated as a simple modification or incremental upgrade of the existing ALICA system. The existing ALICA DSH codebase and documentation should be reviewed carefully and used as reference material where appropriate, but the new system must follow the architecture, principles, boundaries, and building strategy defined in the provided ALICA V2 documents.
+Development Environment
+A dedicated fresh VPS will be provided exclusively for the development of ALICA V2.
+Server access credentials will be provided separately.
+The VPS should become the primary development and integration environment for the project. Before installing or implementing anything, assess the existing state of the server and determine the minimal development environment required.
+Follow the architectural principle of keeping the system lean, minimal, modular, and robust. Do not introduce infrastructure, dependencies, frameworks, databases, services, or tooling unless they provide a clearly justified functional benefit.
+GitHub Repository
+The complete project must be maintained in the following GitHub repository:
+https://github.com/BartSchuster22/AlicaV2
+All relevant source code, specifications, architecture decisions, schemas, configuration templates, tests, development documentation, installation instructions, and operational documentation must be version-controlled there.
+Development must follow a disciplined commit strategy with clear and meaningful commit messages so that the evolution of ALICA V2 remains understandable and auditable.
+Determine the appropriate secure GitHub authentication/deployment method for the development VPS and provide me with the required public key or other information that I need to configure repository access.
+Do not expose or commit private keys, credentials, tokens, secrets, or other sensitive information to the repository.
+Documentation Requirement
+Documentation is a first-class deliverable of this project.
+The system must be documented continuously and comprehensively while it is being developed, rather than reconstructed afterwards.
+At minimum, documentation should cover:
+- architecture and architectural decisions;
+- Kernel design and boundaries;
+- ACAP specifications and schemas;
+- SDK design and public interfaces;
+- PluginManifest, Bundle, and Profile specifications;
+- lifecycle and scope models;
+- security and trust model;
+- repository structure;
+- installation and development environment;
+- testing and conformance procedures;
+- important implementation decisions and their rationale;
+- changes to previously agreed architecture;
+- known limitations and open design questions.
+Where appropriate, use Architecture Decision Records (ADRs) for significant decisions.
+Initial Assignment
+Do not begin implementing ALICA V2 immediately.
+The first assignment is to establish a verified understanding of the project and prepare the development environment and implementation plan.
+Proceed in the following order:
+1 Review all provided ALICA V2 documents comprehensively.
+2 Review the existing ALICA DSH project and relevant documentation as reference material, identifying concepts, operational requirements, security practices, and existing code that may be useful for ALICA V2.
+3 Clearly distinguish between concepts that should be retained, redesigned, replaced, or deliberately excluded from ALICA V2.
+4 Inspect the provided VPS and document its current state.
+5 Define the minimal development environment required to build ALICA V2 from scratch.
+6 Prepare the GitHub integration and provide me with the public deployment/authentication key or other required information so that repository access can be authorized.
+7 Propose the initial repository structure for source code, specifications, SDK, tests, examples, documentation, ADRs, and development tooling.
+8 Identify ambiguities, contradictions, missing specifications, architectural risks, or decisions that must be resolved before implementation begins.
+9 Produce a comprehensive step-by-step building plan for Step 1: ALICA V2 Kernel + ACAP + SDK.
+The building plan must break the work into concrete implementation phases, dependencies, deliverables, tests, acceptance criteria, and explicit completion gates.
+Architectural Priority
+The immediate project scope is strictly:
+ALICA V2 Kernel → ACAP → SDK
+Do not begin integrating Hermes, MemoryV4, Doghouse, UniUI, Unify, AInbA, or other higher-level ALICA services during this initial phase.
+The architecture must first prove that the Kernel, capability system, plugin lifecycle, scopes, security model, SDK, and ACAP interoperability model work independently.
+The guiding rule is:
+Everything above the Kernel should be replaceable, and components should communicate through versioned ACAP capabilities rather than direct implementation dependencies.
+The Kernel itself must remain as small as reasonably possible.
+Required Initial Deliverable
+After completing the assessment and environment preparation, stop before beginning the actual ALICA V2 implementation and hand back a project-initiation report containing:
+1 your understanding of the ALICA V2 architecture and objectives;
+2 assessment of the provided documents;
+3 relevant findings from the existing ALICA DSH project;
+4 VPS/environment assessment;
+5 proposed development environment;
+6 proposed GitHub/repository structure;
+7 GitHub access information that requires configuration by me;
+8 identified risks, ambiguities, and unresolved architectural questions;
+9 the detailed Step-1 building plan for Kernel + ACAP + SDK;
+10 clear acceptance criteria defining when Step 1 can be considered complete.
+Wait for approval of this plan before beginning the implementation phase.
+Inspirational resources for that concept:
+https://github.com/deepseek-ai/deepseek-harness
+https://github.com/BartSchuster22/Alica-DSH
