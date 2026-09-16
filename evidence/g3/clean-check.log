@@ -1,0 +1,371 @@
+
+> alica-v2@0.0.0 check
+> node tools/check-toolchain.mjs && npm run format:check && npm run build && npm run typecheck && npm run test && node tools/check-schema-sync.mjs && npm run schema && npm run boundaries && npm run secrets && npm run dependencies
+
+Pinned Node/npm verified
+
+> alica-v2@0.0.0 format:check
+> prettier --check package.json package-lock.json tsconfig*.json packages tools/*.mjs tests/foundation tests/kernel .github/workflows
+
+Checking formatting...
+All matched files use Prettier code style!
+
+> alica-v2@0.0.0 build
+> node tools/build.mjs
+
+
+> alica-v2@0.0.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> alica-v2@0.0.0 test
+> node --experimental-vm-modules --test tests/foundation/*.test.mjs tests/kernel/*.test.mjs
+
+✔ boundary CLI fails on planted source violation (331.208291ms)
+✔ built public entry has no accidental runtime implementation (1.013768ms)
+✔ reject deep import (5.45337ms)
+✔ reject cross-package relative (0.885126ms)
+✔ reject V1 absolute (0.443835ms)
+✔ reject dynamic computed (2.299647ms)
+✔ reject undeclared external (0.359546ms)
+✔ reject developer tooling from package (0.444066ms)
+✔ reject host dependency from package (0.379524ms)
+✔ reject escape to repo tools (0.411264ms)
+✔ accept public type import (0.523905ms)
+✔ package exports reject deep runtime import (35.801353ms)
+✔ planted synthetic token is rejected without leaking its value (37.730403ms)
+✔ ordinary public data passes secret scanner (40.273388ms)
+(node:4127) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ same capability/version with different digest is rejected before activation (100.541982ms)
+✔ duplicate visible provider identity is conflict, not load-order selection (58.719481ms)
+✔ version/feature exclusions explain deterministic ranking and optional negotiation (185.191266ms)
+✔ planning is registry/lifecycle read-only; profile pin controls real calls and lock (273.642512ms)
+✔ invalid profile pin fails before evaluating any module (19.052836ms)
+✔ cancellation first terminal outcome wins over immediate provider success (81.534543ms)
+✔ call values are detached in both directions, not live objects (69.160845ms)
+✔ pending uncooperative call is reported instead of falsely clean disposal (72.266948ms)
+✔ expired trust stops new calls and quiesces all live instances (124.619741ms)
+✔ secret grant rechecked immediately before result delivery (33.843391ms)
+✔ nested scopes destroyed before parent owner and stale contexts never revive (29.636497ms)
+✔ nested calls cannot extend inherited deadline (150.854217ms)
+✔ same-version altered trust metadata and corrupted durable state are rejected (11.289059ms)
+(node:4133) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ independent Echo A passes unchanged consumer suite (393.654073ms)
+✔ independent Echo B passes unchanged consumer suite (206.803465ms)
+✔ selection invariant under order a,b (164.249739ms)
+✔ selection invariant under order b,a (157.267913ms)
+✔ strict parser rejects {"a":1,"a":2} (0.462018ms)
+✔ strict parser rejects {"a":1e0} (0.235613ms)
+✔ strict parser rejects {"a":1.0} (0.146966ms)
+✔ strict parser rejects {"a":9007199254740992} (0.108795ms)
+✔ strict parser rejects {"a":"\ud800"} (0.169529ms)
+✔ strict parser rejects {"é":1} (0.213051ms)
+✔ strict parser rejects [1,] (0.134342ms)
+✔ strict parser rejects {"a":true}x (0.150473ms)
+✔ bounded parsing/canonicalization rejects deep, cyclic, accessor, sparse and oversized values (1.529257ms)
+✔ runtime canonical digest matches G1 descriptor and Unicode/control rules (0.328349ms)
+✔ configuration is closed and secrets cannot be placed in config (8.8921ms)
+✔ verification rejects signature before evaluation (16.333709ms)
+✔ verification rejects file before evaluation (18.637144ms)
+✔ verification rejects unknown-manifest before evaluation (13.601028ms)
+✔ verification rejects duplicate-json before evaluation (11.62997ms)
+✔ verification rejects untrusted-key before evaluation (14.591151ms)
+✔ verification rejects unsupported-stream before evaluation (17.300467ms)
+✔ loaded bytes are immutable after verification (32.86041ms)
+✔ unverified module imports cannot be linked or evaluated (20.459891ms)
+✔ missing mandatory dependency blocks ACTIVE (18.753722ms)
+✔ incompatible mandatory dependency blocks ACTIVE (33.77391ms)
+✔ denied mandatory dependency blocks ACTIVE (28.619793ms)
+✔ mandatory cycles rejected; no participant becomes ACTIVE (28.480612ms)
+✔ partial activation never publishes; effects clean in reverse order; disposal idempotent (24.820224ms)
+✔ staged registration invisible while activation awaits (48.057683ms)
+✔ cleanup failures remain FAILED, remaining disposers still execute (28.737294ms)
+✔ uncooperative disposer times out and requires restart (35.268373ms)
+✔ capability denial and optional absence are distinct (34.622047ms)
+✔ revoked grant invalidates retained handle (47.120028ms)
+✔ expired grant invalidates retained handle (49.981402ms)
+✔ wrong principal/instance/scope generation and widened child grants rejected (41.656339ms)
+✔ child scope teardown invalidates handles and removes only owned resources (62.581276ms)
+✔ parent cannot see child registrations (44.109184ms)
+✔ mandatory provider loss quiesces consumer transitively without rebinding (97.230262ms)
+✔ revocation during call prevents result delivery (87.563505ms)
+✔ unload during call cancels delivery and cleans call tracking (60.93076ms)
+✔ deadline, cancellation, input/output validation and no idempotent replay (110.025033ms)
+✔ provider errors and invalid output normalized without value leakage (57.997662ms)
+✔ secret access requires declaration and separate grant; inspection redacts values (35.052614ms)
+✔ events deliver FIFO broker identity; disposer removes listener (68.061456ms)
+✔ event rechecks revoked subscription and publisher; handler failures isolated (50.84251ms)
+✔ bounded event overflow terminates affected subscription and cleanup reclaims listener (90.400361ms)
+✔ audit exhaustion blocks mutation but never emergency revocation (27.566252ms)
+✔ expired trust and backward clock fail closed (20.650981ms)
+✔ trust revocation quiesces running providers (100.178458ms)
+✔ persistent trust state rejects rollback and missing-state recovery (12.651771ms)
+✔ root rotation requires both old and new signatures plus exact next policy (30.667306ms)
+(node:4176) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ runtime matches frozen Python/OpenSSL vector C-00 (2.013448ms)
+✔ runtime matches frozen Python/OpenSSL vector C-01 (0.178737ms)
+✔ runtime matches frozen Python/OpenSSL vector C-02 (0.147638ms)
+✔ runtime matches frozen Python/OpenSSL vector C-03 (0.139051ms)
+✔ runtime matches frozen Python/OpenSSL vector C-04 (0.271551ms)
+✔ runtime matches frozen Python/OpenSSL vector C-05 (0.242767ms)
+✔ runtime matches frozen Python/OpenSSL vector C-06 (0.219514ms)
+✔ runtime matches frozen Python/OpenSSL vector C-07 (0.1749ms)
+✔ runtime matches frozen Python/OpenSSL vector C-08 (0.24959ms)
+✔ runtime matches frozen Python/OpenSSL vector C-09 (0.321665ms)
+✔ runtime matches frozen Python/OpenSSL vector C-10 (0.241755ms)
+✔ runtime matches frozen Python/OpenSSL vector C-11 (0.156594ms)
+✔ runtime matches frozen Python/OpenSSL vector C-12 (0.09563ms)
+✔ runtime matches frozen Python/OpenSSL vector C-13 (0.083557ms)
+✔ runtime matches frozen Python/OpenSSL vector C-14 (0.143149ms)
+✔ runtime matches frozen Python/OpenSSL vector C-15 (0.307178ms)
+✔ runtime matches frozen Python/OpenSSL vector C-16 (0.182393ms)
+✔ runtime matches frozen Python/OpenSSL vector C-17 (0.154231ms)
+✔ mandatory activation binding cannot silently switch after catalog changes (139.397452ms)
+✔ plugin log admits only fixed safe metadata and quiesce is idempotent (32.325686ms)
+ℹ tests 98
+ℹ suites 0
+ℹ pass 98
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2744.913391
+Runtime schemas match frozen G1 schema sources
+
+> alica-v2@0.0.0 schema
+> python3 -S tools/run-design.py
+
+test_authorized (test_g1_completion.AuthorityLifecycle.test_authorized) ... ok
+test_changed_instance (test_g1_completion.AuthorityLifecycle.test_changed_instance) ... ok
+test_changed_principal (test_g1_completion.AuthorityLifecycle.test_changed_principal) ... ok
+test_deadline_inheritance (test_g1_completion.AuthorityLifecycle.test_deadline_inheritance) ... ok
+test_every_transition (test_g1_completion.AuthorityLifecycle.test_every_transition) ... ok
+test_expiry_boundary (test_g1_completion.AuthorityLifecycle.test_expiry_boundary) ... ok
+test_future_issuance (test_g1_completion.AuthorityLifecycle.test_future_issuance) ... ok
+test_offline_backward_clock (test_g1_completion.AuthorityLifecycle.test_offline_backward_clock) ... ok
+test_offline_expired (test_g1_completion.AuthorityLifecycle.test_offline_expired) ... ok
+test_offline_fresh (test_g1_completion.AuthorityLifecycle.test_offline_fresh) ... ok
+test_offline_old_metadata (test_g1_completion.AuthorityLifecycle.test_offline_old_metadata) ... ok
+test_offline_rollback_metadata (test_g1_completion.AuthorityLifecycle.test_offline_rollback_metadata) ... ok
+test_partial_cleanup_keeps_failure (test_g1_completion.AuthorityLifecycle.test_partial_cleanup_keeps_failure) ... ok
+test_reused_scope (test_g1_completion.AuthorityLifecycle.test_reused_scope) ... ok
+test_revision_revoke (test_g1_completion.AuthorityLifecycle.test_revision_revoke) ... ok
+test_revoked_flag (test_g1_completion.AuthorityLifecycle.test_revoked_flag) ... ok
+test_sibling_scope (test_g1_completion.AuthorityLifecycle.test_sibling_scope) ... ok
+test_terminal_first_wins (test_g1_completion.AuthorityLifecycle.test_terminal_first_wins) ... ok
+test_wrong_operation (test_g1_completion.AuthorityLifecycle.test_wrong_operation) ... ok
+test_semantic_positive_bundle (test_g1_completion.CompleteSchemas.test_semantic_positive_bundle) ... ok
+test_semantic_positive_call (test_g1_completion.CompleteSchemas.test_semantic_positive_call) ... ok
+test_semantic_positive_capability (test_g1_completion.CompleteSchemas.test_semantic_positive_capability) ... ok
+test_semantic_positive_error (test_g1_completion.CompleteSchemas.test_semantic_positive_error) ... ok
+test_semantic_positive_event (test_g1_completion.CompleteSchemas.test_semantic_positive_event) ... ok
+test_semantic_positive_event_descriptor (test_g1_completion.CompleteSchemas.test_semantic_positive_event_descriptor) ... ok
+test_semantic_positive_event_grant (test_g1_completion.CompleteSchemas.test_semantic_positive_event_grant) ... ok
+test_semantic_positive_grant (test_g1_completion.CompleteSchemas.test_semantic_positive_grant) ... ok
+test_semantic_positive_package_index (test_g1_completion.CompleteSchemas.test_semantic_positive_package_index) ... ok
+test_semantic_positive_plugin (test_g1_completion.CompleteSchemas.test_semantic_positive_plugin) ... ok
+test_semantic_positive_profile (test_g1_completion.CompleteSchemas.test_semantic_positive_profile) ... ok
+test_semantic_positive_resolution_lock (test_g1_completion.CompleteSchemas.test_semantic_positive_resolution_lock) ... ok
+test_semantic_positive_response (test_g1_completion.CompleteSchemas.test_semantic_positive_response) ... ok
+test_semantic_positive_revocation (test_g1_completion.CompleteSchemas.test_semantic_positive_revocation) ... ok
+test_semantic_positive_root_rotation (test_g1_completion.CompleteSchemas.test_semantic_positive_root_rotation) ... ok
+test_semantic_positive_secret_grant (test_g1_completion.CompleteSchemas.test_semantic_positive_secret_grant) ... ok
+test_semantic_positive_signature (test_g1_completion.CompleteSchemas.test_semantic_positive_signature) ... ok
+test_semantic_positive_trust_policy (test_g1_completion.CompleteSchemas.test_semantic_positive_trust_policy) ... ok
+test_dual_root_and_openssl (test_g1_completion.CryptoVectors.test_dual_root_and_openssl) ... ok
+test_missing_rotation_signature (test_g1_completion.CryptoVectors.test_missing_rotation_signature) ... ok
+test_tampered_record (test_g1_completion.CryptoVectors.test_tampered_record) ... ok
+test_wrong_domain (test_g1_completion.CryptoVectors.test_wrong_domain) ... ok
+test_wrong_root (test_g1_completion.CryptoVectors.test_wrong_root) ... ok
+test_both_reject_nonascii_key (test_g1_completion.Digests.test_both_reject_nonascii_key) ... ok
+test_both_reject_surrogate (test_g1_completion.Digests.test_both_reject_surrogate) ... ok
+test_golden_vectors (test_g1_completion.Digests.test_golden_vectors) ... ok
+test_reject_duplicates_raw (test_g1_completion.Digests.test_reject_duplicates_raw) ... ok
+test_reject_oversize_raw (test_g1_completion.Digests.test_reject_oversize_raw) ... ok
+test_const_enum_mismatch (test_g1_completion.NegativeSemantic.test_const_enum_mismatch) ... ok
+test_const_wrong_type (test_g1_completion.NegativeSemantic.test_const_wrong_type) ... ok
+test_dependency_duplicates (test_g1_completion.NegativeSemantic.test_dependency_duplicates) ... ok
+test_empty_capability_operations (test_g1_completion.NegativeSemantic.test_empty_capability_operations) ... ok
+test_enum_duplicate (test_g1_completion.NegativeSemantic.test_enum_duplicate) ... ok
+test_enum_wrong_type (test_g1_completion.NegativeSemantic.test_enum_wrong_type) ... ok
+test_event_descriptor_fixture_binding (test_g1_completion.NegativeSemantic.test_event_descriptor_fixture_binding) ... ok
+test_event_duplicate_declaration (test_g1_completion.NegativeSemantic.test_event_duplicate_declaration) ... ok
+test_event_instance_required (test_g1_completion.NegativeSemantic.test_event_instance_required) ... ok
+test_event_scope_generation_required (test_g1_completion.NegativeSemantic.test_event_scope_generation_required) ... ok
+test_event_unknown_metadata (test_g1_completion.NegativeSemantic.test_event_unknown_metadata) ... ok
+test_event_wrong_operation (test_g1_completion.NegativeSemantic.test_event_wrong_operation) ... ok
+test_expired_interval (test_g1_completion.NegativeSemantic.test_expired_interval) ... ok
+test_feature_overlap (test_g1_completion.NegativeSemantic.test_feature_overlap) ... ok
+test_inverted_version_range (test_g1_completion.NegativeSemantic.test_inverted_version_range) ... ok
+test_lock_duplicate_binding (test_g1_completion.NegativeSemantic.test_lock_duplicate_binding) ... ok
+test_lock_plugin_order (test_g1_completion.NegativeSemantic.test_lock_plugin_order) ... ok
+test_lock_unknown_provider (test_g1_completion.NegativeSemantic.test_lock_unknown_provider) ... ok
+test_lock_wrong_package (test_g1_completion.NegativeSemantic.test_lock_wrong_package) ... ok
+test_missing_idempotency_policy (test_g1_completion.NegativeSemantic.test_missing_idempotency_policy) ... ok
+test_package_duplicate_path (test_g1_completion.NegativeSemantic.test_package_duplicate_path) ... ok
+test_package_missing_manifest (test_g1_completion.NegativeSemantic.test_package_missing_manifest) ... ok
+test_payload_range (test_g1_completion.NegativeSemantic.test_payload_range) ... ok
+test_payload_wrong_keyword (test_g1_completion.NegativeSemantic.test_payload_wrong_keyword) ... ok
+test_pin_unknown_provider (test_g1_completion.NegativeSemantic.test_pin_unknown_provider) ... ok
+test_policy_for_none (test_g1_completion.NegativeSemantic.test_policy_for_none) ... ok
+test_required_missing_property (test_g1_completion.NegativeSemantic.test_required_missing_property) ... ok
+test_response_both_outcomes (test_g1_completion.NegativeSemantic.test_response_both_outcomes) ... ok
+test_rotation_same_key (test_g1_completion.NegativeSemantic.test_rotation_same_key) ... ok
+test_rotation_skips_version (test_g1_completion.NegativeSemantic.test_rotation_skips_version) ... ok
+test_scope_cycle (test_g1_completion.NegativeSemantic.test_scope_cycle) ... ok
+test_scope_two_roots (test_g1_completion.NegativeSemantic.test_scope_two_roots) ... ok
+test_secret_wrong_operation (test_g1_completion.NegativeSemantic.test_secret_wrong_operation) ... ok
+test_stream_idempotency (test_g1_completion.NegativeSemantic.test_stream_idempotency) ... ok
+test_unknown_parent (test_g1_completion.NegativeSemantic.test_unknown_parent) ... ok
+test_version_component_overflow (test_g1_completion.NegativeSemantic.test_version_component_overflow) ... ok
+test_catalog_permutations (test_g1_completion.Negotiation.test_catalog_permutations) ... ok
+test_conflicting_descriptor (test_g1_completion.Negotiation.test_conflicting_descriptor) ... ok
+test_max_minor (test_g1_completion.Negotiation.test_max_minor) ... ok
+test_optional_features (test_g1_completion.Negotiation.test_optional_features) ... ok
+test_optional_features_absent (test_g1_completion.Negotiation.test_optional_features_absent) ... ok
+test_bool_not_integer (test_specifications.CanonicalTests.test_bool_not_integer) ... ok
+test_depth (test_specifications.CanonicalTests.test_depth) ... ok
+test_descriptor_digest (test_specifications.CanonicalTests.test_descriptor_digest) ... ok
+test_duplicate_keys (test_specifications.CanonicalTests.test_duplicate_keys) ... ok
+test_exponent (test_specifications.CanonicalTests.test_exponent) ... ok
+test_fixed_bytes (test_specifications.CanonicalTests.test_fixed_bytes) ... ok
+test_float (test_specifications.CanonicalTests.test_float) ... ok
+test_key_order (test_specifications.CanonicalTests.test_key_order) ... ok
+test_nan (test_specifications.CanonicalTests.test_nan) ... ok
+test_negative_zero (test_specifications.CanonicalTests.test_negative_zero) ... ok
+test_nonascii_key (test_specifications.CanonicalTests.test_nonascii_key) ... ok
+test_range (test_specifications.CanonicalTests.test_range) ... ok
+test_size (test_specifications.CanonicalTests.test_size) ... ok
+test_surrogate (test_specifications.CanonicalTests.test_surrogate) ... ok
+test_denied_grant (test_specifications.DesignExamples.test_denied_grant) ... ok
+test_invisible_provider (test_specifications.DesignExamples.test_invisible_provider) ... ok
+test_missing_feature (test_specifications.DesignExamples.test_missing_feature) ... ok
+test_missing_operation (test_specifications.DesignExamples.test_missing_operation) ... ok
+test_missing_pin_no_fallback (test_specifications.DesignExamples.test_missing_pin_no_fallback) ... ok
+test_numeric_version (test_specifications.DesignExamples.test_numeric_version) ... ok
+test_pin (test_specifications.DesignExamples.test_pin) ... ok
+test_shuffle_resolution (test_specifications.DesignExamples.test_shuffle_resolution) ... ok
+test_untrusted_provider (test_specifications.DesignExamples.test_untrusted_provider) ... ok
+test_wrong_major (test_specifications.DesignExamples.test_wrong_major) ... ok
+test_absolute_path (test_specifications.NegativeTests.test_absolute_path) ... ok
+test_backslash_path (test_specifications.NegativeTests.test_backslash_path) ... ok
+test_bad_grant_interval (test_specifications.NegativeTests.test_bad_grant_interval) ... ok
+test_duplicate_bundle_path (test_specifications.NegativeTests.test_duplicate_bundle_path) ... ok
+test_duplicate_features (test_specifications.NegativeTests.test_duplicate_features) ... ok
+test_duplicate_operation (test_specifications.NegativeTests.test_duplicate_operation) ... ok
+test_duplicate_profile_plugin (test_specifications.NegativeTests.test_duplicate_profile_plugin) ... ok
+test_leading_zero_version (test_specifications.NegativeTests.test_leading_zero_version) ... ok
+test_path_traversal (test_specifications.NegativeTests.test_path_traversal) ... ok
+test_prerelease (test_specifications.NegativeTests.test_prerelease) ... ok
+test_remote_schema (test_specifications.NegativeTests.test_remote_schema) ... ok
+test_retry_denial (test_specifications.NegativeTests.test_retry_denial) ... ok
+test_secret_value_in_profile (test_specifications.NegativeTests.test_secret_value_in_profile) ... ok
+test_unknown_mode (test_specifications.NegativeTests.test_unknown_mode) ... ok
+test_missing_field_bundle (test_specifications.SchemaTests.test_missing_field_bundle) ... ok
+test_missing_field_call (test_specifications.SchemaTests.test_missing_field_call) ... ok
+test_missing_field_capability (test_specifications.SchemaTests.test_missing_field_capability) ... ok
+test_missing_field_error (test_specifications.SchemaTests.test_missing_field_error) ... ok
+test_missing_field_event (test_specifications.SchemaTests.test_missing_field_event) ... ok
+test_missing_field_event_descriptor (test_specifications.SchemaTests.test_missing_field_event_descriptor) ... ok
+test_missing_field_event_grant (test_specifications.SchemaTests.test_missing_field_event_grant) ... ok
+test_missing_field_grant (test_specifications.SchemaTests.test_missing_field_grant) ... ok
+test_missing_field_package_index (test_specifications.SchemaTests.test_missing_field_package_index) ... ok
+test_missing_field_plugin (test_specifications.SchemaTests.test_missing_field_plugin) ... ok
+test_missing_field_profile (test_specifications.SchemaTests.test_missing_field_profile) ... ok
+test_missing_field_resolution_lock (test_specifications.SchemaTests.test_missing_field_resolution_lock) ... ok
+test_missing_field_response (test_specifications.SchemaTests.test_missing_field_response) ... ok
+test_missing_field_revocation (test_specifications.SchemaTests.test_missing_field_revocation) ... ok
+test_missing_field_root_rotation (test_specifications.SchemaTests.test_missing_field_root_rotation) ... ok
+test_missing_field_secret_grant (test_specifications.SchemaTests.test_missing_field_secret_grant) ... ok
+test_missing_field_signature (test_specifications.SchemaTests.test_missing_field_signature) ... ok
+test_missing_field_trust_policy (test_specifications.SchemaTests.test_missing_field_trust_policy) ... ok
+test_unknown_field_bundle (test_specifications.SchemaTests.test_unknown_field_bundle) ... ok
+test_unknown_field_call (test_specifications.SchemaTests.test_unknown_field_call) ... ok
+test_unknown_field_capability (test_specifications.SchemaTests.test_unknown_field_capability) ... ok
+test_unknown_field_error (test_specifications.SchemaTests.test_unknown_field_error) ... ok
+test_unknown_field_event (test_specifications.SchemaTests.test_unknown_field_event) ... ok
+test_unknown_field_event_descriptor (test_specifications.SchemaTests.test_unknown_field_event_descriptor) ... ok
+test_unknown_field_event_grant (test_specifications.SchemaTests.test_unknown_field_event_grant) ... ok
+test_unknown_field_grant (test_specifications.SchemaTests.test_unknown_field_grant) ... ok
+test_unknown_field_package_index (test_specifications.SchemaTests.test_unknown_field_package_index) ... ok
+test_unknown_field_plugin (test_specifications.SchemaTests.test_unknown_field_plugin) ... ok
+test_unknown_field_profile (test_specifications.SchemaTests.test_unknown_field_profile) ... ok
+test_unknown_field_resolution_lock (test_specifications.SchemaTests.test_unknown_field_resolution_lock) ... ok
+test_unknown_field_response (test_specifications.SchemaTests.test_unknown_field_response) ... ok
+test_unknown_field_revocation (test_specifications.SchemaTests.test_unknown_field_revocation) ... ok
+test_unknown_field_root_rotation (test_specifications.SchemaTests.test_unknown_field_root_rotation) ... ok
+test_unknown_field_secret_grant (test_specifications.SchemaTests.test_unknown_field_secret_grant) ... ok
+test_unknown_field_signature (test_specifications.SchemaTests.test_unknown_field_signature) ... ok
+test_unknown_field_trust_policy (test_specifications.SchemaTests.test_unknown_field_trust_policy) ... ok
+test_valid_bundle (test_specifications.SchemaTests.test_valid_bundle) ... ok
+test_valid_call (test_specifications.SchemaTests.test_valid_call) ... ok
+test_valid_capability (test_specifications.SchemaTests.test_valid_capability) ... ok
+test_valid_error (test_specifications.SchemaTests.test_valid_error) ... ok
+test_valid_event (test_specifications.SchemaTests.test_valid_event) ... ok
+test_valid_event_descriptor (test_specifications.SchemaTests.test_valid_event_descriptor) ... ok
+test_valid_event_grant (test_specifications.SchemaTests.test_valid_event_grant) ... ok
+test_valid_grant (test_specifications.SchemaTests.test_valid_grant) ... ok
+test_valid_package_index (test_specifications.SchemaTests.test_valid_package_index) ... ok
+test_valid_plugin (test_specifications.SchemaTests.test_valid_plugin) ... ok
+test_valid_profile (test_specifications.SchemaTests.test_valid_profile) ... ok
+test_valid_resolution_lock (test_specifications.SchemaTests.test_valid_resolution_lock) ... ok
+test_valid_response (test_specifications.SchemaTests.test_valid_response) ... ok
+test_valid_revocation (test_specifications.SchemaTests.test_valid_revocation) ... ok
+test_valid_root_rotation (test_specifications.SchemaTests.test_valid_root_rotation) ... ok
+test_valid_secret_grant (test_specifications.SchemaTests.test_valid_secret_grant) ... ok
+test_valid_signature (test_specifications.SchemaTests.test_valid_signature) ... ok
+test_valid_trust_policy (test_specifications.SchemaTests.test_valid_trust_policy) ... ok
+test_activation_staging (test_specifications.ScopeLifecycleExamples.test_activation_staging) ... ok
+test_ancestor_visible (test_specifications.ScopeLifecycleExamples.test_ancestor_visible) ... ok
+test_bad_signature_padding (test_specifications.ScopeLifecycleExamples.test_bad_signature_padding) ... ok
+test_call_cannot_assert_authority (test_specifications.ScopeLifecycleExamples.test_call_cannot_assert_authority) ... ok
+test_child_hidden_from_parent (test_specifications.ScopeLifecycleExamples.test_child_hidden_from_parent) ... ok
+test_grant_expiry_boundary (test_specifications.ScopeLifecycleExamples.test_grant_expiry_boundary) ... ok
+test_grant_intersection (test_specifications.ScopeLifecycleExamples.test_grant_intersection) ... ok
+test_reverse_disposal_order (test_specifications.ScopeLifecycleExamples.test_reverse_disposal_order) ... ok
+test_revoked_revision (test_specifications.ScopeLifecycleExamples.test_revoked_revision) ... ok
+test_scope_self_visible (test_specifications.ScopeLifecycleExamples.test_scope_self_visible) ... ok
+test_sibling_hidden (test_specifications.ScopeLifecycleExamples.test_sibling_hidden) ... ok
+test_stale_generation (test_specifications.ScopeLifecycleExamples.test_stale_generation) ... ok
+test_terminal_state (test_specifications.ScopeLifecycleExamples.test_terminal_state) ... ok
+
+----------------------------------------------------------------------
+Ran 193 tests in 0.232s
+
+OK
+
+> alica-v2@0.0.0 boundaries
+> node tools/check-boundaries.mjs
+
+Public import boundaries passed
+
+> alica-v2@0.0.0 secrets
+> python3 tools/check-secrets.py
+
+Secret pattern check passed
+
+> alica-v2@0.0.0 dependencies
+> python3 -S tools/check-dependencies.py
+
+npm @types/node 24.13.5 MIT
+npm ajv 8.20.0 MIT
+npm fast-deep-equal 3.1.3 MIT
+npm fast-uri 3.1.8 BSD-3-Clause
+npm json-schema-traverse 1.0.0 MIT
+npm prettier 3.9.7 MIT
+npm require-from-string 2.0.2 MIT
+npm typescript 6.0.3 Apache-2.0
+npm undici-types 7.18.2 MIT
+python attrs 26.1.0 MIT
+python cffi 2.1.1 MIT-0
+python cryptography 50.0.1 Apache-2.0 OR BSD-3-Clause
+python jsonschema 4.26.0 MIT
+python jsonschema-specifications 2025.9.1 MIT
+python pycparser 3.0 BSD-3-Clause
+python referencing 0.37.0 MIT
+python rpds-py 2026.6.3 MIT
+python typing_extensions 4.16.0 PSF-2.0
+Exact dependencies and reviewed license allowlist passed; not a vulnerability scan

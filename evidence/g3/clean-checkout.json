@@ -1,0 +1,30 @@
+{
+  "recordedAtUtc": "2026-09-16T15:02:12.479469+00:00",
+  "implementationCommit": "756c7c9f75133e20a8eb3dd4fe272b8091729da1",
+  "checkout": "independent local clone --no-hardlinks; toolchain bootstrapped into initially absent .tools; npm ci --ignore-scripts",
+  "gitClean": true,
+  "nodeTests": {
+    "total": 98,
+    "passed": 98,
+    "failed": 0
+  },
+  "designTests": {
+    "total": 193,
+    "passed": true
+  },
+  "realEchoDemo": {
+    "providers": [
+      "a",
+      "b"
+    ],
+    "sameConsumerSuite": true,
+    "cooperativeCleanupAllZero": true
+  },
+  "buildComparison": {
+    "workingVsIndependentCheckout": "identical",
+    "artifactFiles": 16
+  },
+  "remoteCI": "Not verified for the candidate: private repository, development account has no GitHub CLI/API authentication. Owner must confirm exact SHA.",
+  "ownerG3Acceptance": "Pending; no approval inferred from tests",
+  "githubControl": "Repository remains private; owner-approved manual alternative, not technical required-check enforcement."
+}
