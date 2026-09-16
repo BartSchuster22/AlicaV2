@@ -6,7 +6,7 @@
 | G1 | Normative design delivery retained; G3 uses its frozen semantics | G1.md, completion clauses, design checks; historical acceptance wording is not silently rewritten |
 | G2 | Owner explicitly authorized progression under the manual control alternative | G2-OWNER-DISPOSITION.md; host/CI evidence attributed to owner outputs |
 | G3 | ACCEPTED by owner for candidate 9323a5c | G3-OWNER-ACCEPTANCE.md; exact-candidate foundation CI success confirmed by owner; documented limitations retained |
-| G4 | Technical acceptance candidate; exact-commit CI and owner acceptance pending | G4.md; evidence/g4; isolated public-package provider qualification |
+| G4 | ACCEPTED by owner for a0bd08d | G4-OWNER-ACCEPTANCE.md; exact-candidate foundation success confirmed by owner |
 | G5–G8 | NOT STARTED | No higher-level service integration, OS isolation, distribution or SDK completion claimed |
 
 GitHub stays private. Required-check enforcement is unavailable on the current plan.
