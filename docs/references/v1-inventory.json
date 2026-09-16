@@ -1,0 +1,184 @@
+{
+  "scope": "Distribution declarations only; internal behavior and named human ownership not independently audited.",
+  "components": [
+    {
+      "id": "caddy",
+      "authority": "edge",
+      "contract": "caddy/v1",
+      "dataSchema": {
+        "authority": "edge",
+        "target": "caddy-config/v1"
+      },
+      "requires": [],
+      "artifact": "oci://ghcr.io/bartschuster22/alica-dsh-d6/caddy@sha256:108a242cdaa59e995eaff1dbeb2e5435a1203985f345115d35127f2a63c771ab",
+      "humanOwner": "UNVERIFIED",
+      "step1Disposition": "reference only; excluded from runtime"
+    },
+    {
+      "id": "uniui",
+      "authority": "uniui",
+      "contract": "uniui/v1",
+      "dataSchema": {
+        "authority": "uniui",
+        "target": "stateless/v1"
+      },
+      "requires": [
+        "unify-api/v1"
+      ],
+      "artifact": "oci://ghcr.io/bartschuster22/alica-dsh-d6/uniui@sha256:5e9ef7d61f91e9c22eb2640028f32247174c25a0e987185e5bbad17fede0de58",
+      "humanOwner": "UNVERIFIED",
+      "step1Disposition": "reference only; excluded from runtime"
+    },
+    {
+      "id": "unify-core",
+      "authority": "unify",
+      "contract": "unify-core/v1",
+      "dataSchema": {
+        "authority": "unify",
+        "target": "core-migrations/d1"
+      },
+      "requires": [
+        "postgresql/v16",
+        "keycloak-oidc/v1",
+        "memory-v4-api/v1"
+      ],
+      "artifact": "oci://ghcr.io/bartschuster22/alica-dsh-d6/unify-core@sha256:114a16a81ef07ca0a34e7d94e92d1d253ef1c6440950a906e9f326a095862c5e",
+      "humanOwner": "UNVERIFIED",
+      "step1Disposition": "reference only; excluded from runtime"
+    },
+    {
+      "id": "keycloak",
+      "authority": "identity",
+      "contract": "keycloak/v1",
+      "dataSchema": {
+        "authority": "identity",
+        "target": "keycloak-schema/d1"
+      },
+      "requires": [
+        "postgresql/v16"
+      ],
+      "artifact": "oci://ghcr.io/bartschuster22/alica-dsh-d6/keycloak@sha256:840aa7366bda8b9b194646580ee11f0f6fec0f01d1c2500be5298059e1893f25",
+      "humanOwner": "UNVERIFIED",
+      "step1Disposition": "reference only; excluded from runtime"
+    },
+    {
+      "id": "postgresql",
+      "authority": "postgresql",
+      "contract": "postgresql/v1",
+      "dataSchema": {
+        "authority": "postgresql",
+        "target": "postgresql-schema/d1"
+      },
+      "requires": [],
+      "artifact": "oci://ghcr.io/bartschuster22/alica-dsh-d6/postgres@sha256:1d04b9ba1d4996401f2552b51beda8187f175c0645c091e4781134fc9c9a3eef",
+      "humanOwner": "UNVERIFIED",
+      "step1Disposition": "reference only; excluded from runtime"
+    },
+    {
+      "id": "alica-runtime",
+      "authority": "alica",
+      "contract": "alica-runtime/v1",
+      "dataSchema": {
+        "authority": "alica",
+        "target": "alica-state/d1"
+      },
+      "requires": [
+        "unify-api/v1",
+        "memory-v4-api/v1"
+      ],
+      "artifact": "oci://ghcr.io/bartschuster22/alica-dsh-d6/hermes-runtime@sha256:c8a170cf00d9bd598e45fd317d244d0cb949920c5eb5ee68346918c261755a6c",
+      "humanOwner": "UNVERIFIED",
+      "step1Disposition": "reference only; excluded from runtime"
+    },
+    {
+      "id": "herman-runtime",
+      "authority": "herman",
+      "contract": "herman-runtime/v1",
+      "dataSchema": {
+        "authority": "herman",
+        "target": "herman-state/d1"
+      },
+      "requires": [
+        "unify-api/v1",
+        "memory-v4-api/v1"
+      ],
+      "artifact": "oci://ghcr.io/bartschuster22/alica-dsh-d6/hermes-runtime@sha256:c8a170cf00d9bd598e45fd317d244d0cb949920c5eb5ee68346918c261755a6c",
+      "humanOwner": "UNVERIFIED",
+      "step1Disposition": "reference only; excluded from runtime"
+    },
+    {
+      "id": "memory-v4",
+      "authority": "memory-v4",
+      "contract": "memory-v4/v1",
+      "dataSchema": {
+        "authority": "memory-v4",
+        "target": "memory-v4-schema/d1"
+      },
+      "requires": [
+        "postgresql/v16"
+      ],
+      "artifact": "oci://ghcr.io/bartschuster22/alica-dsh-d6/memory-v4@sha256:f3d6eb63447520298890c9f224dea7f86777f085f8ec1c51b79fb322eed512f8",
+      "humanOwner": "UNVERIFIED",
+      "step1Disposition": "reference only; excluded from runtime"
+    },
+    {
+      "id": "ainba-anchor",
+      "authority": "ainba",
+      "contract": "ainba-anchor/v1",
+      "dataSchema": {
+        "authority": "ainba",
+        "target": "ainba-data/d1"
+      },
+      "requires": [
+        "framework-agent/v1",
+        "memory-v4-api/v1"
+      ],
+      "artifact": "oci://ghcr.io/bartschuster22/alica-dsh-d6/unify-core@sha256:114a16a81ef07ca0a34e7d94e92d1d253ef1c6440950a906e9f326a095862c5e",
+      "humanOwner": "UNVERIFIED",
+      "step1Disposition": "reference only; excluded from runtime"
+    },
+    {
+      "id": "doghouse-node",
+      "authority": "doghouse",
+      "contract": "doghouse-node/v1",
+      "dataSchema": {
+        "authority": "doghouse",
+        "target": "doghouse-state/d1"
+      },
+      "requires": [
+        "unify-api/v1"
+      ],
+      "artifact": "oci://ghcr.io/bartschuster22/alica-dsh-d6/unify-core@sha256:114a16a81ef07ca0a34e7d94e92d1d253ef1c6440950a906e9f326a095862c5e",
+      "humanOwner": "UNVERIFIED",
+      "step1Disposition": "reference only; excluded from runtime"
+    },
+    {
+      "id": "alicactl",
+      "authority": "lifecycle",
+      "contract": "alicactl/v1",
+      "dataSchema": {
+        "authority": "lifecycle",
+        "target": "lifecycle-state/v1"
+      },
+      "requires": [],
+      "artifact": "file://bundle/alicactl@sha256:ade98a40bd288c3c6da4ccdb2523e70f16a93d7731d9024849918a7b6ec1d8b3",
+      "humanOwner": "UNVERIFIED",
+      "step1Disposition": "reference only; excluded from runtime"
+    },
+    {
+      "id": "operations-jobs",
+      "authority": "operations",
+      "contract": "operations-jobs/v1",
+      "dataSchema": {
+        "authority": "operations",
+        "target": "operations-jobs-state/v1"
+      },
+      "requires": [
+        "alica-lifecycle-readonly/v1"
+      ],
+      "artifact": "file://bundle/alicactl@sha256:ade98a40bd288c3c6da4ccdb2523e70f16a93d7731d9024849918a7b6ec1d8b3",
+      "humanOwner": "UNVERIFIED",
+      "step1Disposition": "reference only; excluded from runtime"
+    }
+  ]
+}
