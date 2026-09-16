@@ -13,3 +13,7 @@ MUST/MUST NOT are requirements; SHOULD permits only a recorded justified deviati
 v1 supports typed observation events only, not middleware waterfalls or policy interception. Delivery is asynchronous, FIFO per source/subscription, at-most-once within a live subscription; there is no replay/durability promise. Across sources no order is guaranteed. Each subscription is scope/owner-bound and disposed on owner teardown. Before each delivery, revalidate scope visibility and grant. Subscribe permission does not grant publish permission.
 
 The queue limit defaults to 256 events and may be lowered by policy. Overflow MUST terminate the affected subscription with RESOURCE_EXHAUSTED rather than silently dropping an unknown subset; other authorized subscribers continue. Handler errors are isolated and audited without crashing unrelated plugins. The event fabric MUST NOT grow a workflow engine or persistent broker.
+
+## G1 completion clauses
+
+[ALICA-NORMATIVE-BASELINE-v1](ALICA-NORMATIVE-BASELINE-v1.md) resolves feature ranges, generations, lifecycle failure, secret/event grants, canonicalization, package digests and trust semantics. Its explicit completion clauses supersede conflicting earlier-draft wording.

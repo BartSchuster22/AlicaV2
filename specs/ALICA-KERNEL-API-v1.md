@@ -23,3 +23,7 @@ Quiesce prevents new calls/registrations, waits at most the operator timeout, th
 ## Audit and failure
 
 Security-relevant actions include activation decisions, grant denial/revocation, trust rejection, scope destruction and cleanup failure. Emit actor, target, scope, outcome, stable reason, timestamp and correlation ID; never payload/secret values by default. The local audit mechanism is bounded. Failure to record a security-sensitive mutation MUST block that mutation; emergency revocation/termination still proceeds and reports audit unavailability to the operator. Crash recovery rebuilds registry from verified profile, not persisted object handles. Policy changes and state writes are atomic; recovery MUST NOT silently lower trust.
+
+## G1 completion clauses
+
+[ALICA-NORMATIVE-BASELINE-v1](ALICA-NORMATIVE-BASELINE-v1.md) resolves feature ranges, generations, lifecycle failure, secret/event grants, canonicalization, package digests and trust semantics. Its explicit completion clauses supersede conflicting earlier-draft wording.

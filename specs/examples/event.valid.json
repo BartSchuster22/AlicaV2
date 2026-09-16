@@ -1,12 +1,14 @@
 {
   "eventId": "event-1",
   "type": "org.alica.observed",
-  "contractDigest": "sha256:58ee9f01fb4948faf71ed7a3468d55563f3117faccecb8a3b1ebc81ff0aee649",
+  "contractDigest": "sha256:a8ab2ed4bf14b914e82dad553c78b5ab3829f5ec86cc8a9ed3caeba282065e3f",
   "sourceProvider": "org.alica.echoa",
   "sourceScope": "scope-1",
   "sequence": 1,
   "timeMs": 1000,
   "data": {
     "text": "hello"
-  }
+  },
+  "sourceInstanceId": "echo-instance-1",
+  "scopeGeneration": 1
 }

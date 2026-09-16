@@ -39,7 +39,7 @@
         "maxLength": 128,
         "pattern": "^[a-z][A-Za-z0-9]*$"
       },
-      "minItems": 0,
+      "minItems": 1,
       "maxItems": 256,
       "uniqueItems": true
     },
@@ -57,6 +57,17 @@
       "type": "integer",
       "minimum": 0,
       "maximum": 9007199254740991
+    },
+    "instanceId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+    },
+    "scopeGeneration": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
     }
   },
   "required": [
@@ -68,6 +79,8 @@
     "operations",
     "issuedAtMs",
     "expiresAtMs",
-    "revision"
+    "revision",
+    "instanceId",
+    "scopeGeneration"
   ]
 }

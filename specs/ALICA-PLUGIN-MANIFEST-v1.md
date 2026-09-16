@@ -11,3 +11,7 @@ MUST/MUST NOT are requirements; SHOULD permits only a recorded justified deviati
 The manifest does not include its own package digest, avoiding circular hashes. A signed bundle inventory binds manifest, descriptors and code artifacts by path/length/digest. The loader verifies signature against operator policy, then verifies all bytes before interpreting code. Signature validity does not make a publisher trusted automatically.
 
 Entrypoints and descriptor paths are relative slash-separated safe components, no `.`/`..`, absolute paths, backslashes or executable interpolation. Symlinks escaping staging and duplicate archive paths are rejected. Execution mode is `inproc` or `ipc`; mode selection is trust-policy-constrained, never a plugin escape hatch. Required capability requirements are checked before ACTIVE. Secret declarations request permission but do not grant it.
+
+## G1 completion clauses
+
+[ALICA-NORMATIVE-BASELINE-v1](ALICA-NORMATIVE-BASELINE-v1.md) resolves feature ranges, generations, lifecycle failure, secret/event grants, canonicalization, package digests and trust semantics. Its explicit completion clauses supersede conflicting earlier-draft wording.

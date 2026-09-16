@@ -13,3 +13,7 @@ Trust root is operator-pinned separately, not accepted because delivered in the 
 Offline bundles include the application runtime and all accepted application dependencies, schemas and verification material. The base OS and its declared prerequisites are a separate explicit qualification boundary. Application install and verification after disconnection require no package registry, transparency service or central ALICA endpoint. 'Offline' does not mean provisioning an unprepared blank machine unless that path is independently tested.
 
 Install stages into a private directory, verifies, then atomically publishes accepted state. Failure leaves prior accepted state unchanged. Exact reinstall is non-mutating. Recovery reconstructs trusted state from verified artifact inventory and separately custodied identity/secret recovery data.
+
+## G1 completion clauses
+
+[ALICA-NORMATIVE-BASELINE-v1](ALICA-NORMATIVE-BASELINE-v1.md) resolves feature ranges, generations, lifecycle failure, secret/event grants, canonicalization, package digests and trust semantics. Its explicit completion clauses supersede conflicting earlier-draft wording.

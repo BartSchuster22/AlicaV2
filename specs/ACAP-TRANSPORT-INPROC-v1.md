@@ -11,3 +11,7 @@ In-process transport must use the same public request/result schema validation, 
 Every handle is bound to provider instance/generation and caller scope. Require/provide does not bypass policy on subsequent invocation. Reentrant nested calls inherit deadlines and use provider's own outbound authority. Provider choice is resolved once per handle, not dynamically based on load timing.
 
 Trusted in-process code is cooperative. A blocked event loop cannot be forcibly cancelled by another callback; lifecycle timeout is a detection/reporting boundary and may require process restart. Unit tests must not claim that cancellation kills arbitrary same-process computation.
+
+## G1 completion clauses
+
+[ALICA-NORMATIVE-BASELINE-v1](ALICA-NORMATIVE-BASELINE-v1.md) resolves feature ranges, generations, lifecycle failure, secret/event grants, canonicalization, package digests and trust semantics. Its explicit completion clauses supersede conflicting earlier-draft wording.

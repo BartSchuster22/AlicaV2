@@ -60,6 +60,27 @@
               "none",
               "provider"
             ]
+          },
+          "idempotencyPolicy": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "retentionMs": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9007199254740991
+              },
+              "persistence": {
+                "enum": [
+                  "instance",
+                  "durable"
+                ]
+              }
+            },
+            "required": [
+              "retentionMs",
+              "persistence"
+            ]
           }
         },
         "required": [
@@ -68,6 +89,29 @@
           "input",
           "output",
           "idempotency"
+        ],
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "idempotency": {
+                  "const": "provider"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "idempotencyPolicy"
+              ]
+            },
+            "else": {
+              "not": {
+                "required": [
+                  "idempotencyPolicy"
+                ]
+              }
+            }
+          }
         ]
       },
       "minItems": 1,

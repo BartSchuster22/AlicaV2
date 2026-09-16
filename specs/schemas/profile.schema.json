@@ -79,6 +79,40 @@
       },
       "minItems": 0,
       "maxItems": 256
+    },
+    "scopes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+          },
+          "parent": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "parent"
+        ]
+      },
+      "minItems": 1,
+      "maxItems": 256
     }
   },
   "required": [
@@ -86,6 +120,7 @@
     "profileId",
     "version",
     "plugins",
-    "providerPins"
+    "providerPins",
+    "scopes"
   ]
 }

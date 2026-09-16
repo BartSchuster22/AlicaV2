@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://alica.invalid/specs/revocation.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": "alica.revocation/v1"
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "issuedAtMs": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "expiresAtMs": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "revokedKeyIds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 128,
+        "pattern": "^sha256:[0-9a-f]{64}$"
+      },
+      "minItems": 0,
+      "maxItems": 256,
+      "uniqueItems": true
+    },
+    "revokedArtifactDigests": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 128,
+        "pattern": "^sha256:[0-9a-f]{64}$"
+      },
+      "minItems": 0,
+      "maxItems": 256,
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "version",
+    "issuedAtMs",
+    "expiresAtMs",
+    "revokedKeyIds",
+    "revokedArtifactDigests"
+  ]
+}

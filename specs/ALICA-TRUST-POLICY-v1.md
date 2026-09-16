@@ -19,3 +19,7 @@ Rotation requires authorization under the currently trusted root and the new roo
 Bundle bytes are signed under `ALICA-BUNDLE-v1\n`; trust policy bytes under `ALICA-TRUST-POLICY-v1\n`; root-rotation authorization under `ALICA-ROOT-ROTATION-v1\n`. Prefix ASCII bytes directly precede canonical JSON bytes, with no extra delimiter. Signatures from one domain are invalid in another. Trusted raw Ed25519 public keys are exactly 32 bytes; keyId is SHA-256 over those bytes. Operator trust records bind key ID to raw public key and publisher and are not obtained from unsigned plugin claims.
 
 A root rotation record includes prior/new monotonic policy versions and both policy digests, signed in the rotation domain by both prior and new roots. Missing either signature is failure. Exact rotation record schema and cryptographic vectors are required before implementing that operation; unsigned development fixtures never qualify rotation. Revocation storage and enforcement are local-authoritative and cannot be reset by profile changes.
+
+## G1 completion clauses
+
+[ALICA-NORMATIVE-BASELINE-v1](ALICA-NORMATIVE-BASELINE-v1.md) resolves feature ranges, generations, lifecycle failure, secret/event grants, canonicalization, package digests and trust semantics. Its explicit completion clauses supersede conflicting earlier-draft wording.

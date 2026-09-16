@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://alica.invalid/specs/root-rotation.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": "alica.root-rotation/v1"
+    },
+    "priorVersion": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "nextVersion": {
+      "type": "integer",
+      "minimum": 2,
+      "maximum": 9007199254740991
+    },
+    "priorPolicyDigest": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "nextPolicyDigest": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "priorKeyId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "nextKeyId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "priorVersion",
+    "nextVersion",
+    "priorPolicyDigest",
+    "nextPolicyDigest",
+    "priorKeyId",
+    "nextKeyId"
+  ]
+}

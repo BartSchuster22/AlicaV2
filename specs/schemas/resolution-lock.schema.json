@@ -99,6 +99,12 @@
             "minLength": 1,
             "maxLength": 128,
             "pattern": "^sha256:[0-9a-f]{64}$"
+          },
+          "providerVersion": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"
           }
         },
         "required": [
@@ -108,7 +114,8 @@
           "providerId",
           "version",
           "descriptorDigest",
-          "packageDigest"
+          "packageDigest",
+          "providerVersion"
         ]
       },
       "maxItems": 256

@@ -1,0 +1,129 @@
+{
+  "scope": "Two independently authored Python encoders; not cross-language verification. Literal-byte anchors plus OpenSSL digest cross-check.",
+  "vectors": [
+    {
+      "id": "C-00",
+      "value": null,
+      "canonicalHex": "6e756c6c",
+      "digest": "sha256:74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+    },
+    {
+      "id": "C-01",
+      "value": true,
+      "canonicalHex": "74727565",
+      "digest": "sha256:b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+    },
+    {
+      "id": "C-02",
+      "value": false,
+      "canonicalHex": "66616c7365",
+      "digest": "sha256:fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "id": "C-03",
+      "value": 0,
+      "canonicalHex": "30",
+      "digest": "sha256:5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "id": "C-04",
+      "value": -9007199254740991,
+      "canonicalHex": "2d39303037313939323534373430393931",
+      "digest": "sha256:4c933a456bb8f2e9894b2d0b26480439cd72d52fb8a27cbf8fd7f323f22c7815"
+    },
+    {
+      "id": "C-05",
+      "value": 9007199254740991,
+      "canonicalHex": "39303037313939323534373430393931",
+      "digest": "sha256:f40b423c2dd95ff2b2f027e22208f438cf7242862e5e746860e697308c9add26"
+    },
+    {
+      "id": "C-06",
+      "value": "",
+      "canonicalHex": "2222",
+      "digest": "sha256:12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+    },
+    {
+      "id": "C-07",
+      "value": [],
+      "canonicalHex": "5b5d",
+      "digest": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "id": "C-08",
+      "value": {},
+      "canonicalHex": "7b7d",
+      "digest": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    {
+      "id": "C-09",
+      "value": "é",
+      "canonicalHex": "22c3a922",
+      "digest": "sha256:f2886017e9c7abacf804b54d64787dce2b611c9544ba21f3affdd126a6e50086"
+    },
+    {
+      "id": "C-10",
+      "value": "😀",
+      "canonicalHex": "22f09f988022",
+      "digest": "sha256:7a0c50b92434b015545fe93ab723db2d4b2cdd14a441405624a9ce8be29f1d5a"
+    },
+    {
+      "id": "C-11",
+      "value": "  ",
+      "canonicalHex": "22e280a8e280a922",
+      "digest": "sha256:e3a0e2262ac7790f4df36b522a8fbdd4ee3370d568eb15dc25c5f1775f14ed6c"
+    },
+    {
+      "id": "C-12",
+      "value": "",
+      "canonicalHex": "227f22",
+      "digest": "sha256:6fe76740e12a93d5598fe685cb6ad3d3c94e44609065a56866b69647772026ec"
+    },
+    {
+      "id": "C-13",
+      "value": "\u0000\u0001\u0002\u0003\u0004\u0005\u0006\u0007\b\t\n\u000b\f\r\u000e\u000f\u0010\u0011\u0012\u0013\u0014\u0015\u0016\u0017\u0018\u0019\u001a\u001b\u001c\u001d\u001e\u001f",
+      "canonicalHex": "225c75303030305c75303030315c75303030325c75303030335c75303030345c75303030355c75303030365c75303030375c625c745c6e5c75303030625c665c725c75303030655c75303030665c75303031305c75303031315c75303031325c75303031335c75303031345c75303031355c75303031365c75303031375c75303031385c75303031395c75303031615c75303031625c75303031635c75303031645c75303031655c753030316622",
+      "digest": "sha256:f144bcffbdbaea0a670956fb0a3edd44ce6bc4dedc77c30cfc14f40034044739"
+    },
+    {
+      "id": "C-14",
+      "value": "\\u007f",
+      "canonicalHex": "225c5c753030376622",
+      "digest": "sha256:6a7e115bca6bd3f305f10b56186c29e373af0a66a37abdbc059797086fbed153"
+    },
+    {
+      "id": "C-15",
+      "value": {
+        "z": 1,
+        "a": "é\n"
+      },
+      "canonicalHex": "7b2261223a22c3a95c6e222c227a223a317d",
+      "digest": "sha256:d761003bed1770a776843b856a46e926e97b30d0fd16dd00dd6cf925982ed954"
+    },
+    {
+      "id": "C-16",
+      "value": {
+        "b": [
+          true,
+          null,
+          {
+            "x": "/\\\""
+          }
+        ],
+        "a": []
+      },
+      "canonicalHex": "7b2261223a5b5d2c2262223a5b747275652c6e756c6c2c7b2278223a222f5c5c5c22227d5d7d",
+      "digest": "sha256:e101759c1b82aade03fc3bd67a4642f5c293de58702247737bd57ef71009403f"
+    },
+    {
+      "id": "C-17",
+      "value": {
+        "!": 1,
+        "A": 2,
+        "a": 3
+      },
+      "canonicalHex": "7b2221223a312c2241223a322c2261223a337d",
+      "digest": "sha256:3a314f2708c2762ed8a1223754c4bcd80d8107d757ff5c50042dfad0a4169832"
+    }
+  ]
+}

@@ -29,3 +29,7 @@ Kernel inserts authoritative caller/scope/grant binding; provider-supplied ident
 ## Consumer call envelope
 
 `call.schema.json` is the consumer-supplied call request. It has no caller, grant, provider or scope assertion field. The broker derives those from an authenticated handle and MUST NOT accept client overrides. `descriptorDigest` must match that handle's bound contract. RequestId is unique among outstanding requests per session; idempotencyKey is optional but allowed only when the operation advertises provider idempotency. `deadlineMs` must be in the future and within operator limits; validation order rejects missing/invalid authentication before revealing bound provider details. The IPC envelope carries broker-authenticated routing separately and is frozen before G6.
+
+## G1 completion clauses
+
+[ALICA-NORMATIVE-BASELINE-v1](ALICA-NORMATIVE-BASELINE-v1.md) resolves feature ranges, generations, lifecycle failure, secret/event grants, canonicalization, package digests and trust semantics. Its explicit completion clauses supersede conflicting earlier-draft wording.

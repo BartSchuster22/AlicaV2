@@ -17,3 +17,7 @@ Profile requests are not grants. Policy is immutable to plugin code. Scope/autho
 Secret identifiers are references, never values in manifests/profiles/locks. A grant must explicitly permit a declared secret reference; access is audited without value. Only local test secrets are used in Step 1. A returned secret cannot be erased from malicious trusted code; state this limitation. IPC providers receive only authorized per-call material, not a copy of all environment variables.
 
 Malformed signatures, untrusted publishers, digest mismatches, stale metadata and trust overrides fail closed before code evaluation. Audit failure does not prevent emergency revocation. See trust policy for bootstrap/custody and threat model for host compromise limits.
+
+## G1 completion clauses
+
+[ALICA-NORMATIVE-BASELINE-v1](ALICA-NORMATIVE-BASELINE-v1.md) resolves feature ranges, generations, lifecycle failure, secret/event grants, canonicalization, package digests and trust semantics. Its explicit completion clauses supersede conflicting earlier-draft wording.

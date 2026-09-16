@@ -28,3 +28,7 @@ python3 tests/design/test_specifications.py
 ```
 
 These checks use the host's existing Python/jsonschema installation and are not production runtime tests. No application tooling or service stack has been installed.
+
+## G1 normative baseline
+
+The completed design-validation delivery is indexed by [G1 gate](docs/gates/G1.md) and [six review records](docs/gates/G1-REVIEW.md). Owner normative-baseline acceptance remains the exit gate; no production Kernel or service integration exists.

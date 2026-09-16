@@ -1,0 +1,18 @@
+{
+  "schemaVersion": "acap.event-descriptor/v1",
+  "id": "org.alica.observed",
+  "version": "1.0.0",
+  "payload": {
+    "type": "object",
+    "properties": {
+      "text": {
+        "type": "string",
+        "maxLength": 4096
+      }
+    },
+    "required": [
+      "text"
+    ],
+    "additionalProperties": false
+  }
+}

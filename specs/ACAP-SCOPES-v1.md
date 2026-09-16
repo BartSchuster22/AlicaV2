@@ -15,3 +15,7 @@ A registration is visible within its registration scope and descendants only, su
 Mark the subtree CLOSING atomically before cleanup: reject new registrations, child creation and calls. Cancel outstanding calls, invalidate generations, remove subscriptions/registrations, then dispose children before parents in reverse ownership order. Destruction is idempotent. Retained handles fail FAILED_PRECONDITION after destruction even if IDs are reused in later instances. A scope ID reuse MUST use a new generation; persistent handles are forbidden.
 
 Managed resource cleanup guarantees apply only to effects registered through public ownership mechanisms. Direct OS effects by trusted in-process code are outside enforceable isolation and must be documented as a plugin compliance obligation. IPC process termination is the containment boundary for uncooperative isolated providers.
+
+## G1 completion clauses
+
+[ALICA-NORMATIVE-BASELINE-v1](ALICA-NORMATIVE-BASELINE-v1.md) resolves feature ranges, generations, lifecycle failure, secret/event grants, canonicalization, package digests and trust semantics. Its explicit completion clauses supersede conflicting earlier-draft wording.
