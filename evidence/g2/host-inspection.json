@@ -1,0 +1,114 @@
+{
+  "observedAtUtc": "2026-09-16T13:25:31.692903+00:00",
+  "commands": [
+    {
+      "command": [
+        "id"
+      ],
+      "exitCode": 0,
+      "stdout": "uid=1000(alica-dev) gid=1000(alica-dev) groups=1000(alica-dev)\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "sudo",
+        "-n",
+        "-l"
+      ],
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "sudo: a password is required\n"
+    },
+    {
+      "command": [
+        "ss",
+        "-lntup"
+      ],
+      "exitCode": 0,
+      "stdout": "Netid State  Recv-Q Send-Q        Local Address:Port Peer Address:PortProcess\nudp   UNCONN 0      0                127.0.0.54:53        0.0.0.0:*          \nudp   UNCONN 0      0             127.0.0.53%lo:53        0.0.0.0:*          \nudp   UNCONN 0      0      167.233.135.142%eth0:68        0.0.0.0:*          \ntcp   LISTEN 0      4096             127.0.0.54:53        0.0.0.0:*          \ntcp   LISTEN 0      4096          127.0.0.53%lo:53        0.0.0.0:*          \ntcp   LISTEN 0      4096                0.0.0.0:22        0.0.0.0:*          \ntcp   LISTEN 0      4096                   [::]:22           [::]:*          \n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/usr/sbin/sshd",
+        "-T"
+      ],
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "/etc/ssh/sshd_config.d/50-cloud-init.conf: Permission denied\n"
+    },
+    {
+      "command": [
+        "ufw",
+        "status",
+        "verbose"
+      ],
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "ERROR: You need to be root to run this script\n"
+    },
+    {
+      "command": [
+        "timedatectl",
+        "show",
+        "-p",
+        "NTPSynchronized"
+      ],
+      "exitCode": 0,
+      "stdout": "NTPSynchronized=yes\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "systemctl",
+        "is-active",
+        "unattended-upgrades"
+      ],
+      "exitCode": 0,
+      "stdout": "active\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "systemctl",
+        "is-enabled",
+        "ufw"
+      ],
+      "exitCode": 0,
+      "stdout": "enabled\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "--version"
+      ],
+      "exitCode": 0,
+      "stdout": "git version 2.43.0\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "--version"
+      ],
+      "exitCode": 0,
+      "stdout": "Python 3.12.3\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "openssl",
+        "version"
+      ],
+      "exitCode": 0,
+      "stdout": "OpenSSL 3.0.13 30 Jan 2024 (Library: OpenSSL 3.0.13 30 Jan 2024)\n",
+      "stderr": ""
+    }
+  ],
+  "ownerControlsPending": [
+    "effective SSH settings including protected include/Match rules",
+    "effective host and provider firewall",
+    "owner console/MFA/recovery and backup policy"
+  ]
+}

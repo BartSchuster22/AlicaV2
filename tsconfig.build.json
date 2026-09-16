@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "ES2023",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": false,
+    "verbatimModuleSyntax": true,
+    "declaration": true,
+    "rootDir": "packages/acap-types/src",
+    "outDir": "packages/acap-types/dist",
+    "newLine": "lf"
+  },
+  "include": ["packages/acap-types/src/**/*.ts"]
+}

@@ -1,0 +1,46 @@
+{
+  "observedAtUtc": "2026-09-16T13:25:32.443245+00:00",
+  "authentication": "No GitHub API credentials available. SSH deploy key provides git access only. Local gh CLI is unauthenticated.",
+  "queries": [
+    {
+      "url": "https://api.github.com/repos/BartSchuster22/AlicaV2",
+      "httpStatus": 404,
+      "response": {
+        "message": "Not Found",
+        "documentation_url": "https://docs.github.com/rest/repos/repos#get-a-repository",
+        "status": "404"
+      }
+    },
+    {
+      "url": "https://api.github.com/repos/BartSchuster22/AlicaV2/actions/runs?per_page=3",
+      "httpStatus": 404,
+      "response": {
+        "message": "Not Found",
+        "documentation_url": "https://docs.github.com/rest/actions/workflow-runs#list-workflow-runs-for-a-repository",
+        "status": "404"
+      }
+    },
+    {
+      "url": "https://api.github.com/repos/BartSchuster22/AlicaV2/branches/main/protection",
+      "httpStatus": 401,
+      "response": {
+        "message": "Requires authentication",
+        "documentation_url": "https://docs.github.com/rest",
+        "status": "401"
+      }
+    },
+    {
+      "url": "https://api.github.com/repos/BartSchuster22/AlicaV2/rulesets",
+      "httpStatus": 404,
+      "response": {
+        "message": "Not Found",
+        "documentation_url": "https://docs.github.com/rest/repos/rules#get-all-repository-rulesets",
+        "status": "404"
+      }
+    }
+  ],
+  "workflowRun": "UNVERIFIED",
+  "requiredCheckEnforcement": "UNKNOWN",
+  "equivalentOwnerApproval": false,
+  "gateDisposition": "BLOCKER; no successful remote CI claim"
+}

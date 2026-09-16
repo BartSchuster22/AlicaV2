@@ -1,0 +1,27 @@
+name: foundation
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: foundation-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  foundation:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - name: Install hash-locked development tools
+        run: python3 tools/bootstrap.py
+      - name: Build and validate
+        shell: bash
+        run: |
+          export PATH="$PWD/.tools/node/bin:$PATH"
+          npm ci --ignore-scripts
+          npm run check
+          git diff --exit-code

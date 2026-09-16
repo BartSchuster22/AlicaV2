@@ -32,3 +32,7 @@ These checks use the host's existing Python/jsonschema installation and are not 
 ## G1 normative baseline
 
 The completed design-validation delivery is indexed by [G1 gate](docs/gates/G1.md) and [six review records](docs/gates/G1-REVIEW.md). Owner normative-baseline acceptance remains the exit gate; no production Kernel or service integration exists.
+
+## Engineering foundation (G2)
+
+See [development setup](docs/development/SETUP.md), [testing](docs/development/TESTING.md), [host controls](docs/operations/G2-HOST-SECURITY.md), and [G2 gate](docs/gates/G2.md). Toolchain and dependency locks support a clean build without V1 services. Formal gate status is tracked honestly, separately from local test success.
