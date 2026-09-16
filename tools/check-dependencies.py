@@ -11,7 +11,7 @@ assert not p.get('dependencies'),'root is development-only'
 for manifest_path in (R/'packages').glob('*/package.json'):
  manifest=json.loads(manifest_path.read_text())
  for name,version in manifest.get('dependencies',{}).items():
-  assert name in {'@alica/acap-types','@alica/acap-contracts','ajv'},name
+  assert name in {'@alica/acap-types','@alica/acap-contracts','@alica/plugin-sdk','ajv'},name
   assert re.fullmatch(r'\d+\.\d+\.\d+',version),name
 for name,version in p['devDependencies'].items():assert re.fullmatch(r'\d+\.\d+\.\d+',version),name
 for path,entry in lock['packages'].items():

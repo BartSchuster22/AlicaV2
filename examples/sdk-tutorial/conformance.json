@@ -1,0 +1,38 @@
+[
+  {
+    "name": "positive",
+    "operation": "add",
+    "input": {
+      "left": 2,
+      "right": 3
+    },
+    "expected": 5
+  },
+  {
+    "name": "negative",
+    "operation": "add",
+    "input": {
+      "left": -2,
+      "right": 3
+    },
+    "expected": 1
+  },
+  {
+    "name": "zero",
+    "operation": "add",
+    "input": {
+      "left": 0,
+      "right": 0
+    },
+    "expected": 0
+  },
+  {
+    "name": "invalid-input",
+    "operation": "add",
+    "input": {
+      "left": "bad",
+      "right": 3
+    },
+    "errorCode": "INVALID_ARGUMENT"
+  }
+]

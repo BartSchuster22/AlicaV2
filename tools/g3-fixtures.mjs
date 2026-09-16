@@ -143,6 +143,10 @@ export function fixture(publisher, options = {}) {
     options.manifestText ?? canonical(manifest),
   );
   files['dist/index.js'] = Buffer.from(code);
+  for (const [path, bytes] of Object.entries(options.extraFiles ?? {})) {
+    if (Object.hasOwn(files, path)) throw new Error('duplicate fixture path');
+    files[path] = Buffer.from(bytes);
+  }
   const index = {
     schemaVersion: 'alica.package-index/v1',
     pluginId: id,

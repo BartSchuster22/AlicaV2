@@ -40,8 +40,14 @@ export function violations(file, source, root) {
       );
     if (name.startsWith('@alica/')) {
       const allowed = packageSource
-        ? ['@alica/acap-types', '@alica/acap-contracts']
-        : ['@alica/acap-types', '@alica/acap-contracts', '@alica/kernel'];
+        ? ['@alica/acap-types', '@alica/acap-contracts', '@alica/plugin-sdk']
+        : [
+            '@alica/acap-types',
+            '@alica/acap-contracts',
+            '@alica/plugin-sdk',
+            '@alica/testkit',
+            '@alica/kernel',
+          ];
       if (!allowed.includes(name))
         errors.push('non-public or undeclared package import');
     } else if (name.startsWith('.') || path.isAbsolute(name)) {

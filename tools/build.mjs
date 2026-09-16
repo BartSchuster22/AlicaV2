@@ -4,6 +4,8 @@ for (const name of [
   'acap-types',
   'acap-contracts',
   'alicac',
+  'plugin-sdk',
+  'testkit',
   'kernel',
   'echo-a',
   'echo-b',

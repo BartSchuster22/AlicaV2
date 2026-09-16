@@ -13,19 +13,20 @@
   },
   "packageManager": "npm@11.19.0",
   "scripts": {
-    "format": "prettier --write package.json package-lock.json tsconfig*.json packages tools/*.mjs tests/foundation tests/kernel tests/contracts .github/workflows",
-    "format:check": "prettier --check package.json package-lock.json tsconfig*.json packages tools/*.mjs tests/foundation tests/kernel tests/contracts .github/workflows",
+    "format": "prettier --write package.json package-lock.json tsconfig*.json packages tools/*.mjs tests/foundation tests/kernel tests/contracts .github/workflows tests/sdk",
+    "format:check": "prettier --check package.json package-lock.json tsconfig*.json packages tools/*.mjs tests/foundation tests/kernel tests/contracts .github/workflows tests/sdk",
     "build": "node tools/build.mjs",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "test": "node --experimental-vm-modules --test tests/foundation/*.test.mjs tests/kernel/*.test.mjs tests/contracts/*.test.mjs",
+    "test": "node --experimental-vm-modules --test tests/foundation/*.test.mjs tests/kernel/*.test.mjs tests/contracts/*.test.mjs tests/sdk/*.test.mjs",
     "schema": "python3 -S tools/run-design.py",
     "boundaries": "node tools/check-boundaries.mjs",
     "secrets": "python3 tools/check-secrets.py",
     "dependencies": "python3 -S tools/check-dependencies.py",
-    "check": "node tools/check-toolchain.mjs && npm run format:check && npm run build && npm run typecheck && npm run test && node tools/check-schema-sync.mjs && npm run schema && npm run boundaries && npm run secrets && npm run dependencies && npm run test:isolated",
+    "check": "node tools/check-toolchain.mjs && npm run format:check && npm run build && npm run typecheck && npm run test && node tools/check-schema-sync.mjs && npm run schema && npm run boundaries && npm run secrets && npm run dependencies && npm run test:isolated && node tools/check-sdk-api.mjs && npm run test:external",
     "demo": "node --experimental-vm-modules tools/echo-demo.mjs",
     "alicac": "node packages/alicac/dist/index.js",
-    "test:isolated": "node tools/test-isolated.mjs"
+    "test:isolated": "node tools/test-isolated.mjs",
+    "test:external": "node tools/test-external-sdk.mjs"
   },
   "devDependencies": {
     "typescript": "6.0.3",

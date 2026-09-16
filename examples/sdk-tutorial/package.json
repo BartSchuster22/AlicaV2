@@ -1,0 +1,36 @@
+{
+  "name": "@tutorial/plugins",
+  "version": "0.1.0",
+  "private": true,
+  "license": "UNLICENSED",
+  "type": "module",
+  "files": [
+    "dist",
+    "generated",
+    "contracts",
+    "provider.plugin.json",
+    "consumer.plugin.json"
+  ],
+  "exports": {
+    "./provider": "./dist/provider.js",
+    "./consumer": "./dist/consumer.js"
+  },
+  "dependencies": {
+    "@alica/plugin-sdk": "0.1.0",
+    "@alica/acap-contracts": "0.0.0",
+    "@alica/acap-types": "0.0.0"
+  },
+  "devDependencies": {
+    "@alica/testkit": "0.1.0",
+    "@alica/alicac": "0.0.0",
+    "typescript": "6.0.3",
+    "@types/node": "24.13.5"
+  },
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "node --test tutorial.test.mjs",
+    "verify": "node verify.mjs",
+    "run": "node run.mjs",
+    "conformance": "alicac conformance run --provider dist/provider.js --fixtures conformance.json --json"
+  }
+}

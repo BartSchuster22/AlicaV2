@@ -1,21 +1,21 @@
 {
-  "name": "@alica/kernel",
-  "version": "0.0.0",
+  "name": "@alica/plugin-sdk",
+  "version": "0.1.0",
   "private": true,
   "license": "UNLICENSED",
   "type": "module",
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     }
   },
-  "files": [
-    "dist"
-  ],
   "dependencies": {
     "@alica/acap-types": "0.0.0",
-    "@alica/acap-contracts": "0.0.0",
-    "@alica/plugin-sdk": "0.1.0"
+    "@alica/acap-contracts": "0.0.0"
   }
 }

@@ -1,5 +1,8 @@
 import { randomUUID } from 'node:crypto';
-import { SourceTextModule } from 'node:vm';
+import { SourceTextModule, SyntheticModule } from 'node:vm';
+import { posix } from 'node:path';
+import * as sdk from '@alica/plugin-sdk';
+import * as contracts from '@alica/acap-contracts';
 import { ContractProvider, ContractSession } from '@alica/acap-contracts';
 import type {
   Value,
@@ -958,15 +961,71 @@ export class Host {
       }
       this.transition(i, 'RESOLVED');
       this.transition(i, 'ACTIVATING');
-      const module = new SourceTextModule(i.pkg.code, {
-        identifier: 'alica:' + i.pkg.digest,
-        importModuleDynamically: () => {
-          throw new AcapError('PERMISSION_DENIED');
-        },
-      });
-      check(module.dependencySpecifiers.length === 0, 'FAILED_PRECONDITION');
-      await module.link(() => {
-        throw new AcapError('PERMISSION_DENIED');
+      // Only copied, inventory-verified module bytes and fixed public SDK roots.
+      // No filesystem or Node package resolution occurs for plugin imports.
+      const local = new Map<string, SourceTextModule>();
+      const paths = new Map<SourceTextModule, string>();
+      const publicModules = new Map<string, SyntheticModule>();
+      const load = (path: string): SourceTextModule => {
+        const previous = local.get(path);
+        if (previous) return previous;
+        const code = i.pkg.modules.get(path);
+        check(code !== undefined, 'FAILED_PRECONDITION');
+        const source = new SourceTextModule(code, {
+          identifier: 'alica:' + i.pkg.digest + '/' + path,
+          importModuleDynamically: () => {
+            throw new AcapError('PERMISSION_DENIED');
+          },
+        });
+        local.set(path, source);
+        paths.set(source, path);
+        return source;
+      };
+      const module = load(i.pkg.manifest.entrypoint);
+      await module.link((specifier, referencing) => {
+        if (
+          [
+            '@alica/plugin-sdk',
+            '@alica/acap-contracts',
+            '@alica/acap-types',
+          ].includes(specifier)
+        ) {
+          let shared = publicModules.get(specifier);
+          if (!shared) {
+            const exports: Record<string, unknown> =
+              specifier === '@alica/plugin-sdk'
+                ? sdk
+                : specifier === '@alica/acap-contracts'
+                  ? contracts
+                  : {};
+            shared = new SyntheticModule(
+              Object.keys(exports),
+              function () {
+                for (const [key, value] of Object.entries(exports))
+                  this.setExport(key, value);
+              },
+              { identifier: 'public:' + specifier },
+            );
+            publicModules.set(specifier, shared);
+          }
+          return shared;
+        }
+        check(
+          /^(?:\.\.?\/)[A-Za-z0-9_./-]+$/.test(specifier),
+          'FAILED_PRECONDITION',
+        );
+        const from = paths.get(referencing as SourceTextModule);
+        check(from, 'FAILED_PRECONDITION');
+        const target = posix.normalize(
+          posix.join(posix.dirname(from), specifier),
+        );
+        check(
+          target !== '..' &&
+            !target.startsWith('../') &&
+            !posix.isAbsolute(target),
+          'FAILED_PRECONDITION',
+        );
+        return load(target);
       });
       this.fresh(i);
       await this.bounded(

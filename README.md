@@ -4,7 +4,7 @@ A new, lean capability-oriented substrate: **Kernel → ACAP → SDK**.
 
 ## Current stage
 
-G3 is [accepted by the owner](docs/gates/G3-OWNER-ACCEPTANCE.md). G4 ACAP contract runtime and compiler tooling is delivered as a technical acceptance candidate: see [G4 delivery, commands, tests and limitations](docs/gates/G4.md). G2 progression uses the [owner-approved manual gate](docs/gates/G2-OWNER-DISPOSITION.md); GitHub remains private. No higher-level ALICA services are integrated. Existing V1 artifacts are references, not runtime dependencies.
+G3 and [G4](docs/gates/G4-OWNER-ACCEPTANCE.md) are accepted by the owner. G5 public SDK and external developer experience is delivered as a technical acceptance candidate: see [G5 delivery and limitations](docs/gates/G5.md), the [empty-directory tutorial](docs/sdk/TUTORIAL.md), [SDK API](docs/sdk/API.md), and [mock differences](docs/sdk/TESTKIT.md). G2 progression uses the [owner-approved manual gate](docs/gates/G2-OWNER-DISPOSITION.md); GitHub remains private. G6–G8 and higher-level ALICA services are not started. Existing V1 artifacts are references, not runtime dependencies.
 
 - [Initiation assessment and building plan](docs/planning/ALICA_V2_Assessment_and_Step1_Building_Plan.md)
 - [Gate status](docs/gates/STATUS.md)

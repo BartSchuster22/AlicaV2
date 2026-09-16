@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "acap.capability/v1",
+  "id": "org.tutorial.math",
+  "version": "1.0.0",
+  "features": [],
+  "operations": [
+    {
+      "name": "add",
+      "kind": "unary",
+      "input": {
+        "type": "object",
+        "properties": {
+          "left": {
+            "type": "integer",
+            "minimum": -1000,
+            "maximum": 1000
+          },
+          "right": {
+            "type": "integer",
+            "minimum": -1000,
+            "maximum": 1000
+          }
+        },
+        "required": [
+          "left",
+          "right"
+        ],
+        "additionalProperties": false
+      },
+      "output": {
+        "type": "integer",
+        "minimum": -2000,
+        "maximum": 2000
+      },
+      "idempotency": "none"
+    }
+  ]
+}

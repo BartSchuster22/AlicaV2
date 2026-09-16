@@ -82,6 +82,7 @@ export interface VerifiedPackage {
   descriptors: Map<string, Descriptor>;
   events: Map<string, EventDescriptor>;
   code: string;
+  modules: Map<string, string>;
 }
 export class Trust {
   #material: TrustMaterial;
@@ -422,6 +423,7 @@ export class Trust {
       descriptors: new Map(),
       events: new Map(),
       code: '',
+      modules: new Map(),
     };
     this.accepted(p);
     this.signature(
@@ -470,6 +472,15 @@ export class Trust {
     check(code, 'CONTRACT_MISMATCH');
     try {
       p.code = new TextDecoder('utf-8', { fatal: true }).decode(code);
+      p.modules.set(m.entrypoint, p.code);
+      for (const [path, bytes] of files)
+        if (/\.(?:mjs|js)$/.test(path)) {
+          check(p.modules.size < 256, 'RESOURCE_EXHAUSTED');
+          p.modules.set(
+            path,
+            new TextDecoder('utf-8', { fatal: true }).decode(bytes),
+          );
+        }
     } catch {
       check(false);
     }
