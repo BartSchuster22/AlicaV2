@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "acap.grant/v1",
+  "grantId": "grant-1",
+  "principal": "org.alica.consumer",
+  "scope": "scope-1",
+  "capabilityId": "org.alica.echo",
+  "operations": [
+    "echo"
+  ],
+  "issuedAtMs": 1000,
+  "expiresAtMs": 2000,
+  "revision": 1
+}

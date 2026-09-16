@@ -1,0 +1,18 @@
+{
+  "schemaVersion": "alica.plugin/v1",
+  "id": "org.alica.echoa",
+  "version": "1.0.0",
+  "publisher": "org.alica.example",
+  "execution": "inproc",
+  "entrypoint": "dist/index.js",
+  "provides": [
+    {
+      "capabilityId": "org.alica.echo",
+      "version": "1.0.0",
+      "descriptorDigest": "sha256:58ee9f01fb4948faf71ed7a3468d55563f3117faccecb8a3b1ebc81ff0aee649",
+      "descriptorPath": "contracts/echo.json"
+    }
+  ],
+  "requires": [],
+  "secretReferences": []
+}

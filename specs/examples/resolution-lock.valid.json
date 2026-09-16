@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "alica.resolution-lock/v1",
+  "profileDigest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+  "policyDigest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+  "plugins": [
+    {
+      "id": "org.alica.consumer",
+      "version": "1.0.0",
+      "packageDigest": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+    },
+    {
+      "id": "org.alica.echoa",
+      "version": "1.0.0",
+      "packageDigest": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+    }
+  ],
+  "bindings": [
+    {
+      "consumerId": "org.alica.consumer",
+      "scope": "scope-1",
+      "capabilityId": "org.alica.echo",
+      "providerId": "org.alica.echoa",
+      "version": "1.0.0",
+      "descriptorDigest": "sha256:58ee9f01fb4948faf71ed7a3468d55563f3117faccecb8a3b1ebc81ff0aee649",
+      "packageDigest": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+    }
+  ]
+}

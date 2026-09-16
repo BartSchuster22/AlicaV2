@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://alica.invalid/specs/error.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "code": {
+      "enum": [
+        "INVALID_ARGUMENT",
+        "UNAUTHENTICATED",
+        "PERMISSION_DENIED",
+        "NOT_FOUND",
+        "INCOMPATIBLE_VERSION",
+        "CONTRACT_MISMATCH",
+        "CONFLICT",
+        "DEADLINE_EXCEEDED",
+        "CANCELLED",
+        "UNAVAILABLE",
+        "RESOURCE_EXHAUSTED",
+        "FAILED_PRECONDITION",
+        "INTERNAL"
+      ]
+    },
+    "message": {
+      "type": "string",
+      "maxLength": 512
+    },
+    "retryable": {
+      "type": "boolean"
+    },
+    "correlationId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+    }
+  },
+  "required": [
+    "code",
+    "message",
+    "retryable",
+    "correlationId"
+  ]
+}
