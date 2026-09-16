@@ -1,19 +1,31 @@
-# G2 host inspection — unresolved privileged controls
+# G2 host inspection — owner evidence received; disposition pending
 
-Target: dedicated VPS 167.233.135.142, account alica-dev. Read-only observations: Ubuntu 24.04.4 LTS, kernel 6.8.0-138-generic; no sudo permission; only SSH TCP/22 publicly listening in the unprivileged socket view; local DNS listeners; NTP synchronized; unattended-upgrades active and enabled; UFW service enabled. Enabled UFW service is NOT evidence of effective filtering.
+Target: dedicated VPS 167.233.135.142, hostname ALICA-v1, development account alica-dev (no sudo). Earlier read-only observations: SSH TCP/22 publicly listening in the unprivileged socket view, local DNS listeners, synchronized NTP. Earlier agent inability to read protected SSH configuration is retained in historical evidence, not treated as the current owner-reported result.
 
-Readable sshd_config contains `PermitRootLogin yes` and X11Forwarding yes. The included cloud-init configuration is unreadable to alica-dev, and `sshd -T` fails on that include. Therefore effective password/root policy is UNKNOWN, not inferred from a partial file. `ufw status verbose` also requires root. No firewall/SSH/login changes were made.
+## Owner-provided root console evidence
 
-## Owner-assisted read-only completion
+See `evidence/g2/owner-host-inspection.json` for the supplied output and provenance. This is owner-reported evidence, not an independent privileged agent inspection.
 
-From the owner root console/PuTTY session, run and return the output (no private keys/passwords):
+| Control | Reported result | Disposition |
+|---|---|---|
+| PermitRootLogin | yes | Root SSH allowed by default effective configuration |
+| PasswordAuthentication | yes | Password authentication enabled; a usable root password is not established |
+| PubkeyAuthentication | yes | Keys permitted; tested owner key access still unknown |
+| KbdInteractiveAuthentication | no | Interactive keyboard authentication disabled |
+| AuthenticationMethods | any | No configured multi-method requirement; does not mean unauthenticated login |
+| X11Forwarding | yes | Disable if unnecessary after owner review |
+| AllowTcpForwarding | yes | Review legitimate tunnels before restricting |
+| UFW | inactive | No active UFW policy; other host/provider firewall layers unverified |
+| unattended-upgrades.service | enabled, active | Service status only; successful/scheduled updates not established |
 
-```sh
-/usr/sbin/sshd -T | grep -E '^(permitrootlogin|passwordauthentication|kbdinteractiveauthentication|pubkeyauthentication|x11forwarding|allowtcpforwarding|authenticationmethods) '
-ufw status verbose
-systemctl --no-pager status unattended-upgrades --lines=5
-```
+The unrestricted root/password configuration and inactive UFW require remediation or explicit, scoped owner risk acceptance before formal G2 closure. Returning inspection output is not risk acceptance. No SSH, firewall, account or login changes were made.
 
-If Match rules exist, also inspect `sshd -T -C user=alica-dev,host=ALICA-v1,addr=<actual-client-IP>` and the owner-login context. Host-provider firewall rules, console/MFA/recovery access and verified backup policy also require owner confirmation. Do not disable root/password login before another verified administrative path exists.
+## Safe next steps — not yet authorized/executed
 
-These controls are unresolved; ordinary low-privilege development can be exercised, but this is not a security-approved production host or hostile-plugin isolation environment. Formal G2 closure needs returned evidence/remediation or explicit owner-approved risk disposition.
+1. Identify and test the owner's key-based administrative access in a second session, while retaining the current root session. Verify provider console/recovery. The development account must remain unprivileged; do not give it sudo merely to complete inspection.
+2. With owner approval, back up relevant configuration and plan SSH hardening appropriate to the verified owner access method. Validate with `sshd -t`, then reload and test a new connection before closing the original session. Do not disable root/password login blindly.
+3. Inspect any existing nftables/iptables and provider firewall rules. If UFW is chosen, allow the verified SSH port/access path and other authorized traffic before enabling it. Re-test access and effective policy. Do not assume that inactive UFW means all network filtering is absent.
+4. Review effective Match contexts using `sshd -T -C user=<login>,host=<client-host>,addr=<actual-client-IP>` for owner and development logins. Here host is the connecting client's hostname, not automatically the server hostname.
+5. Confirm automatic update scheduling/recent results, provider firewall, owner console/MFA recovery and backup policy. Record remediation or explicit owner-approved exceptions and residual risks.
+
+The host is not certified for production or hostile-plugin isolation. CI/required-check enforcement remains a separate unresolved G2 control. Historical clean-checkout test evidence is unchanged.

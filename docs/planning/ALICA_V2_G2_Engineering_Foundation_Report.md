@@ -44,9 +44,9 @@ Full execution/logs/input and artifact hashes: `evidence/g2/execution.json` and 
 
 ### 1. Read-only host security evidence
 
-The development account has no sudo access. Effective SSH includes and firewall state cannot be verified. Readable SSH configuration permits root login, but protected includes may override it. NTP synchronization and active unattended upgrades were verified. No SSH/firewall settings were changed.
+Owner root output has now been received: default effective root and password authentication, X11 forwarding and TCP forwarding are enabled; UFW is inactive. This requires remediation or explicit risk acceptance. The development account remains unprivileged. NTP synchronization was observed earlier; the enabled/running unattended-upgrades service does not by itself prove successful update installation. No SSH/firewall settings were changed.
 
-From the VPS root console/PuTTY session:
+The owner supplied output from these VPS root console/PuTTY commands (preserved in `evidence/g2/owner-host-inspection.json`):
 
 ```sh
 /usr/sbin/sshd -T | grep -E '^(permitrootlogin|passwordauthentication|kbdinteractiveauthentication|pubkeyauthentication|x11forwarding|allowtcpforwarding|authenticationmethods) '
@@ -54,7 +54,7 @@ ufw status verbose
 systemctl --no-pager status unattended-upgrades --lines=5
 ```
 
-Return these outputs (not credentials). Also confirm provider firewall, console/MFA recovery and backup policy; account-specific Match rules require the contextual check described in `docs/operations/G2-HOST-SECURITY.md`. Remediation must preserve a tested owner access path.
+The initial output request is fulfilled. Next establish tested owner key access and recovery before any hardening. Other/provider firewall controls, update scheduling/results and backup policy remain unverified; Match-specific rules need contextual checks. See `docs/operations/G2-HOST-SECURITY.md`. Merely supplying the output is not risk acceptance.
 
 ### 2. CI and required-check enforcement
 

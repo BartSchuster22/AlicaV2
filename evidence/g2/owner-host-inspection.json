@@ -1,0 +1,19 @@
+{
+  "recordedAtUtc": "2026-09-16T13:37:28.295221+00:00",
+  "source": "Owner-pasted root console output in Telegram; not independently executed with root by the agent",
+  "hostLabel": "ALICA-v1",
+  "targetVps": "167.233.135.142",
+  "commands": [
+    "/usr/sbin/sshd -T | grep -E '^(permitrootlogin|passwordauthentication|kbdinteractiveauthentication|pubkeyauthentication|x11forwarding|allowtcpforwarding|authenticationmethods) '",
+    "ufw status verbose",
+    "systemctl --no-pager status unattended-upgrades --lines=5"
+  ],
+  "stdoutAsProvided": "permitrootlogin yes\npubkeyauthentication yes\npasswordauthentication yes\nkbdinteractiveauthentication no\nx11forwarding yes\nallowtcpforwarding yes\nauthenticationmethods any\nStatus: inactive\n\u25cf unattended-upgrades.service - Unattended Upgrades Shutdown\n     Loaded: loaded (/usr/lib/systemd/system/unattended-upgrades.service; enabled; preset: enabled)\n     Active: active (running) since Wed 2026-09-16 11:22:46 UTC; 2h 11min ago\n       Docs: man:unattended-upgrade(8)\n   Main PID: 954 (unattended-upgr)\n      Tasks: 2 (limit: 9255)\n     Memory: 11.0M (peak: 11.5M)\n        CPU: 75ms\n     CGroup: /system.slice/unattended-upgrades.service\n             \u2514\u2500954 /usr/bin/python3 /usr/share/unattended-upgrades/unattended-u\u2026\n\nSep 16 11:22:46 ALICA-v1 systemd[1]: Started unattended-upgrades.service - \u2026own.\nHint: Some lines were ellipsized, use -l to show in full.\n",
+  "disposition": "Default SSH configuration enables root and password authentication. UFW inactive. Remediation or explicit owner risk acceptance required. Match-specific contexts and provider firewall remain unverified.",
+  "limitations": [
+    "No evidence of a usable root password or a successful password login; configuration enables these methods",
+    "Inactive UFW does not establish the absence of nftables/iptables/provider firewall controls",
+    "Running unattended-upgrades shutdown service is not proof of scheduled/successful security updates",
+    "No SSH/firewall changes or risk acceptance authorized by merely supplying this output"
+  ]
+}
