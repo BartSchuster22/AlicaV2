@@ -4,14 +4,15 @@
   "fullCheckExitCode": 0,
   "nativeTests": 12,
   "ownerApprovedCandidate": "552a24d",
-  "utc": "2026-09-16T21:41:56.558185+00:00",
+  "utc": "2026-09-16T21:51:08.401403+00:00",
   "sources": {
     "native/g6/sandbox.c": "269bca3d61b2a90af2490d51f701b557bcb455ba888762215d89f06d32d8d664",
-    "native/g6/launcher.c": "3e735bcaac2f2b14a4fb6bd05abf0d67125f3e20b279bcd8d8dbdb80f4c5be11",
+    "native/g6/launcher.c": "4d5368ce5e1c4d7b9294fb569028e7d00aa606acab7d7ad3c2f6c535927e9407",
     "native/g6/bridge.c": "7247370e986112f0e41f4fda838ee970d37aae68d5d50ad909742f8ed86091ff",
     "tools/build-g6-native.py": "661f7b43f18f39e93ff718aea3d5ee3f84cdf6463e58847ef7b2a29178fa1811",
-    "tests/ipc/native.test.mjs": "b5312c5e39c58ee157d1757368397d970bd5e3f45edadf5a92b3311689552d8d",
+    "tests/ipc/native.test.mjs": "b30efa85365a26a22e01c8a3c26ac94baf44e9a3b78343fab06a513f579e5e49",
     "tests/ipc/native-malformed.py": "540b8bea89aeca97e0a28f1e89b1155c8b2a543162d6a86a06a08e7b4b4608e7",
-    "tests/ipc/native-worker.mjs": "36ddb75fa12f9aac47b91cb6d991df65fe83249ddb5c09a8eb86fb309479d7f7"
-  }
+    "tests/ipc/native-worker.mjs": "b0f95e41644bb579ad679bcbb8c64b72a9abbe6987ae483f36b4524472b13898"
+  },
+  "preExecLandlockInheritanceRegression": "passed async read/write denial; outside synthetic file unchanged"
 }

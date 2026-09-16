@@ -57,6 +57,16 @@ try {
     result.allowedRead =
       fs.readFileSync(capsule.allowed, 'utf8') === 'public fixture';
     result.outsideRead = blocked(() => fs.readFileSync(capsule.outside));
+    result.outsideAsyncRead = await fs.promises.readFile(capsule.outside).then(
+      () => false,
+      () => true,
+    );
+    result.outsideAsyncWrite = await fs.promises
+      .writeFile(capsule.outside, 'forbidden')
+      .then(
+        () => false,
+        () => true,
+      );
     result.writeDenied = blocked(() =>
       fs.writeFileSync(capsule.allowed, 'bad'),
     );

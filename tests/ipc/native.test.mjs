@@ -155,6 +155,19 @@ async function launched(mode, action) {
       process.execPath,
       path.join(root, 'tests/ipc/native-worker.mjs'),
       socketPath,
+      ...new Set(
+        [
+          path.dirname(process.execPath),
+          path.join(root, 'native/g6/build'),
+          path.join(root, 'tests/ipc'),
+          path.join(root, 'package.json'),
+          '/usr/lib',
+          '/lib',
+          '/lib64',
+          '/dev/null',
+          pub,
+        ].map((p) => fs.realpathSync(p)),
+      ),
     ],
     {
       env: { G6_PARENT_ONLY: 'synthetic-not-a-secret' },
@@ -197,6 +210,10 @@ async function launched(mode, action) {
     assert.equal(ready.inheritedSentinel, false);
     assert.ok(ready.abi >= 3);
     await action({ child, ready, carrier, pidfd, exited });
+    assert.equal(
+      fs.readFileSync(path.join(dir, 'outside'), 'utf8'),
+      'synthetic outside',
+    );
   } finally {
     if (child.exitCode === null && child.signalCode === null) {
       if (pidfd) n.signal(pidfd, 9);
@@ -225,6 +242,8 @@ test(
       for (const key of [
         'allowedRead',
         'outsideRead',
+        'outsideAsyncRead',
+        'outsideAsyncWrite',
         'writeDenied',
         'symlinkDenied',
         'networkSocketDenied',
