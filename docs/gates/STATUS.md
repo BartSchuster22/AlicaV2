@@ -5,7 +5,7 @@
 | G0 | Historical technical closure delivered | G0.md and reference inventory; original approval history retained |
 | G1 | Normative design delivery retained; G3 uses its frozen semantics | G1.md, completion clauses, design checks; historical acceptance wording is not silently rewritten |
 | G2 | Owner explicitly authorized progression under the manual control alternative | G2-OWNER-DISPOSITION.md; host/CI evidence attributed to owner outputs |
-| G3 | Minimal runtime implemented; acceptance candidate, not owner PASS | G3.md and evidence/g3; exact-candidate CI and owner review remain acceptance conditions |
+| G3 | ACCEPTED by owner for candidate 9323a5c | G3-OWNER-ACCEPTANCE.md; exact-candidate foundation CI success confirmed by owner; documented limitations retained |
 | G4–G8 | NOT STARTED | No service integration, isolation, distribution or SDK completion claimed |
 
 GitHub stays private. Required-check enforcement is unavailable on the current plan.
