@@ -1,0 +1,304 @@
+{
+  "schemaVersion": "alica.g5-external/v1",
+  "level": "PROVIDER",
+  "sourceRevision": "ec2c9fe8c5873352934ad4685c7381f2891a3420",
+  "runtime": "v24.21.0",
+  "publicImportsOnly": true,
+  "authorProjectHasNoKernel": true,
+  "separateOperatorProject": true,
+  "deterministicGeneration": true,
+  "negativeTypeCheck": true,
+  "packageFiles": [
+    "consumer.plugin.json",
+    "contracts/math.json",
+    "contracts/result.json",
+    "dist/consumer.d.ts",
+    "dist/consumer.js",
+    "dist/provider.d.ts",
+    "dist/provider.js",
+    "generated/client.d.mts",
+    "generated/client.mjs",
+    "generated/provider.d.mts",
+    "generated/provider.mjs",
+    "package.json",
+    "provider.plugin.json"
+  ],
+  "conformance": {
+    "checks": [
+      {
+        "name": "fixture:positive",
+        "passed": true
+      },
+      {
+        "name": "fixture:negative",
+        "passed": true
+      },
+      {
+        "name": "fixture:zero",
+        "passed": true
+      },
+      {
+        "name": "fixture:invalid-input",
+        "passed": true
+      },
+      {
+        "name": "wrong-digest",
+        "passed": true
+      },
+      {
+        "name": "unknown-operation",
+        "passed": true
+      },
+      {
+        "name": "expired-request",
+        "passed": true
+      },
+      {
+        "name": "caller-spoof",
+        "passed": true
+      },
+      {
+        "name": "incompatible-negotiation",
+        "passed": true
+      }
+    ],
+    "descriptorDigest": "sha256:19bfc82bed3b4f3478966a8b6a86a1d7c14999387231d2f1dbb6ff239cd1167e",
+    "passed": true,
+    "schemaVersion": "alica.conformance/v1"
+  },
+  "production": {
+    "level": "PROVIDER",
+    "transport": "inproc",
+    "signedPackageVerified": true,
+    "inventoryOnlyModules": true,
+    "publicSdk": true,
+    "result": 42,
+    "cleanup": {
+      "completedDisposers": 2,
+      "failedDisposers": [],
+      "restartRequired": false,
+      "state": "DISPOSED",
+      "timedOutResources": 0
+    },
+    "providerActivated": true
+  },
+  "commands": [
+    {
+      "command": [
+        "npm",
+        "pack",
+        "/home/alica-dev/alica-g5-clean/packages/acap-types",
+        "--pack-destination",
+        "$TMP/artifacts",
+        "--json",
+        "--ignore-scripts"
+      ],
+      "output": "[\n  {\n    \"id\": \"@alica/acap-types@0.0.0\",\n    \"name\": \"@alica/acap-types\",\n    \"version\": \"0.0.0\",\n    \"size\": 2360,\n    \"unpackedSize\": 6863,\n    \"shasum\": \"5caa9bb436b0e62f2cefe1a776df2fd4e88e3977\",\n    \"integrity\": \"sha512-kHWRglKb5gCrdMknDhP2TCXI5fCuXURqu9MpYBiR/Y68x9tUVDCybocThTxHw8y2b/Ifb/TLl41XTkBfZGtlqQ==\",\n    \"filename\": \"alica-acap-types-0.0.0.tgz\",\n    \"files\": [\n      {\n        \"path\": \"README.md\",\n        \"size\": 359,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"dist/index.d.ts\",\n        \"size\": 6235,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"dist/index.js\",\n        \"size\": 11,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"package.json\",\n        \"size\": 258,\n        \"mode\": 420\n      }\n    ],\n    \"entryCount\": 4,\n    \"bundled\": []\n  }\n]\n"
+    },
+    {
+      "command": [
+        "npm",
+        "pack",
+        "/home/alica-dev/alica-g5-clean/packages/acap-contracts",
+        "--pack-destination",
+        "$TMP/artifacts",
+        "--json",
+        "--ignore-scripts"
+      ],
+      "output": "[\n  {\n    \"id\": \"@alica/acap-contracts@0.0.0\",\n    \"name\": \"@alica/acap-contracts\",\n    \"version\": \"0.0.0\",\n    \"size\": 25867,\n    \"unpackedSize\": 260009,\n    \"shasum\": \"d760e4ac371c420fe1a412868860ef2aa9105ea4\",\n    \"integrity\": \"sha512-OkRMSgr94Ocr2nLhMHyPv/QQzXOgaWFtDnkB95DXS4A7e/aU9eFjlSrbV4cLo3Nr/sIblZZSoGPt2+6tfuGvKw==\",\n    \"filename\": \"alica-acap-contracts-0.0.0.tgz\",\n    \"files\": [\n      {\n        \"path\": \"dist/conformance.d.ts\",\n        \"size\": 572,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"dist/conformance.js\",\n        \"size\": 6188,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"dist/index.d.ts\",\n        \"size\": 50096,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"dist/index.js\",\n        \"size\": 287,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"dist/runtime.d.ts\",\n        \"size\": 3638,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"dist/runtime.js\",\n        \"size\": 19406,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"dist/schema-data.d.ts\",\n        \"size\": 49940,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"dist/schema-data.js\",\n        \"size\": 56149,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"dist/stream.d.ts\",\n        \"size\": 1093,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"dist/stream.js\",\n        \"size\": 3766,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"dist/tooling.d.ts\",\n        \"size\": 1200,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"dist/tooling.js\",\n        \"size\": 8029,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"dist/validation.d.ts\",\n        \"size\": 1681,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"dist/validation.js\",\n        \"size\": 12691,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"package.json\",\n        \"size\": 390,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"schemas/bundle.schema.json\",\n        \"size\": 1768,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"schemas/call.schema.json\",\n        \"size\": 1179,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"schemas/capability.schema.json\",\n        \"size\": 5583,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"schemas/error.schema.json\",\n        \"size\": 934,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"schemas/event-descriptor.schema.json\",\n        \"size\": 3398,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"schemas/event-grant.schema.json\",\n        \"size\": 1860,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"schemas/event.schema.json\",\n        \"size\": 1615,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"schemas/grant.schema.json\",\n        \"size\": 1902,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"schemas/package-index.schema.json\",\n        \"size\": 1729,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"schemas/plugin.schema.json\",\n        \"size\": 8948,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"schemas/profile.schema.json\",\n        \"size\": 3042,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"schemas/resolution-lock.schema.json\",\n        \"size\": 3472,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"schemas/response.schema.json\",\n        \"size\": 2341,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"schemas/revocation.schema.json\",\n        \"size\": 1274,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"schemas/root-rotation.schema.json\",\n        \"size\": 1218,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"schemas/secret-grant.schema.json\",\n        \"size\": 1804,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"schemas/signature.schema.json\",\n        \"size\": 588,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"schemas/trust-policy.schema.json\",\n        \"size\": 2228,\n        \"mode\": 420\n      }\n    ],\n    \"entryCount\": 33,\n    \"bundled\": []\n  }\n]\n"
+    },
+    {
+      "command": [
+        "npm",
+        "pack",
+        "/home/alica-dev/alica-g5-clean/packages/plugin-sdk",
+        "--pack-destination",
+        "$TMP/artifacts",
+        "--json",
+        "--ignore-scripts"
+      ],
+      "output": "[\n  {\n    \"id\": \"@alica/plugin-sdk@0.1.0\",\n    \"name\": \"@alica/plugin-sdk\",\n    \"version\": \"0.1.0\",\n    \"size\": 2719,\n    \"unpackedSize\": 8123,\n    \"shasum\": \"585a6d72fa1b036160d393ed86870fbb5c3f4241\",\n    \"integrity\": \"sha512-cjLJU+R7Sc+wJPm5M+RUhYEnwRnMuDIylDvMwu48EOyOZBbpXsLXRzPuxrgjMsjfSHh8pxYCI6Q/FjM8Bcw6Uw==\",\n    \"filename\": \"alica-plugin-sdk-0.1.0.tgz\",\n    \"files\": [\n      {\n        \"path\": \"README.md\",\n        \"size\": 601,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"dist/index.d.ts\",\n        \"size\": 1925,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"dist/index.js\",\n        \"size\": 5226,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"package.json\",\n        \"size\": 371,\n        \"mode\": 420\n      }\n    ],\n    \"entryCount\": 4,\n    \"bundled\": []\n  }\n]\n"
+    },
+    {
+      "command": [
+        "npm",
+        "pack",
+        "/home/alica-dev/alica-g5-clean/packages/testkit",
+        "--pack-destination",
+        "$TMP/artifacts",
+        "--json",
+        "--ignore-scripts"
+      ],
+      "output": "[\n  {\n    \"id\": \"@alica/testkit@0.1.0\",\n    \"name\": \"@alica/testkit\",\n    \"version\": \"0.1.0\",\n    \"size\": 5749,\n    \"unpackedSize\": 22078,\n    \"shasum\": \"4e1e3ee6fc7bcbbdead481ee6a15a4a4e88daa17\",\n    \"integrity\": \"sha512-doeNq7EEkzTGQdsV9ep4uYL7b9HkPS0R5HXG/1H1Ewg8jT3Ke/z4edWUYIwY9+33s5x6Yb2uuK717nPdmvS5gw==\",\n    \"filename\": \"alica-testkit-0.1.0.tgz\",\n    \"files\": [\n      {\n        \"path\": \"README.md\",\n        \"size\": 598,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"dist/index.d.ts\",\n        \"size\": 1767,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"dist/index.js\",\n        \"size\": 19311,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"package.json\",\n        \"size\": 402,\n        \"mode\": 420\n      }\n    ],\n    \"entryCount\": 4,\n    \"bundled\": []\n  }\n]\n"
+    },
+    {
+      "command": [
+        "npm",
+        "pack",
+        "/home/alica-dev/alica-g5-clean/packages/alicac",
+        "--pack-destination",
+        "$TMP/artifacts",
+        "--json",
+        "--ignore-scripts"
+      ],
+      "output": "[\n  {\n    \"id\": \"@alica/alicac@0.0.0\",\n    \"name\": \"@alica/alicac\",\n    \"version\": \"0.0.0\",\n    \"size\": 2744,\n    \"unpackedSize\": 9168,\n    \"shasum\": \"9704a6e62ebff56b7d08ed88d1b729e76120a9dd\",\n    \"integrity\": \"sha512-Z0tu2A3mkuPTihXgnzg1jcjoX3w4crIYfJBRhH/QlFxeGiZBZGMJsQFhURSOtK7Bso1Y7itQfSeqJ+DC9BGdoA==\",\n    \"filename\": \"alica-alicac-0.0.0.tgz\",\n    \"files\": [\n      {\n        \"path\": \"dist/index.d.ts\",\n        \"size\": 83,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"dist/index.js\",\n        \"size\": 8071,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"dist/provider-loader.d.ts\",\n        \"size\": 299,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"dist/provider-loader.js\",\n        \"size\": 304,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"package.json\",\n        \"size\": 411,\n        \"mode\": 420\n      }\n    ],\n    \"entryCount\": 5,\n    \"bundled\": []\n  }\n]\n"
+    },
+    {
+      "command": [
+        "npm",
+        "pack",
+        "/home/alica-dev/alica-g5-clean/packages/kernel",
+        "--pack-destination",
+        "$TMP/artifacts",
+        "--json",
+        "--ignore-scripts"
+      ],
+      "output": "[\n  {\n    \"id\": \"@alica/kernel@0.0.0\",\n    \"name\": \"@alica/kernel\",\n    \"version\": \"0.0.0\",\n    \"size\": 14744,\n    \"unpackedSize\": 64590,\n    \"shasum\": \"708451e3d697771ac5f928e4b24b29b2de2934ce\",\n    \"integrity\": \"sha512-24V5qYD6avYUKzVRAujwN93wdO+Klz/ohd2kpaCYGpnI7RJ2AE3LWp+ockcpri54om3LWQqJNvmTFQ9caDzwqw==\",\n    \"filename\": \"alica-kernel-0.0.0.tgz\",\n    \"files\": [\n      {\n        \"path\": \"dist/index.d.ts\",\n        \"size\": 2700,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"dist/index.js\",\n        \"size\": 48219,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"dist/schema-data.d.ts\",\n        \"size\": 49,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"dist/schema-data.js\",\n        \"size\": 129,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"dist/trust.d.ts\",\n        \"size\": 1384,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"dist/trust.js\",\n        \"size\": 11579,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"dist/validation.d.ts\",\n        \"size\": 39,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"dist/validation.js\",\n        \"size\": 107,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"package.json\",\n        \"size\": 384,\n        \"mode\": 420\n      }\n    ],\n    \"entryCount\": 9,\n    \"bundled\": []\n  }\n]\n"
+    },
+    {
+      "command": [
+        "npm",
+        "install",
+        "--no-save",
+        "--ignore-scripts",
+        "--no-audit",
+        "--no-fund",
+        "$TMP/artifacts/alica-acap-types-0.0.0.tgz",
+        "$TMP/artifacts/alica-acap-contracts-0.0.0.tgz",
+        "$TMP/artifacts/alica-plugin-sdk-0.1.0.tgz",
+        "$TMP/artifacts/alica-testkit-0.1.0.tgz",
+        "$TMP/artifacts/alica-alicac-0.0.0.tgz"
+      ],
+      "output": "\nadded 13 packages in 1s\n"
+    },
+    {
+      "command": [
+        "/tmp/alica-g5-external-7i3ivr/author/node_modules/.bin/alicac",
+        "capability",
+        "init",
+        "--id",
+        "org.tutorial.math",
+        "--out",
+        "starter.json",
+        "--json"
+      ],
+      "output": "{\"descriptorDigest\":\"sha256:58a55a1975f737ee215b2d3ffff4fb21f28890ab5a19c29a4b629ae1782bb320\",\"valid\":true}\n"
+    },
+    {
+      "command": [
+        "/tmp/alica-g5-external-7i3ivr/author/node_modules/.bin/alicac",
+        "capability",
+        "validate",
+        "contracts/math.json",
+        "--json"
+      ],
+      "output": "{\"descriptorDigest\":\"sha256:19bfc82bed3b4f3478966a8b6a86a1d7c14999387231d2f1dbb6ff239cd1167e\",\"valid\":true}\n"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "output": "\n> @tutorial/plugins@0.1.0 build\n> node build.mjs\n\n"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "output": "\n> @tutorial/plugins@0.1.0 build\n> node build.mjs\n\n"
+    },
+    {
+      "command": [
+        "npm",
+        "test"
+      ],
+      "output": "\n> @tutorial/plugins@0.1.0 test\n> node --test tutorial.test.mjs\n\n✔ handwritten provider and generated client work with two implementations (29.955851ms)\nℹ tests 1\nℹ suites 0\nℹ pass 1\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 296.153714\n"
+    },
+    {
+      "command": [
+        "/tmp/alica-g5-external-7i3ivr/author/node_modules/.bin/alicac",
+        "conformance",
+        "run",
+        "--provider",
+        "dist/provider.js",
+        "--fixtures",
+        "conformance.json",
+        "--json"
+      ],
+      "output": "{\"checks\":[{\"name\":\"fixture:positive\",\"passed\":true},{\"name\":\"fixture:negative\",\"passed\":true},{\"name\":\"fixture:zero\",\"passed\":true},{\"name\":\"fixture:invalid-input\",\"passed\":true},{\"name\":\"wrong-digest\",\"passed\":true},{\"name\":\"unknown-operation\",\"passed\":true},{\"name\":\"expired-request\",\"passed\":true},{\"name\":\"caller-spoof\",\"passed\":true},{\"name\":\"incompatible-negotiation\",\"passed\":true}],\"descriptorDigest\":\"sha256:19bfc82bed3b4f3478966a8b6a86a1d7c14999387231d2f1dbb6ff239cd1167e\",\"passed\":true,\"schemaVersion\":\"alica.conformance/v1\"}\n"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "verify"
+      ],
+      "output": "\n> @tutorial/plugins@0.1.0 verify\n> node verify.mjs\n\n{\"level\":\"PACKAGE_CONTENTS\",\"passed\":true,\"files\":[\"consumer.plugin.json\",\"contracts/math.json\",\"contracts/result.json\",\"dist/consumer.d.ts\",\"dist/consumer.js\",\"dist/provider.d.ts\",\"dist/provider.js\",\"generated/client.d.mts\",\"generated/client.mjs\",\"generated/provider.d.mts\",\"generated/provider.mjs\",\"package.json\",\"provider.plugin.json\"]}\n"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "run"
+      ],
+      "output": "\n> @tutorial/plugins@0.1.0 run\n> node run.mjs\n\n{\"mode\":\"TESTKIT—not production authority\",\"result\":42}\n"
+    },
+    {
+      "command": [
+        "node",
+        "--input-type=module",
+        "-e",
+        "import assert from 'node:assert/strict';import {createRequire} from 'node:module';const require=createRequire(import.meta.url);assert.throws(()=>require.resolve('@alica/kernel'),e=>e.code==='MODULE_NOT_FOUND');for(const p of ['@alica/plugin-sdk/dist/index.js','@alica/testkit/dist/index.js'])assert.throws(()=>require.resolve(p),e=>e.code==='ERR_PACKAGE_PATH_NOT_EXPORTED')"
+      ],
+      "output": ""
+    },
+    {
+      "command": [
+        "node",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "-p",
+        "tsconfig.json"
+      ],
+      "output": ""
+    },
+    {
+      "command": [
+        "npm",
+        "pack",
+        "--pack-destination",
+        "$TMP/artifacts",
+        "--json",
+        "--ignore-scripts"
+      ],
+      "output": "[\n  {\n    \"id\": \"@tutorial/plugins@0.1.0\",\n    \"name\": \"@tutorial/plugins\",\n    \"version\": \"0.1.0\",\n    \"size\": 2597,\n    \"unpackedSize\": 7817,\n    \"shasum\": \"8412329a46da48ec71db45fc2ff50c608871b958\",\n    \"integrity\": \"sha512-wsb+JYeRy/WbM09olBw3uKX6o7eQ7LNm/L2FCXQoFtm3Mhe2Nn0kXi2lj3tTg5yJ6K7O78u0CM4XjysQbY3I7w==\",\n    \"filename\": \"tutorial-plugins-0.1.0.tgz\",\n    \"files\": [\n      {\n        \"path\": \"consumer.plugin.json\",\n        \"size\": 569,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"contracts/math.json\",\n        \"size\": 762,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"contracts/result.json\",\n        \"size\": 436,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"dist/consumer.d.ts\",\n        \"size\": 460,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"dist/consumer.js\",\n        \"size\": 910,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"dist/provider.d.ts\",\n        \"size\": 318,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"dist/provider.js\",\n        \"size\": 434,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"generated/client.d.mts\",\n        \"size\": 421,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"generated/client.mjs\",\n        \"size\": 1072,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"generated/provider.d.mts\",\n        \"size\": 347,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"generated/provider.mjs\",\n        \"size\": 739,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"package.json\",\n        \"size\": 878,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"provider.plugin.json\",\n        \"size\": 471,\n        \"mode\": 420\n      }\n    ],\n    \"entryCount\": 13,\n    \"bundled\": []\n  }\n]\n"
+    },
+    {
+      "command": [
+        "npm",
+        "install",
+        "--no-save",
+        "--ignore-scripts",
+        "--no-audit",
+        "--no-fund",
+        "$TMP/artifacts/alica-acap-types-0.0.0.tgz",
+        "$TMP/artifacts/alica-acap-contracts-0.0.0.tgz",
+        "$TMP/artifacts/alica-plugin-sdk-0.1.0.tgz",
+        "$TMP/artifacts/alica-kernel-0.0.0.tgz",
+        "$TMP/artifacts/tutorial-plugins-0.1.0.tgz"
+      ],
+      "output": "\nadded 10 packages in 988ms\n"
+    },
+    {
+      "command": [
+        "node",
+        "--experimental-vm-modules",
+        "operator-run.mjs"
+      ],
+      "output": "{\"level\":\"PROVIDER\",\"transport\":\"inproc\",\"signedPackageVerified\":true,\"inventoryOnlyModules\":true,\"publicSdk\":true,\"result\":42,\"cleanup\":{\"completedDisposers\":2,\"failedDisposers\":[],\"restartRequired\":false,\"state\":\"DISPOSED\",\"timedOutResources\":0},\"providerActivated\":true}\n"
+    }
+  ]
+}
