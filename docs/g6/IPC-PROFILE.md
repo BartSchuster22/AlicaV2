@@ -1,6 +1,6 @@
 # G6 R2 — IPC profile and state rules
 
-Status: **complete review candidate; not implementation or runtime qualification**. [ADR-013 R2](../adr/ADR-013.md) and the schemas in `draft/` are one proposal. The old single-active profile is superseded. Frozen G1 schemas/specifications are unchanged.
+Status: **approved R2 implementation profile; runtime qualification pending**. Approval: [owner record](../gates/G6-R2-OWNER-APPROVAL.md). [ADR-013 R2](../adr/ADR-013.md) and the schemas in `draft/` are one proposal. The old single-active profile is superseded. Frozen G1 schemas/specifications are unchanged.
 
 ## Wire formats and channels
 
