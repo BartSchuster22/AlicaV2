@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "alica.g4-execution/v1",
+  "capturedAtUtc": "2026-09-16T16:14:45.296813+00:00",
+  "implementationCommit": "5386c32bf375fbed8701f9da5b3f2798744b80fd",
+  "baselineG3AcceptanceCommit": "0c7d6626cc62e513d50bb5870e6fdf90c30a3567",
+  "checks": {
+    "working": {
+      "nodePassed": 142,
+      "nodeFailed": 0,
+      "designPassed": 193,
+      "isolatedConformancePassed": true,
+      "installedCliBinaryExercised": true
+    },
+    "clean": {
+      "nodePassed": 142,
+      "nodeFailed": 0,
+      "designPassed": 193,
+      "isolatedConformancePassed": true,
+      "installedCliBinaryExercised": true
+    }
+  },
+  "artifactCount": 56,
+  "workingAndCleanArtifactsIdentical": true,
+  "g1SpecificationsUnchanged": true,
+  "cleanCheckoutStatus": "clean",
+  "ciStatus": "Not independently accessible; exact pushed-candidate owner CI confirmation remains required",
+  "ownerAcceptance": "Pending",
+  "productionDeployment": false
+}

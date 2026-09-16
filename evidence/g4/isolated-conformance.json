@@ -1,0 +1,60 @@
+{
+  "schemaVersion": "alica.isolated-conformance/v1",
+  "passed": true,
+  "installedPackages": [
+    "@alica/acap-types",
+    "@alica/acap-contracts",
+    "@alica/alicac"
+  ],
+  "kernelInstalled": false,
+  "generatedArtifactsDeterministic": true,
+  "generatedTypesChecked": true,
+  "wireRoundTrip": true,
+  "conformance": {
+    "checks": [
+      {
+        "name": "fixture:independent-add",
+        "passed": true
+      },
+      {
+        "name": "fixture:recorded-replay",
+        "passed": true
+      },
+      {
+        "name": "fixture:changed-payload-conflict",
+        "passed": true
+      },
+      {
+        "name": "fixture:stream-count",
+        "passed": true
+      },
+      {
+        "name": "fixture:empty-stream",
+        "passed": true
+      },
+      {
+        "name": "wrong-digest",
+        "passed": true
+      },
+      {
+        "name": "unknown-operation",
+        "passed": true
+      },
+      {
+        "name": "expired-request",
+        "passed": true
+      },
+      {
+        "name": "caller-spoof",
+        "passed": true
+      },
+      {
+        "name": "incompatible-negotiation",
+        "passed": true
+      }
+    ],
+    "descriptorDigest": "sha256:8766c5d4a8e68a5194a76fc0ce18ed3b50b86ce8765508fc95c05de0d83bff21",
+    "passed": true,
+    "schemaVersion": "alica.conformance/v1"
+  }
+}
