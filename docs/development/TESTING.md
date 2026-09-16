@@ -1,6 +1,6 @@
 # Testing and evidence
 
-The foundation has two distinct test layers: Node built-in tests for workspace/check behavior and the retained Python G1 schema/design tests. Neither is production Kernel conformance.
+The checks have three distinct layers: Node foundation checks; real Kernel/ACAP runtime tests in `tests/kernel`; and retained Python G1 schema/design checks. Only the runtime suites exercise G3 enforcement. `npm run demo` also executes both Echo substitutions and asserts cooperative resource reclamation. See `docs/gates/G3.md` for supported scope and limitations.
 
 Import-boundary fixtures exercise the same AST analyzer as the command and include deep package imports, relative cross-package paths, computed imports and absolute V1 paths. Public package export rejection is checked by Node itself. The secret fixture is constructed in a temporary directory from clearly synthetic characters, scanned through the actual CLI, checked for nonzero exit/redacted output, then deleted; no credential is used or committed.
 

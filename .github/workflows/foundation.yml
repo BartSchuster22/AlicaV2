@@ -24,4 +24,5 @@ jobs:
           export PATH="$PWD/.tools/node/bin:$PATH"
           npm ci --ignore-scripts
           npm run check
+          npm run demo
           git diff --exit-code

@@ -14,12 +14,20 @@ export function violations(file, source, root) {
     const packageSource = path
       .relative(root, file)
       .startsWith('packages' + path.sep);
-    if (packageSource && (name.startsWith('node:') || name === 'typescript'))
+    const kernel = path
+      .relative(root, file)
+      .startsWith('packages' + path.sep + 'kernel' + path.sep);
+    if (
+      packageSource &&
+      ((!kernel && name.startsWith('node:')) || name === 'typescript')
+    )
       errors.push(
         'foundation packages cannot depend on host or developer tooling',
       );
     if (name.startsWith('@alica/')) {
-      const allowed = ['@alica/acap-types'];
+      const allowed = packageSource
+        ? ['@alica/acap-types']
+        : ['@alica/acap-types', '@alica/kernel'];
       if (!allowed.includes(name))
         errors.push('non-public or undeclared package import');
     } else if (name.startsWith('.') || path.isAbsolute(name)) {
@@ -39,7 +47,11 @@ export function violations(file, source, root) {
       if (targetPackage && targetPackage !== owner)
         errors.push('cross-package path import');
       if (path.isAbsolute(name)) errors.push('absolute import');
-    } else if (!name.startsWith('node:') && name !== 'typescript')
+    } else if (
+      !name.startsWith('node:') &&
+      name !== 'typescript' &&
+      !(kernel && ['ajv', 'ajv/dist/2020.js'].includes(name))
+    )
       errors.push('undeclared external import');
   }
   function visit(n) {
@@ -76,7 +88,7 @@ if (
 ) {
   const root = path.resolve(process.argv[2] || '.');
   let failed = false;
-  for (const folder of ['packages', 'tests/foundation', 'tools'])
+  for (const folder of ['packages', 'tests', 'tools'])
     for (const file of walk(path.join(root, folder))) {
       for (const error of violations(file, readFileSync(file, 'utf8'), root)) {
         console.error(path.relative(root, file) + ': ' + error);

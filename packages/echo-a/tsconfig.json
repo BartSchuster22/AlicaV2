@@ -9,8 +9,12 @@
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": false,
     "verbatimModuleSyntax": true,
+    "declaration": true,
+    "rootDir": "src",
+    "outDir": "dist",
+    "newLine": "lf",
     "types": ["node"],
     "lib": ["ES2024"]
   },
-  "include": ["packages/*/src/**/*.ts", "tests/foundation/**/*.ts"]
+  "include": ["src/**/*.ts"]
 }

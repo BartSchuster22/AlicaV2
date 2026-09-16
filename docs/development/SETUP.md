@@ -14,15 +14,16 @@ git diff --exit-code
 
 `toolchain.lock.json` pins runtime download URL/SHA256, npm and the bootstrap pip wheel. `requirements-design.txt` pins every design dependency and wheel SHA256. `package-lock.json` pins npm dependency versions/integrity. `bootstrap.py` installs only into ignored `.tools/`, with standard pip bootstrapped from a checksum-verified wheel; no sudo/system Python mutation. The global development account runtime was also installed under its own `.local/share/alica/toolchains/` with evidence, but clean checkouts do not depend on it.
 
-Selected TypeScript 6 is the pure-JavaScript compiler/API used by the boundary parser. TypeScript 7 currently introduces per-platform native packages; not adopted because they add no needed G2 benefit. Two npm dev dependencies only: TypeScript and Prettier. No production dependency exists. Python dependencies support the retained G1 design checks, not the product runtime. Updated jsonschema/cryptography are pinned locally rather than silently relying on older host packages.
+Selected TypeScript 6 is the pure-JavaScript compiler/API used by the boundary parser. TypeScript 7 currently introduces per-platform native packages; not adopted because they add no needed G2 benefit. G3 adds exact-pinned `@types/node` for development and Ajv for runtime JSON Schema validation. The lockfile includes reviewed transitive licenses; lifecycle scripts stay disabled. Python dependencies support the retained G1 design checks, not the product runtime. Updated jsonschema/cryptography are pinned locally rather than silently relying on older host packages.
 
 Setup integrity is based on reviewed upstream HTTPS hash metadata, not independently verified Node release-key signatures. This limitation is explicit; production candidate signing remains a separate G7 obligation.
 
 ## Commands
 
-- `npm run build`: compile public type foundation and declarations.
+- `npm run build`: compile public types, Kernel, independent Echo providers and consumer in dependency order.
 - `npm run typecheck`: positive/negative TypeScript contract checks.
-- `npm test`: import-boundary/public-export and synthetic secret-detector checks.
+- `npm test`: foundation checks plus real Kernel and adversarial lifecycle/security tests.
+- `npm run demo`: live synthetic Echo substitutions, resolver/audit/inspection output and teardown assertions; requires the built workspace.
 - `npm run schema`: G1 design suite under Python `-S` and locked local deps.
 - `npm run format:check`: engineering-source/config formatting; historical normative/evidence documents are not reformatted.
 - `npm run boundaries`: AST import checks.

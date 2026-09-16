@@ -4,7 +4,7 @@ A new, lean capability-oriented substrate: **Kernel → ACAP → SDK**.
 
 ## Current stage
 
-Step-1 implementation authorized. G0 technical reference closure is delivered with owner EXIT acceptance pending; existing G1 design remains proposed. No higher-level ALICA services are integrated. Existing V1 artifacts are references, not runtime dependencies.
+G3 minimal trusted Kernel and synthetic Echo implementation is delivered as an acceptance candidate. See [G3 scope, evidence and limitations](docs/gates/G3.md). G2 progression uses the [owner-approved manual gate](docs/gates/G2-OWNER-DISPOSITION.md); GitHub remains private. No higher-level ALICA services are integrated. Existing V1 artifacts are references, not runtime dependencies.
 
 - [Initiation assessment and building plan](docs/planning/ALICA_V2_Assessment_and_Step1_Building_Plan.md)
 - [Gate status](docs/gates/STATUS.md)
@@ -27,11 +27,11 @@ Run design validation on the development VPS:
 python3 tests/design/test_specifications.py
 ```
 
-These checks use the host's existing Python/jsonschema installation and are not production runtime tests. No application tooling or service stack has been installed.
+These are historical design checks, not Kernel runtime tests. Use `npm run check` with the locked development setup for the complete design, engineering and runtime suites.
 
 ## G1 normative baseline
 
-The completed design-validation delivery is indexed by [G1 gate](docs/gates/G1.md) and [six review records](docs/gates/G1-REVIEW.md). Owner normative-baseline acceptance remains the exit gate; no production Kernel or service integration exists.
+The completed design-validation delivery is indexed by [G1 gate](docs/gates/G1.md) and [six review records](docs/gates/G1-REVIEW.md). The original G1 delivery/acceptance history remains in its gate record. G3 now implements the qualified minimal in-process subset; it does not claim every later-phase feature or production service integration.
 
 ## Engineering foundation (G2)
 

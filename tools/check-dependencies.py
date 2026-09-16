@@ -7,7 +7,12 @@ def license_ok(expression):
  tokens=set(re.findall(r'[A-Za-z0-9.+-]+',expression))-{'AND','OR'}
  return bool(tokens) and tokens<=allowed
 p=json.loads((R/'package.json').read_text());lock=json.loads((R/'package-lock.json').read_text())
-assert not p.get('dependencies'),'G2 has no runtime dependencies'
+assert not p.get('dependencies'),'root is development-only'
+for manifest_path in (R/'packages').glob('*/package.json'):
+ manifest=json.loads(manifest_path.read_text())
+ for name,version in manifest.get('dependencies',{}).items():
+  assert name in {'@alica/acap-types','ajv'},name
+  assert re.fullmatch(r'\d+\.\d+\.\d+',version),name
 for name,version in p['devDependencies'].items():assert re.fullmatch(r'\d+\.\d+\.\d+',version),name
 for path,entry in lock['packages'].items():
  if not path.startswith('node_modules/') or entry.get('link'):continue

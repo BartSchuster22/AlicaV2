@@ -13,19 +13,21 @@
   },
   "packageManager": "npm@11.19.0",
   "scripts": {
-    "format": "prettier --write package.json package-lock.json tsconfig*.json packages tools/*.mjs tests/foundation .github/workflows",
-    "format:check": "prettier --check package.json package-lock.json tsconfig*.json packages tools/*.mjs tests/foundation .github/workflows",
-    "build": "tsc -p tsconfig.build.json",
+    "format": "prettier --write package.json package-lock.json tsconfig*.json packages tools/*.mjs tests/foundation tests/kernel .github/workflows",
+    "format:check": "prettier --check package.json package-lock.json tsconfig*.json packages tools/*.mjs tests/foundation tests/kernel .github/workflows",
+    "build": "node tools/build.mjs",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "test": "node --test tests/foundation/*.test.mjs",
+    "test": "node --experimental-vm-modules --test tests/foundation/*.test.mjs tests/kernel/*.test.mjs",
     "schema": "python3 -S tools/run-design.py",
     "boundaries": "node tools/check-boundaries.mjs",
     "secrets": "python3 tools/check-secrets.py",
     "dependencies": "python3 -S tools/check-dependencies.py",
-    "check": "node tools/check-toolchain.mjs && npm run format:check && npm run build && npm run typecheck && npm run test && npm run schema && npm run boundaries && npm run secrets && npm run dependencies"
+    "check": "node tools/check-toolchain.mjs && npm run format:check && npm run build && npm run typecheck && npm run test && node tools/check-schema-sync.mjs && npm run schema && npm run boundaries && npm run secrets && npm run dependencies",
+    "demo": "node --experimental-vm-modules tools/echo-demo.mjs"
   },
   "devDependencies": {
     "typescript": "6.0.3",
-    "prettier": "3.9.7"
+    "prettier": "3.9.7",
+    "@types/node": "24.13.5"
   }
 }
