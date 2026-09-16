@@ -1,0 +1,194 @@
+{
+  "schemaVersion": "alica.foundation-evidence/v1",
+  "executedAtUtc": "2026-09-16T13:27:33.838476+00:00",
+  "sourceCommit": "b827cda24ae11901bb0afdd80e92f8fb81161c70",
+  "sourceDirty": false,
+  "cleanCheckout": "/tmp/alica-g2-clean-pcic1pru/checkout",
+  "isolatedHome": "/tmp/alica-g2-clean-pcic1pru/home",
+  "initialPATH": "/usr/bin:/bin",
+  "host": "Ubuntu 24.04 x86_64 / Python 3.12 / OpenSSL system prerequisites",
+  "localChecks": "PASS",
+  "gateStatus": "BLOCKED_OWNER_HOST_CONTROLS_AND_CI_ENFORCEMENT",
+  "foundationTests": 14,
+  "designTests": 193,
+  "artifacts": {
+    "packages/acap-types/dist/index.d.ts": "2f053b6ac24979938f3b343c723fe5ac996c8b6f0a559e8006a23c0fa94dc8fc",
+    "packages/acap-types/dist/index.js": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+  },
+  "repeatBuildIdentical": true,
+  "developmentBuildIdentical": true,
+  "noTrackedChanges": true,
+  "v1RuntimeDependency": false,
+  "commands": [
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "git",
+        "clone",
+        "--no-local",
+        "/home/alica-dev/AlicaV2",
+        "/tmp/alica-g2-clean-pcic1pru/checkout"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "git",
+        "status",
+        "--porcelain"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "python3",
+        "tools/bootstrap.py"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "npm",
+        "ci",
+        "--ignore-scripts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "check"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--exit-code"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "git",
+        "status",
+        "--porcelain"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "git",
+        "status",
+        "--porcelain"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "inputSha256": {
+    ".github/workflows/foundation.yml": "f12c975829f8ccaf276afc02844059013831df73f4c989efeabeea01075288b7",
+    ".npmrc": "ae68fbe13277326dfb23cacb4ac2ab466e46ceb6d0a025e677e491b06c1ddf8b",
+    ".prettierignore": "b54d557ea29cfdc066e8b1e424f4f444cb3c38fc2d7d0fad70c75f732a879758",
+    ".prettierrc.json": "0b9202c996f8dd36f8147e37e99108aa134eed99db3c4a7b920ef48a68a6db42",
+    "package-lock.json": "a0f158c39d00e8e030856203c58bb7c57bf18ebb5d3be0bf53b21882ffa21138",
+    "package.json": "80da41b76c292ec839e2cc9076ecb9297e863c1a526c85f66ea5eadf5dc5da35",
+    "packages/acap-types/README.md": "a5d5f988fa3513e87b7f6cabdb38fd7b373fb5711011e6a8ca5c80f8e646b2d8",
+    "packages/acap-types/package.json": "57ebfe46f2cd56d9e4a27cb165b96aeb235833b22fc7e356d26b4995826e5df9",
+    "packages/acap-types/src/index.ts": "eb98fa79d33509d29aa94eadb5673fd66a0bef19fcb7debf47e2cd3bcf59c19c",
+    "requirements-design.txt": "8abf5ea787fb4bfa06c3ae4f84bb695954878d26499fd78f85be2ba1ab96bd84",
+    "specs/ACAP-CORE-v1.md": "943eac44eeaef87f5981c2318431a3a7f3d29eaacf671239105c6774af8d069e",
+    "specs/ACAP-ERRORS-v1.md": "370aa68867a643b67279e07fec7e6bd961b07f7d1d9bf63edddb0a1e82ced1a1",
+    "specs/ACAP-EVENTS-v1.md": "634b710373db921006f7567c72f643efe853d2e7546c4dee074de1c79734048f",
+    "specs/ACAP-SCOPES-v1.md": "06b367f60615b4c6db90caf506f74a55f54888070349250b3053a8bf5ff5d228",
+    "specs/ACAP-SECURITY-v1.md": "23bbec2b8a89740610fba5934fd4f616cb440f77c106cfac5dd5116ce185a376",
+    "specs/ACAP-TRANSPORT-INPROC-v1.md": "582096d31a122da11f5510d7524357a7831760755600b8a5f4af0c48e5bca195",
+    "specs/ACAP-TRANSPORT-IPC-v1.md": "a85a596beb402a745a2cb947ed1ab5c08d59789bb261084b4303f79f7a3b0677",
+    "specs/ALICA-BUNDLE-v1.md": "ba10a24c0abc4c13a19720c1f8f5a343f10a0ca4e046793c9230caae119580e3",
+    "specs/ALICA-KERNEL-API-v1.md": "268ba388a87cb2f3823c8cd375914e83de962f1dce12ae7d00ee27f3ce5cfb8d",
+    "specs/ALICA-NORMATIVE-BASELINE-v1.md": "0c0fee27a15754502ab07464507ebb7c11e17bd47db382e3cc160db473508bef",
+    "specs/ALICA-PLUGIN-MANIFEST-v1.md": "346aa3ad605743607a37c198969cb2340f65ae92ad38891b21816a1608d23016",
+    "specs/ALICA-PROFILE-v1.md": "6bfa2dd4d3ae0a7cf304000e5b46d3d6bd3656ed241ccb0db298794c824bebfb",
+    "specs/ALICA-PUBLIC-INTERFACES-v1.md": "501f321e78f6f0e61eb5dec4a16a3c39371aec33e6777b342a1af5260da3ad25",
+    "specs/ALICA-SDK-CONFORMANCE-v1.md": "03b09e012aac0a14ec2ccb47a53966c5b1653bb819201df7dffa04a3d336380e",
+    "specs/ALICA-TRUST-POLICY-v1.md": "933bd8f9ed56cf7f97f241bd3e2a864e0aac9519ed84d8b7c05e37be0180450a",
+    "specs/README.md": "67c32616724aa8c79cf6a337aa071fcf4392b246ad212bbba25fd7aa6357c10a",
+    "specs/examples/README.md": "8f51511af0f8fe76d7ca4da0134a1e7334e161674ad182cbc9c83eefba784916",
+    "specs/examples/bundle.valid.json": "b83d6fd046b4954d2ce78efd94173b188893f2deb0d2a0d827e7840932e23c26",
+    "specs/examples/call.valid.json": "199289c34d233fd19c8be212a5d55e23705f53b0c6d4420f05016c9f99e165ed",
+    "specs/examples/capability.valid.json": "069cff3007254f9a32372bc8352dc712cf315e88f4167adb75621874b32fbe06",
+    "specs/examples/error.valid.json": "32edd4d3fdadabba0cfb051b3e39dce06a88745b7a90286af896b7d4c1583c2c",
+    "specs/examples/event-descriptor.valid.json": "bc0d899bac4714bcaec5701b4f5744ee3456e4e0fcb0b3ce006e268134a66826",
+    "specs/examples/event-grant.valid.json": "57be262777e51b716fab99c2d7f11ba0573092d3b69b08de61fe89c4248db2d0",
+    "specs/examples/event.valid.json": "6a8f57b864ed175e1afc3d1d4db017d9e8c8875cbdc23d031117af3c81b20a06",
+    "specs/examples/grant.valid.json": "bbf168185282a2daba8ccdf36b3c4d07cfac4c3b20ea990401839160599de77d",
+    "specs/examples/package-index.valid.json": "3112c112972fbd7da05d5a157082ab8166cc4530bd618c02b7cb31853c328739",
+    "specs/examples/plugin.valid.json": "acd9cb422e71ab3197dc0e25a782d0d5ccf99b8bf04b9741781244cacd3ca6fc",
+    "specs/examples/profile.valid.json": "1506e86792a80d8383f55063ae7897056562a99c4b8e4c521b81dd5f5bb06b4c",
+    "specs/examples/resolution-lock.valid.json": "9859de3f5a13b4a93b419dbf75b3ee26d745e4dc5ff7517152c5a122612fd230",
+    "specs/examples/response.valid.json": "b3e90bf3bf92cb659b53d94182a84bc911efbc4ab614b95d76112e804ce9d26f",
+    "specs/examples/revocation.valid.json": "c860176efb3e0f441c3c1d773ba7e3167a98f532ffc06e204c73788483eccb21",
+    "specs/examples/root-rotation.valid.json": "8edae4ec04e3e0ec81299ce7a80e17607b48ff8b003aa462c92cf4218c7e30df",
+    "specs/examples/secret-grant.valid.json": "47316028e88edc3e3121cdbbc1b15bbbbc50e4ab7c7807ce4ae48e49993a4100",
+    "specs/examples/signature.valid.json": "50ca3aac7d8d3f2f11da29ebf50de2295283e73b25da731d43f888b61f9882f8",
+    "specs/examples/trust-policy.valid.json": "b8fe33bdc5480501b8cef164e50115b5ce3999c92cb4e2dd96ffffedb3e12c88",
+    "specs/schemas/bundle.schema.json": "e2ab69db5d00a430bd6b2988710550425a34049c5b10e66c56520ecd2aa86fc8",
+    "specs/schemas/call.schema.json": "25df22d8f6a5b5703e7aae83a1069603888000ac9dd5a21965120bb04e8abf19",
+    "specs/schemas/capability.schema.json": "0aae5fe4b8dbc317e9961b308f3a0398ecce6a1e05be47cf81121f99a12bb3eb",
+    "specs/schemas/error.schema.json": "19e33e88b2e3c155d3bcef78efbfedcaaa87d5d3e9574acb12b6893b1692ae79",
+    "specs/schemas/event-descriptor.schema.json": "94077b85f611ea542973c17070f69777600d674f3ef58f3357e2a7e1dab1dbab",
+    "specs/schemas/event-grant.schema.json": "650d6a86d340d81e01251aa9aa0d55a2d3707ade91b640c062d0139bfe04c134",
+    "specs/schemas/event.schema.json": "63e548385953b8329defbf37cebdef48a511252b8e7f72259fdc5c49e60e2e98",
+    "specs/schemas/grant.schema.json": "d6484b3b56ee38ac5212774ddebef394bc5253ce808fc386393db67365f128b1",
+    "specs/schemas/package-index.schema.json": "034b4b91a39f69032a945d43244ed2ec78b250ad1e4e1d75ae66638efddaebd8",
+    "specs/schemas/plugin.schema.json": "81eda75d8f60af321af081d41764cdc062d5755824366962413230b5d8905513",
+    "specs/schemas/profile.schema.json": "0e1bbe23e99806004841c805d10b1840cb5be0be12bce5794b71b42b3addca5d",
+    "specs/schemas/resolution-lock.schema.json": "c99b75abe56516b46610a814966ce31a6c53f5acf1ccfb7a22cf020fb5a330d8",
+    "specs/schemas/response.schema.json": "8c5b06b51bdc450ba59213f5094a37e5bcd8715dc1fc057f0678e51511a327d1",
+    "specs/schemas/revocation.schema.json": "57000e4b40347859ab0e200a07ce49e29dc159e4498fc39c0cd8b36618139b8f",
+    "specs/schemas/root-rotation.schema.json": "308752da1df08d09ebd1a6ebb0a2cd4977581d510de5b9d9b78ab02f513e690d",
+    "specs/schemas/secret-grant.schema.json": "8f73b533feb50b18ce714f614bf414559731470a7290069bbd1363cf651da8ff",
+    "specs/schemas/signature.schema.json": "e4e5e6022e4899583c152f66e70c5521efc35b95c97027c8ffb214a6aa559dc3",
+    "specs/schemas/trust-policy.schema.json": "3133b52fc56e5b4cd80a335bdadaa2aae1b241801095b1d226b31db3d1fad49a",
+    "specs/vectors/canonical.json": "cc3e821484481b1d6ee1a4ebd527b0f7f52cbec7004f03da9f0da82569ce8894",
+    "tests/design/README.md": "70be31d2fb56da22a437f07ad25b142234f765c197096b8bf37b08a640f6476c",
+    "tests/design/test_g1_completion.py": "e79c2e8cfe94a7d9083a1ffa9f1ced22a8178469364ad363b1c1603f3add598b",
+    "tests/design/test_specifications.py": "dc7382f5bb21b1b897836ca18711f8374ce381a06cfa01ff3e59aef492055f1e",
+    "tests/foundation/foundation.test.mjs": "9c0ec6a4d2cce83572554d406da182f21f5a23df4bb367542fc7806803a1966b",
+    "tests/foundation/types.test.ts": "fce60d4b8badd3d5da0a338da4e2f4232fc4604f0d862c472ce0936656a9c2e2",
+    "tests/reference/verify_g0.py": "14942a5cc41863556113164fc9db124ebd1c00a9b7c4ee117c7697251491db71",
+    "toolchain.lock.json": "078cc50770b1ede31fcf4346a1ad316c97d1ffe6d0a55fe44a929d8a1fb612f6",
+    "tools/bootstrap.py": "89a0e2b46b0b94cfa4befadf56e9e9377907cac1a2f73306461e977e6bdb023d",
+    "tools/check-boundaries.mjs": "ef73cacded320e7b3c76eb004e1829dbc68e7aa173ec90a3470105283df8cb47",
+    "tools/check-dependencies.py": "3f79d26b19a005c045b4c08373fa0efcf4431d602a8119e23ad0b7b48268bc52",
+    "tools/check-secrets.py": "47b635b848efdebac48b396f5ff2aac09be5061fccbb7def0736390e14c2e229",
+    "tools/check-toolchain.mjs": "a85c3e3e0e6d696a4224e57078030dba76c47a6f20d1aeab763f753488090c47",
+    "tools/run-design.py": "8d2405349819aa7c543cff487b00d45ff8230a2d32d55294a66b6e74c1163961",
+    "tsconfig.build.json": "a7d7fd69693bf585e87d3a1882d756cb209bb3106c5edae124d4320a66594e60",
+    "tsconfig.json": "c4951594865516734b6ebef0f1fbc3ebcb92aced9f280f6f2002d221f7f5aaed"
+  },
+  "logSha256": "4a08fc80ee3c3705d778652e86e565b9ac32d861052f6d1965e325dbe96d73f7",
+  "limits": [
+    "Same-host separate checkout, not VM isolation or G7 disconnected qualification",
+    "Online dependency setup uses only pinned public tooling artifacts",
+    "Remote Actions result and required-check enforcement not authenticated/verified",
+    "Owner-only effective SSH/firewall controls unresolved",
+    "No owner-approved substitute CI control recorded"
+  ]
+}
