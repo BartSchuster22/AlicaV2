@@ -8,7 +8,7 @@
 | G3 | ACCEPTED by owner for candidate 9323a5c | G3-OWNER-ACCEPTANCE.md; exact-candidate foundation CI success confirmed by owner; documented limitations retained |
 | G4 | ACCEPTED by owner for a0bd08d | G4-OWNER-ACCEPTANCE.md; exact-candidate foundation success confirmed by owner |
 | G5 | ACCEPTED by owner for db74818 | G5-OWNER-ACCEPTANCE.md; exact-candidate foundation success confirmed by owner |
-| G6 | Baseline approved; ADR-013 and frame-schema design review candidate prepared | G6-BASELINE-APPROVAL.md; ../adr/ADR-013.md; ../g6/QUALIFICATION.md; platform probes and schema checks only, no runtime qualification |
+| G6 | Bounded-concurrency/reentrancy revision direction approved; revised ADR/schema review pending | G6-CONCURRENCY-DIRECTION.md; single-active candidate superseded as exit target; no runtime qualification |
 | G7–G8 | NOT STARTED | No service integration or installer/recovery qualification claimed |
 
 GitHub stays private. Required-check enforcement is unavailable on the current plan.

@@ -1,5 +1,7 @@
 # Proposed G6 IPC profile — wire/state rules
 
+**SUPERSEDED REVIEW DRAFT — not approved for implementation.** The owner approved a bounded-concurrency/reentrancy revision; the single-active target below is historical, not the G6 exit target. See [revision requirements](CONCURRENCY-REVISION.md). The existing frame schemas remain structural drafts and also require revision.
+
 **Review draft, not implemented transport.** ADR-013 and `draft/frames.schema.json` form one proposal. The schema is intentionally stored outside frozen G1 specifications. Each definition is closed except explicitly typed ACAP values. JSON Schema validates shapes; it cannot authenticate a peer or enforce protocol state.
 
 ## Framing and strict data boundary

@@ -1,6 +1,8 @@
 # G6 qualification plan and current evidence boundary
 
-Status: **design review candidate; G6 implementation and exit qualification not complete**.
+Status: **revision required; bounded-concurrency direction approved, implementation and G6 exit qualification not complete**.
+
+The owner decision in [G6-CONCURRENCY-DIRECTION.md](../gates/G6-CONCURRENCY-DIRECTION.md) supersedes the single-active qualification target. The earlier evidence remains historical evidence only.
 
 ## Required implementation artifacts after approval
 
@@ -28,7 +30,7 @@ Status: **design review candidate; G6 implementation and exit qualification not 
 | Resource bounds | Record peak frames/bytes, handles/scopes/subscriptions, event acks, parser work and output draining under hostile traffic | Not run |
 | Containers | Same provider qualified inside any selected container runtime | NOT SELECTED; no qualification claimed |
 
-The equivalence profile proposes one active invocation per worker. Explicitly test bounded cyclic/reentrant rejection on both routes; do not describe that restricted profile as unrestricted inproc concurrency equivalence. Owner review can require a different concurrency design before implementation.
+The revised equivalence target must exercise successful concurrent and reentrant work within declared bounds using the same consumer function on both routes, and deterministic capacity/depth failures only when those bounds are exceeded. Blanket rejection of reentrancy or a single-active-only suite cannot satisfy this target. See CONCURRENCY-REVISION.md for additional causal-budget and isolation tests.
 
 ## Design checks
 
