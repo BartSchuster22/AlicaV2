@@ -9,7 +9,8 @@
 | G4 | ACCEPTED by owner for a0bd08d | G4-OWNER-ACCEPTANCE.md; exact-candidate foundation success confirmed by owner |
 | G5 | ACCEPTED by owner for db74818 | G5-OWNER-ACCEPTANCE.md; exact-candidate foundation success confirmed by owner |
 | G6 | Runtime implementation and qualification delivered; formal exact-candidate CI/owner acceptance pending | G6.md; docs/g6/FULL-QUALIFICATION-LEDGER.md; evidence/g6-runtime; original approvals retained |
-| G7–G8 | NOT STARTED | No service integration or installer/recovery qualification claimed |
+| G7 | DESIGN/PREQUISITES PREPARATION ONLY; implementation blocked on entry decisions | G7.md; docs/g7/DESIGN.md; owner explicitly retained pending G6 acceptance; no runtime results |
+| G8 | NOT STARTED | No final Step-1 acceptance or service integration claimed |
 
 GitHub stays private. Required-check enforcement is unavailable on the current plan.
 The approved process is clean-checkout checks, successful CI for the exact candidate,

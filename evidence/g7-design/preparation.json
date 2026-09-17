@@ -1,0 +1,51 @@
+{
+  "kind": "design-preparation-validation-only",
+  "baseline": "79702d16d41153ea3ad4518be7b04eb8a45b43c1",
+  "g6_formal_acceptance": "pending",
+  "g7_implementation": "not_authorized_not_started",
+  "g7_runtime_tests_executed": 0,
+  "planned_runtime_cases": [
+    "G7-01",
+    "G7-02",
+    "G7-03",
+    "G7-04",
+    "G7-05",
+    "G7-06",
+    "G7-07",
+    "G7-08",
+    "G7-09",
+    "G7-10",
+    "G7-11",
+    "G7-12",
+    "G7-13",
+    "G7-14",
+    "G7-15",
+    "G7-16",
+    "G7-17",
+    "G7-18",
+    "G7-19",
+    "G7-20"
+  ],
+  "relative_links_checked": 39,
+  "design_test_counts": [
+    193,
+    30
+  ],
+  "commands": [
+    "npm run schema",
+    "npm run test:g6-design",
+    "npm run secrets"
+  ],
+  "commands_exit_code": 0,
+  "runtime_specs_and_dependency_changes": false,
+  "document_sha256": {
+    "README.md": "1f6a764ecf438fe61b68a0929479ff53220830c81c69342da85f9686536b70bb",
+    "docs/gates/STATUS.md": "17fb6b9471208267dcbd93a693641493399a55a0b2d8b25bb8de903eae1ee022",
+    "docs/gates/G7.md": "ba9edc05d2f9785d523f8a25caecd331db4484dea404a9eabe8ac9c1e395669a",
+    "docs/g7/DESIGN.md": "b3eab06781fe4fb7699796f3edff7990c14cb7d2f291e15138c212adcb71ada6",
+    "docs/g7/PREREQUISITES.md": "e214581054d811f6fd78d47b33d02cfd93b7112bb1889f797f74d63384bb184c",
+    "docs/g7/ACCEPTANCE-MATRIX.md": "c2affab244d75539f63b63fa6e453d226d176f886934938ad19b73b778e1fdc8"
+  },
+  "raw_log_sha256": "9de124202bc4957c0efc7786203b44c0626945dd6f1525b0f8f7db85081d4114",
+  "checked_utc": "2026-09-17T13:24:00.280780+00:00"
+}
