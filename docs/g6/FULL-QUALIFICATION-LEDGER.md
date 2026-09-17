@@ -1,5 +1,7 @@
 # G6 runtime qualification ledger
 
+**Clean-source result:** exact candidate `ea38b4a9cd406ff75ef491e0aecca664b54d1c91` passed the complete `npm run check` in `/home/alica-dev/AlicaV2-g6-clean`: 169 baseline JavaScript tests, 193 schema tests, 30 design-model tests, and **160/160 IPC/native tests, no skips**. The raw exact-commit receipt is `evidence/g6-runtime/clean-source-final.log`. Earlier checkpoint counts below are historical, not the final suite total.
+
 The runtime matrix has executed on the pinned Linux target. The complete earlier
 checkpoint passed `npm run check` (169 JavaScript baseline tests, 193 schema tests,
 30 design-model tests, 156 IPC/native tests; no skips). The subsequent event
@@ -30,7 +32,7 @@ independent clean worktree before publication; its receipt identifies the commit
 * `evidence/g6-runtime/qualified-isolation-repeat.log`: deterministic isolation regressions and 20 consecutive consumer runs on both transports.
 * `evidence/g6-runtime/buffered-event-closure.log`: subsequent 14/14 closure extension.
 * `evidence/g6-runtime/pre-offer-metadata-red.log`: deterministic zero-budget-offer regression before correction.
-* Final exact-commit clean-source receipt is retained outside the committed source tree at `evidence/g6-runtime/clean-source-final.log` on the target. Publication requires exit zero, no skipped tests, a clean source tree and matching candidate identity.
+* The committed `evidence/g6-runtime/clean-source-final.log` records exact implementation candidate `ea38b4a`. The subsequent documentation/evidence-only publication revision is rechecked independently; its receipt is retained at `evidence/g6-runtime/publication-check.log` on the target. Publication requires exit zero, no skipped tests, a clean source tree and matching candidate identity.
 
 The sealed qualification dispatcher is trusted test instrumentation using real
 bootstrap, sealing, native descriptors and framing; it is not represented as a

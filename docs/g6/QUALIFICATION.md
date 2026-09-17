@@ -1,5 +1,7 @@
 # G6 qualification
 
+**Clean-source result:** exact candidate `ea38b4a9cd406ff75ef491e0aecca664b54d1c91` passed the complete `npm run check` in `/home/alica-dev/AlicaV2-g6-clean`: 169 baseline JavaScript tests, 193 schema tests, 30 design-model tests, and **160/160 IPC/native tests, no skips**. The raw exact-commit receipt is `evidence/g6-runtime/clean-source-final.log`. Earlier checkpoint counts below are historical, not the final suite total.
+
 The runtime implementation and twelve-area matrix are documented in
 [FULL-QUALIFICATION-LEDGER.md](FULL-QUALIFICATION-LEDGER.md), with raw execution
 receipts under `evidence/g6-runtime/`. That ledger supersedes earlier test-only
