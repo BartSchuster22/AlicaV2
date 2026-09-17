@@ -1,0 +1,73 @@
+{
+  "verifiedAt": "2026-09-17T20:56:51.846861+00:00",
+  "scope": "Dependency-only probes on ElioHermes1, disposable keys only; not a Cell backup/restore or offline qualification",
+  "ageVersion": "v1.3.2",
+  "binarySha256": "eb7dd1b518f0a307c99cd97782623c5321da049154b04acd2d98d21aa7bc9b2c",
+  "ageKeygenSha256": "0a0009db842259d6717f7eeb30acb6b90d2a2eb924c6acd0a0db0ca1f1537899",
+  "archiveSha256": "cbe24006683f8eb669266162894b9a522a1af52f2665fbc63a4bb032ed26ac10",
+  "proofSha256": "98402fa59b4e433426156b4a7e74a32e44902e0434c61158f7de18ffc84f1f97",
+  "sigsum": {
+    "verifierVersion": "v0.13.1",
+    "verifierSha256": "c5ad4f07daa1e90a87d665dda30be4b048e1dffbf118ab13962388c3ed7a2121",
+    "policy": "sigsum-generic-2025-1",
+    "result": "PASS",
+    "keySource": "Pinned upstream v1.3.2 SIGSUM.md over HTTPS, not an independently owner-provisioned age publisher key; the exact archive digest was in approved R1"
+  },
+  "results": [
+    {
+      "test": "roundtrip",
+      "bytes": 0,
+      "result": "PASS"
+    },
+    {
+      "test": "roundtrip",
+      "bytes": 1,
+      "result": "PASS"
+    },
+    {
+      "test": "roundtrip",
+      "bytes": 65535,
+      "result": "PASS"
+    },
+    {
+      "test": "roundtrip",
+      "bytes": 65536,
+      "result": "PASS"
+    },
+    {
+      "test": "roundtrip",
+      "bytes": 65537,
+      "result": "PASS"
+    },
+    {
+      "test": "roundtrip",
+      "bytes": 1048576,
+      "result": "PASS"
+    },
+    {
+      "test": "wrong-key",
+      "result": "PASS",
+      "exitCode": 1,
+      "partialPlaintextBytes": 0
+    },
+    {
+      "test": "truncated",
+      "result": "PASS",
+      "exitCode": 1,
+      "partialPlaintextBytes": 983040
+    },
+    {
+      "test": "tampered",
+      "result": "PASS",
+      "exitCode": 1,
+      "partialPlaintextBytes": 458752
+    },
+    {
+      "test": "extra-bytes",
+      "result": "PASS",
+      "exitCode": 1,
+      "partialPlaintextBytes": 1048576
+    }
+  ],
+  "caveat": "Streaming decryption can emit partial plaintext before final authentication fails. Cell restore must stage privately and never publish until complete authentication and validation."
+}

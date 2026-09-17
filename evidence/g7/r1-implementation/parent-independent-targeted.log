@@ -1,0 +1,53 @@
+
+> alica-v2@0.0.0 test:g7-implementation
+> node --experimental-vm-modules --test --test-timeout=30000 tests/g7/r1-implementation.test.mjs
+
+✔ R1 actual deterministic USTAR assembly, signature and graph inspection is read-only (47.365798ms)
+✔ R1 denies wrong-domain (8.339609ms)
+✔ R1 denies expired (6.70878ms)
+✔ R1 denies revoked-signer (11.696514ms)
+✔ R1 denies future-floor (6.262342ms)
+✔ R1 denies old-policy (6.379631ms)
+✔ R1 denies wrong-root (5.697518ms)
+✔ R1 denies inproc-authority (6.321723ms)
+✔ R1 rejects duplicate-key through real archive decoding (9.612863ms)
+✔ R1 rejects unsafe-integer through real archive decoding (11.086377ms)
+✔ R1 rejects bad-unicode through real archive decoding (10.344922ms)
+✔ R1 rejects depth through real archive decoding (10.850804ms)
+✔ R1 rejects utf8 through real archive decoding (12.511557ms)
+✔ R1 rejects size through real archive decoding (14.359013ms)
+✔ R1 rejects unknown closed lock fields and wrong policy binding (17.204897ms)
+✔ USTAR rejects checksum (2.520112ms)
+✔ USTAR rejects symlink (2.307121ms)
+✔ USTAR rejects hardlink (2.854109ms)
+✔ USTAR rejects directory (5.236772ms)
+✔ USTAR rejects pax (2.232661ms)
+✔ USTAR rejects gnu (3.133365ms)
+✔ USTAR rejects base256 (3.377284ms)
+✔ USTAR rejects nul-alias (6.987245ms)
+✔ USTAR rejects traversal (3.589643ms)
+✔ USTAR rejects padding (2.981489ms)
+✔ USTAR rejects tail (2.818451ms)
+✔ USTAR rejects link-target (2.431945ms)
+✔ USTAR exact EOF, duplicate/case aliases, path bounds and symlink input (5.503764ms)
+✔ USTAR rechecks descriptor bytes after source modification (2.874948ms)
+✔ durable owner-only no-follow writes and exclusive publication (6.960626ms)
+✔ real SIGKILL at durable replacement open (458.687188ms)
+✔ real SIGKILL at durable replacement write (442.843382ms)
+✔ real SIGKILL at durable replacement file-fsync (459.052927ms)
+✔ real SIGKILL at durable replacement rename (440.692715ms)
+✔ real SIGKILL at durable replacement directory-fsync (476.879353ms)
+✔ public Kernel admission boundary: release-wide signature is not a per-package signature (23.061845ms)
+✔ read-only inspection CLI actually runs and redacts failure paths (550.060759ms)
+✔ trust verifier does not write floors (2.326385ms)
+✔ USTAR enforces real input size, entry count and parent aliases (1481.283577ms)
+✔ USTAR supports canonical long paths without prefix aliases (2.853919ms)
+✔ release inventory rejects corrupt payloads, extra files and missing inventory members (13.193451ms)
+ℹ tests 41
+ℹ suites 0
+ℹ pass 41
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4872.626351

@@ -10,7 +10,7 @@ has been silently waived or marked passed. Design/model tests are not these host
 
 | ID    | Future test                                                  | Required evidence/result                                                                                                                              |
 | ----- | ------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| G7-01 | Fresh online install and synthetic calls                     | Clean O identity/OS inventory; exact candidate, profile/lock/policy digests; real signed in-process and IPC providers and teardown                    |
+| G7-01 | Fresh online install and synthetic calls                     | Clean O identity/OS inventory; exact candidate, profile/lock/policy digests; real signed IPC providers/consumer calls and teardown; in-process activation rejected under the approved IPC-only profile                    |
 | G7-02 | Fresh disconnected install                                   | Independent clean D; same immutable bytes; all runtime dependencies included; network denial and failed egress observations; no package-manager fetch |
 | G7-03 | Unsigned/tampered/wrong-length/missing/extra artifacts       | Reject before candidate code executes; prior accepted state unchanged                                                                                 |
 | G7-04 | Wrong publisher/root substitution/cross-domain signature     | Independently pinned root honored; no archive-driven bootstrap or policy override                                                                     |

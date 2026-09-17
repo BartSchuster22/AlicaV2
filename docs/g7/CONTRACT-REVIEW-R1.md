@@ -1,6 +1,6 @@
 # G7 concrete contract candidate R1
 
-**Status: REVIEW REQUIRED, not frozen and not a runtime qualification.** This closes the _description_ gap in ADR-009 with closed schemas and an executable reference model. Owner approval of this concrete candidate is separate from the already-given instruction to implement G7. No new approval of the overall project direction is requested.
+**Status: APPROVED by owner for R1 implementation; not a runtime qualification.** See [owner approval](R1-OWNER-APPROVAL.md). This closes the _description_ gap in ADR-009 with closed schemas and an executable reference model. Owner approval of this concrete candidate is separate from the already-given instruction to implement G7. No new approval of the overall project direction is requested.
 
 Artifacts: [closed schemas](draft/contracts.schema.json), [exact limits](draft/limits.json), [proposed recovery dependency](draft/recovery-dependency.json), `tools/g7-contract-model.py`, `tests/g7/test_contract_model.py`. The generator must reproduce schema/limit bytes structurally; CI checks this. Existing normative schemas, Kernel API and signature domains are unchanged.
 
