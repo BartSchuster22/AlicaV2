@@ -1,0 +1,17 @@
+$ npm run test:g7-cell
+
+> alica-v2@0.0.0 test:g7-cell
+> npm run build:g7-native && node --experimental-vm-modules --test --test-timeout=60000 tests/g7/cell-preparation.test.mjs
+
+
+> alica-v2@0.0.0 build:g7-native
+> python3 tools/build-g7-native.py
+
+Traceback (most recent call last):
+  File "/home/herman/g7-implementation/tools/build-g7-native.py", line 14, in <module>
+    if archive.stat().st_size != lock['bytes'] or sha(archive) != lock['sha256']:
+  File "/usr/lib/python3.10/pathlib.py", line 1097, in stat
+    return self._accessor.stat(self, follow_symlinks=follow_symlinks)
+FileNotFoundError: [Errno 2] No such file or directory: '/home/herman/g7-implementation/.tools/g6-zig.tar.xz'
+
+exit=1

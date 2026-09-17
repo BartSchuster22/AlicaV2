@@ -1,0 +1,19 @@
+$ npm exec --yes --package=prettier@3.9.7 -- prettier --check package.json tools/g7-cell.mjs tools/g7-cell-cli.mjs tools/g7-durable.mjs tests/g7/cell-fixture.mjs tests/g7/cell-process.mjs tests/g7/cell-preparation.test.mjs
+Checking formatting...
+All matched files use Prettier code style!
+exit=0
+$ git diff --check
+exit=0
+$ node --check tools/g7-cell.mjs
+exit=0
+$ node --check tools/g7-cell-cli.mjs
+exit=0
+$ node --check tools/g7-durable.mjs
+exit=0
+$ node --check tests/g7/cell-fixture.mjs
+exit=0
+$ node --check tests/g7/cell-process.mjs
+exit=0
+$ node --check tests/g7/cell-preparation.test.mjs
+exit=0
+Python build script syntax: OK

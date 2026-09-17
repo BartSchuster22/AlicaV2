@@ -117,7 +117,9 @@ export function violations(file, source, root) {
       !name.startsWith('node:') &&
       name !== 'typescript' &&
       !(contract && ['ajv', 'ajv/dist/2020.js'].includes(name)) &&
-      !(privateG6ComponentTest && name === 'ajv/dist/2020.js')
+      !(privateG6ComponentTest && name === 'ajv/dist/2020.js') &&
+      // Exact host-only R1 Cell schema validator, using the existing pinned Ajv.
+      !(normalizedFile === 'tools/g7-cell.mjs' && name === 'ajv/dist/2020.js')
     )
       errors.push('undeclared external import');
   }

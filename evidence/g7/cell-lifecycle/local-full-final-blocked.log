@@ -1,0 +1,18 @@
+$ npm run check
+
+> alica-v2@0.0.0 check
+> node tools/check-toolchain.mjs && npm run format:check && npm run build && npm run typecheck && npm run test && node tools/check-schema-sync.mjs && npm run schema && npm run boundaries && npm run secrets && npm run dependencies && npm run test:isolated && node tools/check-sdk-api.mjs && npm run test:external && npm run test:g6-design && npm run build:g6-native && npm run test:g6-native && npm run test:g7-bootstrap && npm run test:g7-contracts
+
+file:///home/herman/g7-implementation/tools/check-toolchain.mjs:8
+  throw new Error('Pinned Node/npm toolchain mismatch');
+        ^
+
+Error: Pinned Node/npm toolchain mismatch
+    at file:///home/herman/g7-implementation/tools/check-toolchain.mjs:8:9
+    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:665:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v22.22.2
+
+exit=1

@@ -1,0 +1,10 @@
+{
+  "status": "pending_approval",
+  "approval_pending": true,
+  "pattern_key": "tirith:raw_ip_url",
+  "exit_code": -1,
+  "transferred": "NOT_ESTABLISHED",
+  "command": "scp -i /home/herman/.ssh/alica_v2_vps_ed25519 -o IdentitiesOnly=yes -o BatchMode=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile=/home/herman/.ssh/alica_v2_known_hosts tools/g7-cell.mjs tools/g7-cell-cli.mjs tools/g7-durable.mjs tools/build-g7-native.py alica-dev@167.233.135.142:/home/alica-dev/AlicaV2/tools/ && ssh -i /home/herman/.ssh/alica_v2_vps_ed25519 -o IdentitiesOnly=yes -o BatchMode=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile=/home/herman/.ssh/alica_v2_known_hosts alica-dev@167.233.135.142 'cd /home/alica-dev/AlicaV2 && mkdir -p native/g7 evidence/g7/cell-lifecycle' && scp -i /home/herman/.ssh/alica_v2_vps_ed25519 -o IdentitiesOnly=yes -o BatchMode=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile=/home/herman/.ssh/alica_v2_known_hosts native/g7/ownership.c alica-dev@167.233.135.142:/home/alica-dev/AlicaV2/native/g7/ && scp -i /home/herman/.ssh/alica_v2_vps_ed25519 -o IdentitiesOnly=yes -o BatchMode=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile=/home/herman/.ssh/alica_v2_known_hosts tests/g7/cell-fixture.mjs tests/g7/cell-process.mjs tests/g7/cell-preparation.test.mjs alica-dev@167.233.135.142:/home/alica-dev/AlicaV2/tests/g7/",
+  "description": "Security scan — [MEDIUM] URL uses raw IP address: URL points to IP address 167.233.135.142 instead of a domain name; [MEDIUM] URL uses raw IP address: URL points to IP address 167.233.135.142 instead of a domain name; [MEDIUM] URL uses raw IP address: URL points to IP address 167.233.135.142 instead of a domain name",
+  "response": "No alternate transport, alias, wrapper or retry used. Source subsequently received local edits; parent must use source-hashes.json for the final proposed files, including package.json absent from this original attempted transfer."
+}

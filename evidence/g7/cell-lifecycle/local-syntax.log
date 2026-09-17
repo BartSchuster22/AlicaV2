@@ -1,0 +1,13 @@
+$ node --check tools/g7-cell.mjs
+exit=0
+$ node --check tools/g7-cell-cli.mjs
+exit=0
+$ node --check tools/g7-durable.mjs
+exit=0
+$ node --check tests/g7/cell-fixture.mjs
+exit=0
+$ node --check tests/g7/cell-process.mjs
+exit=0
+$ node --check tests/g7/cell-preparation.test.mjs
+exit=0
+tools/build-g7-native.py: Python syntax OK

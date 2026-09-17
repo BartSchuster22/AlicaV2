@@ -1,0 +1,137 @@
+
+> alica-v2@0.0.0 test:g7-cell
+> npm run build:g7-native && node --experimental-vm-modules --test --test-timeout=60000 tests/g7/cell-preparation.test.mjs
+
+
+> alica-v2@0.0.0 build:g7-native
+> python3 tools/build-g7-native.py
+
+{
+  "qualification": "HOST-OWNERSHIP-ONLY",
+  "command": [
+    "/home/alica-dev/AlicaV2/.tools/zig-x86_64-linux-0.15.2/zig",
+    "cc",
+    "-target",
+    "x86_64-linux-gnu",
+    "-std=c11",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-fstack-protector-strong",
+    "-D_FORTIFY_SOURCE=2",
+    "-fPIC",
+    "-shared",
+    "-Wl,-z,relro,-z,now",
+    "-DNAPI_VERSION=9",
+    "-I/home/alica-dev/AlicaV2/.tools/node/include/node",
+    "/home/alica-dev/AlicaV2/native/g7/ownership.c",
+    "-o",
+    "/home/alica-dev/AlicaV2/native/g7/build/ownership.node"
+  ],
+  "compilerArchiveSha256": "02aa270f183da276e5b5920b1dac44a63f1a49e55050ebde3aecc9eb82f93239",
+  "compilerExecutableSha256": "2858dc89dbbfdd08cceda1b841e7fd0a793a1a67b49f150bc3d0d1de44ed7f51",
+  "inputs": {
+    "native/g7/ownership.c": "976a33b9e366d9e37876b6122791736faa63ff8cf395090434df39b93fa940db",
+    "tools/build-g7-native.py": "a2b66b8758fe4d75dd6b906a8a57bf999e8eb1d825d0737ff2b55de6bb4542fc",
+    "native/g6/toolchain.lock.json": "c3ce193c7bd0a2dfe828c688ea32966824e6f24ff75ffc52fda1b31c6b081fbb",
+    "toolchain.lock.json": "078cc50770b1ede31fcf4346a1ad316c97d1ffe6d0a55fe44a929d8a1fb612f6",
+    ".tools/node/include/node/js_native_api.h": "8808ef8899a1691411928ef5dd7dae0537aedc93d3a34e223b2d89692e79c788",
+    ".tools/node/include/node/js_native_api_types.h": "4f19cb90d240765cc0961d92a1ee20f65fdc50db7de1ab0a5cb6bc227224e1a0",
+    ".tools/node/include/node/node.h": "e7252ed1e9812d1336093315ec3f1e08296ae9965e055754f28d9b7bcbbe5d98",
+    ".tools/node/include/node/node_api.h": "2d4560831e525b47b060ec8a0864ab73993df9e20215ce9f0fe7b24cd31af32a",
+    ".tools/node/include/node/node_api_types.h": "a25356630d3058f0a0c8937d9f297e9471e037fda58c2696d8a505c2bd99cb00",
+    ".tools/node/include/node/node_buffer.h": "48077ade87e863a88e75a74c61fd948cb9ae16d7546cc5d61e1207fc95a7ac48",
+    ".tools/node/include/node/node_object_wrap.h": "47bc10f599b4f518374e13501cf05de4273dfb0a7bfe21bc72d6714f9b6336b5",
+    ".tools/node/include/node/node_version.h": "bd056729fddf4bfa58687036219f07417c334c4ecfcb513ac256fa254451bfc9",
+    ".tools/node/include/node/uv.h": "bb9ed99b80cd22c58361bffdfbb2aa7029ce0391cde616745c0072a6f3c03219",
+    ".tools/node/include/node/v8-array-buffer.h": "5ab664c31420db10083db3efb9712666eb0fa1c14c71f4bbbf9c11f9e3ae991e",
+    ".tools/node/include/node/v8-callbacks.h": "8fe95d3b62906b8b5ff5c7c7cfb02d10dcc71e1a8328728422d3887634926eb4",
+    ".tools/node/include/node/v8-container.h": "30c8fce13776a8b02e0268f55ba604a0cc359f28b91bcda84c07e7d87343e1e6",
+    ".tools/node/include/node/v8-context.h": "8059e175eea93b622aae4d4dbd796b39fcdd5d15fa502bfb2aa86019fa5a8e8e",
+    ".tools/node/include/node/v8-cppgc.h": "112b01dbcd87a407e1e4efe467641a1da2cce2d233b2c1fe9582998205a9ba19",
+    ".tools/node/include/node/v8-data.h": "e2755bf6e3ddab5fd36176b0c79ff3ac9cf01c85502a74f2973b60ff1d8d910f",
+    ".tools/node/include/node/v8-date.h": "bcb25002ce911e826fe66fc8f788d3c70b17d77713cce8a43851c3fcf1390130",
+    ".tools/node/include/node/v8-debug.h": "2c5776228c8a010d10e920e153c4368d35dec80a97a671c2789cca6321ab6ea8",
+    ".tools/node/include/node/v8-embedder-heap.h": "94317e3b040d721f21867d5a5333fa5aa2850d0228df4c2301ac93070fa1aa61",
+    ".tools/node/include/node/v8-embedder-state-scope.h": "8ac9da5d0502946981ecadec567a9e6658bb97591da5e585a3247cc7ccf924c3",
+    ".tools/node/include/node/v8-exception.h": "a56b9a825bd5a95e3a091f16e1f49c9e56b0aa7392fd584d34e3bf3452b4f6f3",
+    ".tools/node/include/node/v8-extension.h": "ad2783655342544e49ad5323e04aefd112facbf5f6630d2f3050fbee1da4bcd0",
+    ".tools/node/include/node/v8-external.h": "234042362502bc29d2e5fa652b3ca50aeff60bbacbb045a3e9e4ca10b3bb59fd",
+    ".tools/node/include/node/v8-forward.h": "13a977a548417301d77359e6116a9a06a27d3b60cdeefed2614bf832aa95fc37",
+    ".tools/node/include/node/v8-function-callback.h": "0a04fb5fe15f0956db82c286cee3ab21a5630b37b1c89249a5beda79358a5064",
+    ".tools/node/include/node/v8-function.h": "335c745cdc90804e34ea3694da3bd5db88492e73c4e94c5169c55b67a8604b74",
+    ".tools/node/include/node/v8-handle-base.h": "a39ce35b295ac1225e6842ab5f3a422384a5c5dbe13b5c5f384a245252670b14",
+    ".tools/node/include/node/v8-initialization.h": "7c88a037f0b4396f8e285ff3e62fc4c1b34ea4d8e7d5c7f149d8d1f1316df533",
+    ".tools/node/include/node/v8-internal.h": "eb74fc0740b7f858a03e319e077c1698d2083325f3154c67771b120fb48f8520",
+    ".tools/node/include/node/v8-isolate.h": "db213aa2a3c1e381588583ab3fbae8c282be4384d57fa498863a0065f1c8aa29",
+    ".tools/node/include/node/v8-json.h": "7ac22ac74ebac312a5901478e398ef1d3a29f0ef56accb6d6736d47e0dbb4cdc",
+    ".tools/node/include/node/v8-local-handle.h": "f2d45e5b71ebde65715bd08460ca1a19ac7d096f95257df33e15cea23694ba4d",
+    ".tools/node/include/node/v8-locker.h": "a3f67133e57b85f46482e312ec1400ba00cf831fe4fe4556872d270b000a72e9",
+    ".tools/node/include/node/v8-maybe.h": "4b34196e6643c7b0757ea2fb1179a15c031ac2961ea6f99bbeab2df816b11b00",
+    ".tools/node/include/node/v8-memory-span.h": "294c6c5271329d65fcc1253f4a6c72b36fbada6eb8ac85b407ae5e583c3ba824",
+    ".tools/node/include/node/v8-message.h": "ce6fcfeeafa8d6528e7be5c5b9d58f09927b88a110a0bfacb5fbb0dc9ad0aa96",
+    ".tools/node/include/node/v8-microtask-queue.h": "4616dbb7376a61a1c0643e8006c14642b7c78c78e314fdf6651ddd51c961d285",
+    ".tools/node/include/node/v8-microtask.h": "e055cf06808240053f30672c424716db7d87cd15029a1dbd1cf2a2f9a3b3dc3b",
+    ".tools/node/include/node/v8-object.h": "fa891650c8d9279a552136e76d416ef6fafbbc73dca9db4d981644b0d42fca15",
+    ".tools/node/include/node/v8-persistent-handle.h": "92dc3b3241a2e42f08e4e959b0bea9814ed2863303e5fea23c175ad019b7a0f6",
+    ".tools/node/include/node/v8-platform.h": "44a7fb139483b65dd5e962665d79d25fdf632910690632222991bda5e063f326",
+    ".tools/node/include/node/v8-primitive-object.h": "d9c187b42f7ee96ec20ad4d9ac91a9a1eed3efc227a831736bba362f9c2b22ba",
+    ".tools/node/include/node/v8-primitive.h": "22b7f84fc79e55144323a29be18ccb657e09fa3be5d2a2fd5380cbe4c82e4a28",
+    ".tools/node/include/node/v8-profiler.h": "5e4e427164d4c886edcd978100a9b43851cf754a28576a3884b9a853d43eecf6",
+    ".tools/node/include/node/v8-promise.h": "d9e1d89bde1ba8998d3d9aea60f1c5635ad9b36714b91a48bf0bde9b14410908",
+    ".tools/node/include/node/v8-proxy.h": "0883885e2477071a1176151443b38754edde22b04a0a05d05fe3764ae44622b5",
+    ".tools/node/include/node/v8-regexp.h": "8bdbcbb83463c77495973fe30294273d00a5c5cff90e8428415f5d2f034d0a8a",
+    ".tools/node/include/node/v8-sandbox.h": "e3831b68766d59f1bfeeed2f629b1d0085c02fe2543175b1acdee63dcd1aeb82",
+    ".tools/node/include/node/v8-script.h": "d753f702cf724070eaa683a8314313995535384dd74ca7b5a54a3f06152d5b0a",
+    ".tools/node/include/node/v8-snapshot.h": "4228f27fc7794598efdc0d465268d70707212155b12a7c347d5fd8a0c137c779",
+    ".tools/node/include/node/v8-source-location.h": "4e7890937c1d3de89bce3ff8749f9e6560994251385acf927b599f1f77a66a66",
+    ".tools/node/include/node/v8-statistics.h": "f9547cff9044e7a8a518287ff20867a29a2c198a87ec070fd8b252825d997dac",
+    ".tools/node/include/node/v8-template.h": "3527a7124e8fdb555102f1d9616a6010aa8de2bd94cfbb07496332b6afaacbc7",
+    ".tools/node/include/node/v8-traced-handle.h": "c190953ea39cdfed8058e67b23c74255376c065c8c565c9f821fa467997756f8",
+    ".tools/node/include/node/v8-typed-array.h": "4af778470c542677ea099ca334a042c448ce3b9f4d3b96a7fa6d599492651c64",
+    ".tools/node/include/node/v8-unwinder.h": "2e27b3e40167e2eeb3d2ba53ad4723ed41d12dd5a1fe2d572344ab0062ca7756",
+    ".tools/node/include/node/v8-value-serializer.h": "bc1d30d03ee47dd548b3ce30609a66fc47d252b3454603dffa28a3a9c1dd1cb6",
+    ".tools/node/include/node/v8-value.h": "4bdb297358d309e003ea09279f2cf0e94024dbdafdd34a106513344b70d1685c",
+    ".tools/node/include/node/v8-version.h": "7a945b923eec649417fc366a50b1439af006869ca764f37d1d07be15eed47802",
+    ".tools/node/include/node/v8-wasm.h": "f6e41223234a00ea662b8706cc080acccca476a9c5d253e9ad2347eb3fcf12c1",
+    ".tools/node/include/node/v8-weak-callback-info.h": "ffe109dcb5b0364c7d0653470c845f01c10573e6a5ab369f4dc7a0ccedc689d8",
+    ".tools/node/include/node/v8.h": "e27a005daa45f342845ffb9b33409686c380b1d5a97f46f3ab4749517a213d25",
+    ".tools/node/include/node/v8config.h": "7454d35a34b52b23a50f9ef2742dc0c57025cd9eb1f85c27b7618fe2b269bacf",
+    ".tools/node/include/node/zconf.h": "5ad08c16565403aa7823d165050c5bfac211b8748717eec8a2bb8bc6efd56981",
+    ".tools/node/include/node/zlib.h": "0ff41598d145693759a8322bb90bc4f2c57dcdcb3635fdf5b2195bf13df15b54"
+  },
+  "outputSha256": "a316b3c335e35d6b48dc2439a7470efef80522b52f7147d03fac93784186e906"
+}
+✔ real staged transaction, separate-process status/recovery, persistent identity/floor and no accepted selection (1284.626165ms)
+✔ OS flock contention is immediate across processes and releases on SIGKILL without PID guessing (332.656177ms)
+✔ external SIGKILL at staging-durable with fresh-process readback (762.781998ms)
+✔ external SIGKILL at verified-durable with fresh-process readback (889.268013ms)
+✔ external SIGKILL at journal-link with fresh-process readback (728.940574ms)
+✔ external SIGKILL at floor-rename with fresh-process readback (695.047923ms)
+✔ private-root attack rejects symlink-root (68.908191ms)
+✔ private-root attack rejects root-mode (73.321085ms)
+✔ private-root attack rejects identity-hardlink (65.603474ms)
+✔ private-root attack rejects floor-symlink (70.056362ms)
+✔ private-root attack rejects floor-mode (62.916358ms)
+✔ private-root attack rejects unknown-root (70.028771ms)
+✔ private-root attack rejects missing-kernel (66.569312ms)
+✔ private-root attack rejects accepted-selection (65.016259ms)
+✔ stage rejects wrong-root without accepted publication (70.769114ms)
+✔ stage rejects clock-floor without accepted publication (68.695502ms)
+✔ stage rejects metadata-floor without accepted publication (69.079475ms)
+✔ stage rejects intent-profile without accepted publication (99.705437ms)
+✔ stage rejects intent-operation without accepted publication (203.258104ms)
+✔ stage rejects intent-duplicate without accepted publication (81.378265ms)
+✔ stage rejects intent-secret without accepted publication (78.507683ms)
+✔ stage rejects source-corruption without accepted publication (69.937348ms)
+✔ journal corruption, unknown shape, checksum-valid illegal edge and rollback deny (1995.787667ms)
+✔ install, upgrade, start, stop, verify and backup are explicitly unavailable; no root mutation (1634.503154ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9917.364555

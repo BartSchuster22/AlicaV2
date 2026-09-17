@@ -1,0 +1,21 @@
+{
+  "baseline": "728d335a08a2e7402852a54edb1e355a22348528",
+  "qualification": "PREPARATION-ONLY; NOT A COMPLETE CELL OR G7 ACCEPTANCE",
+  "verification": "Local source hashes equal development source hashes after full npm run check, final format check and diff check exited 0.",
+  "sha256": {
+    ".gitignore": "55bc7d09a24979cc2c6e0425d4d9a9488c2de50506b4d06d9efe2de346bba80e",
+    "package.json": "5daa507552a4866ba9128666860917a8f4926f8844f01969d4e07fc2b23a885e",
+    "package-lock.json": "e113136de6dabb322cb3fec5273abcfb54b36a12826a3e5c7061bb8a7a21c9bd",
+    "tools/check-boundaries.mjs": "81b755b338d71afc3175ccd2c7bb0ad3efc2cc0b1407c650a3040ca22802ff12",
+    "tools/g7-durable.mjs": "53341d22f4eb632a6336ddee9bc20453fda15480bf77d24a46aab93fa9d76ec2",
+    "tools/g7-cell.mjs": "57832313bb2c7f7b61f660e7801c2973ce8d25bbee0fa1f7c873de2912bc2189",
+    "tools/g7-cell-cli.mjs": "3eb3f84d60f985d60c811c84f191c2a9d41db4443cdbc45a8eabc87746dddd3c",
+    "tools/build-g7-native.py": "a2b66b8758fe4d75dd6b906a8a57bf999e8eb1d825d0737ff2b55de6bb4542fc",
+    "native/g7/ownership.c": "976a33b9e366d9e37876b6122791736faa63ff8cf395090434df39b93fa940db",
+    "tests/foundation/foundation.test.mjs": "8ca10e37e84d065ec3bd094e263360ce3e6fc5fb7db7c8940b6efea23bd975a8",
+    "tests/g7/cell-fixture.mjs": "e5d8c447d2427955c996769a3069b40deba4625cb7404b6342f26cc877cf573c",
+    "tests/g7/cell-process.mjs": "f2be489a9e7a3c4b566daa197e54f1167f993b3e35107bdf7d462013ad1c36ae",
+    "tests/g7/cell-preparation.test.mjs": "085e5ddf852c581dfd510b5bf4d057648f06532d19bdfafe6e04caf9df468b2b"
+  },
+  "fullLogSha256": "2203f93344dee3b1f8acaf6c44e2d79c6caa221cc4673ce4555d507793defc30"
+}

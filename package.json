@@ -27,7 +27,9 @@
     "alicac": "node packages/alicac/dist/index.js",
     "test:isolated": "node tools/test-isolated.mjs",
     "test:external": "node tools/test-external-sdk.mjs",
-    "test:g7-bootstrap": "PYTHONPATH=.tools/python python3 -S tests/g7/test_bootstrap.py && PYTHONPATH=.tools/python node --experimental-vm-modules --test tests/g7/*.test.mjs",
+    "build:g7-native": "python3 tools/build-g7-native.py",
+    "test:g7-cell": "npm run build:g7-native && node --experimental-vm-modules --test --test-timeout=60000 tests/g7/cell-preparation.test.mjs",
+    "test:g7-bootstrap": "npm run build:g7-native && PYTHONPATH=.tools/python python3 -S tests/g7/test_bootstrap.py && PYTHONPATH=.tools/python node --experimental-vm-modules --test tests/g7/*.test.mjs",
     "test:g7-contracts": "PYTHONPATH=.tools/python python3 -S tests/g7/test_contract_model.py",
     "g7:inspect": "node tools/g7-inspect.mjs",
     "test:g7-implementation": "node --experimental-vm-modules --test --test-timeout=30000 tests/g7/r1-implementation.test.mjs tests/g7/release-admission.test.mjs",
@@ -36,6 +38,7 @@
     "test:g6-native": "node --experimental-vm-modules --test tests/ipc/*.test.mjs"
   },
   "devDependencies": {
+    "ajv": "8.20.0",
     "typescript": "6.0.3",
     "prettier": "3.9.7",
     "@types/node": "24.13.5"

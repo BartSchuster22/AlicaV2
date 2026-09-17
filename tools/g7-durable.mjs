@@ -13,6 +13,7 @@ import {
   fsyncSync,
   readSync,
   statfsSync,
+  readdirSync,
 } from 'node:fs';
 import { randomUUID } from 'node:crypto';
 import { check, rawDigest } from '@alica/acap-contracts';
@@ -83,6 +84,16 @@ function parent(root, path, create, boundary) {
   } catch (e) {
     closeSync(fd);
     throw e;
+  }
+}
+export function listPrivate(root, relative) {
+  owned(root, true);
+  if (relative === undefined) return readdirSync('/proc/self/fd/' + root);
+  const p = parent(root, relative + '/sentinel', false, () => {});
+  try {
+    return readdirSync('/proc/self/fd/' + p.fd);
+  } finally {
+    closeSync(p.fd);
   }
 }
 export function readPrivate(root, relative, maximum = 1048576) {
