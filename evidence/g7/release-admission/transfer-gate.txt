@@ -1,0 +1,18 @@
+Baseline development HEAD observed: f84bf378329bd7a355fec9d827c38f170387eb28
+Development Node observed: v24.21.0
+Development pre-existing untracked G6 evidence observed and left unchanged.
+
+Transfer attempt 1: explicit four-file SCP loop followed by scoped Prettier/build/typecheck/focused tests.
+Tool result: pending_approval; approval_pending=true; exit_code=-1.
+Scanner: tirith:raw_ip_url — URL points to IP address 167.233.135.142 instead of a domain name.
+No command output or successful transfer/test execution returned.
+
+Transfer attempt 2: direct SCP of packages/kernel/src/trust.ts and index.ts to the explicitly authorized development repository.
+Tool result: pending_approval; approval_pending=true; exit_code=-1.
+Same scanner rule. No successful transfer returned.
+
+No bypass of the transfer approval gate attempted. No renewed R1 approval required.
+New implementation is NOT verified on development host. Full npm run check has NOT run for this follow-up.
+Local node --check tests/g7/release-admission.test.mjs: exit 0 (Node v22.22.2).
+Local git diff --check: no diagnostics. These are not substitutes for pinned-host testing.
+No commits/push, acceptance qualification or G7 acceptance.

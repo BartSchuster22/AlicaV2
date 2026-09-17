@@ -32,6 +32,7 @@ import {
   manifest,
   descriptor,
   payloadSchema,
+  validateProfile,
 } from './validation.js';
 export interface TrustMaterial {
   rootKeyId: string;
@@ -47,6 +48,10 @@ export interface SignedPackage {
   profileText: string;
   signature: Signature;
   files: Record<string, Uint8Array>;
+}
+/** Selected package bytes only; the full release manifest/signature remain unchanged. */
+export interface ReleasePackage extends SignedPackage {
+  packagePrefix: string;
 }
 interface Inventory {
   path: string;
@@ -83,6 +88,8 @@ export interface VerifiedPackage {
   events: Map<string, EventDescriptor>;
   code: string;
   modules: Map<string, string>;
+  // Release membership remains subject to current revocation at activation/delivery.
+  releaseDigests?: string[];
 }
 export class Trust {
   #material: TrustMaterial;
@@ -258,7 +265,10 @@ export class Trust {
     const m = this.#material;
     check(
       !m.revocation.revokedKeyIds.includes(p.signer) &&
-        !m.revocation.revokedArtifactDigests.includes(p.digest),
+        !m.revocation.revokedArtifactDigests.includes(p.digest) &&
+        !(p.releaseDigests ?? []).some((d) =>
+          m.revocation.revokedArtifactDigests.includes(d),
+        ),
       'PERMISSION_DENIED',
     );
     check(
@@ -351,6 +361,21 @@ export class Trust {
     this.#material = m;
   }
   verifyPackage(input: SignedPackage): VerifiedPackage {
+    return this.verify(input);
+  }
+  verifyReleasePackage(input: ReleasePackage): VerifiedPackage {
+    const selected = {
+      indexText: input.indexText,
+      bundleText: input.bundleText,
+      profileText: input.profileText,
+      signature: detach(input.signature),
+      files: { ...input.files },
+      packagePrefix: input.packagePrefix,
+    };
+    check(typeof selected.packagePrefix === 'string', 'CONTRACT_MISMATCH');
+    return this.verify(selected, selected.packagePrefix);
+  }
+  private verify(input: SignedPackage, prefix?: string): VerifiedPackage {
     this.fresh();
     const index = document<PackageIndex>('package-index', input.indexText);
     const bundle = document<Bundle>('bundle', input.bundleText);
@@ -372,10 +397,62 @@ export class Trust {
       !index.files.some((x) => x.path === 'package-index.json'),
       'CONFLICT',
     );
-    check(
-      bundle.artifacts.length === index.files.length + 1,
-      'CONTRACT_MISMATCH',
-    );
+    let artifacts = bundle.artifacts;
+    let releaseDigests: string[] | undefined;
+    if (prefix !== undefined) {
+      check(
+        prefix === 'plugins/' + index.pluginId + '/' &&
+          index.manifestPath === 'manifest.json',
+        'CONTRACT_MISMATCH',
+      );
+      validateProfile(input.profileText);
+      // Reject case/parent aliases across the signed path namespace, without claiming
+      // to have received or hashed unrelated artifact bytes.
+      const paths = new Map<string, string>();
+      const leaves = new Set(bundle.artifacts.map((a) => a.path.toLowerCase()));
+      for (const a of bundle.artifacts) {
+        const parts = a.path.split('/');
+        check(a.path.length <= 240 && parts.length <= 16);
+        for (let i = 1; i <= parts.length; i++) {
+          const path = parts.slice(0, i).join('/');
+          const lower = path.toLowerCase();
+          check(!paths.has(lower) || paths.get(lower) === path, 'CONFLICT');
+          check(i === parts.length || !leaves.has(lower), 'CONFLICT');
+          paths.set(lower, path);
+        }
+      }
+      const profileArtifact = bundle.artifacts.find(
+        (a) => a.path === 'profile/profile.json',
+      );
+      check(
+        profileArtifact &&
+          profileArtifact.kind === 'profile' &&
+          profileArtifact.bytes === Buffer.byteLength(input.profileText) &&
+          profileArtifact.digest === rawDigest(input.profileText),
+        'CONTRACT_MISMATCH',
+      );
+      artifacts = bundle.artifacts.filter((a) => a.path.startsWith(prefix));
+      for (const a of artifacts) {
+        const path = a.path.slice(prefix.length);
+        const kind =
+          path === 'manifest.json' || path === 'index.json'
+            ? 'manifest'
+            : path.startsWith('code/')
+              ? 'plugin'
+              : path.startsWith('contracts/')
+                ? 'descriptor'
+                : undefined;
+        check(kind && kind === a.kind, 'CONTRACT_MISMATCH');
+      }
+      check(!index.files.some((f) => f.path === 'index.json'), 'CONFLICT');
+      releaseDigests = [
+        digest(bundle),
+        digest(profile),
+        profileArtifact.digest,
+        ...artifacts.map((a) => a.digest),
+      ];
+    }
+    check(artifacts.length === index.files.length + 1, 'CONTRACT_MISMATCH');
     // Files are copied and hashed before any module evaluation. No filesystem path is later reopened.
     check(
       Object.keys(input.files).length === index.files.length,
@@ -398,11 +475,12 @@ export class Trust {
       );
       files.set(x.path, copy);
     }
-    for (const x of bundle.artifacts) {
+    for (const x of artifacts) {
+      const path = prefix === undefined ? x.path : x.path.slice(prefix.length);
       const bytes =
-        x.path === 'package-index.json'
+        path === (prefix === undefined ? 'package-index.json' : 'index.json')
           ? Buffer.from(input.indexText)
-          : files.get(x.path);
+          : files.get(path);
       check(
         bytes && bytes.byteLength === x.bytes && rawDigest(bytes) === x.digest,
         'CONTRACT_MISMATCH',
@@ -427,6 +505,7 @@ export class Trust {
       events: new Map(),
       code: '',
       modules: new Map(),
+      ...(releaseDigests ? { releaseDigests } : {}),
     };
     this.accepted(p);
     this.signature(

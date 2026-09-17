@@ -1,0 +1,19 @@
+{
+  "recordedAt": "2026-09-17T21:39:46.348053+00:00",
+  "baseCommit": "f84bf378329bd7a355fec9d827c38f170387eb28",
+  "scope": "Additive public selected-package release admission, not standalone Cell qualification",
+  "targetedTests": 88,
+  "targetedFailures": 0,
+  "fullCheckExit": 0,
+  "postCheckFormattingExit": 0,
+  "diffCheckExit": 0,
+  "sourceSha256": {
+    "packages/kernel/src/index.ts": "ce437c9421a0be3c47fdec8bc131a9f8200027309e087d07ec428fca58fa0909",
+    "packages/kernel/src/trust.ts": "085a42051a9f021857639045258b41860283949f5c1eb5561cc8c533f7c108e7",
+    "tests/g7/release-admission.test.mjs": "e0ddba8f347a31e013e84ac1c03a3a7c9c1765860da9b08cc8fada37149b3be4",
+    "package.json": "38d941cbeda61df97a6deb87fc16f240bbf1723e283b9248a7a7b17ca675ffd9"
+  },
+  "fullLogSha256": "4f44b305af884122cbce9e234e07c9c46f0f50e62fdcdcf04390f9c778ba9ddf",
+  "privateHelper": "ECMAScript #discoverVerified with executable access/shadowing rejection test",
+  "productionSigning": false
+}

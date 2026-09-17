@@ -30,7 +30,7 @@
     "test:g7-bootstrap": "PYTHONPATH=.tools/python python3 -S tests/g7/test_bootstrap.py && PYTHONPATH=.tools/python node --experimental-vm-modules --test tests/g7/*.test.mjs",
     "test:g7-contracts": "PYTHONPATH=.tools/python python3 -S tests/g7/test_contract_model.py",
     "g7:inspect": "node tools/g7-inspect.mjs",
-    "test:g7-implementation": "node --experimental-vm-modules --test --test-timeout=30000 tests/g7/r1-implementation.test.mjs",
+    "test:g7-implementation": "node --experimental-vm-modules --test --test-timeout=30000 tests/g7/r1-implementation.test.mjs tests/g7/release-admission.test.mjs",
     "test:g6-design": "python3 -S tools/check-g6-design.py && python3 -S tools/test-g6-context-model.py",
     "build:g6-native": "python3 tools/build-g6-native.py",
     "test:g6-native": "node --experimental-vm-modules --test tests/ipc/*.test.mjs"

@@ -45,7 +45,12 @@ import {
   requirement,
 } from './validation.js';
 import { Trust } from './trust.js';
-import type { SignedPackage, VerifiedPackage, TrustMaterial } from './trust.js';
+import type {
+  SignedPackage,
+  ReleasePackage,
+  VerifiedPackage,
+  TrustMaterial,
+} from './trust.js';
 export {
   AcapError,
   parse,
@@ -53,7 +58,7 @@ export {
   digest,
   rawDigest,
 } from './validation.js';
-export type { SignedPackage, TrustMaterial } from './trust.js';
+export type { SignedPackage, ReleasePackage, TrustMaterial } from './trust.js';
 export interface Config {
   cellId: string;
   rootScope: string;
@@ -408,6 +413,22 @@ export class Host {
     return this.newScope(id, parent, owner).id;
   }
   discover(input: SignedPackage, scopeId = this.#config.rootScope): string {
+    return this.#discoverVerified(
+      () => this.#trust.verifyPackage(input),
+      scopeId,
+    );
+  }
+  /** Independently verify selected-package membership in an unchanged signed release. */
+  discoverReleasePackage(
+    input: ReleasePackage,
+    scopeId = this.#config.rootScope,
+  ): string {
+    return this.#discoverVerified(
+      () => this.#trust.verifyReleasePackage(input),
+      scopeId,
+    );
+  }
+  #discoverVerified(verify: () => VerifiedPackage, scopeId: string): string {
     this.fresh();
     const scope = this.#scopes.get(scopeId);
     check(scope, 'NOT_FOUND');
@@ -419,7 +440,7 @@ export class Host {
     this.record('operator', 'package', scopeId, 'ATTEMPT', 'VERIFY');
     let pkg: VerifiedPackage;
     try {
-      pkg = this.#trust.verifyPackage(input);
+      pkg = verify();
     } catch (e) {
       this.record(
         'operator',
