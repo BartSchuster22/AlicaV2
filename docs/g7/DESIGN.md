@@ -2,7 +2,8 @@
 
 Status: **PROPOSED; preparation only, not approved for implementation.**
 Source baseline: `79702d16d41153ea3ad4518be7b04eb8a45b43c1`.
-G6 formal acceptance remains pending. No G7 runtime or acceptance result is claimed.
+G6 is now [accepted](../gates/G6-OWNER-ACCEPTANCE.md). G7 implementation remains
+unauthorized; no G7 runtime or acceptance result is claimed.
 
 ## Authority and unchanged contracts
 
