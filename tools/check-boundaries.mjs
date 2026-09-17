@@ -18,18 +18,31 @@ export function violations(file, source, root) {
       return;
     }
     const name = spec.text;
-    const packageSource = path
-      .relative(root, file)
-      .startsWith('packages' + path.sep);
-    const kernel = path
-      .relative(root, file)
-      .startsWith('packages' + path.sep + 'kernel' + path.sep);
-    const contract = path
-      .relative(root, file)
-      .startsWith('packages' + path.sep + 'acap-contracts' + path.sep);
-    const cli = path
-      .relative(root, file)
-      .startsWith('packages' + path.sep + 'alicac' + path.sep);
+    const relFile = path.relative(root, file);
+    const normalizedFile = relFile.replaceAll('\\', '/');
+    const packageSource = relFile.startsWith('packages' + path.sep);
+    const kernel = relFile.startsWith(
+      'packages' + path.sep + 'kernel' + path.sep,
+    );
+    const contract = relFile.startsWith(
+      'packages' + path.sep + 'acap-contracts' + path.sep,
+    );
+    const cli = relFile.startsWith('packages' + path.sep + 'alicac' + path.sep);
+    // Exact importer -> exact target allowlist; never expose kernel internals
+    // to package code or to arbitrary tests under the same directory.
+    const privateG6Targets = {
+      'tests/ipc/wire.test.mjs': [
+        'packages/kernel/dist/g6/schema.js',
+        'packages/kernel/dist/g6/wire-schema.js',
+        'packages/kernel/dist/g6/wire.js',
+      ],
+      'tests/ipc/scheduler.test.mjs': [
+        'packages/kernel/dist/g6/scheduler.js',
+        'packages/kernel/dist/g6/wire.js',
+      ],
+      'tests/ipc/reap.test.mjs': ['packages/kernel/src/g6/reap.ts'],
+    };
+    const privateG6ComponentTest = normalizedFile === 'tests/ipc/wire.test.mjs';
     if (
       packageSource &&
       ((!kernel && !contract && !cli && name.startsWith('node:')) ||
@@ -53,8 +66,11 @@ export function violations(file, source, root) {
     } else if (name.startsWith('.') || path.isAbsolute(name)) {
       const target = path.resolve(path.dirname(file), name);
       const rel = path.relative(root, target);
+      const normalizedTarget = rel.replaceAll('\\', '/');
       if (rel.startsWith('..') || path.isAbsolute(rel))
         errors.push('outside repository');
+      const allowedPrivateG6Target =
+        privateG6Targets[normalizedFile]?.includes(normalizedTarget) ?? false;
       const targetPackage = rel.match(/^packages[/\\]([^/\\]+)/)?.[1];
       const owner = path
         .relative(root, file)
@@ -64,13 +80,14 @@ export function violations(file, source, root) {
         !target.startsWith(path.join(root, 'packages', owner) + path.sep)
       )
         errors.push('package path escapes its own package');
-      if (targetPackage && targetPackage !== owner)
+      if (targetPackage && targetPackage !== owner && !allowedPrivateG6Target)
         errors.push('cross-package path import');
       if (path.isAbsolute(name)) errors.push('absolute import');
     } else if (
       !name.startsWith('node:') &&
       name !== 'typescript' &&
-      !(contract && ['ajv', 'ajv/dist/2020.js'].includes(name))
+      !(contract && ['ajv', 'ajv/dist/2020.js'].includes(name)) &&
+      !(privateG6ComponentTest && name === 'ajv/dist/2020.js')
     )
       errors.push('undeclared external import');
   }

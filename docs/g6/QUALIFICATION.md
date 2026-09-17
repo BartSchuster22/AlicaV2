@@ -1,6 +1,25 @@
 # G6 R2 qualification and evidence boundary
 
-Status: **design candidate only; G6 runtime qualification incomplete**.
+Status: **owner-approved R2 implementation; G6 runtime qualification incomplete**.
+
+## Current local integration issues
+
+The SDK adapter is not complete. Before implementing undocumented wire
+semantics, resolve two closed-schema gaps: returning the real `emit()`
+`{ admitted }` result, and registering/invoking scope-owned effect cleanup
+callbacks on child-scope destruction without disposing the entire worker.
+See [SDK integration gaps](SDK-INTEGRATION-GAPS.md) for schema/API
+references, the proposed correction and its review boundary. No approved schema, frozen
+G1 schema or SDK 0.1.0 API was changed to conceal these gaps.
+
+The target full `npm run check` passed at the current component checkpoint:
+169 baseline JavaScript tests, 193 specification tests, 135 frame-schema checks,
+30 design-model tests, and 48 native/wire/scheduler/reap-helper/boundary tests.
+Build/typecheck, SDK publication/isolated/external checks also passed. This is
+component and baseline evidence, not full session or SDK transport qualification.
+New PhysicalSession failure paths still require real session fault injection.
+Receipts: `evidence/g6-runtime/COMPONENT-CHECKPOINT.md`.
+
 
 ## Evidence levels
 
@@ -9,7 +28,7 @@ Status: **design candidate only; G6 runtime qualification incomplete**.
 3. `tools/probe-g6-carrier.py`: real disposable Linux Python subprocess/SCM_RIGHTS feasibility. Two pending contexts use shared process state; extra descriptors and a regular-file descriptor are rejected/closed, received sockets are close-on-exec and the synthetic parent marker is absent. The initial prototype used a stream reader on seqpacket acknowledgements and timed out; the corrected packet-aware reader passed. This is a trusted Python fixture, not the production Node/native transport, full offer protocol, authentication or final seccomp profile.
 4. Existing G1/G3/G4/G5 checks protect the frozen/runtime/SDK baseline. They do not become G6 runtime evidence merely because they pass again.
 
-New execution receipts belong in `evidence/g6-r2-design/`; earlier `evidence/g6-design/` reports describe the superseded single-active candidate. The compiler lock contains retrieved official download metadata, not a downloaded/validated compiler or successful native build.
+Design receipts belong in `evidence/g6-r2-design/`; earlier `evidence/g6-design/` reports describe the superseded single-active candidate. Native build/component evidence now exists in `evidence/g6-native-foundation/` and `evidence/g6-runtime/`: the pinned compiler and native artifacts have been built and tested. Neither native component nor design evidence is full G6 runtime qualification.
 
 ## Required implementation after review
 
