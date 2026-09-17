@@ -1,0 +1,33 @@
+✔ in-process IPC install: actual echo and unchanged consumer readiness, exact frozen selection, lifetime ownership and real shutdown (3068.899015ms)
+✔ real staged transaction, separate-process status/recovery, persistent identity/floor and no accepted selection (1396.042146ms)
+✔ OS flock contention is immediate across processes and releases on SIGKILL without PID guessing (333.240419ms)
+✔ external SIGKILL at staging-durable with fresh-process readback (817.009136ms)
+✔ external SIGKILL at verified-durable with fresh-process readback (929.069961ms)
+✔ external SIGKILL at journal-link with fresh-process readback (709.017686ms)
+✔ external SIGKILL at floor-rename with fresh-process readback (682.977048ms)
+✔ private-root attack rejects symlink-root (66.756736ms)
+✔ private-root attack rejects root-mode (68.317472ms)
+✔ private-root attack rejects identity-hardlink (68.982212ms)
+✔ private-root attack rejects floor-symlink (68.396501ms)
+✔ private-root attack rejects floor-mode (63.894835ms)
+✔ private-root attack rejects unknown-root (65.573971ms)
+✔ private-root attack rejects missing-kernel (68.772798ms)
+✔ private-root attack rejects accepted-selection (79.592038ms)
+✔ stage rejects wrong-root without accepted publication (69.501759ms)
+✔ stage rejects clock-floor without accepted publication (63.242938ms)
+✔ stage rejects metadata-floor without accepted publication (71.805854ms)
+✔ stage rejects intent-profile without accepted publication (94.109261ms)
+✔ stage rejects intent-operation without accepted publication (193.954681ms)
+✔ stage rejects intent-duplicate without accepted publication (75.218132ms)
+✔ stage rejects intent-secret without accepted publication (76.653581ms)
+✔ stage rejects source-corruption without accepted publication (69.910238ms)
+✔ journal corruption, unknown shape, checksum-valid illegal edge and rollback deny (2183.329373ms)
+✔ install, upgrade, start, stop, verify and backup are explicitly unavailable; no root mutation (1749.22121ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10385.615661

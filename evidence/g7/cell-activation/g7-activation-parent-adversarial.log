@@ -1,0 +1,42 @@
+✔ in-process IPC install: actual echo and unchanged consumer readiness, exact frozen selection, lifetime ownership and real shutdown (2989.542595ms)
+✔ external SIGKILL at activating-durable preserves selection and requires operator without inventing reap (1249.563327ms)
+✔ external SIGKILL at accepted-rename preserves selection and requires operator without inventing reap (3208.602313ms)
+✔ external SIGKILL at committed-durable preserves selection and requires operator without inventing reap (3120.857441ms)
+✔ fresh recovery rejects committed corruption: wrong-sequence (2407.617783ms)
+✔ fresh recovery rejects committed corruption: wrong-release (2456.950581ms)
+✔ fresh recovery rejects committed corruption: unknown-field (2516.291063ms)
+✔ fresh recovery rejects committed corruption: missing-selection (2502.818763ms)
+✔ fresh recovery rejects committed corruption: corrupt-journal (2494.397586ms)
+✔ real provider activation failure never publishes accepted selection and records clean rollback (835.074903ms)
+✔ real staged transaction, separate-process status/recovery, persistent identity/floor and no accepted selection (1335.15476ms)
+✔ OS flock contention is immediate across processes and releases on SIGKILL without PID guessing (330.68703ms)
+✔ external SIGKILL at staging-durable with fresh-process readback (785.884291ms)
+✔ external SIGKILL at verified-durable with fresh-process readback (943.792641ms)
+✔ external SIGKILL at journal-link with fresh-process readback (779.613577ms)
+✔ external SIGKILL at floor-rename with fresh-process readback (753.258487ms)
+✔ private-root attack rejects symlink-root (71.658579ms)
+✔ private-root attack rejects root-mode (63.942165ms)
+✔ private-root attack rejects identity-hardlink (69.268203ms)
+✔ private-root attack rejects floor-symlink (68.365635ms)
+✔ private-root attack rejects floor-mode (88.082579ms)
+✔ private-root attack rejects unknown-root (72.988089ms)
+✔ private-root attack rejects missing-kernel (78.861788ms)
+✔ private-root attack rejects accepted-selection (85.601873ms)
+✔ stage rejects wrong-root without accepted publication (72.177854ms)
+✔ stage rejects clock-floor without accepted publication (70.067735ms)
+✔ stage rejects metadata-floor without accepted publication (66.947647ms)
+✔ stage rejects intent-profile without accepted publication (85.507044ms)
+✔ stage rejects intent-operation without accepted publication (207.257587ms)
+✔ stage rejects intent-duplicate without accepted publication (79.716162ms)
+✔ stage rejects intent-secret without accepted publication (78.004023ms)
+✔ stage rejects source-corruption without accepted publication (73.120218ms)
+✔ journal corruption, unknown shape, checksum-valid illegal edge and rollback deny (2256.065846ms)
+✔ install, upgrade, start, stop, verify and backup are explicitly unavailable; no root mutation (1792.715469ms)
+ℹ tests 34
+ℹ suites 0
+ℹ pass 34
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 24101.554038

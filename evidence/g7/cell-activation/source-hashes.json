@@ -1,0 +1,13 @@
+{
+  "baseline": "054efdd15662f5a82b254a498339e9e2d837e2e2",
+  "qualification": "UNEXECUTED_SOURCE_SECURITY_APPROVAL_PENDING",
+  "developmentTransfer": "NOT_CONFIRMED",
+  "testsExecuted": [],
+  "localChecks": {"git diff --check": "exit 0, no diagnostics"},
+  "sha256": {
+    "tools/g7-cell.mjs": "aeefdec8d9fd3da4b17425f06df2cd7e42c22bb5695012106b106bc2c3eb7573",
+    "tests/g7/cell-activation.test.mjs": "4cbcf9cf3d29362632966b7da6f65488631dae47cf4841bd42ffa08250ea4147",
+    "docs/g7/R1-CELL-ACTIVATION-CHECKPOINT.md": "072cf3c0985d13c8b2fb96be9775953e7614832e31de84d55efabe9360644120",
+    "evidence/g7/cell-activation/blocked-operation.json": "a3f97ef3db0fa14a327d0685fa57e2efdcf60d4274cff5c0d3243315ff17c560"
+  }
+}

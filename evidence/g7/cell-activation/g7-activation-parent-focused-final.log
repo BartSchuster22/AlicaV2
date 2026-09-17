@@ -1,0 +1,53 @@
+tools/g7-cell.mjs 153ms
+tests/g7/cell-fixture.mjs 25ms
+tests/g7/cell-process.mjs 11ms
+tests/g7/cell-activation.test.mjs 26ms
+✔ in-process IPC install: actual echo and unchanged consumer readiness, exact frozen selection, lifetime ownership and real shutdown (2898.72463ms)
+✔ external SIGKILL at activating-durable preserves selection and requires operator without inventing reap (1221.389685ms)
+✔ external SIGKILL at accepted-rename preserves selection and requires operator without inventing reap (3182.627133ms)
+✔ external SIGKILL at committed-durable preserves selection and requires operator without inventing reap (3082.994558ms)
+✔ fresh recovery rejects committed corruption: wrong-sequence (2474.366344ms)
+✔ fresh recovery rejects committed corruption: wrong-release (2470.825725ms)
+✔ fresh recovery rejects committed corruption: unknown-field (2560.544826ms)
+✔ fresh recovery rejects committed corruption: missing-selection (2522.284173ms)
+✔ fresh recovery rejects committed corruption: corrupt-journal (2346.366427ms)
+✔ real provider activation failure never publishes accepted selection and records clean rollback (806.831251ms)
+✔ post-activation recovery still enforces Kernel same-version policy digest continuity (2512.017675ms)
+✔ expired grants cannot continue to report a ready RUNNING Cell (7337.131365ms)
+✔ real staged transaction, separate-process status/recovery, persistent identity/floor and no accepted selection (1251.166722ms)
+✔ OS flock contention is immediate across processes and releases on SIGKILL without PID guessing (330.112896ms)
+✔ external SIGKILL at staging-durable with fresh-process readback (774.398136ms)
+✔ external SIGKILL at verified-durable with fresh-process readback (974.609315ms)
+✔ external SIGKILL at journal-link with fresh-process readback (771.496108ms)
+✔ external SIGKILL at floor-rename with fresh-process readback (738.213416ms)
+✔ private-root attack rejects symlink-root (72.002005ms)
+✔ private-root attack rejects root-mode (72.475728ms)
+✔ private-root attack rejects identity-hardlink (72.178228ms)
+✔ private-root attack rejects floor-symlink (62.63675ms)
+✔ private-root attack rejects floor-mode (68.301085ms)
+✔ private-root attack rejects unknown-root (64.019943ms)
+✔ private-root attack rejects missing-kernel (78.140852ms)
+✔ private-root attack rejects accepted-selection (80.061986ms)
+✔ stage rejects wrong-root without accepted publication (73.888895ms)
+✔ stage rejects clock-floor without accepted publication (74.423842ms)
+✔ stage rejects metadata-floor without accepted publication (76.184382ms)
+✔ stage rejects intent-profile without accepted publication (92.510519ms)
+✔ stage rejects intent-operation without accepted publication (217.225291ms)
+✔ stage rejects intent-duplicate without accepted publication (77.297315ms)
+✔ stage rejects intent-secret without accepted publication (78.293019ms)
+✔ stage rejects source-corruption without accepted publication (63.937309ms)
+✔ journal corruption, unknown shape, checksum-valid illegal edge and rollback deny (2202.338587ms)
+✔ install, upgrade, start, stop, verify and backup are explicitly unavailable; no root mutation (1719.802963ms)
+ℹ tests 36
+ℹ suites 0
+ℹ pass 36
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 33703.605201
+
+> alica-v2@0.0.0 boundaries
+> node tools/check-boundaries.mjs
+
+Public import boundaries passed

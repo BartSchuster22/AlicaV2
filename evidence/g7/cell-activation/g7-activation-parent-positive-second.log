@@ -1,0 +1,29 @@
+✖ in-process IPC install: actual echo and unchanged consumer readiness, exact frozen selection, lifetime ownership and real shutdown (2290.123867ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2612.595268
+
+✖ failing tests:
+
+test at tests/g7/cell-activation.test.mjs:30:1
+✖ in-process IPC install: actual echo and unchanged consumer readiness, exact frozen selection, lifetime ownership and real shutdown (2290.123867ms)
+  Error [AcapError]: FAILED_PRECONDITION
+      at fail (file:///home/alica-dev/AlicaV2/packages/acap-contracts/dist/validation.js:31:11)
+      at check (file:///home/alica-dev/AlicaV2/packages/acap-contracts/dist/validation.js:35:9)
+      at #base (file:///home/alica-dev/AlicaV2/tools/g7-cell.mjs:214:5)
+      at #status (file:///home/alica-dev/AlicaV2/tools/g7-cell.mjs:312:37)
+      at #activate (file:///home/alica-dev/AlicaV2/tools/g7-cell.mjs:606:26)
+      at async #stage (file:///home/alica-dev/AlicaV2/tools/g7-cell.mjs:475:28)
+      at async #run (file:///home/alica-dev/AlicaV2/tools/g7-cell.mjs:158:14)
+      at async TestContext.<anonymous> (file:///home/alica-dev/AlicaV2/tests/g7/cell-activation.test.mjs:33:20)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    code: 'FAILED_PRECONDITION',
+    correlationId: '7f58a96a-4028-46d0-a30f-25ade1901952',
+    retryable: false
+  }

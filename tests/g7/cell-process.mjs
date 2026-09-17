@@ -22,7 +22,9 @@ if (boundary) {
         .filter((n) => /^\d{6}\.json$/.test(n)).length;
       if (
         (boundary === 'staging-durable' && count === 1) ||
-        (boundary === 'verified-durable' && count === 2)
+        (boundary === 'verified-durable' && count === 2) ||
+        (boundary === 'activating-durable' && count === 3) ||
+        (boundary === 'committed-durable' && count === 4)
       )
         pause();
     }
@@ -35,6 +37,7 @@ if (boundary) {
   fs.renameSync = (a, b) => {
     original.renameSync(a, b);
     if (boundary === 'floor-rename' && b.endsWith('/floor.json')) pause();
+    if (boundary === 'accepted-rename' && b.endsWith('/accepted.json')) pause();
   };
   syncBuiltinESMExports();
 }
@@ -44,15 +47,18 @@ try {
   if (mode === 'hold') pause();
   const f = JSON.parse(fs.readFileSync(inputs));
   const result =
-    mode === 'stage'
-      ? await cell.stage(f.archive, f.trust, f.authorization)
-      : mode === 'recover'
-        ? await cell.recover(f.trust)
-        : cell.status();
+    mode === 'install'
+      ? await cell.install(f.archive, f.trust, f.authorization)
+      : mode === 'stage'
+        ? await cell.stage(f.archive, f.trust, f.authorization)
+        : mode === 'recover'
+          ? await cell.recover(f.trust)
+          : cell.status();
   console.log(JSON.stringify(result));
 } catch (e) {
   console.error(e.code ?? e.message);
   process.exitCode = 1;
 } finally {
+  await cell.shutdown();
   cell.close();
 }

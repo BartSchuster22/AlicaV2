@@ -15,7 +15,10 @@ import {
   consumerRequirement,
 } from '../../tools/g3-fixtures.mjs';
 import { assembleRelease, artifactKind } from '../../tools/g7-release.mjs';
-export async function cellFixture(dir) {
+export async function cellFixture(
+  dir,
+  { providerCode, grantLifetimeMs = 30000 } = {},
+) {
   const root = keyPair(),
     publisher = keyPair();
   const trust = trustMaterial(root, publisher, Date.now(), {
@@ -36,7 +39,10 @@ export async function cellFixture(dir) {
     lastWallMs: Date.now(),
   };
   const packages = [
-    fixture(publisher),
+    fixture(
+      publisher,
+      providerCode === undefined ? {} : { code: providerCode },
+    ),
     fixture(publisher, {
       id: 'org.alica.consumer',
       provides: [consumerDescriptor],
@@ -98,7 +104,7 @@ export async function cellFixture(dir) {
       scope: 'root',
       capabilityId,
       operations: ['echo'],
-      lifetimeMs: 30000,
+      lifetimeMs: grantLifetimeMs,
     })),
     secrets: [],
     events: [],

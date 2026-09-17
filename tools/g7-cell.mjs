@@ -1,4 +1,4 @@
-// Bounded pre-activation Cell implementation. No accepted-publication or runtime API.
+// Lifetime-locked in-process Cell. CLI daemon/admin and upgrade remain unavailable.
 import { closeSync, readFileSync, statfsSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { randomUUID } from 'node:crypto';
@@ -125,6 +125,46 @@ export class CellPreparation {
   #fd;
   #failed = false;
   #busy = false;
+  #host;
+  #stopped = false;
+  #running = false;
+  install(archivePath, material, authorization) {
+    return this.#run(() =>
+      this.#stage(
+        archivePath,
+        parse(canonical(material)),
+        parse(canonical(authorization)),
+        true,
+      ),
+    );
+  }
+  shutdown() {
+    check(!this.#busy, 'CONFLICT');
+    this.#busy = true;
+    return this.#shutdown().finally(() => {
+      this.#busy = false;
+    });
+  }
+  async #shutdown() {
+    this.#running = false;
+    if (!this.#host) return;
+    const report = await this.#host.shutdown();
+    check(
+      report.unsettledWork === 0 &&
+        Object.values(report.resources).every((n) => n === 0) &&
+        report.instances.every(
+          (i) =>
+            ['DISPOSED', 'FAILED'].includes(i.state) &&
+            !i.cleanup.restartRequired &&
+            i.cleanup.timedOutResources === 0 &&
+            i.cleanup.failedDisposers.length === 0,
+        ),
+      'FAILED_PRECONDITION',
+    );
+    this.#host = undefined;
+    this.#stopped = true;
+    return report;
+  }
   async #run(operation) {
     this.#guard();
     check(!this.#busy, 'CONFLICT');
@@ -160,7 +200,7 @@ export class CellPreparation {
     }
   }
   close() {
-    check(!this.#busy, 'CONFLICT');
+    check(!this.#busy && !this.#host, 'CONFLICT');
     if (this.#fd !== undefined) closeSync(this.#fd);
     this.#fd = undefined;
   }
@@ -186,15 +226,22 @@ export class CellPreparation {
   #base() {
     this.#guard();
     const names = listPrivate(this.#fd);
+    // Public Kernel creates private g6-XXXXXX socket directories beside its
+    // state file. Validate their ownership/path without treating their presence
+    // or absence as authority or proof of worker death.
+    for (const n of names.filter((n) => /^g6-[A-Za-z0-9]{6}$/.test(n)))
+      listPrivate(this.#fd, n);
     check(
-      names.every((n) =>
-        [
-          'identity.json',
-          'floor.json',
-          'kernel.json',
-          'transactions',
-          'releases',
-        ].includes(n),
+      names.every(
+        (n) =>
+          [
+            'identity.json',
+            'floor.json',
+            'kernel.json',
+            'transactions',
+            'releases',
+            'accepted.json',
+          ].includes(n) || /^g6-[A-Za-z0-9]{6}$/.test(n),
       ),
       'FAILED_PRECONDITION',
     );
@@ -245,7 +292,7 @@ export class CellPreparation {
     try {
       h = bootstrap(configuration(id.cellId, 'root'), {
         trust: material,
-        statePath: '/proc/self/fd/' + this.#fd + '/kernel.json',
+        statePath: '/proc/' + process.pid + '/fd/' + this.#fd + '/kernel.json',
         initialize: true,
       });
     } catch (e) {
@@ -285,6 +332,35 @@ export class CellPreparation {
   #status() {
     const { id, floor } = this.#base(),
       journals = this.#journals();
+    const accepted = listPrivate(this.#fd).includes('accepted.json')
+      ? cellSchema('accepted', this.#read('accepted.json'))
+      : null;
+    if (accepted) {
+      check(accepted.cellId === id.cellId, 'FAILED_PRECONDITION');
+      monotonic(accepted.trustFloor, floor);
+      const match = journals.find(
+        (j) => j.last.transactionId === accepted.transactionId,
+      );
+      check(
+        match &&
+          ['ACTIVATING', 'COMMITTED', 'RECOVERING', 'NEEDS_OPERATOR'].includes(
+            match.last.state,
+          ) &&
+          match.last.targetRevision === accepted.sequence &&
+          same(match.last.target, accepted.release),
+        'FAILED_PRECONDITION',
+      );
+      const activation = match.rows.find(
+        (r) => r.record.state === 'ACTIVATING',
+      );
+      check(activation, 'FAILED_PRECONDITION');
+      monotonic(activation.record.trustFloor, accepted.trustFloor);
+      if (match.last.state === 'COMMITTED')
+        check(
+          same(match.last.trustFloor, accepted.trustFloor),
+          'FAILED_PRECONDITION',
+        );
+    }
     for (const { last } of journals) {
       check(
         last.cellId === id.cellId &&
@@ -294,21 +370,33 @@ export class CellPreparation {
         'FAILED_PRECONDITION',
       );
       monotonic(last.trustFloor, floor);
-      // This implementation never launches code. Foreign/post-activation records
-      // cannot establish old-runtime death and are deliberately unavailable.
-      check(
-        ['STAGING', 'VERIFIED', 'RECOVERING', 'ABORTED'].includes(last.state),
-        'FAILED_PRECONDITION',
-      );
+      if (last.state === 'COMMITTED')
+        check(
+          accepted?.transactionId === last.transactionId,
+          'FAILED_PRECONDITION',
+        );
     }
     check(
       journals.filter((j) => j.last.state !== 'ABORTED').length <= 1,
       'FAILED_PRECONDITION',
     );
+    const live = this.#running ? this.#host.inspect() : undefined;
     return {
       cellId: id.cellId,
-      accepted: null,
-      runtime: 'UNAVAILABLE',
+      accepted,
+      runtime: this.#running
+        ? !live.auditUnavailable &&
+          live.instances.every((i) => i.state === 'ACTIVE') &&
+          live.grants.every((g) => g.valid && !g.revoked)
+          ? 'RUNNING'
+          : 'FAILED'
+        : this.#stopped
+          ? 'STOPPED'
+          : journals.some((j) =>
+                j.rows.some((r) => r.record.state === 'ACTIVATING'),
+              )
+            ? 'NEEDS_OPERATOR'
+            : 'UNAVAILABLE',
       trustFloor: floor,
       transactions: journals.map((j) => ({
         transactionId: j.last.transactionId,
@@ -347,7 +435,7 @@ export class CellPreparation {
       outcome,
     });
   }
-  async #stage(archivePath, material, authorization) {
+  async #stage(archivePath, material, authorization, activate = false) {
     const status = this.#status();
     check(
       status.transactions.every((t) => t.state === 'ABORTED'),
@@ -434,6 +522,15 @@ export class CellPreparation {
       );
       const fresh = this.#advance(material, floor);
       this.#transition(rows, 'VERIFIED', fresh, 'PENDING');
+      if (activate)
+        return await this.#activate(
+          prefix,
+          inspected,
+          material,
+          status.cellId,
+          authorization,
+          rows,
+        );
       return {
         transactionId,
         state: 'VERIFIED',
@@ -448,7 +545,14 @@ export class CellPreparation {
       archive.close();
     }
   }
-  async #admit(prefix, inspected, material, cellId, authorization) {
+  async #admit(
+    prefix,
+    inspected,
+    material,
+    cellId,
+    authorization,
+    retain = false,
+  ) {
     const read = (p) => readPrivate(this.#fd, prefix + '/' + p);
     const rootScope = inspected.profile.scopes.find(
       (s) => s.parent === null,
@@ -465,9 +569,10 @@ export class CellPreparation {
     readPrivate(this.#fd, 'kernel.json');
     const h = bootstrap(configuration(cellId, rootScope), {
       trust: material,
-      statePath: '/proc/self/fd/' + this.#fd + '/kernel.json',
+      statePath: '/proc/' + process.pid + '/fd/' + this.#fd + '/kernel.json',
       initialize: false,
     });
+    if (retain) this.#host = h;
     try {
       const ids = new Map();
       for (const p of inspected.profile.plugins) {
@@ -526,8 +631,91 @@ export class CellPreparation {
         same(h.plan(canonical(inspected.profile)).lock, inspected.lock),
         'CONTRACT_MISMATCH',
       );
+      return { h, ids };
     } finally {
-      await h.shutdown();
+      if (!retain) await h.shutdown();
+    }
+  }
+  async #activate(prefix, inspected, material, cellId, authorization, rows) {
+    let publishing = false;
+    let floor = this.#advance(material, this.#read('floor.json'));
+    this.#transition(rows, 'ACTIVATING', floor, 'PENDING');
+    this.#stopped = false;
+    try {
+      const { h, ids } = await this.#admit(
+        prefix,
+        inspected,
+        material,
+        cellId,
+        authorization,
+        true,
+      );
+      await h.startProfile(canonical(inspected.profile));
+      // Fixed synthetic readiness contract, never a caller-supplied callback.
+      for (const capabilityId of ['org.alica.echo', 'org.alica.consumer']) {
+        const intent = authorization.capabilities.find(
+          (c) =>
+            c.capabilityId === capabilityId && c.operations.includes('echo'),
+        );
+        check(intent, 'PERMISSION_DENIED');
+        const bound = await h.context(ids.get(intent.principal)).require({
+          capabilityId,
+          major: 1,
+          minMinor: 0,
+          operations: ['echo'],
+          features: [],
+        });
+        const text = 'g7-readiness-' + randomUUID();
+        const result = await bound.call(
+          'echo',
+          { text },
+          { deadlineMs: Date.now() + 1000 },
+        );
+        check(same(result, { text }), 'CONTRACT_MISMATCH');
+      }
+      check(
+        h.inspect().instances.every((i) => i.state === 'ACTIVE'),
+        'FAILED_PRECONDITION',
+      );
+      floor = this.#advance(material, floor);
+      const last = rows.at(-1).record;
+      const accepted = cellSchema('accepted', {
+        schemaVersion: 'alica.cell-accepted/v1',
+        cellId,
+        transactionId: last.transactionId,
+        sequence: last.targetRevision,
+        release: last.target,
+        trustFloor: floor,
+      });
+      publishing = true;
+      this.#write('accepted.json', accepted, true);
+      this.#transition(rows, 'COMMITTED', floor, 'OK');
+      this.#running = true;
+      return this.#status();
+    } catch (error) {
+      let clean = false;
+      try {
+        await this.#shutdown();
+        clean = !this.#host;
+      } catch {
+        /* no fabricated reap */
+      }
+      if (!publishing && !this.#failed) {
+        this.#transition(
+          rows,
+          'RECOVERING',
+          floor,
+          clean ? 'ACTIVATION_FAILED' : 'CLEANUP_UNCERTAIN',
+        );
+        this.#transition(
+          rows,
+          clean ? 'ABORTED' : 'NEEDS_OPERATOR',
+          floor,
+          clean ? 'ACTIVATION_FAILED' : 'CLEANUP_UNCERTAIN',
+        );
+      }
+      // Durability uncertainty preserves evidence and never rolls selection back.
+      throw error;
     }
   }
   recover(material) {
@@ -535,6 +723,7 @@ export class CellPreparation {
   }
   async #recover(material) {
     const status = this.#status();
+    check(!this.#host, 'CONFLICT');
     const floor = this.#advance(material, status.trustFloor);
     // Public Kernel enforces same-version digest continuity as well as current
     // signatures/freshness. The opaque persisted Kernel high-water is not reset.
@@ -542,7 +731,7 @@ export class CellPreparation {
     try {
       h = bootstrap(configuration(status.cellId, 'root'), {
         trust: material,
-        statePath: '/proc/self/fd/' + this.#fd + '/kernel.json',
+        statePath: '/proc/' + process.pid + '/fd/' + this.#fd + '/kernel.json',
         initialize: false,
       });
     } catch (e) {
@@ -550,6 +739,20 @@ export class CellPreparation {
       throw e;
     } finally {
       if (h) await h.shutdown();
+    }
+    if (
+      this.#journals().some((j) =>
+        j.rows.some((r) => r.record.state === 'ACTIVATING'),
+      )
+    ) {
+      for (const { rows, last } of this.#journals()) {
+        if (['ABORTED', 'COMMITTED', 'NEEDS_OPERATOR'].includes(last.state))
+          continue;
+        if (last.state !== 'RECOVERING')
+          this.#transition(rows, 'RECOVERING', floor, 'CLEANUP_UNCERTAIN');
+        this.#transition(rows, 'NEEDS_OPERATOR', floor, 'CLEANUP_UNCERTAIN');
+      }
+      return this.#status();
     }
     for (const { rows, last } of this.#journals()) {
       if (last.state === 'ABORTED') continue;

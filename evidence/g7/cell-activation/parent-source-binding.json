@@ -1,0 +1,23 @@
+{
+  "scope": "In-process first-install activation checkpoint; not standalone qualification",
+  "sourceSha256": {
+    "tools/g7-cell.mjs": "5d5f0bfe2628b5e34e9a130aaabc4cc7e6a0c431984759d6ddc2f7d5e894fc35",
+    "tests/g7/cell-fixture.mjs": "4da9fd7e8b2317114f363f7e45d7552b9bfda4a7a9ef4b24771df58a63a1a079",
+    "tests/g7/cell-process.mjs": "5b6fc80fa2e6691a3a11face77ae8f3b73c8609396e4a5dead41cdc74db2a944",
+    "tests/g7/cell-activation.test.mjs": "b8deb304a228469da65b0b7b468ada336efa49839d84eae40df310b3c41ea83e"
+  },
+  "developmentComparison": "All listed source hashes matched after successful full regression",
+  "fullCheckExitCode": 0,
+  "fullLogSha256": "d15fe123d6bc08850d46ed9a1815c0f8792b65ede6c61a67206e538eb3ef23b2",
+  "nodeSuites": [
+    170,
+    160,
+    140
+  ],
+  "pythonSuites": [
+    193,
+    30,
+    11,
+    119
+  ]
+}
