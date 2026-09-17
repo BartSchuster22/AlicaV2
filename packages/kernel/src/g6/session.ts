@@ -145,7 +145,7 @@ export class PhysicalSession {
     });
     this.expected = Object.freeze({
       protocolMajor: 1,
-      protocolMinor: 1,
+      protocolMinor: 2,
       cellId: options.cellId,
       providerId: options.pkg.manifest.id,
       instanceId: options.instanceId,
@@ -155,6 +155,7 @@ export class PhysicalSession {
         'wire.contexts',
         'wire.sdkresults',
         'wire.scopedeffects',
+        'wire.scopevalidation',
       ],
       optionalFeatures: [],
       contracts: [...options.pkg.descriptors.values()]
@@ -424,6 +425,7 @@ export class PhysicalSession {
             'wire.contexts',
             'wire.sdkresults',
             'wire.scopedeffects',
+            'wire.scopevalidation',
           ],
           effectLimit: this.options.maxEffects,
           rootScopeId: this.options.scopeId,

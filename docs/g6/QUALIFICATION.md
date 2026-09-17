@@ -16,9 +16,14 @@ pass inproc and fail over IPC. These six normal exit-gate tests are checked in a
 `tests/ipc/scope-completion.test.mjs`; none is skipped or excluded. The current
 source tree is therefore not a green qualification result. See
 [exact failures, evidence and proposed correction](INTEGRATION-EXIT-BLOCKERS.md).
-The additional private-wire scope/cleanup correction is proposed, not approved or
-implemented. No frozen G1 or public SDK 0.1.0 API was changed. Historical review
-inputs remain intact. Earlier component results are retained below as history,
+The owner explicitly approved that correction against target `05c35d9`; see
+[direct approval](../gates/G6-SCOPE-CLEANUP-OWNER-APPROVAL.md). The synchronized local
+adapter, active minor-2 protocol and additional tests now implement it; pinned
+target execution of this correction is pending. See
+[implementation and exact handoff](../../G6-CORRECTION-STATUS.md).
+The three failures above describe the supplied pre-correction target evidence,
+not a rerun of the changed source. No runtime pass is claimed. No frozen G1 or
+public SDK 0.1.0 API was changed. Historical review inputs remain intact. Earlier component results are retained below as history,
 not current G6 acceptance.
 
 ## Historical component checkpoint

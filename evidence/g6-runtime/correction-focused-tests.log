@@ -1,0 +1,152 @@
+(node:65846) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ unchanged public KernelContext consumer: inproc signed factory (1150.37077ms)
+✔ unchanged public KernelContext consumer: ipc signed factory (4651.321777ms)
+✔ IPC execution requires explicit signed publisher execution-mode authorization (15.335442ms)
+✔ real Host IPC rejects delayed continuations rather than opening replacement tasks (1559.086224ms)
+✔ signed real Host IPC package cannot read operator files, write or spawn (731.577457ms)
+✔ ordinary overlap, FIFO roots and reserved nested/lifecycle admission (5.200157ms)
+✔ actual queued timeout retains original clock and never dispatches (20.028976ms)
+✖ selected absolute cleanup deadline caps queue, offer and nested handover (30.950491ms)
+✔ A to B to A ancestry succeeds; parent cancellation does not affect sibling (1.962654ms)
+✔ depth eight succeeds, nine rejects immediately (1.065155ms)
+✔ expired unconsumed offer retains slot/bytes; foreign ACK cannot release it (1.251005ms)
+✔ hard offer expiry quarantines until physical reap, not logical failure (1100.850971ms)
+✔ queued authorization is rechecked; rejected head cannot block following work (1.041701ms)
+✔ pre-abort and shared byte exhaustion leave no partial admission (0.636067ms)
+(node:65853) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ overlapping inline cleanup preserves sibling causality: inproc (281.24549ms)
+✔ child-context log retains child scope: inproc (121.349636ms)
+✔ zero-cleanup acquisition rechecks closed child scope: inproc (225.208124ms)
+✔ overlapping inline cleanup preserves sibling causality: ipc (1039.415205ms)
+✔ child-context log retains child scope: ipc (845.042516ms)
+✔ zero-cleanup acquisition rechecks closed child scope: ipc (989.513548ms)
+(node:65882) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ scope-check is read-only even with the real Host effect budget exhausted (1091.648541ms)
+✔ live Host authority rejects stale/foreign scopes and replay without changing the held endpoint (1017.491053ms)
+✔ closed-child preflight prevents acquisition without creating a resource (895.238026ms)
+✔ completion rejection rolls back already scope-selected cleanup without redispatch (1099.626866ms)
+✔ real simultaneous siblings cleanup uses distinct authenticated descriptors (1002.643729ms)
+✔ real simultaneous nested cleanup uses distinct authenticated descriptors (1165.648563ms)
+✔ first-selected cleanup coalesces releases from another actual live endpoint (1046.981254ms)
+✔ bounded cleanup capacity fails before descriptor dispatch and leaves no reservation (1107.129026ms)
+✔ real native worker rejects duplicate-cleanup on an already claimed cleanup descriptor (1290.519767ms)
+✔ real native worker rejects wrong-dispatch-role on an already claimed cleanup descriptor (1267.600682ms)
+✖ cancelling an invocation closes its real cleanup child descriptors (1345.014809ms)
+✖ minor2 closed scoped log: exact fields, integers, directions (6.951614ms)
+✖ minor2 closed scoped scope-check: exact fields, integers, directions (1.773357ms)
+✔ minor2 mandatory negotiation in hello (5.596232ms)
+✔ minor2 mandatory negotiation in accepted (5.323949ms)
+✔ cleanup can precede registration reply; binding remains one-to-one (4.602672ms)
+✔ registration reply may precede cleanup; callback reuse/foreign binding fails (0.583969ms)
+✔ completed effects remain charged; definite rejection releases only unbound reservation (0.546869ms)
+✔ cleanup first error is cached, including throwing undefined (0.603575ms)
+✔ cleanup deadline wins over late success and fails the physical session once (10.173997ms)
+✔ registerCleanup returns void; synchronous rejection stops acquisition (1.092396ms)
+✔ failed acquisition closes registration before reverse rollback awaits (0.652829ms)
+✔ uncertain registration retains callback charge, fails session and never retries (0.396155ms)
+✔ pending publication accepts zero/multiple but never substitutes ack (1.474284ms)
+✔ wrong endpoint and wrong effect cannot settle pending operations (0.656727ms)
+✔ RPC IDs are never reused across endpoints and retired replies remain endpoint-bound (0.508215ms)
+✔ 64 pending requests shared across endpoints reject before send (3.231401ms)
+✔ synchronous pending RPC pumps until actual reply, not a Promise surrogate (0.315853ms)
+✔ broker registrations consume the same Host-owned lifetime effect ledger (0.763538ms)
+ℹ tests 49
+ℹ suites 0
+ℹ pass 45
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 14146.816134
+
+✖ failing tests:
+
+test at tests/ipc/scheduler.test.mjs:65:1
+✖ selected absolute cleanup deadline caps queue, offer and nested handover (30.950491ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (file:///home/alica-dev/AlicaV2/tests/ipc/scheduler.test.mjs:73:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { code: 'DEADLINE_EXCEEDED' },
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/ipc/scope-correction.test.mjs:473:1
+✖ cancelling an invocation closes its real cleanup child descriptors (1345.014809ms)
+  Error [AcapError]: UNAVAILABLE
+      at ContractSession.call (file:///home/alica-dev/AlicaV2/packages/acap-contracts/dist/runtime.js:521:19)
+      at async TestContext.<anonymous> (file:///home/alica-dev/AlicaV2/tests/ipc/scope-correction.test.mjs:490:18)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    code: 'UNAVAILABLE',
+    correlationId: '34016972-832e-433b-bb8d-0c9419eba860',
+    retryable: false
+  }
+
+test at tests/ipc/scope-wire.test.mjs:11:3
+✖ minor2 closed scoped log: exact fields, integers, directions (6.951614ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + [Object: null prototype] {
+  +   body: [Object: null prototype] {
+  - {
+  -   body: {
+        kind: 'log',
+  +     record: [Object: null prototype] {
+  -     record: {
+          event: 'checkpoint',
+          level: 'info'
+        },
+        scopeGeneration: 1,
+        scopeId: 'child1',
+  
+      at TestContext.<anonymous> (file:///home/alica-dev/AlicaV2/tests/ipc/scope-wire.test.mjs:22:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { body: { kind: 'log', record: [Object], scopeGeneration: 1, scopeId: 'child1', wireId: 2 }, contextId: 'ctx1', generation: 1, schemaVersion: 'acap.ipc/v1', sequence: 1, sessionId: 'eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', tag: 'request' },
+    expected: { schemaVersion: 'acap.ipc/v1', tag: 'request', sessionId: 'eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', generation: 1, sequence: 1, body: { kind: 'log', wireId: 2, scopeId: 'child1', scopeGeneration: 1, record: [Object] }, contextId: 'ctx1' },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/ipc/scope-wire.test.mjs:11:3
+✖ minor2 closed scoped scope-check: exact fields, integers, directions (1.773357ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + [Object: null prototype] {
+  +   body: [Object: null prototype] {
+  - {
+  -   body: {
+        kind: 'scope-check',
+        scopeGeneration: 1,
+        scopeId: 'child1',
+        wireId: 2
+      },
+  
+      at TestContext.<anonymous> (file:///home/alica-dev/AlicaV2/tests/ipc/scope-wire.test.mjs:22:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { body: { kind: 'scope-check', scopeGeneration: 1, scopeId: 'child1', wireId: 2 }, contextId: 'ctx1', generation: 1, schemaVersion: 'acap.ipc/v1', sequence: 1, sessionId: 'eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', tag: 'request' },
+    expected: { schemaVersion: 'acap.ipc/v1', tag: 'request', sessionId: 'eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', generation: 1, sequence: 1, body: { kind: 'scope-check', wireId: 2, scopeId: 'child1', scopeGeneration: 1 }, contextId: 'ctx1' },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

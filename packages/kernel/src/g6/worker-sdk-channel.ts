@@ -32,6 +32,7 @@ export class WorkerSDKChannel {
   readonly callbacks: CallbackLedger;
   readonly effects: WorkerEffects;
   #current = new AsyncLocalStorage<WorkerEndpoint>();
+  #dispatch = new WeakSet<WorkerEndpoint>();
   #sequences = new WeakMap<WorkerEndpoint, number>();
   #releases = new WeakMap<WorkerEndpoint, Map<string, Promise<void>>>();
   #taskOpening: { endpoint?: WorkerEndpoint } | undefined;
@@ -192,6 +193,19 @@ export class WorkerSDKChannel {
     );
     return this.#current.run(endpoint, work);
   }
+  /** One authenticated first dispatch per descriptor, shared by all roles. */
+  claim(
+    endpoint: WorkerEndpoint,
+    ...purposes: WorkerEndpoint['offer']['purpose'][]
+  ): void {
+    check(
+      this.transport.contexts.get(endpoint.offer.contextId) === endpoint &&
+        purposes.includes(endpoint.offer.purpose) &&
+        !this.#dispatch.has(endpoint),
+      'UNAUTHENTICATED',
+    );
+    this.#dispatch.add(endpoint);
+  }
   current(): WorkerEndpoint {
     const endpoint = this.#current.getStore();
     // Delayed continuations keep their expired marker and fail; they never
@@ -267,6 +281,15 @@ export class WorkerSDKChannel {
     acquire: (register: (dispose: Disposer) => void) => Promise<T>,
   ): Promise<T> {
     const endpoint = this.current();
+    const end = Math.min(endpoint.end, performance.now() + this.activationMs);
+    const validate = () => {
+      check(this.current() === endpoint, 'UNAUTHENTICATED');
+      this.sync(
+        { kind: 'scope-check', scopeId, scopeGeneration: generation },
+        ['ack'],
+        end,
+      );
+    };
     return this.effects.acquire(
       scopeId,
       generation,
@@ -277,7 +300,13 @@ export class WorkerSDKChannel {
           Math.floor(endpoint.end - performance.now()),
         ),
       ),
-      acquire,
+      async (register) => {
+        validate();
+        const value = await acquire(register);
+        validate();
+        return value;
+      },
+      end,
     );
   }
   private releaseEffect(effectId: string): Promise<void> {
@@ -286,8 +315,8 @@ export class WorkerSDKChannel {
     if (!releases) this.#releases.set(endpoint, (releases = new Map()));
     const prior = releases.get(effectId);
     if (prior) return prior;
-    // Reserve the inline link BEFORE enqueue. Cleanup may arrive from native
-    // pumping while the originating effect-release reply is still pending.
+    // Coalesce release RPCs on their originating endpoint. A cleanup descriptor
+    // can arrive before this reply (or before the registration reply).
     let resolve!: () => void, reject!: (error: unknown) => void;
     const result = new Promise<void>((yes, no) => {
       resolve = yes;
@@ -320,11 +349,9 @@ export class WorkerSDKChannel {
     if (frame.tag !== 'request' || frame.body.kind !== 'effect-cleanup')
       return false;
     const body = frame.body;
-    check(
-      endpoint.offer.purpose === 'lifecycle' ||
-        this.#releases.get(endpoint)?.has(body.effectId),
-      'UNAUTHENTICATED',
-    );
+    // Resource binding is worker-owned; this actual broker-issued descriptor
+    // authenticates dispatch. A release reply still belongs to its origin RPC.
+    this.claim(endpoint, 'invoke', 'lifecycle');
     const remainingMs = Math.min(
       body.remainingMs,
       Math.floor(endpoint.end - performance.now()),

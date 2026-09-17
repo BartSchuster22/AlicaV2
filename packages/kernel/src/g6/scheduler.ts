@@ -11,6 +11,8 @@ export interface Admission {
   readonly purpose: Purpose;
   readonly requestedMs: number;
   readonly encodedBytes: number;
+  /** Broker-selected absolute monotonic cap; never serialized as authority. */
+  readonly end?: number;
   readonly parent?: WorkContext;
   readonly signal?: AbortSignal;
   /** Host closure: checks current scope, instance, grant and registration. */
@@ -120,6 +122,7 @@ export class Scheduler {
         this.now() +
           Math.min(input.requestedMs, input.purpose === 'event' ? 2000 : 30000),
         input.parent?.end ?? Infinity,
+        input.end ?? Infinity,
       );
       check(end > this.now(), 'DEADLINE_EXCEEDED');
       const slot = this.slot(input.purpose, !!input.parent);
@@ -147,16 +150,28 @@ export class Scheduler {
       input.parent?.children.add(context);
       return new Promise<WorkContext>((resolve, reject) => {
         const abort = () => context.finish('CANCELLED');
+        // Node truncates fractional timer delays. A wakeup is not proof that
+        // the selected monotonic deadline has elapsed; never expire early or
+        // replace the original end with a fresh duration when rearming.
+        const expire = () => {
+          if (context.terminal) return;
+          const remaining = end - this.now();
+          if (remaining > 0) {
+            record.timer = setTimeout(
+              expire,
+              Math.max(1, Math.ceil(remaining)),
+            );
+            return;
+          }
+          context.finish('DEADLINE_EXCEEDED');
+        };
         const record: RecordState = {
           context,
           releaseBytes,
           resolve,
           reject,
           admitted: false,
-          timer: setTimeout(
-            () => context.finish('DEADLINE_EXCEEDED'),
-            Math.max(1, end - this.now()),
-          ),
+          timer: setTimeout(expire, Math.max(1, Math.ceil(end - this.now()))),
           detach: () => input.signal?.removeEventListener('abort', abort),
         };
         this.#records.set(context, record);

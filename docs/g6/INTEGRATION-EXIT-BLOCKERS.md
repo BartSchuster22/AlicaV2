@@ -1,7 +1,13 @@
-# G6 integration exit blockers and narrow correction for review
+# G6 integration exit blockers and approved narrow correction
 
-**Status: G6 INCOMPLETE. This document proposes a further private-wire correction;
-it does not approve or activate it.** Public SDK 0.1.0 and frozen G1 stay unchanged.
+**Status: correction APPROVED and implemented locally; G6 qualification INCOMPLETE.**
+The owner directly answered “Approve the correction; implement and complete G6”
+to the proposal at target `05c35d91bd2e3241543aa09b8aa9652dd7973174`.
+See [approval](../gates/G6-SCOPE-CLEANUP-OWNER-APPROVAL.md) and
+[implementation/parent handoff](../../G6-CORRECTION-STATUS.md).
+The actual target results below remain the unchanged pre-correction evidence;
+they are not results of the new implementation. Public SDK 0.1.0 and frozen G1
+stay unchanged.
 The previous candidate `758610b` was approved and implemented; this is not a request
 to approve it again or to release the historical SCP tool gate.
 
@@ -57,7 +63,7 @@ logical callback must not cancel an unrelated sibling. Scope logging currently
 has no scope field on the log request. Zero-cleanup acquisition currently has no
 broker recheck at completion, so endpoint liveness is insufficient.
 
-## Proposed bounded correction (review required)
+## Owner-approved bounded correction
 
 ### 1. Scoped log request
 
@@ -95,7 +101,7 @@ The extra round trips share the existing 64-pending/byte/frame bounds.
 
 Both requests remain forbidden on the control lane. This extends the closed
 message contract, so it must not be slipped into the approved v1 schema silently.
-Proposed negotiation: private protocol minor **2**, mandatory feature
+Approved negotiation: private protocol minor **2**, mandatory feature
 `wire.scopevalidation` in both hello and accepted, in addition to the three
 existing required features. Reject peers missing these semantics; no fallback to
 root-scope logging or unchecked acquisition. Public SDK version remains 0.1.0.
@@ -123,8 +129,8 @@ offer and dispatch time to the selected deadline; never renew it at handover.
 Exhaustion must fail finitely before dispatch and roll back reservations exactly
 once, without stranding a disposer. The worker must distinguish an authenticated
 first cleanup dispatch on this descriptor from ordinary invocation dispatch.
-This revises v1's same-endpoint inline-cleanup implementation strategy and requires
-review; it is not permission to relax R2 authentication or concurrency.
+This approved correction revises v1's same-endpoint inline-cleanup implementation
+strategy; it is not permission to relax R2 authentication or concurrency.
 
 ## Required acceptance for this correction
 
@@ -138,6 +144,8 @@ review; it is not permission to relax R2 authentication or concurrency.
 - Full original G6 hostile/capacity/recovery/reentrancy matrix and clean-source
   verification remain mandatory; six regression passes alone are not G6 exit.
 
-No implementation of these additional wire fields/messages is claimed. The
-integration candidate must remain explicitly incomplete until this correction is
-reviewed, implemented and the full required qualification is actually green.
+These additional wire fields/messages and separate cleanup descriptors are now
+implemented in the synchronized local correction. The parent still must transfer,
+format, build/typecheck and execute the exact corrected candidate. No runtime
+success is claimed before that output. The integration candidate remains explicitly
+incomplete until the full required qualification and clean-source gate are green.

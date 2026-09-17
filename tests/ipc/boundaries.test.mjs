@@ -24,6 +24,12 @@ const pairs = [
   ['tests/ipc/scheduler.test.mjs', 'packages/kernel/dist/g6/scheduler.js'],
   ['tests/ipc/scheduler.test.mjs', 'packages/kernel/dist/g6/wire.js'],
   ['tests/ipc/reap.test.mjs', 'packages/kernel/src/g6/reap.ts'],
+  [
+    'tests/ipc/scope-correction.test.mjs',
+    'packages/kernel/dist/g6/host-adapter.js',
+  ],
+  ['tests/ipc/scope-correction.test.mjs', 'packages/kernel/dist/g6/native.js'],
+  ['tests/ipc/scope-wire.test.mjs', 'packages/kernel/dist/g6/wire.js'],
 ];
 
 test('private component tests can import only their enumerated runtime modules', () => {
@@ -50,6 +56,31 @@ test('adjacent tests and plugin packages cannot inherit component exceptions', (
   ]) {
     for (const [, target] of pairs)
       assert.ok(check(importer, target).includes('cross-package path import'));
+  }
+});
+
+test('scope qualification permissions remain exact importer-target pairs', () => {
+  for (const importer of [
+    'tests/ipc/scope-correction.test.mjs',
+    'tests/ipc/scope-wire.test.mjs',
+  ]) {
+    for (const [, target] of pairs) {
+      if (
+        !pairs.some(
+          ([file, allowed]) => file === importer && allowed === target,
+        )
+      )
+        assert.ok(
+          check(importer, target).includes('cross-package path import'),
+        );
+    }
+    assert.ok(
+      violations(
+        path.join(root, importer),
+        "import Ajv from 'ajv/dist/2020.js';",
+        root,
+      ).includes('undeclared external import'),
+    );
   }
 });
 

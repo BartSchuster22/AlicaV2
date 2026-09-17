@@ -93,7 +93,6 @@ export class HostIPC {
   #queuedCleanup = 0;
   #unloadEnd = Infinity;
   #unloadTimer: ReturnType<typeof setTimeout> | undefined;
-  #inlineParents = new Map<Endpoint, WorkContext>();
   #taskOpening = false;
   #taskWater = 0;
   #tasks = new WeakMap<Endpoint, number>();
@@ -235,6 +234,7 @@ export class HostIPC {
     ms: number,
     signal?: AbortSignal,
     authorize: () => void = this.host.fresh,
+    end?: number,
   ): Promise<Endpoint> {
     const parent = causalContext.getStore();
     const endpoint = await this.session.open({
@@ -242,6 +242,7 @@ export class HostIPC {
       purpose,
       requestedMs: Math.max(1, Math.min(30000, Math.floor(ms))),
       encodedBytes: 256,
+      ...(end === undefined ? {} : { end }),
       ...(parent ? { parent } : {}),
       ...(signal ? { signal } : {}),
       authorize,
@@ -383,39 +384,28 @@ export class HostIPC {
     );
     const run = async () => {
       check(performance.now() < end, 'DEADLINE_EXCEEDED');
-      let endpoint = inline ?? this.#lifecycle;
-      let owned = false;
-      if (!endpoint) {
-        endpoint = await causalContext.run(undefined as never, () =>
-          this.open(scope, 'lifecycle', end - performance.now()),
+      // The release receiver is the only ancestry authority. Overlapping
+      // releases on one descriptor create siblings, never an ambient stack.
+      if (inline) {
+        check(
+          this.#endpoints.get(inline.context) === inline,
+          'UNAUTHENTICATED',
         );
-        owned = true;
-        this.#lifecycle = endpoint;
+        inline.context.assertLive();
       }
-      const parent = this.#inlineParents.get(endpoint) ?? endpoint.context;
-      let child: WorkContext | undefined;
-      let timer: ReturnType<typeof setTimeout> | undefined;
-      try {
-        if (inline) {
-          parent.assertLive();
-          check(parent.depth < 8, 'RESOURCE_EXHAUSTED');
-          child = new WorkContext(
-            parent.owner,
-            'cleanup-' + effectId,
-            scope.id,
-            'lifecycle',
-            Math.min(end, parent.end),
-            parent.depth + 1,
-            parent,
+      const endpoint = await causalContext.run(
+        inline?.context as WorkContext,
+        () =>
+          this.open(
+            scope,
+            inline ? 'invoke' : 'lifecycle',
+            end - performance.now(),
+            undefined,
             this.host.fresh,
-          );
-          parent.children.add(child);
-          this.#inlineParents.set(endpoint, child);
-          timer = setTimeout(
-            () => child!.finish('DEADLINE_EXCEEDED'),
-            Math.max(1, child.end - performance.now()),
-          );
-        }
+            end,
+          ),
+      );
+      try {
         const remainingMs = Math.floor(
           Math.min(end, endpoint.context.end) - performance.now(),
         );
@@ -444,19 +434,7 @@ export class HostIPC {
         )
           throw new AcapError(frame.body.error.code);
       } finally {
-        clearTimeout(timer);
-        if (child) {
-          if (this.#inlineParents.get(endpoint) === child) {
-            if (parent === endpoint.context)
-              this.#inlineParents.delete(endpoint);
-            else this.#inlineParents.set(endpoint, parent);
-          }
-          child.finish();
-        }
-        if (owned) {
-          this.#lifecycle = undefined;
-          endpoint.context.finish();
-        }
+        endpoint.context.finish();
       }
     };
     if (inline) return run();
@@ -682,136 +660,138 @@ export class HostIPC {
         tag: 'response',
         body: { kind: 'control', wireId: body.wireId, value },
       });
-    void causalContext.run(
-      this.#inlineParents.get(endpoint) ?? endpoint.context,
-      async () => {
-        try {
-          if (frame.tag === 'event' && frame.body.kind === 'publish') {
-            const b = frame.body,
-              scope = this.scope(b.scopeId);
-            check(
-              digest(this.host.pkg.events.get(b.eventType)) ===
-                b.descriptorDigest,
-              'CONTRACT_MISMATCH',
+    void causalContext.run(endpoint.context, async () => {
+      try {
+        if (frame.tag === 'event' && frame.body.kind === 'publish') {
+          const b = frame.body,
+            scope = this.scope(b.scopeId);
+          check(
+            digest(this.host.pkg.events.get(b.eventType)) ===
+              b.descriptorDigest,
+            'CONTRACT_MISMATCH',
+          );
+          const result = await this.host
+            .context(scope)
+            .emit(b.eventType, b.data);
+          reply({ kind: 'published', admitted: result.admitted });
+          return;
+        }
+        check(frame.tag === 'request', 'UNAUTHENTICATED');
+        const b = frame.body;
+        if (b.kind === 'outbound') {
+          const handle = this.#handles.get(b.handleId);
+          check(handle, 'PERMISSION_DENIED');
+          this.scope(handle.scope.id, handle.scope.generation);
+          check(
+            b.call.descriptorDigest === handle.bound.descriptorDigest,
+            'CONTRACT_MISMATCH',
+          );
+          const requirements = handle.optional
+            ? this.host.pkg.manifest.optionalRequires
+            : this.host.pkg.manifest.requires;
+          check(
+            b.call.capabilityId ===
+              requirements[handle.requirementIndex]!.capabilityId,
+            'PERMISSION_DENIED',
+          );
+          const options = {
+            deadlineMs: Math.min(
+              b.call.deadlineMs,
+              Date.now() + b.requestedMs,
+              Date.now() + endpoint.context.remainingMs,
+            ),
+            signal: endpoint.context.controller.signal,
+            ...(b.call.idempotencyKey === undefined
+              ? {}
+              : { idempotencyKey: b.call.idempotencyKey }),
+          };
+          // A bound Host capability validates operation kind; stream kind is
+          // selected from the broker's verified descriptor, never caller flags.
+          const descriptor = this.host.descriptor(
+            handle.bound.descriptorDigest,
+          );
+          const op = descriptor.operations.find(
+            (x) => x.name === b.call.operation,
+          );
+          check(op, 'CONTRACT_MISMATCH');
+          const input = b.call.payload;
+          check(input !== undefined, 'CONTRACT_MISMATCH');
+          if (op.kind === 'stream')
+            await this.exchanges.produce(endpoint, b.wireId, (signal) =>
+              handle.bound.stream(op.name, input, {
+                ...options,
+                signal,
+              }),
             );
-            const result = await this.host
-              .context(scope)
-              .emit(b.eventType, b.data);
-            reply({ kind: 'published', admitted: result.admitted });
-            return;
-          }
-          check(frame.tag === 'request', 'UNAUTHENTICATED');
-          const b = frame.body;
-          if (b.kind === 'outbound') {
-            const handle = this.#handles.get(b.handleId);
-            check(handle, 'PERMISSION_DENIED');
-            this.scope(handle.scope.id, handle.scope.generation);
-            check(
-              b.call.descriptorDigest === handle.bound.descriptorDigest,
-              'CONTRACT_MISMATCH',
-            );
-            const requirements = handle.optional
-              ? this.host.pkg.manifest.optionalRequires
-              : this.host.pkg.manifest.requires;
-            check(
-              b.call.capabilityId ===
-                requirements[handle.requirementIndex]!.capabilityId,
-              'PERMISSION_DENIED',
-            );
-            const options = {
-              deadlineMs: Math.min(
-                b.call.deadlineMs,
-                Date.now() + b.requestedMs,
-                Date.now() + endpoint.context.remainingMs,
-              ),
-              signal: endpoint.context.controller.signal,
-              ...(b.call.idempotencyKey === undefined
-                ? {}
-                : { idempotencyKey: b.call.idempotencyKey }),
-            };
-            // A bound Host capability validates operation kind; stream kind is
-            // selected from the broker's verified descriptor, never caller flags.
-            const descriptor = this.host.descriptor(
-              handle.bound.descriptorDigest,
-            );
-            const op = descriptor.operations.find(
-              (x) => x.name === b.call.operation,
-            );
-            check(op, 'CONTRACT_MISMATCH');
-            const input = b.call.payload;
-            check(input !== undefined, 'CONTRACT_MISMATCH');
-            if (op.kind === 'stream')
-              await this.exchanges.produce(endpoint, b.wireId, (signal) =>
-                handle.bound.stream(op.name, input, {
-                  ...options,
-                  signal,
-                }),
-              );
-            else {
-              const controller = new AbortController();
-              let calls = this.#outbound.get(endpoint);
-              if (!calls) this.#outbound.set(endpoint, (calls = new Map()));
-              calls.set(b.wireId, controller);
-              try {
-                const value = await handle.bound.call(op.name, input, {
-                  ...options,
-                  signal: AbortSignal.any([options.signal, controller.signal]),
-                });
-                this.send(endpoint, {
-                  tag: 'response',
-                  body: {
-                    kind: 'invoke',
-                    wireId: b.wireId,
-                    response: {
-                      requestId: b.call.requestId,
-                      result: { kind: 'success', value },
-                    },
-                  },
-                });
-              } catch (error) {
-                this.send(endpoint, {
-                  tag: 'response',
-                  body: {
-                    kind: 'invoke',
-                    wireId: b.wireId,
-                    response: {
-                      requestId: b.call.requestId,
-                      result: { kind: 'error', error: errorRecord(error) },
-                    },
-                  },
-                });
-              }
-            }
-            return;
-          }
-          reply(await this.scoped(endpoint, b));
-        } catch (error) {
-          if (!endpoint.context.terminal) {
+          else {
+            const controller = new AbortController();
+            let calls = this.#outbound.get(endpoint);
+            if (!calls) this.#outbound.set(endpoint, (calls = new Map()));
+            calls.set(b.wireId, controller);
             try {
+              const value = await handle.bound.call(op.name, input, {
+                ...options,
+                signal: AbortSignal.any([options.signal, controller.signal]),
+              });
               this.send(endpoint, {
                 tag: 'response',
                 body: {
-                  kind: 'control-error',
-                  wireId: body.wireId,
-                  error: errorRecord(error),
+                  kind: 'invoke',
+                  wireId: b.wireId,
+                  response: {
+                    requestId: b.call.requestId,
+                    result: { kind: 'success', value },
+                  },
                 },
               });
-            } catch {
-              this.session.fail();
+            } catch (error) {
+              this.send(endpoint, {
+                tag: 'response',
+                body: {
+                  kind: 'invoke',
+                  wireId: b.wireId,
+                  response: {
+                    requestId: b.call.requestId,
+                    result: { kind: 'error', error: errorRecord(error) },
+                  },
+                },
+              });
             }
           }
-        } finally {
-          done();
+          return;
         }
-      },
-    );
+        reply(await this.scoped(endpoint, b));
+      } catch (error) {
+        if (!endpoint.context.terminal) {
+          try {
+            this.send(endpoint, {
+              tag: 'response',
+              body: {
+                kind: 'control-error',
+                wireId: body.wireId,
+                error: errorRecord(error),
+              },
+            });
+          } catch {
+            this.session.fail();
+          }
+        }
+      } finally {
+        done();
+      }
+    });
   }
 
   private async scoped(
     endpoint: Endpoint,
     b: request['body'],
   ): Promise<Control> {
+    endpoint.context.assertLive();
     switch (b.kind) {
+      case 'scope-check': {
+        this.host.context(this.scope(b.scopeId, b.scopeGeneration));
+        return { kind: 'ack' };
+      }
       case 'register': {
         const scope = this.scope(b.scopeId),
           context = this.host.context(scope);
@@ -910,7 +890,7 @@ export class HostIPC {
       case 'log': {
         check(b.record.level !== 'debug', 'INVALID_ARGUMENT');
         this.host
-          .context(this.scope(endpoint.context.scope))
+          .context(this.scope(b.scopeId, b.scopeGeneration))
           .log({ level: b.record.level, event: b.record.event });
         return { kind: 'ack' };
       }

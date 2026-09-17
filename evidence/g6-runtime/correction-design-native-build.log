@@ -1,0 +1,1550 @@
+
+> alica-v2@0.0.0 test:g6-design
+> python3 -S tools/check-g6-design.py && python3 -S tools/test-g6-context-model.py
+
+{
+  "level": "SCHEMA-DESIGN-ONLY",
+  "schemaChecksPassed": 248,
+  "runtimeQualification": false,
+  "cases": [
+    {
+      "case": "valid-hello",
+      "passed": true,
+      "expectedValid": true,
+      "direction": null
+    },
+    {
+      "case": "closed-hello-envelope",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "closed-hello-body",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "generation-required-hello",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "valid-accepted",
+      "passed": true,
+      "expectedValid": true,
+      "direction": null
+    },
+    {
+      "case": "closed-accepted-envelope",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "closed-accepted-body",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "generation-required-accepted",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "valid-request",
+      "passed": true,
+      "expectedValid": true,
+      "direction": null
+    },
+    {
+      "case": "closed-request-envelope",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "closed-request-body",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "generation-required-request",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "valid-response",
+      "passed": true,
+      "expectedValid": true,
+      "direction": null
+    },
+    {
+      "case": "closed-response-envelope",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "closed-response-body",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "generation-required-response",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "valid-error",
+      "passed": true,
+      "expectedValid": true,
+      "direction": null
+    },
+    {
+      "case": "closed-error-envelope",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "closed-error-body",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "generation-required-error",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "valid-cancel",
+      "passed": true,
+      "expectedValid": true,
+      "direction": null
+    },
+    {
+      "case": "closed-cancel-envelope",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "closed-cancel-body",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "generation-required-cancel",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "valid-stream-item",
+      "passed": true,
+      "expectedValid": true,
+      "direction": null
+    },
+    {
+      "case": "closed-stream-item-envelope",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "closed-stream-item-body",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "generation-required-stream-item",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "valid-stream-credit",
+      "passed": true,
+      "expectedValid": true,
+      "direction": null
+    },
+    {
+      "case": "closed-stream-credit-envelope",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "closed-stream-credit-body",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "generation-required-stream-credit",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "valid-stream-end",
+      "passed": true,
+      "expectedValid": true,
+      "direction": null
+    },
+    {
+      "case": "closed-stream-end-envelope",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "closed-stream-end-body",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "generation-required-stream-end",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "valid-event",
+      "passed": true,
+      "expectedValid": true,
+      "direction": null
+    },
+    {
+      "case": "closed-event-envelope",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "closed-event-body",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "generation-required-event",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "valid-ping",
+      "passed": true,
+      "expectedValid": true,
+      "direction": null
+    },
+    {
+      "case": "closed-ping-envelope",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "closed-ping-body",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "generation-required-ping",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "valid-pong",
+      "passed": true,
+      "expectedValid": true,
+      "direction": null
+    },
+    {
+      "case": "closed-pong-envelope",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "closed-pong-body",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "generation-required-pong",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "valid-scope-check",
+      "passed": true,
+      "expectedValid": true,
+      "direction": null
+    },
+    {
+      "case": "closed-scope-check-envelope",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "closed-scope-check-body",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "generation-required-scope-check",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "valid-log",
+      "passed": true,
+      "expectedValid": true,
+      "direction": null
+    },
+    {
+      "case": "closed-log-envelope",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "closed-log-body",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "generation-required-log",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "hello-from-provider",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "toBroker"
+    },
+    {
+      "case": "hello-not-from-broker",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "toProvider"
+    },
+    {
+      "case": "accepted-from-broker",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "toProvider"
+    },
+    {
+      "case": "accepted-not-from-provider",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "toBroker"
+    },
+    {
+      "case": "broker-invoke",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "toProvider"
+    },
+    {
+      "case": "provider-cannot-send-broker-invoke",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "toBroker"
+    },
+    {
+      "case": "outbound-shape",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "toBroker"
+    },
+    {
+      "case": "outbound-rejects-caller-assertion",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "toBroker"
+    },
+    {
+      "case": "invalid-header-contextId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "invalid-header-sessionId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "invalid-header-generation",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "invalid-header-sequence",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "invalid-header-schemaVersion",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "invalid-header-tag",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "credit-shape-0",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "credit-shape-257",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "credit-shape-1.5",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "handshake-shape-protocolMajor",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "handshake-shape-packageDigest",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "handshake-shape-challenge",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "reject-non-acap-value-76",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "reject-non-acap-value-77",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "reject-non-acap-value-78",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "accept-acap-value-79",
+      "passed": true,
+      "expectedValid": true,
+      "direction": null
+    },
+    {
+      "case": "accept-acap-value-80",
+      "passed": true,
+      "expectedValid": true,
+      "direction": null
+    },
+    {
+      "case": "accept-acap-value-81",
+      "passed": true,
+      "expectedValid": true,
+      "direction": null
+    },
+    {
+      "case": "accept-acap-value-82",
+      "passed": true,
+      "expectedValid": true,
+      "direction": null
+    },
+    {
+      "case": "accept-acap-value-83",
+      "passed": true,
+      "expectedValid": true,
+      "direction": null
+    },
+    {
+      "case": "control-context-ready",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "toBroker"
+    },
+    {
+      "case": "control-not-from-broker-context-ready",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "toProvider"
+    },
+    {
+      "case": "control-task-open",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "toBroker"
+    },
+    {
+      "case": "control-not-from-broker-task-open",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "toProvider"
+    },
+    {
+      "case": "control-event-ack",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "toBroker"
+    },
+    {
+      "case": "control-not-from-broker-event-ack",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "toProvider"
+    },
+    {
+      "case": "control-bind",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "toBroker"
+    },
+    {
+      "case": "control-not-from-broker-bind",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "toProvider"
+    },
+    {
+      "case": "control-register",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "toBroker"
+    },
+    {
+      "case": "control-not-from-broker-register",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "toProvider"
+    },
+    {
+      "case": "control-withdraw",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "toBroker"
+    },
+    {
+      "case": "control-not-from-broker-withdraw",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "toProvider"
+    },
+    {
+      "case": "control-secret",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "toBroker"
+    },
+    {
+      "case": "control-not-from-broker-secret",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "toProvider"
+    },
+    {
+      "case": "control-subscribe",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "toBroker"
+    },
+    {
+      "case": "control-not-from-broker-subscribe",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "toProvider"
+    },
+    {
+      "case": "control-unsubscribe",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "toBroker"
+    },
+    {
+      "case": "control-not-from-broker-unsubscribe",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "toProvider"
+    },
+    {
+      "case": "control-scope-create",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "toBroker"
+    },
+    {
+      "case": "control-not-from-broker-scope-create",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "toProvider"
+    },
+    {
+      "case": "control-scope-check",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "toBroker"
+    },
+    {
+      "case": "control-not-from-broker-scope-check",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "toProvider"
+    },
+    {
+      "case": "control-log",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "toBroker"
+    },
+    {
+      "case": "control-not-from-broker-log",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "toProvider"
+    },
+    {
+      "case": "valid-digest-shape-does-not-authenticate",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "toBroker"
+    },
+    {
+      "case": "valid-name-shape-does-not-authenticate",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "toBroker"
+    },
+    {
+      "case": "invoke-on-work-lane",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "invoke-not-on-control-lane",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "controlToProvider"
+    },
+    {
+      "case": "hello-on-control-lane",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "controlToBroker"
+    },
+    {
+      "case": "hello-not-on-work-lane",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "context-ready-control-lane",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "controlToBroker"
+    },
+    {
+      "case": "context-ready-not-work-lane",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "task-open-control-lane",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "controlToBroker"
+    },
+    {
+      "case": "task-open-not-work-lane",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "outbound-cannot-use-control-channel",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "controlToBroker"
+    },
+    {
+      "case": "outbound-work-channel",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "required-context-feature-hello",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "event-digests-required-hello",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "required-context-feature-accepted",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "event-digests-required-accepted",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "r2-reject-asserted-parentWireId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "toBroker"
+    },
+    {
+      "case": "r2-reject-asserted-caller",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "toBroker"
+    },
+    {
+      "case": "context-required",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "single-active-is-not-r2",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "toProvider"
+    },
+    {
+      "case": "offer-shape",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "broker-native-carrier"
+    },
+    {
+      "case": "offer-reject-descriptorCount-0",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "broker-native-carrier"
+    },
+    {
+      "case": "offer-reject-descriptorCount-2",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "broker-native-carrier"
+    },
+    {
+      "case": "offer-reject-generation-0",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "broker-native-carrier"
+    },
+    {
+      "case": "offer-reject-contextId-",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "broker-native-carrier"
+    },
+    {
+      "case": "offer-reject-purpose-arbitrary",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "broker-native-carrier"
+    },
+    {
+      "case": "offer-reject-parentWireId-1",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "broker-native-carrier"
+    },
+    {
+      "case": "offer-reject-fd-12",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "broker-native-carrier"
+    },
+    {
+      "case": "offer-reject-caller-{}",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "broker-native-carrier"
+    },
+    {
+      "case": "offer-requires-schemaVersion",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "broker-native-carrier"
+    },
+    {
+      "case": "offer-requires-sessionId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "broker-native-carrier"
+    },
+    {
+      "case": "offer-requires-generation",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "broker-native-carrier"
+    },
+    {
+      "case": "offer-requires-offerId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "broker-native-carrier"
+    },
+    {
+      "case": "offer-requires-contextId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "broker-native-carrier"
+    },
+    {
+      "case": "offer-requires-purpose",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "broker-native-carrier"
+    },
+    {
+      "case": "offer-requires-descriptorCount",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "broker-native-carrier"
+    },
+    {
+      "case": "offer-requires-remainingMs",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "broker-native-carrier"
+    },
+    {
+      "case": "sdk-positive-0",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-wrong-lane-0-controlToBroker",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "controlToBroker"
+    },
+    {
+      "case": "sdk-wrong-lane-0-controlToProvider",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "controlToProvider"
+    },
+    {
+      "case": "sdk-wrong-lane-0-workToProvider",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-required-0-kind",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-required-0-wireId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-required-0-scopeId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-required-0-scopeGeneration",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-closed-0",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-positive-1",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-wrong-lane-1-controlToBroker",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "controlToBroker"
+    },
+    {
+      "case": "sdk-wrong-lane-1-controlToProvider",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "controlToProvider"
+    },
+    {
+      "case": "sdk-wrong-lane-1-workToProvider",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-required-1-kind",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-required-1-wireId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-required-1-scopeId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-required-1-scopeGeneration",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-required-1-record",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-closed-1",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-positive-2",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-wrong-lane-2-controlToBroker",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "controlToBroker"
+    },
+    {
+      "case": "sdk-wrong-lane-2-controlToProvider",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "controlToProvider"
+    },
+    {
+      "case": "sdk-wrong-lane-2-workToProvider",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-required-2-kind",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-required-2-wireId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-required-2-scopeId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-required-2-scopeGeneration",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-required-2-callbackId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-closed-2",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-positive-3",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-wrong-lane-3-controlToBroker",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "controlToBroker"
+    },
+    {
+      "case": "sdk-wrong-lane-3-controlToProvider",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "controlToProvider"
+    },
+    {
+      "case": "sdk-wrong-lane-3-workToProvider",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-required-3-kind",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-required-3-wireId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-required-3-effectId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-closed-3",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-positive-4",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-wrong-lane-4-controlToBroker",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "controlToBroker"
+    },
+    {
+      "case": "sdk-wrong-lane-4-controlToProvider",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "controlToProvider"
+    },
+    {
+      "case": "sdk-wrong-lane-4-workToBroker",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-required-4-kind",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-required-4-wireId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-required-4-effectId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-required-4-callbackId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-required-4-remainingMs",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-closed-4",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-positive-5",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-wrong-lane-5-controlToBroker",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "controlToBroker"
+    },
+    {
+      "case": "sdk-wrong-lane-5-controlToProvider",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "controlToProvider"
+    },
+    {
+      "case": "sdk-wrong-lane-5-workToProvider",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-required-5-kind",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-required-5-wireId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-required-5-effectId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-closed-5",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-positive-6",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-wrong-lane-6-controlToBroker",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "controlToBroker"
+    },
+    {
+      "case": "sdk-wrong-lane-6-controlToProvider",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "controlToProvider"
+    },
+    {
+      "case": "sdk-wrong-lane-6-workToProvider",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-required-6-kind",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-required-6-wireId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-required-6-effectId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-required-6-error",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-closed-6",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-positive-7",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-wrong-lane-7-controlToBroker",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "controlToBroker"
+    },
+    {
+      "case": "sdk-wrong-lane-7-controlToProvider",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "controlToProvider"
+    },
+    {
+      "case": "sdk-wrong-lane-7-workToBroker",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-required-7-kind",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-required-7-wireId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-required-7-value",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-closed-7",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-positive-8",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-wrong-lane-8-controlToBroker",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "controlToBroker"
+    },
+    {
+      "case": "sdk-wrong-lane-8-controlToProvider",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "controlToProvider"
+    },
+    {
+      "case": "sdk-wrong-lane-8-workToBroker",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-required-8-kind",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-required-8-wireId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-required-8-value",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-closed-8",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-positive-9",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-wrong-lane-9-controlToBroker",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "controlToBroker"
+    },
+    {
+      "case": "sdk-wrong-lane-9-controlToProvider",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "controlToProvider"
+    },
+    {
+      "case": "sdk-wrong-lane-9-workToBroker",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-required-9-kind",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-required-9-wireId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-required-9-value",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-closed-9",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-no-minor-zero-hello",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "scope-no-minor-one-hello",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "sdk-mandatory-hello-wire.contexts",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "sdk-mandatory-hello-wire.sdkresults",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "sdk-mandatory-hello-wire.scopedeffects",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "sdk-mandatory-hello-wire.scopevalidation",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "sdk-no-minor-zero-accepted",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "scope-no-minor-one-accepted",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "sdk-mandatory-accepted-wire.contexts",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "sdk-mandatory-accepted-wire.sdkresults",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "sdk-mandatory-accepted-wire.scopedeffects",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "sdk-mandatory-accepted-wire.scopevalidation",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "sdk-invalid-effect-limit-0",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "sdk-invalid-effect-limit-4097",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "sdk-invalid-effect-limit-1.5",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    }
+  ]
+}
+test_bytes_aggregate_across_contexts (__main__.Design.test_bytes_aggregate_across_contexts) ... ok
+test_caller_identity_not_inherited (__main__.Design.test_caller_identity_not_inherited) ... ok
+test_cancel_descendants_not_unrelated (__main__.Design.test_cancel_descendants_not_unrelated) ... ok
+test_capacity_exhaustion_not_queued_deadlock (__main__.Design.test_capacity_exhaustion_not_queued_deadlock) ... ok
+test_child_budget_charged_at_admission (__main__.Design.test_child_budget_charged_at_admission) ... ok
+test_claimed_parent_and_caller_rejected (__main__.Design.test_claimed_parent_and_caller_rejected) ... ok
+test_consumer_grant_does_not_authorize_provider (__main__.Design.test_consumer_grant_does_not_authorize_provider) ... ok
+test_descriptor_offer_success_then_replay (__main__.Design.test_descriptor_offer_success_then_replay) ... ok
+test_descriptor_offer_swap_extra_and_truncation (__main__.Design.test_descriptor_offer_swap_extra_and_truncation) ... ok
+test_endpoint_cannot_be_retargeted_by_header (__main__.Design.test_endpoint_cannot_be_retargeted_by_header) ... ok
+test_expired_a_not_renewed_by_live_b (__main__.Design.test_expired_a_not_renewed_by_live_b) ... ok
+test_expired_pending_offer_retains_slot_until_consumed (__main__.Design.test_expired_pending_offer_retains_slot_until_consumed) ... ok
+test_foreign_offer_ack_cannot_cancel_victims_context (__main__.Design.test_foreign_offer_ack_cannot_cancel_victims_context) ... ok
+test_foreign_scoped_handle_rejected (__main__.Design.test_foreign_scoped_handle_rejected) ... ok
+test_frame_budget_and_exactly_once_release (__main__.Design.test_frame_budget_and_exactly_once_release) ... ok
+test_lifecycle_reserved_capacity (__main__.Design.test_lifecycle_reserved_capacity) ... ok
+test_max_depth (__main__.Design.test_max_depth) ... ok
+test_nested_reserve_survives_ordinary_saturation (__main__.Design.test_nested_reserve_survives_ordinary_saturation) ... ok
+test_offer_timeout_releases_slot (__main__.Design.test_offer_timeout_releases_slot) ... ok
+test_one_offer_per_context (__main__.Design.test_one_offer_per_context) ... ok
+test_overlap_and_independent_deadlines (__main__.Design.test_overlap_and_independent_deadlines) ... ok
+test_process_failure_shared_not_per_call_isolation (__main__.Design.test_process_failure_shared_not_per_call_isolation) ... ok
+test_queue_bound (__main__.Design.test_queue_bound) ... ok
+test_queue_fifo_and_original_deadline (__main__.Design.test_queue_fifo_and_original_deadline) ... ok
+test_restart_does_not_rebind_old_endpoint (__main__.Design.test_restart_does_not_rebind_old_endpoint) ... ok
+test_revocation_before_delivery_cascades (__main__.Design.test_revocation_before_delivery_cascades) ... ok
+test_shared_process_valid_other_capability_is_not_intent_proof (__main__.Design.test_shared_process_valid_other_capability_is_not_intent_proof) ... ok
+test_state_is_shared_not_replicated (__main__.Design.test_state_is_shared_not_replicated) ... ok
+test_successful_a_b_a_reentry (__main__.Design.test_successful_a_b_a_reentry) ... ok
+test_unconsumed_offer_fails_shared_session_at_hard_timeout (__main__.Design.test_unconsumed_offer_fails_shared_session_at_hard_timeout) ... ok
+
+----------------------------------------------------------------------
+Ran 30 tests in 0.003s
+
+OK
+G6 R2 DESIGN MODEL ONLY; runtime qualification=False; tests=30
+
+> alica-v2@0.0.0 build:g6-native
+> python3 tools/build-g6-native.py
+
+{
+  "level": "NATIVE-BUILD-ONLY",
+  "runtimeQualification": false,
+  "compiler": "0.15.2",
+  "compilerArchiveSha256": "02aa270f183da276e5b5920b1dac44a63f1a49e55050ebde3aecc9eb82f93239",
+  "compilerExecutableSha256": "2858dc89dbbfdd08cceda1b841e7fd0a793a1a67b49f150bc3d0d1de44ed7f51",
+  "artifacts": {
+    "bridge.node": "7bb4d660d72986ad6feeb851100ce262d994db1034f2d6b41460bf578b533951",
+    "launcher": "a493f78a308f49c23dd192ac8d501c727f37032794b988e6a695397ca57ee8e6"
+  }
+}

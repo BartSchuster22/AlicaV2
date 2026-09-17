@@ -7,7 +7,7 @@
     "sequence": 0,
     "body": {
       "protocolMajor": 1,
-      "protocolMinor": 1,
+      "protocolMinor": 2,
       "cellId": "cell1",
       "providerId": "org.example.provider",
       "instanceId": "instance1",
@@ -24,7 +24,8 @@
       "requiredFeatures": [
         "wire.contexts",
         "wire.sdkresults",
-        "wire.scopedeffects"
+        "wire.scopedeffects",
+        "wire.scopevalidation"
       ],
       "optionalFeatures": [],
       "events": []
@@ -39,7 +40,7 @@
     "sequence": 0,
     "body": {
       "protocolMajor": 1,
-      "protocolMinor": 1,
+      "protocolMinor": 2,
       "cellId": "cell1",
       "providerId": "org.example.provider",
       "instanceId": "instance1",
@@ -55,7 +56,8 @@
       "negotiatedFeatures": [
         "wire.contexts",
         "wire.sdkresults",
-        "wire.scopedeffects"
+        "wire.scopedeffects",
+        "wire.scopevalidation"
       ],
       "rootScopeId": "scope1",
       "scopeGeneration": 1,
@@ -245,5 +247,37 @@
       "nonce": "heartbeat1"
     },
     "contextId": "control"
+  },
+  "scope-check": {
+    "schemaVersion": "acap.ipc/v1",
+    "tag": "request",
+    "sessionId": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "generation": 1,
+    "sequence": 1,
+    "body": {
+      "kind": "scope-check",
+      "wireId": 2,
+      "scopeId": "child1",
+      "scopeGeneration": 1
+    },
+    "contextId": "ctx1"
+  },
+  "log": {
+    "schemaVersion": "acap.ipc/v1",
+    "tag": "request",
+    "sessionId": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "generation": 1,
+    "sequence": 1,
+    "body": {
+      "kind": "log",
+      "wireId": 2,
+      "scopeId": "child1",
+      "scopeGeneration": 1,
+      "record": {
+        "level": "info",
+        "event": "checkpoint"
+      }
+    },
+    "contextId": "ctx1"
   }
 }

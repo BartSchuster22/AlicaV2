@@ -374,7 +374,7 @@
               "const": 1
             },
             "protocolMinor": {
-              "const": 1
+              "const": 2
             },
             "cellId": {
               "type": "string",
@@ -432,6 +432,11 @@
                 {
                   "contains": {
                     "const": "wire.scopedeffects"
+                  }
+                },
+                {
+                  "contains": {
+                    "const": "wire.scopevalidation"
                   }
                 }
               ]
@@ -513,7 +518,7 @@
               "const": 1
             },
             "protocolMinor": {
-              "const": 1
+              "const": 2
             },
             "cellId": {
               "type": "string",
@@ -567,6 +572,11 @@
                 {
                   "contains": {
                     "const": "wire.scopedeffects"
+                  }
+                },
+                {
+                  "contains": {
+                    "const": "wire.scopevalidation"
                   }
                 }
               ]
@@ -1041,12 +1051,25 @@
                     "level",
                     "event"
                   ]
+                },
+                "scopeId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+                },
+                "scopeGeneration": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
                 }
               },
               "required": [
                 "kind",
                 "wireId",
-                "record"
+                "record",
+                "scopeId",
+                "scopeGeneration"
               ]
             },
             {
@@ -1209,6 +1232,37 @@
                 "effectId",
                 "callbackId",
                 "remainingMs"
+              ]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "scope-check"
+                },
+                "wireId": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "scopeId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+                },
+                "scopeGeneration": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                }
+              },
+              "required": [
+                "kind",
+                "wireId",
+                "scopeId",
+                "scopeGeneration"
               ]
             }
           ]
@@ -3144,12 +3198,25 @@
                         "level",
                         "event"
                       ]
+                    },
+                    "scopeId": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128,
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+                    },
+                    "scopeGeneration": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 9007199254740991
                     }
                   },
                   "required": [
                     "kind",
                     "wireId",
-                    "record"
+                    "record",
+                    "scopeId",
+                    "scopeGeneration"
                   ]
                 },
                 {
@@ -3274,6 +3341,37 @@
                     "kind",
                     "wireId",
                     "effectId"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "kind": {
+                      "const": "scope-check"
+                    },
+                    "wireId": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 9007199254740991
+                    },
+                    "scopeId": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128,
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+                    },
+                    "scopeGeneration": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 9007199254740991
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "wireId",
+                    "scopeId",
+                    "scopeGeneration"
                   ]
                 }
               ]
@@ -4078,12 +4176,25 @@
                             "level",
                             "event"
                           ]
+                        },
+                        "scopeId": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 128,
+                          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+                        },
+                        "scopeGeneration": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 9007199254740991
                         }
                       },
                       "required": [
                         "kind",
                         "wireId",
-                        "record"
+                        "record",
+                        "scopeId",
+                        "scopeGeneration"
                       ]
                     },
                     {
@@ -4147,6 +4258,37 @@
                         "kind",
                         "wireId",
                         "effectId"
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "kind": {
+                          "const": "scope-check"
+                        },
+                        "wireId": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 9007199254740991
+                        },
+                        "scopeId": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 128,
+                          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+                        },
+                        "scopeGeneration": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 9007199254740991
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "wireId",
+                        "scopeId",
+                        "scopeGeneration"
                       ]
                     }
                   ]

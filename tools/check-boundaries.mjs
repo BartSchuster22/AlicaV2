@@ -46,6 +46,11 @@ export function violations(file, source, root) {
         'packages/kernel/dist/g6/broker-effects.js',
       ],
       'tests/ipc/reap.test.mjs': ['packages/kernel/src/g6/reap.ts'],
+      'tests/ipc/scope-correction.test.mjs': [
+        'packages/kernel/dist/g6/host-adapter.js',
+        'packages/kernel/dist/g6/native.js',
+      ],
+      'tests/ipc/scope-wire.test.mjs': ['packages/kernel/dist/g6/wire.js'],
     };
     const privateG6ComponentTest = normalizedFile === 'tests/ipc/wire.test.mjs';
     if (

@@ -54,7 +54,6 @@ const contexts = new Map<string, KernelContext>();
 let activated = false;
 let activationStarted = false;
 let disposed = false;
-const inbound = new WeakSet<WorkerEndpoint>();
 const invocations = new WeakMap<
   WorkerEndpoint,
   { wireId: number; controller: AbortController }
@@ -236,7 +235,9 @@ function context(scope: string, scopeGeneration: number): KernelContext {
         ['info', 'warn', 'error'].includes(record.level) &&
           ['checkpoint', 'warning', 'failure'].includes(record.event),
       );
-      channel.sync({ kind: 'log', record }, ['ack']);
+      channel.sync({ kind: 'log', scopeId: scope, scopeGeneration, record }, [
+        'ack',
+      ]);
     },
   });
   const wrapped = scopedObject(scope, scoped);
@@ -366,11 +367,7 @@ transport.onFrame = (endpoint, frame) => {
     return;
   if (exchanges.handle(endpoint, frame)) return;
   if (frame.tag === 'event' && frame.body.kind === 'deliver') {
-    check(
-      endpoint.offer.purpose === 'event' && !inbound.has(endpoint),
-      'UNAUTHENTICATED',
-    );
-    inbound.add(endpoint);
+    channel.claim(endpoint, 'event');
     const body = frame.body;
     const handler = subscriptions.get(body.subscriptionId);
     check(handler, 'UNAUTHENTICATED');
@@ -397,11 +394,7 @@ transport.onFrame = (endpoint, frame) => {
   check(frame.tag === 'request', 'UNAUTHENTICATED');
   const body = frame.body;
   if (body.kind === 'lifecycle') {
-    check(
-      endpoint.offer.purpose === 'lifecycle' && !inbound.has(endpoint),
-      'UNAUTHENTICATED',
-    );
-    inbound.add(endpoint);
+    channel.claim(endpoint, 'lifecycle');
     void channel.run(endpoint, async () => {
       try {
         if (body.action === 'activate') {
@@ -466,13 +459,8 @@ transport.onFrame = (endpoint, frame) => {
     });
     return;
   }
-  check(
-    body.kind === 'invoke' &&
-      endpoint.offer.purpose === 'invoke' &&
-      !inbound.has(endpoint),
-    'UNAUTHENTICATED',
-  );
-  inbound.add(endpoint);
+  check(body.kind === 'invoke', 'UNAUTHENTICATED');
+  channel.claim(endpoint, 'invoke');
   check(activated && !disposed, 'UNAVAILABLE');
   const registration = registrations.get(body.registrationId);
   check(registration, 'UNAUTHENTICATED');

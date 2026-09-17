@@ -183,6 +183,7 @@ export class WorkerTransport {
                   'wire.contexts',
                   'wire.sdkresults',
                   'wire.scopedeffects',
+                  'wire.scopevalidation',
                 ]),
             'UNAUTHENTICATED',
           );

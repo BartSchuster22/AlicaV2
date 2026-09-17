@@ -124,11 +124,12 @@ export class WorkerEffects {
     generation: number,
     remainingMs: number,
     acquire: (registerCleanup: (cleanup: Disposer) => void) => Promise<T>,
+    inheritedEnd = Infinity,
   ): Promise<T> {
     check(
       Number.isInteger(remainingMs) && remainingMs > 0 && remainingMs <= 30000,
     );
-    const end = performance.now() + remainingMs;
+    const end = Math.min(performance.now() + remainingMs, inheritedEnd);
     const owned: string[] = [];
     let accepting = true;
     let timer: ReturnType<typeof setTimeout> | undefined;
@@ -157,10 +158,13 @@ export class WorkerEffects {
           }),
         ),
         new Promise<never>((_, reject) => {
-          timer = setTimeout(() => {
-            accepting = false;
-            reject(new AcapError('DEADLINE_EXCEEDED'));
-          }, remainingMs);
+          timer = setTimeout(
+            () => {
+              accepting = false;
+              reject(new AcapError('DEADLINE_EXCEEDED'));
+            },
+            Math.max(1, end - performance.now()),
+          );
         }),
       ]);
       check(performance.now() < end, 'DEADLINE_EXCEEDED');

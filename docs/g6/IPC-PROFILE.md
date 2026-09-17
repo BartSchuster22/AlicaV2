@@ -9,7 +9,7 @@ Status: **approved R2 implementation profile; runtime qualification pending**. A
 - The carrier belongs exclusively to the native transport layer. Ordinary Node stream reads must not race it or silently discard ancillary data. Application data remains ACAP JSON; the descriptor is not serialized as an integer or delivered to consumer logic.
 - Each stream has independent direction sequence numbers and an immutable receiver-side context identity. `contextId` in JSON is an equality check, not authentication or routing authority. Work IDs are never reused within a session; counters never wrap.
 
-Hello/accepted bind the exact launched process/package and expected capability **and event** descriptor digests. Capability versions/features and canonical event descriptor digests must match broker-accepted metadata. Reject logical duplicate IDs even when array elements differ. Protocol minor 1 requires `wire.contexts`, `wire.sdkresults` and `wire.scopedeffects`; never downgrade to minor 0 or the old single-active/parent-ID protocol. Accepted `effectLimit` equals the validated Host `maxEffects`, including provide/on/custom effects and retired lifetime charges. The exact SDK-wire addendum at candidate `758610b3f6ac29459951f4158abcd77685852e8f` is approved by [owner record](../gates/G6-SDK-WIRE-OWNER-APPROVAL.md).
+Hello/accepted bind the exact launched process/package and expected capability **and event** descriptor digests. Capability versions/features and canonical event descriptor digests must match broker-accepted metadata. Reject logical duplicate IDs even when array elements differ. Protocol minor 2 requires `wire.contexts`, `wire.sdkresults`, `wire.scopedeffects` and `wire.scopevalidation` in both hello and accepted; never downgrade to minor 1/0 or the old single-active/parent-ID protocol. The [direct correction approval](../gates/G6-SCOPE-CLEANUP-OWNER-APPROVAL.md) authorizes scoped log, non-mutating scope-check, and separate cleanup descriptors. Accepted `effectLimit` equals the validated Host `maxEffects`, including provide/on/custom effects and retired lifetime charges. The exact SDK-wire addendum at candidate `758610b3f6ac29459951f4158abcd77685852e8f` is approved by [owner record](../gates/G6-SDK-WIRE-OWNER-APPROVAL.md).
 
 The eight approved publication/effect message shapes and all associated state
 rules are specified in [the immutable candidate addendum](review/sdk-wire-v1/ADDENDUM.md).
@@ -17,9 +17,28 @@ They are work-lane traffic only. `published.admitted` is Host's committed queue
 admission count, not callback completion. Worker registration is synchronous;
 effectId/callbackId binding supports cleanup arriving before registration reply.
 The single Host ledger owns cleanup order, first terminal results and reports.
-One reserved lifecycle lane is reused; inline rollback cleanup is legal only
-on the broker-linked pending release endpoint. Bounds, causal depth and the
-selected cleanup clock cannot be reset by queueing, offer transfer or delivery.
+Each callback executes on a separate broker-issued work descriptor. An
+invocation-triggered cleanup consumes existing nested capacity and has the actual
+first release endpoint's WorkContext as its parent; overlapping releases from
+one endpoint are siblings, never an ambient mutable stack. Normal scope/unload
+callbacks use the one reserved lifecycle lane in order. First dispatch is claimed
+once per authenticated descriptor: effect-cleanup accepts invoke/lifecycle purpose,
+while invoke, event and lifecycle actions retain their exact dispatch roles.
+Callback IDs bind scope-owned resources, not parent authority. The effect-released
+result stays on the original release endpoint; effect-cleaned is received on the
+separate cleanup descriptor, including binding before registration reply.
+Bounds, causal depth and the original selected cleanup clock cannot be reset by
+queueing, offer transfer or delivery. A broker-local absolute end caps scheduler
+admission and dispatch; it is never a caller-asserted wire field.
+Scoped log requires scopeId and scopeGeneration and resolves the actual current
+provider-owned Host scope before logging. scope-check requires only kind, wireId,
+scopeId and scopeGeneration. Both are closed work-to-broker requests with existing
+control ack/error results. The check allocates no scope, effect, grant, endpoint,
+audit artifact or detached task; ordinary bounded request/reply bookkeeping is not
+a hidden resource. The worker validates immediately before acquisition and after
+successful completion within the original endpoint/activation end. Rejection at
+completion enters normal reverse rollback, including zero-cleanup acquisition.
+
 Unknown commit outcomes are not replayed, and physical capacity is held until
 actual owned-process reap. Review/model tests do not qualify these runtime rules.
 

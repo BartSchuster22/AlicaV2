@@ -15,8 +15,9 @@ export interface EffectAuthority<E extends object> {
   /** The existing Host.own ledger is the sole capacity and ordering authority.
    * Its returned disposer caches first terminal result/report accounting. */
   own(scope: EffectScope, cleanup: Disposer, select?: () => void): Disposer;
-  /** Select a lifecycle lane, or the broker-linked release endpoint for inline
-   * rollback, under the original selected deadline and causal depth. */
+  /** Dispatch on a separate lifecycle or bounded nested descriptor. The actual
+   * first release endpoint supplies ancestry, not the callback transport; preserve
+   * the original selected deadline and causal depth. */
   dispatch(
     effectId: string,
     callbackId: string,
@@ -84,7 +85,7 @@ export class BrokerEffects<E extends object> {
     const record = this.#records.get(effectId);
     check(record, 'PERMISSION_DENIED');
     this.authority.releaseScope(endpoint, record.scope);
-    // Only the first release installs the inline lane. Concurrent callers join
+    // Only the first release selects cleanup ancestry. Concurrent callers join
     // Host's cached cleanup task and cannot retarget an in-flight callback.
     if (!record.selected) record.inline ??= endpoint;
     return record.release();

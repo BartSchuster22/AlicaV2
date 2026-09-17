@@ -38,7 +38,7 @@ for val in [1.5,9007199254740992,{'bad':'\ud800'}]:
 for val in [{'__proto__':{'constructor':'ordinary JSON data'}},'Unicode ✓ 😀',None,False,-9007199254740991]:
  good=copy.deepcopy(examples['stream-item']);good['body']['value']=val;check('accept-acap-value-'+str(len(results)),good)
 # Validate every supported control shape, not merely one request per tag.
-controls=[{'kind':'context-ready','wireId':11,'offerId':'f'*64,'readyContextId':'ctx1'},{'kind':'task-open','wireId':12,'scopeId':'s1','requestedMs':1000},{'kind':'event-ack','wireId':10,'subscriptionId':'sub1','eventId':'event1'},{'kind':'bind','wireId':2,'scopeId':'s1','requirementIndex':0,'optional':True},{'kind':'register','wireId':3,'scopeId':'s1','capabilityId':'org.example.echo','descriptorDigest':'sha256:'+'a'*64},{'kind':'withdraw','wireId':4,'registrationId':'reg1'},{'kind':'secret','wireId':5,'scopeId':'s1','reference':'synthetic_token'},{'kind':'subscribe','wireId':6,'scopeId':'s1','eventType':'org.example.changed','descriptorDigest':'sha256:'+'a'*64},{'kind':'unsubscribe','wireId':7,'subscriptionId':'sub1'},{'kind':'scope-create','wireId':8,'parentScopeId':'s1'},{'kind':'log','wireId':9,'record':{'level':'info','event':'checkpoint'}}]
+controls=[{'kind':'context-ready','wireId':11,'offerId':'f'*64,'readyContextId':'ctx1'},{'kind':'task-open','wireId':12,'scopeId':'s1','requestedMs':1000},{'kind':'event-ack','wireId':10,'subscriptionId':'sub1','eventId':'event1'},{'kind':'bind','wireId':2,'scopeId':'s1','requirementIndex':0,'optional':True},{'kind':'register','wireId':3,'scopeId':'s1','capabilityId':'org.example.echo','descriptorDigest':'sha256:'+'a'*64},{'kind':'withdraw','wireId':4,'registrationId':'reg1'},{'kind':'secret','wireId':5,'scopeId':'s1','reference':'synthetic_token'},{'kind':'subscribe','wireId':6,'scopeId':'s1','eventType':'org.example.changed','descriptorDigest':'sha256:'+'a'*64},{'kind':'unsubscribe','wireId':7,'subscriptionId':'sub1'},{'kind':'scope-create','wireId':8,'parentScopeId':'s1'},{'kind':'scope-check','wireId':13,'scopeId':'s1','scopeGeneration':1},{'kind':'log','wireId':9,'scopeId':'s1','scopeGeneration':1,'record':{'level':'info','event':'checkpoint'}}]
 for body in controls:
  value=copy.deepcopy(examples['request']);value['body']=body;check('control-'+body['kind'],value,True,'toBroker');check('control-not-from-broker-'+body['kind'],value,False,'toProvider')
 # Correctly-shaped false identities/digests intentionally remain schema-valid.
@@ -76,8 +76,10 @@ for key,value in [('descriptorCount',0),('descriptorCount',2),('generation',0),(
  bad=copy.deepcopy(sample);bad[key]=value;offercheck('offer-reject-'+key+'-'+str(value),bad,False)
 for key in sample:
  bad=copy.deepcopy(sample);del bad[key];offercheck('offer-requires-'+key,bad,False)
-# Approved SDK minor-1 shapes. These are active schema checks, not runtime evidence.
+# Approved SDK minor-2 shapes. These are active schema checks, not runtime evidence.
 sdk_shapes = [
+ ('request', {'kind':'scope-check','wireId':25,'scopeId':'s1','scopeGeneration':1}, 'workToBroker'),
+ ('request', {'kind':'log','wireId':26,'scopeId':'s1','scopeGeneration':1,'record':{'level':'info','event':'checkpoint'}}, 'workToBroker'),
  ('request', {'kind':'effect-register','wireId':21,'scopeId':'s1','scopeGeneration':1,'callbackId':'cb1'}, 'workToBroker'),
  ('request', {'kind':'effect-release','wireId':22,'effectId':'e1'}, 'workToBroker'),
  ('request', {'kind':'effect-cleanup','wireId':23,'effectId':'e1','callbackId':'cb1','remainingMs':100}, 'workToProvider'),
@@ -102,7 +104,9 @@ for n,(tag,body,lane) in enumerate(sdk_shapes):
 for tag,field in [('hello','requiredFeatures'),('accepted','negotiatedFeatures')]:
  bad=copy.deepcopy(examples[tag]);bad['body']['protocolMinor']=0
  check('sdk-no-minor-zero-'+tag,bad,False)
- for feature in ['wire.contexts','wire.sdkresults','wire.scopedeffects']:
+ bad=copy.deepcopy(examples[tag]);bad['body']['protocolMinor']=1
+ check('scope-no-minor-one-'+tag,bad,False)
+ for feature in ['wire.contexts','wire.sdkresults','wire.scopedeffects','wire.scopevalidation']:
   bad=copy.deepcopy(examples[tag]);bad['body'][field].remove(feature)
   check('sdk-mandatory-'+tag+'-'+feature,bad,False)
 for limit in [0,4097,1.5]:

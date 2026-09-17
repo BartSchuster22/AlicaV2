@@ -62,6 +62,58 @@ test('actual queued timeout retains original clock and never dispatches', async 
   assert.equal(s.usage.queued, 0);
   assert.equal(s.usage.records, 4);
 });
+test('selected absolute cleanup deadline caps queue, offer and nested handover', async (t) => {
+  const { scheduler: s, budget } = fixture(t);
+  const roots = await Promise.all(
+    Array.from({ length: 4 }, () => s.admit(input())),
+  );
+  const end = performance.now() + 30;
+  await assert.rejects(s.admit(input({ end })), { code: 'DEADLINE_EXCEEDED' });
+  assert.ok(
+    performance.now() >= end,
+    'timer wakeup must not expire work before its absolute end',
+  );
+  const before = { ...s.usage };
+  await assert.rejects(s.admit(input({ parent: roots[0], end })), {
+    code: 'DEADLINE_EXCEEDED',
+  });
+  assert.deepEqual(
+    s.usage,
+    before,
+    'expired selected cleanup must not reserve anything',
+  );
+  const selected = performance.now() + 1000;
+  const child = await s.admit(input({ parent: roots[0], end: selected }));
+  assert.equal(child.end, selected);
+  const offer = s.offer(child);
+  assert.ok(offer.remainingMs <= 1000);
+  assert.equal(s.acknowledge(s.sessionId, 1, child.id, offer.offerId), child);
+  assert.equal(child.end, selected, 'ACK must not renew selected clock');
+  child.finish();
+  assert.equal(budget.usage.frames, 4);
+});
+
+test('fractional scheduler timers never reject queued work before the selected end', async (t) => {
+  const { scheduler: s, budget } = fixture(t);
+  const roots = await Promise.all(
+    Array.from({ length: 4 }, () => s.admit(input())),
+  );
+  for (let i = 0; i < 24; i++) {
+    const end = performance.now() + 8.875;
+    await assert.rejects(s.admit(input({ end })), {
+      code: 'DEADLINE_EXCEEDED',
+    });
+    assert.ok(
+      performance.now() >= end,
+      'fractional timer must recheck, not truncate deadline',
+    );
+    assert.equal(s.usage.queued, 0);
+    assert.equal(s.usage.records, 4);
+    assert.equal(budget.usage.frames, 4);
+  }
+  for (const root of roots) root.finish();
+});
+
 test('A to B to A ancestry succeeds; parent cancellation does not affect sibling', async (t) => {
   const { scheduler: a } = fixture(t),
     { scheduler: b } = fixture(t, 'b'.repeat(64));
