@@ -41,6 +41,7 @@ export interface HostAuthority {
   config: Config;
   pkg: VerifiedPackage;
   instanceId: string;
+  generation?: number;
   scope: EffectScope;
   runtimeDirectory: string;
   fresh(): void;
@@ -138,7 +139,7 @@ export class HostIPC {
       instanceId: host.instanceId,
       scopeId: host.scope.id,
       scopeGeneration: host.scope.generation,
-      generation: 1,
+      generation: host.generation ?? 1,
       maxEffects: host.config.maxEffects,
       pkg: host.pkg,
       fresh: host.fresh,

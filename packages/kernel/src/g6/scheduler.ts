@@ -208,6 +208,10 @@ export class Scheduler {
     const record = this.#records.get(context);
     check(record?.admitted && !record.offer, 'FAILED_PRECONDITION');
     context.assertLive();
+    // Snapshot a valid wire budget before reserving an offer. The original
+    // broker deadline remains authoritative through acknowledgement/dispatch.
+    const remainingMs = context.remainingMs;
+    check(remainingMs > 0, 'DEADLINE_EXCEEDED');
     check(this.#offerCounter < Number.MAX_SAFE_INTEGER, 'RESOURCE_EXHAUSTED');
     // Admission order differs from dispatch order when nested work bypasses a
     // queued root. Allocate the immutable wire identity in carrier send order.
@@ -225,7 +229,7 @@ export class Scheduler {
       offerId: nonce,
       descriptorCount: 1,
       purpose: context.purpose,
-      remainingMs: context.remainingMs,
+      remainingMs,
     };
   }
   /** Called on this physical session only after authenticated control fencing. */

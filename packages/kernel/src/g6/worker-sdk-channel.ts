@@ -235,7 +235,7 @@ export class WorkerSDKChannel {
     check(Number.isSafeInteger(sequence), 'RESOURCE_EXHAUSTED');
     this.#sequences.set(endpoint, sequence);
     // NativeStream validates the directional closed schema before enqueueing.
-    endpoint.stream.send({
+    this.transport.send(endpoint, {
       schemaVersion: 'acap.ipc/v1',
       sessionId: endpoint.offer.sessionId,
       generation: endpoint.offer.generation,
@@ -253,6 +253,7 @@ export class WorkerSDKChannel {
     return this.pending.requestSync(
       {
         ...this.admission(endpoint),
+        ...(body.kind === 'scope-check' ? { readOnly: true as const } : {}),
         end: Math.min(end ?? endpoint.end, endpoint.end),
       },
       expected,
@@ -268,7 +269,10 @@ export class WorkerSDKChannel {
   ) {
     const endpoint = this.current();
     return this.pending.request(
-      this.admission(endpoint),
+      {
+        ...this.admission(endpoint),
+        ...(body.kind === 'scope-check' ? { readOnly: true as const } : {}),
+      },
       expected,
       (wireId) =>
         this.send(endpoint, { tag: 'request', body: { ...body, wireId } }),

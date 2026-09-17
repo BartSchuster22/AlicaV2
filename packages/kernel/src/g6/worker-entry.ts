@@ -504,7 +504,11 @@ transport.onFrame = (endpoint, frame) => {
         return (async function* () {
           for await (const value of values) {
             const copy = detach(value);
-            payload(operation.output, copy);
+            try {
+              payload(operation.output, copy);
+            } catch {
+              throw new AcapError('CONTRACT_MISMATCH');
+            }
             yield copy;
           }
         })();

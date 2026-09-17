@@ -1,0 +1,329 @@
+packages/kernel/src/g6/scheduler.ts 161ms (unchanged)
+tests/ipc/isolation.test.mjs 68ms
+
+> alica-v2@0.0.0 build
+> node tools/build.mjs
+
+
+> alica-v2@0.0.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+✔ pre-offer phase 3 DEADLINE_EXCEEDED preserves the real session and releases admission (1131.266052ms)
+✔ pre-offer phase 4 DEADLINE_EXCEEDED preserves the real session and releases admission (1186.900804ms)
+✔ pre-offer phase 4 PERMISSION_DENIED preserves the real session and releases admission (1096.286228ms)
+✔ worker deadline abort does not close a broker-live work socket (1081.358729ms)
+✔ reply after observed broker closure is endpoint-local, not physical EPIPE failure (1114.754572ms)
+✔ scope-check write racing broker closure rejects locally and preserves sibling (1074.729099ms)
+✔ unexpected worker EOF on broker-live work still fails the physical session (1071.38315ms)
+✔ effect-release write racing broker closure still fails the real worker (1042.012946ms)
+✔ cancelled read-only scope observation retires only its RPC (2.137874ms)
+✔ synchronous scope observation timeout is local, malformed response remains fatal (0.749341ms)
+✔ unanswered SDK mutation and effect-release remain fail-closed on endpoint abort (0.475815ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9112.269305
+Repeat 1
+(node:81249) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ same-source matrix consumer inproc: ancestry, authority and live sibling independence (1133.756546ms)
+ℹ {"consumerSHA256":"6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb","providerASHA256":"9746fbf0ad5898e51a35a6209e80d09aedbe2126817a97da831192fc9244449d","providerBSHA256":"a82f9788b6336be98163ce077838f99a7e2a60bad4c58fc78054f110a62a9179"}
+✔ same-source matrix consumer ipc: ancestry, authority and live sibling independence (3897.030892ms)
+ℹ {"consumerSHA256":"6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb","providerASHA256":"9746fbf0ad5898e51a35a6209e80d09aedbe2126817a97da831192fc9244449d","providerBSHA256":"a82f9788b6336be98163ce077838f99a7e2a60bad4c58fc78054f110a62a9179"}
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5294.950256
+Repeat 2
+(node:81278) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ same-source matrix consumer inproc: ancestry, authority and live sibling independence (1160.66323ms)
+ℹ {"consumerSHA256":"6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb","providerASHA256":"9746fbf0ad5898e51a35a6209e80d09aedbe2126817a97da831192fc9244449d","providerBSHA256":"a82f9788b6336be98163ce077838f99a7e2a60bad4c58fc78054f110a62a9179"}
+✔ same-source matrix consumer ipc: ancestry, authority and live sibling independence (3758.022077ms)
+ℹ {"consumerSHA256":"6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb","providerASHA256":"9746fbf0ad5898e51a35a6209e80d09aedbe2126817a97da831192fc9244449d","providerBSHA256":"a82f9788b6336be98163ce077838f99a7e2a60bad4c58fc78054f110a62a9179"}
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5230.687753
+Repeat 3
+(node:81307) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ same-source matrix consumer inproc: ancestry, authority and live sibling independence (1206.660711ms)
+ℹ {"consumerSHA256":"6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb","providerASHA256":"9746fbf0ad5898e51a35a6209e80d09aedbe2126817a97da831192fc9244449d","providerBSHA256":"a82f9788b6336be98163ce077838f99a7e2a60bad4c58fc78054f110a62a9179"}
+✔ same-source matrix consumer ipc: ancestry, authority and live sibling independence (3976.158207ms)
+ℹ {"consumerSHA256":"6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb","providerASHA256":"9746fbf0ad5898e51a35a6209e80d09aedbe2126817a97da831192fc9244449d","providerBSHA256":"a82f9788b6336be98163ce077838f99a7e2a60bad4c58fc78054f110a62a9179"}
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5487.669542
+Repeat 4
+(node:81336) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ same-source matrix consumer inproc: ancestry, authority and live sibling independence (1133.785383ms)
+ℹ {"consumerSHA256":"6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb","providerASHA256":"9746fbf0ad5898e51a35a6209e80d09aedbe2126817a97da831192fc9244449d","providerBSHA256":"a82f9788b6336be98163ce077838f99a7e2a60bad4c58fc78054f110a62a9179"}
+✔ same-source matrix consumer ipc: ancestry, authority and live sibling independence (3823.379273ms)
+ℹ {"consumerSHA256":"6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb","providerASHA256":"9746fbf0ad5898e51a35a6209e80d09aedbe2126817a97da831192fc9244449d","providerBSHA256":"a82f9788b6336be98163ce077838f99a7e2a60bad4c58fc78054f110a62a9179"}
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5236.451671
+Repeat 5
+(node:81365) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ same-source matrix consumer inproc: ancestry, authority and live sibling independence (1115.173126ms)
+ℹ {"consumerSHA256":"6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb","providerASHA256":"9746fbf0ad5898e51a35a6209e80d09aedbe2126817a97da831192fc9244449d","providerBSHA256":"a82f9788b6336be98163ce077838f99a7e2a60bad4c58fc78054f110a62a9179"}
+✔ same-source matrix consumer ipc: ancestry, authority and live sibling independence (3902.414485ms)
+ℹ {"consumerSHA256":"6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb","providerASHA256":"9746fbf0ad5898e51a35a6209e80d09aedbe2126817a97da831192fc9244449d","providerBSHA256":"a82f9788b6336be98163ce077838f99a7e2a60bad4c58fc78054f110a62a9179"}
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5287.872049
+Repeat 6
+(node:81394) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ same-source matrix consumer inproc: ancestry, authority and live sibling independence (1138.962154ms)
+ℹ {"consumerSHA256":"6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb","providerASHA256":"9746fbf0ad5898e51a35a6209e80d09aedbe2126817a97da831192fc9244449d","providerBSHA256":"a82f9788b6336be98163ce077838f99a7e2a60bad4c58fc78054f110a62a9179"}
+✔ same-source matrix consumer ipc: ancestry, authority and live sibling independence (3901.218344ms)
+ℹ {"consumerSHA256":"6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb","providerASHA256":"9746fbf0ad5898e51a35a6209e80d09aedbe2126817a97da831192fc9244449d","providerBSHA256":"a82f9788b6336be98163ce077838f99a7e2a60bad4c58fc78054f110a62a9179"}
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5313.148728
+Repeat 7
+(node:81423) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ same-source matrix consumer inproc: ancestry, authority and live sibling independence (1175.204479ms)
+ℹ {"consumerSHA256":"6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb","providerASHA256":"9746fbf0ad5898e51a35a6209e80d09aedbe2126817a97da831192fc9244449d","providerBSHA256":"a82f9788b6336be98163ce077838f99a7e2a60bad4c58fc78054f110a62a9179"}
+✔ same-source matrix consumer ipc: ancestry, authority and live sibling independence (3903.975907ms)
+ℹ {"consumerSHA256":"6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb","providerASHA256":"9746fbf0ad5898e51a35a6209e80d09aedbe2126817a97da831192fc9244449d","providerBSHA256":"a82f9788b6336be98163ce077838f99a7e2a60bad4c58fc78054f110a62a9179"}
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5366.875416
+Repeat 8
+(node:81452) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ same-source matrix consumer inproc: ancestry, authority and live sibling independence (1161.174188ms)
+ℹ {"consumerSHA256":"6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb","providerASHA256":"9746fbf0ad5898e51a35a6209e80d09aedbe2126817a97da831192fc9244449d","providerBSHA256":"a82f9788b6336be98163ce077838f99a7e2a60bad4c58fc78054f110a62a9179"}
+✔ same-source matrix consumer ipc: ancestry, authority and live sibling independence (3919.472599ms)
+ℹ {"consumerSHA256":"6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb","providerASHA256":"9746fbf0ad5898e51a35a6209e80d09aedbe2126817a97da831192fc9244449d","providerBSHA256":"a82f9788b6336be98163ce077838f99a7e2a60bad4c58fc78054f110a62a9179"}
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5361.169945
+Repeat 9
+(node:81481) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ same-source matrix consumer inproc: ancestry, authority and live sibling independence (1185.085064ms)
+ℹ {"consumerSHA256":"6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb","providerASHA256":"9746fbf0ad5898e51a35a6209e80d09aedbe2126817a97da831192fc9244449d","providerBSHA256":"a82f9788b6336be98163ce077838f99a7e2a60bad4c58fc78054f110a62a9179"}
+✔ same-source matrix consumer ipc: ancestry, authority and live sibling independence (3953.67915ms)
+ℹ {"consumerSHA256":"6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb","providerASHA256":"9746fbf0ad5898e51a35a6209e80d09aedbe2126817a97da831192fc9244449d","providerBSHA256":"a82f9788b6336be98163ce077838f99a7e2a60bad4c58fc78054f110a62a9179"}
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5403.4979
+Repeat 10
+(node:81510) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ same-source matrix consumer inproc: ancestry, authority and live sibling independence (1150.956602ms)
+ℹ {"consumerSHA256":"6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb","providerASHA256":"9746fbf0ad5898e51a35a6209e80d09aedbe2126817a97da831192fc9244449d","providerBSHA256":"a82f9788b6336be98163ce077838f99a7e2a60bad4c58fc78054f110a62a9179"}
+✔ same-source matrix consumer ipc: ancestry, authority and live sibling independence (3946.223517ms)
+ℹ {"consumerSHA256":"6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb","providerASHA256":"9746fbf0ad5898e51a35a6209e80d09aedbe2126817a97da831192fc9244449d","providerBSHA256":"a82f9788b6336be98163ce077838f99a7e2a60bad4c58fc78054f110a62a9179"}
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5373.997251
+Repeat 11
+(node:81539) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ same-source matrix consumer inproc: ancestry, authority and live sibling independence (1109.319883ms)
+ℹ {"consumerSHA256":"6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb","providerASHA256":"9746fbf0ad5898e51a35a6209e80d09aedbe2126817a97da831192fc9244449d","providerBSHA256":"a82f9788b6336be98163ce077838f99a7e2a60bad4c58fc78054f110a62a9179"}
+✔ same-source matrix consumer ipc: ancestry, authority and live sibling independence (3880.112875ms)
+ℹ {"consumerSHA256":"6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb","providerASHA256":"9746fbf0ad5898e51a35a6209e80d09aedbe2126817a97da831192fc9244449d","providerBSHA256":"a82f9788b6336be98163ce077838f99a7e2a60bad4c58fc78054f110a62a9179"}
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5277.604341
+Repeat 12
+(node:81568) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ same-source matrix consumer inproc: ancestry, authority and live sibling independence (1190.982602ms)
+ℹ {"consumerSHA256":"6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb","providerASHA256":"9746fbf0ad5898e51a35a6209e80d09aedbe2126817a97da831192fc9244449d","providerBSHA256":"a82f9788b6336be98163ce077838f99a7e2a60bad4c58fc78054f110a62a9179"}
+✔ same-source matrix consumer ipc: ancestry, authority and live sibling independence (3924.719962ms)
+ℹ {"consumerSHA256":"6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb","providerASHA256":"9746fbf0ad5898e51a35a6209e80d09aedbe2126817a97da831192fc9244449d","providerBSHA256":"a82f9788b6336be98163ce077838f99a7e2a60bad4c58fc78054f110a62a9179"}
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5412.930413
+Repeat 13
+(node:81599) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ same-source matrix consumer inproc: ancestry, authority and live sibling independence (1179.602324ms)
+ℹ {"consumerSHA256":"6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb","providerASHA256":"9746fbf0ad5898e51a35a6209e80d09aedbe2126817a97da831192fc9244449d","providerBSHA256":"a82f9788b6336be98163ce077838f99a7e2a60bad4c58fc78054f110a62a9179"}
+✔ same-source matrix consumer ipc: ancestry, authority and live sibling independence (3902.287143ms)
+ℹ {"consumerSHA256":"6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb","providerASHA256":"9746fbf0ad5898e51a35a6209e80d09aedbe2126817a97da831192fc9244449d","providerBSHA256":"a82f9788b6336be98163ce077838f99a7e2a60bad4c58fc78054f110a62a9179"}
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5351.330634
+Repeat 14
+(node:81628) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ same-source matrix consumer inproc: ancestry, authority and live sibling independence (1158.808212ms)
+ℹ {"consumerSHA256":"6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb","providerASHA256":"9746fbf0ad5898e51a35a6209e80d09aedbe2126817a97da831192fc9244449d","providerBSHA256":"a82f9788b6336be98163ce077838f99a7e2a60bad4c58fc78054f110a62a9179"}
+✔ same-source matrix consumer ipc: ancestry, authority and live sibling independence (3807.405312ms)
+ℹ {"consumerSHA256":"6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb","providerASHA256":"9746fbf0ad5898e51a35a6209e80d09aedbe2126817a97da831192fc9244449d","providerBSHA256":"a82f9788b6336be98163ce077838f99a7e2a60bad4c58fc78054f110a62a9179"}
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5229.103468
+Repeat 15
+(node:81657) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ same-source matrix consumer inproc: ancestry, authority and live sibling independence (1165.642663ms)
+ℹ {"consumerSHA256":"6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb","providerASHA256":"9746fbf0ad5898e51a35a6209e80d09aedbe2126817a97da831192fc9244449d","providerBSHA256":"a82f9788b6336be98163ce077838f99a7e2a60bad4c58fc78054f110a62a9179"}
+✔ same-source matrix consumer ipc: ancestry, authority and live sibling independence (3816.431625ms)
+ℹ {"consumerSHA256":"6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb","providerASHA256":"9746fbf0ad5898e51a35a6209e80d09aedbe2126817a97da831192fc9244449d","providerBSHA256":"a82f9788b6336be98163ce077838f99a7e2a60bad4c58fc78054f110a62a9179"}
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5239.275376
+Repeat 16
+(node:81686) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ same-source matrix consumer inproc: ancestry, authority and live sibling independence (1127.042056ms)
+ℹ {"consumerSHA256":"6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb","providerASHA256":"9746fbf0ad5898e51a35a6209e80d09aedbe2126817a97da831192fc9244449d","providerBSHA256":"a82f9788b6336be98163ce077838f99a7e2a60bad4c58fc78054f110a62a9179"}
+✔ same-source matrix consumer ipc: ancestry, authority and live sibling independence (4006.442261ms)
+ℹ {"consumerSHA256":"6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb","providerASHA256":"9746fbf0ad5898e51a35a6209e80d09aedbe2126817a97da831192fc9244449d","providerBSHA256":"a82f9788b6336be98163ce077838f99a7e2a60bad4c58fc78054f110a62a9179"}
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5408.854822
+Repeat 17
+(node:81715) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ same-source matrix consumer inproc: ancestry, authority and live sibling independence (1178.080555ms)
+ℹ {"consumerSHA256":"6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb","providerASHA256":"9746fbf0ad5898e51a35a6209e80d09aedbe2126817a97da831192fc9244449d","providerBSHA256":"a82f9788b6336be98163ce077838f99a7e2a60bad4c58fc78054f110a62a9179"}
+✔ same-source matrix consumer ipc: ancestry, authority and live sibling independence (3801.994104ms)
+ℹ {"consumerSHA256":"6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb","providerASHA256":"9746fbf0ad5898e51a35a6209e80d09aedbe2126817a97da831192fc9244449d","providerBSHA256":"a82f9788b6336be98163ce077838f99a7e2a60bad4c58fc78054f110a62a9179"}
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5230.212127
+Repeat 18
+(node:81744) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ same-source matrix consumer inproc: ancestry, authority and live sibling independence (1155.343554ms)
+ℹ {"consumerSHA256":"6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb","providerASHA256":"9746fbf0ad5898e51a35a6209e80d09aedbe2126817a97da831192fc9244449d","providerBSHA256":"a82f9788b6336be98163ce077838f99a7e2a60bad4c58fc78054f110a62a9179"}
+✔ same-source matrix consumer ipc: ancestry, authority and live sibling independence (3832.780137ms)
+ℹ {"consumerSHA256":"6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb","providerASHA256":"9746fbf0ad5898e51a35a6209e80d09aedbe2126817a97da831192fc9244449d","providerBSHA256":"a82f9788b6336be98163ce077838f99a7e2a60bad4c58fc78054f110a62a9179"}
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5279.38122
+Repeat 19
+(node:81773) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ same-source matrix consumer inproc: ancestry, authority and live sibling independence (1183.471275ms)
+ℹ {"consumerSHA256":"6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb","providerASHA256":"9746fbf0ad5898e51a35a6209e80d09aedbe2126817a97da831192fc9244449d","providerBSHA256":"a82f9788b6336be98163ce077838f99a7e2a60bad4c58fc78054f110a62a9179"}
+✔ same-source matrix consumer ipc: ancestry, authority and live sibling independence (3839.22008ms)
+ℹ {"consumerSHA256":"6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb","providerASHA256":"9746fbf0ad5898e51a35a6209e80d09aedbe2126817a97da831192fc9244449d","providerBSHA256":"a82f9788b6336be98163ce077838f99a7e2a60bad4c58fc78054f110a62a9179"}
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5297.812211
+Repeat 20
+(node:81802) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ same-source matrix consumer inproc: ancestry, authority and live sibling independence (1186.102728ms)
+ℹ {"consumerSHA256":"6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb","providerASHA256":"9746fbf0ad5898e51a35a6209e80d09aedbe2126817a97da831192fc9244449d","providerBSHA256":"a82f9788b6336be98163ce077838f99a7e2a60bad4c58fc78054f110a62a9179"}
+✔ same-source matrix consumer ipc: ancestry, authority and live sibling independence (3760.581465ms)
+ℹ {"consumerSHA256":"6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb","providerASHA256":"9746fbf0ad5898e51a35a6209e80d09aedbe2126817a97da831192fc9244449d","providerBSHA256":"a82f9788b6336be98163ce077838f99a7e2a60bad4c58fc78054f110a62a9179"}
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5212.39422

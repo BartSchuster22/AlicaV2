@@ -477,9 +477,11 @@ export class PhysicalSession {
     this.options.fresh();
     const context = await this.scheduler.admit(input);
     let remote: Lease | undefined;
+    let offered = false;
     try {
       context.assertLive();
       const offer = this.scheduler.offer(context);
+      offered = true;
       const [local, peer] = native.pair(1);
       remote = peer;
       const stream = new NativeStream(
@@ -524,7 +526,15 @@ export class PhysicalSession {
       );
       return { context, stream: await ready };
     } catch (error) {
-      context.finish('UNAVAILABLE');
+      // A trusted admission may expire or lose authority before any transport
+      // offer exists. Preserve its logical terminal instead of killing siblings.
+      const localRejection =
+        !offered &&
+        error instanceof AcapError &&
+        (error.code === 'DEADLINE_EXCEEDED' ||
+          error.code === 'PERMISSION_DENIED' ||
+          error.code === 'CANCELLED');
+      context.finish(localRejection ? error.code : 'UNAVAILABLE');
       if (!context.terminal || context.terminal === 'UNAVAILABLE') this.fail();
       throw error;
     } finally {

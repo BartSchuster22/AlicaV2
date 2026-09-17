@@ -32,6 +32,100 @@ const pairs = [
   ['tests/ipc/scope-wire.test.mjs', 'packages/kernel/dist/g6/wire.js'],
 ];
 
+const sessionPairs = [
+  [
+    'tests/ipc/session-qualification.test.mjs',
+    'packages/kernel/dist/g6/host-adapter.js',
+  ],
+  [
+    'tests/ipc/session-qualification.test.mjs',
+    'packages/kernel/dist/g6/session.js',
+  ],
+  [
+    'tests/ipc/session-qualification.test.mjs',
+    'packages/kernel/dist/g6/native.js',
+  ],
+  [
+    'tests/ipc/qualification-worker.mjs',
+    'packages/kernel/dist/g6/worker-transport.js',
+  ],
+  ['tests/ipc/qualification-worker.mjs', 'packages/kernel/dist/g6/native.js'],
+];
+test('session qualification permissions are exact and do not leak to adjacent tests or SDK', () => {
+  for (const [importer, target] of sessionPairs)
+    assert.deepEqual(check(importer, target), []);
+  for (const importer of [
+    'tests/ipc/adjacent.test.mjs',
+    'tests/ipc/nested/qualification-worker.mjs',
+    'packages/plugin-sdk/src/index.ts',
+  ])
+    for (const [, target] of sessionPairs)
+      assert.ok(check(importer, target).includes('cross-package path import'));
+  for (const importer of new Set(sessionPairs.map(([file]) => file))) {
+    for (const target of [
+      'packages/kernel/dist/trust.js',
+      'packages/kernel/dist/index.js',
+      'packages/kernel/dist/g6/worker-sdk-channel.js',
+    ])
+      assert.ok(check(importer, target).includes('cross-package path import'));
+    for (const [, target] of sessionPairs)
+      if (
+        !sessionPairs.some(
+          ([file, allowed]) => file === importer && allowed === target,
+        )
+      )
+        assert.ok(
+          check(importer, target).includes('cross-package path import'),
+        );
+  }
+});
+
+const isolationPairs = [
+  ['tests/ipc/isolation.test.mjs', 'packages/kernel/dist/g6/host-adapter.js'],
+  ['tests/ipc/isolation.test.mjs', 'packages/kernel/dist/g6/session.js'],
+  ['tests/ipc/isolation.test.mjs', 'packages/kernel/dist/g6/sdk-rpc.js'],
+  [
+    'tests/ipc/isolation-worker.mjs',
+    'packages/kernel/dist/g6/worker-transport.js',
+  ],
+  [
+    'tests/ipc/isolation-worker.mjs',
+    'packages/kernel/dist/g6/worker-sdk-channel.js',
+  ],
+  ['tests/ipc/isolation-worker.mjs', 'packages/kernel/dist/g6/native.js'],
+];
+test('isolation regressions retain exact private importer-target permissions', () => {
+  for (const [importer, target] of isolationPairs)
+    assert.deepEqual(check(importer, target), []);
+  for (const importer of [
+    'tests/ipc/adjacent.test.mjs',
+    'tests/ipc/nested/isolation-worker.mjs',
+    'packages/plugin-sdk/src/index.ts',
+  ]) {
+    for (const [, target] of isolationPairs)
+      assert.ok(check(importer, target).includes('cross-package path import'));
+  }
+  for (const importer of new Set(isolationPairs.map(([file]) => file))) {
+    for (const target of [
+      'packages/kernel/dist/trust.js',
+      'packages/kernel/dist/index.js',
+      ...isolationPairs.map(([, target]) => target),
+    ]) {
+      if (!isolationPairs.some(([f, t]) => f === importer && t === target))
+        assert.ok(
+          check(importer, target).includes('cross-package path import'),
+        );
+    }
+    assert.ok(
+      violations(
+        path.join(root, importer),
+        "import Ajv from 'ajv/dist/2020.js';",
+        root,
+      ).includes('undeclared external import'),
+    );
+  }
+});
+
 test('private component tests can import only their enumerated runtime modules', () => {
   for (const [importer, target] of pairs)
     assert.deepEqual(check(importer, target), []);

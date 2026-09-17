@@ -11,6 +11,7 @@ interface Pending {
   resolve: (value: Control) => void;
   reject: (error: unknown) => void;
   finish: () => void;
+  lose: (code: ErrorCode) => void;
   value?: Control;
   error?: unknown;
   done: boolean;
@@ -26,6 +27,8 @@ export interface RPCAdmission {
   readonly endpoint: object;
   readonly signal: AbortSignal;
   readonly end: number;
+  /** Trusted scope-check only; default remains uncertain mutation on loss. */
+  readonly readOnly?: true;
 }
 /** Per physical worker, requester-origin only. The dispatcher must route only
  * authenticated response frames here; incoming broker requests have a separate
@@ -104,19 +107,19 @@ export class SDKPending {
         state!.pending.delete(wireId);
         this.#active.delete(pending);
       },
+      lose: (code) => {
+        if (pending.done) return;
+        pending.error = new AcapError(code);
+        pending.finish();
+        reject(pending.error);
+        // Only a scope observation has no commit to reconcile. Registration,
+        // release, publication and every other SDK request remain fail-closed.
+        if (!admission.readOnly) this.failSession();
+      },
     };
-    const lose = (code: ErrorCode) => {
-      if (pending.done) return;
-      pending.error = new AcapError(code);
-      pending.finish();
-      reject(pending.error);
-      // Mutating SDK requests have unknown commit status. No retry or release
-      // of a callback reservation can safely be inferred from this timeout.
-      this.failSession();
-    };
-    const abort = () => lose('CANCELLED');
+    const abort = () => pending.lose('CANCELLED');
     const timer = setTimeout(
-      () => lose('DEADLINE_EXCEEDED'),
+      () => pending.lose('DEADLINE_EXCEEDED'),
       Math.max(1, admission.end - performance.now()),
     );
     admission.signal.addEventListener('abort', abort, { once: true });
@@ -162,9 +165,10 @@ export class SDKPending {
     try {
       send(wireId);
       while (!pending.done) {
-        check(!admission.signal.aborted, 'CANCELLED');
-        check(performance.now() < admission.end, 'DEADLINE_EXCEEDED');
-        pump();
+        if (admission.signal.aborted) pending.lose('CANCELLED');
+        else if (performance.now() >= admission.end)
+          pending.lose('DEADLINE_EXCEEDED');
+        else pump();
       }
     } catch (error) {
       this.sendFailure(pending, error);

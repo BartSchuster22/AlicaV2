@@ -50,6 +50,26 @@ export function violations(file, source, root) {
         'packages/kernel/dist/g6/host-adapter.js',
         'packages/kernel/dist/g6/native.js',
       ],
+      'tests/ipc/session-qualification.test.mjs': [
+        'packages/kernel/dist/execution-context.js',
+        'packages/kernel/dist/g6/host-adapter.js',
+        'packages/kernel/dist/g6/session.js',
+        'packages/kernel/dist/g6/native.js',
+      ],
+      'tests/ipc/qualification-worker.mjs': [
+        'packages/kernel/dist/g6/worker-transport.js',
+        'packages/kernel/dist/g6/native.js',
+      ],
+      'tests/ipc/isolation.test.mjs': [
+        'packages/kernel/dist/g6/host-adapter.js',
+        'packages/kernel/dist/g6/session.js',
+        'packages/kernel/dist/g6/sdk-rpc.js',
+      ],
+      'tests/ipc/isolation-worker.mjs': [
+        'packages/kernel/dist/g6/worker-transport.js',
+        'packages/kernel/dist/g6/worker-sdk-channel.js',
+        'packages/kernel/dist/g6/native.js',
+      ],
       'tests/ipc/scope-wire.test.mjs': ['packages/kernel/dist/g6/wire.js'],
     };
     const privateG6ComponentTest = normalizedFile === 'tests/ipc/wire.test.mjs';

@@ -1,4 +1,5 @@
-import { canonical, check } from '@alica/acap-contracts';
+import { constants } from 'node:os';
+import { AcapError, canonical, check } from '@alica/acap-contracts';
 import type { Lane } from './schema.js';
 import type { Lease } from './native.js';
 import { native } from './native.js';
@@ -10,6 +11,25 @@ import {
   WireBudget,
 } from './wire.js';
 import type { Frame, OwnedFrame } from './wire.js';
+
+/** Only native EOF/EPIPE/reset, never schema, fencing or dispatcher errors. */
+export class PeerClosed extends AcapError {
+  constructor() {
+    super('UNAVAILABLE');
+  }
+}
+function peerClosed(error: unknown, operation: 'read' | 'write'): boolean {
+  // The fixed private bridge reports NATIVE_IO with this exact errno format.
+  // Do not classify arbitrary UNAVAILABLE/NATIVE_IO as a context closure.
+  return (
+    error instanceof Error &&
+    'code' in error &&
+    error.code === 'NATIVE_IO' &&
+    [constants.errno.EPIPE, constants.errno.ECONNRESET].some(
+      (errno) => error.message === `${operation}: errno=${errno}`,
+    )
+  );
+}
 
 /** One rate account per physical session, shared across its endpoints. */
 export class FrameRate {
@@ -86,10 +106,13 @@ export class NativeStream {
     for (let i = 0; i < 16 && this.#out.length; i++) {
       const item = this.#out[0]!;
       check(performance.now() - item.start < 2000, 'DEADLINE_EXCEEDED');
-      const written = native.write(
-        this.lease,
-        item.bytes.subarray(item.offset),
-      );
+      let written: number;
+      try {
+        written = native.write(this.lease, item.bytes.subarray(item.offset));
+      } catch (error) {
+        if (peerClosed(error, 'write')) throw new PeerClosed();
+        throw error;
+      }
       if (!written) break;
       item.offset += written;
       if (item.offset === item.bytes.length) {
@@ -105,9 +128,15 @@ export class NativeStream {
     this.reader.checkDeadline();
     // At most prefix and body reads, never an unbounded read-and-discard loop.
     for (let i = 0; i < 2; i++) {
-      const bytes = native.read(this.lease, this.reader.readSize);
+      let bytes: Buffer | null;
+      try {
+        bytes = native.read(this.lease, this.reader.readSize);
+      } catch (error) {
+        if (peerClosed(error, 'read')) throw new PeerClosed();
+        throw error;
+      }
       if (bytes === null) return;
-      check(bytes.length, 'UNAVAILABLE');
+      if (!bytes.length) throw new PeerClosed();
       const owned = this.reader.feed(bytes);
       if (owned) {
         try {

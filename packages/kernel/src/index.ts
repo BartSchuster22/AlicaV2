@@ -1,7 +1,12 @@
 import { randomUUID } from 'node:crypto';
 import { SourceTextModule, SyntheticModule } from 'node:vm';
 import { posix, dirname } from 'node:path';
-import { callAuthority, cleanupSelection } from './execution-context.js';
+import {
+  callAuthority,
+  cleanupSelection,
+  causalContext,
+  logicalCall,
+} from './execution-context.js';
 import type { HostIPC } from './g6/host-adapter.js';
 import * as sdk from '@alica/plugin-sdk';
 import * as contracts from '@alica/acap-contracts';
@@ -85,7 +90,16 @@ interface Effect {
   cleanup: Disposer;
   task?: Promise<void>;
 }
+interface RecoveryLineage {
+  attempts: number;
+  generation: number;
+  cancelled: boolean;
+  current: string;
+  timer?: ReturnType<typeof setTimeout>;
+}
 interface Instance {
+  lineage: RecoveryLineage;
+  recovering?: boolean;
   remote?: HostIPC;
   id: string;
   pkg: VerifiedPackage;
@@ -122,6 +136,7 @@ interface BoundGrant {
   revision: number;
 }
 interface Pending {
+  grant: BoundGrant;
   caller: Instance;
   registration: Registration;
   provider: Instance;
@@ -416,12 +431,28 @@ export class Host {
       );
       throw normalized(e);
     }
+    return this.admit(pkg, scope).id;
+  }
+  private admit(
+    pkg: VerifiedPackage,
+    scope: Scope,
+    lineage?: RecoveryLineage,
+  ): Instance {
+    this.fresh();
+    this.open(scope);
+    this.#trust.accepted(pkg);
+    check(this.#scopes.get(scope.id) === scope, 'FAILED_PRECONDITION');
+    check(
+      this.#instances.size < this.#config.maxInstances,
+      'RESOURCE_EXHAUSTED',
+    );
     check(
       ![...this.#instances.values()].some(
         (x) =>
           x.scope === scope &&
           x.pkg.manifest.id === pkg.manifest.id &&
-          !['FAILED', 'DISPOSED'].includes(x.state),
+          (!['FAILED', 'DISPOSED'].includes(x.state) ||
+            !!x.remote?.session.unreaped),
       ),
       'CONFLICT',
     );
@@ -441,8 +472,11 @@ export class Host {
           check(existing.pkg.manifest.id !== pkg.manifest.id, 'CONFLICT');
       }
     }
+    const id = randomUUID();
+    lineage ??= { attempts: 0, generation: 1, cancelled: false, current: id };
     const i: Instance = {
-      id: randomUUID(),
+      id,
+      lineage,
       pkg,
       scope,
       token: Object.freeze({}),
@@ -465,7 +499,8 @@ export class Host {
     this.#instances.set(i.id, i);
     this.#tokens.set(i.token, i);
     this.transition(i, 'VERIFIED');
-    return i.id;
+    lineage.current = i.id;
+    return i;
   }
   identity(id: string): Readonly<{
     principal: string;
@@ -605,6 +640,31 @@ export class Host {
     const g = this.#grants.get(id);
     check(g, 'NOT_FOUND');
     g.revoked = true;
+    // Cancellation is an authority event, not a check deferred until a stalled
+    // handler happens to return. Include attenuated grants whose parent died.
+    for (const p of this.#pending) {
+      const current = this.#grants.get(p.grant.id);
+      if (
+        !current ||
+        !this.valid(current) ||
+        current.record.revision !== p.grant.revision
+      )
+        p.cancel('PERMISSION_DENIED');
+    }
+    for (const sub of this.#subscriptions) {
+      const current = this.#grants.get(sub.grant.id);
+      if (!current || !this.valid(current)) {
+        sub.live = false;
+        sub.queue = [];
+        sub.cancel?.();
+        this.#subscriptions.delete(sub);
+      } else {
+        sub.queue = sub.queue.filter((x) => {
+          const publisher = this.#grants.get(x.grant.id);
+          return publisher && this.valid(publisher);
+        });
+      }
+    }
     this.record(
       'operator',
       id,
@@ -946,6 +1006,90 @@ export class Host {
       if (timer) clearTimeout(timer);
     }
   }
+  private stopRecovery(lineage: RecoveryLineage): void {
+    lineage.cancelled = true;
+    if (lineage.timer) clearTimeout(lineage.timer);
+    delete lineage.timer;
+  }
+  private failedIPC(i: Instance): void {
+    if (i.recovering || i.disposal || i.lineage.cancelled || this.#closed)
+      return;
+    i.recovering = true;
+    i.error ??= 'UNAVAILABLE';
+    // Disposal fences every old handle and mutation before considering a new
+    // process. The old instance remains terminal, including after late reap.
+    void this.disposeInstance(i.id)
+      .then(() => this.queueRecovery(i))
+      .catch(() => {
+        this.stopRecovery(i.lineage);
+      });
+  }
+  private queueRecovery(prior: Instance): void {
+    const lineage = prior.lineage;
+    if (
+      lineage.cancelled ||
+      this.#closed ||
+      lineage.current !== prior.id ||
+      lineage.timer
+    )
+      return;
+    // A failed reap is sticky. Late exit releases physical accounting but must
+    // not automatically restart a quarantined lineage.
+    if (prior.remote?.session.unreaped || prior.remote?.session.reapFailure) {
+      this.stopRecovery(lineage);
+      return;
+    }
+    if (lineage.attempts >= 4) return;
+    const delay = 1000 * 2 ** lineage.attempts++;
+    const end = performance.now() + delay;
+    const fire = () => {
+      if (lineage.cancelled || this.#closed) return;
+      const remaining = end - performance.now();
+      if (remaining > 0) {
+        lineage.timer = setTimeout(fire, Math.ceil(remaining));
+        return;
+      }
+      delete lineage.timer;
+      void this.restartIPC(prior).catch(() => this.stopRecovery(lineage));
+    };
+    lineage.timer = setTimeout(fire, delay);
+  }
+  private async restartIPC(prior: Instance): Promise<void> {
+    const lineage = prior.lineage;
+    if (lineage.cancelled || this.#closed || lineage.current !== prior.id)
+      return;
+    let next: Instance | undefined;
+    try {
+      check(
+        !prior.remote?.session.unreaped && !prior.remote?.session.reapFailure,
+        'UNAVAILABLE',
+      );
+      this.fresh();
+      this.open(prior.scope);
+      check(
+        this.#scopes.get(prior.scope.id) === prior.scope,
+        'FAILED_PRECONDITION',
+      );
+      this.#trust.accepted(prior.pkg);
+      check(
+        !this.#profileIds || this.#profileIds.has(prior.id),
+        'PERMISSION_DENIED',
+      );
+      lineage.generation++;
+      next = this.admit(prior.pkg, prior.scope, lineage);
+      if (this.#profileIds) this.#profileIds.add(next.id);
+      // No grant migration. Old grants are revoked by disposal; the fresh
+      // identity starts with no authority. Every bind/effect/registration uses
+      // current Host trust, declaration, scope and grant checks. No RPC replay.
+      await this.activate(next.id);
+    } catch (error) {
+      if (next) {
+        next.error ??= normalized(error).code;
+        await this.disposeInstance(next.id);
+      }
+      this.queueRecovery(next ?? prior);
+    }
+  }
   activate(id: string): Promise<void> {
     check(!this.#profileIds || this.#profileIds.has(id), 'PERMISSION_DENIED');
     const i = this.instance(id);
@@ -983,6 +1127,7 @@ export class Host {
           config: this.#config,
           pkg: i.pkg,
           instanceId: i.id,
+          generation: i.lineage.generation,
           scope: i.scope,
           runtimeDirectory: this.#runtimeDirectory,
           fresh: () => this.#trust.accepted(i.pkg),
@@ -1006,9 +1151,7 @@ export class Host {
             check(registration, 'CONTRACT_MISMATCH');
             return registration.descriptor;
           },
-          failed: () => {
-            void this.dispose(i.id).catch(() => {});
-          },
+          failed: () => this.failedIPC(i),
         });
         await this.bounded(
           () => this.track(i, i.remote!.activate()),
@@ -1119,7 +1262,8 @@ export class Host {
     } catch (e) {
       i.error = normalized(e).code;
       if (i.error === 'DEADLINE_EXCEEDED') i.report.restartRequired = true;
-      await this.dispose(i.id);
+      if (i.remote && !i.disposal) this.failedIPC(i);
+      await this.disposeInstance(i.id);
       throw normalized(e);
     }
   }
@@ -1356,9 +1500,11 @@ export class Host {
         );
       },
       admit: (cancel) => {
+        check((logicalCall.getStore()?.depth ?? 0) <= 8, 'RESOURCE_EXHAUSTED');
         check(this.#pending.size < this.#config.maxCalls, 'RESOURCE_EXHAUSTED');
         this.record(i.pkg.manifest.id, req.capabilityId, s.id, 'ALLOW', 'CALL');
         const pending: Pending = {
+          grant,
           caller: i,
           registration: r,
           provider: r.instance,
@@ -1372,6 +1518,19 @@ export class Host {
       },
       track: <T>(promise: Promise<T>) => this.track(r.instance, promise),
     });
+    const run = <T>(work: () => T): T => {
+      const depth =
+        Math.max(
+          logicalCall.getStore()?.depth ?? -1,
+          causalContext.getStore()?.depth ?? -1,
+        ) + 1;
+      return logicalCall.run({ depth }, () =>
+        callAuthority.run(
+          { grantId: grant.id, grantRevision: grant.revision },
+          work,
+        ),
+      );
+    };
     return Object.freeze({
       descriptorDigest: digest(r.descriptor),
       negotiatedFeatures: Object.freeze(
@@ -1380,15 +1539,9 @@ export class Host {
           .sort(),
       ),
       call: (operation: string, input: Value, options: CallOptions) =>
-        callAuthority.run(
-          { grantId: grant.id, grantRevision: grant.revision },
-          () => session.call(operation, input, options),
-        ),
+        run(() => session.call(operation, input, options)),
       stream: (operation: string, input: Value, options: CallOptions) =>
-        callAuthority.run(
-          { grantId: grant.id, grantRevision: grant.revision },
-          () => session.openStream(operation, input, options),
-        ),
+        run(() => session.openStream(operation, input, options)),
     });
   }
   private async secret(i: Instance, s: Scope, ref: string): Promise<string> {
@@ -1556,7 +1709,7 @@ export class Host {
                 ),
                 stop,
               ]),
-            this.#config.maxCallMs,
+            Math.min(2000, this.#config.maxCallMs),
           );
         } catch (e) {
           this.record(
@@ -1567,8 +1720,15 @@ export class Host {
             normalized(e).code,
             true,
           );
-          if (normalized(e).code === 'DEADLINE_EXCEEDED')
+          if (normalized(e).code === 'DEADLINE_EXCEEDED') {
             sub.instance.report.restartRequired = true;
+            sub.live = false;
+            sub.queue = [];
+            this.#subscriptions.delete(sub);
+            // An expired uncooperative callback cannot accumulate one detached
+            // handler per subsequent delivery. IPC failure is honestly shared.
+            sub.instance.remote?.session.fail();
+          }
         } finally {
           delete sub.cancel;
         }
@@ -1581,6 +1741,19 @@ export class Host {
     return this.dispose(id);
   }
   dispose(id: string): Promise<CleanupReport> {
+    const i = this.instance(id);
+    this.stopRecovery(i.lineage);
+    const report = this.disposeInstance(id);
+    const current = i.lineage.current;
+    // An operator may still hold the original logical-instance ID. Unload
+    // cancels its whole lineage, without rewriting the original terminal report.
+    return current === id
+      ? report
+      : Promise.all([report, this.disposeInstance(current)]).then(
+          ([original]) => original,
+        );
+  }
+  private disposeInstance(id: string): Promise<CleanupReport> {
     const i = this.instance(id);
     if (i.disposal) return i.disposal;
     if (i.state === 'DISPOSED' || i.state === 'FAILED')
@@ -1614,8 +1787,11 @@ export class Host {
       if (i.remote) {
         try {
           await i.remote.shutdown();
-        } catch {
+        } catch (error) {
           i.report.restartRequired = true;
+          i.report.failedDisposers.push(normalized(error).code);
+          if (i.remote.session.unreaped || i.remote.session.reapFailure)
+            i.report.timedOutResources++;
         }
       }
       const work = this.#work.get(i);
@@ -1641,7 +1817,13 @@ export class Host {
       if (wasActive)
         this.transition(
           i,
-          i.report.failedDisposers.length ? 'FAILED' : 'DISPOSED',
+          i.error ||
+            i.report.failedDisposers.length ||
+            i.report.restartRequired ||
+            i.remote?.session.unreaped ||
+            i.remote?.session.reapFailure
+            ? 'FAILED'
+            : 'DISPOSED',
         );
       return freeze(detach(i.report));
     })();
@@ -1663,6 +1845,8 @@ export class Host {
     );
     for (const s of scopes) {
       s.state = 'CLOSING';
+      for (const i of this.#instances.values())
+        if (i.scope === s) this.stopRecovery(i.lineage);
       for (const g of this.#grants.values())
         if (g.record.scope === s.id) g.revoked = true;
       for (const p of this.#pending)
@@ -1769,6 +1953,7 @@ export class Host {
   async shutdown(): Promise<unknown> {
     if (this.#closed) return this.inspect();
     this.#closed = true;
+    for (const i of this.#instances.values()) this.stopRecovery(i.lineage);
     if (this.#trustTimer) clearTimeout(this.#trustTimer);
     await this.destroyScope(this.#config.rootScope);
     this.#secret = undefined;

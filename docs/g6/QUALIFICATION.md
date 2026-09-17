@@ -1,77 +1,43 @@
-# G6 R2 qualification and evidence boundary
+# G6 qualification
 
-Status: **owner-approved R2 implementation; G6 runtime qualification incomplete**.
+The runtime implementation and twelve-area matrix are documented in
+[FULL-QUALIFICATION-LEDGER.md](FULL-QUALIFICATION-LEDGER.md), with raw execution
+receipts under `evidence/g6-runtime/`. That ledger supersedes earlier test-only
+and pending-matrix handoff notes; historical failures remain preserved.
 
-## Current integration and exit status
+## Implemented closure
 
-The owner-approved candidate `758610b3f6ac29459951f4158abcd77685852e8f`
-has been implemented and connected to a real Host/PhysicalSession/worker path.
-See [authorization](../gates/G6-SDK-WIRE-OWNER-APPROVAL.md).
-Target build/typecheck and the first 19 combined helper/integration tests passed,
-including the unchanged consumer in both factories. A full pipeline subsequently
-passed with 67 IPC/native/component tests, **before adding the new regressions**.
+* Bounded production recovery with 1/2/4/8-second backoff, fresh identities,
+  trust/lifecycle cancellation, no old-handle rebinding and no mutation replay.
+* Actual reap governs disposal and capacity release; unreaped processes remain
+  quarantined and cannot be reported as DISPOSED.
+* Normal cancellation, deadline expiry and read-only scope-check retirement
+  preserve unrelated work. Unanswered mutations and malformed transport still
+  fail closed.
+* Pre-offer authorization/deadline rejection remains logical. Offer budgets are
+  validated before reservation; original broker deadlines remain authoritative.
+* Stream schema failures retain CONTRACT_MISMATCH and first-terminal behavior.
+* Resource diagnostics run inside sealed test workers without weakening the
+  production non-dumpable sandbox.
 
-G6 remains incomplete: three additional identical-source scope/cleanup cases
-pass inproc and fail over IPC. These six normal exit-gate tests are checked in as
-`tests/ipc/scope-completion.test.mjs`; none is skipped or excluded. The current
-source tree is therefore not a green qualification result. See
-[exact failures, evidence and proposed correction](INTEGRATION-EXIT-BLOCKERS.md).
-The owner explicitly approved that correction against target `05c35d9`; see
-[direct approval](../gates/G6-SCOPE-CLEANUP-OWNER-APPROVAL.md). The synchronized local
-adapter, active minor-2 protocol and additional tests now implement it; pinned
-target execution of this correction is pending. See
-[implementation and exact handoff](../../G6-CORRECTION-STATUS.md).
-The three failures above describe the supplied pre-correction target evidence,
-not a rerun of the changed source. No runtime pass is claimed. No frozen G1 or
-public SDK 0.1.0 API was changed. Historical review inputs remain intact. Earlier component results are retained below as history,
-not current G6 acceptance.
+## Verification and publication
 
-## Historical component checkpoint
+The original six scope-completion tests, frozen public SDK/specifications and
+native sandbox are unchanged. The shared consumers use identical assertions
+on in-process and IPC routes, and print source hashes in their receipts.
 
-The target full `npm run check` passed at the current component checkpoint:
-169 baseline JavaScript tests, 193 specification tests, 135 frame-schema checks,
-30 design-model tests, and 48 native/wire/scheduler/reap-helper/boundary tests.
-Build/typecheck, SDK publication/isolated/external checks also passed. This is
-component and baseline evidence, not full session or SDK transport qualification.
-New PhysicalSession failure paths still require real session fault injection.
-Receipts: `evidence/g6-runtime/COMPONENT-CHECKPOINT.md`.
+The complete checkpoint passed `npm run check`, including 156 IPC/native tests
+without skips. Twenty repeated dual-route consumer runs passed. Four additional
+buffered event grant/scope tests subsequently passed as part of the 14-test
+production-closure suite. Final publication requires the expanded complete
+pipeline on the exact committed candidate in an independent detached worktree,
+with separately installed dependencies and no copied `dist` directories.
+The final execution/publication receipt records that candidate's commit and
+full-suite totals; prior logs must not be relabelled as that receipt.
 
+## Formal gate
 
-## Evidence levels
-
-1. `tools/check-g6-design.py`: JSON schema, closed-body, directional/control/work-lane and carrier metadata checks. Correctly shaped identity claims still do not authenticate anything.
-2. `tools/test-g6-context-model.py`: deterministic abstract broker model. Opaque Python objects stand in for native endpoint/descriptor leases; there is no PID authentication or production socket implementation. It checks overlap, shared state records, A→B→A success, budgets, provider-owned grants, reentrant capacity/depth, queues, cancellation/revocation, offer replay/swap, foreign acknowledgements, in-flight descriptor reservations and shared failure. Retained terminal histories are test inspection state, not a production memory design.
-3. `tools/probe-g6-carrier.py`: real disposable Linux Python subprocess/SCM_RIGHTS feasibility. Two pending contexts use shared process state; extra descriptors and a regular-file descriptor are rejected/closed, received sockets are close-on-exec and the synthetic parent marker is absent. The initial prototype used a stream reader on seqpacket acknowledgements and timed out; the corrected packet-aware reader passed. This is a trusted Python fixture, not the production Node/native transport, full offer protocol, authentication or final seccomp profile.
-4. Existing G1/G3/G4/G5 checks protect the frozen/runtime/SDK baseline. They do not become G6 runtime evidence merely because they pass again.
-
-Design receipts belong in `evidence/g6-r2-design/`; earlier `evidence/g6-design/` reports describe the superseded single-active candidate. Native build/component evidence now exists in `evidence/g6-native-foundation/` and `evidence/g6-runtime/`: the pinned compiler and native artifacts have been built and tested. Neither native component nor design evidence is full G6 runtime qualification.
-
-## Required implementation after review
-
-- Private pinned native bridge/launcher, authenticated child-connected stream, inherited packet carrier, sealed launch/package association, Landlock/seccomp and fixed FD/thread/process budgets.
-- TypeScript IPC adapter/dispatcher with actual receiver-owned context records, broker authorization, endpoint lifetimes, monotonic budgets, first-terminal outcomes and shared accounting.
-- One out-of-process synthetic Node provider using the public SDK; no per-call module replica or mocked in-process substitute.
-- One unchanged consumer test function parameterized over in-process and IPC factories. Record its source hash and exercise the same expected results, not per-transport test branching that hides missing semantics.
-
-## Mandatory runtime matrix (all still pending)
-
-| Area | Required evidence |
-|---|---|
-| Authentication | Genuine launched PID/UID/GID/pidfd/package/descriptor match; forged name, wrong process/publisher/digest, stale challenge/generation and replay rejected |
-| Offer/endpoint binding | Correct atomic packet/SCM transfer; wrong nonce/context/instance, duplicate/truncated/multiple/unsolicited descriptors, wrong socket type and FD reuse rejected with observed cleanup |
-| Concurrency/state | Slow and fast overlapping calls, independent deadlines/cancellation, one shared mutable provider instance and stable activation/disposal semantics |
-| Reentrancy | Successful A→B→A and bounded deeper nesting; exhausted slots/depth fail promptly without admission deadlock |
-| Authority | No upstream consumer-grant inheritance; no asserted parent/caller retargeting, scoped handle widening or old-context revival while another call remains live |
-| Calls/streams/events | Same values/errors/metadata over both transports, schema enforcement, cumulative credit and shared reservations, event callback acknowledgement and overload |
-| Revocation | Live grant/scope invalidation before buffered delivery; descendant cancellation while healthy unrelated contexts remain independent |
-| Death/stalls | Actual worker death, partial-frame/read/write/stream stall, missing heartbeat/offer consumption, malformed messages and deterministic first-terminal failure |
-| Recovery | Bounded retries with fresh trust/session/registration; old handles invalid; no mutation replay or automatic caller rebinding |
-| Resource accounting | Queue/byte/frame/FD bounds across all active, pending and retired contexts, including rights still queued in the carrier; actual memory/socket-buffer observations |
-| Confinement | Final pinned Node/native filter denies outside reads/writes, symlink escape, network and bypass syscalls, process/thread/exec escape, ptrace/FD theft and attacks on other processes; no inherited credentials |
-| Cleanup | Uncooperative provider forced down through owned pidfd; actual exit/reap, no orphan endpoints/processes; overshoots/unreaped state reported, never marked disposed from an acknowledgement |
-
-Do not claim per-call fault isolation when the shared process must be killed. Do not claim semantic provenance merely from possession of a different live context capability. Any tighter isolation requirement requires a separately reviewed design that still explains stateful semantics.
-
-## Exit gate
-
-A production adapter and synthetic provider must actually run, the unchanged consumer suite must pass on both routes, every hostile/lifecycle case must have real evidence, and bounded cleanup/resource claims must be measured. Apply the existing exact-candidate CI/owner acceptance controls. Until then G6 is not complete.
+`docs/gates/G6.md` continues to govern exact-candidate CI and owner acceptance.
+Local/target success does not substitute for an unobserved private GitHub check.
+No public repository conversion, frozen ABI change or sandbox relaxation is
+part of this qualification.

@@ -4,7 +4,7 @@ import { check, canonical, parse } from '@alica/acap-contracts';
 import type { Manifest, Descriptor, EventDescriptor } from '@alica/acap-types';
 import { native } from './native.js';
 import type { Lease } from './native.js';
-import { NativeStream, FrameRate } from './stream.js';
+import { NativeStream, FrameRate, PeerClosed } from './stream.js';
 import { decodeOffer, WireBudget } from './wire.js';
 import type { Frame } from './wire.js';
 import type { ContextOffer, hello, accepted } from './wire-schema.js';
@@ -257,24 +257,23 @@ export class WorkerTransport {
       }
     }
     for (const endpoint of [...this.contexts.values()]) {
+      if (endpoint.stream.closed) continue;
       if (performance.now() >= endpoint.end) {
-        this.closeEndpoint(endpoint, 'DEADLINE_EXCEEDED');
-        continue;
+        // Worker time is an attenuated execution cap, not authority to retire
+        // the broker's descriptor. Closing here races the broker's own timer
+        // and turns a local deadline into unexpected EOF/session failure.
+        endpoint.controller.abort('DEADLINE_EXCEEDED');
+        if (endpoint.stream.closed) continue;
       }
       let owned;
       try {
         endpoint.stream.flush();
         owned = endpoint.stream.receive();
       } catch (error) {
-        // Only a transport EOF is treated as broker context closure. An
-        // application/dispatcher callback throwing UNAVAILABLE must not be
-        // misclassified as EOF and silently leave the session running.
-        if (
-          error &&
-          typeof error === 'object' &&
-          'code' in error &&
-          error.code === 'UNAVAILABLE'
-        ) {
+        // Only actual native peer closure retires this endpoint. Protocol,
+        // rate, partial-frame/write deadlines and dispatcher errors still fail
+        // the physical session. Pending SDK mutations fail closed on abort.
+        if (error instanceof PeerClosed) {
           this.closeEndpoint(endpoint, 'UNAVAILABLE');
           continue;
         }
@@ -282,16 +281,31 @@ export class WorkerTransport {
       }
       if (!owned) continue;
       try {
-        this.onFrame(endpoint, owned.frame);
+        if (!endpoint.controller.signal.aborted)
+          this.onFrame(endpoint, owned.frame);
       } finally {
         owned.release();
       }
     }
   }
+  /** A broker can retire work between a read and the dispatcher's reply.
+   * Catch only native peer closure at the write boundary, before any caller
+   * can mistake it for a protocol fault. Aborting rejects pending exchanges;
+   * SDKPending still fails the session for unanswered mutations/releases. */
+  send(endpoint: WorkerEndpoint, frame: Frame): void {
+    try {
+      endpoint.stream.send(frame);
+    } catch (error) {
+      if (!(error instanceof PeerClosed)) throw error;
+      this.closeEndpoint(endpoint, 'UNAVAILABLE');
+    }
+  }
   closeEndpoint(endpoint: WorkerEndpoint, reason: string): void {
-    endpoint.controller.abort(reason);
     endpoint.stream.close();
     this.contexts.delete(endpoint.offer.contextId);
+    // Remove ownership before listeners run: uncertain SDK aborts may reenter
+    // physical close(), which must not try to operate on this endpoint again.
+    endpoint.controller.abort(reason);
   }
   fail(error: unknown): void {
     this.#reject(error);

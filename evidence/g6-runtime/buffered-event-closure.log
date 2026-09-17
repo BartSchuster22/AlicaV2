@@ -1,0 +1,28 @@
+(node:85224) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ buffered event grant invalidation preserves healthy siblings: inproc (272.683917ms)
+✔ buffered event scope invalidation preserves healthy siblings: inproc (299.511631ms)
+✔ buffered event grant invalidation preserves healthy siblings: ipc (1128.530092ms)
+✔ buffered event scope invalidation preserves healthy siblings: ipc (1227.167712ms)
+✔ production streams metadata credit and buffered grant revocation: inproc (217.634206ms)
+ℹ sameSourceSHA256=7d454da3a88c06f0b991c265c04694d989093681c0a3f454e5843acfebcdb8ba
+✔ production stream stall and schema error retain first terminal: inproc (282.121931ms)
+✔ production overload bounds active and queued callbacks: inproc (213.854382ms)
+ℹ sameSourceSHA256=93684641f1853e6bc80d33776ded76658262f3d044441a349bca49c7ebdf1fed
+✔ registered acquisition rollback races scope closure without duplicate cleanup: inproc (172.522139ms)
+✔ registered acquisition timeout rolls back exactly once: inproc (1724.224818ms)
+✔ production streams metadata credit and buffered grant revocation: ipc (860.995037ms)
+ℹ sameSourceSHA256=7d454da3a88c06f0b991c265c04694d989093681c0a3f454e5843acfebcdb8ba
+✔ production stream stall and schema error retain first terminal: ipc (864.50881ms)
+✔ production overload bounds active and queued callbacks: ipc (1068.150079ms)
+ℹ sameSourceSHA256=93684641f1853e6bc80d33776ded76658262f3d044441a349bca49c7ebdf1fed
+✔ registered acquisition rollback races scope closure without duplicate cleanup: ipc (973.507939ms)
+✔ registered acquisition timeout rolls back exactly once: ipc (2406.491264ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11993.615246

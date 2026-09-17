@@ -72,26 +72,31 @@ export class Exchanges<E extends object> {
     origin.next++;
     let timer: ReturnType<typeof setTimeout>;
     const abort = () => {
+      const rawReason = link.signal.reason;
+      const reason =
+        rawReason === 'PERMISSION_DENIED' ||
+        rawReason === 'UNAVAILABLE' ||
+        rawReason === 'DEADLINE_EXCEEDED'
+          ? rawReason
+          : 'CANCELLED';
       if (!original.signal.aborted) {
         try {
           this.send(endpoint, {
             tag: 'cancel',
-            body: { wireId: id, reason: 'CANCELLED' },
+            body: { wireId: id, reason },
           });
         } catch {
           this.fault();
         }
       }
-      const reason = link.signal.reason;
-      p.fail(
-        new AcapError(reason === 'DEADLINE_EXCEEDED' ? reason : 'CANCELLED'),
-      );
+      p.fail(new AcapError(reason));
     };
     const p: Pending = {
       endpoint,
       accept,
       receive,
       fail: (error) => {
+        if (this.#pending.get(id) !== p) return;
         p.remove();
         fail(error);
       },

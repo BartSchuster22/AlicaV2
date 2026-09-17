@@ -1,0 +1,44 @@
+✔ pre-offer phase 3 DEADLINE_EXCEEDED preserves the real session and releases admission (1164.365675ms)
+✖ pre-offer phase 4 DEADLINE_EXCEEDED preserves the real session and releases admission (1084.601259ms)
+✔ pre-offer phase 4 PERMISSION_DENIED preserves the real session and releases admission (1126.272229ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 2
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3656.452004
+
+✖ failing tests:
+
+test at tests/ipc/isolation.test.mjs:154:3
+✖ pre-offer phase 4 DEADLINE_EXCEEDED preserves the real session and releases admission (1084.601259ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   code: 'INVALID_ARGUMENT'
+  -   code: 'DEADLINE_EXCEEDED'
+    }
+  
+      at async TestContext.<anonymous> (file:///home/alica-dev/AlicaV2/tests/ipc/isolation.test.mjs:163:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: AcapError: INVALID_ARGUMENT
+        at fail (file:///home/alica-dev/AlicaV2/packages/acap-contracts/dist/validation.js:31:11)
+        at check (file:///home/alica-dev/AlicaV2/packages/acap-contracts/dist/validation.js:35:9)
+        at validateOffer (file:///home/alica-dev/AlicaV2/packages/kernel/dist/g6/schema.js:161:5)
+        at encodeOffer (file:///home/alica-dev/AlicaV2/packages/kernel/dist/g6/wire.js:74:5)
+        at PhysicalSession.open (file:///home/alica-dev/AlicaV2/packages/kernel/dist/g6/session.js:421:27)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async TestContext.<anonymous> (file:///home/alica-dev/AlicaV2/tests/ipc/isolation.test.mjs:163:9)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: { code: 'DEADLINE_EXCEEDED' },
+    operator: 'rejects',
+    diff: 'simple'
+  }

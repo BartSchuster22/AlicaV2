@@ -7,3 +7,5 @@ export const callAuthority = new AsyncLocalStorage<{
   grantRevision: number;
 }>();
 export const cleanupSelection = new AsyncLocalStorage<{ end: number }>();
+/** Local implementation of the same bounded ancestry, with no grant inheritance. */
+export const logicalCall = new AsyncLocalStorage<{ depth: number }>();
