@@ -1,0 +1,35 @@
+{
+  "kind": "g7-bootstrap-development-checks",
+  "recordedAt": "2026-09-17T19:27:39.834277+00:00",
+  "baseCommit": "b0de9be",
+  "host": "ALICA development VPS",
+  "command": "npm run check",
+  "exitCode": 0,
+  "pythonTestGroups": [193, 30, 11],
+  "nodeTestGroups": [169, 160, 16],
+  "logSha256": "861b5bbd47f04285febf662978e087b8321b581abcc42a0ec4a8ca7097f4a791",
+  "sourceSha256": {
+    "package.json": "2250cf106becf1dd62fc12534c8c236bf9d29d80263d8ec0ef19681efc0ad041",
+    "tools/g7-bootstrap-trust.py": "df7a35f18c97a62e716563c0f94ef08f31d218471377b1688b04ec86b4c96ede",
+    "tests/g7/bootstrap-trust.test.mjs": "78300474e33cda1472d77b0c17049170e367549ae8e0ca0d3b84970885b5b1c9",
+    "tests/g7/test_bootstrap.py": "1f1acdef2d06ccbdd34ef42126716b0142319edeecaafc04c749d52525bed736"
+  },
+  "operatorInstallation": {
+    "host": "ElioHermes1",
+    "path": "/usr/local/libexec/alica-g7/bootstrap-trust.py",
+    "owner": "root",
+    "mode": "0555",
+    "sha256": "df7a35f18c97a62e716563c0f94ef08f31d218471377b1688b04ec86b4c96ede",
+    "publicOnlyPreflight": "PASS",
+    "realSignerTerminalCancellation": "PASS",
+    "privateKeyReadByTests": false,
+    "productionSignaturesCreated": false
+  },
+  "limitations": [
+    "Development worktree regression, not clean-host G7 qualification",
+    "All automated signing tests use ephemeral test-only keys",
+    "Initial real trust policy signing awaits owner terminal action",
+    "No G7 Cell, release or install/restore acceptance claimed"
+  ],
+  "correctedFailure": "Initial full check rejected private Kernel imports in the new test. Tests were rewritten to use the public Kernel API; boundary rules were not loosened. Full check was rerun successfully."
+}
