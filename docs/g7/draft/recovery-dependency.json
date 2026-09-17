@@ -1,0 +1,21 @@
+{
+  "status": "PROPOSED_NOT_INSTALLED_OR_QUALIFIED",
+  "purpose": "Standard age v1 X25519 encryption for Cell backup; no custom cryptographic format or age plugins",
+  "project": "https://github.com/FiloSottile/age",
+  "release": "v1.3.2",
+  "releasePublishedAt": "2026-08-29T17:55:36Z",
+  "asset": "age-v1.3.2-linux-amd64.tar.gz",
+  "url": "https://github.com/FiloSottile/age/releases/download/v1.3.2/age-v1.3.2-linux-amd64.tar.gz",
+  "bytes": 19405817,
+  "upstreamReportedDigest": "sha256:cbe24006683f8eb669266162894b9a522a1af52f2665fbc63a4bb032ed26ac10",
+  "proofUrl": "https://github.com/FiloSottile/age/releases/download/v1.3.2/age-v1.3.2-linux-amd64.tar.gz.proof",
+  "proofUpstreamReportedDigest": "sha256:98402fa59b4e433426156b4a7e74a32e44902e0434c61158f7de18ffc84f1f97",
+  "evidenceSource": "GitHub releases API queried during R1 preparation; reported metadata is not local download/proof verification",
+  "pending": [
+    "Owner review of added recovery dependency",
+    "Retrieve and verify exact archive and upstream proof against independently approved proof trust anchors",
+    "Determine complete binary dependency/license/SBOM and base-OS compatibility",
+    "Test standard X25519 custody-key encoding without leaking or regenerating keys",
+    "Exercise bounded encryption/decryption, wrong key, tampering and disconnected recovery"
+  ]
+}

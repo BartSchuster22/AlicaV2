@@ -3,6 +3,11 @@
 Every row is **NOT RUN**. These are required future tests, not fabricated receipts.
 The [design](DESIGN.md) and [prerequisites](PREREQUISITES.md) control entry.
 
+Scope decision pending in [concrete R1 review](CONTRACT-REVIEW-R1.md): G7-01 below
+includes both execution modes, whereas the actual owner-signed policy authorizes
+IPC only. The proposed first-profile adjustment requires explicit review; no row
+has been silently waived or marked passed. Design/model tests are not these host tests.
+
 | ID    | Future test                                                  | Required evidence/result                                                                                                                              |
 | ----- | ------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
 | G7-01 | Fresh online install and synthetic calls                     | Clean O identity/OS inventory; exact candidate, profile/lock/policy digests; real signed in-process and IPC providers and teardown                    |

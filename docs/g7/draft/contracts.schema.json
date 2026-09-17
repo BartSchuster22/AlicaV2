@@ -1,0 +1,603 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://alica.invalid/g7/draft/contracts.schema.json",
+  "$defs": {
+    "release": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "bundleDigest": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 71,
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "profileDigest": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 71,
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "lockDigest": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 71,
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "policyDigest": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 71,
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "authorizationDigest": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 71,
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "bundleDigest",
+        "profileDigest",
+        "lockDigest",
+        "policyDigest",
+        "authorizationDigest"
+      ]
+    },
+    "floor": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "rootKeyId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 71,
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "policyVersion": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "revocationVersion": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "lastWallMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "rootKeyId",
+        "policyVersion",
+        "revocationVersion",
+        "lastWallMs"
+      ]
+    },
+    "accepted": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "alica.cell-accepted/v1"
+        },
+        "cellId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+        },
+        "transactionId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "release": {
+          "$ref": "#/$defs/release"
+        },
+        "trustFloor": {
+          "$ref": "#/$defs/floor"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "cellId",
+        "transactionId",
+        "sequence",
+        "release",
+        "trustFloor"
+      ]
+    },
+    "journalBody": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "alica.cell-journal/v1"
+        },
+        "cellId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+        },
+        "transactionId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "priorRevision": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "targetRevision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "operation": {
+          "enum": [
+            "install",
+            "upgrade",
+            "recover",
+            "restore"
+          ]
+        },
+        "state": {
+          "enum": [
+            "STAGING",
+            "VERIFIED",
+            "ACTIVATING",
+            "COMMITTED",
+            "RECOVERING",
+            "ABORTED",
+            "NEEDS_OPERATOR"
+          ]
+        },
+        "prior": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/release"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "target": {
+          "$ref": "#/$defs/release"
+        },
+        "trustFloor": {
+          "$ref": "#/$defs/floor"
+        },
+        "previousHash": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 71,
+              "pattern": "^sha256:[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "outcome": {
+          "enum": [
+            "PENDING",
+            "OK",
+            "VALIDATION_FAILED",
+            "ACTIVATION_FAILED",
+            "CLEANUP_UNCERTAIN",
+            "CRASH_RECONCILIATION"
+          ]
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "cellId",
+        "transactionId",
+        "sequence",
+        "priorRevision",
+        "targetRevision",
+        "operation",
+        "state",
+        "prior",
+        "target",
+        "trustFloor",
+        "previousHash",
+        "outcome"
+      ]
+    },
+    "journal": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "record": {
+          "$ref": "#/$defs/journalBody"
+        },
+        "checksum": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 71,
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "record",
+        "checksum"
+      ]
+    },
+    "capabilityIntent": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "principal": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-z][a-z0-9]*(?:\\.[a-z][a-z0-9]*)+$"
+        },
+        "scope": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+        },
+        "capabilityId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-z][a-z0-9]*(?:\\.[a-z][a-z0-9]*)+$"
+        },
+        "operations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[a-z][A-Za-z0-9]*$"
+          },
+          "minItems": 1,
+          "maxItems": 256,
+          "uniqueItems": true
+        },
+        "lifetimeMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 30000
+        }
+      },
+      "required": [
+        "principal",
+        "scope",
+        "capabilityId",
+        "operations",
+        "lifetimeMs"
+      ]
+    },
+    "authorization": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "alica.cell-authorization/v1"
+        },
+        "profileDigest": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 71,
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "capabilities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/capabilityIntent"
+          },
+          "minItems": 0,
+          "maxItems": 256,
+          "uniqueItems": true
+        },
+        "secrets": {
+          "type": "array",
+          "maxItems": 0
+        },
+        "events": {
+          "type": "array",
+          "maxItems": 0
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "profileDigest",
+        "capabilities",
+        "secrets",
+        "events"
+      ]
+    },
+    "adminRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "alica.cell-admin-request/v1"
+        },
+        "requestId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+        },
+        "incarnation": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+        },
+        "expectedSequence": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "operation": {
+          "enum": [
+            "status",
+            "verify",
+            "stop",
+            "start"
+          ]
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "requestId",
+        "incarnation",
+        "expectedSequence",
+        "operation"
+      ]
+    },
+    "adminResponse": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "alica.cell-admin-response/v1"
+        },
+        "requestId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+        },
+        "incarnation": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "status": {
+          "enum": [
+            "STOPPED",
+            "RUNNING",
+            "FAILED",
+            "NEEDS_OPERATOR"
+          ]
+        },
+        "code": {
+          "enum": [
+            "OK",
+            "CONFLICT",
+            "DENIED",
+            "INVALID",
+            "TIMEOUT",
+            "CLEANUP_UNCERTAIN"
+          ]
+        },
+        "acceptedDigest": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 71,
+              "pattern": "^sha256:[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "requestId",
+        "incarnation",
+        "sequence",
+        "status",
+        "code",
+        "acceptedDigest"
+      ]
+    },
+    "backupFile": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 240,
+          "pattern": "^[A-Za-z0-9_-]+(?:\\.[A-Za-z0-9_-]+)*(?:/[A-Za-z0-9_-]+(?:\\.[A-Za-z0-9_-]+)*)*$"
+        },
+        "digest": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 71,
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 268435456
+        }
+      },
+      "required": [
+        "path",
+        "digest",
+        "bytes"
+      ]
+    },
+    "backup": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "alica.cell-backup/v1"
+        },
+        "backupId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+        },
+        "cellId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+        },
+        "createdAtMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "accepted": {
+          "$ref": "#/$defs/accepted"
+        },
+        "trustFloor": {
+          "$ref": "#/$defs/floor"
+        },
+        "recoveryKeyId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 71,
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "format": {
+          "const": "age-encryption.org/v1"
+        },
+        "files": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/backupFile"
+          },
+          "minItems": 1,
+          "maxItems": 8192,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "backupId",
+        "cellId",
+        "createdAtMs",
+        "accepted",
+        "trustFloor",
+        "recoveryKeyId",
+        "format",
+        "files"
+      ]
+    },
+    "recoveryApproval": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "alica.cell-recovery-approval/v1"
+        },
+        "cellId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+        },
+        "backupCipherDigest": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 71,
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "approvedAtMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "minimumFloor": {
+          "$ref": "#/$defs/floor"
+        },
+        "authorizationDigest": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 71,
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "sourceStopped": {
+          "const": true
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "cellId",
+        "backupCipherDigest",
+        "approvedAtMs",
+        "minimumFloor",
+        "authorizationDigest",
+        "sourceStopped"
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/accepted"
+    },
+    {
+      "$ref": "#/$defs/journal"
+    },
+    {
+      "$ref": "#/$defs/authorization"
+    },
+    {
+      "$ref": "#/$defs/adminRequest"
+    },
+    {
+      "$ref": "#/$defs/adminResponse"
+    },
+    {
+      "$ref": "#/$defs/backup"
+    },
+    {
+      "$ref": "#/$defs/recoveryApproval"
+    }
+  ]
+}

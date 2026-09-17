@@ -1,0 +1,46 @@
+{
+  "keys": {
+    "sha256:93ea41d456775cfea241ace10bb60eb4450313f1e14072ffe75cca7efca51df1": "642gSpygnqMERE+uBgNfGhX1dR2N+iDq/qwrCKo8RxM=",
+    "sha256:a1495a5dbcdf08ad844c5cc27e860b35e78d296cc751c440e6cb24109ef1e395": "iIROrX18xjn0CmwppPD9n3pvZ9xlceIY4S8FIOlEWH4="
+  },
+  "policy": {
+    "expiresAtMs": 1797449793193,
+    "issuedAtMs": 1789673793193,
+    "maxOfflineAgeMs": 604800000,
+    "publishers": [
+      {
+        "executionModes": [
+          "ipc"
+        ],
+        "id": "org.aquiero.alica",
+        "keyIds": [
+          "sha256:93ea41d456775cfea241ace10bb60eb4450313f1e14072ffe75cca7efca51df1"
+        ]
+      }
+    ],
+    "rootKeyIds": [
+      "sha256:a1495a5dbcdf08ad844c5cc27e860b35e78d296cc751c440e6cb24109ef1e395"
+    ],
+    "schemaVersion": "alica.trust-policy/v1",
+    "version": 1
+  },
+  "policySignature": {
+    "algorithm": "ed25519",
+    "keyId": "sha256:a1495a5dbcdf08ad844c5cc27e860b35e78d296cc751c440e6cb24109ef1e395",
+    "signature": "vsmBhFrtAsGBp2l5I6n2KTCBfcUqM+9+KR6Q74MfIY3qewEHinkI0y9rXeRBygGj8k6iK9lSkbdKCjRWHxT7Dw=="
+  },
+  "revocation": {
+    "expiresAtMs": 1790278593193,
+    "issuedAtMs": 1789673793193,
+    "revokedArtifactDigests": [],
+    "revokedKeyIds": [],
+    "schemaVersion": "alica.revocation/v1",
+    "version": 1
+  },
+  "revocationSignature": {
+    "algorithm": "ed25519",
+    "keyId": "sha256:a1495a5dbcdf08ad844c5cc27e860b35e78d296cc751c440e6cb24109ef1e395",
+    "signature": "GWdBNPXOCr3frnK30sB8zo1cbna/wQgieX3ttegVituy9vg/Wgt99ZUT5Gk+UDLO0xGjlOcWhujhQu5tY1JbCQ=="
+  },
+  "rootKeyId": "sha256:a1495a5dbcdf08ad844c5cc27e860b35e78d296cc751c440e6cb24109ef1e395"
+}

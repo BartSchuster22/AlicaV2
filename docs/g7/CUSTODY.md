@@ -1,6 +1,6 @@
 # G7 online custody and initial trust ceremony
 
-Status: owner-approved online software custody exists; encrypted off-server copy verified. Initial root signing is operator-pending. No G7 release or candidate acceptance is claimed.
+Status: owner-approved online software custody exists; encrypted off-server copy verified. Initial root signing is complete; both actual signatures were independently verified, including through the public Kernel bootstrap API. No G7 release or candidate acceptance is claimed.
 
 ## Approved simplification and residual risk
 
@@ -38,7 +38,7 @@ The X25519 key is reserved for the separately reviewed application backup format
 
 IMPORTANT: the existing Kernel checks freshness of BOTH policy and revocation metadata. Therefore nominal 90-day policy validity does not permit 90 days of disconnected use. Both documents need approved renewal within the 7-day freshness boundary; renewal/versioning tooling and its profile-lock consequences still require implementation/review. Never rerun initialization to reset versions or freshness.
 
-## Owner command
+## Owner command — already completed; do not rerun
 
 After the reviewed source has been installed root-owned/read-only at the path below, run in the `herman@ElioHermes1` PuTTY window:
 
@@ -56,4 +56,6 @@ Python tests cover the normative canonical vectors, rejected values/duplicates/d
 
 Development tests use the repository's existing hash-locked Python cryptography dependency. The operator helper uses the independently inspected host Python/cryptography installation; this is an explicit signer-host prerequisite, not an undeclared dependency of an offline Cell. Cell bootstrap verifier delivery and its trusted digest are still outstanding.
 
-Pending: actual owner ceremony; independent verification and root pinning on the acceptance environments; controlled metadata renewal; exact manifest/inventory-bound release signing; final journal/profile/restore contracts; signed candidate and complete offline bundle; full G7 install/adversarial/recovery qualification and exact-candidate CI/owner acceptance. The application candidate must not establish its own root merely by shipping a key.
+The completed ceremony and public-only Kernel verification are recorded in `evidence/g7/initial-trust.public.json` and its verification receipt. Bootstrap source a894246 passed exact-revision foundation CI run 35265226631.
+
+Pending: root pinning on the acceptance environments; controlled metadata renewal; exact manifest/inventory-bound release signing; final journal/profile/restore contracts; signed candidate and complete offline bundle; full G7 install/adversarial/recovery qualification and exact-candidate CI/owner acceptance. The application candidate must not establish its own root merely by shipping a key.

@@ -1,0 +1,29 @@
+{
+  "kind": "g7-contract-R1-development-checks",
+  "recordedAt": "2026-09-17T20:09:00.771244+00:00",
+  "sourceBase": "a8942466928f4b0fc976e67c4985b849ded759b3",
+  "command": "npm run check",
+  "exitCode": 0,
+  "pythonTestGroups": [193, 30, 11, 119],
+  "nodeTestGroups": [169, 160, 16],
+  "logSha256": "9057e2781dae8b69020e432b3791343ef66bfc67dab87c18825277c016eb92a9",
+  "contractSourceSha256": {
+    "tools/g7-contract-model.py": "791b47ca948e39e855c52667790963628a127d102f80010faedd984e45c2bf25",
+    "tests/g7/test_contract_model.py": "70972ca37d1d4aaca4abf11f8d962bc35353ac3359082d2cf0721578d1ccb031",
+    "docs/g7/draft/contracts.schema.json": "917e9ab5aa42e9fd344ca380fee1bb4ba7ab53e1044e41e6d2fb4583b0fadc32",
+    "docs/g7/draft/limits.json": "75a0fa6abe34d1c6bbfba24d10e509b32e2bbc40fba3ab372583de07d975d7d2",
+    "package.json": "248a0f2102142ffeed20f95b615909a92c3569622cc2b47e27fc39203b6ce933"
+  },
+  "priorBootstrapCI": {
+    "runId": 35265226631,
+    "headSha": "a8942466928f4b0fc976e67c4985b849ded759b3",
+    "conclusion": "success",
+    "source": "Authenticated GitHub API query"
+  },
+  "limits": [
+    "Design/model checks, not implemented Cell or real crash/reap tests",
+    "No installation, backup encryption, restore or two-host qualification result",
+    "Owner concrete-contract review and IPC-mode scope decision remain pending",
+    "No acceptance of this revision is claimed"
+  ]
+}
