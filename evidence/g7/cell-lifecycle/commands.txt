@@ -1,0 +1,18 @@
+Baseline local discovery:
+cd /home/herman/g7-implementation && pwd; git status --short; git rev-parse HEAD
+Observed clean at ce6d72423b426ff8e44e10d624ab7640dc7f30ea.
+
+Development discovery (executed, exit 0):
+ssh -i /home/herman/.ssh/alica_v2_vps_ed25519 -o IdentitiesOnly=yes -o BatchMode=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile=/home/herman/.ssh/alica_v2_known_hosts alica-dev@167.233.135.142 'cd /home/alica-dev/AlicaV2 && export PATH="$PWD/.tools/node/bin:$PATH" && git rev-parse HEAD && git status --short && node --version'
+Observed same HEAD, Node v24.21.0, preserved unrelated untracked G6 evidence/status files.
+
+Explicit transfer and targeted execution (started; see checkpoint for final result):
+cd /home/herman/g7-implementation
+tar -cf - tools/g7-cell.mjs tests/g7/cell-lifecycle-process.mjs tests/g7/cell-lifecycle.test.mjs | ssh -i /home/herman/.ssh/alica_v2_vps_ed25519 -o IdentitiesOnly=yes -o BatchMode=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile=/home/herman/.ssh/alica_v2_known_hosts alica-dev@167.233.135.142 'cd /home/alica-dev/AlicaV2 && tar -xf - && export PATH="$PWD/.tools/node/bin:$PATH" && node --check tools/g7-cell.mjs && ./node_modules/.bin/prettier --write tools/g7-cell.mjs tests/g7/cell-lifecycle-process.mjs tests/g7/cell-lifecycle.test.mjs && node --experimental-vm-modules --test tests/g7/cell-preparation.test.mjs tests/g7/cell-activation.test.mjs tests/g7/cell-lifecycle.test.mjs'
+Hermes background session proc_5a07fc5865fc. Transferred inputs recorded in transferred-input.sha256; development formatter changes mean these are NOT post-format development hashes.
+
+BLOCKED return-transfer command (not retried or replaced):
+scp -i /home/herman/.ssh/alica_v2_vps_ed25519 -o IdentitiesOnly=yes -o BatchMode=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile=/home/herman/.ssh/alica_v2_known_hosts alica-dev@167.233.135.142:/home/alica-dev/AlicaV2/tools/g7-cell.mjs tools/g7-cell.mjs && scp -i /home/herman/.ssh/alica_v2_vps_ed25519 -o IdentitiesOnly=yes -o BatchMode=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile=/home/herman/.ssh/alica_v2_known_hosts 'alica-dev@167.233.135.142:/home/alica-dev/AlicaV2/tests/g7/cell-lifecycle*.mjs' tests/g7/
+Tool result: exit_code -1; status pending_approval; approval_pending true; pattern_key tirith:raw_ip_url.
+Description: Security scan — [MEDIUM] URL uses raw IP address: URL points to IP address 167.233.135.142 instead of a domain name; [MEDIUM] URL uses raw IP address: URL points to IP address 167.233.135.142 instead of a domain name.
+No further remote transfer/execution initiated after this guard. Monitoring the already-running targeted command is not a new execution. Parent must perform any subsequent approved transfer, formatting, source binding and full check.

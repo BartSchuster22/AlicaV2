@@ -1,0 +1,23 @@
+{
+  "base": "ce6d72423b426ff8e44e10d624ab7640dc7f30ea",
+  "sourceSha256": {
+    "tools/g7-cell.mjs": "11a7d25e29bf96343b4266540af921a7662444d4480df7c77e3f6973e602f74d",
+    "tests/g7/cell-lifecycle-process.mjs": "d6614ce2aedbd0700fd8132eb65194665006261e647d61930da25fb8361d37d3",
+    "tests/g7/cell-lifecycle.test.mjs": "b957c6411fb07e74131cdfa172bb18f37ff3394458cecc0803e58c962dbf8b2a"
+  },
+  "comparison": "Parent retrieved the three development-formatted files and verified identical local/development hashes.",
+  "verification": "Independent parent full regression passed, exit 0; all source hashes match before and after execution and current local files.",
+  "log": "evidence/g7/cell-lifecycle/parent-hardening-full-check.log",
+  "fullLogSha256": "cd0667dfbd3c31d2cdd16d909c38cf3788c79f80b1913fd7d64ace4453d20b03",
+  "nodeSuites": [
+    170,
+    160,
+    154
+  ],
+  "pythonSuites": [
+    193,
+    30,
+    11,
+    119
+  ]
+}

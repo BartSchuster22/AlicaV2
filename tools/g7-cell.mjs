@@ -38,6 +38,57 @@ export function cellSchema(name, value) {
   check(validators.get(name)(JSON.parse(canonical(value))), 'INVALID_ARGUMENT');
   return value;
 }
+// Real monotonic elapsed time; one budget across all awaits in a phase.
+// Race only leaf Kernel promises, never a continuation that can publish selection.
+function deadline(ms) {
+  const end = process.hrtime.bigint() + BigInt(ms) * 1000000n;
+  let expired = false;
+  const timeout = () =>
+    Object.assign(new Error('Cell deadline exceeded'), { code: 'TIMEOUT' });
+  const remaining = () => Number(end - process.hrtime.bigint()) / 1000000;
+  const assert = () => {
+    if (expired || remaining() <= 0) {
+      expired = true;
+      throw timeout();
+    }
+  };
+  return {
+    assert,
+    async wait(start) {
+      assert();
+      let timer;
+      try {
+        const value = await Promise.race([
+          Promise.resolve().then(() => {
+            assert();
+            return start();
+          }),
+          new Promise((_, reject) => {
+            timer = setTimeout(
+              () => {
+                expired = true;
+                reject(timeout());
+              },
+              Math.max(1, remaining()),
+            );
+          }),
+        ]);
+        assert();
+        return value;
+      } finally {
+        clearTimeout(timer);
+      }
+    },
+  };
+}
+function outcome(error, runtime) {
+  // In-process error metadata only, not a new admin wire/schema contract.
+  return Object.assign(error, {
+    runtime,
+    outcome:
+      runtime === 'NEEDS_OPERATOR' ? 'CLEANUP_UNCERTAIN' : 'ACTIVATION_FAILED',
+  });
+}
 const same = (a, b) => canonical(a) === canonical(b);
 const bytes = (v) => Buffer.from(canonical(v));
 const edges = {
@@ -128,6 +179,7 @@ export class CellPreparation {
   #host;
   #stopped = false;
   #running = false;
+  #cleanupUncertain = false;
   install(archivePath, material, authorization) {
     return this.#run(() =>
       this.#stage(
@@ -148,22 +200,33 @@ export class CellPreparation {
   async #shutdown() {
     this.#running = false;
     if (!this.#host) return;
-    const report = await this.#host.shutdown();
-    check(
-      report.unsettledWork === 0 &&
-        Object.values(report.resources).every((n) => n === 0) &&
-        report.instances.every(
-          (i) =>
-            ['DISPOSED', 'FAILED'].includes(i.state) &&
-            !i.cleanup.restartRequired &&
-            i.cleanup.timedOutResources === 0 &&
-            i.cleanup.failedDisposers.length === 0,
-        ),
-      'FAILED_PRECONDITION',
-    );
-    this.#host = undefined;
-    this.#stopped = true;
-    return report;
+    try {
+      const budget = deadline(limits.cleanupTimeoutMs);
+      // A second Kernel shutdown can return an interim inspect report. Never
+      // use that as proof that the original shutdown completed.
+      check(!this.#cleanupUncertain, 'FAILED_PRECONDITION');
+      const report = await budget.wait(() => this.#host.shutdown());
+      check(
+        report.unsettledWork === 0 &&
+          Object.values(report.resources).every((n) => n === 0) &&
+          report.instances.every(
+            (i) =>
+              ['DISPOSED', 'FAILED'].includes(i.state) &&
+              !i.cleanup.restartRequired &&
+              i.cleanup.timedOutResources === 0 &&
+              i.cleanup.failedDisposers.length === 0,
+          ),
+        'FAILED_PRECONDITION',
+      );
+      this.#host = undefined;
+      this.#stopped = true;
+      return report;
+    } catch (error) {
+      this.#cleanupUncertain = true;
+      this.#failed = true;
+      this.#stopped = false;
+      throw outcome(error, 'NEEDS_OPERATOR');
+    }
   }
   async #run(operation) {
     this.#guard();
@@ -171,6 +234,9 @@ export class CellPreparation {
     this.#busy = true;
     try {
       return await operation();
+    } catch (error) {
+      if (this.#failed) throw outcome(error, 'NEEDS_OPERATOR');
+      throw error;
     } finally {
       this.#busy = false;
     }
@@ -205,18 +271,26 @@ export class CellPreparation {
     this.#fd = undefined;
   }
   #guard() {
-    check(this.#fd !== undefined && !this.#failed, 'FAILED_PRECONDITION');
+    if (this.#failed)
+      throw outcome(
+        Object.assign(new Error('Cell requires operator review'), {
+          code: 'FAILED_PRECONDITION',
+        }),
+        'NEEDS_OPERATOR',
+      );
+    check(this.#fd !== undefined, 'FAILED_PRECONDITION');
   }
   #read(p, max) {
     this.#guard();
     return parse(readPrivate(this.#fd, p, max), max);
   }
-  #write(p, v, replace = false) {
+  #write(p, v, replace = false, budget) {
     this.#guard();
     try {
       durableWrite(this.#fd, p, bytes(v), {
         replace,
         maximum: limits.jsonBytes,
+        boundary: () => budget?.assert(),
       });
     } catch (e) {
       this.#failed = true;
@@ -299,7 +373,11 @@ export class CellPreparation {
       this.#failed = true;
       throw e;
     } finally {
-      if (h) await h.shutdown();
+      if (h) {
+        this.#host = h;
+        await this.#shutdown();
+        this.#stopped = false;
+      }
     }
     return { cellId: id.cellId, accepted: null, runtime: 'UNAVAILABLE' };
   }
@@ -330,6 +408,14 @@ export class CellPreparation {
     return this.#status();
   }
   #status() {
+    try {
+      return this.#validatedStatus();
+    } catch (error) {
+      this.#failed = true;
+      throw outcome(error, 'NEEDS_OPERATOR');
+    }
+  }
+  #validatedStatus() {
     const { id, floor } = this.#base(),
       journals = this.#journals();
     const accepted = listPrivate(this.#fd).includes('accepted.json')
@@ -436,6 +522,7 @@ export class CellPreparation {
     });
   }
   async #stage(archivePath, material, authorization, activate = false) {
+    const verification = deadline(limits.verifyTimeoutMs);
     const status = this.#status();
     check(
       status.transactions.every((t) => t.state === 'ABORTED'),
@@ -465,6 +552,15 @@ export class CellPreparation {
       ),
     );
     target.authorizationDigest = digest(authorization);
+    // Retained immutable bytes from a failed attempt are evidence, not a
+    // reusable staging area. Exact retry/reinstall remains outside this component.
+    if (listPrivate(this.#fd).includes('releases'))
+      check(
+        !listPrivate(this.#fd, 'releases').includes(
+          inspected.bundleDigest.slice(7),
+        ),
+        'CONFLICT',
+      );
     const transactionId = randomUUID(),
       rows = [];
     this.#append(rows, {
@@ -505,13 +601,15 @@ export class CellPreparation {
           'CONTRACT_MISMATCH',
         );
       }
-      for (const entry of archive.entries)
+      for (const entry of archive.entries) {
+        verification.assert();
         durableWrite(
           this.#fd,
           prefix + '/' + entry.path,
           archive.read(entry.path),
           { maximum: limits.fileBytes },
         );
+      }
       this.#write(prefix + '/authorization.json', authorization);
       await this.#admit(
         prefix,
@@ -521,6 +619,7 @@ export class CellPreparation {
         authorization,
       );
       const fresh = this.#advance(material, floor);
+      verification.assert();
       this.#transition(rows, 'VERIFIED', fresh, 'PENDING');
       if (activate)
         return await this.#activate(
@@ -539,7 +638,7 @@ export class CellPreparation {
         qualification: 'NOT_QUALIFIED',
       };
     } catch (e) {
-      this.#failed = true;
+      if (e.runtime !== 'STOPPED') this.#failed = true;
       throw e;
     } finally {
       archive.close();
@@ -572,7 +671,7 @@ export class CellPreparation {
       statePath: '/proc/' + process.pid + '/fd/' + this.#fd + '/kernel.json',
       initialize: false,
     });
-    if (retain) this.#host = h;
+    this.#host = h;
     try {
       const ids = new Map();
       for (const p of inspected.profile.plugins) {
@@ -633,10 +732,14 @@ export class CellPreparation {
       );
       return { h, ids };
     } finally {
-      if (!retain) await h.shutdown();
+      if (!retain) {
+        await this.#shutdown();
+        this.#stopped = false;
+      }
     }
   }
   async #activate(prefix, inspected, material, cellId, authorization, rows) {
+    const budget = deadline(limits.activationTimeoutMs);
     let publishing = false;
     let floor = this.#advance(material, this.#read('floor.json'));
     this.#transition(rows, 'ACTIVATING', floor, 'PENDING');
@@ -650,7 +753,8 @@ export class CellPreparation {
         authorization,
         true,
       );
-      await h.startProfile(canonical(inspected.profile));
+      budget.assert();
+      await budget.wait(() => h.startProfile(canonical(inspected.profile)));
       // Fixed synthetic readiness contract, never a caller-supplied callback.
       for (const capabilityId of ['org.alica.echo', 'org.alica.consumer']) {
         const intent = authorization.capabilities.find(
@@ -658,18 +762,18 @@ export class CellPreparation {
             c.capabilityId === capabilityId && c.operations.includes('echo'),
         );
         check(intent, 'PERMISSION_DENIED');
-        const bound = await h.context(ids.get(intent.principal)).require({
-          capabilityId,
-          major: 1,
-          minMinor: 0,
-          operations: ['echo'],
-          features: [],
-        });
+        const bound = await budget.wait(() =>
+          h.context(ids.get(intent.principal)).require({
+            capabilityId,
+            major: 1,
+            minMinor: 0,
+            operations: ['echo'],
+            features: [],
+          }),
+        );
         const text = 'g7-readiness-' + randomUUID();
-        const result = await bound.call(
-          'echo',
-          { text },
-          { deadlineMs: Date.now() + 1000 },
+        const result = await budget.wait(() =>
+          bound.call('echo', { text }, { deadlineMs: Date.now() + 1000 }),
         );
         check(same(result, { text }), 'CONTRACT_MISMATCH');
       }
@@ -678,6 +782,7 @@ export class CellPreparation {
         'FAILED_PRECONDITION',
       );
       floor = this.#advance(material, floor);
+      budget.assert();
       const last = rows.at(-1).record;
       const accepted = cellSchema('accepted', {
         schemaVersion: 'alica.cell-accepted/v1',
@@ -688,8 +793,10 @@ export class CellPreparation {
         trustFloor: floor,
       });
       publishing = true;
-      this.#write('accepted.json', accepted, true);
+      this.#write('accepted.json', accepted, true, budget);
+      budget.assert();
       this.#transition(rows, 'COMMITTED', floor, 'OK');
+      budget.assert();
       this.#running = true;
       return this.#status();
     } catch (error) {
@@ -700,6 +807,7 @@ export class CellPreparation {
       } catch {
         /* no fabricated reap */
       }
+      if (error.code === 'TIMEOUT') clean = false;
       if (!publishing && !this.#failed) {
         this.#transition(
           rows,
@@ -715,7 +823,12 @@ export class CellPreparation {
         );
       }
       // Durability uncertainty preserves evidence and never rolls selection back.
-      throw error;
+      if (publishing || !clean || this.#failed) {
+        this.#failed = true;
+        this.#stopped = false;
+        throw outcome(error, 'NEEDS_OPERATOR');
+      }
+      throw outcome(error, 'STOPPED');
     }
   }
   recover(material) {
@@ -738,7 +851,11 @@ export class CellPreparation {
       this.#failed = true;
       throw e;
     } finally {
-      if (h) await h.shutdown();
+      if (h) {
+        this.#host = h;
+        await this.#shutdown();
+        this.#stopped = false;
+      }
     }
     if (
       this.#journals().some((j) =>

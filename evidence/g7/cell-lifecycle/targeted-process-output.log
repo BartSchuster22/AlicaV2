@@ -1,0 +1,61 @@
+tools/g7-cell.mjs 165ms
+tests/g7/cell-lifecycle-process.mjs 18ms
+tests/g7/cell-lifecycle.test.mjs 27ms
+✔ in-process IPC install: actual echo and unchanged consumer readiness, exact frozen selection, lifetime ownership and real shutdown (3212.274187ms)
+✔ external SIGKILL at activating-durable preserves selection and requires operator without inventing reap (1266.76623ms)
+✔ external SIGKILL at accepted-rename preserves selection and requires operator without inventing reap (3376.833509ms)
+✔ external SIGKILL at committed-durable preserves selection and requires operator without inventing reap (3288.688385ms)
+✔ fresh recovery rejects committed corruption: wrong-sequence (2536.316037ms)
+✔ fresh recovery rejects committed corruption: wrong-release (2515.00375ms)
+✔ fresh recovery rejects committed corruption: unknown-field (2565.679407ms)
+✔ fresh recovery rejects committed corruption: missing-selection (2549.137261ms)
+✔ fresh recovery rejects committed corruption: corrupt-journal (2669.201804ms)
+✔ real provider activation failure never publishes accepted selection and records clean rollback (845.327529ms)
+✔ post-activation recovery still enforces Kernel same-version policy digest continuity (2627.229066ms)
+✔ expired grants cannot continue to report a ready RUNNING Cell (7524.208514ms)
+✔ real syscall fault remains conservative and cannot publish later: accepted-rename (5117.852086ms)
+✔ real syscall fault remains conservative and cannot publish later: accepted-directory (4930.30674ms)
+✔ real syscall fault remains conservative and cannot publish later: journal-link (4980.835692ms)
+✔ real syscall fault remains conservative and cannot publish later: enospc (2638.278179ms)
+✔ real syscall fault remains conservative and cannot publish later: accepted-file-delay (35913.751232ms)
+✔ activation hangs: actual IPC, no late accepted publication (32805.028517ms)
+✔ activation resolves late: actual IPC, no late accepted publication (33377.71097ms)
+✔ readiness shares activation budget: actual IPC, no late accepted publication (32849.343741ms)
+✔ throwing IPC activation preserves clean same-object status and safe conflict on retained candidate (917.746436ms)
+✔ actual IPC readiness fails closed: throw new Error("readiness failure"); (3869.619855ms)
+✔ actual IPC readiness fails closed: await new Promise(r => setTimeout(r, 1500)); return x; (5130.048904ms)
+✔ actual IPC readiness fails closed: await new Promise(() => {}); (4719.516809ms)
+✔ actual hanging IPC disposer cannot claim STOPPED or reopen admission (5220.091461ms)
+✔ actual committed corruption has structured conservative error and is not repaired (2195.378912ms)
+✔ real staged transaction, separate-process status/recovery, persistent identity/floor and no accepted selection (1452.400713ms)
+✔ OS flock contention is immediate across processes and releases on SIGKILL without PID guessing (365.929522ms)
+✔ external SIGKILL at staging-durable with fresh-process readback (852.840761ms)
+✔ external SIGKILL at verified-durable with fresh-process readback (1021.432248ms)
+✔ external SIGKILL at journal-link with fresh-process readback (750.608732ms)
+✔ external SIGKILL at floor-rename with fresh-process readback (812.18457ms)
+✔ private-root attack rejects symlink-root (73.242694ms)
+✔ private-root attack rejects root-mode (70.468876ms)
+✔ private-root attack rejects identity-hardlink (79.105501ms)
+✔ private-root attack rejects floor-symlink (84.072744ms)
+✔ private-root attack rejects floor-mode (82.726292ms)
+✔ private-root attack rejects unknown-root (84.466524ms)
+✔ private-root attack rejects missing-kernel (97.889491ms)
+✔ private-root attack rejects accepted-selection (88.535698ms)
+✔ stage rejects wrong-root without accepted publication (68.171795ms)
+✔ stage rejects clock-floor without accepted publication (63.214312ms)
+✔ stage rejects metadata-floor without accepted publication (71.530644ms)
+✔ stage rejects intent-profile without accepted publication (92.129469ms)
+✔ stage rejects intent-operation without accepted publication (246.887765ms)
+✔ stage rejects intent-duplicate without accepted publication (87.317878ms)
+✔ stage rejects intent-secret without accepted publication (91.365361ms)
+✔ stage rejects source-corruption without accepted publication (64.332173ms)
+✔ journal corruption, unknown shape, checksum-valid illegal edge and rollback deny (2230.152989ms)
+✔ install, upgrade, start, stop, verify and backup are explicitly unavailable; no root mutation (1850.715039ms)
+ℹ tests 50
+ℹ suites 0
+ℹ pass 50
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 175007.542416
