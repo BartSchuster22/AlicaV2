@@ -266,7 +266,7 @@ export class Trust {
         (x) =>
           x.id === p.manifest.publisher &&
           x.keyIds.includes(p.signer) &&
-          x.executionModes.includes('inproc'),
+          x.executionModes.includes(p.manifest.execution),
       ),
       'PERMISSION_DENIED',
     );
@@ -415,7 +415,10 @@ export class Trust {
       m.id === index.pluginId && m.version === index.version,
       'CONTRACT_MISMATCH',
     );
-    check(m.execution === 'inproc', 'FAILED_PRECONDITION');
+    check(
+      m.execution === 'inproc' || m.execution === 'ipc',
+      'FAILED_PRECONDITION',
+    );
     const p: VerifiedPackage = {
       manifest: freeze(m),
       digest: packageDigest,

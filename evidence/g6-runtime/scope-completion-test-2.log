@@ -1,0 +1,79 @@
+(node:62268) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ overlapping inline cleanup preserves sibling causality: inproc (278.148818ms)
+✔ child-context log retains child scope: inproc (99.957663ms)
+✔ zero-cleanup acquisition rechecks closed child scope: inproc (177.328598ms)
+✖ overlapping inline cleanup preserves sibling causality: ipc (923.866746ms)
+✖ child-context log retains child scope: ipc (676.298147ms)
+✖ zero-cleanup acquisition rechecks closed child scope: ipc (779.115516ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 3
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3212.429675
+
+✖ failing tests:
+
+test at tests/ipc/scope-completion.test.mjs:113:3
+✖ overlapping inline cleanup preserves sibling causality: ipc (923.866746ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'CANCELLED'
+  - 'healthy'
+  
+      at TestContext.<anonymous> (file:///home/alica-dev/AlicaV2/tests/ipc/scope-completion.test.mjs:118:14)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'CANCELLED',
+    expected: 'healthy',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/ipc/scope-completion.test.mjs:124:3
+✖ child-context log retains child scope: ipc (676.298147ms)
+  AssertionError [ERR_ASSERTION]: log must not be silently attributed to its root invocation scope
+  + actual - expected
+  
+  + 'root'
+  - '2191e7ce-ad5c-473a-924e-28ede6cc214d'
+  
+      at TestContext.<anonymous> (file:///home/alica-dev/AlicaV2/tests/ipc/scope-completion.test.mjs:134:14)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'root',
+    expected: '2191e7ce-ad5c-473a-924e-28ede6cc214d',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/ipc/scope-completion.test.mjs:143:3
+✖ zero-cleanup acquisition rechecks closed child scope: ipc (779.115516ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+  +   kind: 'success',
+  +   value: 'acquired'
+  -   code: 'FAILED_PRECONDITION',
+  -   kind: 'error'
+    }
+  
+      at TestContext.<anonymous> (file:///home/alica-dev/AlicaV2/tests/ipc/scope-completion.test.mjs:160:14)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { kind: 'success', value: 'acquired' },
+    expected: { kind: 'error', code: 'FAILED_PRECONDITION' },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

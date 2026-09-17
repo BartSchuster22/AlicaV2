@@ -1,6 +1,8 @@
 import { randomUUID } from 'node:crypto';
 import { SourceTextModule, SyntheticModule } from 'node:vm';
-import { posix } from 'node:path';
+import { posix, dirname } from 'node:path';
+import { callAuthority, cleanupSelection } from './execution-context.js';
+import type { HostIPC } from './g6/host-adapter.js';
 import * as sdk from '@alica/plugin-sdk';
 import * as contracts from '@alica/acap-contracts';
 import { ContractProvider, ContractSession } from '@alica/acap-contracts';
@@ -77,12 +79,14 @@ interface Scope {
   state: 'OPEN' | 'CLOSING' | 'CLOSED';
 }
 interface Effect {
+  select?: () => void;
   scope: Scope;
   done: boolean;
   cleanup: Disposer;
   task?: Promise<void>;
 }
 interface Instance {
+  remote?: HostIPC;
   id: string;
   pkg: VerifiedPackage;
   scope: Scope;
@@ -91,6 +95,7 @@ interface Instance {
   history: Lifecycle[];
   effects: Effect[];
   dependencies: Set<string>;
+  requiredRegistrations: Set<Registration>;
   mandatory: Map<string, string>;
   staged: Registration[];
   sequence: number;
@@ -118,6 +123,7 @@ interface BoundGrant {
 }
 interface Pending {
   caller: Instance;
+  registration: Registration;
   provider: Instance;
   scope: Scope;
   cancel: (code: ErrorCode) => void;
@@ -201,8 +207,11 @@ export class Host {
   #audit: Audit[] = [];
   #auditUnavailable = false;
   #closed = false;
+  #runtimeDirectory: string;
+  #scopeClosures = new WeakMap<Scope, Promise<void>>();
   #trustTimer: ReturnType<typeof setTimeout> | undefined;
   constructor(configText: string, options: BootstrapOptions) {
+    this.#runtimeDirectory = dirname(options.statePath);
     const c = parse(configText) as unknown as Config;
     check(
       c &&
@@ -441,6 +450,7 @@ export class Host {
       history: ['DISCOVERED'],
       effects: [],
       dependencies: new Set(),
+      requiredRegistrations: new Set(),
       mandatory: new Map(),
       staged: [],
       sequence: 0,
@@ -644,9 +654,9 @@ export class Host {
     if (!v?.size) c?.delete(r.descriptor.id);
     if (!c?.size) this.#registry.delete(r.scope.id);
     for (const pending of this.#pending)
-      if (pending.provider === r.instance) pending.cancel('UNAVAILABLE');
+      if (pending.registration === r) pending.cancel('UNAVAILABLE');
     for (const i of this.#instances.values())
-      if (i.dependencies.has(r.instance.id)) void this.dispose(i.id);
+      if (i.requiredRegistrations.has(r)) void this.dispose(i.id);
   }
   private resolve(
     i: Instance,
@@ -958,91 +968,136 @@ export class Host {
         await this.activateTree(selected.instance, stack);
         i.dependencies.add(selected.instance.id);
         i.mandatory.set(r.capabilityId, selected.instance.id);
+        const registration = this.resolve(i, i.scope, r, false).selected;
+        check(
+          registration && registration.instance === selected.instance,
+          'FAILED_PRECONDITION',
+        );
+        i.requiredRegistrations.add(registration);
       }
       this.transition(i, 'RESOLVED');
       this.transition(i, 'ACTIVATING');
-      // Only copied, inventory-verified module bytes and fixed public SDK roots.
-      // No filesystem or Node package resolution occurs for plugin imports.
-      const local = new Map<string, SourceTextModule>();
-      const paths = new Map<SourceTextModule, string>();
-      const publicModules = new Map<string, SyntheticModule>();
-      const load = (path: string): SourceTextModule => {
-        const previous = local.get(path);
-        if (previous) return previous;
-        const code = i.pkg.modules.get(path);
-        check(code !== undefined, 'FAILED_PRECONDITION');
-        const source = new SourceTextModule(code, {
-          identifier: 'alica:' + i.pkg.digest + '/' + path,
-          importModuleDynamically: () => {
-            throw new AcapError('PERMISSION_DENIED');
+      if (i.pkg.manifest.execution === 'ipc') {
+        const { HostIPC } = await import('./g6/host-adapter.js');
+        i.remote = new HostIPC({
+          config: this.#config,
+          pkg: i.pkg,
+          instanceId: i.id,
+          scope: i.scope,
+          runtimeDirectory: this.#runtimeDirectory,
+          fresh: () => this.#trust.accepted(i.pkg),
+          context: (scope) => {
+            const s = this.ownedScope(i, scope.id, scope.generation);
+            this.live(i, s, true);
+            return this.contextFor(i, s);
+          },
+          resolveScope: (id, generation) => this.ownedScope(i, id, generation),
+          own: (scope, cleanup, select) =>
+            this.own(
+              i,
+              this.ownedScope(i, scope.id, scope.generation),
+              cleanup,
+              select,
+            ),
+          descriptor: (hash) => {
+            const registration = this.registrations().find(
+              (r) => digest(r.descriptor) === hash,
+            );
+            check(registration, 'CONTRACT_MISMATCH');
+            return registration.descriptor;
+          },
+          failed: () => {
+            void this.dispose(i.id).catch(() => {});
           },
         });
-        local.set(path, source);
-        paths.set(source, path);
-        return source;
-      };
-      const module = load(i.pkg.manifest.entrypoint);
-      await module.link((specifier, referencing) => {
-        if (
-          [
-            '@alica/plugin-sdk',
-            '@alica/acap-contracts',
-            '@alica/acap-types',
-          ].includes(specifier)
-        ) {
-          let shared = publicModules.get(specifier);
-          if (!shared) {
-            const exports: Record<string, unknown> =
-              specifier === '@alica/plugin-sdk'
-                ? sdk
-                : specifier === '@alica/acap-contracts'
-                  ? contracts
-                  : {};
-            shared = new SyntheticModule(
-              Object.keys(exports),
-              function () {
-                for (const [key, value] of Object.entries(exports))
-                  this.setExport(key, value);
-              },
-              { identifier: 'public:' + specifier },
-            );
-            publicModules.set(specifier, shared);
+        await this.bounded(
+          () => this.track(i, i.remote!.activate()),
+          this.#config.activationMs,
+        );
+      } else {
+        // Only copied, inventory-verified module bytes and fixed public SDK roots.
+        // No filesystem or Node package resolution occurs for plugin imports.
+        const local = new Map<string, SourceTextModule>();
+        const paths = new Map<SourceTextModule, string>();
+        const publicModules = new Map<string, SyntheticModule>();
+        const load = (path: string): SourceTextModule => {
+          const previous = local.get(path);
+          if (previous) return previous;
+          const code = i.pkg.modules.get(path);
+          check(code !== undefined, 'FAILED_PRECONDITION');
+          const source = new SourceTextModule(code, {
+            identifier: 'alica:' + i.pkg.digest + '/' + path,
+            importModuleDynamically: () => {
+              throw new AcapError('PERMISSION_DENIED');
+            },
+          });
+          local.set(path, source);
+          paths.set(source, path);
+          return source;
+        };
+        const module = load(i.pkg.manifest.entrypoint);
+        await module.link((specifier, referencing) => {
+          if (
+            [
+              '@alica/plugin-sdk',
+              '@alica/acap-contracts',
+              '@alica/acap-types',
+            ].includes(specifier)
+          ) {
+            let shared = publicModules.get(specifier);
+            if (!shared) {
+              const exports: Record<string, unknown> =
+                specifier === '@alica/plugin-sdk'
+                  ? sdk
+                  : specifier === '@alica/acap-contracts'
+                    ? contracts
+                    : {};
+              shared = new SyntheticModule(
+                Object.keys(exports),
+                function () {
+                  for (const [key, value] of Object.entries(exports))
+                    this.setExport(key, value);
+                },
+                { identifier: 'public:' + specifier },
+              );
+              publicModules.set(specifier, shared);
+            }
+            return shared;
           }
-          return shared;
-        }
-        check(
-          /^(?:\.\.?\/)[A-Za-z0-9_./-]+$/.test(specifier),
-          'FAILED_PRECONDITION',
+          check(
+            /^(?:\.\.?\/)[A-Za-z0-9_./-]+$/.test(specifier),
+            'FAILED_PRECONDITION',
+          );
+          const from = paths.get(referencing as SourceTextModule);
+          check(from, 'FAILED_PRECONDITION');
+          const target = posix.normalize(
+            posix.join(posix.dirname(from), specifier),
+          );
+          check(
+            target !== '..' &&
+              !target.startsWith('../') &&
+              !posix.isAbsolute(target),
+            'FAILED_PRECONDITION',
+          );
+          return load(target);
+        });
+        this.fresh(i);
+        await this.bounded(
+          () =>
+            this.track(
+              i,
+              (async () => {
+                await module.evaluate({ timeout: this.#config.activationMs });
+                const ns = module.namespace as unknown as {
+                  activate?: (context: KernelContext) => Promise<void>;
+                };
+                check(typeof ns.activate === 'function', 'FAILED_PRECONDITION');
+                await ns.activate(this.contextFor(i, i.scope));
+              })(),
+            ),
+          this.#config.activationMs,
         );
-        const from = paths.get(referencing as SourceTextModule);
-        check(from, 'FAILED_PRECONDITION');
-        const target = posix.normalize(
-          posix.join(posix.dirname(from), specifier),
-        );
-        check(
-          target !== '..' &&
-            !target.startsWith('../') &&
-            !posix.isAbsolute(target),
-          'FAILED_PRECONDITION',
-        );
-        return load(target);
-      });
-      this.fresh(i);
-      await this.bounded(
-        () =>
-          this.track(
-            i,
-            (async () => {
-              await module.evaluate({ timeout: this.#config.activationMs });
-              const ns = module.namespace as unknown as {
-                activate?: (context: KernelContext) => Promise<void>;
-              };
-              check(typeof ns.activate === 'function', 'FAILED_PRECONDITION');
-              await ns.activate(this.contextFor(i, i.scope));
-            })(),
-          ),
-        this.#config.activationMs,
-      );
+      }
       this.live(i, i.scope, true);
       check((i.state as Lifecycle) === 'ACTIVATING', 'FAILED_PRECONDITION');
       for (const b of i.pkg.manifest.provides)
@@ -1072,6 +1127,16 @@ export class Host {
     const i = this.instance(id);
     this.live(i, i.scope);
     return this.contextFor(i, i.scope);
+  }
+  private ownedScope(i: Instance, id: string, generation?: number): Scope {
+    const scope = this.#scopes.get(id);
+    check(scope, 'FAILED_PRECONDITION');
+    check(scope === i.scope || scope.owner === i.id, 'PERMISSION_DENIED');
+    check(
+      generation === undefined || generation === scope.generation,
+      'FAILED_PRECONDITION',
+    );
+    return scope;
   }
   private contextFor(i: Instance, s: Scope): KernelContext {
     return Object.freeze({
@@ -1135,30 +1200,45 @@ export class Host {
       },
     });
   }
-  private own(i: Instance, s: Scope, cleanup: Disposer): Disposer {
+  private own(
+    i: Instance,
+    s: Scope,
+    cleanup: Disposer,
+    select?: () => void,
+  ): Disposer {
     this.live(i, s, true);
     check(typeof cleanup === 'function');
     check(i.effects.length < this.#config.maxEffects, 'RESOURCE_EXHAUSTED');
-    const e: Effect = { scope: s, cleanup, done: false };
+    const e: Effect = {
+      scope: s,
+      cleanup,
+      done: false,
+      ...(select ? { select } : {}),
+    };
     i.effects.push(e);
     return () => this.clean(i, e);
   }
   private clean(i: Instance, e: Effect): Promise<void> {
     if (e.task) return e.task;
     e.done = true;
-    e.task = this.bounded(e.cleanup, this.#config.cleanupMs).then(
-      () => {
-        i.report.completedDisposers++;
-      },
-      (error) => {
-        const code = normalized(error).code;
-        i.report.failedDisposers.push(code);
-        i.report.restartRequired = true;
-        if (code === 'DEADLINE_EXCEEDED') i.report.timedOutResources++;
-        this.record('kernel', i.id, e.scope.id, 'FAIL', 'CLEANUP', true);
-        throw new AcapError(code);
-      },
-    );
+    e.select?.();
+    const selected = { end: performance.now() + this.#config.cleanupMs };
+    e.task = cleanupSelection
+      .run(selected, () => this.bounded(e.cleanup, this.#config.cleanupMs))
+      .then(
+        () => {
+          i.report.completedDisposers++;
+        },
+        (error) => {
+          const code = normalized(error).code;
+          i.report.failedDisposers.push(code);
+          i.report.restartRequired = true;
+          if (code === 'DEADLINE_EXCEEDED') i.report.timedOutResources++;
+          if (code === 'DEADLINE_EXCEEDED') i.remote?.session.fail();
+          this.record('kernel', i.id, e.scope.id, 'FAIL', 'CLEANUP', true);
+          throw new AcapError(code);
+        },
+      );
     return e.task;
   }
   private async effect<T>(
@@ -1181,6 +1261,10 @@ export class Host {
       this.live(i, s, true);
       return result;
     } catch (e) {
+      // A failed acquisition is closed before asynchronous rollback starts.
+      // Otherwise a delayed continuation could register new ownership while
+      // the reverse cleanup traversal is already in progress.
+      accepting = false;
       for (const d of owned.reverse())
         try {
           await d();
@@ -1276,6 +1360,7 @@ export class Host {
         this.record(i.pkg.manifest.id, req.capabilityId, s.id, 'ALLOW', 'CALL');
         const pending: Pending = {
           caller: i,
+          registration: r,
           provider: r.instance,
           scope: s,
           cancel,
@@ -1295,9 +1380,15 @@ export class Host {
           .sort(),
       ),
       call: (operation: string, input: Value, options: CallOptions) =>
-        session.call(operation, input, options),
+        callAuthority.run(
+          { grantId: grant.id, grantRevision: grant.revision },
+          () => session.call(operation, input, options),
+        ),
       stream: (operation: string, input: Value, options: CallOptions) =>
-        session.openStream(operation, input, options),
+        callAuthority.run(
+          { grantId: grant.id, grantRevision: grant.revision },
+          () => session.openStream(operation, input, options),
+        ),
     });
   }
   private async secret(i: Instance, s: Scope, ref: string): Promise<string> {
@@ -1498,6 +1589,7 @@ export class Host {
     if (wasActive) this.transition(i, 'QUIESCING');
     else this.transition(i, 'FAILED');
     this.#tokens.delete(i.token);
+    i.remote?.beginDispose();
     for (const p of this.#pending)
       if (p.caller === i || p.provider === i) p.cancel('UNAVAILABLE');
     for (const g of this.#grants.values())
@@ -1519,6 +1611,13 @@ export class Host {
           /* recorded; keep cleaning */
         }
       i.staged = [];
+      if (i.remote) {
+        try {
+          await i.remote.shutdown();
+        } catch {
+          i.report.restartRequired = true;
+        }
+      }
       const work = this.#work.get(i);
       if (work?.size)
         try {
@@ -1551,6 +1650,14 @@ export class Host {
   async destroyScope(id: string): Promise<void> {
     const root = this.#scopes.get(id);
     if (!root) return;
+    const prior = this.#scopeClosures.get(root);
+    if (prior) return prior;
+    const task = this.closeScope(root);
+    this.#scopeClosures.set(root, task);
+    return task;
+  }
+  private async closeScope(root: Scope): Promise<void> {
+    const id = root.id;
     const scopes = [...this.#scopes.values()].filter((s) =>
       this.visible(root, s),
     );

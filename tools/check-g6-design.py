@@ -76,4 +76,36 @@ for key,value in [('descriptorCount',0),('descriptorCount',2),('generation',0),(
  bad=copy.deepcopy(sample);bad[key]=value;offercheck('offer-reject-'+key+'-'+str(value),bad,False)
 for key in sample:
  bad=copy.deepcopy(sample);del bad[key];offercheck('offer-requires-'+key,bad,False)
+# Approved SDK minor-1 shapes. These are active schema checks, not runtime evidence.
+sdk_shapes = [
+ ('request', {'kind':'effect-register','wireId':21,'scopeId':'s1','scopeGeneration':1,'callbackId':'cb1'}, 'workToBroker'),
+ ('request', {'kind':'effect-release','wireId':22,'effectId':'e1'}, 'workToBroker'),
+ ('request', {'kind':'effect-cleanup','wireId':23,'effectId':'e1','callbackId':'cb1','remainingMs':100}, 'workToProvider'),
+ ('response', {'kind':'effect-cleaned','wireId':23,'effectId':'e1'}, 'workToBroker'),
+ ('response', {'kind':'effect-cleanup-error','wireId':23,'effectId':'e1','error':{'code':'INTERNAL','message':'INTERNAL','retryable':False,'correlationId':'c1'}}, 'workToBroker'),
+ ('response', {'kind':'control','wireId':24,'value':{'kind':'published','admitted':0}}, 'workToProvider'),
+ ('response', {'kind':'control','wireId':21,'value':{'kind':'effect-registered','effectId':'e1'}}, 'workToProvider'),
+ ('response', {'kind':'control','wireId':22,'value':{'kind':'effect-released','effectId':'e1'}}, 'workToProvider'),
+]
+for n,(tag,body,lane) in enumerate(sdk_shapes):
+ value=copy.deepcopy(examples[tag]);value['body']=body;value['contextId']='ctx1'
+ check('sdk-positive-'+str(n),value,True,lane)
+ for wrong in ['controlToBroker','controlToProvider', 'workToProvider' if lane=='workToBroker' else 'workToBroker']:
+  bad=copy.deepcopy(value)
+  if wrong.startswith('control'):bad['contextId']='control'
+  check('sdk-wrong-lane-'+str(n)+'-'+wrong,bad,False,wrong)
+ for field in body:
+  bad=copy.deepcopy(value);del bad['body'][field]
+  check('sdk-required-'+str(n)+'-'+field,bad,False,lane)
+ bad=copy.deepcopy(value);bad['body']['caller']={}
+ check('sdk-closed-'+str(n),bad,False,lane)
+for tag,field in [('hello','requiredFeatures'),('accepted','negotiatedFeatures')]:
+ bad=copy.deepcopy(examples[tag]);bad['body']['protocolMinor']=0
+ check('sdk-no-minor-zero-'+tag,bad,False)
+ for feature in ['wire.contexts','wire.sdkresults','wire.scopedeffects']:
+  bad=copy.deepcopy(examples[tag]);bad['body'][field].remove(feature)
+  check('sdk-mandatory-'+tag+'-'+feature,bad,False)
+for limit in [0,4097,1.5]:
+ bad=copy.deepcopy(examples['accepted']);bad['body']['effectLimit']=limit
+ check('sdk-invalid-effect-limit-'+str(limit),bad,False)
 print(json.dumps({'level':'SCHEMA-DESIGN-ONLY','schemaChecksPassed':len(results),'runtimeQualification':False,'cases':results},indent=2))

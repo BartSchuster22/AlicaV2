@@ -7,7 +7,7 @@
     "sequence": 0,
     "body": {
       "protocolMajor": 1,
-      "protocolMinor": 0,
+      "protocolMinor": 1,
       "cellId": "cell1",
       "providerId": "org.example.provider",
       "instanceId": "instance1",
@@ -22,8 +22,9 @@
         }
       ],
       "requiredFeatures": [
-        "wire.unary",
-        "wire.contexts"
+        "wire.contexts",
+        "wire.sdkresults",
+        "wire.scopedeffects"
       ],
       "optionalFeatures": [],
       "events": []
@@ -38,7 +39,7 @@
     "sequence": 0,
     "body": {
       "protocolMajor": 1,
-      "protocolMinor": 0,
+      "protocolMinor": 1,
       "cellId": "cell1",
       "providerId": "org.example.provider",
       "instanceId": "instance1",
@@ -52,8 +53,9 @@
         }
       ],
       "negotiatedFeatures": [
-        "wire.unary",
-        "wire.contexts"
+        "wire.contexts",
+        "wire.sdkresults",
+        "wire.scopedeffects"
       ],
       "rootScopeId": "scope1",
       "scopeGeneration": 1,
@@ -82,7 +84,8 @@
         "offerTimeoutMs": 1000,
         "carrierPacketBytes": 4096
       },
-      "events": []
+      "events": [],
+      "effectLimit": 4096
     },
     "contextId": "control"
   },

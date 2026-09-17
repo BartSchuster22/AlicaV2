@@ -59,6 +59,8 @@ export interface LaunchOptions {
   readonly scopeId: string;
   readonly scopeGeneration: number;
   readonly generation: number;
+  readonly maxEffects: number;
+  readonly runtime?: { activationMs: number; maxCallMs: number };
   readonly pkg: VerifiedPackage;
   readonly fresh: () => void;
 }
@@ -125,7 +127,14 @@ export class PhysicalSession {
   onTask: (frame: Extract<Frame, { tag: 'request' }>) => void = () => {
     throw new AcapError('FAILED_PRECONDITION');
   };
+  onFailure: () => void = () => {};
   constructor(readonly options: LaunchOptions) {
+    check(
+      Number.isInteger(options.maxEffects) &&
+        options.maxEffects >= 1 &&
+        options.maxEffects <= 4096,
+      'INVALID_ARGUMENT',
+    );
     check(PhysicalSession.#live.size < 4, 'RESOURCE_EXHAUSTED');
     options.fresh();
     this.identity = Object.freeze({
@@ -136,13 +145,17 @@ export class PhysicalSession {
     });
     this.expected = Object.freeze({
       protocolMajor: 1,
-      protocolMinor: 0,
+      protocolMinor: 1,
       cellId: options.cellId,
       providerId: options.pkg.manifest.id,
       instanceId: options.instanceId,
       packageDigest: options.pkg.digest,
       challenge: token(),
-      requiredFeatures: ['wire.contexts'],
+      requiredFeatures: [
+        'wire.contexts',
+        'wire.sdkresults',
+        'wire.scopedeffects',
+      ],
       optionalFeatures: [],
       contracts: [...options.pkg.descriptors.values()]
         .map((d) => ({
@@ -223,6 +236,7 @@ export class PhysicalSession {
               modules: [...o.pkg.modules],
               descriptors: [...o.pkg.descriptors.values()],
               events: [...o.pkg.events.values()],
+              runtime: o.runtime ?? { activationMs: 30000, maxCallMs: 30000 },
               identity: this.identity,
               readPaths,
             },
@@ -367,6 +381,19 @@ export class PhysicalSession {
       body,
     };
   }
+  controlReply(body: Extract<Frame, { tag: 'response' }>['body']): void {
+    check(this.active && this.#control, 'UNAVAILABLE');
+    check(this.#sequence < Number.MAX_SAFE_INTEGER, 'RESOURCE_EXHAUSTED');
+    this.#control.send({
+      schemaVersion: 'acap.ipc/v1',
+      tag: 'response',
+      sessionId: this.sessionId,
+      generation: this.options.generation,
+      contextId: 'control',
+      sequence: this.#sequence++,
+      body,
+    });
+  }
   private controlFrame(frame: Frame): void {
     if (!this.#active) {
       check(frame.tag === 'hello', 'UNAUTHENTICATED');
@@ -393,7 +420,12 @@ export class PhysicalSession {
         sequence: 0,
         body: {
           ...identity,
-          negotiatedFeatures: ['wire.contexts'],
+          negotiatedFeatures: [
+            'wire.contexts',
+            'wire.sdkresults',
+            'wire.scopedeffects',
+          ],
+          effectLimit: this.options.maxEffects,
           rootScopeId: this.options.scopeId,
           scopeGeneration: this.options.scopeGeneration,
           limits: LIMITS,
@@ -505,6 +537,7 @@ export class PhysicalSession {
     if (this.#failed) return;
     this.#failed = true;
     this.#active = false;
+    this.onFailure();
     this.#rejectReady(new AcapError('UNAVAILABLE'));
     this.scheduler.fail();
     for (const endpoint of this.#endpoints.values()) {

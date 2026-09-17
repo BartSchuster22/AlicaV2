@@ -1,0 +1,37 @@
+
+> alica-v2@0.0.0 build
+> node tools/build.mjs
+
+
+> alica-v2@0.0.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+(node:60445) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ unchanged public KernelContext consumer: inproc signed factory (932.403257ms)
+✔ unchanged public KernelContext consumer: ipc signed factory (3998.076665ms)
+✔ IPC execution requires explicit signed publisher execution-mode authorization (13.194209ms)
+✔ real Host IPC rejects delayed continuations rather than opening replacement tasks (1511.691869ms)
+✔ signed real Host IPC package cannot read operator files, write or spawn (700.735091ms)
+✔ cleanup can precede registration reply; binding remains one-to-one (2.781135ms)
+✔ registration reply may precede cleanup; callback reuse/foreign binding fails (0.423097ms)
+✔ completed effects remain charged; definite rejection releases only unbound reservation (0.399523ms)
+✔ cleanup first error is cached, including throwing undefined (0.450167ms)
+✔ cleanup deadline wins over late success and fails the physical session once (10.513193ms)
+✔ registerCleanup returns void; synchronous rejection stops acquisition (0.922737ms)
+✔ failed acquisition closes registration before reverse rollback awaits (0.793805ms)
+✔ uncertain registration retains callback charge, fails session and never retries (0.547491ms)
+✔ pending publication accepts zero/multiple but never substitutes ack (1.677678ms)
+✔ wrong endpoint and wrong effect cannot settle pending operations (0.699907ms)
+✔ RPC IDs are never reused across endpoints and retired replies remain endpoint-bound (0.719954ms)
+✔ 64 pending requests shared across endpoints reject before send (2.671339ms)
+✔ synchronous pending RPC pumps until actual reply, not a Promise surrogate (0.472128ms)
+✔ broker registrations consume the same Host-owned lifetime effect ledger (0.852635ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7437.577919

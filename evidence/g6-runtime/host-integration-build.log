@@ -1,0 +1,67 @@
+package.json 23ms (unchanged)
+packages/kernel/src/execution-context.ts 45ms (unchanged)
+packages/kernel/src/g6/broker-effects.ts 49ms
+packages/kernel/src/g6/exchange.ts 98ms
+packages/kernel/src/g6/host-adapter.ts 151ms
+packages/kernel/src/g6/sdk-rpc.ts 29ms
+packages/kernel/src/g6/session.ts 63ms
+packages/kernel/src/g6/worker-entry.ts 57ms
+packages/kernel/src/g6/worker-sdk-channel.ts 30ms
+packages/kernel/src/g6/worker-transport.ts 34ms (unchanged)
+packages/kernel/src/index.ts 175ms
+packages/kernel/src/package-loader.ts 8ms
+packages/kernel/src/trust.ts 37ms
+tests/ipc/host-sdk.test.mjs 48ms
+G6 private wire schema/type synchronization passed
+
+> alica-v2@0.0.0 build
+> node tools/build.mjs
+
+packages/kernel/src/g6/host-adapter.ts(481,5): error TS2322: Type '{ [k: string]: ((input: JsonValue, context: OperationContext) => Promise<value | undefined>) | ((input: JsonValue, context: OperationContext) => AsyncGenerator<...>); }' is not assignable to type 'Record<string, Handler>'.
+  'string' index signatures are incompatible.
+    Type '((input: JsonValue, context: OperationContext) => Promise<value | undefined>) | ((input: JsonValue, context: OperationContext) => AsyncGenerator<...>)' is not assignable to type 'Handler'.
+      Type '(input: Value, context: OperationContext) => Promise<value | undefined>' is not assignable to type 'Handler'.
+        Type '(input: Value, context: OperationContext) => Promise<value | undefined>' is not assignable to type 'UnaryHandler'.
+          Type 'Promise<value | undefined>' is not assignable to type 'Promise<JsonValue>'.
+            Type 'value | undefined' is not assignable to type 'JsonValue'.
+              Type 'undefined' is not assignable to type 'JsonValue'.
+packages/kernel/src/g6/host-adapter.ts(739,46): error TS2345: Argument of type 'value | undefined' is not assignable to parameter of type 'JsonValue'.
+  Type 'undefined' is not assignable to type 'JsonValue'.
+packages/kernel/src/g6/host-adapter.ts(750,64): error TS2345: Argument of type 'value | undefined' is not assignable to parameter of type 'JsonValue'.
+  Type 'undefined' is not assignable to type 'JsonValue'.
+packages/kernel/src/g6/worker-entry.ts(306,3): error TS2322: Type '{ descriptorDigest: string; negotiatedFeatures: readonly string[]; call: (operation: string, input: Value, options: CallOptions) => Promise<value | undefined>; stream: (operation: string, input: Value, options: CallOptions) => AsyncIterableIterator<...>; }' is not assignable to type 'BoundCapability'.
+  The types returned by 'call(...)' are incompatible between these types.
+    Type 'Promise<value | undefined>' is not assignable to type 'Promise<JsonValue>'.
+      Type 'value | undefined' is not assignable to type 'JsonValue'.
+        Type 'undefined' is not assignable to type 'JsonValue'.
+packages/kernel/src/g6/worker-entry.ts(375,23): error TS2345: Argument of type 'eventEnvelope' is not assignable to parameter of type 'EventEnvelope'.
+  Types of property 'data' are incompatible.
+    Type 'value | undefined' is not assignable to type 'JsonValue'.
+      Type 'undefined' is not assignable to type 'JsonValue'.
+packages/kernel/src/g6/worker-entry.ts(504,32): error TS2345: Argument of type 'value | undefined' is not assignable to parameter of type 'JsonValue'.
+  Type 'undefined' is not assignable to type 'JsonValue'.
+packages/kernel/src/g6/worker-entry.ts(522,26): error TS2345: Argument of type 'value | undefined' is not assignable to parameter of type 'JsonValue'.
+  Type 'undefined' is not assignable to type 'JsonValue'.
+packages/kernel/src/index.ts(657,17): error TS2339: Property 'bindings' does not exist on type 'Instance'.
+node:internal/errors:986
+  const err = new Error(message);
+              ^
+
+Error: Command failed: /home/alica-dev/AlicaV2/.tools/node-v24.21.0-linux-x64/bin/node node_modules/typescript/bin/tsc -p packages/kernel/tsconfig.json
+    at genericNodeError (node:internal/errors:986:15)
+    at wrappedFn (node:internal/errors:540:14)
+    at checkExecSyncError (node:child_process:942:11)
+    at execFileSync (node:child_process:978:15)
+    at file:///home/alica-dev/AlicaV2/tools/build.mjs:15:3
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  status: 2,
+  signal: null,
+  output: [ null, null, null ],
+  pid: 59519,
+  stdout: null,
+  stderr: null
+}
+
+Node.js v24.21.0

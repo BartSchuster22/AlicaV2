@@ -19,6 +19,7 @@ interface Capsule {
   events: EventDescriptor[];
   identity: Record<string, string>;
   readPaths: string[];
+  runtime: { activationMs: number; maxCallMs: number };
 }
 export interface WorkerEndpoint {
   readonly offer: ContextOffer;
@@ -132,6 +133,21 @@ export class WorkerTransport {
       sequence: this.nextControlSequence(),
     };
   }
+  /** Bounded native wait used by synchronous SDK registration. This is the
+   * same transport reader as the timer pump, not a private libuv handle loop.
+   * All endpoints and the reserved control lane continue making progress. */
+  waitTurn(): void {
+    check(!this.#closed, 'UNAVAILABLE');
+    native.poll(
+      [
+        this.control.lease,
+        this.carrier,
+        ...[...this.contexts.values()].map((endpoint) => endpoint.stream.lease),
+      ],
+      2,
+    );
+    this.pump();
+  }
   /** Also used by a bounded synchronous framework RPC. Never has a second
    * reader or Promise wait spinning an unbounded application queue. */
   pump(): void {
@@ -155,13 +171,19 @@ export class WorkerTransport {
           const {
             negotiatedFeatures,
             limits: _l,
+            effectLimit: _e,
             rootScopeId: _s,
             scopeGeneration: _g,
             ...actual
           } = frame.body;
           check(
             canonical(actual) === canonical(expected) &&
-              canonical(negotiatedFeatures) === canonical(['wire.contexts']),
+              canonical(negotiatedFeatures) ===
+                canonical([
+                  'wire.contexts',
+                  'wire.sdkresults',
+                  'wire.scopedeffects',
+                ]),
             'UNAUTHENTICATED',
           );
           this.#accepted = frame;

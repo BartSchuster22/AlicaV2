@@ -29,7 +29,7 @@
     "test:external": "node tools/test-external-sdk.mjs",
     "test:g6-design": "python3 -S tools/check-g6-design.py && python3 -S tools/test-g6-context-model.py",
     "build:g6-native": "python3 tools/build-g6-native.py",
-    "test:g6-native": "node --test tests/ipc/*.test.mjs"
+    "test:g6-native": "node --experimental-vm-modules --test tests/ipc/*.test.mjs"
   },
   "devDependencies": {
     "typescript": "6.0.3",

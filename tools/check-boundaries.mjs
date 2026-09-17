@@ -40,6 +40,11 @@ export function violations(file, source, root) {
         'packages/kernel/dist/g6/scheduler.js',
         'packages/kernel/dist/g6/wire.js',
       ],
+      'tests/ipc/sdk-bookkeeping.test.mjs': [
+        'packages/kernel/dist/g6/sdk-effects.js',
+        'packages/kernel/dist/g6/sdk-rpc.js',
+        'packages/kernel/dist/g6/broker-effects.js',
+      ],
       'tests/ipc/reap.test.mjs': ['packages/kernel/src/g6/reap.ts'],
     };
     const privateG6ComponentTest = normalizedFile === 'tests/ipc/wire.test.mjs';

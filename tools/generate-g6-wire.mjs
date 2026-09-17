@@ -41,8 +41,9 @@ function shape(s) {
   if (s.enum) return s.enum.map((v) => JSON.stringify(v)).join(' | ');
   if (s.oneOf || s.anyOf)
     return '(' + (s.oneOf || s.anyOf).map(shape).join(' | ') + ')';
-  if (s.allOf) return '(' + s.allOf.map(shape).join(' & ') + ')';
+  // Array allOf/contains constrains membership, not the element type.
   if (s.type === 'array') return 'Array<' + shape(s.items || true) + '>';
+  if (s.allOf) return '(' + s.allOf.map(shape).join(' & ') + ')';
   if (s.type === 'object' || s.properties) {
     const fields = Object.entries(s.properties || {}).map(
       ([k, v]) =>

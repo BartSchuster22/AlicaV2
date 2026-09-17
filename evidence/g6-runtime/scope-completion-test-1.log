@@ -1,0 +1,58 @@
+(node:62089) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ child-context log retains child scope: inproc (131.116783ms)
+✔ zero-cleanup acquisition rechecks closed child scope: inproc (160.918806ms)
+✖ child-context log retains child scope: ipc (724.333155ms)
+✖ zero-cleanup acquisition rechecks closed child scope: ipc (785.008309ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 2
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2072.737821
+
+✖ failing tests:
+
+test at tests/ipc/scope-completion.test.mjs:91:3
+✖ child-context log retains child scope: ipc (724.333155ms)
+  AssertionError [ERR_ASSERTION]: log must not be silently attributed to its root invocation scope
+  + actual - expected
+  
+  + 'root'
+  - 'd36bd298-acf8-44fa-b026-4c6d68d7f18e'
+  
+      at TestContext.<anonymous> (file:///home/alica-dev/AlicaV2/tests/ipc/scope-completion.test.mjs:101:14)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'root',
+    expected: 'd36bd298-acf8-44fa-b026-4c6d68d7f18e',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/ipc/scope-completion.test.mjs:110:3
+✖ zero-cleanup acquisition rechecks closed child scope: ipc (785.008309ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+  +   kind: 'success',
+  +   value: 'acquired'
+  -   code: 'FAILED_PRECONDITION',
+  -   kind: 'error'
+    }
+  
+      at TestContext.<anonymous> (file:///home/alica-dev/AlicaV2/tests/ipc/scope-completion.test.mjs:127:14)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { kind: 'success', value: 'acquired' },
+    expected: { kind: 'error', code: 'FAILED_PRECONDITION' },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

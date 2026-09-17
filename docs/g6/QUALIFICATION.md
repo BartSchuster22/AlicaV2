@@ -2,15 +2,26 @@
 
 Status: **owner-approved R2 implementation; G6 runtime qualification incomplete**.
 
-## Current local integration issues
+## Current integration and exit status
 
-The SDK adapter is not complete. Before implementing undocumented wire
-semantics, resolve two closed-schema gaps: returning the real `emit()`
-`{ admitted }` result, and registering/invoking scope-owned effect cleanup
-callbacks on child-scope destruction without disposing the entire worker.
-See [SDK integration gaps](SDK-INTEGRATION-GAPS.md) for schema/API
-references, the proposed correction and its review boundary. No approved schema, frozen
-G1 schema or SDK 0.1.0 API was changed to conceal these gaps.
+The owner-approved candidate `758610b3f6ac29459951f4158abcd77685852e8f`
+has been implemented and connected to a real Host/PhysicalSession/worker path.
+See [authorization](../gates/G6-SDK-WIRE-OWNER-APPROVAL.md).
+Target build/typecheck and the first 19 combined helper/integration tests passed,
+including the unchanged consumer in both factories. A full pipeline subsequently
+passed with 67 IPC/native/component tests, **before adding the new regressions**.
+
+G6 remains incomplete: three additional identical-source scope/cleanup cases
+pass inproc and fail over IPC. These six normal exit-gate tests are checked in as
+`tests/ipc/scope-completion.test.mjs`; none is skipped or excluded. The current
+source tree is therefore not a green qualification result. See
+[exact failures, evidence and proposed correction](INTEGRATION-EXIT-BLOCKERS.md).
+The additional private-wire scope/cleanup correction is proposed, not approved or
+implemented. No frozen G1 or public SDK 0.1.0 API was changed. Historical review
+inputs remain intact. Earlier component results are retained below as history,
+not current G6 acceptance.
+
+## Historical component checkpoint
 
 The target full `npm run check` passed at the current component checkpoint:
 169 baseline JavaScript tests, 193 specification tests, 135 frame-schema checks,

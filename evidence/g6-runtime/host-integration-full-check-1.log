@@ -1,0 +1,14 @@
+
+> alica-v2@0.0.0 check
+> node tools/check-toolchain.mjs && npm run format:check && npm run build && npm run typecheck && npm run test && node tools/check-schema-sync.mjs && npm run schema && npm run boundaries && npm run secrets && npm run dependencies && npm run test:isolated && node tools/check-sdk-api.mjs && npm run test:external && npm run test:g6-design && npm run build:g6-native && npm run test:g6-native
+
+Pinned Node/npm verified
+
+> alica-v2@0.0.0 format:check
+> prettier --check package.json package-lock.json tsconfig*.json packages tools/*.mjs tests/foundation tests/kernel tests/contracts .github/workflows tests/sdk tests/ipc
+
+Checking formatting...
+[warn] packages/kernel/src/g6/host-adapter.ts
+[warn] packages/kernel/src/g6/worker-entry.ts
+[warn] packages/kernel/src/index.ts
+[warn] Code style issues found in 3 files. Run Prettier with --write to fix.
