@@ -1,0 +1,29 @@
+test_child_scope_reverse_order_preserves_unrelated_callbacks (__main__.ModelTests.test_child_scope_reverse_order_preserves_unrelated_callbacks) ... ok
+test_cleanup_error_is_not_success_or_physical_reap (__main__.ModelTests.test_cleanup_error_is_not_success_or_physical_reap) ... ok
+test_cleanup_response_context_and_wire_are_exact (__main__.ModelTests.test_cleanup_response_context_and_wire_are_exact) ... ok
+test_cross_endpoint_cleanup_can_precede_registration_reply (__main__.ModelTests.test_cross_endpoint_cleanup_can_precede_registration_reply) ... ok
+test_depth_eight_admitted_nine_rejected_without_partial_transition (__main__.ModelTests.test_depth_eight_admitted_nine_rejected_without_partial_transition) ... ok
+test_duplicate_callback_registration_rejected_without_ownership_change (__main__.ModelTests.test_duplicate_callback_registration_rejected_without_ownership_change) ... ok
+test_effect_capacity_matches_host_and_counts_retired_and_other_resources (__main__.ModelTests.test_effect_capacity_matches_host_and_counts_retired_and_other_resources) ... ok
+test_failed_acquisition_rollback_reverse_and_shared_cleanup_join (__main__.ModelTests.test_failed_acquisition_rollback_reverse_and_shared_cleanup_join) ... ok
+test_inline_rollback_and_lifecycle_cleanup_do_not_wait_for_own_slot (__main__.ModelTests.test_inline_rollback_and_lifecycle_cleanup_do_not_wait_for_own_slot) ... ok
+test_lifecycle_slot_occupancy_does_not_reset_selected_deadline (__main__.ModelTests.test_lifecycle_slot_occupancy_does_not_reset_selected_deadline) ... ok
+test_pending_operation_endpoint_generation_and_origin_are_binding (__main__.ModelTests.test_pending_operation_endpoint_generation_and_origin_are_binding) ... ok
+test_publication_zero_mixed_admission_overload_and_later_failure (__main__.ModelTests.test_publication_zero_mixed_admission_overload_and_later_failure) ... ok
+test_release_cannot_retarget_other_session_generation_or_scope (__main__.ModelTests.test_release_cannot_retarget_other_session_generation_or_scope) ... ok
+test_sdk_pending_bound_and_no_partial_reservation (__main__.ModelTests.test_sdk_pending_bound_and_no_partial_reservation) ... ok
+test_timeout_shared_failure_late_reply_and_quarantine_until_actual_reap (__main__.ModelTests.test_timeout_shared_failure_late_reply_and_quarantine_until_actual_reap) ... ok
+test_unknown_registration_outcome_fails_session_not_replayed (__main__.ModelTests.test_unknown_registration_outcome_fails_session_not_replayed) ... ok
+test_wrong_scope_generation_closed_scope_and_late_registration (__main__.ModelTests.test_wrong_scope_generation_closed_scope_and_late_registration) ... ok
+test_added_shapes_are_closed_directional_and_rejected_by_baseline (__main__.SchemaTests.test_added_shapes_are_closed_directional_and_rejected_by_baseline) ... ok
+test_existing_nonhandshake_examples_and_r2_limits_unchanged (__main__.SchemaTests.test_existing_nonhandshake_examples_and_r2_limits_unchanged) ... ok
+test_handshake_requires_minor_features_and_host_effect_limit (__main__.SchemaTests.test_handshake_requires_minor_features_and_host_effect_limit) ... ok
+test_limits_types_and_no_numeric_fd_or_scope_spoof (__main__.SchemaTests.test_limits_types_and_no_numeric_fd_or_scope_spoof) ... ok
+test_meta_schema_and_deterministic_snapshot (__main__.SchemaTests.test_meta_schema_and_deterministic_snapshot) ... ok
+test_protected_baseline_hashes (__main__.SchemaTests.test_protected_baseline_hashes) ... ok
+
+----------------------------------------------------------------------
+Ran 23 tests in 1.747s
+
+OK
+{"level": "REVIEW-SCHEMA-AND-MODEL-ONLY", "runtimeQualification": false, "tests": 23, "failures": 0, "errors": 0}
