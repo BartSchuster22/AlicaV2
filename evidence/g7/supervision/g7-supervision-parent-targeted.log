@@ -1,0 +1,37 @@
+da21bdc84ed5ed157d3bea60f6f005a4d513f3c6237ae9d010c2102fbe03cf78  native/g7/ownership.c
+de28a08b0e09efa9c3522a46f99fe7ab1f27204e6fd407281c6251e7b6dc2ea9  tools/g7-cell.mjs
+b65ada322e3f4272f3e78c3b5625e39e8e0170eb01bf27df375943637bc71377  tools/g7-cell-owner.mjs
+6a2a46ff044cb7cecc4efd7e37ef7dc954b2033b31e288b30214b54da174c19e  tools/g7-owner-channel.mjs
+05e7150839d47c76b66a9f0148efc2befb1bc68bc69f6a313cbc8415383de655  tools/g7-supervisor.py
+e33eb46c9c17a298240191f6f8c4017a0886b921f7b6b6eba294df804e26f7e9  tests/g7/custody.test.mjs
+6c6f7178c7abbdcdf70b19973e16f498fbc0c59d15ee3be4cc6b83557c6beb4d  tests/g7/supervision-block.mjs
+8a689175245eaaacf9e63c823665b04a05d2ecb4ba9477385a3845f62ad26216  tests/g7/supervision.test.mjs
+✔ native custody requires matching private inode and the actual held flock description (3.219068ms)
+✔ supervised real IPC install, exact local admin status/stop, retained custody (2652.986753ms)
+✔ external SIGKILL of actual owner never proves descendants reaped; fence survives supervisor death (2652.122571ms)
+✔ real synchronous FIFO IO during outer cleanup: responsive admin, 30s external expiry, no restart (32548.980772ms)
+✔ activation blocked in real synchronous IO is externally killed without publication or new admission (30852.470767ms)
+✔ actual Unix peer credentials, malformed/duplicate/oversized frames and eight-connection ceiling (3103.659021ms)
+✔ launcher exits before real first-install completes; owner remains alive for authenticated status and clean stop (2657.368049ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 74798.491826
+
+> alica-v2@0.0.0 format:check
+> prettier --check package.json package-lock.json tsconfig*.json packages tools/*.mjs tests/foundation tests/kernel tests/contracts .github/workflows tests/sdk tests/ipc tests/g7
+
+Checking formatting...
+All matched files use Prettier code style!
+da21bdc84ed5ed157d3bea60f6f005a4d513f3c6237ae9d010c2102fbe03cf78  native/g7/ownership.c
+de28a08b0e09efa9c3522a46f99fe7ab1f27204e6fd407281c6251e7b6dc2ea9  tools/g7-cell.mjs
+b65ada322e3f4272f3e78c3b5625e39e8e0170eb01bf27df375943637bc71377  tools/g7-cell-owner.mjs
+6a2a46ff044cb7cecc4efd7e37ef7dc954b2033b31e288b30214b54da174c19e  tools/g7-owner-channel.mjs
+05e7150839d47c76b66a9f0148efc2befb1bc68bc69f6a313cbc8415383de655  tools/g7-supervisor.py
+e33eb46c9c17a298240191f6f8c4017a0886b921f7b6b6eba294df804e26f7e9  tests/g7/custody.test.mjs
+6c6f7178c7abbdcdf70b19973e16f498fbc0c59d15ee3be4cc6b83557c6beb4d  tests/g7/supervision-block.mjs
+8a689175245eaaacf9e63c823665b04a05d2ecb4ba9477385a3845f62ad26216  tests/g7/supervision.test.mjs

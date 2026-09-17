@@ -1,0 +1,31 @@
+Worktree: /home/herman/g7-implementation
+Development cwd: /home/alica-dev/AlicaV2
+SSH prefix used for all remote commands:
+ssh -i /home/herman/.ssh/alica_v2_vps_ed25519 -o IdentitiesOnly=yes -o BatchMode=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile=/home/herman/.ssh/alica_v2_known_hosts alica-dev@167.233.135.142
+
+Prerequisite remote command:
+cd /home/alica-dev/AlicaV2 && export PATH="$PWD/.tools/node/bin:$PATH" && git status --short && git rev-parse HEAD && node --version && python3 --version
+Returned baseline 0b70b71f69f9548574d38d51937769499cdb5ff1, Node v24.21.0, Python 3.12.3. Existing untracked G6 artifacts were not removed.
+
+Initial explicit-path transfer:
+tar -cf - native/g7/ownership.c tools/g7-cell.mjs tools/g7-owner-channel.mjs tools/g7-cell-owner.mjs tools/g7-supervisor.py tests/g7/supervision-block.mjs tests/g7/supervision.test.mjs | <SSH prefix> 'cd /home/alica-dev/AlicaV2 && tar -xf -'
+
+Initial remote targeted command (raw combined output captured locally in targeted-initial.log using tee and pipefail):
+cd /home/alica-dev/AlicaV2 && export PATH="$PWD/.tools/node/bin:$PATH" && sha256sum native/g7/ownership.c tools/g7-cell.mjs tools/g7-owner-channel.mjs tools/g7-cell-owner.mjs tools/g7-supervisor.py tests/g7/supervision-block.mjs tests/g7/supervision.test.mjs && node node_modules/prettier/bin/prettier.cjs --write tools/g7-cell.mjs tools/g7-owner-channel.mjs tools/g7-cell-owner.mjs tests/g7/supervision-block.mjs tests/g7/supervision.test.mjs && npm run build:g7-native && node --experimental-vm-modules --test tests/g7/supervision.test.mjs
+
+First formatted return transfer, exact paths:
+<SSH prefix> 'cd /home/alica-dev/AlicaV2 && tar -cf - tools/g7-cell.mjs tools/g7-owner-channel.mjs tools/g7-cell-owner.mjs tests/g7/supervision-block.mjs tests/g7/supervision.test.mjs' | tar -xf -
+
+Hardening/expanded test input transfer, exact paths:
+tar -cf - tools/g7-supervisor.py tests/g7/supervision-block.mjs tests/g7/supervision.test.mjs tests/g7/custody.test.mjs | <SSH prefix> 'cd /home/alica-dev/AlicaV2 && tar -xf -'
+
+Expanded remote targeted command (raw combined output captured locally in targeted-expanded.log):
+cd /home/alica-dev/AlicaV2 && export PATH="$PWD/.tools/node/bin:$PATH" && sha256sum tools/g7-supervisor.py tests/g7/supervision-block.mjs tests/g7/supervision.test.mjs tests/g7/custody.test.mjs && node node_modules/prettier/bin/prettier.cjs --write tests/g7/supervision-block.mjs tests/g7/supervision.test.mjs tests/g7/custody.test.mjs && node --experimental-vm-modules --test tests/g7/supervision.test.mjs tests/g7/custody.test.mjs
+
+Final formatted test return transfer:
+<SSH prefix> 'cd /home/alica-dev/AlicaV2 && tar -cf - tests/g7/supervision-block.mjs tests/g7/supervision.test.mjs tests/g7/custody.test.mjs' | tar -xf -
+
+Full remote regression command (raw combined output captured locally in full-check.log):
+cd /home/alica-dev/AlicaV2 && export PATH="$PWD/.tools/node/bin:$PATH" && sha256sum native/g7/ownership.c tools/g7-cell.mjs tools/g7-owner-channel.mjs tools/g7-cell-owner.mjs tools/g7-supervisor.py tests/g7/supervision-block.mjs tests/g7/supervision.test.mjs tests/g7/custody.test.mjs && npm run check && git diff --check && sha256sum native/g7/ownership.c tools/g7-cell.mjs tools/g7-owner-channel.mjs tools/g7-cell-owner.mjs tools/g7-supervisor.py tests/g7/supervision-block.mjs tests/g7/supervision.test.mjs tests/g7/custody.test.mjs
+
+IMPORTANT: hashes printed before prettier in targeted logs identify pre-format inputs, not final tested bytes. Full-check before/after hashes and source-binding.json identify final tested source. The first three-test run precedes outer cleanup budget hardening and is not the final seven-test result. No pending_approval response occurred during these transfers or runs. No commit/push.

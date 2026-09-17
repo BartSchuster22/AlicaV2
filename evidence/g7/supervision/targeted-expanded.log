@@ -1,0 +1,22 @@
+05e7150839d47c76b66a9f0148efc2befb1bc68bc69f6a313cbc8415383de655  tools/g7-supervisor.py
+28a1070ace01d76010e8aafce0e480e42d07149cf13b177ef8341f0b53f8950c  tests/g7/supervision-block.mjs
+de787dd069d359e22948a48ddc7d7238178510461e6b837e82c1c96e4e612549  tests/g7/supervision.test.mjs
+1e803408d2779dcdad0ea68a1593f23e238def5ca9e7ddd17bf34f6e817e460d  tests/g7/custody.test.mjs
+tests/g7/supervision-block.mjs 45ms
+tests/g7/supervision.test.mjs 74ms
+tests/g7/custody.test.mjs 8ms
+✔ native custody requires matching private inode and the actual held flock description (2.456236ms)
+✔ supervised real IPC install, exact local admin status/stop, retained custody (2740.685618ms)
+✔ external SIGKILL of actual owner never proves descendants reaped; fence survives supervisor death (2643.193599ms)
+✔ real synchronous FIFO IO during outer cleanup: responsive admin, 30s external expiry, no restart (32533.551486ms)
+✔ activation blocked in real synchronous IO is externally killed without publication or new admission (30860.042987ms)
+✔ actual Unix peer credentials, malformed/duplicate/oversized frames and eight-connection ceiling (2938.547111ms)
+✔ launcher exits before real first-install completes; owner remains alive for authenticated status and clean stop (2718.164149ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 74736.459933

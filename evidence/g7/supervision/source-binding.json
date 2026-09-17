@@ -1,0 +1,74 @@
+{
+  "baseline": "0b70b71f69f9548574d38d51937769499cdb5ff1",
+  "qualification": "WORKER-VERIFIED-COMPONENT-ONLY; PARENT-REVIEW-REQUIRED",
+  "sourceSha256": {
+    "native/g7/ownership.c": "da21bdc84ed5ed157d3bea60f6f005a4d513f3c6237ae9d010c2102fbe03cf78",
+    "tools/g7-cell.mjs": "de28a08b0e09efa9c3522a46f99fe7ab1f27204e6fd407281c6251e7b6dc2ea9",
+    "tools/g7-owner-channel.mjs": "6a2a46ff044cb7cecc4efd7e37ef7dc954b2033b31e288b30214b54da174c19e",
+    "tools/g7-cell-owner.mjs": "b65ada322e3f4272f3e78c3b5625e39e8e0170eb01bf27df375943637bc71377",
+    "tools/g7-supervisor.py": "05e7150839d47c76b66a9f0148efc2befb1bc68bc69f6a313cbc8415383de655",
+    "tests/g7/supervision-block.mjs": "6c6f7178c7abbdcdf70b19973e16f498fbc0c59d15ee3be4cc6b83557c6beb4d",
+    "tests/g7/supervision.test.mjs": "8a689175245eaaacf9e63c823665b04a05d2ecb4ba9477385a3845f62ad26216",
+    "tests/g7/custody.test.mjs": "e33eb46c9c17a298240191f6f8c4017a0886b921f7b6b6eba294df804e26f7e9"
+  },
+  "developmentBeforeAndAfterFullCheck": {
+    "native/g7/ownership.c": [
+      "da21bdc84ed5ed157d3bea60f6f005a4d513f3c6237ae9d010c2102fbe03cf78",
+      "da21bdc84ed5ed157d3bea60f6f005a4d513f3c6237ae9d010c2102fbe03cf78"
+    ],
+    "tools/g7-cell.mjs": [
+      "de28a08b0e09efa9c3522a46f99fe7ab1f27204e6fd407281c6251e7b6dc2ea9",
+      "de28a08b0e09efa9c3522a46f99fe7ab1f27204e6fd407281c6251e7b6dc2ea9"
+    ],
+    "tools/g7-owner-channel.mjs": [
+      "6a2a46ff044cb7cecc4efd7e37ef7dc954b2033b31e288b30214b54da174c19e",
+      "6a2a46ff044cb7cecc4efd7e37ef7dc954b2033b31e288b30214b54da174c19e"
+    ],
+    "tools/g7-cell-owner.mjs": [
+      "b65ada322e3f4272f3e78c3b5625e39e8e0170eb01bf27df375943637bc71377",
+      "b65ada322e3f4272f3e78c3b5625e39e8e0170eb01bf27df375943637bc71377"
+    ],
+    "tools/g7-supervisor.py": [
+      "05e7150839d47c76b66a9f0148efc2befb1bc68bc69f6a313cbc8415383de655",
+      "05e7150839d47c76b66a9f0148efc2befb1bc68bc69f6a313cbc8415383de655"
+    ],
+    "tests/g7/supervision-block.mjs": [
+      "6c6f7178c7abbdcdf70b19973e16f498fbc0c59d15ee3be4cc6b83557c6beb4d",
+      "6c6f7178c7abbdcdf70b19973e16f498fbc0c59d15ee3be4cc6b83557c6beb4d"
+    ],
+    "tests/g7/supervision.test.mjs": [
+      "8a689175245eaaacf9e63c823665b04a05d2ecb4ba9477385a3845f62ad26216",
+      "8a689175245eaaacf9e63c823665b04a05d2ecb4ba9477385a3845f62ad26216"
+    ],
+    "tests/g7/custody.test.mjs": [
+      "e33eb46c9c17a298240191f6f8c4017a0886b921f7b6b6eba294df804e26f7e9",
+      "e33eb46c9c17a298240191f6f8c4017a0886b921f7b6b6eba294df804e26f7e9"
+    ]
+  },
+  "localMatchesBothDevelopmentObservations": true,
+  "frozenUnchangedSha256": {
+    "docs/g7/draft/contracts.schema.json": "917e9ab5aa42e9fd344ca380fee1bb4ba7ab53e1044e41e6d2fb4583b0fadc32",
+    "docs/g7/draft/limits.json": "75a0fa6abe34d1c6bbfba24d10e509b32e2bbc40fba3ab372583de07d975d7d2"
+  },
+  "fullCheckExitCode": 0,
+  "nodeSuites": [
+    170,
+    160,
+    161
+  ],
+  "pythonSuites": [
+    193,
+    30,
+    11,
+    119
+  ],
+  "targetedNewTests": 7,
+  "rawLogSha256": {
+    "targeted-expanded.log": "3d205b4faeaaa3f9c8b1677f55b508814598616e3fab50b72dd83e9ec508d8d0",
+    "full-check.log": "c59cb0c8a610aa0a25b2a405476cfcafeebb2f4b00a803cbf0d4cbc9e02950cf",
+    "post-run-state.log": "a6cc37ec8d6bd135a18e65e91c9871b205ec1c1031502141c7782b7712e65a7e",
+    "targeted-initial.log": "6fd76a35e65e0432f511a0af34a6523af277f6b7dd515ee2e362c36f4f9ea85a"
+  },
+  "preFormatInputs": "First hashes in targeted-initial.log and targeted-expanded.log precede prettier; not final tested-byte receipts.",
+  "sourceUncommitted": true
+}

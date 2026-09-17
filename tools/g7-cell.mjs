@@ -1,4 +1,5 @@
-// Lifetime-locked in-process Cell. CLI daemon/admin and upgrade remain unavailable.
+// Lifetime-locked Cell. Supervised custody is host-only; upgrade remains unavailable.
+import { OwnerChannel } from './g7-owner-channel.mjs';
 import { closeSync, readFileSync, statfsSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { randomUUID } from 'node:crypto';
@@ -14,7 +15,7 @@ import {
 import { openArchive } from './g7-archive.mjs';
 import { inspectRelease, verifyCurrentTrust } from './g7-release.mjs';
 const require = createRequire(import.meta.url);
-const { lockRoot } = require('../native/g7/build/ownership.node');
+const { lockRoot, adoptRoot } = require('../native/g7/build/ownership.node');
 const contract = JSON.parse(
   readFileSync(
     new URL('../docs/g7/draft/contracts.schema.json', import.meta.url),
@@ -174,6 +175,7 @@ function configuration(cellId, rootScope) {
 // verified flag, activation callback, supplied clock, or shared-mutation escape hatch.
 export class CellPreparation {
   #fd;
+  #channel;
   #failed = false;
   #busy = false;
   #host;
@@ -201,6 +203,7 @@ export class CellPreparation {
     this.#running = false;
     if (!this.#host) return;
     try {
+      await this.#channel?.send({ phase: 'cleanup' });
       const budget = deadline(limits.cleanupTimeoutMs);
       // A second Kernel shutdown can return an interim inspect report. Never
       // use that as proof that the original shutdown completed.
@@ -226,6 +229,8 @@ export class CellPreparation {
       this.#failed = true;
       this.#stopped = false;
       throw outcome(error, 'NEEDS_OPERATOR');
+    } finally {
+      await this.#channel?.send({ phase: 'resume' });
     }
   }
   async #run(operation) {
@@ -255,10 +260,23 @@ export class CellPreparation {
       ),
     );
   }
-  constructor(root) {
+  constructor(root, custody) {
     this.#fd = openPrivateRoot(root);
     try {
-      lockRoot(this.#fd);
+      if (custody !== undefined) {
+        check(custody.channel instanceof OwnerChannel, 'PERMISSION_DENIED');
+        const adopted = adoptRoot(custody.fd, this.#fd);
+        closeSync(this.#fd);
+        this.#fd = adopted;
+        this.#channel = custody.channel;
+      } else {
+        lockRoot(this.#fd);
+        // Durable custody residue is not stale-PID evidence. No automatic takeover.
+        check(
+          !listPrivate(this.#fd).includes('supervision'),
+          'FAILED_PRECONDITION',
+        );
+      }
     } catch (e) {
       closeSync(this.#fd);
       this.#fd = undefined;
@@ -315,6 +333,7 @@ export class CellPreparation {
             'transactions',
             'releases',
             'accepted.json',
+            ...(this.#channel ? ['supervision'] : []),
           ].includes(n) || /^g6-[A-Za-z0-9]{6}$/.test(n),
       ),
       'FAILED_PRECONDITION',
@@ -739,6 +758,7 @@ export class CellPreparation {
     }
   }
   async #activate(prefix, inspected, material, cellId, authorization, rows) {
+    await this.#channel?.send({ phase: 'activation' });
     const budget = deadline(limits.activationTimeoutMs);
     let publishing = false;
     let floor = this.#advance(material, this.#read('floor.json'));

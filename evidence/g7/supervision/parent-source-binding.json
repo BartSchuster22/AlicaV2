@@ -1,0 +1,33 @@
+{
+  "qualification": "PARENT-VERIFIED-SUPERVISION-COMPONENT-ONLY; NOT-G7-ACCEPTANCE",
+  "sourceSha256": {
+    "native/g7/ownership.c": "b4f9cf253e1f1784d09416f9ed4b113d102c9dd99b144d2fb4d938c37b522563",
+    "tools/g7-cell.mjs": "de28a08b0e09efa9c3522a46f99fe7ab1f27204e6fd407281c6251e7b6dc2ea9",
+    "tools/g7-owner-channel.mjs": "6a2a46ff044cb7cecc4efd7e37ef7dc954b2033b31e288b30214b54da174c19e",
+    "tools/g7-cell-owner.mjs": "8d72fbe0c4521fe6a4f339bc0cffd26a01fc1cd6736b9fd7c73f79dfd135bd68",
+    "tools/g7-supervisor.py": "05e7150839d47c76b66a9f0148efc2befb1bc68bc69f6a313cbc8415383de655",
+    "tests/g7/supervision-block.mjs": "6c6f7178c7abbdcdf70b19973e16f498fbc0c59d15ee3be4cc6b83557c6beb4d",
+    "tests/g7/supervision.test.mjs": "2354a2afab4dc81ec5b7aebfb7c1a7a6e606550cbe1ca391fe283cc226331106",
+    "tests/g7/custody.test.mjs": "e33eb46c9c17a298240191f6f8c4017a0886b921f7b6b6eba294df804e26f7e9"
+  },
+  "beforeAndAfterAndLocalMatch": true,
+  "frozenUnchangedSha256": {
+    "docs/g7/draft/contracts.schema.json": "917e9ab5aa42e9fd344ca380fee1bb4ba7ab53e1044e41e6d2fb4583b0fadc32",
+    "docs/g7/draft/limits.json": "75a0fa6abe34d1c6bbfba24d10e509b32e2bbc40fba3ab372583de07d975d7d2"
+  },
+  "fullCheckExitCode": 0,
+  "nodeSuites": [
+    170,
+    160,
+    162
+  ],
+  "pythonSuites": [
+    193,
+    30,
+    11,
+    119
+  ],
+  "rawFullLogSha256": "8bc34a5443a2e9d52abd73dbab093ba9408e25eea22cbe2bfc8c5dab53617e03",
+  "renderedFullLogSha256": "8bc34a5443a2e9d52abd73dbab093ba9408e25eea22cbe2bfc8c5dab53617e03",
+  "rawBase64": null
+}
