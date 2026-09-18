@@ -1,0 +1,28 @@
+✔ owned coordinator: independent custodian and owner normal reaps precede real stopped verification; original Cell preserved (3268.611649ms)
+✔ owned coordinator loss retains fence at before-fsync (228.025614ms)
+✔ owned coordinator loss retains fence at after-fsync (248.113125ms)
+✔ owned coordinator loss retains fence at before-READY (2566.112432ms)
+✔ owned coordinator loss retains fence at after-READY (2516.515742ms)
+✔ owned coordinator loss retains fence at before-SEALED (2603.723909ms)
+✔ owned coordinator loss retains fence at after-SEALED (2642.294911ms)
+✔ owned coordinator loss retains fence at before-CLEAN (2770.303802ms)
+✔ owned coordinator loss retains fence at after-CLEAN (2817.614431ms)
+✔ owned coordinator loss retains fence at after-reap (2894.062225ms)
+✔ owned coordinator loss retains fence at before-maintenance (2863.358194ms)
+✔ owned coordinator loss retains fence at after-maintenance (3115.124581ms)
+✔ custodian abnormal death cannot become stopped permission at before-READY (2576.105178ms)
+✔ custodian abnormal death cannot become stopped permission at before-SEALED (2526.096494ms)
+✔ custodian abnormal death cannot become stopped permission at after-SEALED (2622.13253ms)
+✔ custodian abnormal death cannot become stopped permission at before-CLEAN (2699.277857ms)
+✔ custodian abnormal death cannot become stopped permission at after-CLEAN (2778.5244ms)
+✔ sealing excludes concurrent v1/v2 starts stops and mutations without a successor (3100.262031ms)
+✔ stopped verification uses original retained artifacts and current independent input, rejects tamper without Cell writes (3256.188086ms)
+✔ late sealed receipt after actual unchanged cleanup budget cannot publish maintenance (32500.800841ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 80862.680509

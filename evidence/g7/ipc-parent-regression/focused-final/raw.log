@@ -1,0 +1,53 @@
+✔ pre-offer phase 3 DEADLINE_EXCEEDED preserves the real session and releases admission (1192.49166ms)
+✔ pre-offer phase 4 DEADLINE_EXCEEDED preserves the real session and releases admission (1161.404981ms)
+✔ pre-offer phase 4 PERMISSION_DENIED preserves the real session and releases admission (1156.436642ms)
+✔ worker deadline abort does not close a broker-live work socket (1232.117025ms)
+✔ reply after observed broker closure is endpoint-local, not physical EPIPE failure (1113.054576ms)
+✔ scope-check write racing broker closure rejects locally and preserves sibling (1099.653488ms)
+✔ unexpected worker EOF on broker-live work still fails the physical session (1098.651022ms)
+✔ effect-release write racing broker closure still fails the real worker (1050.008844ms)
+✔ cancelled read-only scope observation retires only its RPC (2.740479ms)
+✔ synchronous scope observation timeout is local, malformed response remains fatal (1.188577ms)
+✔ unanswered SDK mutation and effect-release remain fail-closed on endpoint abort (0.936002ms)
+(node:207668) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ same-source matrix consumer inproc: ancestry, authority and live sibling independence (1113.549045ms)
+ℹ {"consumerSHA256":"6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb","providerASHA256":"186ecdd947ff450dcb345649f9cab118cf24dcc75cdc863e5363d569a37dccd8","providerBSHA256":"193a857ebe7be7e9e33dc7e22584109f9cbb684c816ecbc7e67377de4aef23e1"}
+✔ same-source matrix consumer ipc: ancestry, authority and live sibling independence (3690.67495ms)
+ℹ {"consumerSHA256":"6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb","providerASHA256":"186ecdd947ff450dcb345649f9cab118cf24dcc75cdc863e5363d569a37dccd8","providerBSHA256":"193a857ebe7be7e9e33dc7e22584109f9cbb684c816ecbc7e67377de4aef23e1"}
+✔ established binding isolates real deadline retirement: broker-running (6004.737418ms)
+ℹ {"schedule":"broker-running","held":1,"heldKind":"outbound","events":[{"phase":"hold","kind":"outbound","remainingMs":4468},{"phase":"retire","terminal":"CANCELLED"},{"phase":"physical-failure"},{"phase":"reaped","pid":207763,"code":1,"signal":null,"elapsedMs":5893.225043000001}]}
+✔ established binding isolates real deadline retirement: broker-stalled (6098.322954ms)
+ℹ {"schedule":"broker-stalled","held":1,"heldKind":"outbound","events":[{"phase":"hold","kind":"outbound","remainingMs":4477},{"phase":"broker-resumed"},{"phase":"retire","terminal":"DEADLINE_EXCEEDED"},{"phase":"physical-failure"},{"phase":"reaped","pid":207820,"code":1,"signal":null,"elapsedMs":5993.2750940000005}]}
+✔ ordinary overlap, FIFO roots and reserved nested/lifecycle admission (7.912124ms)
+✔ actual queued timeout retains original clock and never dispatches (21.559516ms)
+✔ selected absolute cleanup deadline caps queue, offer and nested handover (33.440741ms)
+✔ fractional scheduler timers never reject queued work before the selected end (227.068776ms)
+✔ A to B to A ancestry succeeds; parent cancellation does not affect sibling (1.425914ms)
+✔ depth eight succeeds, nine rejects immediately (1.272636ms)
+✔ expired unconsumed offer retains slot/bytes; foreign ACK cannot release it (0.895326ms)
+✔ hard offer expiry quarantines until physical reap, not logical failure (1099.810485ms)
+✔ queued authorization is rechecked; rejected head cannot block following work (1.085442ms)
+✔ pre-abort and shared byte exhaustion leave no partial admission (0.656897ms)
+✔ cleanup can precede registration reply; binding remains one-to-one (5.906499ms)
+✔ registration reply may precede cleanup; callback reuse/foreign binding fails (0.328899ms)
+✔ completed effects remain charged; definite rejection releases only unbound reservation (0.46197ms)
+✔ cleanup first error is cached, including throwing undefined (0.56309ms)
+✔ cleanup deadline wins over late success and fails the physical session once (10.932961ms)
+✔ registerCleanup returns void; synchronous rejection stops acquisition (1.190061ms)
+✔ failed acquisition closes registration before reverse rollback awaits (0.652187ms)
+✔ uncertain registration retains callback charge, fails session and never retries (0.418176ms)
+✔ pending publication accepts zero/multiple but never substitutes ack (1.342708ms)
+✔ wrong endpoint and wrong effect cannot settle pending operations (0.545198ms)
+✔ RPC IDs are never reused across endpoints and retired replies remain endpoint-bound (0.689187ms)
+✔ 64 pending requests shared across endpoints reject before send (3.561975ms)
+✔ synchronous pending RPC pumps until actual reply, not a Promise surrogate (0.45128ms)
+✔ broker registrations consume the same Host-owned lifetime effect ledger (0.781531ms)
+ℹ tests 39
+ℹ suites 0
+ℹ pass 39
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 17282.495725

@@ -1,0 +1,17 @@
+{
+  "baseline": "122ac0d33cb0a1e08aef836ac7c964ae365a30b3",
+  "source": [
+    "tools/g7-supervisor.py",
+    "tools/g7-owned-coordinator.py",
+    "tools/g7-stopped-verify.mjs",
+    "tests/g7/owned-coordinator-driver.py",
+    "tests/g7/owned-coordinator.test.mjs",
+    "tests/g7/owned-channel-process.py",
+    "tests/g7/owned-coordinator-block.mjs"
+  ],
+  "newDocumentation": [
+    "docs/g7/R1-OWNED-COORDINATOR-CHECKPOINT.md",
+    "docs/g7/R1-OWNED-COORDINATOR-EXECUTION.md"
+  ],
+  "newEvidencePrefix": "evidence/g7/owned-coordinator/"
+}

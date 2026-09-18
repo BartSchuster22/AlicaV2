@@ -1,0 +1,23 @@
+{"event": "before-GO", "pid": 191920, "parent": 190224, "monotonic": 151530.195722017}
+{"event": "after-GO", "pid": 191920, "parent": 190224, "monotonic": 151530.195887659}
+{"event": "before-fsync", "pid": 191921, "parent": 191920, "monotonic": 151530.196787012}
+{"event": "before-fsync-1", "pid": 191921, "parent": 191920, "monotonic": 151530.196919782}
+{"event": "after-fsync-1", "pid": 191921, "parent": 191920, "monotonic": 151530.198542547}
+{"event": "after-fsync", "pid": 191921, "parent": 191920, "monotonic": 151530.198612609}
+{"event": "before-fsync", "pid": 191921, "parent": 191920, "monotonic": 151530.19884682}
+{"event": "before-fsync-2", "pid": 191921, "parent": 191920, "monotonic": 151530.198898327}
+{"event": "after-fsync-2", "pid": 191921, "parent": 191920, "monotonic": 151530.200479695}
+{"event": "after-fsync", "pid": 191921, "parent": 191920, "monotonic": 151530.200550799}
+{"event": "before-fsync", "pid": 191921, "parent": 191920, "monotonic": 151530.200600601}
+{"event": "before-fsync-3", "pid": 191921, "parent": 191920, "monotonic": 151530.200640197}
+{"event": "after-fsync-3", "pid": 191921, "parent": 191920, "monotonic": 151530.201609622}
+{"event": "after-fsync", "pid": 191921, "parent": 191920, "monotonic": 151530.201664425}
+{"event": "owner-spawn", "pid": 191921, "parent": 191920, "monotonic": 151530.202751622, "child": 191922, "pidfd": 11}
+{"event": "before-READY", "pid": 191921, "parent": 191920, "monotonic": 151532.640571659}
+{"event": "after-READY", "pid": 191921, "parent": 191920, "monotonic": 151532.640676787}
+{"event": "owner-killed", "pid": 191921, "parent": 191920, "monotonic": 151532.640766485, "child": 191922, "pidfd": 11}
+{"event": "before-SEAL", "pid": 191920, "parent": 190224, "monotonic": 151532.641079084}
+{"event": "after-SEAL", "pid": 191920, "parent": 190224, "monotonic": 151532.641147343}
+{"event": "before-UNCERTAIN", "pid": 191921, "parent": 191920, "monotonic": 151532.657129593}
+{"event": "after-UNCERTAIN", "pid": 191921, "parent": 191920, "monotonic": 151532.657256983}
+{"event": "owner-waitpid", "pid": 191921, "parent": 191920, "monotonic": 151532.657420611, "child": 191922, "pidfd": 11, "status": -9}

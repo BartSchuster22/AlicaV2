@@ -1,0 +1,25 @@
+{"event": "before-GO", "pid": 197858, "parent": 197434, "monotonic": 152684.139509926}
+{"event": "after-GO", "pid": 197858, "parent": 197434, "monotonic": 152684.139680587}
+{"event": "before-fsync", "pid": 197859, "parent": 197858, "monotonic": 152684.140660152}
+{"event": "before-fsync-1", "pid": 197859, "parent": 197858, "monotonic": 152684.140794304}
+{"event": "after-fsync-1", "pid": 197859, "parent": 197858, "monotonic": 152684.141777165}
+{"event": "after-fsync", "pid": 197859, "parent": 197858, "monotonic": 152684.141855622}
+{"event": "before-fsync", "pid": 197859, "parent": 197858, "monotonic": 152684.142167008}
+{"event": "before-fsync-2", "pid": 197859, "parent": 197858, "monotonic": 152684.142268169}
+{"event": "after-fsync-2", "pid": 197859, "parent": 197858, "monotonic": 152684.143525927}
+{"event": "after-fsync", "pid": 197859, "parent": 197858, "monotonic": 152684.143593824}
+{"event": "before-fsync", "pid": 197859, "parent": 197858, "monotonic": 152684.143648589}
+{"event": "before-fsync-3", "pid": 197859, "parent": 197858, "monotonic": 152684.143683794}
+{"event": "after-fsync-3", "pid": 197859, "parent": 197858, "monotonic": 152684.144387729}
+{"event": "after-fsync", "pid": 197859, "parent": 197858, "monotonic": 152684.144437143}
+{"event": "owner-spawn", "pid": 197859, "parent": 197858, "monotonic": 152684.145286111, "child": 197860, "pidfd": 11}
+{"event": "before-READY", "pid": 197859, "parent": 197858, "monotonic": 152686.575850753}
+{"event": "after-READY", "pid": 197859, "parent": 197858, "monotonic": 152686.575953215}
+{"event": "before-SEAL", "pid": 197858, "parent": 197434, "monotonic": 152686.576222142}
+{"event": "after-SEAL", "pid": 197858, "parent": 197434, "monotonic": 152686.576302042}
+{"event": "before-SEALED", "pid": 197859, "parent": 197858, "monotonic": 152686.626273194}
+{"event": "after-SEALED", "pid": 197859, "parent": 197858, "monotonic": 152686.626377161}
+{"event": "owner-waitpid", "pid": 197859, "parent": 197858, "monotonic": 152686.811183544, "child": 197860, "pidfd": 11, "status": 0}
+{"event": "before-CLEAN", "pid": 197859, "parent": 197858, "monotonic": 152686.811365416}
+{"event": "after-CLEAN", "pid": 197859, "parent": 197858, "monotonic": 152686.811441408}
+{"event": "before-reap", "pid": 197858, "parent": 197434, "monotonic": 152686.811613412}

@@ -1,0 +1,87 @@
+import pathlib, subprocess, json, hashlib, shlex, datetime, tarfile, shutil
+r = pathlib.Path('/home/herman/g7-implementation')
+e = r / 'evidence/g7/ipc-parent-regression'
+ssh = ['ssh','-i','/home/herman/.ssh/alica_v2_vps_ed25519','-o','IdentitiesOnly=yes','-o','BatchMode=yes','-o','StrictHostKeyChecking=yes','-o','UserKnownHostsFile=/home/herman/.ssh/alica_v2_known_hosts','alica-dev@167.233.135.142']
+script = (e / 'inventory-script.py.txt').read_text()
+def store(name, data):
+    p = e / name
+    assert not p.exists(), p
+    p.write_bytes(data if isinstance(data, bytes) else (json.dumps(data, indent=2, sort_keys=True)+'\n').encode())
+def digest(p): return hashlib.sha256(p.read_bytes()).hexdigest()
+for label, cmd in [('local',['python3','-c',script]),('remote',ssh+['cd /home/alica-dev/AlicaV2 && python3 -c '+shlex.quote(script)])]:
+    store(label+'-final.json', subprocess.check_output(cmd,cwd=r))
+    store(label+'-process-final.txt', subprocess.check_output(['ps','-eo','pid,ppid,etime,args'] if label=='local' else ssh+['ps -eo pid,ppid,etime,args']))
+    store(label+'-git-final.txt', subprocess.check_output(['git','status','--short'] if label=='local' else ssh+['cd /home/alica-dev/AlicaV2 && git status --short'],cwd=r))
+    store(label+'-HEAD-final.txt', subprocess.check_output(['git','rev-parse','HEAD'] if label=='local' else ssh+['cd /home/alica-dev/AlicaV2 && git rev-parse HEAD'],cwd=r))
+before=json.loads((e/'local-before.json').read_text())
+remote_before=json.loads((e/'remote-before.json').read_text())
+after=json.loads((e/'local-final.json').read_text())
+remote_after=json.loads((e/'remote-final.json').read_text())
+check=e/'full-check-boundary-corrected'
+check_before=json.loads((check/'before.json').read_text())
+check_after=json.loads((check/'after.json').read_text())
+source_allowlist=['tests/ipc/qualification-consumer.test.mjs','tests/ipc/isolation.test.mjs','tests/ipc/qualification-consumer-fixture.mjs']
+doc='docs/g7/R1-IPC-PARENT-REGRESSION-CHECKPOINT.md'
+changed=[p for p in before if before[p]!=after.get(p)]
+added=sorted(set(after)-set(before))
+removed=sorted(set(before)-set(after))
+assert sorted(changed)==sorted(source_allowlist[:2]), changed
+assert added==sorted([source_allowlist[2],doc]), added
+assert not removed,removed
+def source_only(inventory):
+    # Historical evidence and root G6 custody/transfer records differed already.
+    return {p:h for p,h in inventory.items() if not p.startswith(('evidence/','G6-'))}
+assert source_only(before)==source_only(remote_before), 'initial source disagreement'
+assert source_only(after)==source_only(remote_after), 'final source disagreement'
+remote_changed=[p for p in remote_before if remote_before[p]!=remote_after.get(p)]
+remote_added=sorted(set(remote_after)-set(remote_before))
+assert sorted(remote_changed)==sorted(source_allowlist[:2]), remote_changed
+assert remote_added==sorted([source_allowlist[2],doc]), remote_added
+assert check_before==check_after, 'source changed during full check'
+assert source_only(check_after) == {p:h for p,h in source_only(after).items() if p!=doc}, 'final source differs from full-check source'
+assert all(before[p]==after[p] for p in before if p.startswith('evidence/g7/owned-coordinator/'))
+assert digest(pathlib.Path('/home/herman/g7-owned-parent-full-check.log')) == digest(e/'parent-full-check.log')
+assert all((e/(label+'-HEAD-final.txt')).read_text().strip()=='122ac0d33cb0a1e08aef836ac7c964ae365a30b3' for label in ['local','remote'])
+owned=[p for p in before if p.startswith(('tools/g7','tests/g7/','docs/g7/R1-OWNED-COORDINATOR-'))]
+assert all(before[p]==after[p] for p in owned)
+report={
+ 'baseline':'122ac0d33cb0a1e08aef836ac7c964ae365a30b3',
+ 'capturedUTC':datetime.datetime.now(datetime.timezone.utc).isoformat(),
+ 'permanentSourceAllowlist':source_allowlist,
+ 'documentationAllowlist':[doc],
+ 'evidencePrefix':'evidence/g7/ipc-parent-regression/',
+ 'changedOriginalFiles':changed,'addedFiles':added,'removedFiles':removed,
+ 'initialLocalRemoteSourceEqual':source_only(before)==source_only(remote_before),
+ 'finalLocalRemoteSourceEqual':source_only(after)==source_only(remote_after),
+ 'inventorySourceFilter':'excludes evidence/ and pre-existing root G6-* custody/transfer records; all originals separately preserved',
+ 'remoteChangedOriginalFiles':remote_changed,'remoteAddedFiles':remote_added,
+ 'fullCheckSourceUnchanged':check_before==check_after,
+ 'finalSourceMatchesFullCheck':True,
+ 'fullCheckExit':int((check/'exit.txt').read_text().strip()),
+ 'parentFailureLogSHA256':digest(e/'parent-full-check.log'),
+ 'preservedOriginalEvidenceFiles':sum(p.startswith('evidence/g7/owned-coordinator/') for p in before),
+ 'preservedAllLocalEvidenceFiles':sum(p.startswith('evidence/') for p in before),
+ 'preservedAllRemoteEvidenceFiles':sum(p.startswith('evidence/') for p in remote_before),
+ 'sourceBeforeAfter':{p:{'beforeSHA256':before.get(p),'finalSHA256':after[p]} for p in source_allowlist},
+ 'ownedCoordinatorAndG7Preserved':{p:after[p] for p in owned},
+ 'allOriginalProductionAndOtherFilesPreserved':True,
+ 'consumerAssertionFunctionSHA256':'6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb',
+ 'originalParentAssertionRetrospectivelyProven':False,
+ 'instrumentedPermissionSignatureAssertion':'original consumer line 169; initial deny line 120 passed',
+ 'noCommitPushDeploySignAcceptance':True,
+}
+store('preservation-and-binding.json',report)
+store('candidate.diff',subprocess.check_output(['git','diff','--',*source_allowlist],cwd=r))
+store('all-working-diff.txt',subprocess.check_output(['git','diff'],cwd=r))
+subprocess.run(['git','diff','--check'],cwd=r,check=True)
+archive=e/'returned-candidate-source.tar'
+assert not archive.exists()
+with tarfile.open(archive,'w') as t:
+    for p in sorted(set(source_allowlist+[doc]+owned)):
+        t.add(r/p,arcname=p,recursive=False)
+for name in ['g7-ipc-run.py','g7-ipc-capture.py','g7-ipc-finalize.py']:
+    store(name+'.txt',(pathlib.Path('/home/herman')/name).read_bytes())
+manifest={str(p.relative_to(e)):digest(p) for p in sorted(e.rglob('*')) if p.is_file()}
+store('SHA256-MANIFEST.json',manifest)
+print(json.dumps(report,indent=2))
+print('Evidence manifest entries:',len(manifest))

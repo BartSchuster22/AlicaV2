@@ -1,0 +1,23 @@
+Pre-edit gate observed in the initial tool call:
+  local git status --short: empty
+  local git rev-parse HEAD: 122ac0d33cb0a1e08aef836ac7c964ae365a30b3
+  development git rev-parse HEAD: 122ac0d33cb0a1e08aef836ac7c964ae365a30b3
+  development tracked modifications: none
+  development untracked G6 and earlier G7 evidence: retained; exact list is in remote-before.json
+Required record read before editing:
+  docs/g7/R1-EXACT-REINSTALL-PARENT-REVIEW.md
+
+local-before.json and remote-before.json bind original Git-listed regular files and recursive docs/evidence regular files, excluding only this new evidence prefix. The local-before status includes this newly created evidence directory because the output file was opened before the snapshot process ran. It is not an original dirty source tree. Ignored toolchain/build/system files outside docs/evidence are not whole-filesystem forensic coverage.
+
+All SSH calls used:
+  ssh -i /home/herman/.ssh/alica_v2_vps_ed25519 -o IdentitiesOnly=yes -o BatchMode=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile=/home/herman/.ssh/alica_v2_known_hosts alica-dev@167.233.135.142
+Development working directory:
+  /home/alica-dev/AlicaV2
+Toolchain environment for format/test/full runs:
+  PATH="$PWD/.tools/node/bin:$PATH"
+
+Initial execution records:
+  source-input.tar -> format explicit two .mjs files -> focused-1.log/.exit (owned coordinator suite)
+  source-input-2.tar -> format explicit three .mjs files -> focused-2.log/.exit (owned coordinator + supervision + exact reinstall)
+  source-input-3.tar -> format explicit three .mjs files -> focused-3.log/.exit (same suites, expanded tests)
+No earlier log or archive was replaced by a subsequent attempt. Source transfer members are explicitly enumerated in transfer-allowlist.json; source-input.tar predates addition of the two extra test helpers. The final run script records exact final focused/full commands separately.

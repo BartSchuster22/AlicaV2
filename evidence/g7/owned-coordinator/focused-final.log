@@ -1,0 +1,117 @@
+✔ exact reinstall under continuous same-owner clean custody is a byte/inode/mtime preserving no-op, repeatedly (2669.859275ms)
+✔ exact reinstall fails closed without writes: retained-artifact (2437.462934ms)
+✔ exact reinstall fails closed without writes: retained-extra (2410.910596ms)
+✔ exact reinstall fails closed without writes: retained-missing (2251.353676ms)
+✔ exact reinstall fails closed without writes: authorization (2303.965107ms)
+✔ exact reinstall fails closed without writes: accepted (2296.740026ms)
+✔ exact reinstall fails closed without writes: journal (2356.824695ms)
+✔ exact reinstall fails closed without writes: kernel-malformed (2425.929527ms)
+✔ exact reinstall fails closed without writes: kernel-backward-clock (2365.589158ms)
+✔ exact reinstall fails closed without writes: floor-backward-clock (2565.905785ms)
+✔ exact reinstall fails closed without writes: expired (2354.66866ms)
+✔ exact reinstall fails closed without writes: revoked-bundle (2459.240383ms)
+✔ exact reinstall fails closed without writes: revoked-publisher (2445.352759ms)
+✔ exact reinstall fails closed without writes: revoked-package (2353.893844ms)
+✔ exact reinstall fails closed without writes: same-version-equivocation (2426.790164ms)
+✔ exact reinstall fails closed without writes: missing-trust (2297.413043ms)
+✔ exact reinstall fails closed without writes: candidate-tamper (2420.128945ms)
+✔ exact reinstall fails closed without writes: different-valid-candidate (2481.959371ms)
+✔ normal owner close/reopen cannot reconstruct clean custody from accepted bytes or journal (2482.46746ms)
+✔ unmodified CLI path establishes custody from inception and refuses later residue adoption (3958.623498ms)
+✔ owned coordinator: independent custodian and owner normal reaps precede real stopped verification; original Cell preserved (3567.878064ms)
+✔ owned coordinator loss retains fence at before-fsync-1 (381.766463ms)
+✔ owned coordinator loss retains fence at after-fsync-1 (359.235346ms)
+✔ owned coordinator loss retains fence at before-fsync-2 (358.150082ms)
+✔ owned coordinator loss retains fence at after-fsync-2 (344.350554ms)
+✔ owned coordinator loss retains fence at before-fsync-3 (358.12248ms)
+✔ owned coordinator loss retains fence at after-fsync-3 (393.372054ms)
+✔ owned coordinator loss retains fence at before-READY (2920.430668ms)
+✔ owned coordinator loss retains fence at after-READY (2891.778167ms)
+✔ owned coordinator loss retains fence at before-SEALED (2817.837044ms)
+✔ owned coordinator loss retains fence at after-SEALED (3108.350962ms)
+✔ owned coordinator loss retains fence at before-CLEAN (3217.459427ms)
+✔ owned coordinator loss retains fence at after-CLEAN (3169.978218ms)
+✔ owned coordinator loss retains fence at after-reap (3486.183105ms)
+✔ owned coordinator loss retains fence at before-maintenance (3123.235941ms)
+✔ owned coordinator loss retains fence at after-maintenance (3580.740027ms)
+✔ custodian abnormal death cannot become stopped permission at before-fsync-1 (239.718738ms)
+✔ custodian abnormal death cannot become stopped permission at after-fsync-1 (219.318571ms)
+✔ custodian abnormal death cannot become stopped permission at before-fsync-2 (222.223611ms)
+✔ custodian abnormal death cannot become stopped permission at after-fsync-2 (223.169804ms)
+✔ custodian abnormal death cannot become stopped permission at before-fsync-3 (253.513129ms)
+✔ custodian abnormal death cannot become stopped permission at after-fsync-3 (264.978635ms)
+✔ custodian abnormal death cannot become stopped permission at before-READY (2852.815716ms)
+✔ custodian abnormal death cannot become stopped permission at before-SEALED (3088.747437ms)
+✔ custodian abnormal death cannot become stopped permission at after-SEALED (2882.633426ms)
+✔ custodian abnormal death cannot become stopped permission at before-CLEAN (2874.202205ms)
+✔ custodian abnormal death cannot become stopped permission at after-CLEAN (2836.073713ms)
+✔ exact owner pidfd death denies maintenance at after-READY (2690.073936ms)
+✔ exact owner pidfd death denies maintenance at before-SEALED (2750.378601ms)
+✔ exact owner pidfd death denies maintenance at after-SEALED (2706.693686ms)
+✔ requests queued before seal cannot restart after the seal linearization point (3161.042103ms)
+✔ sealing excludes concurrent v1/v2 starts stops and mutations without a successor (3365.942413ms)
+✔ stopped verification rejects retained tamper without Cell writes (3338.337535ms)
+✔ stopped verification rejects archive tamper without Cell writes (3281.577304ms)
+✔ stopped verification rejects current-trust tamper without Cell writes (3314.122228ms)
+test_authenticated_receive_return_late_is_not_permission (__main__.Channels.test_authenticated_receive_return_late_is_not_permission) ... ok
+test_forced_child_exit_is_never_normal_reap (__main__.Channels.test_forced_child_exit_is_never_normal_reap) ... ok
+test_late_real_normal_exit_is_not_a_reap_permit (__main__.Channels.test_late_real_normal_exit_is_not_a_reap_permit) ... ok
+test_non_parent_guard_is_rejected (__main__.Channels.test_non_parent_guard_is_rejected) ... ok
+test_plain_inherited_stream_fd_and_closed_channel_are_not_credentials (__main__.Channels.test_plain_inherited_stream_fd_and_closed_channel_are_not_credentials) ... ok
+test_real_child_credentials_and_held_pidfd_normal_reap (__main__.Channels.test_real_child_credentials_and_held_pidfd_normal_reap) ... ok
+test_socketpair_creator_is_not_actual_child_credential (__main__.Channels.test_socketpair_creator_is_not_actual_child_credential) ... ok
+test_syscall_return_late_normal_reap_is_not_permission (__main__.Channels.test_syscall_return_late_normal_reap_is_not_permission) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.141s
+
+OK
+
+✔ stopped verification rejects authorization tamper without Cell writes (3242.684868ms)
+✔ real Unix credentials reject forged/unowned/closed inherited channels and abnormal/late pidfd reaps (246.077312ms)
+✔ real owner blocked IO expires unchanged cleanup budget without offline admission (32684.71713ms)
+✔ real owner blocked IO expires unchanged verification budget without offline admission (300249.892896ms)
+✔ buffered genuine CLEAN and normal child exit cannot certify after the unchanged reap deadline (33330.816755ms)
+✔ blocked seal acknowledgement expires the actual unchanged cleanup budget without maintenance (32569.355227ms)
+✔ clean stop then authenticated same-revision start uses preserved bytes and new exact owner (8279.840268ms)
+✔ same-revision start: expired grants stay FAILED until clean stop and fresh issuance (12878.024995ms)
+✔ same-revision start rechecks newer current revocation while preserving accepted bytes and floor monotonicity (5985.923342ms)
+✔ same-revision start refuses fresh validation failure: authorization (3485.602651ms)
+✔ same-revision start refuses fresh validation failure: trust-signature (3276.617285ms)
+✔ same-revision start refuses fresh validation failure: revoked-bundle (3223.204229ms)
+✔ same-revision start refuses fresh validation failure: expired-trust (3377.387116ms)
+✔ same-revision start refuses fresh validation failure: policy-continuity (3588.504597ms)
+✔ same-revision start refuses fresh validation failure: accepted-sequence (3329.886971ms)
+✔ same-revision start refuses fresh validation failure: missing-selection (3266.608971ms)
+✔ same-revision start refuses fresh validation failure: journal (3105.397748ms)
+✔ same-revision start refuses fresh validation failure: artifact (3113.457704ms)
+✔ same-revision start refuses fresh validation failure: extra-file (3088.639842ms)
+✔ same-revision start refuses fresh validation failure: symlink (3061.430938ms)
+✔ same-revision start refuses fresh validation failure: future-floor (3139.640752ms)
+✔ same-revision start refuses fresh validation failure: kernel-residue (3147.44195ms)
+✔ same-revision start waits for actual prior owner reap, not its clean stopped message (2893.765595ms)
+✔ same-revision successor launch is not readiness; concurrent start conflicts and disconnect is not cancellation (7841.642475ms)
+✔ same-revision successor retains parent-death guard while blocked and residue denies takeover (3172.615081ms)
+✔ actual publication rename uncertainty forbids start and preserves selection without rollback (2761.31942ms)
+✔ actual floor-publication rename uncertainty forbids start and preserves selection without rollback (3080.78576ms)
+✔ same accepted provider fails actual successor activation without replacing artifacts (11155.687449ms)
+✔ same accepted provider fails actual successor readiness without replacing artifacts (12298.847249ms)
+✔ same-revision successor external 30s expiry is sticky and cannot authorize another owner (33119.76963ms)
+✔ same-revision successor-cleanup external 30s expiry is sticky and cannot authorize another owner (34860.361783ms)
+✔ clean stopped residue is not a restart permit after supervisor death (2857.726209ms)
+✔ restricted framing requires write EOF; delayed trailing bytes never execute stop (32864.779179ms)
+✔ supervised real IPC install, exact local admin status/stop, retained custody (2757.673504ms)
+✔ external SIGKILL of actual owner never proves descendants reaped; fence survives supervisor death (2607.684794ms)
+✔ real synchronous FIFO IO during outer cleanup: responsive admin, 30s external expiry, no restart (32642.054522ms)
+✔ activation blocked in real synchronous IO is externally killed without publication or new admission (30912.082617ms)
+✔ actual Unix peer credentials, malformed/duplicate/oversized frames and eight-connection ceiling (2889.655425ms)
+✔ launcher exits before real first-install completes; owner remains alive for authenticated status and clean stop (2723.302094ms)
+✔ supervisor SIGKILL terminates the blocked owner without an event-loop callback (694.349946ms)
+ℹ tests 95
+ℹ suites 0
+ℹ pass 95
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 481320.550898

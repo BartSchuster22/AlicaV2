@@ -1,0 +1,63 @@
+tests/ipc/qualification-consumer.test.mjs 110ms (unchanged)
+tests/ipc/qualification-consumer-fixture.mjs 18ms (unchanged)
+tests/ipc/isolation.test.mjs 59ms
+
+> alica-v2@0.0.0 boundaries
+> node tools/check-boundaries.mjs
+
+Public import boundaries passed
+✔ pre-offer phase 3 DEADLINE_EXCEEDED preserves the real session and releases admission (1201.295833ms)
+✔ pre-offer phase 4 DEADLINE_EXCEEDED preserves the real session and releases admission (1156.166053ms)
+✔ pre-offer phase 4 PERMISSION_DENIED preserves the real session and releases admission (1148.958809ms)
+✔ worker deadline abort does not close a broker-live work socket (1102.80885ms)
+✔ reply after observed broker closure is endpoint-local, not physical EPIPE failure (1111.794794ms)
+✔ scope-check write racing broker closure rejects locally and preserves sibling (1177.398189ms)
+✔ unexpected worker EOF on broker-live work still fails the physical session (1124.656202ms)
+✔ effect-release write racing broker closure still fails the real worker (1072.5599ms)
+✔ cancelled read-only scope observation retires only its RPC (2.011856ms)
+✔ synchronous scope observation timeout is local, malformed response remains fatal (0.880526ms)
+✔ unanswered SDK mutation and effect-release remain fail-closed on endpoint abort (0.661203ms)
+(node:208983) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ established binding isolates real deadline retirement: broker-running (6060.247976ms)
+ℹ {"schedule":"broker-running","held":1,"heldKind":"outbound","events":[{"phase":"hold","kind":"outbound","remainingMs":4468},{"phase":"retire","terminal":"CANCELLED"},{"phase":"healthy-before-cleanup"},{"phase":"physical-failure","stack":"Error\n    at session.onFailure (file:///home/alica-dev/AlicaV2/tests/ipc/isolation.test.mjs:461:22)\n    at PhysicalSession.fail (file:///home/alica-dev/AlicaV2/packages/kernel/dist/g6/session.js:452:14)\n    at file:///home/alica-dev/AlicaV2/packages/kernel/dist/g6/session.js:515:22\n    at async HostIPC.shutdown (file:///home/alica-dev/AlicaV2/packages/kernel/dist/g6/host-adapter.js:232:13)\n    at async file:///home/alica-dev/AlicaV2/packages/kernel/dist/index.js:1280:21\n    at async Host.closeScope (file:///home/alica-dev/AlicaV2/packages/kernel/dist/index.js:1342:21)\n    at async Host.shutdown (file:///home/alica-dev/AlicaV2/packages/kernel/dist/index.js:1426:9)\n    at async TestContext.stop (file:///home/alica-dev/AlicaV2/tools/g3-fixtures.mjs:218:5)\n    at async TestHook.run (node:internal/test_runner/test:1409:7)\n    at async Test.runHook (node:internal/test_runner/test:1289:9)"},{"phase":"reaped","pid":209124,"code":1,"signal":null,"elapsedMs":5956.279484999999}]}
+✔ established binding isolates real deadline retirement: broker-stalled (6133.110947ms)
+ℹ {"schedule":"broker-stalled","held":1,"heldKind":"outbound","events":[{"phase":"hold","kind":"outbound","remainingMs":4468},{"phase":"broker-resumed"},{"phase":"retire","terminal":"DEADLINE_EXCEEDED"},{"phase":"healthy-before-cleanup"},{"phase":"physical-failure","stack":"Error\n    at session.onFailure (file:///home/alica-dev/AlicaV2/tests/ipc/isolation.test.mjs:461:22)\n    at PhysicalSession.fail (file:///home/alica-dev/AlicaV2/packages/kernel/dist/g6/session.js:452:14)\n    at file:///home/alica-dev/AlicaV2/packages/kernel/dist/g6/session.js:515:22\n    at async HostIPC.shutdown (file:///home/alica-dev/AlicaV2/packages/kernel/dist/g6/host-adapter.js:232:13)\n    at async file:///home/alica-dev/AlicaV2/packages/kernel/dist/index.js:1280:21\n    at async Host.closeScope (file:///home/alica-dev/AlicaV2/packages/kernel/dist/index.js:1342:21)\n    at async Host.shutdown (file:///home/alica-dev/AlicaV2/packages/kernel/dist/index.js:1426:9)\n    at async TestContext.stop (file:///home/alica-dev/AlicaV2/tools/g3-fixtures.mjs:218:5)\n    at async TestHook.run (node:internal/test_runner/test:1409:7)\n    at async Test.runHook (node:internal/test_runner/test:1289:9)"},{"phase":"reaped","pid":209139,"code":1,"signal":null,"elapsedMs":6033.693630000002}]}
+(node:208984) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ same-source matrix consumer inproc: ancestry, authority and live sibling independence (1087.144085ms)
+ℹ {"consumerSHA256":"6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb","providerASHA256":"186ecdd947ff450dcb345649f9cab118cf24dcc75cdc863e5363d569a37dccd8","providerBSHA256":"193a857ebe7be7e9e33dc7e22584109f9cbb684c816ecbc7e67377de4aef23e1"}
+✔ same-source matrix consumer ipc: ancestry, authority and live sibling independence (3844.908057ms)
+ℹ {"consumerSHA256":"6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb","providerASHA256":"186ecdd947ff450dcb345649f9cab118cf24dcc75cdc863e5363d569a37dccd8","providerBSHA256":"193a857ebe7be7e9e33dc7e22584109f9cbb684c816ecbc7e67377de4aef23e1"}
+✔ ordinary overlap, FIFO roots and reserved nested/lifecycle admission (6.265984ms)
+✔ actual queued timeout retains original clock and never dispatches (21.646982ms)
+✔ selected absolute cleanup deadline caps queue, offer and nested handover (33.223752ms)
+✔ fractional scheduler timers never reject queued work before the selected end (227.476119ms)
+✔ A to B to A ancestry succeeds; parent cancellation does not affect sibling (1.422127ms)
+✔ depth eight succeeds, nine rejects immediately (1.612666ms)
+✔ expired unconsumed offer retains slot/bytes; foreign ACK cannot release it (1.387832ms)
+✔ hard offer expiry quarantines until physical reap, not logical failure (1103.377459ms)
+✔ queued authorization is rechecked; rejected head cannot block following work (1.623995ms)
+✔ pre-abort and shared byte exhaustion leave no partial admission (0.91896ms)
+✔ cleanup can precede registration reply; binding remains one-to-one (3.095907ms)
+✔ registration reply may precede cleanup; callback reuse/foreign binding fails (0.311065ms)
+✔ completed effects remain charged; definite rejection releases only unbound reservation (0.412977ms)
+✔ cleanup first error is cached, including throwing undefined (0.416504ms)
+✔ cleanup deadline wins over late success and fails the physical session once (9.575582ms)
+✔ registerCleanup returns void; synchronous rejection stops acquisition (0.961109ms)
+✔ failed acquisition closes registration before reverse rollback awaits (0.593807ms)
+✔ uncertain registration retains callback charge, fails session and never retries (0.394071ms)
+✔ pending publication accepts zero/multiple but never substitutes ack (1.363265ms)
+✔ wrong endpoint and wrong effect cannot settle pending operations (0.540476ms)
+✔ RPC IDs are never reused across endpoints and retired replies remain endpoint-bound (0.565284ms)
+✔ 64 pending requests shared across endpoints reject before send (2.441235ms)
+✔ synchronous pending RPC pumps until actual reply, not a Promise surrogate (0.449617ms)
+✔ broker registrations consume the same Host-owned lifetime effect ledger (0.804926ms)
+ℹ tests 39
+ℹ suites 0
+ℹ pass 39
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 21633.673151

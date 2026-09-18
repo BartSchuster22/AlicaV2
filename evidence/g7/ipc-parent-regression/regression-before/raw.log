@@ -1,0 +1,59 @@
+
+> alica-v2@0.0.0 build
+> node tools/build.mjs
+
+(node:206778) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✖ established binding isolates real deadline retirement: broker-running (5971.236844ms)
+ℹ {"schedule":"broker-running","held":1,"heldKind":"bind","events":[{"phase":"hold","kind":"bind","remainingMs":4472},{"phase":"retire","terminal":"CANCELLED"},{"phase":"physical-failure"},{"phase":"reaped","pid":206785,"code":1,"signal":null,"elapsedMs":5825.728264}]}
+✖ established binding isolates real deadline retirement: broker-stalled (5962.265279ms)
+ℹ {"schedule":"broker-stalled","held":1,"heldKind":"bind","events":[{"phase":"hold","kind":"bind","remainingMs":4472},{"phase":"broker-resumed"},{"phase":"physical-failure"},{"phase":"retire","terminal":"CANCELLED"},{"phase":"reaped","pid":206802,"code":1,"signal":null,"elapsedMs":5846.6599289999995}]}
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12229.976016
+
+✖ failing tests:
+
+test at tests/ipc/qualification-consumer.test.mjs:218:3
+✖ established binding isolates real deadline retirement: broker-running (5971.236844ms)
+  Error [AcapError]: UNAVAILABLE
+      at ContractSession.call (file:///home/alica-dev/AlicaV2/packages/acap-contracts/dist/runtime.js:521:19)
+      at async TestContext.<anonymous> (file:///home/alica-dev/AlicaV2/tests/ipc/qualification-consumer.test.mjs:270:20)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    code: 'UNAVAILABLE',
+    correlationId: '4e82f21e-0d88-4d37-b843-58852afb2b1b',
+    retryable: false
+  }
+
+test at tests/ipc/qualification-consumer.test.mjs:218:3
+✖ established binding isolates real deadline retirement: broker-stalled (5962.265279ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   code: 'UNAVAILABLE'
+  -   code: 'DEADLINE_EXCEEDED'
+    }
+  
+      at async TestContext.<anonymous> (file:///home/alica-dev/AlicaV2/tests/ipc/qualification-consumer.test.mjs:267:7)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: AcapError: UNAVAILABLE
+        at ContractSession.call (file:///home/alica-dev/AlicaV2/packages/acap-contracts/dist/runtime.js:521:19)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async TestContext.<anonymous> (file:///home/alica-dev/AlicaV2/tests/ipc/qualification-consumer.test.mjs:267:7)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: { code: 'DEADLINE_EXCEEDED' },
+    operator: 'rejects',
+    diff: 'simple'
+  }

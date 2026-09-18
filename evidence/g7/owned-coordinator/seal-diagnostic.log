@@ -1,0 +1,393 @@
+TAP version 13
+# Subtest: sealing excludes concurrent v1/v2 starts stops and mutations without a successor
+not ok 1 - sealing excludes concurrent v1/v2 starts stops and mutations without a successor
+  ---
+  duration_ms: 2755.80786
+  type: 'test'
+  location: '/home/alica-dev/AlicaV2/tests/g7/owned-coordinator.test.mjs:415:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    ... Skipped lines
+    
+      {
+        'accepted.json': {
+          ino: 428772,
+          mode: 33152,
+          mtimeMs: 1789719487904.328,
+    ...
+        'kernel.json': {
+    +     ino: 428782,
+    -     ino: 428773,
+          mode: 33152,
+    +     mtimeMs: 1789719487993.3284,
+    +     sha256: 'sha256:0b887941c70bd5de597de0f7fb54d06f5ff61c02698513559a28cbd4ba4ac1f4'
+    -     mtimeMs: 1789719487890.3276,
+    -     sha256: 'sha256:2d51c83930ac2cad4789a9600db534ebd5c87041bf4e71f9e7e9434e893e1500'
+        },
+        'releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/authorization.json': {
+          ino: 428770,
+          mode: 33152,
+          mtimeMs: 1789719485910.315,
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    accepted.json:
+      sha256: 'sha256:e4ef4fa16910aa6bd03126c64fc0178cfe50a78de768a8f129fecb0a83e30a5a'
+      ino: 428772
+      mode: 33152
+      mtimeMs: 1789719487904.328
+    floor.json:
+      sha256: 'sha256:80561a56bfc9f7b88bb05163a61f1d760cf8abafb91216a222dbcc853bd78dac'
+      ino: 428779
+      mode: 33152
+      mtimeMs: 1789719487896.328
+    identity.json:
+      sha256: 'sha256:02bf5644562f5c0e07a87b85d1834eaca62a37f77649928122382f17d7161ebe'
+      ino: 428715
+      mode: 33152
+      mtimeMs: 1789719485441.312
+    kernel.json:
+      sha256: 'sha256:2d51c83930ac2cad4789a9600db534ebd5c87041bf4e71f9e7e9434e893e1500'
+      ino: 428773
+      mode: 33152
+      mtimeMs: 1789719487890.3276
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/authorization.json:
+      sha256: 'sha256:cc2d2c5ac902bcb65235368faa8f2c499e2e2b411fc753c613cd6972f7fe99a4'
+      ino: 428770
+      mode: 33152
+      mtimeMs: 1789719485910.315
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/bundle-signature.json:
+      sha256: 'sha256:cb17087d0541a1b6286e6da3f38f91be08d8346e4e6bebdf0fd7f3a121ad9cb3'
+      ino: 428731
+      mode: 33152
+      mtimeMs: 1789719485854.3147
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/bundle.json:
+      sha256: 'sha256:d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90'
+      ino: 428730
+      mode: 33152
+      mtimeMs: 1789719485852.3147
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/docs/fixture.txt:
+      sha256: 'sha256:23472d77cf14065f05744d9159c2c53595dc0c3126867382ca47091106f1a3ba'
+      ino: 428733
+      mode: 33152
+      mtimeMs: 1789719485856.3147
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/plugins/org.alica.client/code/index.js:
+      sha256: 'sha256:ef2ed2a9ec4c6f3cd911387ade1ea2823f0962502579211f9281cbb94fab9121'
+      ino: 428737
+      mode: 33152
+      mtimeMs: 1789719485860.3147
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/plugins/org.alica.client/index.json:
+      sha256: 'sha256:69bfa3ce25fe967bbfa054888d22f42a2a2aa958d77138d84c54ebeda05279bd'
+      ino: 428738
+      mode: 33152
+      mtimeMs: 1789719485862.3147
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/plugins/org.alica.client/manifest.json:
+      sha256: 'sha256:107541f5de58c2adac4698bd172abbe4f3dc53a4dbbe95a204ad834a446dc6b0'
+      ino: 428739
+      mode: 33152
+      mtimeMs: 1789719485864.3147
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/plugins/org.alica.consumer/code/index.js:
+      sha256: 'sha256:e0522ba07461ff9cfe69a3350866107ad5766c2804a05ee6323e6fd7c18e2b69'
+      ino: 428742
+      mode: 33152
+      mtimeMs: 1789719485868.3147
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/plugins/org.alica.consumer/contracts/c0.json:
+      sha256: 'sha256:0ef2f30880956bd7e5d2bbab948573d55bd9d756170881193f25259c0c8fd000'
+      ino: 428744
+      mode: 33152
+      mtimeMs: 1789719485871.3147
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/plugins/org.alica.consumer/index.json:
+      sha256: 'sha256:a0f8143f73812f9f9fc7f8d0856523397a4c3fdb77b0e74a35bfd8b1313aab75'
+      ino: 428745
+      mode: 33152
+      mtimeMs: 1789719485874.3147
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/plugins/org.alica.consumer/manifest.json:
+      sha256: 'sha256:f8b2e71b3b10b3bedc4d1ed90ca95f434a1cce705aa3ba2d9c3b6893ad11ddfd'
+      ino: 428746
+      mode: 33152
+      mtimeMs: 1789719485876.3147
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/plugins/org.alica.echoa/code/index.js:
+      sha256: 'sha256:9c6e00f7fa07f8b0fb579e2ed03f1afa7023b2bfe0692936114e37383a1e5dfe'
+      ino: 428749
+      mode: 33152
+      mtimeMs: 1789719485880.315
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/plugins/org.alica.echoa/contracts/c0.json:
+      sha256: 'sha256:58ee9f01fb4948faf71ed7a3468d55563f3117faccecb8a3b1ebc81ff0aee649'
+      ino: 428751
+      mode: 33152
+      mtimeMs: 1789719485882.315
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/plugins/org.alica.echoa/index.json:
+      sha256: 'sha256:bbbfe40e40f220301de43bcb18edd7c85e0e85162176dde109363ed869fff356'
+      ino: 428752
+      mode: 33152
+      mtimeMs: 1789719485884.315
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/plugins/org.alica.echoa/manifest.json:
+      sha256: 'sha256:4ad8c2ede6a8224c643078807f644c053fca29179546889ad59e28fbebe09e0b'
+      ino: 428753
+      mode: 33152
+      mtimeMs: 1789719485886.315
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/profile/lock.json:
+      sha256: 'sha256:0ed3703608f0b5183a460eb4f1db6c2ac514f2cd93fa75b70d4ea6da965face0'
+      ino: 428755
+      mode: 33152
+      mtimeMs: 1789719485888.315
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/profile/profile.json:
+      sha256: 'sha256:a48428faaf22d426078feb215a2adde17e7aa1d6de9b4290fb9c297cf10f654a'
+      ino: 428756
+      mode: 33152
+      mtimeMs: 1789719485890.315
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/provenance/build.json:
+      sha256: 'sha256:ffbc2dfc402782325da71132100e74ff511d1585dd80e4ea196ed4bcace3fef2'
+      ino: 428758
+      mode: 33152
+      mtimeMs: 1789719485892.315
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/runtime/fixture.txt:
+      sha256: 'sha256:999d412febdcd686cbcb86c753139405308ed372566ff1c188578e67b79c979a'
+      ino: 428760
+      mode: 33152
+      mtimeMs: 1789719485894.315
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/sbom/sbom.json:
+      sha256: 'sha256:ffbc2dfc402782325da71132100e74ff511d1585dd80e4ea196ed4bcace3fef2'
+      ino: 428762
+      mode: 33152
+      mtimeMs: 1789719485897.315
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/schemas/fixture.json:
+      sha256: 'sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a'
+      ino: 428764
+      mode: 33152
+      mtimeMs: 1789719485900.315
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/trust/policy-signature.json:
+      sha256: 'sha256:fe092de16f8dc76a256aaea9072eef8c5876ac26c49b771569e6c4cbbcdadd8d'
+      ino: 428766
+      mode: 33152
+      mtimeMs: 1789719485902.315
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/trust/policy.json:
+      sha256: 'sha256:4ac6ccb87a7e416087561237d403c0182c4fb3651f7e487e0b4b927731d9596f'
+      ino: 428767
+      mode: 33152
+      mtimeMs: 1789719485904.315
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/trust/revocation-signature.json:
+      sha256: 'sha256:6335586291016adad6d490898434154fc06a41ae7ed9ecf0b0b428c9487357a1'
+      ino: 428768
+      mode: 33152
+      mtimeMs: 1789719485906.315
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/trust/revocation.json:
+      sha256: 'sha256:2d5bf922715def8a41e8b6bb1d55fab8a20b526b4209888264e6765e2f7f63fe'
+      ino: 428769
+      mode: 33152
+      mtimeMs: 1789719485908.315
+    supervision/incarnation.json:
+      sha256: 'sha256:8f9eb61ce77b6f9cca5d1c30340875d67c1e0d19dd57ff316b3ae8643ef410a4'
+      ino: 428722
+      mode: 33152
+      mtimeMs: 1789719485504.3125
+    transactions/0ebddeef-4105-43db-b625-bcc200df7b61/000001.json:
+      sha256: 'sha256:c665fb8c9824d33c5125e771004d6c0d45cd65e2b5b4ec14c04353cfc8d901bd'
+      ino: 428727
+      mode: 33152
+      mtimeMs: 1789719485845.3147
+    transactions/0ebddeef-4105-43db-b625-bcc200df7b61/000002.json:
+      sha256: 'sha256:7f7f4077598d0c1e2b7c68613f6ecdd2742bc38677506a4e7ae4c100dd2e0071'
+      ino: 428725
+      mode: 33152
+      mtimeMs: 1789719485978.3154
+    transactions/0ebddeef-4105-43db-b625-bcc200df7b61/000003.json:
+      sha256: 'sha256:a6b0b4d606c0566322f0e414ad0e8d6fd933e823f9237649c413c304f9617d45'
+      ino: 428718
+      mode: 33152
+      mtimeMs: 1789719485984.3154
+    transactions/0ebddeef-4105-43db-b625-bcc200df7b61/000004.json:
+      sha256: 'sha256:00512bd5b2796d2d1766a023aacc77524c1c245eef09fddd324f9b940ed45cac'
+      ino: 428780
+      mode: 33152
+      mtimeMs: 1789719487907.328
+  actual:
+    accepted.json:
+      sha256: 'sha256:e4ef4fa16910aa6bd03126c64fc0178cfe50a78de768a8f129fecb0a83e30a5a'
+      ino: 428772
+      mode: 33152
+      mtimeMs: 1789719487904.328
+    floor.json:
+      sha256: 'sha256:80561a56bfc9f7b88bb05163a61f1d760cf8abafb91216a222dbcc853bd78dac'
+      ino: 428779
+      mode: 33152
+      mtimeMs: 1789719487896.328
+    identity.json:
+      sha256: 'sha256:02bf5644562f5c0e07a87b85d1834eaca62a37f77649928122382f17d7161ebe'
+      ino: 428715
+      mode: 33152
+      mtimeMs: 1789719485441.312
+    kernel.json:
+      sha256: 'sha256:0b887941c70bd5de597de0f7fb54d06f5ff61c02698513559a28cbd4ba4ac1f4'
+      ino: 428782
+      mode: 33152
+      mtimeMs: 1789719487993.3284
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/authorization.json:
+      sha256: 'sha256:cc2d2c5ac902bcb65235368faa8f2c499e2e2b411fc753c613cd6972f7fe99a4'
+      ino: 428770
+      mode: 33152
+      mtimeMs: 1789719485910.315
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/bundle-signature.json:
+      sha256: 'sha256:cb17087d0541a1b6286e6da3f38f91be08d8346e4e6bebdf0fd7f3a121ad9cb3'
+      ino: 428731
+      mode: 33152
+      mtimeMs: 1789719485854.3147
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/bundle.json:
+      sha256: 'sha256:d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90'
+      ino: 428730
+      mode: 33152
+      mtimeMs: 1789719485852.3147
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/docs/fixture.txt:
+      sha256: 'sha256:23472d77cf14065f05744d9159c2c53595dc0c3126867382ca47091106f1a3ba'
+      ino: 428733
+      mode: 33152
+      mtimeMs: 1789719485856.3147
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/plugins/org.alica.client/code/index.js:
+      sha256: 'sha256:ef2ed2a9ec4c6f3cd911387ade1ea2823f0962502579211f9281cbb94fab9121'
+      ino: 428737
+      mode: 33152
+      mtimeMs: 1789719485860.3147
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/plugins/org.alica.client/index.json:
+      sha256: 'sha256:69bfa3ce25fe967bbfa054888d22f42a2a2aa958d77138d84c54ebeda05279bd'
+      ino: 428738
+      mode: 33152
+      mtimeMs: 1789719485862.3147
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/plugins/org.alica.client/manifest.json:
+      sha256: 'sha256:107541f5de58c2adac4698bd172abbe4f3dc53a4dbbe95a204ad834a446dc6b0'
+      ino: 428739
+      mode: 33152
+      mtimeMs: 1789719485864.3147
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/plugins/org.alica.consumer/code/index.js:
+      sha256: 'sha256:e0522ba07461ff9cfe69a3350866107ad5766c2804a05ee6323e6fd7c18e2b69'
+      ino: 428742
+      mode: 33152
+      mtimeMs: 1789719485868.3147
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/plugins/org.alica.consumer/contracts/c0.json:
+      sha256: 'sha256:0ef2f30880956bd7e5d2bbab948573d55bd9d756170881193f25259c0c8fd000'
+      ino: 428744
+      mode: 33152
+      mtimeMs: 1789719485871.3147
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/plugins/org.alica.consumer/index.json:
+      sha256: 'sha256:a0f8143f73812f9f9fc7f8d0856523397a4c3fdb77b0e74a35bfd8b1313aab75'
+      ino: 428745
+      mode: 33152
+      mtimeMs: 1789719485874.3147
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/plugins/org.alica.consumer/manifest.json:
+      sha256: 'sha256:f8b2e71b3b10b3bedc4d1ed90ca95f434a1cce705aa3ba2d9c3b6893ad11ddfd'
+      ino: 428746
+      mode: 33152
+      mtimeMs: 1789719485876.3147
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/plugins/org.alica.echoa/code/index.js:
+      sha256: 'sha256:9c6e00f7fa07f8b0fb579e2ed03f1afa7023b2bfe0692936114e37383a1e5dfe'
+      ino: 428749
+      mode: 33152
+      mtimeMs: 1789719485880.315
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/plugins/org.alica.echoa/contracts/c0.json:
+      sha256: 'sha256:58ee9f01fb4948faf71ed7a3468d55563f3117faccecb8a3b1ebc81ff0aee649'
+      ino: 428751
+      mode: 33152
+      mtimeMs: 1789719485882.315
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/plugins/org.alica.echoa/index.json:
+      sha256: 'sha256:bbbfe40e40f220301de43bcb18edd7c85e0e85162176dde109363ed869fff356'
+      ino: 428752
+      mode: 33152
+      mtimeMs: 1789719485884.315
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/plugins/org.alica.echoa/manifest.json:
+      sha256: 'sha256:4ad8c2ede6a8224c643078807f644c053fca29179546889ad59e28fbebe09e0b'
+      ino: 428753
+      mode: 33152
+      mtimeMs: 1789719485886.315
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/profile/lock.json:
+      sha256: 'sha256:0ed3703608f0b5183a460eb4f1db6c2ac514f2cd93fa75b70d4ea6da965face0'
+      ino: 428755
+      mode: 33152
+      mtimeMs: 1789719485888.315
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/profile/profile.json:
+      sha256: 'sha256:a48428faaf22d426078feb215a2adde17e7aa1d6de9b4290fb9c297cf10f654a'
+      ino: 428756
+      mode: 33152
+      mtimeMs: 1789719485890.315
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/provenance/build.json:
+      sha256: 'sha256:ffbc2dfc402782325da71132100e74ff511d1585dd80e4ea196ed4bcace3fef2'
+      ino: 428758
+      mode: 33152
+      mtimeMs: 1789719485892.315
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/runtime/fixture.txt:
+      sha256: 'sha256:999d412febdcd686cbcb86c753139405308ed372566ff1c188578e67b79c979a'
+      ino: 428760
+      mode: 33152
+      mtimeMs: 1789719485894.315
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/sbom/sbom.json:
+      sha256: 'sha256:ffbc2dfc402782325da71132100e74ff511d1585dd80e4ea196ed4bcace3fef2'
+      ino: 428762
+      mode: 33152
+      mtimeMs: 1789719485897.315
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/schemas/fixture.json:
+      sha256: 'sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a'
+      ino: 428764
+      mode: 33152
+      mtimeMs: 1789719485900.315
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/trust/policy-signature.json:
+      sha256: 'sha256:fe092de16f8dc76a256aaea9072eef8c5876ac26c49b771569e6c4cbbcdadd8d'
+      ino: 428766
+      mode: 33152
+      mtimeMs: 1789719485902.315
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/trust/policy.json:
+      sha256: 'sha256:4ac6ccb87a7e416087561237d403c0182c4fb3651f7e487e0b4b927731d9596f'
+      ino: 428767
+      mode: 33152
+      mtimeMs: 1789719485904.315
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/trust/revocation-signature.json:
+      sha256: 'sha256:6335586291016adad6d490898434154fc06a41ae7ed9ecf0b0b428c9487357a1'
+      ino: 428768
+      mode: 33152
+      mtimeMs: 1789719485906.315
+    releases/d1daeb43410fa2fd03d9cf9a4ee5e36f150186536d51e2e5fa28d9c318f28e90/trust/revocation.json:
+      sha256: 'sha256:2d5bf922715def8a41e8b6bb1d55fab8a20b526b4209888264e6765e2f7f63fe'
+      ino: 428769
+      mode: 33152
+      mtimeMs: 1789719485908.315
+    supervision/incarnation.json:
+      sha256: 'sha256:8f9eb61ce77b6f9cca5d1c30340875d67c1e0d19dd57ff316b3ae8643ef410a4'
+      ino: 428722
+      mode: 33152
+      mtimeMs: 1789719485504.3125
+    transactions/0ebddeef-4105-43db-b625-bcc200df7b61/000001.json:
+      sha256: 'sha256:c665fb8c9824d33c5125e771004d6c0d45cd65e2b5b4ec14c04353cfc8d901bd'
+      ino: 428727
+      mode: 33152
+      mtimeMs: 1789719485845.3147
+    transactions/0ebddeef-4105-43db-b625-bcc200df7b61/000002.json:
+      sha256: 'sha256:7f7f4077598d0c1e2b7c68613f6ecdd2742bc38677506a4e7ae4c100dd2e0071'
+      ino: 428725
+      mode: 33152
+      mtimeMs: 1789719485978.3154
+    transactions/0ebddeef-4105-43db-b625-bcc200df7b61/000003.json:
+      sha256: 'sha256:a6b0b4d606c0566322f0e414ad0e8d6fd933e823f9237649c413c304f9617d45'
+      ino: 428718
+      mode: 33152
+      mtimeMs: 1789719485984.3154
+    transactions/0ebddeef-4105-43db-b625-bcc200df7b61/000004.json:
+      sha256: 'sha256:00512bd5b2796d2d1766a023aacc77524c1c245eef09fddd324f9b940ed45cac'
+      ino: 428780
+      mode: 33152
+      mtimeMs: 1789719487907.328
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/alica-dev/AlicaV2/tests/g7/owned-coordinator.test.mjs:431:12)
+    process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3043.557025

@@ -1,0 +1,160 @@
+✔ exact reinstall under continuous same-owner clean custody is a byte/inode/mtime preserving no-op, repeatedly (2712.357542ms)
+✔ exact reinstall fails closed without writes: retained-artifact (2486.841166ms)
+✔ exact reinstall fails closed without writes: retained-extra (2436.606268ms)
+✔ exact reinstall fails closed without writes: retained-missing (2363.892878ms)
+✔ exact reinstall fails closed without writes: authorization (2348.423033ms)
+✔ exact reinstall fails closed without writes: accepted (2258.960781ms)
+✔ exact reinstall fails closed without writes: journal (2248.673232ms)
+✔ exact reinstall fails closed without writes: kernel-malformed (2460.227ms)
+✔ exact reinstall fails closed without writes: kernel-backward-clock (2366.569619ms)
+✔ exact reinstall fails closed without writes: floor-backward-clock (2404.612174ms)
+✔ exact reinstall fails closed without writes: expired (2336.896192ms)
+✔ exact reinstall fails closed without writes: revoked-bundle (2503.394172ms)
+✔ exact reinstall fails closed without writes: revoked-publisher (2351.089184ms)
+✔ exact reinstall fails closed without writes: revoked-package (2372.148033ms)
+✔ exact reinstall fails closed without writes: same-version-equivocation (2420.157301ms)
+✔ exact reinstall fails closed without writes: missing-trust (2370.312818ms)
+✔ exact reinstall fails closed without writes: candidate-tamper (2402.234528ms)
+✔ exact reinstall fails closed without writes: different-valid-candidate (2355.434777ms)
+✔ normal owner close/reopen cannot reconstruct clean custody from accepted bytes or journal (2395.17655ms)
+✔ unmodified CLI path establishes custody from inception and refuses later residue adoption (3889.689852ms)
+✔ owned coordinator: independent custodian and owner normal reaps precede real stopped verification; original Cell preserved (3597.592385ms)
+✔ owned coordinator loss retains fence at before-fsync-1 (367.047068ms)
+✔ owned coordinator loss retains fence at after-fsync-1 (397.40248ms)
+✔ owned coordinator loss retains fence at before-fsync-2 (385.610227ms)
+✔ owned coordinator loss retains fence at after-fsync-2 (384.645893ms)
+✔ owned coordinator loss retains fence at before-fsync-3 (408.681294ms)
+✔ owned coordinator loss retains fence at after-fsync-3 (367.012333ms)
+✔ owned coordinator loss retains fence at before-READY (2909.030983ms)
+✔ owned coordinator loss retains fence at after-READY (2953.11352ms)
+✔ owned coordinator loss retains fence at before-SEALED (2829.106247ms)
+✔ owned coordinator loss retains fence at after-SEALED (3102.757989ms)
+✔ owned coordinator loss retains fence at before-CLEAN (3223.518077ms)
+✔ owned coordinator loss retains fence at after-CLEAN (3210.915933ms)
+✔ owned coordinator loss retains fence at after-reap (3335.764909ms)
+✔ owned coordinator loss retains fence at before-maintenance (3286.765466ms)
+✔ owned coordinator loss retains fence at after-maintenance (3697.061442ms)
+✔ custodian abnormal death cannot become stopped permission at before-fsync-1 (241.482135ms)
+✔ custodian abnormal death cannot become stopped permission at after-fsync-1 (254.700591ms)
+✔ custodian abnormal death cannot become stopped permission at before-fsync-2 (224.102563ms)
+✔ custodian abnormal death cannot become stopped permission at after-fsync-2 (230.274874ms)
+✔ custodian abnormal death cannot become stopped permission at before-fsync-3 (219.457889ms)
+✔ custodian abnormal death cannot become stopped permission at after-fsync-3 (212.040094ms)
+✔ custodian abnormal death cannot become stopped permission at before-READY (2874.879579ms)
+✔ custodian abnormal death cannot become stopped permission at before-SEALED (2879.334356ms)
+✔ custodian abnormal death cannot become stopped permission at after-SEALED (2762.713551ms)
+✔ custodian abnormal death cannot become stopped permission at before-CLEAN (3024.568283ms)
+✔ custodian abnormal death cannot become stopped permission at after-CLEAN (2871.689494ms)
+✔ exact owner pidfd death denies maintenance at after-READY (2662.239597ms)
+✔ exact owner pidfd death denies maintenance at before-SEALED (2644.363142ms)
+✔ exact owner pidfd death denies maintenance at after-SEALED (2726.745495ms)
+✔ requests queued before seal cannot restart after the seal linearization point (3199.683868ms)
+✖ sealing excludes concurrent v1/v2 starts stops and mutations without a successor (2718.452622ms)
+✔ stopped verification rejects retained tamper without Cell writes (3072.149085ms)
+✔ stopped verification rejects archive tamper without Cell writes (3286.618443ms)
+✔ stopped verification rejects current-trust tamper without Cell writes (3103.971289ms)
+test_actual_guarded_parent_death_contains_child_with_held_pidfd (__main__.Channels.test_actual_guarded_parent_death_contains_child_with_held_pidfd) ... ok
+test_authenticated_receive_return_late_is_not_permission (__main__.Channels.test_authenticated_receive_return_late_is_not_permission) ... ok
+test_forced_child_exit_is_never_normal_reap (__main__.Channels.test_forced_child_exit_is_never_normal_reap) ... ok
+test_late_real_normal_exit_is_not_a_reap_permit (__main__.Channels.test_late_real_normal_exit_is_not_a_reap_permit) ... ok
+test_non_parent_guard_is_rejected (__main__.Channels.test_non_parent_guard_is_rejected) ... ok
+test_plain_inherited_stream_fd_and_closed_channel_are_not_credentials (__main__.Channels.test_plain_inherited_stream_fd_and_closed_channel_are_not_credentials) ... ok
+test_real_child_credentials_and_held_pidfd_normal_reap (__main__.Channels.test_real_child_credentials_and_held_pidfd_normal_reap) ... ok
+test_socketpair_creator_is_not_actual_child_credential (__main__.Channels.test_socketpair_creator_is_not_actual_child_credential) ... ok
+test_syscall_return_late_normal_reap_is_not_permission (__main__.Channels.test_syscall_return_late_normal_reap_is_not_permission) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.145s
+
+OK
+
+✔ stopped verification rejects authorization tamper without Cell writes (3170.074183ms)
+✔ real Unix credentials reject forged/unowned/closed inherited channels and abnormal/late pidfd reaps (262.644419ms)
+✔ independent stopped worker blocked IO expires unchanged verification budget without release (302861.684136ms)
+✔ coordinator death kills the guarded independent stopped worker while retaining residue (3151.616693ms)
+✔ real owner blocked IO expires unchanged cleanup budget without offline admission (32559.221066ms)
+✔ real owner blocked IO expires unchanged verification budget without offline admission (300206.388262ms)
+✔ buffered genuine CLEAN and normal child exit cannot certify after the unchanged reap deadline (33289.394594ms)
+✔ blocked seal acknowledgement expires the actual unchanged cleanup budget without maintenance (32597.43377ms)
+✔ clean stop then authenticated same-revision start uses preserved bytes and new exact owner (8200.107732ms)
+✔ same-revision start: expired grants stay FAILED until clean stop and fresh issuance (13070.788234ms)
+✔ same-revision start rechecks newer current revocation while preserving accepted bytes and floor monotonicity (5989.013134ms)
+✔ same-revision start refuses fresh validation failure: authorization (3351.273217ms)
+✔ same-revision start refuses fresh validation failure: trust-signature (3399.106704ms)
+✔ same-revision start refuses fresh validation failure: revoked-bundle (3259.238931ms)
+✔ same-revision start refuses fresh validation failure: expired-trust (3290.225721ms)
+✔ same-revision start refuses fresh validation failure: policy-continuity (3219.848491ms)
+✔ same-revision start refuses fresh validation failure: accepted-sequence (3226.082437ms)
+✔ same-revision start refuses fresh validation failure: missing-selection (3130.426575ms)
+✔ same-revision start refuses fresh validation failure: journal (3140.685339ms)
+✔ same-revision start refuses fresh validation failure: artifact (3219.994466ms)
+✔ same-revision start refuses fresh validation failure: extra-file (3016.542943ms)
+✔ same-revision start refuses fresh validation failure: symlink (3166.57824ms)
+✔ same-revision start refuses fresh validation failure: future-floor (3240.221621ms)
+✔ same-revision start refuses fresh validation failure: kernel-residue (3074.292341ms)
+✔ same-revision start waits for actual prior owner reap, not its clean stopped message (2766.346754ms)
+✔ same-revision successor launch is not readiness; concurrent start conflicts and disconnect is not cancellation (7639.263243ms)
+✔ same-revision successor retains parent-death guard while blocked and residue denies takeover (3164.637697ms)
+✔ actual publication rename uncertainty forbids start and preserves selection without rollback (2808.138288ms)
+✔ actual floor-publication rename uncertainty forbids start and preserves selection without rollback (3092.662939ms)
+✔ same accepted provider fails actual successor activation without replacing artifacts (11132.183113ms)
+✔ same accepted provider fails actual successor readiness without replacing artifacts (12438.888888ms)
+✔ same-revision successor external 30s expiry is sticky and cannot authorize another owner (33138.10594ms)
+✔ same-revision successor-cleanup external 30s expiry is sticky and cannot authorize another owner (34923.342946ms)
+✔ clean stopped residue is not a restart permit after supervisor death (2834.221352ms)
+✔ restricted framing requires write EOF; delayed trailing bytes never execute stop (32747.284197ms)
+✔ supervised real IPC install, exact local admin status/stop, retained custody (2683.036184ms)
+✔ external SIGKILL of actual owner never proves descendants reaped; fence survives supervisor death (2576.684632ms)
+✔ real synchronous FIFO IO during outer cleanup: responsive admin, 30s external expiry, no restart (32547.475498ms)
+✔ activation blocked in real synchronous IO is externally killed without publication or new admission (30886.630783ms)
+✔ actual Unix peer credentials, malformed/duplicate/oversized frames and eight-connection ceiling (2906.87677ms)
+✔ launcher exits before real first-install completes; owner remains alive for authenticated status and clean stop (2727.781381ms)
+✔ supervisor SIGKILL terminates the blocked owner without an event-loop callback (715.564876ms)
+ℹ tests 97
+ℹ suites 0
+ℹ pass 96
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 786021.000641
+
+✖ failing tests:
+
+test at tests/g7/owned-coordinator.test.mjs:415:1
+✖ sealing excludes concurrent v1/v2 starts stops and mutations without a successor (2718.452622ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  ... Skipped lines
+  
+    {
+      'accepted.json': {
+        ino: 527371,
+        mode: 33152,
+        mtimeMs: 1789719378752.6277,
+  ...
+      'kernel.json': {
+  +     ino: 528703,
+  -     ino: 528565,
+        mode: 33152,
+  +     mtimeMs: 1789719378838.6284,
+  +     sha256: 'sha256:5da9fcff7fb7cfd7408f309998b09179a161f8d9d47af41072b2ab3fb24a4af4'
+  -     mtimeMs: 1789719378736.6277,
+  -     sha256: 'sha256:0f7ac1951bae81cd972c51bc19fe91d139444324f5499305b9998e86db9953c6'
+      },
+      'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/authorization.json': {
+        ino: 527358,
+        mode: 33152,
+        mtimeMs: 1789719376739.615,
+  
+      at TestContext.<anonymous> (file:///home/alica-dev/AlicaV2/tests/g7/owned-coordinator.test.mjs:431:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { 'accepted.json': { sha256: 'sha256:95192053cf761c6b160c6d8c1bee2526f37fb17e565edfd9e565c29ab2f2fd42', ino: 527371, mode: 33152, mtimeMs: 1789719378752.6277 }, 'floor.json': { sha256: 'sha256:06121cca7acaa8697ace850bf2449add1b604eafeae456492584ffc38f036fea', ino: 528676, mode: 33152, mtimeMs: 1789719378741.6277 }, 'identity.json': { sha256: 'sha256:986ffc393b1e1cf3693cec131b72bf9b6a0dfb72f70674f38a78a6e86c6af370', ino: 526975, mode: 33152, mtimeMs: 1789719376259.6118 }, 'kernel.json': { sha256: 'sha256:5da9fcff7fb7cfd7408f309998b09179a161f8d9d47af41072b2ab3fb24a4af4', ino: 528703, mode: 33152, mtimeMs: 1789719378838.6284 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/authorization.json': { sha256: 'sha256:cc2d2c5ac902bcb65235368faa8f2c499e2e2b411fc753c613cd6972f7fe99a4', ino: 527358, mode: 33152, mtimeMs: 1789719376739.615 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/bundle-signature.json': { sha256: 'sha256:56e2a11c7c6e13c8ab26f6e62f08c528879ad80fd611f9cc07e3750c65a67933', ino: 527011, mode: 33152, mtimeMs: 1789719376677.6145 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/bundle.json': { sha256: 'sha256:464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62', ino: 527010, mode: 33152, mtimeMs: 1789719376674.6145 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/docs/fixture.txt': { sha256: 'sha256:23472d77cf14065f05744d9159c2c53595dc0c3126867382ca47091106f1a3ba', ino: 527014, mode: 33152, mtimeMs: 1789719376680.6145 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/plugins/org.alica.client/code/index.js': { sha256: 'sha256:ef2ed2a9ec4c6f3cd911387ade1ea2823f0962502579211f9281cbb94fab9121', ino: 527019, mode: 33152, mtimeMs: 1789719376684.6145 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/plugins/org.alica.client/index.json': { sha256: 'sha256:69bfa3ce25fe967bbfa054888d22f42a2a2aa958d77138d84c54ebeda05279bd', ino: 527020, mode: 33152, mtimeMs: 1789719376689.6145 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/plugins/org.alica.client/manifest.json': { sha256: 'sha256:107541f5de58c2adac4698bd172abbe4f3dc53a4dbbe95a204ad834a446dc6b0', ino: 527021, mode: 33152, mtimeMs: 1789719376692.6145 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/plugins/org.alica.consumer/code/index.js': { sha256: 'sha256:e0522ba07461ff9cfe69a3350866107ad5766c2804a05ee6323e6fd7c18e2b69', ino: 527032, mode: 33152, mtimeMs: 1789719376695.6145 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/plugins/org.alica.consumer/contracts/c0.json': { sha256: 'sha256:0ef2f30880956bd7e5d2bbab948573d55bd9d756170881193f25259c0c8fd000', ino: 527110, mode: 33152, mtimeMs: 1789719376698.6147 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/plugins/org.alica.consumer/index.json': { sha256: 'sha256:a0f8143f73812f9f9fc7f8d0856523397a4c3fdb77b0e74a35bfd8b1313aab75', ino: 527120, mode: 33152, mtimeMs: 1789719376700.6147 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/plugins/org.alica.consumer/manifest.json': { sha256: 'sha256:f8b2e71b3b10b3bedc4d1ed90ca95f434a1cce705aa3ba2d9c3b6893ad11ddfd', ino: 527122, mode: 33152, mtimeMs: 1789719376703.6147 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/plugins/org.alica.echoa/code/index.js': { sha256: 'sha256:9c6e00f7fa07f8b0fb579e2ed03f1afa7023b2bfe0692936114e37383a1e5dfe', ino: 527145, mode: 33152, mtimeMs: 1789719376706.6147 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/plugins/org.alica.echoa/contracts/c0.json': { sha256: 'sha256:58ee9f01fb4948faf71ed7a3468d55563f3117faccecb8a3b1ebc81ff0aee649', ino: 527232, mode: 33152, mtimeMs: 1789719376708.6147 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/plugins/org.alica.echoa/index.json': { sha256: 'sha256:bbbfe40e40f220301de43bcb18edd7c85e0e85162176dde109363ed869fff356', ino: 527233, mode: 33152, mtimeMs: 1789719376710.6147 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/plugins/org.alica.echoa/manifest.json': { sha256: 'sha256:4ad8c2ede6a8224c643078807f644c053fca29179546889ad59e28fbebe09e0b', ino: 527242, mode: 33152, mtimeMs: 1789719376712.6147 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/profile/lock.json': { sha256: 'sha256:3a261439278bd076720c6dbc723877d1dc109dbcf06b9c600ebd1bd8771033d7', ino: 527271, mode: 33152, mtimeMs: 1789719376714.6147 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/profile/profile.json': { sha256: 'sha256:a48428faaf22d426078feb215a2adde17e7aa1d6de9b4290fb9c297cf10f654a', ino: 527272, mode: 33152, mtimeMs: 1789719376717.6147 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/provenance/build.json': { sha256: 'sha256:ffbc2dfc402782325da71132100e74ff511d1585dd80e4ea196ed4bcace3fef2', ino: 527308, mode: 33152, mtimeMs: 1789719376720.6147 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/runtime/fixture.txt': { sha256: 'sha256:999d412febdcd686cbcb86c753139405308ed372566ff1c188578e67b79c979a', ino: 527331, mode: 33152, mtimeMs: 1789719376722.6147 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/sbom/sbom.json': { sha256: 'sha256:ffbc2dfc402782325da71132100e74ff511d1585dd80e4ea196ed4bcace3fef2', ino: 527333, mode: 33152, mtimeMs: 1789719376725.6147 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/schemas/fixture.json': { sha256: 'sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a', ino: 527355, mode: 33152, mtimeMs: 1789719376728.6147 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/trust/policy-signature.json': { sha256: 'sha256:fbcdaa131e9c1f807a9ad322f878193381cf0c7cb4f0a0044a7adc70d7185779', ino: 527360, mode: 33152, mtimeMs: 1789719376731.6147 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/trust/policy.json': { sha256: 'sha256:6cb9cccf04bd1e128ad271049e932956bad8ed1855d7e834a990d6267c5b0d98', ino: 527361, mode: 33152, mtimeMs: 1789719376733.6147 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/trust/revocation-signature.json': { sha256: 'sha256:083f9e0e2c2f482dfd64f37b7a3ad4996ca900e17d43999204038fd6ff538b12', ino: 526979, mode: 33152, mtimeMs: 1789719376735.6147 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/trust/revocation.json': { sha256: 'sha256:20f9d6fed15f9fef96e2b2701910aaf065996ee12da8ca33650b359968d4bbd3', ino: 526993, mode: 33152, mtimeMs: 1789719376737.615 }, 'supervision/incarnation.json': { sha256: 'sha256:5c1c27961c264dbfdb0cae55380bf90bb908718be5237783765ad48f1f48b88c', ino: 526996, mode: 33152, mtimeMs: 1789719376314.612 }, 'transactions/11ca4fd7-5132-4218-97dc-037df10bf34f/000001.json': { sha256: 'sha256:bc43bc686c4761441d73b62238f0246db834305fbc368be84fbfaa6d89a20d0b', ino: 527005, mode: 33152, mtimeMs: 1789719376662.6145 }, 'transactions/11ca4fd7-5132-4218-97dc-037df10bf34f/000002.json': { sha256: 'sha256:c8b1c4cce3ba5051111060207e28e5310e4b58f7e35db4c1361cb373bb837bea', ino: 527002, mode: 33152, mtimeMs: 1789719376823.6155 }, 'transactions/11ca4fd7-5132-4218-97dc-037df10bf34f/000003.json': { sha256: 'sha256:61ddc950f49f5d62e8863eb4ebbc94f1728984294f9ca2c836f3cefd61049eba', ino: 527368, mode: 33152, mtimeMs: 1789719376830.6155 }, 'transactions/11ca4fd7-5132-4218-97dc-037df10bf34f/000004.json': { sha256: 'sha256:7e57cf9ea3f955a60a54626b690f10440d373b3701ea0bbb1ee0622801be5e7f', ino: 528699, mode: 33152, mtimeMs: 1789719378756.628 } },
+    expected: { 'accepted.json': { sha256: 'sha256:95192053cf761c6b160c6d8c1bee2526f37fb17e565edfd9e565c29ab2f2fd42', ino: 527371, mode: 33152, mtimeMs: 1789719378752.6277 }, 'floor.json': { sha256: 'sha256:06121cca7acaa8697ace850bf2449add1b604eafeae456492584ffc38f036fea', ino: 528676, mode: 33152, mtimeMs: 1789719378741.6277 }, 'identity.json': { sha256: 'sha256:986ffc393b1e1cf3693cec131b72bf9b6a0dfb72f70674f38a78a6e86c6af370', ino: 526975, mode: 33152, mtimeMs: 1789719376259.6118 }, 'kernel.json': { sha256: 'sha256:0f7ac1951bae81cd972c51bc19fe91d139444324f5499305b9998e86db9953c6', ino: 528565, mode: 33152, mtimeMs: 1789719378736.6277 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/authorization.json': { sha256: 'sha256:cc2d2c5ac902bcb65235368faa8f2c499e2e2b411fc753c613cd6972f7fe99a4', ino: 527358, mode: 33152, mtimeMs: 1789719376739.615 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/bundle-signature.json': { sha256: 'sha256:56e2a11c7c6e13c8ab26f6e62f08c528879ad80fd611f9cc07e3750c65a67933', ino: 527011, mode: 33152, mtimeMs: 1789719376677.6145 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/bundle.json': { sha256: 'sha256:464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62', ino: 527010, mode: 33152, mtimeMs: 1789719376674.6145 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/docs/fixture.txt': { sha256: 'sha256:23472d77cf14065f05744d9159c2c53595dc0c3126867382ca47091106f1a3ba', ino: 527014, mode: 33152, mtimeMs: 1789719376680.6145 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/plugins/org.alica.client/code/index.js': { sha256: 'sha256:ef2ed2a9ec4c6f3cd911387ade1ea2823f0962502579211f9281cbb94fab9121', ino: 527019, mode: 33152, mtimeMs: 1789719376684.6145 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/plugins/org.alica.client/index.json': { sha256: 'sha256:69bfa3ce25fe967bbfa054888d22f42a2a2aa958d77138d84c54ebeda05279bd', ino: 527020, mode: 33152, mtimeMs: 1789719376689.6145 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/plugins/org.alica.client/manifest.json': { sha256: 'sha256:107541f5de58c2adac4698bd172abbe4f3dc53a4dbbe95a204ad834a446dc6b0', ino: 527021, mode: 33152, mtimeMs: 1789719376692.6145 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/plugins/org.alica.consumer/code/index.js': { sha256: 'sha256:e0522ba07461ff9cfe69a3350866107ad5766c2804a05ee6323e6fd7c18e2b69', ino: 527032, mode: 33152, mtimeMs: 1789719376695.6145 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/plugins/org.alica.consumer/contracts/c0.json': { sha256: 'sha256:0ef2f30880956bd7e5d2bbab948573d55bd9d756170881193f25259c0c8fd000', ino: 527110, mode: 33152, mtimeMs: 1789719376698.6147 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/plugins/org.alica.consumer/index.json': { sha256: 'sha256:a0f8143f73812f9f9fc7f8d0856523397a4c3fdb77b0e74a35bfd8b1313aab75', ino: 527120, mode: 33152, mtimeMs: 1789719376700.6147 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/plugins/org.alica.consumer/manifest.json': { sha256: 'sha256:f8b2e71b3b10b3bedc4d1ed90ca95f434a1cce705aa3ba2d9c3b6893ad11ddfd', ino: 527122, mode: 33152, mtimeMs: 1789719376703.6147 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/plugins/org.alica.echoa/code/index.js': { sha256: 'sha256:9c6e00f7fa07f8b0fb579e2ed03f1afa7023b2bfe0692936114e37383a1e5dfe', ino: 527145, mode: 33152, mtimeMs: 1789719376706.6147 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/plugins/org.alica.echoa/contracts/c0.json': { sha256: 'sha256:58ee9f01fb4948faf71ed7a3468d55563f3117faccecb8a3b1ebc81ff0aee649', ino: 527232, mode: 33152, mtimeMs: 1789719376708.6147 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/plugins/org.alica.echoa/index.json': { sha256: 'sha256:bbbfe40e40f220301de43bcb18edd7c85e0e85162176dde109363ed869fff356', ino: 527233, mode: 33152, mtimeMs: 1789719376710.6147 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/plugins/org.alica.echoa/manifest.json': { sha256: 'sha256:4ad8c2ede6a8224c643078807f644c053fca29179546889ad59e28fbebe09e0b', ino: 527242, mode: 33152, mtimeMs: 1789719376712.6147 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/profile/lock.json': { sha256: 'sha256:3a261439278bd076720c6dbc723877d1dc109dbcf06b9c600ebd1bd8771033d7', ino: 527271, mode: 33152, mtimeMs: 1789719376714.6147 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/profile/profile.json': { sha256: 'sha256:a48428faaf22d426078feb215a2adde17e7aa1d6de9b4290fb9c297cf10f654a', ino: 527272, mode: 33152, mtimeMs: 1789719376717.6147 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/provenance/build.json': { sha256: 'sha256:ffbc2dfc402782325da71132100e74ff511d1585dd80e4ea196ed4bcace3fef2', ino: 527308, mode: 33152, mtimeMs: 1789719376720.6147 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/runtime/fixture.txt': { sha256: 'sha256:999d412febdcd686cbcb86c753139405308ed372566ff1c188578e67b79c979a', ino: 527331, mode: 33152, mtimeMs: 1789719376722.6147 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/sbom/sbom.json': { sha256: 'sha256:ffbc2dfc402782325da71132100e74ff511d1585dd80e4ea196ed4bcace3fef2', ino: 527333, mode: 33152, mtimeMs: 1789719376725.6147 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/schemas/fixture.json': { sha256: 'sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a', ino: 527355, mode: 33152, mtimeMs: 1789719376728.6147 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/trust/policy-signature.json': { sha256: 'sha256:fbcdaa131e9c1f807a9ad322f878193381cf0c7cb4f0a0044a7adc70d7185779', ino: 527360, mode: 33152, mtimeMs: 1789719376731.6147 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/trust/policy.json': { sha256: 'sha256:6cb9cccf04bd1e128ad271049e932956bad8ed1855d7e834a990d6267c5b0d98', ino: 527361, mode: 33152, mtimeMs: 1789719376733.6147 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/trust/revocation-signature.json': { sha256: 'sha256:083f9e0e2c2f482dfd64f37b7a3ad4996ca900e17d43999204038fd6ff538b12', ino: 526979, mode: 33152, mtimeMs: 1789719376735.6147 }, 'releases/464eeae83ab6bf06cbaf5a59efb6eeb0837f7bba7dcd9873a093f631de149d62/trust/revocation.json': { sha256: 'sha256:20f9d6fed15f9fef96e2b2701910aaf065996ee12da8ca33650b359968d4bbd3', ino: 526993, mode: 33152, mtimeMs: 1789719376737.615 }, 'supervision/incarnation.json': { sha256: 'sha256:5c1c27961c264dbfdb0cae55380bf90bb908718be5237783765ad48f1f48b88c', ino: 526996, mode: 33152, mtimeMs: 1789719376314.612 }, 'transactions/11ca4fd7-5132-4218-97dc-037df10bf34f/000001.json': { sha256: 'sha256:bc43bc686c4761441d73b62238f0246db834305fbc368be84fbfaa6d89a20d0b', ino: 527005, mode: 33152, mtimeMs: 1789719376662.6145 }, 'transactions/11ca4fd7-5132-4218-97dc-037df10bf34f/000002.json': { sha256: 'sha256:c8b1c4cce3ba5051111060207e28e5310e4b58f7e35db4c1361cb373bb837bea', ino: 527002, mode: 33152, mtimeMs: 1789719376823.6155 }, 'transactions/11ca4fd7-5132-4218-97dc-037df10bf34f/000003.json': { sha256: 'sha256:61ddc950f49f5d62e8863eb4ebbc94f1728984294f9ca2c836f3cefd61049eba', ino: 527368, mode: 33152, mtimeMs: 1789719376830.6155 }, 'transactions/11ca4fd7-5132-4218-97dc-037df10bf34f/000004.json': { sha256: 'sha256:7e57cf9ea3f955a60a54626b690f10440d373b3701ea0bbb1ee0622801be5e7f', ino: 528699, mode: 33152, mtimeMs: 1789719378756.628 } },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

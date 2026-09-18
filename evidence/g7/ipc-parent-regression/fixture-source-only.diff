@@ -1,0 +1,28 @@
+--- original-provider-source-generator
++++ candidate-provider-source-generator
+@@ -2,18 +2,22 @@
+   return `import {AcapError} from '@alica/acap-contracts';
+   export async function activate(ctx) {
+     let entered=0, cancelled=0, mutations=0;
++    // Reuse a settled binding. Rebinding inside an expiring invocation is an
++    // SDK mutation whose unknown outcome correctly fails the IPC session.
++    let downstream;
++    const bind=async()=>downstream ??= await ctx.optional(${JSON.stringify(other)});
+     ctx.provide(${JSON.stringify(own)}, {run:async(command, op)=>{
+       if(command==='counts') return entered+':'+cancelled+':'+mutations;
+       if(command==='leaf') return 'leaf';
+       if(command==='mutate') return String(++mutations);
+-      if(command==='deny') {const bound=await ctx.optional(${JSON.stringify(other)});return bound.call('run','leaf',{deadlineMs:op.deadlineMs,signal:op.signal})}
++      if(command==='deny') {const bound=await bind();return bound.call('run','leaf',{deadlineMs:op.deadlineMs,signal:op.signal})}
+       if(command.startsWith('nest:')) {
+         const n=Number(command.slice(5)); if(n===0)return 'leaf';
+-        const bound=await ctx.optional(${JSON.stringify(other)});
++        const bound=await bind();
+         return bound.call('run','nest:'+(n-1),{deadlineMs:op.deadlineMs,signal:op.signal});
+       }
+       if(command==='descendant') {
+-        const bound=await ctx.optional(${JSON.stringify(other)});
++        const bound=await bind();
+         return bound.call('run','wait',{deadlineMs:op.deadlineMs,signal:op.signal});
+       }
+       if(command==='wait') {

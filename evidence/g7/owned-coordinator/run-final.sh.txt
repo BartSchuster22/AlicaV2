@@ -1,0 +1,24 @@
+#!/bin/bash
+set -u
+cd /home/alica-dev/AlicaV2
+export PATH="$PWD/.tools/node/bin:$PATH"
+e=evidence/g7/owned-coordinator
+sources=(tools/g7-supervisor.py tools/g7-owned-coordinator.py tools/g7-stopped-verify.mjs tests/g7/owned-coordinator-driver.py tests/g7/owned-coordinator.test.mjs tests/g7/owned-channel-process.py tests/g7/owned-coordinator-block.mjs)
+date -u > "$e/final-run-start.txt"
+./node_modules/.bin/prettier --write tools/g7-stopped-verify.mjs tests/g7/owned-coordinator.test.mjs tests/g7/owned-coordinator-block.mjs > "$e/format-final.log" 2>&1
+code=$?; printf '%s\n' "$code" > "$e/format-final.exit"
+if [ "$code" != 0 ]; then exit "$code"; fi
+sha256sum "${sources[@]}" > "$e/before-focused.sha256"
+G7_OWNED_EVIDENCE="$PWD/$e/focused-final-process" G7_LIFECYCLE_EVIDENCE="$PWD/$e/focused-final-exact-noop" node --experimental-vm-modules --test tests/g7/owned-coordinator.test.mjs tests/g7/supervision.test.mjs tests/g7/exact-reinstall.test.mjs > "$e/focused-final.log" 2>&1
+code=$?; printf '%s\n' "$code" > "$e/focused-final.exit"
+sha256sum "${sources[@]}" > "$e/after-focused.sha256"
+if [ "$code" != 0 ]; then exit "$code"; fi
+sha256sum "${sources[@]}" > "$e/before-full.sha256"
+date -u > "$e/full-start.txt"
+G7_OWNED_EVIDENCE="$PWD/$e/full-process" G7_LIFECYCLE_EVIDENCE="$PWD/$e/full-exact-noop" npm run check > "$e/full-check.log" 2>&1
+code=$?; printf '%s\n' "$code" > "$e/full-check.exit"
+date -u > "$e/full-end.txt"
+sha256sum "${sources[@]}" > "$e/after-full.sha256"
+git diff --check > "$e/remote-diff-check.log" 2>&1
+printf '%s\n' "$?" > "$e/remote-diff-check.exit"
+exit "$code"

@@ -14,6 +14,7 @@ import { HostIPC } from '../../packages/kernel/dist/g6/host-adapter.js';
 import { PhysicalSession } from '../../packages/kernel/dist/g6/session.js';
 import { AcapError } from '@alica/acap-contracts';
 import { SDKPending } from '../../packages/kernel/dist/g6/sdk-rpc.js';
+import { a, b, factory } from './qualification-consumer-fixture.mjs';
 
 const pause = () => new Promise((resolve) => setTimeout(resolve, 5));
 async function until(fn) {
@@ -375,7 +376,12 @@ test('synchronous scope observation timeout is local, malformed response remains
 });
 
 test('unanswered SDK mutation and effect-release remain fail-closed on endpoint abort', async () => {
-  for (const expected of [['registered'], ['effect-released'], ['ack']]) {
+  for (const expected of [
+    ['registered'],
+    ['effect-released'],
+    ['ack'],
+    ['bound', 'absent'],
+  ]) {
     let failed = 0;
     const rpc = new SDKPending(() => {
       failed++;
@@ -398,3 +404,106 @@ test('unanswered SDK mutation and effect-release remain fail-closed on endpoint 
     assert.equal(rpc.size, 0);
   }
 });
+
+// Hold exactly one authenticated descendant request across its actual deadline.
+// No mocked timers, synthetic errors, extra budget, or full-suite serialization.
+// A binding mutation of unknown outcome must fail closed; a logical outbound
+// call must not. Both schedules failed with the old per-invocation binding.
+for (const schedule of ['broker-running', 'broker-stalled'])
+  test(
+    `established binding isolates real deadline retirement: ${schedule}`,
+    { timeout: 30000 },
+    async (t) => {
+      const e = await factory(t, 'ipc');
+      e.grant(e.A, b.id, ['run']);
+      e.grant(e.B, a.id, ['run']);
+      const call = (bound, value) =>
+        bound.call('run', value, { deadlineMs: Date.now() + 4500 });
+      assert.equal(await call(e.ca, 'nest:2'), 'leaf');
+      const receive = HostIPC.prototype.receive;
+      let held = 0;
+      let selected;
+      let heldKind;
+      const events = [];
+      t.after(() => {
+        HostIPC.prototype.receive = receive;
+        t.diagnostic(JSON.stringify({ schedule, held, heldKind, events }));
+      });
+      HostIPC.prototype.receive = function (endpoint, frame) {
+        if (
+          !held &&
+          this.host.instanceId === e.A &&
+          frame.tag === 'request' &&
+          (frame.body.kind === 'bind' || frame.body.kind === 'outbound')
+        ) {
+          held++;
+          selected = this.session;
+          heldKind = frame.body.kind;
+          events.push({
+            phase: 'hold',
+            kind: heldKind,
+            remainingMs: endpoint.context.remainingMs,
+          });
+          endpoint.context.controller.signal.addEventListener(
+            'abort',
+            () => {
+              events.push({
+                phase: 'retire',
+                terminal: endpoint.context.terminal,
+              });
+            },
+            { once: true },
+          );
+          const failure = this.session.onFailure;
+          this.session.onFailure = () => {
+            events.push({
+              phase: 'physical-failure',
+              stack: new Error().stack,
+            });
+            failure();
+          };
+          void this.session.exited.then((receipt) =>
+            events.push({ phase: 'reaped', ...receipt }),
+          );
+          if (schedule === 'broker-stalled') {
+            // The worker still runs and observes its real monotonic deadline.
+            Atomics.wait(
+              new Int32Array(new SharedArrayBuffer(4)),
+              0,
+              0,
+              endpoint.context.remainingMs + 100,
+            );
+            events.push({ phase: 'broker-resumed' });
+          }
+          // Deliberately no dispatch/reply/replay of the held request.
+          return;
+        }
+        return receive.call(this, endpoint, frame);
+      };
+      await assert.rejects(call(e.ca, 'descendant'), {
+        code: 'DEADLINE_EXCEEDED',
+      });
+      assert.equal(held, 1, 'real authenticated request reached barrier');
+      assert.equal(
+        await call(e.cb, 'leaf'),
+        'leaf',
+        'independent provider survives',
+      );
+      assert.equal(
+        await call(e.ca, 'leaf'),
+        'leaf',
+        'same provider survives logical deadline',
+      );
+      assert.equal(selected.active, true);
+      assert.equal(
+        heldKind,
+        'outbound',
+        'no binding mutation inside cancellation boundary',
+      );
+      assert.equal(
+        events.some((event) => event.phase === 'physical-failure'),
+        false,
+      );
+      events.push({ phase: 'healthy-before-cleanup' });
+    },
+  );

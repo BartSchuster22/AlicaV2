@@ -1,0 +1,135 @@
+✔ exact reinstall under continuous same-owner clean custody is a byte/inode/mtime preserving no-op, repeatedly (2610.045209ms)
+✔ exact reinstall fails closed without writes: retained-artifact (2501.432454ms)
+✔ exact reinstall fails closed without writes: retained-extra (2358.184222ms)
+✔ exact reinstall fails closed without writes: retained-missing (2389.490818ms)
+✔ exact reinstall fails closed without writes: authorization (2320.647022ms)
+✔ exact reinstall fails closed without writes: accepted (2201.932966ms)
+✔ exact reinstall fails closed without writes: journal (2129.444621ms)
+✔ exact reinstall fails closed without writes: kernel-malformed (2256.453833ms)
+✔ exact reinstall fails closed without writes: kernel-backward-clock (2378.450368ms)
+✔ exact reinstall fails closed without writes: floor-backward-clock (2450.527872ms)
+✔ exact reinstall fails closed without writes: expired (2406.748039ms)
+✔ exact reinstall fails closed without writes: revoked-bundle (2341.00414ms)
+✔ exact reinstall fails closed without writes: revoked-publisher (2386.124446ms)
+✔ exact reinstall fails closed without writes: revoked-package (2502.08805ms)
+✔ exact reinstall fails closed without writes: same-version-equivocation (2426.639791ms)
+✔ exact reinstall fails closed without writes: missing-trust (2321.54045ms)
+✔ exact reinstall fails closed without writes: candidate-tamper (2440.238595ms)
+✔ exact reinstall fails closed without writes: different-valid-candidate (2467.568523ms)
+✔ normal owner close/reopen cannot reconstruct clean custody from accepted bytes or journal (2462.421852ms)
+✔ owned coordinator: independent custodian and owner normal reaps precede real stopped verification; original Cell preserved (3575.305694ms)
+✔ owned coordinator loss retains fence at before-fsync (230.190583ms)
+✔ owned coordinator loss retains fence at after-fsync (251.105955ms)
+✔ owned coordinator loss retains fence at before-READY (2884.692877ms)
+✔ owned coordinator loss retains fence at after-READY (2873.924381ms)
+✖ owned coordinator loss retains fence at before-SEALED (2816.036274ms)
+✔ owned coordinator loss retains fence at after-SEALED (2584.245708ms)
+✔ owned coordinator loss retains fence at before-CLEAN (2773.845402ms)
+✔ owned coordinator loss retains fence at after-CLEAN (3014.395299ms)
+✔ owned coordinator loss retains fence at after-reap (3107.716351ms)
+✔ owned coordinator loss retains fence at before-maintenance (3052.739476ms)
+✔ owned coordinator loss retains fence at after-maintenance (3459.915379ms)
+✔ custodian abnormal death cannot become stopped permission at before-READY (2802.241105ms)
+✔ custodian abnormal death cannot become stopped permission at before-SEALED (2876.219977ms)
+✔ custodian abnormal death cannot become stopped permission at after-SEALED (2766.034349ms)
+✔ custodian abnormal death cannot become stopped permission at before-CLEAN (2972.373261ms)
+✔ custodian abnormal death cannot become stopped permission at after-CLEAN (3183.69224ms)
+✔ sealing excludes concurrent v1/v2 starts stops and mutations without a successor (3413.364794ms)
+test_forced_child_exit_is_never_normal_reap (__main__.Channels.test_forced_child_exit_is_never_normal_reap) ... ok
+test_late_real_normal_exit_is_not_a_reap_permit (__main__.Channels.test_late_real_normal_exit_is_not_a_reap_permit) ... ok
+test_non_parent_guard_is_rejected (__main__.Channels.test_non_parent_guard_is_rejected) ... ok
+test_plain_inherited_stream_fd_and_closed_channel_are_not_credentials (__main__.Channels.test_plain_inherited_stream_fd_and_closed_channel_are_not_credentials) ... ok
+test_real_child_credentials_and_held_pidfd_normal_reap (__main__.Channels.test_real_child_credentials_and_held_pidfd_normal_reap) ... ok
+test_socketpair_creator_is_not_actual_child_credential (__main__.Channels.test_socketpair_creator_is_not_actual_child_credential) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.005s
+
+OK
+
+✔ stopped verification uses original retained artifacts and current independent input, rejects tamper without Cell writes (3337.747346ms)
+✔ real Unix credentials reject forged/unowned/closed inherited channels and abnormal/late pidfd reaps (76.908089ms)
+✔ real owner blocked IO expires unchanged cleanup budget without offline admission (32639.506765ms)
+✔ real owner blocked IO expires unchanged verification budget without offline admission (300143.09109ms)
+✔ late sealed receipt after actual unchanged cleanup budget cannot publish maintenance (32533.042151ms)
+✔ clean stop then authenticated same-revision start uses preserved bytes and new exact owner (8179.033029ms)
+✔ same-revision start: expired grants stay FAILED until clean stop and fresh issuance (13065.35305ms)
+✔ same-revision start rechecks newer current revocation while preserving accepted bytes and floor monotonicity (5802.732274ms)
+✔ same-revision start refuses fresh validation failure: authorization (3312.537194ms)
+✔ same-revision start refuses fresh validation failure: trust-signature (3261.525603ms)
+✔ same-revision start refuses fresh validation failure: revoked-bundle (3279.829727ms)
+✔ same-revision start refuses fresh validation failure: expired-trust (3317.026044ms)
+✔ same-revision start refuses fresh validation failure: policy-continuity (3277.390503ms)
+✔ same-revision start refuses fresh validation failure: accepted-sequence (3286.893455ms)
+✔ same-revision start refuses fresh validation failure: missing-selection (3196.465258ms)
+✔ same-revision start refuses fresh validation failure: journal (3221.783931ms)
+✔ same-revision start refuses fresh validation failure: artifact (3094.959523ms)
+✔ same-revision start refuses fresh validation failure: extra-file (3048.443058ms)
+✔ same-revision start refuses fresh validation failure: symlink (3092.320844ms)
+✔ same-revision start refuses fresh validation failure: future-floor (3076.172297ms)
+✔ same-revision start refuses fresh validation failure: kernel-residue (2962.710571ms)
+✔ same-revision start waits for actual prior owner reap, not its clean stopped message (2883.776147ms)
+✔ same-revision successor launch is not readiness; concurrent start conflicts and disconnect is not cancellation (7543.67056ms)
+✔ same-revision successor retains parent-death guard while blocked and residue denies takeover (3116.171096ms)
+✔ actual publication rename uncertainty forbids start and preserves selection without rollback (2710.553707ms)
+✔ actual floor-publication rename uncertainty forbids start and preserves selection without rollback (3064.248792ms)
+✔ same accepted provider fails actual successor activation without replacing artifacts (11062.806227ms)
+✔ same accepted provider fails actual successor readiness without replacing artifacts (12337.024044ms)
+✔ same-revision successor external 30s expiry is sticky and cannot authorize another owner (33220.832637ms)
+✔ same-revision successor-cleanup external 30s expiry is sticky and cannot authorize another owner (34955.636119ms)
+✔ clean stopped residue is not a restart permit after supervisor death (2807.19951ms)
+✔ restricted framing requires write EOF; delayed trailing bytes never execute stop (32880.443222ms)
+✔ supervised real IPC install, exact local admin status/stop, retained custody (2823.704399ms)
+✔ external SIGKILL of actual owner never proves descendants reaped; fence survives supervisor death (2639.635273ms)
+✔ real synchronous FIFO IO during outer cleanup: responsive admin, 30s external expiry, no restart (32604.196942ms)
+✔ activation blocked in real synchronous IO is externally killed without publication or new admission (30968.825592ms)
+✔ actual Unix peer credentials, malformed/duplicate/oversized frames and eight-connection ceiling (2874.059554ms)
+✔ launcher exits before real first-install completes; owner remains alive for authenticated status and clean stop (2735.065281ms)
+✔ supervisor SIGKILL terminates the blocked owner without an event-loop callback (723.907191ms)
+ℹ tests 76
+ℹ suites 0
+ℹ pass 75
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 417730.276734
+
+✖ failing tests:
+
+test at tests/g7/owned-coordinator.test.mjs:247:3
+✖ owned coordinator loss retains fence at before-SEALED (2816.036274ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  ... Skipped lines
+  
+    {
+      'accepted.json': {
+        ino: 521635,
+        mode: 33152,
+        mtimeMs: 1789717162629.7576,
+  ...
+      'kernel.json': {
+  +     ino: 521840,
+  -     ino: 521634,
+        mode: 33152,
+  +     mtimeMs: 1789717162708.758,
+  +     sha256: 'sha256:f1d6f18d5ab2aafa094335a49a7611c2c89895873f742e499c10ed44029056eb'
+  -     mtimeMs: 1789717162612.7573,
+  -     sha256: 'sha256:909064350b1983ff6ac26e6781a0f62db7664dae03f5d6b2c852443ad94df6e3'
+      },
+      'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/authorization.json': {
+        ino: 521750,
+        mode: 33152,
+        mtimeMs: 1789717160619.7444,
+  
+      at TestContext.<anonymous> (file:///home/alica-dev/AlicaV2/tests/g7/owned-coordinator.test.mjs:259:14)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { 'accepted.json': { sha256: 'sha256:d262b4148f365ac59d2ac0f43ae548782b4f9af8c274ec21e5099ba8122fd70a', ino: 521635, mode: 33152, mtimeMs: 1789717162629.7576 }, 'floor.json': { sha256: 'sha256:0a852eed4ba7b0bd58be9ddb4c65d842a1668add2a61af7d47cd562b7c5e59f0', ino: 521640, mode: 33152, mtimeMs: 1789717162619.7576 }, 'identity.json': { sha256: 'sha256:2c6fbef7a31ab6e4794955f18421a8a0dadb65aaa77642d308d5191f863d7da0', ino: 520218, mode: 33152, mtimeMs: 1789717160087.7407 }, 'kernel.json': { sha256: 'sha256:f1d6f18d5ab2aafa094335a49a7611c2c89895873f742e499c10ed44029056eb', ino: 521840, mode: 33152, mtimeMs: 1789717162708.758 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/authorization.json': { sha256: 'sha256:cc2d2c5ac902bcb65235368faa8f2c499e2e2b411fc753c613cd6972f7fe99a4', ino: 521750, mode: 33152, mtimeMs: 1789717160619.7444 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/bundle-signature.json': { sha256: 'sha256:860efec7f13b7133f1b2483cb8b0b9e0cd38f44e41aca2388b9884b461116ff5', ino: 521652, mode: 33152, mtimeMs: 1789717160563.744 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/bundle.json': { sha256: 'sha256:2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c', ino: 521650, mode: 33152, mtimeMs: 1789717160561.744 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/docs/fixture.txt': { sha256: 'sha256:23472d77cf14065f05744d9159c2c53595dc0c3126867382ca47091106f1a3ba', ino: 521713, mode: 33152, mtimeMs: 1789717160566.744 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/plugins/org.alica.client/code/index.js': { sha256: 'sha256:ef2ed2a9ec4c6f3cd911387ade1ea2823f0962502579211f9281cbb94fab9121', ino: 521717, mode: 33152, mtimeMs: 1789717160570.744 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/plugins/org.alica.client/index.json': { sha256: 'sha256:69bfa3ce25fe967bbfa054888d22f42a2a2aa958d77138d84c54ebeda05279bd', ino: 521718, mode: 33152, mtimeMs: 1789717160572.744 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/plugins/org.alica.client/manifest.json': { sha256: 'sha256:107541f5de58c2adac4698bd172abbe4f3dc53a4dbbe95a204ad834a446dc6b0', ino: 521719, mode: 33152, mtimeMs: 1789717160575.7441 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/plugins/org.alica.consumer/code/index.js': { sha256: 'sha256:e0522ba07461ff9cfe69a3350866107ad5766c2804a05ee6323e6fd7c18e2b69', ino: 521722, mode: 33152, mtimeMs: 1789717160579.7441 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/plugins/org.alica.consumer/contracts/c0.json': { sha256: 'sha256:0ef2f30880956bd7e5d2bbab948573d55bd9d756170881193f25259c0c8fd000', ino: 521724, mode: 33152, mtimeMs: 1789717160582.7441 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/plugins/org.alica.consumer/index.json': { sha256: 'sha256:a0f8143f73812f9f9fc7f8d0856523397a4c3fdb77b0e74a35bfd8b1313aab75', ino: 521725, mode: 33152, mtimeMs: 1789717160583.7441 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/plugins/org.alica.consumer/manifest.json': { sha256: 'sha256:f8b2e71b3b10b3bedc4d1ed90ca95f434a1cce705aa3ba2d9c3b6893ad11ddfd', ino: 521726, mode: 33152, mtimeMs: 1789717160585.7441 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/plugins/org.alica.echoa/code/index.js': { sha256: 'sha256:9c6e00f7fa07f8b0fb579e2ed03f1afa7023b2bfe0692936114e37383a1e5dfe', ino: 521729, mode: 33152, mtimeMs: 1789717160588.7441 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/plugins/org.alica.echoa/contracts/c0.json': { sha256: 'sha256:58ee9f01fb4948faf71ed7a3468d55563f3117faccecb8a3b1ebc81ff0aee649', ino: 521731, mode: 33152, mtimeMs: 1789717160590.7441 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/plugins/org.alica.echoa/index.json': { sha256: 'sha256:bbbfe40e40f220301de43bcb18edd7c85e0e85162176dde109363ed869fff356', ino: 521732, mode: 33152, mtimeMs: 1789717160593.7441 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/plugins/org.alica.echoa/manifest.json': { sha256: 'sha256:4ad8c2ede6a8224c643078807f644c053fca29179546889ad59e28fbebe09e0b', ino: 521733, mode: 33152, mtimeMs: 1789717160595.7441 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/profile/lock.json': { sha256: 'sha256:25c77efafe2c0505742d4f2e74f2ea0051061386de43b44eba84995db2bf7b4e', ino: 521735, mode: 33152, mtimeMs: 1789717160597.7441 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/profile/profile.json': { sha256: 'sha256:a48428faaf22d426078feb215a2adde17e7aa1d6de9b4290fb9c297cf10f654a', ino: 521736, mode: 33152, mtimeMs: 1789717160599.7441 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/provenance/build.json': { sha256: 'sha256:ffbc2dfc402782325da71132100e74ff511d1585dd80e4ea196ed4bcace3fef2', ino: 521738, mode: 33152, mtimeMs: 1789717160601.7441 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/runtime/fixture.txt': { sha256: 'sha256:999d412febdcd686cbcb86c753139405308ed372566ff1c188578e67b79c979a', ino: 521740, mode: 33152, mtimeMs: 1789717160604.7441 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/sbom/sbom.json': { sha256: 'sha256:ffbc2dfc402782325da71132100e74ff511d1585dd80e4ea196ed4bcace3fef2', ino: 521742, mode: 33152, mtimeMs: 1789717160606.7441 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/schemas/fixture.json': { sha256: 'sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a', ino: 521744, mode: 33152, mtimeMs: 1789717160609.7441 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/trust/policy-signature.json': { sha256: 'sha256:4947187b0210b49550456704dc9dfa88756104e24a21b92991050a74798cf508', ino: 521746, mode: 33152, mtimeMs: 1789717160612.7444 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/trust/policy.json': { sha256: 'sha256:4e5a74c5dab629cf107c1080c51c7ef99037be67f0a27464bbe951025b4a6ad4', ino: 521747, mode: 33152, mtimeMs: 1789717160614.7444 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/trust/revocation-signature.json': { sha256: 'sha256:cefdfd168234c44b5b03218c0193aca4942c5bbe820283777e5934ce56bea255', ino: 521748, mode: 33152, mtimeMs: 1789717160615.7444 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/trust/revocation.json': { sha256: 'sha256:b3ac04dd2896b51a74dd79b04b002b74799489ed29d8206d6d101a321e339ee1', ino: 521749, mode: 33152, mtimeMs: 1789717160617.7444 }, 'supervision/incarnation.json': { sha256: 'sha256:1317ba70059904ccd38b5a4095918fd9ac3fa4dbe3f16594cfc53352172abc15', ino: 521511, mode: 33152, mtimeMs: 1789717160148.7412 }, 'transactions/98c8c816-02d1-42d2-9b12-5b5651f8488b/000001.json': { sha256: 'sha256:d1ac2d5670591ebfcf9219297094b75cf4639afa74e3455d6795a43eab147455', ino: 521647, mode: 33152, mtimeMs: 1789717160553.744 }, 'transactions/98c8c816-02d1-42d2-9b12-5b5651f8488b/000002.json': { sha256: 'sha256:7da1ab430faf0ce73c28214d064cc2bae1aa4e1f6bb24184786b114038d2b91c', ino: 521642, mode: 33152, mtimeMs: 1789717160693.7449 }, 'transactions/98c8c816-02d1-42d2-9b12-5b5651f8488b/000003.json': { sha256: 'sha256:a9dae585a7d24284d10de9f05458c2e058cff59e5fe7dedc32808804a2cf7580', ino: 520255, mode: 33152, mtimeMs: 1789717160699.7449 }, 'transactions/98c8c816-02d1-42d2-9b12-5b5651f8488b/000004.json': { sha256: 'sha256:5a93a6b31c24e55fc6e7e2f8d9433444ca94738e233e239d5d92d1698435cff4', ino: 521752, mode: 33152, mtimeMs: 1789717162632.7576 } },
+    expected: { 'accepted.json': { sha256: 'sha256:d262b4148f365ac59d2ac0f43ae548782b4f9af8c274ec21e5099ba8122fd70a', ino: 521635, mode: 33152, mtimeMs: 1789717162629.7576 }, 'floor.json': { sha256: 'sha256:0a852eed4ba7b0bd58be9ddb4c65d842a1668add2a61af7d47cd562b7c5e59f0', ino: 521640, mode: 33152, mtimeMs: 1789717162619.7576 }, 'identity.json': { sha256: 'sha256:2c6fbef7a31ab6e4794955f18421a8a0dadb65aaa77642d308d5191f863d7da0', ino: 520218, mode: 33152, mtimeMs: 1789717160087.7407 }, 'kernel.json': { sha256: 'sha256:909064350b1983ff6ac26e6781a0f62db7664dae03f5d6b2c852443ad94df6e3', ino: 521634, mode: 33152, mtimeMs: 1789717162612.7573 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/authorization.json': { sha256: 'sha256:cc2d2c5ac902bcb65235368faa8f2c499e2e2b411fc753c613cd6972f7fe99a4', ino: 521750, mode: 33152, mtimeMs: 1789717160619.7444 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/bundle-signature.json': { sha256: 'sha256:860efec7f13b7133f1b2483cb8b0b9e0cd38f44e41aca2388b9884b461116ff5', ino: 521652, mode: 33152, mtimeMs: 1789717160563.744 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/bundle.json': { sha256: 'sha256:2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c', ino: 521650, mode: 33152, mtimeMs: 1789717160561.744 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/docs/fixture.txt': { sha256: 'sha256:23472d77cf14065f05744d9159c2c53595dc0c3126867382ca47091106f1a3ba', ino: 521713, mode: 33152, mtimeMs: 1789717160566.744 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/plugins/org.alica.client/code/index.js': { sha256: 'sha256:ef2ed2a9ec4c6f3cd911387ade1ea2823f0962502579211f9281cbb94fab9121', ino: 521717, mode: 33152, mtimeMs: 1789717160570.744 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/plugins/org.alica.client/index.json': { sha256: 'sha256:69bfa3ce25fe967bbfa054888d22f42a2a2aa958d77138d84c54ebeda05279bd', ino: 521718, mode: 33152, mtimeMs: 1789717160572.744 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/plugins/org.alica.client/manifest.json': { sha256: 'sha256:107541f5de58c2adac4698bd172abbe4f3dc53a4dbbe95a204ad834a446dc6b0', ino: 521719, mode: 33152, mtimeMs: 1789717160575.7441 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/plugins/org.alica.consumer/code/index.js': { sha256: 'sha256:e0522ba07461ff9cfe69a3350866107ad5766c2804a05ee6323e6fd7c18e2b69', ino: 521722, mode: 33152, mtimeMs: 1789717160579.7441 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/plugins/org.alica.consumer/contracts/c0.json': { sha256: 'sha256:0ef2f30880956bd7e5d2bbab948573d55bd9d756170881193f25259c0c8fd000', ino: 521724, mode: 33152, mtimeMs: 1789717160582.7441 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/plugins/org.alica.consumer/index.json': { sha256: 'sha256:a0f8143f73812f9f9fc7f8d0856523397a4c3fdb77b0e74a35bfd8b1313aab75', ino: 521725, mode: 33152, mtimeMs: 1789717160583.7441 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/plugins/org.alica.consumer/manifest.json': { sha256: 'sha256:f8b2e71b3b10b3bedc4d1ed90ca95f434a1cce705aa3ba2d9c3b6893ad11ddfd', ino: 521726, mode: 33152, mtimeMs: 1789717160585.7441 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/plugins/org.alica.echoa/code/index.js': { sha256: 'sha256:9c6e00f7fa07f8b0fb579e2ed03f1afa7023b2bfe0692936114e37383a1e5dfe', ino: 521729, mode: 33152, mtimeMs: 1789717160588.7441 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/plugins/org.alica.echoa/contracts/c0.json': { sha256: 'sha256:58ee9f01fb4948faf71ed7a3468d55563f3117faccecb8a3b1ebc81ff0aee649', ino: 521731, mode: 33152, mtimeMs: 1789717160590.7441 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/plugins/org.alica.echoa/index.json': { sha256: 'sha256:bbbfe40e40f220301de43bcb18edd7c85e0e85162176dde109363ed869fff356', ino: 521732, mode: 33152, mtimeMs: 1789717160593.7441 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/plugins/org.alica.echoa/manifest.json': { sha256: 'sha256:4ad8c2ede6a8224c643078807f644c053fca29179546889ad59e28fbebe09e0b', ino: 521733, mode: 33152, mtimeMs: 1789717160595.7441 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/profile/lock.json': { sha256: 'sha256:25c77efafe2c0505742d4f2e74f2ea0051061386de43b44eba84995db2bf7b4e', ino: 521735, mode: 33152, mtimeMs: 1789717160597.7441 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/profile/profile.json': { sha256: 'sha256:a48428faaf22d426078feb215a2adde17e7aa1d6de9b4290fb9c297cf10f654a', ino: 521736, mode: 33152, mtimeMs: 1789717160599.7441 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/provenance/build.json': { sha256: 'sha256:ffbc2dfc402782325da71132100e74ff511d1585dd80e4ea196ed4bcace3fef2', ino: 521738, mode: 33152, mtimeMs: 1789717160601.7441 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/runtime/fixture.txt': { sha256: 'sha256:999d412febdcd686cbcb86c753139405308ed372566ff1c188578e67b79c979a', ino: 521740, mode: 33152, mtimeMs: 1789717160604.7441 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/sbom/sbom.json': { sha256: 'sha256:ffbc2dfc402782325da71132100e74ff511d1585dd80e4ea196ed4bcace3fef2', ino: 521742, mode: 33152, mtimeMs: 1789717160606.7441 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/schemas/fixture.json': { sha256: 'sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a', ino: 521744, mode: 33152, mtimeMs: 1789717160609.7441 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/trust/policy-signature.json': { sha256: 'sha256:4947187b0210b49550456704dc9dfa88756104e24a21b92991050a74798cf508', ino: 521746, mode: 33152, mtimeMs: 1789717160612.7444 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/trust/policy.json': { sha256: 'sha256:4e5a74c5dab629cf107c1080c51c7ef99037be67f0a27464bbe951025b4a6ad4', ino: 521747, mode: 33152, mtimeMs: 1789717160614.7444 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/trust/revocation-signature.json': { sha256: 'sha256:cefdfd168234c44b5b03218c0193aca4942c5bbe820283777e5934ce56bea255', ino: 521748, mode: 33152, mtimeMs: 1789717160615.7444 }, 'releases/2550706017ff378230bd3c4357c02389230c1bb9ba67f831fc71e7313992651c/trust/revocation.json': { sha256: 'sha256:b3ac04dd2896b51a74dd79b04b002b74799489ed29d8206d6d101a321e339ee1', ino: 521749, mode: 33152, mtimeMs: 1789717160617.7444 }, 'supervision/incarnation.json': { sha256: 'sha256:1317ba70059904ccd38b5a4095918fd9ac3fa4dbe3f16594cfc53352172abc15', ino: 521511, mode: 33152, mtimeMs: 1789717160148.7412 }, 'transactions/98c8c816-02d1-42d2-9b12-5b5651f8488b/000001.json': { sha256: 'sha256:d1ac2d5670591ebfcf9219297094b75cf4639afa74e3455d6795a43eab147455', ino: 521647, mode: 33152, mtimeMs: 1789717160553.744 }, 'transactions/98c8c816-02d1-42d2-9b12-5b5651f8488b/000002.json': { sha256: 'sha256:7da1ab430faf0ce73c28214d064cc2bae1aa4e1f6bb24184786b114038d2b91c', ino: 521642, mode: 33152, mtimeMs: 1789717160693.7449 }, 'transactions/98c8c816-02d1-42d2-9b12-5b5651f8488b/000003.json': { sha256: 'sha256:a9dae585a7d24284d10de9f05458c2e058cff59e5fe7dedc32808804a2cf7580', ino: 520255, mode: 33152, mtimeMs: 1789717160699.7449 }, 'transactions/98c8c816-02d1-42d2-9b12-5b5651f8488b/000004.json': { sha256: 'sha256:5a93a6b31c24e55fc6e7e2f8d9433444ca94738e233e239d5d92d1698435cff4', ino: 521752, mode: 33152, mtimeMs: 1789717162632.7576 } },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

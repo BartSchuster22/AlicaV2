@@ -1,0 +1,1 @@
+npm run build && for i in 1 2 3 4 5 6 7 8; do printf "DIAGNOSTIC_SAMPLE %s\n" "$i"; node --experimental-vm-modules --test tests/ipc/qualification-consumer.test.mjs; printf "SAMPLE_EXIT %s\n" "$?"; done

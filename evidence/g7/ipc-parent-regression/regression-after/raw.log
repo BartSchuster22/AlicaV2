@@ -1,0 +1,18 @@
+(node:207061) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ same-source matrix consumer inproc: ancestry, authority and live sibling independence (1064.536479ms)
+ℹ {"consumerSHA256":"6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb","providerASHA256":"186ecdd947ff450dcb345649f9cab118cf24dcc75cdc863e5363d569a37dccd8","providerBSHA256":"193a857ebe7be7e9e33dc7e22584109f9cbb684c816ecbc7e67377de4aef23e1"}
+✔ same-source matrix consumer ipc: ancestry, authority and live sibling independence (3643.951573ms)
+ℹ {"consumerSHA256":"6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb","providerASHA256":"186ecdd947ff450dcb345649f9cab118cf24dcc75cdc863e5363d569a37dccd8","providerBSHA256":"193a857ebe7be7e9e33dc7e22584109f9cbb684c816ecbc7e67377de4aef23e1"}
+✔ established binding isolates real deadline retirement: broker-running (6009.901865ms)
+ℹ {"schedule":"broker-running","held":1,"heldKind":"outbound","events":[{"phase":"hold","kind":"outbound","remainingMs":4468},{"phase":"retire","terminal":"CANCELLED"},{"phase":"physical-failure"},{"phase":"reaped","pid":207084,"code":1,"signal":null,"elapsedMs":5906.079685999999}]}
+✔ established binding isolates real deadline retirement: broker-stalled (6151.882389ms)
+ℹ {"schedule":"broker-stalled","held":1,"heldKind":"outbound","events":[{"phase":"hold","kind":"outbound","remainingMs":4470},{"phase":"broker-resumed"},{"phase":"retire","terminal":"DEADLINE_EXCEEDED"},{"phase":"physical-failure"},{"phase":"reaped","pid":207101,"code":1,"signal":null,"elapsedMs":6050.941996000001}]}
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 17170.985763

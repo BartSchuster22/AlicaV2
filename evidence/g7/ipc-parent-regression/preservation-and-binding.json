@@ -1,0 +1,100 @@
+{
+  "addedFiles": [
+    "docs/g7/R1-IPC-PARENT-REGRESSION-CHECKPOINT.md",
+    "tests/ipc/qualification-consumer-fixture.mjs"
+  ],
+  "allOriginalProductionAndOtherFilesPreserved": true,
+  "baseline": "122ac0d33cb0a1e08aef836ac7c964ae365a30b3",
+  "capturedUTC": "2026-09-18T09:48:49.895002+00:00",
+  "changedOriginalFiles": [
+    "tests/ipc/isolation.test.mjs",
+    "tests/ipc/qualification-consumer.test.mjs"
+  ],
+  "consumerAssertionFunctionSHA256": "6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb",
+  "documentationAllowlist": [
+    "docs/g7/R1-IPC-PARENT-REGRESSION-CHECKPOINT.md"
+  ],
+  "evidencePrefix": "evidence/g7/ipc-parent-regression/",
+  "finalLocalRemoteSourceEqual": true,
+  "finalSourceMatchesFullCheck": true,
+  "fullCheckExit": 0,
+  "fullCheckSourceUnchanged": true,
+  "initialLocalRemoteSourceEqual": true,
+  "instrumentedPermissionSignatureAssertion": "original consumer line 169; initial deny line 120 passed",
+  "inventorySourceFilter": "excludes evidence/ and pre-existing root G6-* custody/transfer records; all originals separately preserved",
+  "noCommitPushDeploySignAcceptance": true,
+  "originalParentAssertionRetrospectivelyProven": false,
+  "ownedCoordinatorAndG7Preserved": {
+    "docs/g7/R1-OWNED-COORDINATOR-CHECKPOINT.md": "94397f30f2e46945588076b7d0d17ebb9de4385458f1ed42da3e36933bc94c14",
+    "docs/g7/R1-OWNED-COORDINATOR-EXECUTION.md": "bc656f0fda0d8bc74a3fc6b9b7639bbb3ce09b5f1c1e99db83d823fd674d40e8",
+    "tests/g7/admin-amendment.test.mjs": "38fd4b54a2307786376d9dd81b86964ebbd1b1820c3ed708a26e83d62561002e",
+    "tests/g7/admin-boundary.mjs": "3189c99edf4b8c39a1c78e484265c537461d77861195af9f64f1804ecc431dd1",
+    "tests/g7/bootstrap-trust.test.mjs": "78300474e33cda1472d77b0c17049170e367549ae8e0ca0d3b84970885b5b1c9",
+    "tests/g7/cell-activation.test.mjs": "b8deb304a228469da65b0b7b468ada336efa49839d84eae40df310b3c41ea83e",
+    "tests/g7/cell-fixture.mjs": "4da9fd7e8b2317114f363f7e45d7552b9bfda4a7a9ef4b24771df58a63a1a079",
+    "tests/g7/cell-lifecycle-process.mjs": "d6614ce2aedbd0700fd8132eb65194665006261e647d61930da25fb8361d37d3",
+    "tests/g7/cell-lifecycle.test.mjs": "b957c6411fb07e74131cdfa172bb18f37ff3394458cecc0803e58c962dbf8b2a",
+    "tests/g7/cell-preparation.test.mjs": "085e5ddf852c581dfd510b5bf4d057648f06532d19bdfafe6e04caf9df468b2b",
+    "tests/g7/cell-process.mjs": "5b6fc80fa2e6691a3a11face77ae8f3b73c8609396e4a5dead41cdc74db2a944",
+    "tests/g7/clean-start-block.mjs": "bf39a1b90cd45a3ab005b84d58564b98f31a0666bbe317d260719e30702c19eb",
+    "tests/g7/custody.test.mjs": "e33eb46c9c17a298240191f6f8c4017a0886b921f7b6b6eba294df804e26f7e9",
+    "tests/g7/durable-worker.mjs": "6c276ce9c84236fdebdd29dea6bceba4ec8ba7eeb7b6ff9677284d0a410fb9c1",
+    "tests/g7/exact-reinstall.test.mjs": "c0e7fd138b40458dff84b76711f5d7c19d033c207be9380541db38027ceb2909",
+    "tests/g7/owned-channel-process.py": "d6d1b3e28e8966c99f41343aeb10d2904c987d55e144de409657c28fc8931c35",
+    "tests/g7/owned-coordinator-block.mjs": "8ced07a68b3fe26803fb80d2b13ed44c22ad301c5b8b0add8a36153a4fca933f",
+    "tests/g7/owned-coordinator-driver.py": "c5a155880c1f9aac1b755897bd6010c7030d2e49e424f2f7d5d8fce0088dab4b",
+    "tests/g7/owned-coordinator.test.mjs": "88e47a7162487eef7d7c5683992dd890cc10b67edd38c4b051dc0a043fe71bf8",
+    "tests/g7/r1-implementation.test.mjs": "526eff5fd216cf18e7a37145a7fec0f2eaf2cc023b866dc9cd0068e211a7f03c",
+    "tests/g7/release-admission.test.mjs": "e0ddba8f347a31e013e84ac1c03a3a7c9c1765860da9b08cc8fada37149b3be4",
+    "tests/g7/supervision-block.mjs": "6c6f7178c7abbdcdf70b19973e16f498fbc0c59d15ee3be4cc6b83557c6beb4d",
+    "tests/g7/supervision.test.mjs": "3f7838f3c4bf9a6161607f78d0704cd03f9dd79f9696f40d922946364a331e95",
+    "tests/g7/test_bootstrap.py": "1f1acdef2d06ccbdd34ef42126716b0142319edeecaafc04c749d52525bed736",
+    "tests/g7/test_contract_model.py": "e4715d0df7e041aa3424fa1c38f91570d6e0a1eb220a47e466e7a7b7e8ae15b2",
+    "tools/g7-admin.mjs": "db619be91cf91fd525f358a0d93fc36a479afc69ce822fdff8e11b202899b7cd",
+    "tools/g7-archive.mjs": "9fe1304cb74a2dd2517a54d15fb974925e875572bff4c05139018dacbf2c2a3d",
+    "tools/g7-bootstrap-trust.py": "df7a35f18c97a62e716563c0f94ef08f31d218471377b1688b04ec86b4c96ede",
+    "tools/g7-cell-cli.mjs": "3eb3f84d60f985d60c811c84f191c2a9d41db4443cdbc45a8eabc87746dddd3c",
+    "tools/g7-cell-owner.mjs": "a978ad5d4cdc18e941a722d16caaa468e59250d34aaddf6203c4b5046eeaa3f4",
+    "tools/g7-cell.mjs": "3bcfd00e59943e6516aa54c9ea3d9a983fc6963c55a1c427b60d1787af6f46dc",
+    "tools/g7-contract-model.py": "df53ac2808c4e45e6418f7bcf1c199dfd612facc600910f5f3cf501f55a92493",
+    "tools/g7-durable.mjs": "53341d22f4eb632a6336ddee9bc20453fda15480bf77d24a46aab93fa9d76ec2",
+    "tools/g7-inspect.mjs": "c8a653f1a6c9d3ee4a109b81f22ec21d4b2dc417da3c1dcfc8c64e48d382cc6d",
+    "tools/g7-owned-coordinator.py": "7b6702a7e3a0763a087cf8541985b8fe6d2edea039c267866ae3f519cd42921f",
+    "tools/g7-owner-channel.mjs": "6a2a46ff044cb7cecc4efd7e37ef7dc954b2033b31e288b30214b54da174c19e",
+    "tools/g7-release.mjs": "764dcbb05601052d5382ebc7893a2ef2dda670761b17506d08f47a1493ff79fa",
+    "tools/g7-stopped-verify.mjs": "d2ccb91ec26bd8ff1365803716572636ebb62ef285da6e1618d0ae644df9cae5",
+    "tools/g7-supervisor.py": "ffb517a5635b391c13b3f4e4a7a664413899d3a293199b715a3af75a53b744de"
+  },
+  "parentFailureLogSHA256": "ba19ed772482a763ec07c947d1f6eb4ad64fc34961b35f06187a94f2ce7cab9b",
+  "permanentSourceAllowlist": [
+    "tests/ipc/qualification-consumer.test.mjs",
+    "tests/ipc/isolation.test.mjs",
+    "tests/ipc/qualification-consumer-fixture.mjs"
+  ],
+  "preservedAllLocalEvidenceFiles": 9578,
+  "preservedAllRemoteEvidenceFiles": 11074,
+  "preservedOriginalEvidenceFiles": 7718,
+  "remoteAddedFiles": [
+    "docs/g7/R1-IPC-PARENT-REGRESSION-CHECKPOINT.md",
+    "tests/ipc/qualification-consumer-fixture.mjs"
+  ],
+  "remoteChangedOriginalFiles": [
+    "tests/ipc/isolation.test.mjs",
+    "tests/ipc/qualification-consumer.test.mjs"
+  ],
+  "removedFiles": [],
+  "sourceBeforeAfter": {
+    "tests/ipc/isolation.test.mjs": {
+      "beforeSHA256": "e2ae57bbb6fdc20855de3154b9871f87286e81d334aed8053f606547e548d93c",
+      "finalSHA256": "28df5fca7a99adfad3ce09b2f7d6d9097737db83e222a858db1151f35b675fb1"
+    },
+    "tests/ipc/qualification-consumer-fixture.mjs": {
+      "beforeSHA256": null,
+      "finalSHA256": "c50f73349d811691fa85a35cb051f1f659e6be9cfee29bf6fd906f16c9e0e08b"
+    },
+    "tests/ipc/qualification-consumer.test.mjs": {
+      "beforeSHA256": "b64ca625f25584596566e1c5d8f86071df150b98ef0e5966fe18ae2b451c78fa",
+      "finalSHA256": "294139df7ddffb09a6cac242aaed4c3a9590352410cc76d438b9adeeb11ddb17"
+    }
+  }
+}

@@ -1,0 +1,90 @@
+
+> alica-v2@0.0.0 build
+> node tools/build.mjs
+
+IPC_DIAG assertion initial-deny line120
+IPC_DIAG initial-deny passed
+(node:204026) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+IPC_DIAG deadline passed
+IPC_DIAG assertion revoke line169
+IPC_DIAG revoke passed
+✔ same-source matrix consumer inproc: ancestry, authority and live sibling independence (1181.561303ms)
+ℹ {"consumerSHA256":"08d5ac0a053a0be9c317c179dd704e90fba78b9e8585244b4c3973e79b0e8f95","providerASHA256":"9746fbf0ad5898e51a35a6209e80d09aedbe2126817a97da831192fc9244449d","providerBSHA256":"a82f9788b6336be98163ce077838f99a7e2a60bad4c58fc78054f110a62a9179"}
+IPC_DIAG finish f430afcaf695c924e4ac4557baef44a38cc6542540243bbdcdce2bf3f2c4b6b6 c1 complete
+IPC_DIAG finish dfe656b503ebc329d2ccb5c01df69476c6cf4811219eebf565f8c43865b0daa1 c1 complete
+IPC_DIAG assertion initial-deny line120
+IPC_DIAG finish f430afcaf695c924e4ac4557baef44a38cc6542540243bbdcdce2bf3f2c4b6b6 c2 complete
+IPC_DIAG initial-deny passed
+IPC_DIAG finish f430afcaf695c924e4ac4557baef44a38cc6542540243bbdcdce2bf3f2c4b6b6 c4 complete
+IPC_DIAG finish dfe656b503ebc329d2ccb5c01df69476c6cf4811219eebf565f8c43865b0daa1 c2 complete
+IPC_DIAG finish f430afcaf695c924e4ac4557baef44a38cc6542540243bbdcdce2bf3f2c4b6b6 c3 complete
+IPC_DIAG finish f430afcaf695c924e4ac4557baef44a38cc6542540243bbdcdce2bf3f2c4b6b6 c7 complete
+IPC_DIAG finish dfe656b503ebc329d2ccb5c01df69476c6cf4811219eebf565f8c43865b0daa1 c4 complete
+IPC_DIAG finish f430afcaf695c924e4ac4557baef44a38cc6542540243bbdcdce2bf3f2c4b6b6 c6 complete
+IPC_DIAG finish dfe656b503ebc329d2ccb5c01df69476c6cf4811219eebf565f8c43865b0daa1 c3 complete
+IPC_DIAG finish f430afcaf695c924e4ac4557baef44a38cc6542540243bbdcdce2bf3f2c4b6b6 c5 complete
+IPC_DIAG finish dfe656b503ebc329d2ccb5c01df69476c6cf4811219eebf565f8c43865b0daa1 c8 complete
+IPC_DIAG finish f430afcaf695c924e4ac4557baef44a38cc6542540243bbdcdce2bf3f2c4b6b6 c11 complete
+IPC_DIAG finish dfe656b503ebc329d2ccb5c01df69476c6cf4811219eebf565f8c43865b0daa1 c7 complete
+IPC_DIAG finish f430afcaf695c924e4ac4557baef44a38cc6542540243bbdcdce2bf3f2c4b6b6 c10 complete
+IPC_DIAG finish dfe656b503ebc329d2ccb5c01df69476c6cf4811219eebf565f8c43865b0daa1 c6 complete
+IPC_DIAG finish f430afcaf695c924e4ac4557baef44a38cc6542540243bbdcdce2bf3f2c4b6b6 c9 complete
+IPC_DIAG finish dfe656b503ebc329d2ccb5c01df69476c6cf4811219eebf565f8c43865b0daa1 c5 complete
+IPC_DIAG finish f430afcaf695c924e4ac4557baef44a38cc6542540243bbdcdce2bf3f2c4b6b6 c8 complete
+IPC_DIAG finish dfe656b503ebc329d2ccb5c01df69476c6cf4811219eebf565f8c43865b0daa1 c9 complete
+IPC_DIAG finish dfe656b503ebc329d2ccb5c01df69476c6cf4811219eebf565f8c43865b0daa1 c10 complete
+IPC_DIAG finish dfe656b503ebc329d2ccb5c01df69476c6cf4811219eebf565f8c43865b0daa1 c12 complete
+IPC_DIAG finish f430afcaf695c924e4ac4557baef44a38cc6542540243bbdcdce2bf3f2c4b6b6 c12 CANCELLED
+IPC_DIAG finish dfe656b503ebc329d2ccb5c01df69476c6cf4811219eebf565f8c43865b0daa1 c11 CANCELLED
+IPC_DIAG finish dfe656b503ebc329d2ccb5c01df69476c6cf4811219eebf565f8c43865b0daa1 c13 complete
+IPC_DIAG finish dfe656b503ebc329d2ccb5c01df69476c6cf4811219eebf565f8c43865b0daa1 c14 complete
+IPC_DIAG finish f430afcaf695c924e4ac4557baef44a38cc6542540243bbdcdce2bf3f2c4b6b6 c13 DEADLINE_EXCEEDED
+IPC_DIAG finish dfe656b503ebc329d2ccb5c01df69476c6cf4811219eebf565f8c43865b0daa1 c15 complete
+IPC_DIAG deadline passed
+IPC_DIAG finish dfe656b503ebc329d2ccb5c01df69476c6cf4811219eebf565f8c43865b0daa1 c16 complete
+IPC_DIAG assertion revoke line169
+IPC_DIAG finish dfe656b503ebc329d2ccb5c01df69476c6cf4811219eebf565f8c43865b0daa1 c17 complete
+IPC_DIAG finish dfe656b503ebc329d2ccb5c01df69476c6cf4811219eebf565f8c43865b0daa1 c19 complete
+IPC_DIAG finish dfe656b503ebc329d2ccb5c01df69476c6cf4811219eebf565f8c43865b0daa1 c18 CANCELLED
+IPC_DIAG finish f430afcaf695c924e4ac4557baef44a38cc6542540243bbdcdce2bf3f2c4b6b6 c14 complete
+IPC_DIAG revoke passed
+IPC_DIAG finish dfe656b503ebc329d2ccb5c01df69476c6cf4811219eebf565f8c43865b0daa1 c20 complete
+IPC_DIAG finish f430afcaf695c924e4ac4557baef44a38cc6542540243bbdcdce2bf3f2c4b6b6 c15 complete
+IPC_DIAG finish f430afcaf695c924e4ac4557baef44a38cc6542540243bbdcdce2bf3f2c4b6b6 c16 complete
+IPC_DIAG finish f430afcaf695c924e4ac4557baef44a38cc6542540243bbdcdce2bf3f2c4b6b6 c17 complete
+IPC_DIAG fail org.alica.matrixprovidera Error
+    at PhysicalSession.fail (file:///home/alica-dev/AlicaV2/packages/kernel/dist/g6/session.js:451:70)
+    at file:///home/alica-dev/AlicaV2/packages/kernel/dist/g6/session.js:517:22
+    at async HostIPC.shutdown (file:///home/alica-dev/AlicaV2/packages/kernel/dist/g6/host-adapter.js:232:13)
+    at async file:///home/alica-dev/AlicaV2/packages/kernel/dist/index.js:1280:21
+    at async consumer (file:///home/alica-dev/AlicaV2/tests/ipc/qualification-consumer.test.mjs:191:3)
+    at async TestContext.<anonymous> (file:///home/alica-dev/AlicaV2/tests/ipc/qualification-consumer.test.mjs:213:7)
+    at async Test.run (node:internal/test_runner/test:1409:7)
+    at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+IPC_DIAG dead org.alica.matrixprovidera 1 null
+IPC_DIAG finish dfe656b503ebc329d2ccb5c01df69476c6cf4811219eebf565f8c43865b0daa1 c21 complete
+IPC_DIAG finish dfe656b503ebc329d2ccb5c01df69476c6cf4811219eebf565f8c43865b0daa1 c22 complete
+IPC_DIAG finish dfe656b503ebc329d2ccb5c01df69476c6cf4811219eebf565f8c43865b0daa1 c23 complete
+IPC_DIAG fail org.alica.matrixproviderb Error
+    at PhysicalSession.fail (file:///home/alica-dev/AlicaV2/packages/kernel/dist/g6/session.js:451:70)
+    at file:///home/alica-dev/AlicaV2/packages/kernel/dist/g6/session.js:517:22
+    at async HostIPC.shutdown (file:///home/alica-dev/AlicaV2/packages/kernel/dist/g6/host-adapter.js:232:13)
+    at async file:///home/alica-dev/AlicaV2/packages/kernel/dist/index.js:1280:21
+    at async Host.closeScope (file:///home/alica-dev/AlicaV2/packages/kernel/dist/index.js:1342:21)
+    at async Host.shutdown (file:///home/alica-dev/AlicaV2/packages/kernel/dist/index.js:1426:9)
+    at async TestContext.stop (file:///home/alica-dev/AlicaV2/tools/g3-fixtures.mjs:218:5)
+    at async TestHook.run (node:internal/test_runner/test:1409:7)
+    at async Test.runHook (node:internal/test_runner/test:1289:9)
+    at async after (node:internal/test_runner/test:1342:9)
+IPC_DIAG dead org.alica.matrixproviderb 1 null
+✔ same-source matrix consumer ipc: ancestry, authority and live sibling independence (4003.582908ms)
+ℹ {"consumerSHA256":"08d5ac0a053a0be9c317c179dd704e90fba78b9e8585244b4c3973e79b0e8f95","providerASHA256":"9746fbf0ad5898e51a35a6209e80d09aedbe2126817a97da831192fc9244449d","providerBSHA256":"a82f9788b6336be98163ce077838f99a7e2a60bad4c58fc78054f110a62a9179"}
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5472.385242

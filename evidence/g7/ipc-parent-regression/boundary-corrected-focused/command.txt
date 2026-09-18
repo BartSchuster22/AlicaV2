@@ -1,0 +1,1 @@
+./node_modules/.bin/prettier --write tests/ipc/qualification-consumer.test.mjs tests/ipc/qualification-consumer-fixture.mjs tests/ipc/isolation.test.mjs && npm run boundaries && node --experimental-vm-modules --test tests/ipc/qualification-consumer.test.mjs tests/ipc/isolation.test.mjs tests/ipc/sdk-bookkeeping.test.mjs tests/ipc/scheduler.test.mjs

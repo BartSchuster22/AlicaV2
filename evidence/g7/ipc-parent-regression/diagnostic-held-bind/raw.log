@@ -1,0 +1,755 @@
+IPC_DIAG assertion initial-deny line120
+IPC_DIAG initial-deny passed
+(node:206105) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+IPC_DIAG deadline passed
+IPC_DIAG assertion revoke line169
+IPC_DIAG revoke passed
+✔ same-source matrix consumer inproc: ancestry, authority and live sibling independence (1177.917613ms)
+ℹ {"consumerSHA256":"08d5ac0a053a0be9c317c179dd704e90fba78b9e8585244b4c3973e79b0e8f95","providerASHA256":"9746fbf0ad5898e51a35a6209e80d09aedbe2126817a97da831192fc9244449d","providerBSHA256":"a82f9788b6336be98163ce077838f99a7e2a60bad4c58fc78054f110a62a9179"}
+(node:206115) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+IPC_DIAG receive org.alica.matrixprovidera c1 request [Object: null prototype] {
+  capabilityId: 'org.alica.matrixa',
+  descriptorDigest: 'sha256:567c3c109971c611cdc932f189e75194252519c2f7766f27c8bbecb2b178f1fa',
+  kind: 'register',
+  scopeId: 'root',
+  wireId: 134217730
+}
+IPC_DIAG receive org.alica.matrixprovidera c1 response [Object: null prototype] { kind: 'activated', wireId: 134217729 }
+IPC_DIAG finish e4b7f0ab19d9568a6592357da2798f241abba2882f0bb9e0f25adbef8152707e c1 complete
+IPC_DIAG worker-retire 206115 c1 UNAVAILABLE
+(node:206121) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+IPC_DIAG receive org.alica.matrixproviderb c1 request [Object: null prototype] {
+  capabilityId: 'org.alica.matrixb',
+  descriptorDigest: 'sha256:f2194573d7164d46924aa549625e7139c5286fba31598324645b2c0f668607ac',
+  kind: 'register',
+  scopeId: 'root',
+  wireId: 134217730
+}
+IPC_DIAG receive org.alica.matrixproviderb c1 response [Object: null prototype] { kind: 'activated', wireId: 134217729 }
+IPC_DIAG finish f5e614f69ab06c944199c20b6572fc782b3dd52435f0366e0812e45e6fec0be5 c1 complete
+IPC_DIAG worker-retire 206121 c1 UNAVAILABLE
+IPC_DIAG assertion initial-deny line120
+IPC_DIAG receive org.alica.matrixprovidera c2 request [Object: null prototype] {
+  kind: 'bind',
+  optional: true,
+  requirementIndex: 0,
+  scopeId: 'root',
+  wireId: 134217732
+}
+IPC_DIAG receive org.alica.matrixprovidera c2 response [Object: null prototype] {
+  kind: 'invoke',
+  response: [Object: null prototype] {
+    requestId: 'e7cf11a8-cdb2-494a-9f6e-a29f3e403c04',
+    result: [Object: null prototype] {
+      error: [Object: null prototype],
+      kind: 'error'
+    }
+  },
+  wireId: 134217731
+}
+IPC_DIAG finish e4b7f0ab19d9568a6592357da2798f241abba2882f0bb9e0f25adbef8152707e c2 complete
+IPC_DIAG initial-deny passed
+IPC_DIAG worker-retire 206115 c2 UNAVAILABLE
+IPC_DIAG receive org.alica.matrixprovidera c3 request [Object: null prototype] {
+  kind: 'bind',
+  optional: true,
+  requirementIndex: 0,
+  scopeId: 'root',
+  wireId: 134217734
+}
+IPC_DIAG receive org.alica.matrixprovidera c3 request [Object: null prototype] {
+  call: [Object: null prototype] {
+    capabilityId: 'org.alica.matrixb',
+    deadlineMs: 1789722788302,
+    descriptorDigest: 'sha256:f2194573d7164d46924aa549625e7139c5286fba31598324645b2c0f668607ac',
+    operation: 'run',
+    payload: 'nest:1',
+    requestId: '61eec5ee-7441-4b38-976b-5e321b6bca03'
+  },
+  handleId: '6321dd00-650d-490f-8df0-1eecdec15e5e',
+  kind: 'outbound',
+  requestedMs: 4452,
+  wireId: 134217729
+}
+IPC_DIAG receive org.alica.matrixproviderb c2 request [Object: null prototype] {
+  kind: 'bind',
+  optional: true,
+  requirementIndex: 0,
+  scopeId: 'root',
+  wireId: 134217732
+}
+IPC_DIAG receive org.alica.matrixproviderb c2 request [Object: null prototype] {
+  call: [Object: null prototype] {
+    capabilityId: 'org.alica.matrixa',
+    deadlineMs: 1789722788302,
+    descriptorDigest: 'sha256:567c3c109971c611cdc932f189e75194252519c2f7766f27c8bbecb2b178f1fa',
+    operation: 'run',
+    payload: 'nest:0',
+    requestId: 'ef482cd5-8cb2-4982-82c6-46c8f12813bd'
+  },
+  handleId: 'd718e064-7464-48e4-826a-e7f47b1ffbb0',
+  kind: 'outbound',
+  requestedMs: 4386,
+  wireId: 134217729
+}
+IPC_DIAG receive org.alica.matrixprovidera c4 response [Object: null prototype] {
+  kind: 'invoke',
+  response: [Object: null prototype] {
+    requestId: 'bce9a272-aba8-4329-94d2-2d1cb50fbdd8',
+    result: [Object: null prototype] { kind: 'success', value: 'leaf' }
+  },
+  wireId: 134217735
+}
+IPC_DIAG finish e4b7f0ab19d9568a6592357da2798f241abba2882f0bb9e0f25adbef8152707e c4 complete
+IPC_DIAG worker-retire 206115 c4 UNAVAILABLE
+IPC_DIAG receive org.alica.matrixproviderb c2 response [Object: null prototype] {
+  kind: 'invoke',
+  response: [Object: null prototype] {
+    requestId: 'f9e45a07-eaab-4c83-a988-a4ced3b4b742',
+    result: [Object: null prototype] { kind: 'success', value: 'leaf' }
+  },
+  wireId: 134217731
+}
+IPC_DIAG finish f5e614f69ab06c944199c20b6572fc782b3dd52435f0366e0812e45e6fec0be5 c2 complete
+IPC_DIAG worker-retire 206121 c2 UNAVAILABLE
+IPC_DIAG receive org.alica.matrixprovidera c3 response [Object: null prototype] {
+  kind: 'invoke',
+  response: [Object: null prototype] {
+    requestId: 'eef6850c-a4b6-43d2-b511-fa94e1c02bea',
+    result: [Object: null prototype] { kind: 'success', value: 'leaf' }
+  },
+  wireId: 134217733
+}
+IPC_DIAG finish e4b7f0ab19d9568a6592357da2798f241abba2882f0bb9e0f25adbef8152707e c3 complete
+IPC_DIAG worker-retire 206115 c3 UNAVAILABLE
+IPC_DIAG receive org.alica.matrixprovidera c5 request [Object: null prototype] {
+  kind: 'bind',
+  optional: true,
+  requirementIndex: 0,
+  scopeId: 'root',
+  wireId: 134217736
+}
+IPC_DIAG receive org.alica.matrixprovidera c5 request [Object: null prototype] {
+  call: [Object: null prototype] {
+    capabilityId: 'org.alica.matrixb',
+    deadlineMs: 1789722788511,
+    descriptorDigest: 'sha256:f2194573d7164d46924aa549625e7139c5286fba31598324645b2c0f668607ac',
+    operation: 'run',
+    payload: 'nest:3',
+    requestId: '998f4e2c-a40a-48e8-bd02-1573af597d8a'
+  },
+  handleId: 'f91c0443-9a07-43bc-85b9-2c4ad7dd6337',
+  kind: 'outbound',
+  requestedMs: 4445,
+  wireId: 134217731
+}
+IPC_DIAG receive org.alica.matrixproviderb c3 request [Object: null prototype] {
+  kind: 'bind',
+  optional: true,
+  requirementIndex: 0,
+  scopeId: 'root',
+  wireId: 134217734
+}
+IPC_DIAG receive org.alica.matrixproviderb c3 request [Object: null prototype] {
+  call: [Object: null prototype] {
+    capabilityId: 'org.alica.matrixa',
+    deadlineMs: 1789722788511,
+    descriptorDigest: 'sha256:567c3c109971c611cdc932f189e75194252519c2f7766f27c8bbecb2b178f1fa',
+    operation: 'run',
+    payload: 'nest:2',
+    requestId: '9338cafa-82a5-4bdb-accc-c492141de247'
+  },
+  handleId: 'ee1592fa-a4d9-46b1-bcb4-70709208ead7',
+  kind: 'outbound',
+  requestedMs: 4374,
+  wireId: 134217731
+}
+IPC_DIAG receive org.alica.matrixprovidera c6 request [Object: null prototype] {
+  kind: 'bind',
+  optional: true,
+  requirementIndex: 0,
+  scopeId: 'root',
+  wireId: 134217738
+}
+IPC_DIAG receive org.alica.matrixprovidera c6 request [Object: null prototype] {
+  call: [Object: null prototype] {
+    capabilityId: 'org.alica.matrixb',
+    deadlineMs: 1789722788511,
+    descriptorDigest: 'sha256:f2194573d7164d46924aa549625e7139c5286fba31598324645b2c0f668607ac',
+    operation: 'run',
+    payload: 'nest:1',
+    requestId: 'a005fb25-cb0b-4c82-b9c1-2d613b6f0ba9'
+  },
+  handleId: '9ef6fa3c-c079-4721-adbd-35dd6e477147',
+  kind: 'outbound',
+  requestedMs: 4299,
+  wireId: 134217733
+}
+IPC_DIAG receive org.alica.matrixproviderb c4 request [Object: null prototype] {
+  kind: 'bind',
+  optional: true,
+  requirementIndex: 0,
+  scopeId: 'root',
+  wireId: 134217736
+}
+IPC_DIAG receive org.alica.matrixproviderb c4 request [Object: null prototype] {
+  call: [Object: null prototype] {
+    capabilityId: 'org.alica.matrixa',
+    deadlineMs: 1789722788511,
+    descriptorDigest: 'sha256:567c3c109971c611cdc932f189e75194252519c2f7766f27c8bbecb2b178f1fa',
+    operation: 'run',
+    payload: 'nest:0',
+    requestId: '60072b9a-a088-4a2c-b883-ab2b7b0e00db'
+  },
+  handleId: 'beb406e9-4a70-4415-b717-d535ea64444e',
+  kind: 'outbound',
+  requestedMs: 4211,
+  wireId: 134217733
+}
+IPC_DIAG receive org.alica.matrixprovidera c7 response [Object: null prototype] {
+  kind: 'invoke',
+  response: [Object: null prototype] {
+    requestId: '45ee5c61-cad0-455c-b893-e5c0c8ceed46',
+    result: [Object: null prototype] { kind: 'success', value: 'leaf' }
+  },
+  wireId: 134217741
+}
+IPC_DIAG finish e4b7f0ab19d9568a6592357da2798f241abba2882f0bb9e0f25adbef8152707e c7 complete
+IPC_DIAG worker-retire 206115 c7 UNAVAILABLE
+IPC_DIAG receive org.alica.matrixproviderb c4 response [Object: null prototype] {
+  kind: 'invoke',
+  response: [Object: null prototype] {
+    requestId: '81f58e03-d2b4-4710-93c5-bbe2d75bd9e9',
+    result: [Object: null prototype] { kind: 'success', value: 'leaf' }
+  },
+  wireId: 134217735
+}
+IPC_DIAG finish f5e614f69ab06c944199c20b6572fc782b3dd52435f0366e0812e45e6fec0be5 c4 complete
+IPC_DIAG worker-retire 206121 c4 UNAVAILABLE
+IPC_DIAG receive org.alica.matrixprovidera c6 response [Object: null prototype] {
+  kind: 'invoke',
+  response: [Object: null prototype] {
+    requestId: '20710bd5-0724-4046-9046-c21351900a04',
+    result: [Object: null prototype] { kind: 'success', value: 'leaf' }
+  },
+  wireId: 134217739
+}
+IPC_DIAG finish e4b7f0ab19d9568a6592357da2798f241abba2882f0bb9e0f25adbef8152707e c6 complete
+IPC_DIAG worker-retire 206115 c6 UNAVAILABLE
+IPC_DIAG receive org.alica.matrixproviderb c3 response [Object: null prototype] {
+  kind: 'invoke',
+  response: [Object: null prototype] {
+    requestId: 'ab3fd853-768c-4fdc-9a52-d645a181e1a6',
+    result: [Object: null prototype] { kind: 'success', value: 'leaf' }
+  },
+  wireId: 134217733
+}
+IPC_DIAG finish f5e614f69ab06c944199c20b6572fc782b3dd52435f0366e0812e45e6fec0be5 c3 complete
+IPC_DIAG worker-retire 206121 c3 UNAVAILABLE
+IPC_DIAG receive org.alica.matrixprovidera c5 response [Object: null prototype] {
+  kind: 'invoke',
+  response: [Object: null prototype] {
+    requestId: '61e5fab2-9b71-4952-86c7-25b76039480b',
+    result: [Object: null prototype] { kind: 'success', value: 'leaf' }
+  },
+  wireId: 134217737
+}
+IPC_DIAG finish e4b7f0ab19d9568a6592357da2798f241abba2882f0bb9e0f25adbef8152707e c5 complete
+IPC_DIAG worker-retire 206115 c5 UNAVAILABLE
+IPC_DIAG receive org.alica.matrixprovidera c8 request [Object: null prototype] {
+  kind: 'bind',
+  optional: true,
+  requirementIndex: 0,
+  scopeId: 'root',
+  wireId: 134217740
+}
+IPC_DIAG receive org.alica.matrixprovidera c8 request [Object: null prototype] {
+  call: [Object: null prototype] {
+    capabilityId: 'org.alica.matrixb',
+    deadlineMs: 1789722788954,
+    descriptorDigest: 'sha256:f2194573d7164d46924aa549625e7139c5286fba31598324645b2c0f668607ac',
+    operation: 'run',
+    payload: 'nest:23',
+    requestId: 'aa37b371-ecbf-4069-a190-ef66e67821ad'
+  },
+  handleId: 'd1c96c12-89bb-4910-9dd0-1c8dd37a56d4',
+  kind: 'outbound',
+  requestedMs: 4461,
+  wireId: 134217735
+}
+IPC_DIAG receive org.alica.matrixproviderb c5 request [Object: null prototype] {
+  kind: 'bind',
+  optional: true,
+  requirementIndex: 0,
+  scopeId: 'root',
+  wireId: 134217738
+}
+IPC_DIAG receive org.alica.matrixproviderb c5 request [Object: null prototype] {
+  call: [Object: null prototype] {
+    capabilityId: 'org.alica.matrixa',
+    deadlineMs: 1789722788954,
+    descriptorDigest: 'sha256:567c3c109971c611cdc932f189e75194252519c2f7766f27c8bbecb2b178f1fa',
+    operation: 'run',
+    payload: 'nest:22',
+    requestId: '6bef24a9-a8d7-4ad0-8e8b-44e492ae2529'
+  },
+  handleId: '7195388d-d58d-4cd4-aac4-6ca16dea4adb',
+  kind: 'outbound',
+  requestedMs: 4394,
+  wireId: 134217735
+}
+IPC_DIAG receive org.alica.matrixprovidera c9 request [Object: null prototype] {
+  kind: 'bind',
+  optional: true,
+  requirementIndex: 0,
+  scopeId: 'root',
+  wireId: 134217742
+}
+IPC_DIAG receive org.alica.matrixprovidera c9 request [Object: null prototype] {
+  call: [Object: null prototype] {
+    capabilityId: 'org.alica.matrixb',
+    deadlineMs: 1789722788954,
+    descriptorDigest: 'sha256:f2194573d7164d46924aa549625e7139c5286fba31598324645b2c0f668607ac',
+    operation: 'run',
+    payload: 'nest:21',
+    requestId: '5524b727-3a09-4093-a7d6-b267178951fd'
+  },
+  handleId: '52e1f093-a48d-4df4-b3d9-1bdb1df8c49d',
+  kind: 'outbound',
+  requestedMs: 4311,
+  wireId: 134217737
+}
+IPC_DIAG receive org.alica.matrixproviderb c6 request [Object: null prototype] {
+  kind: 'bind',
+  optional: true,
+  requirementIndex: 0,
+  scopeId: 'root',
+  wireId: 134217740
+}
+IPC_DIAG receive org.alica.matrixproviderb c6 request [Object: null prototype] {
+  call: [Object: null prototype] {
+    capabilityId: 'org.alica.matrixa',
+    deadlineMs: 1789722788954,
+    descriptorDigest: 'sha256:567c3c109971c611cdc932f189e75194252519c2f7766f27c8bbecb2b178f1fa',
+    operation: 'run',
+    payload: 'nest:20',
+    requestId: '228d5a60-b0d5-4a1a-8a7e-f362057725a7'
+  },
+  handleId: '5a4b3d2c-2e20-48b5-a3bb-12a95210c312',
+  kind: 'outbound',
+  requestedMs: 4212,
+  wireId: 134217737
+}
+IPC_DIAG receive org.alica.matrixprovidera c10 request [Object: null prototype] {
+  kind: 'bind',
+  optional: true,
+  requirementIndex: 0,
+  scopeId: 'root',
+  wireId: 134217744
+}
+IPC_DIAG receive org.alica.matrixprovidera c10 request [Object: null prototype] {
+  call: [Object: null prototype] {
+    capabilityId: 'org.alica.matrixb',
+    deadlineMs: 1789722788954,
+    descriptorDigest: 'sha256:f2194573d7164d46924aa549625e7139c5286fba31598324645b2c0f668607ac',
+    operation: 'run',
+    payload: 'nest:19',
+    requestId: '0366e034-9bbd-4095-a7a8-5578275fe925'
+  },
+  handleId: '253a8248-cade-44ef-88c4-5de3a7a4a44e',
+  kind: 'outbound',
+  requestedMs: 4098,
+  wireId: 134217739
+}
+IPC_DIAG receive org.alica.matrixproviderb c7 request [Object: null prototype] {
+  kind: 'bind',
+  optional: true,
+  requirementIndex: 0,
+  scopeId: 'root',
+  wireId: 134217742
+}
+IPC_DIAG receive org.alica.matrixproviderb c7 request [Object: null prototype] {
+  call: [Object: null prototype] {
+    capabilityId: 'org.alica.matrixa',
+    deadlineMs: 1789722788954,
+    descriptorDigest: 'sha256:567c3c109971c611cdc932f189e75194252519c2f7766f27c8bbecb2b178f1fa',
+    operation: 'run',
+    payload: 'nest:18',
+    requestId: 'a850ec90-3723-442b-8399-e52b9e865979'
+  },
+  handleId: 'ff817652-c501-463c-a253-adea96b0ea6c',
+  kind: 'outbound',
+  requestedMs: 3974,
+  wireId: 134217739
+}
+IPC_DIAG receive org.alica.matrixprovidera c11 request [Object: null prototype] {
+  kind: 'bind',
+  optional: true,
+  requirementIndex: 0,
+  scopeId: 'root',
+  wireId: 134217746
+}
+IPC_DIAG receive org.alica.matrixprovidera c11 request [Object: null prototype] {
+  call: [Object: null prototype] {
+    capabilityId: 'org.alica.matrixb',
+    deadlineMs: 1789722788954,
+    descriptorDigest: 'sha256:f2194573d7164d46924aa549625e7139c5286fba31598324645b2c0f668607ac',
+    operation: 'run',
+    payload: 'nest:17',
+    requestId: '36c33bea-7033-42a6-8d14-0a130174b0d5'
+  },
+  handleId: '884e268e-39cf-4fda-8c21-0ec473c6f3bd',
+  kind: 'outbound',
+  requestedMs: 3835,
+  wireId: 134217741
+}
+IPC_DIAG receive org.alica.matrixproviderb c8 request [Object: null prototype] {
+  kind: 'bind',
+  optional: true,
+  requirementIndex: 0,
+  scopeId: 'root',
+  wireId: 134217744
+}
+IPC_DIAG receive org.alica.matrixproviderb c8 request [Object: null prototype] {
+  call: [Object: null prototype] {
+    capabilityId: 'org.alica.matrixa',
+    deadlineMs: 1789722788954,
+    descriptorDigest: 'sha256:567c3c109971c611cdc932f189e75194252519c2f7766f27c8bbecb2b178f1fa',
+    operation: 'run',
+    payload: 'nest:16',
+    requestId: 'dd2dc196-b15e-487c-8683-9f6a5a60143f'
+  },
+  handleId: '29b62719-f30f-47a9-b264-48e688ee423e',
+  kind: 'outbound',
+  requestedMs: 3690,
+  wireId: 134217741
+}
+IPC_DIAG receive org.alica.matrixproviderb c8 response [Object: null prototype] {
+  kind: 'invoke',
+  response: [Object: null prototype] {
+    requestId: '13192a2f-2681-44d4-9899-a90144f6f666',
+    result: [Object: null prototype] {
+      error: [Object: null prototype],
+      kind: 'error'
+    }
+  },
+  wireId: 134217743
+}
+IPC_DIAG finish f5e614f69ab06c944199c20b6572fc782b3dd52435f0366e0812e45e6fec0be5 c8 complete
+IPC_DIAG worker-retire 206121 c8 UNAVAILABLE
+IPC_DIAG receive org.alica.matrixprovidera c11 response [Object: null prototype] {
+  kind: 'invoke',
+  response: [Object: null prototype] {
+    requestId: '392f5a8e-0b51-4f7b-a79b-d57dee303acb',
+    result: [Object: null prototype] {
+      error: [Object: null prototype],
+      kind: 'error'
+    }
+  },
+  wireId: 134217749
+}
+IPC_DIAG finish e4b7f0ab19d9568a6592357da2798f241abba2882f0bb9e0f25adbef8152707e c11 complete
+IPC_DIAG worker-retire 206115 c11 UNAVAILABLE
+IPC_DIAG receive org.alica.matrixproviderb c7 response [Object: null prototype] {
+  kind: 'invoke',
+  response: [Object: null prototype] {
+    requestId: 'f2614fee-9da3-4291-b3d2-40aa71d617c5',
+    result: [Object: null prototype] {
+      error: [Object: null prototype],
+      kind: 'error'
+    }
+  },
+  wireId: 134217741
+}
+IPC_DIAG finish f5e614f69ab06c944199c20b6572fc782b3dd52435f0366e0812e45e6fec0be5 c7 complete
+IPC_DIAG worker-retire 206121 c7 UNAVAILABLE
+IPC_DIAG receive org.alica.matrixprovidera c10 response [Object: null prototype] {
+  kind: 'invoke',
+  response: [Object: null prototype] {
+    requestId: '7fe6a6b7-7df4-4efe-ab0d-b6d91b281f87',
+    result: [Object: null prototype] {
+      error: [Object: null prototype],
+      kind: 'error'
+    }
+  },
+  wireId: 134217747
+}
+IPC_DIAG finish e4b7f0ab19d9568a6592357da2798f241abba2882f0bb9e0f25adbef8152707e c10 complete
+IPC_DIAG worker-retire 206115 c10 UNAVAILABLE
+IPC_DIAG receive org.alica.matrixproviderb c6 response [Object: null prototype] {
+  kind: 'invoke',
+  response: [Object: null prototype] {
+    requestId: 'c95d0af9-b47a-4c1a-a5a0-b103c895c0f6',
+    result: [Object: null prototype] {
+      error: [Object: null prototype],
+      kind: 'error'
+    }
+  },
+  wireId: 134217739
+}
+IPC_DIAG finish f5e614f69ab06c944199c20b6572fc782b3dd52435f0366e0812e45e6fec0be5 c6 complete
+IPC_DIAG worker-retire 206121 c6 UNAVAILABLE
+IPC_DIAG receive org.alica.matrixprovidera c9 response [Object: null prototype] {
+  kind: 'invoke',
+  response: [Object: null prototype] {
+    requestId: '09e6b68b-0489-4db1-8eb6-4f943e8981ec',
+    result: [Object: null prototype] {
+      error: [Object: null prototype],
+      kind: 'error'
+    }
+  },
+  wireId: 134217745
+}
+IPC_DIAG finish e4b7f0ab19d9568a6592357da2798f241abba2882f0bb9e0f25adbef8152707e c9 complete
+IPC_DIAG worker-retire 206115 c9 UNAVAILABLE
+IPC_DIAG receive org.alica.matrixproviderb c5 response [Object: null prototype] {
+  kind: 'invoke',
+  response: [Object: null prototype] {
+    requestId: 'a996df12-621e-4d54-8eae-046d5b43e0ee',
+    result: [Object: null prototype] {
+      error: [Object: null prototype],
+      kind: 'error'
+    }
+  },
+  wireId: 134217737
+}
+IPC_DIAG finish f5e614f69ab06c944199c20b6572fc782b3dd52435f0366e0812e45e6fec0be5 c5 complete
+IPC_DIAG worker-retire 206121 c5 UNAVAILABLE
+IPC_DIAG receive org.alica.matrixprovidera c8 response [Object: null prototype] {
+  kind: 'invoke',
+  response: [Object: null prototype] {
+    requestId: '0f843076-88c0-43bb-91d6-34cc215cdf07',
+    result: [Object: null prototype] {
+      error: [Object: null prototype],
+      kind: 'error'
+    }
+  },
+  wireId: 134217743
+}
+IPC_DIAG finish e4b7f0ab19d9568a6592357da2798f241abba2882f0bb9e0f25adbef8152707e c8 complete
+IPC_DIAG worker-retire 206115 c8 UNAVAILABLE
+IPC_DIAG receive org.alica.matrixproviderb c9 response [Object: null prototype] {
+  kind: 'invoke',
+  response: [Object: null prototype] {
+    requestId: '82f90eb5-044f-444d-83e5-158e796f469c',
+    result: [Object: null prototype] { kind: 'success', value: 'leaf' }
+  },
+  wireId: 134217745
+}
+IPC_DIAG finish f5e614f69ab06c944199c20b6572fc782b3dd52435f0366e0812e45e6fec0be5 c9 complete
+IPC_DIAG worker-retire 206121 c9 UNAVAILABLE
+IPC_DIAG receive org.alica.matrixprovidera c12 request [Object: null prototype] {
+  kind: 'bind',
+  optional: true,
+  requirementIndex: 0,
+  scopeId: 'root',
+  wireId: 134217748
+}
+IPC_DIAG receive org.alica.matrixproviderb c10 response [Object: null prototype] {
+  kind: 'invoke',
+  response: [Object: null prototype] {
+    requestId: '06562d8d-ff2d-48c3-ba97-c350d3d8e87d',
+    result: [Object: null prototype] { kind: 'success', value: '0:0:0' }
+  },
+  wireId: 134217747
+}
+IPC_DIAG finish f5e614f69ab06c944199c20b6572fc782b3dd52435f0366e0812e45e6fec0be5 c10 complete
+IPC_DIAG worker-retire 206121 c10 UNAVAILABLE
+IPC_DIAG receive org.alica.matrixprovidera c12 request [Object: null prototype] {
+  call: [Object: null prototype] {
+    capabilityId: 'org.alica.matrixb',
+    deadlineMs: 1789722789968,
+    descriptorDigest: 'sha256:f2194573d7164d46924aa549625e7139c5286fba31598324645b2c0f668607ac',
+    operation: 'run',
+    payload: 'wait',
+    requestId: 'a76b69d6-4d59-4a5d-bc6b-3add5095f6cc'
+  },
+  handleId: '74953a50-1b9b-4c54-b726-037e84b1f777',
+  kind: 'outbound',
+  requestedMs: 4436,
+  wireId: 134217743
+}
+IPC_DIAG receive org.alica.matrixproviderb c12 response [Object: null prototype] {
+  kind: 'invoke',
+  response: [Object: null prototype] {
+    requestId: 'e96ab28d-3bd5-4040-b5d4-b7142f8a5625',
+    result: [Object: null prototype] { kind: 'success', value: '1:0:0' }
+  },
+  wireId: 134217751
+}
+IPC_DIAG finish f5e614f69ab06c944199c20b6572fc782b3dd52435f0366e0812e45e6fec0be5 c12 complete
+IPC_DIAG worker-retire 206121 c12 UNAVAILABLE
+IPC_DIAG finish e4b7f0ab19d9568a6592357da2798f241abba2882f0bb9e0f25adbef8152707e c12 CANCELLED
+IPC_DIAG finish f5e614f69ab06c944199c20b6572fc782b3dd52435f0366e0812e45e6fec0be5 c11 CANCELLED
+IPC_DIAG worker-retire 206115 c12 UNAVAILABLE
+IPC_DIAG worker-retire 206121 c11 UNAVAILABLE
+IPC_DIAG receive org.alica.matrixproviderb c13 response [Object: null prototype] {
+  kind: 'invoke',
+  response: [Object: null prototype] {
+    requestId: 'ce6f6534-3bf9-4ae4-8714-feaa132e16d9',
+    result: [Object: null prototype] { kind: 'success', value: 'slow' }
+  },
+  wireId: 134217753
+}
+IPC_DIAG finish f5e614f69ab06c944199c20b6572fc782b3dd52435f0366e0812e45e6fec0be5 c13 complete
+IPC_DIAG worker-retire 206121 c13 UNAVAILABLE
+IPC_DIAG receive org.alica.matrixproviderb c14 response [Object: null prototype] {
+  kind: 'invoke',
+  response: [Object: null prototype] {
+    requestId: 'ec8839ce-3be2-44ce-b4b4-eb1bcf37e4b3',
+    result: [Object: null prototype] { kind: 'success', value: '1:1:0' }
+  },
+  wireId: 134217755
+}
+IPC_DIAG finish f5e614f69ab06c944199c20b6572fc782b3dd52435f0366e0812e45e6fec0be5 c14 complete
+IPC_DIAG worker-retire 206121 c14 UNAVAILABLE
+IPC_DIAG HOLD short-deadline bind c13 35
+IPC_DIAG finish e4b7f0ab19d9568a6592357da2798f241abba2882f0bb9e0f25adbef8152707e c13 CANCELLED
+IPC_DIAG worker-retire 206115 c13 UNAVAILABLE
+IPC_DIAG rpc-lost 206115 CANCELLED undefined [ 'bound', 'absent' ]
+IPC_DIAG worker-fail 206115 AcapError: UNAVAILABLE
+    at SDKPending.fail [as failSession] (file:///home/alica-dev/AlicaV2/packages/kernel/dist/g6/worker-sdk-channel.js:30:28)
+    at Object.lose (file:///home/alica-dev/AlicaV2/packages/kernel/dist/g6/sdk-rpc.js:89:26)
+    at AbortSignal.abort (file:///home/alica-dev/AlicaV2/packages/kernel/dist/g6/sdk-rpc.js:92:37)
+    at [nodejs.internal.kHybridDispatch] (node:internal/event_target:848:20)
+    at AbortSignal.dispatchEvent (node:internal/event_target:789:26)
+    at runAbort (node:internal/abort_controller:554:10)
+    at abortSignal (node:internal/abort_controller:518:3)
+    at AbortController.abort (node:internal/abort_controller:573:5)
+    at WorkerTransport.closeEndpoint (file:///home/alica-dev/AlicaV2/packages/kernel/dist/g6/worker-transport.js:248:29)
+    at WorkerTransport.pump (file:///home/alica-dev/AlicaV2/packages/kernel/dist/g6/worker-transport.js:212:26) {
+  code: 'UNAVAILABLE',
+  correlationId: 'c822f931-609e-4251-8659-4131b3df4e56',
+  retryable: false
+} Error
+    at WorkerTransport.fail (file:///home/alica-dev/AlicaV2/packages/kernel/dist/g6/worker-transport.js:251:67)
+    at SDKPending.fail [as failSession] (file:///home/alica-dev/AlicaV2/packages/kernel/dist/g6/worker-sdk-channel.js:30:23)
+    at Object.lose (file:///home/alica-dev/AlicaV2/packages/kernel/dist/g6/sdk-rpc.js:89:26)
+    at AbortSignal.abort (file:///home/alica-dev/AlicaV2/packages/kernel/dist/g6/sdk-rpc.js:92:37)
+    at [nodejs.internal.kHybridDispatch] (node:internal/event_target:848:20)
+    at AbortSignal.dispatchEvent (node:internal/event_target:789:26)
+    at runAbort (node:internal/abort_controller:554:10)
+    at abortSignal (node:internal/abort_controller:518:3)
+    at AbortController.abort (node:internal/abort_controller:573:5)
+    at WorkerTransport.closeEndpoint (file:///home/alica-dev/AlicaV2/packages/kernel/dist/g6/worker-transport.js:248:29)
+IPC_DIAG pump org.alica.matrixprovidera PeerClosed [AcapError]: UNAVAILABLE
+    at NativeStream.receive (file:///home/alica-dev/AlicaV2/packages/kernel/dist/g6/stream.js:119:23)
+    at PhysicalSession.pump (file:///home/alica-dev/AlicaV2/packages/kernel/dist/g6/session.js:258:35)
+    at Timeout._onTimeout (file:///home/alica-dev/AlicaV2/packages/kernel/dist/g6/session.js:207:26)
+    at listOnTimeout (node:internal/timers:685:17)
+    at process.processTimers (node:internal/timers:618:7) {
+  code: 'UNAVAILABLE',
+  correlationId: '0dcd1911-bc3a-4413-9bd5-0f7ba6494441',
+  retryable: false
+}
+IPC_DIAG fail org.alica.matrixprovidera Error
+    at PhysicalSession.fail (file:///home/alica-dev/AlicaV2/packages/kernel/dist/g6/session.js:451:70)
+    at Timeout._onTimeout (file:///home/alica-dev/AlicaV2/packages/kernel/dist/g6/session.js:211:26)
+    at listOnTimeout (node:internal/timers:685:17)
+    at process.processTimers (node:internal/timers:618:7)
+IPC_DIAG dead org.alica.matrixprovidera 1 null
+IPC_DIAG held-bind disposition c13 CANCELLED
+IPC_DIAG receive org.alica.matrixproviderb c15 response [Object: null prototype] {
+  kind: 'invoke',
+  response: [Object: null prototype] {
+    requestId: 'd2a7d947-d09b-4ae9-af36-75e466b2f44f',
+    result: [Object: null prototype] { kind: 'success', value: 'slow' }
+  },
+  wireId: 134217757
+}
+IPC_DIAG finish f5e614f69ab06c944199c20b6572fc782b3dd52435f0366e0812e45e6fec0be5 c15 complete
+IPC_DIAG worker-retire 206121 c15 UNAVAILABLE
+IPC_DIAG deadline passed
+IPC_DIAG receive org.alica.matrixproviderb c16 response [Object: null prototype] {
+  kind: 'invoke',
+  response: [Object: null prototype] {
+    requestId: '2351bb9e-5b59-40e8-b487-6c997d262e23',
+    result: [Object: null prototype] { kind: 'success', value: '1:1:0' }
+  },
+  wireId: 134217759
+}
+IPC_DIAG finish f5e614f69ab06c944199c20b6572fc782b3dd52435f0366e0812e45e6fec0be5 c16 complete
+IPC_DIAG worker-retire 206121 c16 UNAVAILABLE
+IPC_DIAG assertion revoke line169
+IPC_DIAG finish f5e614f69ab06c944199c20b6572fc782b3dd52435f0366e0812e45e6fec0be5 c17 CANCELLED
+IPC_DIAG worker-retire 206121 c17 UNAVAILABLE
+IPC_DIAG receive org.alica.matrixproviderb c18 response [Object: null prototype] { kind: 'quiesced', wireId: 134217761 }
+IPC_DIAG finish f5e614f69ab06c944199c20b6572fc782b3dd52435f0366e0812e45e6fec0be5 c18 complete
+IPC_DIAG worker-retire 206121 c18 UNAVAILABLE
+IPC_DIAG receive org.alica.matrixproviderb c19 response [Object: null prototype] {
+  kind: 'disposed',
+  report: [Object: null prototype] {
+    completedDisposers: 0,
+    failedDisposers: [],
+    restartRequired: false,
+    state: 'DISPOSED',
+    timedOutResources: 0
+  },
+  wireId: 134217763
+}
+IPC_DIAG finish f5e614f69ab06c944199c20b6572fc782b3dd52435f0366e0812e45e6fec0be5 c19 complete
+IPC_DIAG fail org.alica.matrixproviderb Error
+    at PhysicalSession.fail (file:///home/alica-dev/AlicaV2/packages/kernel/dist/g6/session.js:451:70)
+    at file:///home/alica-dev/AlicaV2/packages/kernel/dist/g6/session.js:517:22
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async HostIPC.shutdown (file:///home/alica-dev/AlicaV2/packages/kernel/dist/g6/host-adapter.js:232:13)
+    at async file:///home/alica-dev/AlicaV2/packages/kernel/dist/index.js:1280:21
+    at async Host.closeScope (file:///home/alica-dev/AlicaV2/packages/kernel/dist/index.js:1342:21)
+    at async Host.shutdown (file:///home/alica-dev/AlicaV2/packages/kernel/dist/index.js:1426:9)
+    at async TestContext.stop (file:///home/alica-dev/AlicaV2/tools/g3-fixtures.mjs:218:5)
+    at async TestHook.run (node:internal/test_runner/test:1409:7)
+    at async Test.runHook (node:internal/test_runner/test:1289:9)
+IPC_DIAG worker-fail 206121 PeerClosed [AcapError]: UNAVAILABLE
+    at NativeStream.receive (file:///home/alica-dev/AlicaV2/packages/kernel/dist/g6/stream.js:119:23)
+    at WorkerTransport.pump (file:///home/alica-dev/AlicaV2/packages/kernel/dist/g6/worker-transport.js:114:40)
+    at Timeout._onTimeout (file:///home/alica-dev/AlicaV2/packages/kernel/dist/g6/worker-transport.js:67:22)
+    at listOnTimeout (node:internal/timers:685:17)
+    at process.processTimers (node:internal/timers:618:7) {
+  code: 'UNAVAILABLE',
+  correlationId: 'd48d9a2f-867b-42bd-a963-4868026ee793',
+  retryable: false
+} Error
+    at WorkerTransport.fail (file:///home/alica-dev/AlicaV2/packages/kernel/dist/g6/worker-transport.js:251:67)
+    at Timeout._onTimeout (file:///home/alica-dev/AlicaV2/packages/kernel/dist/g6/worker-transport.js:70:22)
+    at listOnTimeout (node:internal/timers:685:17)
+    at process.processTimers (node:internal/timers:618:7)
+IPC_DIAG worker-retire 206121 c19 UNAVAILABLE
+IPC_DIAG dead org.alica.matrixproviderb 1 null
+✖ same-source matrix consumer ipc: ancestry, authority and live sibling independence (3552.932021ms)
+ℹ {"consumerSHA256":"08d5ac0a053a0be9c317c179dd704e90fba78b9e8585244b4c3973e79b0e8f95","providerASHA256":"9746fbf0ad5898e51a35a6209e80d09aedbe2126817a97da831192fc9244449d","providerBSHA256":"a82f9788b6336be98163ce077838f99a7e2a60bad4c58fc78054f110a62a9179"}
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5014.041262
+
+✖ failing tests:
+
+test at tests/ipc/qualification-consumer.test.mjs:213:3
+✖ same-source matrix consumer ipc: ancestry, authority and live sibling independence (3552.932021ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   code: 'UNAVAILABLE'
+  -   code: 'PERMISSION_DENIED'
+    }
+  
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: AcapError: UNAVAILABLE
+        at ContractSession.call (file:///home/alica-dev/AlicaV2/packages/acap-contracts/dist/runtime.js:521:19)
+        at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25),
+    expected: { code: 'PERMISSION_DENIED' },
+    operator: 'rejects',
+    diff: 'simple'
+  }

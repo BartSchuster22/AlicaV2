@@ -1,0 +1,1 @@
+node --experimental-vm-modules --test tests/ipc/qualification-consumer.test.mjs tests/ipc/isolation.test.mjs tests/ipc/sdk-bookkeeping.test.mjs tests/ipc/scheduler.test.mjs

@@ -1,0 +1,16 @@
+import pathlib,subprocess,sys,json,hashlib,tarfile,io,shlex
+r=pathlib.Path('/home/herman/g7-implementation');e=r/'evidence/g7/ipc-parent-regression'
+ssh=['ssh','-i','/home/herman/.ssh/alica_v2_vps_ed25519','-o','IdentitiesOnly=yes','-o','BatchMode=yes','-o','StrictHostKeyChecking=yes','-o','UserKnownHostsFile=/home/herman/.ssh/alica_v2_known_hosts','alica-dev@167.233.135.142']
+name=sys.argv[1]; command=sys.argv[2]; paths=sys.argv[3:]
+out=e/name;out.mkdir(exist_ok=False)
+(out/'command.txt').write_text(command+'\n');(out/'allowlist.json').write_text(json.dumps(paths,indent=2))
+with tarfile.open(out/'input.tar','w') as t:
+ for p in paths:t.add(r/p,arcname=p,recursive=False)
+subprocess.run(ssh+['cd /home/alica-dev/AlicaV2 && tar xf -'],input=(out/'input.tar').read_bytes(),check=True)
+inv=(e/'inventory-script.py.txt').read_text()
+def snapshot(label):
+ (out/(label+'.json')).write_bytes(subprocess.check_output(ssh+['cd /home/alica-dev/AlicaV2 && python3 -c '+shlex.quote(inv)]))
+snapshot('before')
+with (out/'raw.log').open('wb') as f:
+ p=subprocess.run(ssh+['cd /home/alica-dev/AlicaV2 && export PATH="$PWD/.tools/node/bin:$PATH"; '+command],stdout=f,stderr=subprocess.STDOUT)
+(out/'exit.txt').write_text(str(p.returncode)+'\n');snapshot('after');print(name,'exit',p.returncode)

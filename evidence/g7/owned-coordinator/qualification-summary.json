@@ -1,0 +1,70 @@
+{
+  "focused-final": {
+    "exit": 0,
+    "nodeRunnerSummaries": [
+      {
+        "tests": 4,
+        "pass": 4,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 10420.987072
+      }
+    ],
+    "pythonRunnerCounts": [
+      9
+    ],
+    "failureMarkers": []
+  },
+  "full-check": {
+    "exit": 0,
+    "nodeRunnerSummaries": [
+      {
+        "tests": 170,
+        "pass": 170,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 5922.233298
+      },
+      {
+        "tests": 160,
+        "pass": 160,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 161464.020003
+      },
+      {
+        "tests": 272,
+        "pass": 272,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 874806.130527
+      }
+    ],
+    "pythonRunnerCounts": [
+      193,
+      30,
+      11,
+      9,
+      121
+    ],
+    "failureMarkers": []
+  },
+  "finalRealBudgetCases": [
+    "\u2714 independent stopped worker blocked IO expires unchanged verification budget without release (303082.790842ms)",
+    "\u2714 coordinator death kills the guarded independent stopped worker while retaining residue (3243.204405ms)",
+    "\u2714 real owner blocked IO expires unchanged cleanup budget without offline admission (32646.218114ms)",
+    "\u2714 real owner blocked IO expires unchanged verification budget without offline admission (300245.987657ms)",
+    "\u2714 buffered genuine CLEAN and normal child exit cannot certify after the unchanged reap deadline (33367.916799ms)",
+    "\u2714 blocked seal acknowledgement expires the actual unchanged cleanup budget without maintenance (32694.897889ms)"
+  ],
+  "fullStart": "Fri Sep 18 08:29:49 AM UTC 2026",
+  "fullEnd": "Fri Sep 18 08:48:02 AM UTC 2026"
+}

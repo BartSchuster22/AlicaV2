@@ -1,0 +1,13 @@
+test_authenticated_receive_return_late_is_not_permission (__main__.Channels) ... ok
+test_forced_child_exit_is_never_normal_reap (__main__.Channels) ... ok
+test_late_real_normal_exit_is_not_a_reap_permit (__main__.Channels) ... ok
+test_non_parent_guard_is_rejected (__main__.Channels) ... ok
+test_plain_inherited_stream_fd_and_closed_channel_are_not_credentials (__main__.Channels) ... ok
+test_real_child_credentials_and_held_pidfd_normal_reap (__main__.Channels) ... ok
+test_socketpair_creator_is_not_actual_child_credential (__main__.Channels) ... ok
+test_syscall_return_late_normal_reap_is_not_permission (__main__.Channels) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.145s
+
+OK

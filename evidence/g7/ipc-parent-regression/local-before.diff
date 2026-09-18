@@ -1,0 +1,33 @@
+diff --git a/tools/g7-supervisor.py b/tools/g7-supervisor.py
+index 12fdc60..b5cc2ff 100644
+--- a/tools/g7-supervisor.py
++++ b/tools/g7-supervisor.py
+@@ -103,9 +103,17 @@ def request_valid(v, version=1):
+ 
+ 
+ class Supervisor:
++    def acquire_root(self, root):
++        fd = private_root(root)
++        fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
++        return fd
++
++    def lifecycle_tick(self):
++        # Detached custody has no release channel or offline transition.
++        return False
++
+     def __init__(self, node, root, inputs):
+-        self.root = private_root(root)
+-        fcntl.flock(self.root, fcntl.LOCK_EX | fcntl.LOCK_NB)
++        self.root = self.acquire_root(root)
+         # mkdir is exclusive. Never unlink a stale socket/marker based on a PID.
+         os.mkdir('supervision', 0o700, dir_fd=self.root)
+         os.fsync(self.root)
+@@ -347,6 +355,8 @@ class Supervisor:
+ 
+     def run(self):
+         while True:
++            if self.lifecycle_tick():
++                return
+             now = time.monotonic()
+             if any(d is not None and now >= d for d in (self.deadline, self.request_deadline)):
+                 self.fail()

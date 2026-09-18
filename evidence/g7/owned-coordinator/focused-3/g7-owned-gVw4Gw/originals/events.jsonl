@@ -1,0 +1,22 @@
+{"event": "before-GO", "pid": 182369, "parent": 181482, "monotonic": 149882.022423355}
+{"event": "after-GO", "pid": 182369, "parent": 181482, "monotonic": 149882.022589708}
+{"event": "before-fsync", "pid": 182374, "parent": 182369, "monotonic": 149882.022912616}
+{"event": "after-fsync", "pid": 182374, "parent": 182369, "monotonic": 149882.024581608}
+{"event": "before-fsync", "pid": 182374, "parent": 182369, "monotonic": 149882.024777187}
+{"event": "after-fsync", "pid": 182374, "parent": 182369, "monotonic": 149882.025787639}
+{"event": "before-fsync", "pid": 182374, "parent": 182369, "monotonic": 149882.025871156}
+{"event": "after-fsync", "pid": 182374, "parent": 182369, "monotonic": 149882.02660623}
+{"event": "owner-spawn", "pid": 182374, "parent": 182369, "monotonic": 149882.027514869, "child": 182375, "pidfd": 11}
+{"event": "before-READY", "pid": 182374, "parent": 182369, "monotonic": 149884.751894303}
+{"event": "after-READY", "pid": 182374, "parent": 182369, "monotonic": 149884.752130878}
+{"event": "before-SEAL", "pid": 182369, "parent": 181482, "monotonic": 149884.752440251}
+{"event": "after-SEAL", "pid": 182369, "parent": 181482, "monotonic": 149884.752542092}
+{"event": "before-SEALED", "pid": 182374, "parent": 182369, "monotonic": 149884.802748388}
+{"event": "after-SEALED", "pid": 182374, "parent": 182369, "monotonic": 149884.802907226}
+{"event": "owner-waitpid", "pid": 182374, "parent": 182369, "monotonic": 149885.015328105, "child": 182375, "pidfd": 11, "status": 0}
+{"event": "before-CLEAN", "pid": 182374, "parent": 182369, "monotonic": 149885.015493456}
+{"event": "after-CLEAN", "pid": 182374, "parent": 182369, "monotonic": 149885.01557515}
+{"event": "before-reap", "pid": 182369, "parent": 181482, "monotonic": 149885.016606331}
+{"event": "normal-reap", "pid": 182369, "parent": 181482, "monotonic": 149885.016730675, "child": 182374, "pidfd": 6}
+{"event": "after-reap", "pid": 182369, "parent": 181482, "monotonic": 149885.016792011}
+{"event": "before-maintenance", "pid": 182369, "parent": 181482, "monotonic": 149885.016835623}

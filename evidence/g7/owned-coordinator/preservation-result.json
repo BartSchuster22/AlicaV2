@@ -1,0 +1,63 @@
+{
+  "baseline": "122ac0d33cb0a1e08aef836ac7c964ae365a30b3",
+  "hosts": {
+    "local": {
+      "originalFiles": 2212,
+      "preservedOriginalFiles": 2211,
+      "authorizedChangedOriginals": [
+        "tools/g7-supervisor.py"
+      ],
+      "authorizedAdditions": [
+        "docs/g7/R1-OWNED-COORDINATOR-CHECKPOINT.md",
+        "docs/g7/R1-OWNED-COORDINATOR-EXECUTION.md",
+        "tests/g7/owned-channel-process.py",
+        "tests/g7/owned-coordinator-block.mjs",
+        "tests/g7/owned-coordinator-driver.py",
+        "tests/g7/owned-coordinator.test.mjs",
+        "tools/g7-owned-coordinator.py",
+        "tools/g7-stopped-verify.mjs"
+      ],
+      "forbiddenChanges": [],
+      "forbiddenAdditions": []
+    },
+    "remote": {
+      "originalFiles": 3783,
+      "preservedOriginalFiles": 3782,
+      "authorizedChangedOriginals": [
+        "tools/g7-supervisor.py"
+      ],
+      "authorizedAdditions": [
+        "docs/g7/R1-OWNED-COORDINATOR-CHECKPOINT.md",
+        "docs/g7/R1-OWNED-COORDINATOR-EXECUTION.md",
+        "tests/g7/owned-channel-process.py",
+        "tests/g7/owned-coordinator-block.mjs",
+        "tests/g7/owned-coordinator-driver.py",
+        "tests/g7/owned-coordinator.test.mjs",
+        "tools/g7-owned-coordinator.py",
+        "tools/g7-stopped-verify.mjs"
+      ],
+      "forbiddenChanges": [],
+      "forbiddenAdditions": []
+    }
+  },
+  "matchingDeliveredSourceAndDocumentation": [
+    "docs/g7/R1-OWNED-COORDINATOR-CHECKPOINT.md",
+    "docs/g7/R1-OWNED-COORDINATOR-EXECUTION.md",
+    "tests/g7/owned-channel-process.py",
+    "tests/g7/owned-coordinator-block.mjs",
+    "tests/g7/owned-coordinator-driver.py",
+    "tests/g7/owned-coordinator.test.mjs",
+    "tools/g7-owned-coordinator.py",
+    "tools/g7-stopped-verify.mjs",
+    "tools/g7-supervisor.py"
+  ],
+  "sourceMatchesAllFinalFocusedAndFullBoundaries": {
+    "tools/g7-supervisor.py": "ffb517a5635b391c13b3f4e4a7a664413899d3a293199b715a3af75a53b744de",
+    "tools/g7-owned-coordinator.py": "7b6702a7e3a0763a087cf8541985b8fe6d2edea039c267866ae3f519cd42921f",
+    "tools/g7-stopped-verify.mjs": "d2ccb91ec26bd8ff1365803716572636ebb62ef285da6e1618d0ae644df9cae5",
+    "tests/g7/owned-coordinator-driver.py": "c5a155880c1f9aac1b755897bd6010c7030d2e49e424f2f7d5d8fce0088dab4b",
+    "tests/g7/owned-coordinator.test.mjs": "88e47a7162487eef7d7c5683992dd890cc10b67edd38c4b051dc0a043fe71bf8",
+    "tests/g7/owned-channel-process.py": "d6d1b3e28e8966c99f41343aeb10d2904c987d55e144de409657c28fc8931c35",
+    "tests/g7/owned-coordinator-block.mjs": "8ced07a68b3fe26803fb80d2b13ed44c22ad301c5b8b0add8a36153a4fca933f"
+  }
+}

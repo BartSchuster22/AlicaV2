@@ -1,0 +1,16 @@
+import pathlib, subprocess, json, hashlib, datetime
+root=pathlib.Path('/home/herman/g7-implementation'); ev=root/'evidence/g7/ipc-parent-regression'; ev.mkdir(exist_ok=False)
+ssh=['ssh','-i','/home/herman/.ssh/alica_v2_vps_ed25519','-o','IdentitiesOnly=yes','-o','BatchMode=yes','-o','StrictHostKeyChecking=yes','-o','UserKnownHostsFile=/home/herman/.ssh/alica_v2_known_hosts','alica-dev@167.233.135.142']
+script="""import pathlib, subprocess, hashlib, json
+r=pathlib.Path.cwd()
+paths=subprocess.check_output(['git','ls-files','-co','--exclude-standard','-z']).decode().split('\\0')
+print(json.dumps({p:hashlib.sha256((r/p).read_bytes()).hexdigest() for p in sorted(set(paths)) if p and (r/p).is_file() and not p.startswith('evidence/g7/ipc-parent-regression/')},sort_keys=True,indent=2))
+"""
+(ev/'inventory-script.py.txt').write_text(script)
+for label,cmd in [('local',['python3','-c',script]),('remote',ssh+['cd /home/alica-dev/AlicaV2 && python3 -c '+__import__('shlex').quote(script)])]:
+ (ev/(label+'-before.json')).write_bytes(subprocess.check_output(cmd,cwd=root))
+ (ev/(label+'-process-before.txt')).write_bytes(subprocess.check_output(['ps','-eo','pid,ppid,etime,args'] if label=='local' else ssh+['ps -eo pid,ppid,etime,args']))
+(ev/'parent-full-check.log').write_bytes(pathlib.Path('/home/herman/g7-owned-parent-full-check.log').read_bytes())
+(ev/'started.txt').write_text(datetime.datetime.now(datetime.timezone.utc).isoformat())
+(ev/'local-before.diff').write_bytes(subprocess.check_output(['git','diff'],cwd=root))
+print(ev)

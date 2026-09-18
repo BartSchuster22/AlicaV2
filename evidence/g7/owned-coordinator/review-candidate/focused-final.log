@@ -1,0 +1,27 @@
+✔ unmodified CLI path establishes custody from inception and refuses later residue adoption (3429.194888ms)
+✔ owned coordinator: independent custodian and owner normal reaps precede real stopped verification; original Cell preserved (3264.413026ms)
+test_actual_guarded_parent_death_contains_child_with_held_pidfd (__main__.Channels.test_actual_guarded_parent_death_contains_child_with_held_pidfd) ... ok
+test_authenticated_receive_return_late_is_not_permission (__main__.Channels.test_authenticated_receive_return_late_is_not_permission) ... ok
+test_forced_child_exit_is_never_normal_reap (__main__.Channels.test_forced_child_exit_is_never_normal_reap) ... ok
+test_late_real_normal_exit_is_not_a_reap_permit (__main__.Channels.test_late_real_normal_exit_is_not_a_reap_permit) ... ok
+test_non_parent_guard_is_rejected (__main__.Channels.test_non_parent_guard_is_rejected) ... ok
+test_plain_inherited_stream_fd_and_closed_channel_are_not_credentials (__main__.Channels.test_plain_inherited_stream_fd_and_closed_channel_are_not_credentials) ... ok
+test_real_child_credentials_and_held_pidfd_normal_reap (__main__.Channels.test_real_child_credentials_and_held_pidfd_normal_reap) ... ok
+test_socketpair_creator_is_not_actual_child_credential (__main__.Channels.test_socketpair_creator_is_not_actual_child_credential) ... ok
+test_syscall_return_late_normal_reap_is_not_permission (__main__.Channels.test_syscall_return_late_normal_reap_is_not_permission) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.150s
+
+OK
+
+✔ sealing excludes concurrent v1/v2 starts stops and mutations without a successor (3174.164071ms)
+✔ real Unix credentials reject forged/unowned/closed inherited channels and abnormal/late pidfd reaps (261.842658ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10420.987072
