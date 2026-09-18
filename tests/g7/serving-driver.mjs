@@ -59,7 +59,17 @@ try {
     let result;
     if (command === 'serve') result = await cell.ownedServe(current);
     else if (command === 'maintain') result = await cell.ownedMaintain(current);
-    else if (command === 'upgrade') {
+    else if (command === 'recover-prior')
+      result = await cell.ownedRecoverPrior(current);
+    else if (command === 'try-upgrade') {
+      try {
+        await cell.ownedMaintain(current, target);
+        throw new Error('expected target failure');
+      } catch (error) {
+        if (error.runtime !== 'STOPPED') throw error;
+        result = { error: error.code, ...cell.status() };
+      }
+    } else if (command === 'upgrade') {
       result = await cell.ownedMaintain(current, target);
       current = target;
     } else if (command === 'concurrent') {

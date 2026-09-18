@@ -1,0 +1,12 @@
+TEST-ONLY AcapError: PERMISSION_DENIED
+    at fail (file:///home/alica-dev/AlicaV2/packages/acap-contracts/dist/validation.js:31:11)
+    at check (file:///home/alica-dev/AlicaV2/packages/acap-contracts/dist/validation.js:35:9)
+    at inspectSource (file:///home/alica-dev/AlicaV2/tools/g7-release.mjs:296:3)
+    at inspectStoredRelease (file:///home/alica-dev/AlicaV2/tools/g7-release.mjs:59:10)
+    at #exactReinstall (file:///home/alica-dev/AlicaV2/tools/g7-cell.mjs:964:20)
+    at #stage (file:///home/alica-dev/AlicaV2/tools/g7-cell.mjs:1027:34)
+    at file:///home/alica-dev/AlicaV2/tools/g7-cell.mjs:471:39
+    at async #run (file:///home/alica-dev/AlicaV2/tools/g7-cell.mjs:642:14)
+    at async CellPreparation.ownedReinstall (file:///home/alica-dev/AlicaV2/tests/g7/cross-process-block.mjs:10:12)
+    at async file:///home/alica-dev/AlicaV2/tools/g7-owned-cli.mjs:66:11
+{"status":"NEEDS_OPERATOR","fence":"RETAINED"}

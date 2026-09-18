@@ -1,0 +1,6 @@
+{"event":"send","pid":317170,"packet":"GO"}
+{"event":"packet","pid":317170,"child":317177,"packet":"SEALING"}
+{"event":"send","pid":317170,"packet":"SEAL"}
+{"event":"packet","pid":317170,"child":317177,"packet":"CLEAN {\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:1fc4e51f0a2a642f85d4b23c4dd35534d6e9ab2239b4565403beba32126ac454\"}"}
+{"event":"clean-boundary","pid":317170}
+{"event":"send","pid":317170,"packet":"ACK"}

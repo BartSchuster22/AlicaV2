@@ -1,0 +1,348 @@
+    PID    PPID     ELAPSED COMMAND
+      1       0 152-00:12:46 /lib/systemd/systemd --system --deserialize 71
+      2       0 152-00:12:46 [kthreadd]
+      3       2 152-00:12:46 [rcu_gp]
+      4       2 152-00:12:46 [rcu_par_gp]
+      5       2 152-00:12:46 [slub_flushwq]
+      6       2 152-00:12:46 [netns]
+      8       2 152-00:12:46 [kworker/0:0H-events_highpri]
+     10       2 152-00:12:46 [mm_percpu_wq]
+     11       2 152-00:12:46 [rcu_tasks_rude_]
+     12       2 152-00:12:46 [rcu_tasks_trace]
+     13       2 152-00:12:46 [ksoftirqd/0]
+     14       2 152-00:12:46 [rcu_sched]
+     15       2 152-00:12:46 [migration/0]
+     16       2 152-00:12:46 [idle_inject/0]
+     18       2 152-00:12:46 [cpuhp/0]
+     19       2 152-00:12:46 [cpuhp/1]
+     20       2 152-00:12:46 [idle_inject/1]
+     21       2 152-00:12:46 [migration/1]
+     22       2 152-00:12:46 [ksoftirqd/1]
+     24       2 152-00:12:46 [kworker/1:0H-events_highpri]
+     25       2 152-00:12:46 [cpuhp/2]
+     26       2 152-00:12:46 [idle_inject/2]
+     27       2 152-00:12:46 [migration/2]
+     28       2 152-00:12:46 [ksoftirqd/2]
+     30       2 152-00:12:46 [kworker/2:0H-events_highpri]
+     31       2 152-00:12:46 [cpuhp/3]
+     32       2 152-00:12:46 [idle_inject/3]
+     33       2 152-00:12:46 [migration/3]
+     34       2 152-00:12:46 [ksoftirqd/3]
+     36       2 152-00:12:46 [kworker/3:0H-events_highpri]
+     37       2 152-00:12:46 [kdevtmpfs]
+     38       2 152-00:12:46 [inet_frag_wq]
+     39       2 152-00:12:46 [kauditd]
+     40       2 152-00:12:46 [khungtaskd]
+     41       2 152-00:12:46 [oom_reaper]
+     42       2 152-00:12:46 [writeback]
+     43       2 152-00:12:46 [kcompactd0]
+     44       2 152-00:12:46 [ksmd]
+     45       2 152-00:12:46 [khugepaged]
+     93       2 152-00:12:46 [kintegrityd]
+     94       2 152-00:12:46 [kblockd]
+     95       2 152-00:12:46 [blkcg_punt_bio]
+     96       2 152-00:12:46 [tpm_dev_wq]
+     97       2 152-00:12:46 [ata_sff]
+     98       2 152-00:12:46 [md]
+     99       2 152-00:12:46 [edac-poller]
+    100       2 152-00:12:46 [devfreq_wq]
+    101       2 152-00:12:45 [watchdogd]
+    103       2 152-00:12:45 [kworker/0:1H-kblockd]
+    106       2 152-00:12:45 [kswapd0]
+    107       2 152-00:12:45 [ecryptfs-kthrea]
+    109       2 152-00:12:45 [kthrotld]
+    110       2 152-00:12:45 [irq/24-aerdrv]
+    111       2 152-00:12:45 [irq/25-aerdrv]
+    112       2 152-00:12:45 [irq/26-aerdrv]
+    113       2 152-00:12:45 [irq/27-aerdrv]
+    114       2 152-00:12:45 [irq/28-aerdrv]
+    115       2 152-00:12:45 [irq/29-aerdrv]
+    116       2 152-00:12:45 [irq/30-aerdrv]
+    117       2 152-00:12:45 [irq/31-aerdrv]
+    118       2 152-00:12:45 [irq/32-aerdrv]
+    119       2 152-00:12:45 [acpi_thermal_pm]
+    121       2 152-00:12:45 [vfio-irqfd-clea]
+    122       2 152-00:12:45 [mld]
+    123       2 152-00:12:45 [kworker/1:1H-kblockd]
+    124       2 152-00:12:45 [ipv6_addrconf]
+    133       2 152-00:12:45 [kstrp]
+    136       2 152-00:12:45 [zswap-shrink]
+    137       2 152-00:12:45 [kworker/u9:0]
+    142       2 152-00:12:45 [charger_manager]
+    191       2 152-00:12:45 [kworker/2:1H-kblockd]
+    193       2 152-00:12:45 [scsi_eh_0]
+    194       2 152-00:12:45 [scsi_tmf_0]
+    195       2 152-00:12:45 [cryptd]
+    205       2 152-00:12:45 [hwrng]
+    207       2 152-00:12:45 [scsi_eh_1]
+    208       2 152-00:12:45 [kworker/3:1H-kblockd]
+    213       2 152-00:12:44 [scsi_tmf_1]
+    214       2 152-00:12:44 [scsi_eh_2]
+    217       2 152-00:12:44 [scsi_tmf_2]
+    218       2 152-00:12:44 [scsi_eh_3]
+    219       2 152-00:12:44 [scsi_tmf_3]
+    220       2 152-00:12:44 [scsi_eh_4]
+    221       2 152-00:12:44 [scsi_tmf_4]
+    223       2 152-00:12:44 [scsi_eh_5]
+    224       2 152-00:12:44 [scsi_tmf_5]
+    239       2 152-00:12:44 [scsi_eh_6]
+    240       2 152-00:12:44 [scsi_tmf_6]
+    305       2 152-00:12:43 [raid5wq]
+    351       2 152-00:12:43 [jbd2/sda1-8]
+    352       2 152-00:12:43 [ext4-rsv-conver]
+    450       2 152-00:12:42 [kaluad]
+    455       2 152-00:12:42 [kmpath_rdacd]
+    457       2 152-00:12:42 [kmpathd]
+    458       2 152-00:12:42 [kmpath_handlerd]
+    459       1 152-00:12:42 /sbin/multipathd -d -s
+    754       1 152-00:12:39 /usr/sbin/cron -f -P
+    756       1 152-00:12:39 @dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+    759       1 152-00:12:39 /usr/bin/python3 /usr/bin/fail2ban-server -xf start
+    766       1 152-00:12:39 /usr/sbin/irqbalance --foreground
+    767       1 152-00:12:39 /usr/bin/python3 /usr/bin/networkd-dispatcher --run-startup-triggers
+    770       1 152-00:12:39 /usr/sbin/qemu-ga
+    777       1 152-00:12:39 /lib/systemd/systemd-logind
+    781       1 152-00:12:39 /usr/sbin/atd -f
+    812       1 152-00:12:39 /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal
+    814       1 152-00:12:39 /sbin/agetty -o -p -- \u --keep-baud 115200,57600,38400,9600 ttyS0 vt220
+   1713       1 152-00:11:16 /usr/bin/containerd
+   1870       1 152-00:11:14 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+  20120 3472065  8-04:50:15 node /home/herman/.hermes/lsp/bin/pyright-langserver --stdio
+  29597 3472065  8-04:45:16 node /home/herman/.hermes/lsp/bin/pyright-langserver --stdio
+  31597 3472065  8-04:44:12 node /home/herman/.hermes/lsp/bin/docker-langserver --stdio
+ 144296 3156881 87-22:50:28 /usr/bin/dbus-daemon --session --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+ 169499 2570537 87-22:32:30 [python] <defunct>
+ 205646 3472065  1-18:10:08 node /home/herman/.hermes/lsp/bin/pyright-langserver --stdio
+ 210379 3472065  1-18:07:29 node /home/herman/.hermes/lsp/bin/typescript-language-server --stdio
+ 210391  210379  1-18:07:29 /home/herman/.hermes/node/bin/node /home/herman/.hermes/lsp/node_modules/typescript/lib/tsserver.js --serverMode partialSemantic --useInferredProjectPerProjectRoot --disableAutomaticTypingAcquisition --cancellationPipeName /tmp/6fd24ca8b9f78c45ae599d0f6c227ddc/tscancellation* --locale en --validateDefaultNpmLocation --useNodeIpc
+ 210392  210379  1-18:07:29 /home/herman/.hermes/node/bin/node /home/herman/.hermes/lsp/node_modules/typescript/lib/tsserver.js --useInferredProjectPerProjectRoot --cancellationPipeName /tmp/bdc384c167f043c312616eb35ce4e41b/tscancellation* --locale en --validateDefaultNpmLocation --useNodeIpc
+ 210424  210392  1-18:07:29 /home/herman/.hermes/node/bin/node /home/herman/.hermes/lsp/node_modules/typescript/lib/typingsInstaller.js --globalTypingsCacheLocation /home/herman/.cache/typescript/6.0 --typesMapLocation /home/herman/.hermes/lsp/node_modules/typescript/lib/typesMap.json --validateDefaultNpmLocation
+ 269382       1 29-04:49:27 /usr/bin/containerd-shim-runc-v2 -namespace moby -id f462677054f101b2efd90bc50ce492d29ed90ced0c989844dcf824ce1c345359 -address /run/containerd/containerd.sock
+ 269406  269382 29-04:49:27 node server/dist/index.js
+ 377625 3472065  8-01:38:39 node /home/herman/.hermes/lsp/bin/pyright-langserver --stdio
+ 399320 3472065  8-01:26:50 node /home/herman/.hermes/lsp/bin/typescript-language-server --stdio
+ 399332  399320  8-01:26:50 /home/herman/.hermes/node/bin/node /home/herman/.hermes/lsp/node_modules/typescript/lib/tsserver.js --serverMode partialSemantic --useInferredProjectPerProjectRoot --disableAutomaticTypingAcquisition --cancellationPipeName /tmp/26007a064ede54ad31a954656af1618b/tscancellation* --locale en --validateDefaultNpmLocation --useNodeIpc
+ 399333  399320  8-01:26:49 /home/herman/.hermes/node/bin/node /home/herman/.hermes/lsp/node_modules/typescript/lib/tsserver.js --useInferredProjectPerProjectRoot --cancellationPipeName /tmp/c4eaf1166a694ca47a7f552b6454cdcc/tscancellation* --locale en --validateDefaultNpmLocation --useNodeIpc
+ 399369  399333  8-01:26:49 /home/herman/.hermes/node/bin/node /home/herman/.hermes/lsp/node_modules/typescript/lib/typingsInstaller.js --globalTypingsCacheLocation /home/herman/.cache/typescript/6.0 --typesMapLocation /home/herman/.hermes/lsp/node_modules/typescript/lib/typesMap.json --validateDefaultNpmLocation
+ 404109 3472065  8-01:24:18 node /home/herman/.hermes/lsp/bin/typescript-language-server --stdio
+ 404121  404109  8-01:24:18 /home/herman/.hermes/node/bin/node /home/herman/.hermes/lsp/node_modules/typescript/lib/tsserver.js --serverMode partialSemantic --useInferredProjectPerProjectRoot --disableAutomaticTypingAcquisition --cancellationPipeName /tmp/24e28b334b6b31820c7ef44cb8afff03/tscancellation* --locale en --validateDefaultNpmLocation --useNodeIpc
+ 404122  404109  8-01:24:18 /home/herman/.hermes/node/bin/node /home/herman/.hermes/lsp/node_modules/typescript/lib/tsserver.js --useInferredProjectPerProjectRoot --cancellationPipeName /tmp/5826ce5ba59204548fb91c4fea2ad48a/tscancellation* --locale en --validateDefaultNpmLocation --useNodeIpc
+ 404173  404122  8-01:24:18 /home/herman/.hermes/node/bin/node /home/herman/.hermes/lsp/node_modules/typescript/lib/typingsInstaller.js --globalTypingsCacheLocation /home/herman/.cache/typescript/6.0 --typesMapLocation /home/herman/.hermes/lsp/node_modules/typescript/lib/typesMap.json --validateDefaultNpmLocation
+ 515647 3156881 56-09:01:29 /usr/libexec/at-spi-bus-launcher
+ 516176       1 40-23:09:59 /usr/bin/containerd-shim-runc-v2 -namespace moby -id 9ec590ac4661a3183028d294af497d1c839f44b254ecfff7d13745962e4c549c -address /run/containerd/containerd.sock
+ 516200  516176 40-23:09:59 /sbin/docker-init -- uvicorn app.main:app --host 0.0.0.0 --port 8000
+ 516264    1870 40-23:09:59 /usr/bin/docker-proxy -proto tcp -host-ip 127.0.0.1 -host-port 28084 -container-ip 172.18.0.2 -container-port 8000 -use-listen-fd
+ 516280  516200 40-23:09:59 /usr/local/bin/python3.12 /usr/local/bin/uvicorn app.main:app --host 0.0.0.0 --port 8000
+ 518599       2    01:50:20 [kworker/u8:4-flush-8:0]
+ 598801       2    01:06:59 [kworker/u8:1-flush-8:0]
+ 612879 3472065       59:25 /bin/bash -lic set +m; python3 /home/herman/run-g7-recovery-completion.py > /home/herman/g7-recovery-resumed-run.log 2>&1
+ 612892  612879       59:25 python3 /home/herman/run-g7-recovery-completion.py
+ 613002  612892       59:24 /home/herman/.hermes/hermes-agent-live-lane-clean/venv/bin/python3 /home/herman/.local/bin/hermes chat -Q -q RESUME after explicit owner approval of the pending SCP transfer. Parent executed the exact SCP successfully (exit 0) and independently matched local/remote helper SHA256 5d341b413085d5ec0dc3f8a5dcb5774af9cc45038bcdc8cb454c8749cf527249. Helper is now /home/alica-dev/g7-recovery-capture.py on development host. This original transfer approval is resolved; do not repeat it. Preserve original worker log /home/herman/g7-recovery-completion-run.log and partial local baseline /home/herman/g7-recovery-local-baseline; validate freshness and reuse, do not overwrite or recreate existing paths. Capture remote baseline only if absent; preserve existing remote untracked G6/admin evidence (parent verified tracked baseline unchanged). Earlier session 20260918_141137_54eb3e stopped before runtime edits, concrete next finding: owned-maintenance wrapper abandons custody even on target activation failure cleanly ABORTED; investigate explicit independently revalidated prior-selection recovery under genuine retained cleanup authority, not automatic rollback. Any NEW execution approval gate must still be respected; this is not a blanket bypass. Continue owner-authorized G7 completion. Implement and qualify approved recovery/reconciliation requirements after published serving continuation baseline a314e56a17958fa7befa0d07b90b8327c8e2fd0c. Local /home/herman/g7-implementation aligned clean; remote alica-dev@167.233.135.142:/home/alica-dev/AlicaV2. SSH -i /home/herman/.ssh/alica_v2_vps_ed25519 -o IdentitiesOnly=yes -o BatchMode=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile=/home/herman/.ssh/alica_v2_known_hosts; remote PATH="$PWD/.tools/node/bin:$PATH". Check no competing workers/tests and exact baselines before editing. Read docs/gates/G7.md, docs/g7 acceptance/contracts/recovery table/custody/owner approvals, R1-SERVING-CONTINUATION-{CHECKPOINT,EXECUTION,PARENT-REVIEW}, all relevant existing recovery tests. Distinguish actual approved recovery cases from a speculative requirement to make every lost-custody case automatically recoverable. NEEDS_OPERATOR is mandatory where required cleanup/current authority cannot be proved; do not manufacture exceptional adoption.  Implement concrete missing successful recovery cases allowed by R1 and end-to-end qualification, not another naming-only or read-only checkpoint. Existing serving lifecycle operates repeated same-Cell maintenance under original continuous lock; general loss still fences. Determine exactly which crash recovery cells require successful reconciliation versus conservative refusal. Prefer surviving custodian/reconciler with real process cleanup authority and continuously retained ownership if required; never use PID/socket/EOF/cached STOPPED/serialized receipt/force kill as clean proof. No naked fence deletion/adoption of unknown processes, rollback or interrupted mutation replay, no revoked prior revival. Independently current trust/authorization and opaque public Kernel continuity, fresh grants/readiness/synthetic calls required before any serving. No rewriting original Kernel state or original accepted fixture bytes. Certify successful recovery only from genuine retained prior/target artifacts with real journal/crash histories. Test actual uncertainty between accepted rename/fsync and journal commit; preserve residues, do not reinterpret visibility as durability. Explain irreducible owner-gated exceptions narrowly without stopping other authorized G7 work.  Preserve A1+B1 live protocol/stop semantics shared8connections 30s admin/activation/cleanup and300s verification. Do not introduce new live admin operations or weaken approved contracts/tests/deadlines. End-to-end real-process fault tests, stale trust/grants/selection negatives, actual clean reaps, lock competitors, blocked IO and conservative failure fencing. Same original Cell identity and immutable history, current trust and no automatic rollback/replay. If all remaining lost-custody cases are required denials under approved table, document a precise requirement-to-test matrix rather than inventing wider recovery obligations, and proceed to next real implementable G7 prerequisite: assembly/SBOM (reuse /home/herman/g7-bundle-inventory-preparation as preparation only). Avoid spinning on the same scope limitation; deliver actual requirement closure or precise blocker plus progress elsewhere.  Single writer, no child agents/cron. Two-hour window; preserve partial artifacts if exhausted. Only disposable development Cells, no production deployment/service/signing/keys, no RAM/swap/global installs/dependencies or protected licensing/archive changes. No commit/push. Preserve all historical evidence immutable, including intentional raw whitespace. Capture baseline inventories, exact transfer allowlist, beforeafter hashes, raw failed runs, final focused and full npm run check on final executable source/native receipts; synchronize tested source/new evidence local. New docs and evidence/g7/recovery-completion with accurate test-to-requirement mapping, NOT gate acceptance. Parent independently reviews/reruns/publishes. G7 later assembly/provenance/SBOM/licenses/bootstrap, encrypted age/X25519 stopped backuprestore, identical actual bytes qualified online/disconnected twohost, owner production signing/final acceptance. Owner wants routine checkpoints, no repeat approval for already authorized engineering.  --provider openai-codex --model gpt-6-astra --toolsets terminal,file --max-turns 200 --source tool
+ 614090 3472065  3-04:33:13 node /home/herman/.hermes/lsp/bin/docker-langserver --stdio
+ 616195       2       57:46 [kworker/u8:5-ext4-rsv-conversion]
+ 619426  613002       56:15 node /home/herman/.hermes/lsp/bin/typescript-language-server --stdio
+ 619439  619426       56:15 /home/herman/.hermes/node/bin/node /home/herman/.hermes/lsp/node_modules/typescript/lib/tsserver.js --serverMode partialSemantic --useInferredProjectPerProjectRoot --disableAutomaticTypingAcquisition --cancellationPipeName /tmp/d723cae073989a99349ba3ee1a331025/tscancellation* --locale en --validateDefaultNpmLocation --useNodeIpc
+ 619440  619426       56:15 /home/herman/.hermes/node/bin/node /home/herman/.hermes/lsp/node_modules/typescript/lib/tsserver.js --useInferredProjectPerProjectRoot --cancellationPipeName /tmp/7905186f003c469ec597fe32fc4ec76c/tscancellation* --locale en --validateDefaultNpmLocation --useNodeIpc
+ 619453  619440       56:14 /home/herman/.hermes/node/bin/node /home/herman/.hermes/lsp/node_modules/typescript/lib/typingsInstaller.js --globalTypingsCacheLocation /home/herman/.cache/typescript/6.0 --typesMapLocation /home/herman/.hermes/lsp/node_modules/typescript/lib/typesMap.json --validateDefaultNpmLocation
+ 649492       2       41:37 [kworker/0:3-cgroup_free]
+ 652264       2       40:12 [kworker/u8:0-events_unbound]
+ 660757       2       35:36 [kworker/u8:7-events_unbound]
+ 685330       2       22:29 [kworker/1:3-cgroup_free]
+ 687168       2       21:29 [kworker/2:0-cgroup_free]
+ 690739       2       19:28 [kworker/u8:2-events_power_efficient]
+ 696298       2       16:25 [kworker/1:0-events]
+ 697107       2       15:59 [kworker/3:1-cgroup_free]
+ 703616       2       12:24 [kworker/0:2-cgroup_free]
+ 703617       2       12:24 [kworker/u8:3-flush-8:0]
+ 705848       2       11:08 [kworker/2:1-cgroup_free]
+ 706770       2       10:40 [kworker/3:2-cgroup_free]
+ 709166       2       09:22 [kworker/3:3-events]
+ 710982       2       08:22 [kworker/1:2-mm_percpu_wq]
+ 710985       2       08:22 [kworker/2:2-cgroup_free]
+ 714653       2       06:22 [kworker/u8:6-events_unbound]
+ 714660       2       06:21 [kworker/0:0-events]
+ 716930       2       05:06 [kworker/u8:8-ext4-rsv-conversion]
+ 717753 3548336       04:40 postgres: unify unify 172.27.0.1(60202) idle
+ 720234       2       03:20 [kworker/3:0-events]
+ 724129       2       01:20 [kworker/1:1-events]
+ 724140       2       01:19 [kworker/0:1-events]
+ 725165  613002       00:48 /usr/bin/bash -c source /tmp/hermes-snap-ca38f49a5529.sh >/dev/null 2>&1 || true builtin cd -- /home/herman || exit 126 eval 'python3 /home/herman/g7-recovery-verify.py' __hermes_ec=$? { export -p > /tmp/hermes-snap-ca38f49a5529.sh.tmp.$BASHPID && mv -f /tmp/hermes-snap-ca38f49a5529.sh.tmp.$BASHPID /tmp/hermes-snap-ca38f49a5529.sh; } 2>/dev/null || rm -f /tmp/hermes-snap-ca38f49a5529.sh.tmp.$BASHPID 2>/dev/null || true pwd -P > /tmp/hermes-cwd-ca38f49a5529.txt 2>/dev/null || true printf '\n__HERMES_CWD_ca38f49a5529__%s__HERMES_CWD_ca38f49a5529__\n' "$(pwd -P)" exit $__hermes_ec
+ 725167  725165       00:48 python3 /home/herman/g7-recovery-verify.py
+ 725180       2       00:47 [kworker/2:3-mm_percpu_wq]
+ 726611 2790877       00:01 sshd: [accepted]
+ 726612  726611       00:01 sshd: [net]
+ 726642  725167       00:00 ps -eo pid,ppid,etime,args
+ 950217 3472065  3-01:28:07 node /home/herman/.hermes/lsp/bin/pyright-langserver --stdio
+ 985631       1 149-19:23:41 /lib/systemd/systemd --user
+ 985632  985631 149-19:23:41 (sd-pam)
+ 998868  985631 149-18:46:01 /usr/bin/dbus-daemon --session --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+1072537 3156881 50-03:21:56 node /home/herman/.local/bin/pnpm --filter api-core start:prod
+1072540 3156881 50-03:21:56 node /home/herman/.local/bin/pnpm --filter admin-api start:prod
+1072575 1072537 50-03:21:55 node /home/herman/.hermes/profiles/chatboard/home/.local/share/pnpm/.tools/pnpm/10.33.0/bin/pnpm --filter api-core start:prod
+1072583 1072540 50-03:21:55 node /home/herman/.hermes/profiles/chatboard/home/.local/share/pnpm/.tools/pnpm/10.33.0/bin/pnpm --filter admin-api start:prod
+1072631 1072583 50-03:21:55 sh -c node dist/main
+1072632 1072631 50-03:21:55 node dist/main
+1072638 1072575 50-03:21:55 sh -c node dist/main
+1072639 1072638 50-03:21:55 node dist/main
+1125213 2393185  1-09:39:04 node /home/herman/.hermes/profiles/chatboard/lsp/bin/typescript-language-server --stdio
+1125232 1125213  1-09:39:04 /home/herman/.hermes/profiles/chatboard/node/bin/node /home/herman/.hermes/profiles/chatboard/lsp/node_modules/typescript/lib/tsserver.js --serverMode partialSemantic --useInferredProjectPerProjectRoot --disableAutomaticTypingAcquisition --cancellationPipeName /tmp/5e8b2e4c9fb51651402c5b5a948e696a/tscancellation* --locale en --validateDefaultNpmLocation --useNodeIpc
+1125233 1125213  1-09:39:04 /home/herman/.hermes/profiles/chatboard/node/bin/node /home/herman/.hermes/profiles/chatboard/lsp/node_modules/typescript/lib/tsserver.js --useInferredProjectPerProjectRoot --cancellationPipeName /tmp/20e0c237d84b871ee867b6279d9b0bc4/tscancellation* --locale en --validateDefaultNpmLocation --useNodeIpc
+1125250 1125233  1-09:39:03 /home/herman/.hermes/profiles/chatboard/node/bin/node /home/herman/.hermes/profiles/chatboard/lsp/node_modules/typescript/lib/typingsInstaller.js --globalTypingsCacheLocation /home/herman/.cache/typescript/6.0 --typesMapLocation /home/herman/.hermes/profiles/chatboard/lsp/node_modules/typescript/lib/typesMap.json --validateDefaultNpmLocation
+1148265       1 37-09:04:04 /lib/systemd/systemd-networkd
+1148271       1 37-09:04:04 /lib/systemd/systemd-resolved
+1148378       1 37-09:04:03 /lib/systemd/systemd-timesyncd
+1148759       1 37-09:03:55 /lib/systemd/systemd-udevd
+1248925       1  1-08:33:29 /usr/libexec/polkitd --no-debug
+1262224 3472065  1-08:26:20 node /home/herman/.hermes/lsp/bin/pyright-langserver --stdio
+1452430 3472065  1-06:45:09 node /home/herman/.hermes/lsp/bin/typescript-language-server --stdio
+1452449 1452430  1-06:45:09 /home/herman/.hermes/node/bin/node /home/herman/.hermes/lsp/node_modules/typescript/lib/tsserver.js --serverMode partialSemantic --useInferredProjectPerProjectRoot --disableAutomaticTypingAcquisition --cancellationPipeName /tmp/1d2965f27165397e59019b8d4748657c/tscancellation* --locale en --validateDefaultNpmLocation --useNodeIpc
+1452450 1452430  1-06:45:09 /home/herman/.hermes/node/bin/node /home/herman/.hermes/lsp/node_modules/typescript/lib/tsserver.js --useInferredProjectPerProjectRoot --cancellationPipeName /tmp/1e8d107dba3488ec34effb37ccd74463/tscancellation* --locale en --validateDefaultNpmLocation --useNodeIpc
+1452530 1452450  1-06:45:09 /home/herman/.hermes/node/bin/node /home/herman/.hermes/lsp/node_modules/typescript/lib/typingsInstaller.js --globalTypingsCacheLocation /home/herman/.cache/typescript/6.0 --typesMapLocation /home/herman/.hermes/lsp/node_modules/typescript/lib/typesMap.json --validateDefaultNpmLocation
+1462545 3472065  1-06:39:57 node /home/herman/.hermes/lsp/bin/typescript-language-server --stdio
+1462557 1462545  1-06:39:57 /home/herman/.hermes/node/bin/node /home/herman/.hermes/lsp/node_modules/typescript/lib/tsserver.js --serverMode partialSemantic --useInferredProjectPerProjectRoot --disableAutomaticTypingAcquisition --cancellationPipeName /tmp/f7d312a222abd8b5e9b6b034187da45f/tscancellation* --locale en --validateDefaultNpmLocation --useNodeIpc
+1462558 1462545  1-06:39:57 /home/herman/.hermes/node/bin/node /home/herman/.hermes/lsp/node_modules/typescript/lib/tsserver.js --useInferredProjectPerProjectRoot --cancellationPipeName /tmp/327bdef25b28cb6f081702b69dd217dd/tscancellation* --locale en --validateDefaultNpmLocation --useNodeIpc
+1462590 1462558  1-06:39:56 /home/herman/.hermes/node/bin/node /home/herman/.hermes/lsp/node_modules/typescript/lib/typingsInstaller.js --globalTypingsCacheLocation /home/herman/.cache/typescript/6.0 --typesMapLocation /home/herman/.hermes/lsp/node_modules/typescript/lib/typesMap.json --validateDefaultNpmLocation
+1529411 3156881 75-21:47:15 /home/herman/.hermes/hermes-agent-live-lane-clean/venv/bin/python -m hermes_cli.main --profile devops-agent gateway run
+1529494 3156881 75-21:47:14 /home/herman/.hermes/hermes-agent-live-lane-clean/venv/bin/python -m hermes_cli.main --profile pm-agent gateway run
+1529706 3156881 75-21:47:09 /home/herman/.hermes/hermes-agent-live-lane-clean/venv/bin/python -m hermes_cli.main --profile test-agent gateway run
+1529881 3156881 75-21:47:04 /home/herman/.hermes/hermes-agent-live-lane-clean/venv/bin/python -m hermes_cli.main --profile ulrich gateway run
+1761508 3472065  5-22:45:55 node /home/herman/.hermes/lsp/bin/yaml-language-server --stdio
+1779189       1 132-05:55:56 /usr/bin/containerd-shim-runc-v2 -namespace moby -id a661ced7c219ca199b6893ad8da8258ec8def7fd02486b2f9dc0499b4094b46d -address /run/containerd/containerd.sock
+1779212 1779189 132-05:55:56 nginx: master process nginx -g daemon off;
+1779249    1870 132-05:55:56 /usr/bin/docker-proxy -proto tcp -host-ip 127.0.0.1 -host-port 18081 -container-ip 172.20.0.2 -container-port 3000 -use-listen-fd
+1779286 1779212 132-05:55:56 nginx: worker process
+1779287 1779212 132-05:55:56 nginx: worker process
+1779288 1779212 132-05:55:56 nginx: worker process
+1779289 1779212 132-05:55:56 nginx: worker process
+1854778 3472065  2-17:23:54 node /home/herman/.hermes/lsp/bin/pyright-langserver --stdio
+1933896 3472065  9-01:22:44 node /home/herman/.hermes/lsp/bin/pyright-langserver --stdio
+1989051 3472065  9-00:54:18 node /home/herman/.hermes/lsp/bin/pyright-langserver --stdio
+1991465 3472065  9-00:53:02 node /home/herman/.hermes/lsp/bin/docker-langserver --stdio
+2269401       1 106-01:18:49 /usr/bin/containerd-shim-runc-v2 -namespace moby -id b839ad5938e86c29ff2c313ed2b136c0940388ed8a68754391abf9064522a419 -address /run/containerd/containerd.sock
+2269403       1 106-01:18:49 /usr/bin/containerd-shim-runc-v2 -namespace moby -id bc14e8f21c0eca76a6c0d8a83b34dc86e4868427d493a9c40b93fb32b39b0275 -address /run/containerd/containerd.sock
+2269463 2269401 106-01:18:49 redis-server 0.0.0.0:6379
+2269470 2269403 106-01:18:49 postgres
+2269522    1870 106-01:18:49 /usr/bin/docker-proxy -proto tcp -host-ip 127.0.0.1 -host-port 15432 -container-ip 172.19.0.3 -container-port 5432 -use-listen-fd
+2269544    1870 106-01:18:49 /usr/bin/docker-proxy -proto tcp -host-ip 127.0.0.1 -host-port 16379 -container-ip 172.19.0.2 -container-port 6379 -use-listen-fd
+2269594 2269470 106-01:18:49 postgres: checkpointer 
+2269595 2269470 106-01:18:49 postgres: background writer 
+2269597 2269470 106-01:18:49 postgres: walwriter 
+2269598 2269470 106-01:18:49 postgres: autovacuum launcher 
+2269599 2269470 106-01:18:49 postgres: logical replication launcher 
+2393185 3156881 61-00:55:17 /home/herman/.hermes/hermes-agent-live-lane-clean/venv/bin/python -m hermes_cli.main --profile chatboard gateway run
+2488350       1 100-20:13:35 /srv/orchesterv3/apps/api/.venv/bin/python /srv/orchesterv3/apps/api/.venv/bin/uvicorn orchesterv3_api.main:app --host 127.0.0.1 --port 18083
+2557118       1 146-08:40:30 /usr/libexec/packagekitd
+2570513       1 97-07:45:52 /usr/bin/containerd-shim-runc-v2 -namespace moby -id 7157a3b1b6ac1217569c211232f82b57a1edf7ef7d5533f7202b2df18c544605 -address /run/containerd/containerd.sock
+2570537 2570513 97-07:45:52 /usr/local/bin/python /usr/local/bin/doghouse serve
+2600414 3472065    20:20:16 node /home/herman/.hermes/lsp/bin/pyright-langserver --stdio
+2603172 3472065    20:18:46 node /home/herman/.hermes/lsp/bin/typescript-language-server --stdio
+2603184 2603172    20:18:46 /home/herman/.hermes/node/bin/node /home/herman/.hermes/lsp/node_modules/typescript/lib/tsserver.js --serverMode partialSemantic --useInferredProjectPerProjectRoot --disableAutomaticTypingAcquisition --cancellationPipeName /tmp/05e93124acc28df1f23316542877fdf1/tscancellation* --locale en --validateDefaultNpmLocation --useNodeIpc
+2603185 2603172    20:18:46 /home/herman/.hermes/node/bin/node /home/herman/.hermes/lsp/node_modules/typescript/lib/tsserver.js --useInferredProjectPerProjectRoot --cancellationPipeName /tmp/c0bb66cd5f0183570e0ad44c5f45518e/tscancellation* --locale en --validateDefaultNpmLocation --useNodeIpc
+2603217 2603185    20:18:46 /home/herman/.hermes/node/bin/node /home/herman/.hermes/lsp/node_modules/typescript/lib/typingsInstaller.js --globalTypingsCacheLocation /home/herman/.cache/typescript/6.0 --typesMapLocation /home/herman/.hermes/lsp/node_modules/typescript/lib/typesMap.json --validateDefaultNpmLocation
+2619211 3472065  4-00:24:06 node /home/herman/.hermes/lsp/bin/typescript-language-server --stdio
+2619223 2619211  4-00:24:06 /home/herman/.hermes/node/bin/node /home/herman/.hermes/lsp/node_modules/typescript/lib/tsserver.js --serverMode partialSemantic --useInferredProjectPerProjectRoot --disableAutomaticTypingAcquisition --cancellationPipeName /tmp/ec578479ce017a0e669bceb8dd5f8819/tscancellation* --locale en --validateDefaultNpmLocation --useNodeIpc
+2619224 2619211  4-00:24:06 /home/herman/.hermes/node/bin/node /home/herman/.hermes/lsp/node_modules/typescript/lib/tsserver.js --useInferredProjectPerProjectRoot --cancellationPipeName /tmp/b916e85876bba7f0d4e96ab5b0a1a7d8/tscancellation* --locale en --validateDefaultNpmLocation --useNodeIpc
+2619266 2619224  4-00:24:05 /home/herman/.hermes/node/bin/node /home/herman/.hermes/lsp/node_modules/typescript/lib/typingsInstaller.js --globalTypingsCacheLocation /home/herman/.cache/typescript/6.0 --typesMapLocation /home/herman/.hermes/lsp/node_modules/typescript/lib/typesMap.json --validateDefaultNpmLocation
+2621199 3472065  4-00:23:04 node /home/herman/.hermes/lsp/bin/typescript-language-server --stdio
+2621212 2621199  4-00:23:04 /home/herman/.hermes/node/bin/node /home/herman/.hermes/lsp/node_modules/typescript/lib/tsserver.js --serverMode partialSemantic --useInferredProjectPerProjectRoot --disableAutomaticTypingAcquisition --cancellationPipeName /tmp/fad5e1a1fa07a27e91a256a038781f49/tscancellation* --locale en --validateDefaultNpmLocation --useNodeIpc
+2621214 2621199  4-00:23:04 /home/herman/.hermes/node/bin/node /home/herman/.hermes/lsp/node_modules/typescript/lib/tsserver.js --useInferredProjectPerProjectRoot --cancellationPipeName /tmp/da82363984031d3acd7679412d9f3792/tscancellation* --locale en --validateDefaultNpmLocation --useNodeIpc
+2621252 2621214  4-00:23:02 /home/herman/.hermes/node/bin/node /home/herman/.hermes/lsp/node_modules/typescript/lib/typingsInstaller.js --globalTypingsCacheLocation /home/herman/.cache/typescript/6.0 --typesMapLocation /home/herman/.hermes/lsp/node_modules/typescript/lib/typesMap.json --validateDefaultNpmLocation
+2625111 3472065  4-00:21:16 node /home/herman/.hermes/lsp/bin/typescript-language-server --stdio
+2625123 2625111  4-00:21:16 /home/herman/.hermes/node/bin/node /home/herman/.hermes/lsp/node_modules/typescript/lib/tsserver.js --serverMode partialSemantic --useInferredProjectPerProjectRoot --disableAutomaticTypingAcquisition --cancellationPipeName /tmp/1d08058b8ec2090c4615578e4053d0d6/tscancellation* --locale en --validateDefaultNpmLocation --useNodeIpc
+2625124 2625111  4-00:21:16 /home/herman/.hermes/node/bin/node /home/herman/.hermes/lsp/node_modules/typescript/lib/tsserver.js --useInferredProjectPerProjectRoot --cancellationPipeName /tmp/d536e1fa92c0b2ae74328346200dc858/tscancellation* --locale en --validateDefaultNpmLocation --useNodeIpc
+2625138 2625124  4-00:21:15 /home/herman/.hermes/node/bin/node /home/herman/.hermes/lsp/node_modules/typescript/lib/typingsInstaller.js --globalTypingsCacheLocation /home/herman/.cache/typescript/6.0 --typesMapLocation /home/herman/.hermes/lsp/node_modules/typescript/lib/typesMap.json --validateDefaultNpmLocation
+2625575 3472065  4-00:21:09 node /home/herman/.hermes/lsp/bin/typescript-language-server --stdio
+2625593 2625575  4-00:21:09 /home/herman/.hermes/node/bin/node /home/herman/.hermes/lsp/node_modules/typescript/lib/tsserver.js --serverMode partialSemantic --useInferredProjectPerProjectRoot --disableAutomaticTypingAcquisition --cancellationPipeName /tmp/9920227837a9e06383a49740256c9012/tscancellation* --locale en --validateDefaultNpmLocation --useNodeIpc
+2625594 2625575  4-00:21:09 /home/herman/.hermes/node/bin/node /home/herman/.hermes/lsp/node_modules/typescript/lib/tsserver.js --useInferredProjectPerProjectRoot --cancellationPipeName /tmp/6e8887f73525096aa75e3b8c861bde43/tscancellation* --locale en --validateDefaultNpmLocation --useNodeIpc
+2625614 2625594  4-00:21:08 /home/herman/.hermes/node/bin/node /home/herman/.hermes/lsp/node_modules/typescript/lib/typingsInstaller.js --globalTypingsCacheLocation /home/herman/.cache/typescript/6.0 --typesMapLocation /home/herman/.hermes/lsp/node_modules/typescript/lib/typesMap.json --validateDefaultNpmLocation
+2685513 3472065    19:34:03 node /home/herman/.hermes/lsp/bin/pyright-langserver --stdio
+2688235 3472065    19:32:40 node /home/herman/.hermes/lsp/bin/typescript-language-server --stdio
+2688260 2688235    19:32:40 /home/herman/.hermes/node/bin/node /home/herman/.hermes/lsp/node_modules/typescript/lib/tsserver.js --serverMode partialSemantic --useInferredProjectPerProjectRoot --disableAutomaticTypingAcquisition --cancellationPipeName /tmp/0db1451d4f686e31709d7ab271398d99/tscancellation* --locale en --validateDefaultNpmLocation --useNodeIpc
+2688261 2688235    19:32:40 /home/herman/.hermes/node/bin/node /home/herman/.hermes/lsp/node_modules/typescript/lib/tsserver.js --useInferredProjectPerProjectRoot --cancellationPipeName /tmp/4d94e0a66a4e5b1ca3f2f88291eabec8/tscancellation* --locale en --validateDefaultNpmLocation --useNodeIpc
+2688293 2688261    19:32:40 /home/herman/.hermes/node/bin/node /home/herman/.hermes/lsp/node_modules/typescript/lib/typingsInstaller.js --globalTypingsCacheLocation /home/herman/.cache/typescript/6.0 --typesMapLocation /home/herman/.hermes/lsp/node_modules/typescript/lib/typesMap.json --validateDefaultNpmLocation
+2739568 3472065  7-04:04:47 node /home/herman/.hermes/lsp/bin/typescript-language-server --stdio
+2739580 2739568  7-04:04:47 /home/herman/.hermes/node/bin/node /home/herman/stage3-publication/repos/UNIFY/node_modules/typescript/lib/tsserver.js --serverMode partialSemantic --useInferredProjectPerProjectRoot --disableAutomaticTypingAcquisition --cancellationPipeName /tmp/61aaee7b556052488b1062f4deeb8651/tscancellation* --locale en --validateDefaultNpmLocation --useNodeIpc
+2739581 2739568  7-04:04:47 /home/herman/.hermes/node/bin/node /home/herman/stage3-publication/repos/UNIFY/node_modules/typescript/lib/tsserver.js --useInferredProjectPerProjectRoot --cancellationPipeName /tmp/ffba9b0a55f51f55f502e9a892718dfe/tscancellation* --locale en --validateDefaultNpmLocation --useNodeIpc
+2739691 2739581  7-04:04:46 /home/herman/.hermes/node/bin/node /home/herman/stage3-publication/repos/UNIFY/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/typingsInstaller.js --globalTypingsCacheLocation /home/herman/.cache/typescript/5.9 --typesMapLocation /home/herman/stage3-publication/repos/UNIFY/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/typesMap.json --validateDefaultNpmLocation
+2790877       1 10-08:47:37 sshd: /usr/sbin/sshd -D [listener] 1 of 10-100 startups
+2792225 3533365 10-08:47:13 postgres: 16/main: checkpointer 
+2792227 3533365 10-08:47:13 postgres: 16/main: background writer 
+2792337 3533365 10-08:47:12 postgres: 16/main: walwriter 
+2792342 3533365 10-08:47:12 postgres: 16/main: autovacuum launcher 
+2792345 3533365 10-08:47:12 postgres: 16/main: logical replication launcher 
+2793278       1 10-08:47:04 /opt/Herman-Alice/control-api/.venv/bin/python -m app.services.dashboard_worker_service worker-loop --db-path /var/lib/alice-herman/orchestration/ledger.db --worker-id dashboard-validation-worker-01 --poll-interval 1
+2794431 3533365 10-08:46:20 postgres: 16/main: orchesterv3 orchesterv3 127.0.0.1(51488) idle
+2794447 3533365 10-08:46:20 postgres: 16/main: orchesterv3 orchesterv3 127.0.0.1(51518) idle
+2796143 3533365 10-08:45:18 postgres: 16/main: orchesterv3 orchesterv3 127.0.0.1(54446) idle
+2796152 3533365 10-08:45:18 postgres: 16/main: orchesterv3 orchesterv3 127.0.0.1(54476) idle
+2797551 3533365 10-08:44:27 postgres: 16/main: orchesterv3 orchesterv3 127.0.0.1(49220) idle
+2858477 3472065    18:01:29 node /home/herman/.hermes/lsp/bin/typescript-language-server --stdio
+2858506 2858477    18:01:29 /home/herman/.hermes/node/bin/node /home/herman/.hermes/lsp/node_modules/typescript/lib/tsserver.js --serverMode partialSemantic --useInferredProjectPerProjectRoot --disableAutomaticTypingAcquisition --cancellationPipeName /tmp/b10da3e4637ab7ef24e4bf648640df20/tscancellation* --locale en --validateDefaultNpmLocation --useNodeIpc
+2858507 2858477    18:01:29 /home/herman/.hermes/node/bin/node /home/herman/.hermes/lsp/node_modules/typescript/lib/tsserver.js --useInferredProjectPerProjectRoot --cancellationPipeName /tmp/7302ea88a6a35de17cb679533d07609c/tscancellation* --locale en --validateDefaultNpmLocation --useNodeIpc
+2858544 2858507    18:01:29 /home/herman/.hermes/node/bin/node /home/herman/.hermes/lsp/node_modules/typescript/lib/typingsInstaller.js --globalTypingsCacheLocation /home/herman/.cache/typescript/6.0 --typesMapLocation /home/herman/.hermes/lsp/node_modules/typescript/lib/typesMap.json --validateDefaultNpmLocation
+2861246 3472065    18:00:04 node /home/herman/.hermes/lsp/bin/typescript-language-server --stdio
+2861258 2861246    18:00:04 /home/herman/.hermes/node/bin/node /home/herman/.hermes/lsp/node_modules/typescript/lib/tsserver.js --serverMode partialSemantic --useInferredProjectPerProjectRoot --disableAutomaticTypingAcquisition --cancellationPipeName /tmp/cc9dbb20b4650b6a0a8e7a19016ead8a/tscancellation* --locale en --validateDefaultNpmLocation --useNodeIpc
+2861259 2861246    18:00:04 /home/herman/.hermes/node/bin/node /home/herman/.hermes/lsp/node_modules/typescript/lib/tsserver.js --useInferredProjectPerProjectRoot --cancellationPipeName /tmp/ff20d52fa225876f21e266065f98f0f2/tscancellation* --locale en --validateDefaultNpmLocation --useNodeIpc
+2861272 2861259    18:00:04 /home/herman/.hermes/node/bin/node /home/herman/.hermes/lsp/node_modules/typescript/lib/typingsInstaller.js --globalTypingsCacheLocation /home/herman/.cache/typescript/6.0 --typesMapLocation /home/herman/.hermes/lsp/node_modules/typescript/lib/typesMap.json --validateDefaultNpmLocation
+3013215       1  2-06:45:37 /usr/bin/python3 -B /opt/elio-archive-page/server.py
+3029461       1 94-05:07:53 /opt/Herman-Alice/control-api/.venv/bin/python /opt/Herman-Alice/control-api/.venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8088
+3029467       1 94-05:07:53 /usr/bin/python3 /opt/Herman-Alice/control-api/scripts/alice_telegram_dashboard_bridge.py
+3029470       1 94-05:07:53 /opt/Herman-Alice/control-api/.telegram-relay-venv/bin/python /opt/Herman-Alice/control-api/scripts/telegram_user_relay.py
+3054978       1  2-06:23:57 /usr/bin/python3 -B /opt/dsh2-archive-page/server.py
+3156881       1 107-04:14:52 /lib/systemd/systemd --user
+3156882 3156881 107-04:14:52 (sd-pam)
+3221260 3472065  3-18:58:41 node /home/herman/.hermes/lsp/bin/pyright-langserver --stdio
+3367237       1 60-16:25:53 /usr/bin/caddy run --environ --config /etc/caddy/Caddyfile
+3406890       1 60-16:10:35 /usr/bin/containerd-shim-runc-v2 -namespace moby -id d3f5c24ccff1c7ad46318a976396efc2c193da922459a7d097de9520f01a62d3 -address /run/containerd/containerd.sock
+3406925       1 60-16:10:35 /usr/bin/containerd-shim-runc-v2 -namespace moby -id 61ec5f5d7eeec64013aac6831a4aa4621fa2c39691c3b35ebe06bfed6796d2af -address /run/containerd/containerd.sock
+3406982 3406890 60-16:10:35 /sbin/docker-init -- docker-entrypoint.sh node server.mjs
+3406991 3406925 60-16:10:35 /sbin/docker-init -- docker-entrypoint.sh node server.mjs
+3407038 3406982 60-16:10:35 node server.mjs
+3407051 3406991 60-16:10:35 node server.mjs
+3472065       1 10-01:47:21 /home/herman/.hermes/hermes-agent-live-lane-clean/venv/bin/python3 /home/herman/.local/bin/hermes gateway
+3533365       1 116-07:16:29 /usr/lib/postgresql/16/bin/postgres -D /var/lib/postgresql/16/main -c config_file=/etc/postgresql/16/main/postgresql.conf
+3542126 3472065 10-01:05:23 node /home/herman/.hermes/lsp/bin/pyright-langserver --stdio
+3546397 3472065 10-01:03:17 node /home/herman/.hermes/lsp/bin/yaml-language-server --stdio
+3546589 3472065 10-01:03:11 node /home/herman/.hermes/lsp/bin/yaml-language-server --stdio
+3547602       1 10-01:02:44 /usr/bin/containerd-shim-runc-v2 -namespace moby -id 513720a25d08e0e3c4f06ea8008b552e71cba49d04b9481c20e40bf32a1fb6e0 -address /run/containerd/containerd.sock
+3547628 3547602 10-01:02:44 postgres
+3547682 3547628 10-01:02:44 postgres: checkpointer 
+3547683 3547628 10-01:02:44 postgres: background writer 
+3547685 3547628 10-01:02:44 postgres: walwriter 
+3547686 3547628 10-01:02:44 postgres: autovacuum launcher 
+3547687 3547628 10-01:02:44 postgres: logical replication launcher 
+3548115       1 10-01:02:32 /usr/bin/containerd-shim-runc-v2 -namespace moby -id 06b25820ff4c163eca30feaa12837f91cedb0cd9ebf5c557b098295e00169aad -address /run/containerd/containerd.sock
+3548146 3548115 10-01:02:32 /sbin/docker-init -- /nodejs/bin/node dist/server.js
+3548186 3548146 10-01:02:32 /nodejs/bin/node dist/server.js
+3548214       1 10-01:02:32 /usr/bin/containerd-shim-runc-v2 -namespace moby -id 6001610689c2051a1a90c8eb9e62f595cc04ca8cc7fad4b1ef7981b4c03a97a3 -address /run/containerd/containerd.sock
+3548266 3548214 10-01:02:32 /sbin/docker-init -- node dist/server.js
+3548288 3548266 10-01:02:32 node dist/server.js
+3548310       1 10-01:02:32 /usr/bin/containerd-shim-runc-v2 -namespace moby -id cb58868085905059bd9a17817ded730e5b8e7709736e626d60803759d0506425 -address /run/containerd/containerd.sock
+3548336 3548310 10-01:02:32 postgres
+3548372    1870 10-01:02:32 /usr/bin/docker-proxy -proto tcp -host-ip 127.0.0.1 -host-port 25432 -container-ip 172.27.0.2 -container-port 5432 -use-listen-fd
+3548400 3548336 10-01:02:31 postgres: checkpointer 
+3548401 3548336 10-01:02:31 postgres: background writer 
+3548403 3548336 10-01:02:31 postgres: walwriter 
+3548404 3548336 10-01:02:31 postgres: autovacuum launcher 
+3548405 3548336 10-01:02:31 postgres: logical replication launcher 
+3548427 3548288 10-01:02:29 /opt/hermes/.venv/bin/python3 /opt/hermes/.venv/bin/hermes dashboard --host 127.0.0.1 --port 29119 --skip-build --no-open
+3548979 3548336 10-01:02:16 postgres: unify unify 172.27.0.1(49152) idle
+3659349 3472065 10-00:02:04 node /home/herman/.hermes/lsp/bin/pyright-langserver --stdio
+3726922       1  9-23:26:29 /usr/bin/containerd-shim-runc-v2 -namespace moby -id c47c94dda9afbd817d635abd3b65eb1d3a1fa290d32318741f8984a2bbe9f698 -address /run/containerd/containerd.sock
+3726940       1  9-23:26:29 /usr/bin/containerd-shim-runc-v2 -namespace moby -id d93e71d0fb000081dd4a97ecc373d2ab756199879344f765e10e357af3304a03 -address /run/containerd/containerd.sock
+3726977 3726922  9-23:26:29 /usr/local/bin/python3.12 /usr/local/bin/uvicorn app.main:app --host 0.0.0.0 --port 8000
+3726985 3726940  9-23:26:29 python -m app.worker.scheduler
+3727042    1870  9-23:26:28 /usr/bin/docker-proxy -proto tcp -host-ip 127.0.0.1 -host-port 18080 -container-ip 172.20.0.4 -container-port 8000 -use-listen-fd
+3727137 3547628  9-23:26:27 postgres: router router 172.20.0.5(59650) idle
+3727141 3547628  9-23:26:27 postgres: router router 172.20.0.4(40972) idle
+3759277 2570537 17-01:30:57 [python] <defunct>
+3765523       1 39-18:44:50 /usr/bin/containerd-shim-runc-v2 -namespace moby -id 5e02550bd9dbe2be215b56f7b8b2b49149529905b1039903c88fddf8beb0b30e -address /run/containerd/containerd.sock
+3765548 3765523 39-18:44:50 /sbin/docker-init -- /nodejs/bin/node server.mjs
+3765560 3765548 39-18:44:50 /nodejs/bin/node server.mjs
+3781210       1 55-09:08:48 /usr/sbin/rsyslogd -n -iNONE
+3846047 2570537 17-00:59:07 [python] <defunct>
+3864422 2570537 17-00:52:23 [python] <defunct>
+3865648 2570537 17-00:50:51 [python] <defunct>
+3866295       1 17-00:45:01 /lib/systemd/systemd-journald
+3952580 3472065  6-17:04:41 node /home/herman/.hermes/lsp/bin/yaml-language-server --stdio
+3956927 3472065  6-17:02:27 node /home/herman/.hermes/lsp/bin/pyright-langserver --stdio

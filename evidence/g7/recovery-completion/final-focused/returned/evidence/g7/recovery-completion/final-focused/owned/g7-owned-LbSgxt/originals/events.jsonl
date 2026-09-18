@@ -1,0 +1,28 @@
+{"event": "before-GO", "pid": 307213, "parent": 306400, "monotonic": 175245.524832837}
+{"event": "after-GO", "pid": 307213, "parent": 306400, "monotonic": 175245.525041369}
+{"event": "before-fsync", "pid": 307215, "parent": 307213, "monotonic": 175245.525614228}
+{"event": "before-fsync-1", "pid": 307215, "parent": 307213, "monotonic": 175245.52574313}
+{"event": "after-fsync-1", "pid": 307215, "parent": 307213, "monotonic": 175245.527042256}
+{"event": "after-fsync", "pid": 307215, "parent": 307213, "monotonic": 175245.527100626}
+{"event": "before-fsync", "pid": 307215, "parent": 307213, "monotonic": 175245.527377948}
+{"event": "before-fsync-2", "pid": 307215, "parent": 307213, "monotonic": 175245.527430116}
+{"event": "after-fsync-2", "pid": 307215, "parent": 307213, "monotonic": 175245.528440489}
+{"event": "after-fsync", "pid": 307215, "parent": 307213, "monotonic": 175245.528488939}
+{"event": "before-fsync", "pid": 307215, "parent": 307213, "monotonic": 175245.528527732}
+{"event": "before-fsync-3", "pid": 307215, "parent": 307213, "monotonic": 175245.528561366}
+{"event": "after-fsync-3", "pid": 307215, "parent": 307213, "monotonic": 175245.529413049}
+{"event": "after-fsync", "pid": 307215, "parent": 307213, "monotonic": 175245.529457794}
+{"event": "owner-spawn", "pid": 307215, "parent": 307213, "monotonic": 175245.53028424, "child": 307216, "pidfd": 11}
+{"event": "before-READY", "pid": 307215, "parent": 307213, "monotonic": 175247.979731308}
+{"event": "after-READY", "pid": 307215, "parent": 307213, "monotonic": 175247.979841164}
+{"event": "before-SEAL", "pid": 307213, "parent": 306400, "monotonic": 175247.980061629}
+{"event": "after-SEAL", "pid": 307213, "parent": 306400, "monotonic": 175247.980170122}
+{"event": "before-SEALED", "pid": 307215, "parent": 307213, "monotonic": 175248.030321392}
+{"event": "after-SEALED", "pid": 307215, "parent": 307213, "monotonic": 175248.030450074}
+{"event": "owner-waitpid", "pid": 307215, "parent": 307213, "monotonic": 175248.227868189, "child": 307216, "pidfd": 11, "status": 0}
+{"event": "before-CLEAN", "pid": 307215, "parent": 307213, "monotonic": 175248.228113021}
+{"event": "after-CLEAN", "pid": 307215, "parent": 307213, "monotonic": 175248.228191088}
+{"event": "before-reap", "pid": 307213, "parent": 306400, "monotonic": 175248.228439866}
+{"event": "normal-reap", "pid": 307213, "parent": 306400, "monotonic": 175248.22889885, "child": 307215, "pidfd": 6}
+{"event": "after-reap", "pid": 307213, "parent": 306400, "monotonic": 175248.228954404}
+{"event": "before-maintenance", "pid": 307213, "parent": 306400, "monotonic": 175248.229000111}

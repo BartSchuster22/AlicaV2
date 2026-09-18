@@ -1,0 +1,19 @@
+{"event":"send","pid":310774,"monotonicNs":"175496760517925","packet":"GO"}
+{"event":"packet","pid":310774,"monotonicNs":"175499262920080","child":310781,"packet":"SEALING"}
+{"event":"send","pid":310774,"monotonicNs":"175499263127289","packet":"SEAL"}
+{"event":"packet","pid":310774,"monotonicNs":"175499464501662","child":310781,"packet":"CLEAN {\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:0af3c51b41190dacad0f55f707fe3dc72493f499efbff8a79344a42730c91523\"}"}
+{"event":"send","pid":310774,"monotonicNs":"175499469844572","packet":"ACK"}
+{"event":"send","pid":310774,"monotonicNs":"175499571696926","packet":"CLEANUP"}
+{"event":"packet","pid":310774,"monotonicNs":"175499576799964","child":310781,"packet":"ACK"}
+{"event":"send","pid":310774,"monotonicNs":"175499577846484","packet":"RESUME"}
+{"event":"packet","pid":310774,"monotonicNs":"175499583113372","child":310781,"packet":"ACK"}
+{"event":"send","pid":310774,"monotonicNs":"175499622312354","packet":"CLEANUP"}
+{"event":"packet","pid":310774,"monotonicNs":"175499627657478","child":310781,"packet":"ACK"}
+{"event":"send","pid":310774,"monotonicNs":"175499628077488","packet":"RESUME"}
+{"event":"packet","pid":310774,"monotonicNs":"175499633275936","child":310781,"packet":"ACK"}
+{"event":"send","pid":310774,"monotonicNs":"175499636106294","packet":"SERVE {\"inputs\":\"/tmp/g7-serve-KoTHBp/input.json\",\"selection\":{\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:0af3c51b41190dacad0f55f707fe3dc72493f499efbff8a79344a42730c91523\"}}"}
+{"event":"successor","pid":310809,"monotonicNs":"175499901711529","parent":310808}
+{"event":"successor-activation","pid":310809,"monotonicNs":"175499999386890"}
+{"event":"packet","pid":310774,"monotonicNs":"175501890225751","child":310781,"packet":"SERVING"}
+{"event":"send","pid":310774,"monotonicNs":"175501892293013","packet":"SEAL"}
+{"event":"packet","pid":310774,"monotonicNs":"175502097111229","child":310781,"packet":"CLEAN {\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:0af3c51b41190dacad0f55f707fe3dc72493f499efbff8a79344a42730c91523\"}"}

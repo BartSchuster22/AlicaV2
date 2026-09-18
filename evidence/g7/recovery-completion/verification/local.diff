@@ -1,0 +1,238 @@
+diff --git a/tests/g7/serving-continuation.test.mjs b/tests/g7/serving-continuation.test.mjs
+index 0da7cd3a..9317af39 100644
+--- a/tests/g7/serving-continuation.test.mjs
++++ b/tests/g7/serving-continuation.test.mjs
+@@ -411,6 +411,90 @@ for (const kind of [
+       );
+     },
+   );
++for (const mode of ['bad-target-readiness', 'bad-target-call'])
++  test(
++    'explicit prior recovery after real clean target abort: ' + mode,
++    { timeout: 60000 },
++    async (t) => {
++      const f = await setup(t, mode);
++      const initial = (await f.event('begin')).result;
++      const original = inventory(f.rootPath);
++      await f.command('serve');
++      const failed = (await f.command('try-upgrade')).result;
++      assert.equal(failed.runtime, 'STOPPED');
++      assert.deepEqual(failed.accepted, initial.accepted);
++      assert.deepEqual(failed.transactions.map((t) => t.state).sort(), [
++        'ABORTED',
++        'COMMITTED',
++      ]);
++      immutablePreserved(f, original);
++      excluded(f);
++      const aborted = inventory(f.rootPath);
++      const recovered = (await f.command('recover-prior')).result;
++      assert.equal(recovered.runtime, 'STOPPED');
++      assert.deepEqual(recovered.accepted, initial.accepted);
++      assert.deepEqual(inventory(f.rootPath), aborted);
++      await f.command('serve', 2);
++      await exactAdmin(f, 2, 'status', 'RUNNING');
++      excluded(f);
++      await f.command('maintain');
++      immutablePreserved(f, aborted);
++      await f.command('finish');
++      await wait(() => f.child.exitCode !== null);
++      assert.equal(f.child.exitCode, 0, f.errors());
++      excluded(f);
++    },
++  );
++for (const kind of [
++  'revoked',
++  'equivocation',
++  'grants',
++  'expired',
++  'stale',
++  'no-explicit-choice',
++  'no-mutation-replay',
++  'target-instead',
++])
++  test(
++    'explicit prior recovery refuses ' + kind,
++    { timeout: 30000 },
++    async (t) => {
++      const f = await setup(t, 'bad-target-call');
++      await f.event('begin');
++      await f.command('serve');
++      await f.command('try-upgrade');
++      const before = inventory(f.rootPath);
++      if (kind === 'target-instead') {
++        writeFileSync(f.input, readFileSync(f.target));
++      } else if (['expired', 'stale'].includes(kind)) {
++        if (kind === 'expired') f.trust.revocation.expiresAtMs = Date.now() - 1;
++        else f.trust.revocation.version = 1;
++        f.trust.revocationSignature = signature(
++          f.trust.revocation,
++          'ALICA-REVOCATION-v1',
++          f.root,
++        );
++        f.writeInput();
++      } else changeAuthority(f, kind);
++      f.child.stdin.write(
++        kind === 'no-explicit-choice'
++          ? 'serve\n'
++          : kind === 'no-mutation-replay'
++            ? 'upgrade\n'
++            : 'recover-prior\n',
++      );
++      await wait(() => f.errors().includes('NEEDS_OPERATOR'));
++      assert.equal(
++        f.rows().filter((r) => r.event === 'recover-prior').length,
++        0,
++      );
++      assert.equal(f.rows().filter((r) => r.event === 'serve').length, 1);
++      assert.equal(f.rows().filter((r) => r.event === 'upgrade').length, 0);
++      assert.deepEqual(inventory(f.rootPath), before);
++      immutablePreserved(f, before);
++      excluded(f);
++    },
++  );
+ for (const mode of [
+   'forged-selection',
+   'kill-owner',
+diff --git a/tests/g7/serving-driver.mjs b/tests/g7/serving-driver.mjs
+index 22d0fa11..fa8109a3 100644
+--- a/tests/g7/serving-driver.mjs
++++ b/tests/g7/serving-driver.mjs
+@@ -59,7 +59,17 @@ try {
+     let result;
+     if (command === 'serve') result = await cell.ownedServe(current);
+     else if (command === 'maintain') result = await cell.ownedMaintain(current);
+-    else if (command === 'upgrade') {
++    else if (command === 'recover-prior')
++      result = await cell.ownedRecoverPrior(current);
++    else if (command === 'try-upgrade') {
++      try {
++        await cell.ownedMaintain(current, target);
++        throw new Error('expected target failure');
++      } catch (error) {
++        if (error.runtime !== 'STOPPED') throw error;
++        result = { error: error.code, ...cell.status() };
++      }
++    } else if (command === 'upgrade') {
+       result = await cell.ownedMaintain(current, target);
+       current = target;
+     } else if (command === 'concurrent') {
+diff --git a/tools/g7-cell.mjs b/tools/g7-cell.mjs
+index 8dd56e33..f20522fe 100644
+--- a/tools/g7-cell.mjs
++++ b/tools/g7-cell.mjs
+@@ -269,6 +269,8 @@ export class CellPreparation {
+   #stopped = false;
+   #running = false;
+   #cleanupUncertain = false;
++  #cleanAbort;
++  #priorRecovery;
+   // Starts the actual coordinator relationship, not adoption of stopped residue.
+   // No clean/PID/socket/receipt input exists. Only the lexical child lifecycle
+   // below may confer #stopped on this independently running maintenance process.
+@@ -309,6 +311,12 @@ export class CellPreparation {
+       try {
+         return await operation();
+       } catch (error) {
++        // Only #activate mints this lexical result after actual Kernel cleanup
++        // and durable ABORTED. Public error fields/receipts are not authority.
++        if (error === this.#cleanAbort && this.#priorRecovery) {
++          this.#cleanAbort = undefined;
++          throw error;
++        }
+         this.#failed = true;
+         this.#stopped = false;
+         this.#watch.abandon();
+@@ -318,6 +326,7 @@ export class CellPreparation {
+   }
+   ownedServe(inputs) {
+     return this.#ownedOperation(async () => {
++      check(!this.#priorRecovery, 'FAILED_PRECONDITION');
+       check(!this.#serving && this.#stopped, 'FAILED_PRECONDITION');
+       const current = this.#local(inputs);
+       const result = await this.#stage(
+@@ -361,19 +370,66 @@ export class CellPreparation {
+       );
+       if (targetInputs !== undefined) {
+         const target = this.#local(targetInputs);
+-        await this.#stage(
+-          target.archive,
+-          target.trust,
+-          target.authorization,
+-          true,
+-          true,
+-        );
++        try {
++          await this.#stage(
++            target.archive,
++            target.trust,
++            target.authorization,
++            true,
++            true,
++          );
++        } catch (error) {
++          if (error === this.#cleanAbort) {
++            this.#watch.assert();
++            const stopped = this.#status();
++            check(
++              !this.#failed &&
++                !this.#cleanupUncertain &&
++                this.#stopped &&
++                !this.#host &&
++                !this.#running &&
++                same(stopped.accepted, status.accepted) &&
++                stopped.transactions.every((t) =>
++                  ['COMMITTED', 'ABORTED'].includes(t.state),
++                ),
++              'FAILED_PRECONDITION',
++            );
++            this.#priorRecovery = digest(status.accepted);
++          }
++          throw error;
++        }
+         await this.#shutdown();
+         result = this.#status();
+       }
+       return result;
+     });
+   }
++  // Explicit choice, not rollback: the original prior selection never moved.
++  // Independent current authority and both retained/requested bytes are checked.
++  // Serving is separate and requires fresh grants/readiness in a new owner.
++  ownedRecoverPrior(inputs) {
++    return this.#ownedOperation(async () => {
++      check(
++        this.#priorRecovery && !this.#serving && this.#stopped,
++        'FAILED_PRECONDITION',
++      );
++      check(
++        digest(this.#status().accepted) === this.#priorRecovery,
++        'CONFLICT',
++      );
++      const current = this.#local(inputs);
++      const result = await this.#stage(
++        current.archive,
++        current.trust,
++        current.authorization,
++        true,
++      );
++      this.#watch.assert();
++      check(digest(result.accepted) === this.#priorRecovery, 'CONFLICT');
++      this.#priorRecovery = undefined;
++      return result;
++    });
++  }
+   ownedFinish() {
+     return this.#ownedOperation(async () => {
+       check(!this.#serving && this.#stopped, 'FAILED_PRECONDITION');
+@@ -1314,7 +1370,10 @@ export class CellPreparation {
+         this.#stopped = false;
+         throw outcome(error, 'NEEDS_OPERATOR');
+       }
+-      throw outcome(error, 'STOPPED');
++      const stoppedError = outcome(error, 'STOPPED');
++      if (this.#session && rows[0].record.priorRevision > 0)
++        this.#cleanAbort = stoppedError;
++      throw stoppedError;
+     }
+   }
+   recover(material) {

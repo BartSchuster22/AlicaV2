@@ -1,0 +1,40 @@
+{"event":"send","pid":312330,"monotonicNs":"176027983194971","packet":"GO"}
+{"event":"packet","pid":312330,"monotonicNs":"176030459260531","child":312337,"packet":"SEALING"}
+{"event":"send","pid":312330,"monotonicNs":"176030459433948","packet":"SEAL"}
+{"event":"packet","pid":312330,"monotonicNs":"176030698146101","child":312337,"packet":"CLEAN {\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:44ae5dfe36877ad416356ad167c72f3a5130e7a8aadc93e766be8202f797c809\"}"}
+{"event":"send","pid":312330,"monotonicNs":"176030702326101","packet":"ACK"}
+{"event":"send","pid":312330,"monotonicNs":"176030813604864","packet":"CLEANUP"}
+{"event":"packet","pid":312330,"monotonicNs":"176030818726988","child":312337,"packet":"ACK"}
+{"event":"send","pid":312330,"monotonicNs":"176030819686485","packet":"RESUME"}
+{"event":"packet","pid":312330,"monotonicNs":"176030825036007","child":312337,"packet":"ACK"}
+{"event":"send","pid":312330,"monotonicNs":"176030869787288","packet":"CLEANUP"}
+{"event":"packet","pid":312330,"monotonicNs":"176030875092948","child":312337,"packet":"ACK"}
+{"event":"send","pid":312330,"monotonicNs":"176030875372795","packet":"RESUME"}
+{"event":"packet","pid":312330,"monotonicNs":"176030880536678","child":312337,"packet":"ACK"}
+{"event":"send","pid":312330,"monotonicNs":"176030883512080","packet":"SERVE {\"inputs\":\"/tmp/g7-serve-LD83Dq/input.json\",\"selection\":{\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:44ae5dfe36877ad416356ad167c72f3a5130e7a8aadc93e766be8202f797c809\"}}"}
+{"event":"successor","pid":312365,"monotonicNs":"176031135446780","parent":312364}
+{"event":"successor-activation","pid":312365,"monotonicNs":"176031229355958"}
+{"event":"packet","pid":312330,"monotonicNs":"176033055523457","child":312337,"packet":"SERVING"}
+{"event":"send","pid":312330,"monotonicNs":"176033281309282","packet":"SEAL"}
+{"event":"packet","pid":312330,"monotonicNs":"176033492614422","child":312337,"packet":"CLEAN {\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:44ae5dfe36877ad416356ad167c72f3a5130e7a8aadc93e766be8202f797c809\"}"}
+{"event":"send","pid":312330,"monotonicNs":"176033495533077","packet":"ACK"}
+{"event":"send","pid":312330,"monotonicNs":"176033525773065","packet":"CLEANUP"}
+{"event":"packet","pid":312330,"monotonicNs":"176033531062985","child":312337,"packet":"ACK"}
+{"event":"send","pid":312330,"monotonicNs":"176033531435646","packet":"RESUME"}
+{"event":"packet","pid":312330,"monotonicNs":"176033536392080","child":312337,"packet":"ACK"}
+{"event":"send","pid":312330,"monotonicNs":"176033570513816","packet":"CLEANUP"}
+{"event":"packet","pid":312330,"monotonicNs":"176033575786334","child":312337,"packet":"ACK"}
+{"event":"send","pid":312330,"monotonicNs":"176033576125832","packet":"RESUME"}
+{"event":"packet","pid":312330,"monotonicNs":"176033581321425","child":312337,"packet":"ACK"}
+{"event":"send","pid":312330,"monotonicNs":"176033584177352","packet":"SERVE {\"inputs\":\"/tmp/g7-serve-LD83Dq/input.json\",\"selection\":{\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:44ae5dfe36877ad416356ad167c72f3a5130e7a8aadc93e766be8202f797c809\"}}"}
+{"event":"successor","pid":312391,"monotonicNs":"176033855505988","parent":312390}
+{"event":"successor-activation","pid":312391,"monotonicNs":"176033953581120"}
+{"event":"packet","pid":312330,"monotonicNs":"176035815785694","child":312337,"packet":"SERVING"}
+{"event":"send","pid":312330,"monotonicNs":"176035862823059","packet":"SEAL"}
+{"event":"packet","pid":312330,"monotonicNs":"176036083280852","child":312337,"packet":"CLEAN {\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:44ae5dfe36877ad416356ad167c72f3a5130e7a8aadc93e766be8202f797c809\"}"}
+{"event":"send","pid":312330,"monotonicNs":"176036084958280","packet":"ACK"}
+{"event":"send","pid":312330,"monotonicNs":"176036108735108","packet":"CLEANUP"}
+{"event":"packet","pid":312330,"monotonicNs":"176036114148762","child":312337,"packet":"ACK"}
+{"event":"send","pid":312330,"monotonicNs":"176036114804827","packet":"RESUME"}
+{"event":"packet","pid":312330,"monotonicNs":"176036120116248","child":312337,"packet":"ACK"}
+{"event":"send","pid":312330,"monotonicNs":"176036132729146","packet":"DONE"}

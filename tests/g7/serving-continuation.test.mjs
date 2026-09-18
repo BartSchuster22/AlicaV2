@@ -411,6 +411,90 @@ for (const kind of [
       );
     },
   );
+for (const mode of ['bad-target-readiness', 'bad-target-call'])
+  test(
+    'explicit prior recovery after real clean target abort: ' + mode,
+    { timeout: 60000 },
+    async (t) => {
+      const f = await setup(t, mode);
+      const initial = (await f.event('begin')).result;
+      const original = inventory(f.rootPath);
+      await f.command('serve');
+      const failed = (await f.command('try-upgrade')).result;
+      assert.equal(failed.runtime, 'STOPPED');
+      assert.deepEqual(failed.accepted, initial.accepted);
+      assert.deepEqual(failed.transactions.map((t) => t.state).sort(), [
+        'ABORTED',
+        'COMMITTED',
+      ]);
+      immutablePreserved(f, original);
+      excluded(f);
+      const aborted = inventory(f.rootPath);
+      const recovered = (await f.command('recover-prior')).result;
+      assert.equal(recovered.runtime, 'STOPPED');
+      assert.deepEqual(recovered.accepted, initial.accepted);
+      assert.deepEqual(inventory(f.rootPath), aborted);
+      await f.command('serve', 2);
+      await exactAdmin(f, 2, 'status', 'RUNNING');
+      excluded(f);
+      await f.command('maintain');
+      immutablePreserved(f, aborted);
+      await f.command('finish');
+      await wait(() => f.child.exitCode !== null);
+      assert.equal(f.child.exitCode, 0, f.errors());
+      excluded(f);
+    },
+  );
+for (const kind of [
+  'revoked',
+  'equivocation',
+  'grants',
+  'expired',
+  'stale',
+  'no-explicit-choice',
+  'no-mutation-replay',
+  'target-instead',
+])
+  test(
+    'explicit prior recovery refuses ' + kind,
+    { timeout: 30000 },
+    async (t) => {
+      const f = await setup(t, 'bad-target-call');
+      await f.event('begin');
+      await f.command('serve');
+      await f.command('try-upgrade');
+      const before = inventory(f.rootPath);
+      if (kind === 'target-instead') {
+        writeFileSync(f.input, readFileSync(f.target));
+      } else if (['expired', 'stale'].includes(kind)) {
+        if (kind === 'expired') f.trust.revocation.expiresAtMs = Date.now() - 1;
+        else f.trust.revocation.version = 1;
+        f.trust.revocationSignature = signature(
+          f.trust.revocation,
+          'ALICA-REVOCATION-v1',
+          f.root,
+        );
+        f.writeInput();
+      } else changeAuthority(f, kind);
+      f.child.stdin.write(
+        kind === 'no-explicit-choice'
+          ? 'serve\n'
+          : kind === 'no-mutation-replay'
+            ? 'upgrade\n'
+            : 'recover-prior\n',
+      );
+      await wait(() => f.errors().includes('NEEDS_OPERATOR'));
+      assert.equal(
+        f.rows().filter((r) => r.event === 'recover-prior').length,
+        0,
+      );
+      assert.equal(f.rows().filter((r) => r.event === 'serve').length, 1);
+      assert.equal(f.rows().filter((r) => r.event === 'upgrade').length, 0);
+      assert.deepEqual(inventory(f.rootPath), before);
+      immutablePreserved(f, before);
+      excluded(f);
+    },
+  );
 for (const mode of [
   'forged-selection',
   'kill-owner',

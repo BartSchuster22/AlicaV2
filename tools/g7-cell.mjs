@@ -269,6 +269,8 @@ export class CellPreparation {
   #stopped = false;
   #running = false;
   #cleanupUncertain = false;
+  #cleanAbort;
+  #priorRecovery;
   // Starts the actual coordinator relationship, not adoption of stopped residue.
   // No clean/PID/socket/receipt input exists. Only the lexical child lifecycle
   // below may confer #stopped on this independently running maintenance process.
@@ -309,6 +311,12 @@ export class CellPreparation {
       try {
         return await operation();
       } catch (error) {
+        // Only #activate mints this lexical result after actual Kernel cleanup
+        // and durable ABORTED. Public error fields/receipts are not authority.
+        if (error === this.#cleanAbort && this.#priorRecovery) {
+          this.#cleanAbort = undefined;
+          throw error;
+        }
         this.#failed = true;
         this.#stopped = false;
         this.#watch.abandon();
@@ -318,6 +326,7 @@ export class CellPreparation {
   }
   ownedServe(inputs) {
     return this.#ownedOperation(async () => {
+      check(!this.#priorRecovery, 'FAILED_PRECONDITION');
       check(!this.#serving && this.#stopped, 'FAILED_PRECONDITION');
       const current = this.#local(inputs);
       const result = await this.#stage(
@@ -361,16 +370,63 @@ export class CellPreparation {
       );
       if (targetInputs !== undefined) {
         const target = this.#local(targetInputs);
-        await this.#stage(
-          target.archive,
-          target.trust,
-          target.authorization,
-          true,
-          true,
-        );
+        try {
+          await this.#stage(
+            target.archive,
+            target.trust,
+            target.authorization,
+            true,
+            true,
+          );
+        } catch (error) {
+          if (error === this.#cleanAbort) {
+            this.#watch.assert();
+            const stopped = this.#status();
+            check(
+              !this.#failed &&
+                !this.#cleanupUncertain &&
+                this.#stopped &&
+                !this.#host &&
+                !this.#running &&
+                same(stopped.accepted, status.accepted) &&
+                stopped.transactions.every((t) =>
+                  ['COMMITTED', 'ABORTED'].includes(t.state),
+                ),
+              'FAILED_PRECONDITION',
+            );
+            this.#priorRecovery = digest(status.accepted);
+          }
+          throw error;
+        }
         await this.#shutdown();
         result = this.#status();
       }
+      return result;
+    });
+  }
+  // Explicit choice, not rollback: the original prior selection never moved.
+  // Independent current authority and both retained/requested bytes are checked.
+  // Serving is separate and requires fresh grants/readiness in a new owner.
+  ownedRecoverPrior(inputs) {
+    return this.#ownedOperation(async () => {
+      check(
+        this.#priorRecovery && !this.#serving && this.#stopped,
+        'FAILED_PRECONDITION',
+      );
+      check(
+        digest(this.#status().accepted) === this.#priorRecovery,
+        'CONFLICT',
+      );
+      const current = this.#local(inputs);
+      const result = await this.#stage(
+        current.archive,
+        current.trust,
+        current.authorization,
+        true,
+      );
+      this.#watch.assert();
+      check(digest(result.accepted) === this.#priorRecovery, 'CONFLICT');
+      this.#priorRecovery = undefined;
       return result;
     });
   }
@@ -1314,7 +1370,10 @@ export class CellPreparation {
         this.#stopped = false;
         throw outcome(error, 'NEEDS_OPERATOR');
       }
-      throw outcome(error, 'STOPPED');
+      const stoppedError = outcome(error, 'STOPPED');
+      if (this.#session && rows[0].record.priorRevision > 0)
+        this.#cleanAbort = stoppedError;
+      throw stoppedError;
     }
   }
   recover(material) {

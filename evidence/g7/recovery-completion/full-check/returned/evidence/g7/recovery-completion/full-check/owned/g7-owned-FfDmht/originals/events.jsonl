@@ -1,0 +1,25 @@
+{"event": "before-GO", "pid": 320569, "parent": 318970, "monotonic": 176678.385340822}
+{"event": "after-GO", "pid": 320569, "parent": 318970, "monotonic": 176678.385500352}
+{"event": "before-fsync", "pid": 320578, "parent": 320569, "monotonic": 176678.386219747}
+{"event": "before-fsync-1", "pid": 320578, "parent": 320569, "monotonic": 176678.386335656}
+{"event": "after-fsync-1", "pid": 320578, "parent": 320569, "monotonic": 176678.387437971}
+{"event": "after-fsync", "pid": 320578, "parent": 320569, "monotonic": 176678.387510216}
+{"event": "before-fsync", "pid": 320578, "parent": 320569, "monotonic": 176678.387743055}
+{"event": "before-fsync-2", "pid": 320578, "parent": 320569, "monotonic": 176678.387794722}
+{"event": "after-fsync-2", "pid": 320578, "parent": 320569, "monotonic": 176678.388923999}
+{"event": "after-fsync", "pid": 320578, "parent": 320569, "monotonic": 176678.388981947}
+{"event": "before-fsync", "pid": 320578, "parent": 320569, "monotonic": 176678.389052992}
+{"event": "before-fsync-3", "pid": 320578, "parent": 320569, "monotonic": 176678.389093508}
+{"event": "after-fsync-3", "pid": 320578, "parent": 320569, "monotonic": 176678.389792885}
+{"event": "after-fsync", "pid": 320578, "parent": 320569, "monotonic": 176678.389836477}
+{"event": "owner-spawn", "pid": 320578, "parent": 320569, "monotonic": 176678.390628138, "child": 320579, "pidfd": 11}
+{"event": "before-READY", "pid": 320578, "parent": 320569, "monotonic": 176680.803233009}
+{"event": "after-READY", "pid": 320578, "parent": 320569, "monotonic": 176680.803349277}
+{"event": "before-SEAL", "pid": 320569, "parent": 318970, "monotonic": 176680.803750463}
+{"event": "after-SEAL", "pid": 320569, "parent": 318970, "monotonic": 176680.803857074}
+{"event": "before-SEALED", "pid": 320578, "parent": 320569, "monotonic": 176680.85378323}
+{"event": "owner-killed", "pid": 320578, "parent": 320569, "monotonic": 176680.853991472, "child": 320579, "pidfd": 11}
+{"event": "after-SEALED", "pid": 320578, "parent": 320569, "monotonic": 176680.854138519}
+{"event": "owner-waitpid", "pid": 320578, "parent": 320569, "monotonic": 176680.867962448, "child": 320579, "pidfd": 11, "status": -9}
+{"event": "before-UNCERTAIN", "pid": 320578, "parent": 320569, "monotonic": 176680.86812301}
+{"event": "after-UNCERTAIN", "pid": 320578, "parent": 320569, "monotonic": 176680.868200426}

@@ -1,0 +1,12 @@
+TEST-ONLY AcapError: FAILED_PRECONDITION
+    at fail (file:///home/alica-dev/AlicaV2/packages/acap-contracts/dist/validation.js:31:11)
+    at check (file:///home/alica-dev/AlicaV2/packages/acap-contracts/dist/validation.js:35:9)
+    at Object.alive [as assert] (file:///home/alica-dev/AlicaV2/tools/g7-owned-bridge.mjs:50:5)
+    at #guard (file:///home/alica-dev/AlicaV2/tools/g7-cell.mjs:696:18)
+    at #read (file:///home/alica-dev/AlicaV2/tools/g7-cell.mjs:707:16)
+    at #base (file:///home/alica-dev/AlicaV2/tools/g7-cell.mjs:755:49)
+    at #validatedStatus (file:///home/alica-dev/AlicaV2/tools/g7-cell.mjs:847:37)
+    at #status (file:///home/alica-dev/AlicaV2/tools/g7-cell.mjs:840:35)
+    at file:///home/alica-dev/AlicaV2/tools/g7-cell.mjs:460:36
+    at async #run (file:///home/alica-dev/AlicaV2/tools/g7-cell.mjs:642:14)
+{"status":"NEEDS_OPERATOR","fence":"RETAINED"}

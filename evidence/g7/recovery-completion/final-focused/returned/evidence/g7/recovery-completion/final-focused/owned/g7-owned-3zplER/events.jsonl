@@ -1,0 +1,23 @@
+{"event": "before-GO", "pid": 307778, "parent": 306400, "monotonic": 175267.666849588}
+{"event": "after-GO", "pid": 307778, "parent": 306400, "monotonic": 175267.667039405}
+{"event": "before-fsync", "pid": 307779, "parent": 307778, "monotonic": 175267.667757898}
+{"event": "before-fsync-1", "pid": 307779, "parent": 307778, "monotonic": 175267.667869409}
+{"event": "after-fsync-1", "pid": 307779, "parent": 307778, "monotonic": 175267.669057214}
+{"event": "after-fsync", "pid": 307779, "parent": 307778, "monotonic": 175267.669138167}
+{"event": "before-fsync", "pid": 307779, "parent": 307778, "monotonic": 175267.669412053}
+{"event": "before-fsync-2", "pid": 307779, "parent": 307778, "monotonic": 175267.669488676}
+{"event": "after-fsync-2", "pid": 307779, "parent": 307778, "monotonic": 175267.670395594}
+{"event": "after-fsync", "pid": 307779, "parent": 307778, "monotonic": 175267.670450588}
+{"event": "before-fsync", "pid": 307779, "parent": 307778, "monotonic": 175267.670493368}
+{"event": "before-fsync-3", "pid": 307779, "parent": 307778, "monotonic": 175267.670527022}
+{"event": "after-fsync-3", "pid": 307779, "parent": 307778, "monotonic": 175267.671405886}
+{"event": "after-fsync", "pid": 307779, "parent": 307778, "monotonic": 175267.671462263}
+{"event": "owner-spawn", "pid": 307779, "parent": 307778, "monotonic": 175267.672361225, "child": 307780, "pidfd": 11}
+{"event": "before-READY", "pid": 307779, "parent": 307778, "monotonic": 175270.208051306}
+{"event": "after-READY", "pid": 307779, "parent": 307778, "monotonic": 175270.208290285}
+{"event": "owner-killed", "pid": 307779, "parent": 307778, "monotonic": 175270.208409901, "child": 307780, "pidfd": 11}
+{"event": "before-SEAL", "pid": 307778, "parent": 306400, "monotonic": 175270.208656585}
+{"event": "after-SEAL", "pid": 307778, "parent": 306400, "monotonic": 175270.208750351}
+{"event": "owner-waitpid", "pid": 307779, "parent": 307778, "monotonic": 175270.226846131, "child": 307780, "pidfd": 11, "status": -9}
+{"event": "before-UNCERTAIN", "pid": 307779, "parent": 307778, "monotonic": 175270.226993077}
+{"event": "after-UNCERTAIN", "pid": 307779, "parent": 307778, "monotonic": 175270.227093095}

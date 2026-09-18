@@ -1,0 +1,21 @@
+{"event":"send","pid":317701,"packet":"GO"}
+{"event":"packet","pid":317701,"child":317708,"packet":"SEALING"}
+{"event":"send","pid":317701,"packet":"SEAL"}
+{"event":"packet","pid":317701,"child":317708,"packet":"CLEAN {\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:2c21db8d96da706c5522523b4f5b3a504ecb929d2312f608a591f6dae1d260a4\"}"}
+{"event":"clean-boundary","pid":317701}
+{"event":"send","pid":317701,"packet":"ACK"}
+{"event":"send","pid":317701,"packet":"CLEANUP"}
+{"event":"packet","pid":317701,"child":317708,"packet":"ACK"}
+{"event":"send","pid":317701,"packet":"RESUME"}
+{"event":"packet","pid":317701,"child":317708,"packet":"ACK"}
+{"event":"send","pid":317701,"packet":"CLEANUP"}
+{"event":"packet","pid":317701,"child":317708,"packet":"ACK"}
+{"event":"send","pid":317701,"packet":"RESUME"}
+{"event":"packet","pid":317701,"child":317708,"packet":"ACK"}
+{"event":"send","pid":317701,"packet":"ACTIVATION"}
+{"event":"packet","pid":317701,"child":317708,"packet":"ACK"}
+{"event":"send","pid":317701,"packet":"CLEANUP"}
+{"event":"packet","pid":317701,"child":317708,"packet":"ACK"}
+{"event":"send","pid":317701,"packet":"RESUME"}
+{"event":"packet","pid":317701,"child":317708,"packet":"ACK"}
+{"event":"commit-linked","pid":317701}

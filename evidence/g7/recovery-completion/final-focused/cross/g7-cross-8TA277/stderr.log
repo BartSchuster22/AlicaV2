@@ -1,0 +1,11 @@
+TEST-ONLY AcapError: TIMEOUT
+    at fail (file:///home/alica-dev/AlicaV2/packages/acap-contracts/dist/validation.js:31:11)
+    at check (file:///home/alica-dev/AlicaV2/packages/acap-contracts/dist/validation.js:35:9)
+    at assert (file:///home/alica-dev/AlicaV2/tools/g7-owned-bridge.mjs:46:5)
+    at receive (file:///home/alica-dev/AlicaV2/tools/g7-owned-bridge.mjs:64:7)
+    at async ownedStop (file:///home/alica-dev/AlicaV2/tools/g7-owned-bridge.mjs:109:25)
+    at async file:///home/alica-dev/AlicaV2/tools/g7-cell.mjs:454:23
+    at async #run (file:///home/alica-dev/AlicaV2/tools/g7-cell.mjs:642:14)
+    at async CellPreparation.ownedReinstall (file:///home/alica-dev/AlicaV2/tests/g7/cross-process-block.mjs:10:12)
+    at async file:///home/alica-dev/AlicaV2/tools/g7-owned-cli.mjs:66:11
+{"status":"NEEDS_OPERATOR","fence":"RETAINED"}
