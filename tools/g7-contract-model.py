@@ -46,10 +46,23 @@ def schema():
     defs['authorization'] = obj({'schemaVersion': {'const': 'alica.cell-authorization/v1'}, 'profileDigest': DIGEST, 'capabilities': array(ref('capabilityIntent'), 256), 'secrets': {'type': 'array', 'maxItems': 0}, 'events': {'type': 'array', 'maxItems': 0}})
     defs['adminRequest'] = obj({'schemaVersion': {'const': 'alica.cell-admin-request/v1'}, 'requestId': ID, 'incarnation': ID, 'expectedSequence': integer(), 'operation': {'enum': ['status', 'verify', 'stop', 'start']}})
     defs['adminResponse'] = obj({'schemaVersion': {'const': 'alica.cell-admin-response/v1'}, 'requestId': ID, 'incarnation': ID, 'sequence': integer(), 'status': {'enum': ['STOPPED', 'RUNNING', 'FAILED', 'NEEDS_OPERATOR']}, 'code': {'enum': ['OK', 'CONFLICT', 'DENIED', 'INVALID', 'TIMEOUT', 'CLEANUP_UNCERTAIN']}, 'acceptedDigest': nullable(DIGEST)})
+    # A1+B1 owner amendment: v1 definitions above remain byte-structurally unchanged.
+    defs['adminRequestV2'] = copy.deepcopy(defs['adminRequest'])
+    defs['adminRequestV2']['properties']['schemaVersion']['const'] = 'alica.cell-admin-request/v2'
+    response = copy.deepcopy(defs['adminResponse'])
+    response['properties']['schemaVersion']['const'] = 'alica.cell-admin-response/v2'
+    response['properties']['sequence'] = nullable(integer())
+    response['oneOf'] = [
+        {'properties': {'sequence': {'type': 'null'}, 'acceptedDigest': {'type': 'null'},
+                        'status': {'const': 'NEEDS_OPERATOR'}, 'code': {'const': 'CLEANUP_UNCERTAIN'}}},
+        {'properties': {'sequence': {'const': 0}, 'acceptedDigest': {'type': 'null'}}},
+        {'properties': {'sequence': integer(1), 'acceptedDigest': DIGEST}},
+    ]
+    defs['adminResponseV2'] = response
     defs['backupFile'] = obj({'path': PATH, 'digest': DIGEST, 'bytes': integer(0, LIMITS['fileBytes'])})
     defs['backup'] = obj({'schemaVersion': {'const': 'alica.cell-backup/v1'}, 'backupId': ID, 'cellId': ID, 'createdAtMs': integer(), 'accepted': ref('accepted'), 'trustFloor': ref('floor'), 'recoveryKeyId': DIGEST, 'format': {'const': 'age-encryption.org/v1'}, 'files': array(ref('backupFile'), 8192, 1)})
     defs['recoveryApproval'] = obj({'schemaVersion': {'const': 'alica.cell-recovery-approval/v1'}, 'cellId': ID, 'backupCipherDigest': DIGEST, 'approvedAtMs': integer(), 'minimumFloor': ref('floor'), 'authorizationDigest': DIGEST, 'sourceStopped': {'const': True}})
-    names = ['accepted', 'journal', 'authorization', 'adminRequest', 'adminResponse', 'backup', 'recoveryApproval']
+    names = ['accepted', 'journal', 'authorization', 'adminRequest', 'adminResponse', 'backup', 'recoveryApproval', 'adminRequestV2', 'adminResponseV2']
     return {'$schema': 'https://json-schema.org/draft/2020-12/schema', '$id': 'https://alica.invalid/g7/draft/contracts.schema.json', '$defs': defs, 'oneOf': [ref(n) for n in names]}
 
 def canonical(value):
@@ -118,4 +131,4 @@ if __name__ == '__main__':
     DRAFT.mkdir(parents=True, exist_ok=True)
     (DRAFT / 'contracts.schema.json').write_text(json.dumps(schema(), indent=2) + '\n')
     (DRAFT / 'limits.json').write_text(json.dumps(LIMITS, indent=2) + '\n')
-    print('Generated draft schemas/limits; NOT approved and NOT runtime qualification.')
+    print('Generated R1 schemas/limits including owner-approved A1+B1; NOT runtime qualification.')

@@ -1,0 +1,63 @@
+#!/usr/bin/env python3
+"""Verify source identity and preservation against actual recorded manifests."""
+import pathlib, json, hashlib, subprocess, copy, re
+R=pathlib.Path('/home/herman/g7-implementation')
+E=R/'evidence/g7/admin-amendment'
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+before_local=json.loads((E/'before-local.json').read_text())
+before_remote=json.loads((E/'before-remote.log').read_text())
+after_remote=json.loads((E/'after-final-remote.log').read_text())
+allow=(E/'transfer-allowlist.txt').read_text().splitlines()
+assert len(allow)==len(set(allow))
+assert before_remote['head']==after_remote['head']=='d9f0c026790a525d606e7d2e9a2687d52039c444'
+assert subprocess.check_output(['git','rev-parse','HEAD'],cwd=R).decode().strip()==before_remote['head']
+local_changed=[n for n,h in before_local.items() if not (R/n).is_file() or sha(R/n)!=h]
+remote_changed=[n for n,h in before_remote['files'].items() if after_remote['files'].get(n)!=h]
+assert set(local_changed)<=set(allow),local_changed
+assert set(remote_changed)<=set(allow),remote_changed
+assert all(sha(R/n)==after_remote['files'][n] for n in allow)
+for n in ['docs/g7/draft/limits.json','docs/g7/R1-ADMIN-OWNER-APPROVAL.md','docs/g7/R1-ADMIN-OWNER-DECISION-BRIEF.md','docs/g7/R1-OWNER-APPROVAL.md','docs/g7/R1-SUPERVISION-PARENT-REVIEW.md','docs/g7/R1-CLEAN-START-PARENT-REVIEW.md']:
+    assert sha(R/n)==before_local[n],n
+old=json.loads(subprocess.check_output(['git','show',before_remote['head']+':docs/g7/draft/contracts.schema.json'],cwd=R))
+new=json.loads((R/'docs/g7/draft/contracts.schema.json').read_text())
+assert all(new['$defs'][n]==v for n,v in old['$defs'].items())
+assert set(new['$defs'])-set(old['$defs'])=={'adminRequestV2','adminResponseV2'}
+request=copy.deepcopy(old['$defs']['adminRequest']);request['properties']['schemaVersion']['const']='alica.cell-admin-request/v2'
+assert new['$defs']['adminRequestV2']==request
+reduced=copy.deepcopy(new)
+for n in ['adminRequestV2','adminResponseV2']:del reduced['$defs'][n]
+reduced['oneOf']=[v for v in reduced['oneOf'] if not v['$ref'].endswith(('adminRequestV2','adminResponseV2'))]
+assert reduced==old
+assert (json.dumps(reduced, indent=2)+'\n').encode()==subprocess.check_output(['git','show',before_remote['head']+':docs/g7/draft/contracts.schema.json'],cwd=R)
+# Earlier process byte evidence is never replaced by a successful later run.
+for label in ['after-focused-1', 'after-focused-2', 'after-focused-3', 'after-focused-final', 'after-full']:
+    previous=json.loads((E/(label+'.log')).read_text())
+    assert all(after_remote['files'].get(n)==h for n,h in previous['files'].items() if n.startswith('evidence/g7/admin-amendment-process/')),label
+# Raw execution source observation after focused final must agree with full after,
+# returned code and final local bytes. Documentation-only checkpoint added later.
+focused=json.loads((E/'after-focused-final.log').read_text())
+full=json.loads((E/'after-full.log').read_text())
+tested=json.loads((E/'return-tested-hashes.json').read_text())
+assert all(focused['files'][n]==full['files'][n]==h==sha(R/n) for n,h in tested.items())
+observations=re.findall(r'^([0-9a-f]{64})  (.+)$', (E/'full-check.log').read_text(), re.M)
+assert all([v for v,n in observations if n==name]==[h,h] for name,h in tested.items())
+for name in ['focused-final','full-check']:
+    assert (E/(name+'.exit')).read_text().strip()=='0'
+result={
+ 'baseline':before_remote['head'],
+ 'local_changed_tracked_or_original':local_changed,
+ 'remote_changed_original':remote_changed,
+ 'source':{n:sha(R/n) for n in allow},
+ 'tested_source':tested,
+ 'original_local_files_preserved':len(before_local)-len(local_changed),
+ 'original_remote_files_preserved':len(before_remote['files'])-len(remote_changed),
+ 'original_remote_untracked_preserved':[line[3:] for line in before_remote['status'].splitlines() if line.startswith('?? ')],
+ 'all_original_schema_definitions_unchanged':True,
+ 'limits_and_approval_and_historical_reviews_unchanged':True,
+ 'exact_v2_request_clone':True,
+ 'full_and_focused_tested_code_unchanged':True,
+ 'local_remote_final_allowlist_identical':True,
+ 'gate':'NOT ACCEPTED; bounded admin component only',
+}
+(E/'source-and-preservation-verification.json').write_text(json.dumps(result,indent=2)+'\n')
+print(json.dumps(result,indent=2))

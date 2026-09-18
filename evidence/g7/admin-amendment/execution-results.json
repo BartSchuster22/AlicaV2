@@ -1,0 +1,157 @@
+{
+  "focused-1": {
+    "exit": 0,
+    "logSHA256": "a93b8e0f5c78ad5580b8cdd5d2d28cf328f0a7ad284a959e7a3d34b96529b01d",
+    "nodeTests": [
+      "17"
+    ],
+    "nodePass": [
+      "17"
+    ],
+    "nodeFail": [
+      "0"
+    ],
+    "pythonTests": [
+      "120"
+    ],
+    "actualTimingReceipts": [],
+    "admissionMilliseconds": [
+      30000.845617,
+      30000.855206,
+      30000.727686,
+      30050.765238,
+      30051.009677,
+      30050.909428999996,
+      30050.745198000004,
+      30050.604583
+    ]
+  },
+  "focused-2": {
+    "exit": 0,
+    "logSHA256": "a6c482ec919f7446a7a37c441b62cefd3987432cf7b4374a8c4d1f640238dc3c",
+    "nodeTests": [
+      "19"
+    ],
+    "nodePass": [
+      "19"
+    ],
+    "nodeFail": [
+      "0"
+    ],
+    "pythonTests": [
+      "120"
+    ],
+    "actualTimingReceipts": [
+      "actual forced cleanup deadline ms: 30015.550190999995 pidfd: HELD"
+    ],
+    "admissionMilliseconds": [
+      30048.088540999997,
+      30048.279261,
+      30048.087400000004,
+      30047.908162000003,
+      30047.714746999998,
+      30047.555328000002,
+      30047.399434000003,
+      30047.254821000002
+    ]
+  },
+  "focused-3": {
+    "exit": 0,
+    "logSHA256": "6632ea143f6e852e4fd073d9a42ad905a03a40085906539f016b3aaa4028bc7c",
+    "nodeTests": [
+      "35"
+    ],
+    "nodePass": [
+      "35"
+    ],
+    "nodeFail": [
+      "0"
+    ],
+    "pythonTests": [
+      "120"
+    ],
+    "actualTimingReceipts": [
+      "actual forced cleanup deadline ms: 30027.950715999992 pidfd: HELD",
+      "late EOF admission deadline ms: 30039.179372 cleanup ms: 30077.921598"
+    ],
+    "admissionMilliseconds": [
+      30048.002679000005,
+      30047.814746000004,
+      30048.148424,
+      30048.034349,
+      30047.895198000006,
+      30047.794197000003,
+      30047.668780000004,
+      30047.567689999996
+    ]
+  },
+  "focused-final": {
+    "exit": 0,
+    "logSHA256": "73a1bca7ab4d40e7e5dcc8136d7979aa6677114a63c43fab4d11f3e44e7cc31a",
+    "nodeTests": [
+      "35"
+    ],
+    "nodePass": [
+      "35"
+    ],
+    "nodeFail": [
+      "0"
+    ],
+    "pythonTests": [
+      "121"
+    ],
+    "actualTimingReceipts": [
+      "actual forced cleanup deadline ms: 30027.66348000001 pidfd: HELD",
+      "late EOF admission deadline ms: 30042.092053 cleanup ms: 30072.489904000002"
+    ],
+    "admissionMilliseconds": [
+      30002.531122,
+      30002.293002,
+      30002.14286,
+      30002.014248000003,
+      30002.261644,
+      30002.088927999997,
+      30001.962740999996,
+      30001.835231000005
+    ]
+  },
+  "full-check": {
+    "exit": 0,
+    "logSHA256": "e167d0a63e6aa2212e96ecdd3c4d81738b53a25b062997813660ab3cecc35c77",
+    "nodeTests": [
+      "170",
+      "160",
+      "209"
+    ],
+    "nodePass": [
+      "170",
+      "160",
+      "209"
+    ],
+    "nodeFail": [
+      "0",
+      "0",
+      "0"
+    ],
+    "pythonTests": [
+      "193",
+      "30",
+      "11",
+      "121"
+    ],
+    "actualTimingReceipts": [
+      "actual forced cleanup deadline ms: 30022.86163800001 pidfd: HELD",
+      "late EOF admission deadline ms: 30050.064132 cleanup ms: 30094.009298999998"
+    ],
+    "admissionMilliseconds": [
+      30045.446832999998,
+      30045.656238000003,
+      30045.535979999997,
+      30045.434027000003,
+      30045.324741999997,
+      30045.129354000004,
+      30045.033365,
+      30044.934237
+    ]
+  }
+}

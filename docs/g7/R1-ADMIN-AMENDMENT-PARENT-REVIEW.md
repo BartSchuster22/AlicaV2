@@ -1,0 +1,9 @@
+# A1+B1 independent parent verification
+
+Owner-authorized amendment based on d9f0c026790a525d606e7d2e9a2687d52039c444. The independent full development-host regression completed with exit 0: Node 170/170, 160/160, 209/209; Python 193/193, 30/30, 11/11, 121/121. No Node failures, cancellations or skips. Before/after/local hashes match for all 13 handoff files. All 1590 worker evidence-manifest entries were independently hash-verified. Separate parent log and byte bindings are in evidence/g7/admin-parent; worker manifest-bound artifacts remain unchanged.
+
+Reviewed scope: explicit write-EOF sealing, separate strict v2 request/response endpoint, constrained known/unknown selection envelopes, shared admission ceiling and mutation slot, unchanged numerical limits, one-attempt client and adversarial real socket/process tests. Original v1 schema definitions remain unchanged. No G6/Kernel API amendment. The worker checkpoint remains the detailed coverage/limitations record; its uncommitted/publication-pending wording describes the handoff, not this parent-reviewed publication.
+
+Prior-selection syscall tests deliberately rewrite the exact original accepted bytes in a test-only successor preload. They qualify uncertainty handling with prior data present, NOT production upgrade/replacement. Known absence is schema qualified, not a newly exposed pre-install service. Different-UID negative credentials, full verification expiry and direct outer cleanup timer qualification remain open as recorded. No signed release, dependency-complete bundle, complete install/upgrade/recovery/restore, two-host qualification or G7 acceptance is implied.
+
+This parent record does not alter the preserved historical proposal or approval. Production signing and final owner acceptance remain separate gates. Continue G7 under the approved R1 contract plus A1+B1; do not infer restart/reconciliation authority from unknown selection, timeouts, late exits or readable residue.

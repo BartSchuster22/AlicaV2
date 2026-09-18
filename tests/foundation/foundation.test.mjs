@@ -27,12 +27,19 @@ test('boundary CLI fails on planted source violation', () => {
     rmSync(d, { recursive: true, force: true });
   }
 });
-test('Cell Ajv declaration is limited to its exact host importer and target', () => {
+test('Cell/admin Ajv declaration is limited to exact host importers and target', () => {
   const allowed = "import { Ajv2020 } from 'ajv/dist/2020.js';";
-  assert.deepEqual(
-    violations(path.join(root, 'tools/g7-cell.mjs'), allowed, root),
-    [],
-  );
+  for (const importer of ['tools/g7-cell.mjs', 'tools/g7-admin.mjs']) {
+    assert.deepEqual(violations(path.join(root, importer), allowed, root), []);
+    for (const target of ['ajv', 'ajv/dist/jtd.js', 'unapproved-runtime'])
+      assert.ok(
+        violations(
+          path.join(root, importer),
+          `import '${target}';`,
+          root,
+        ).includes('undeclared external import'),
+      );
+  }
   for (const file of [
     'tools/other.mjs',
     'tools/g7-cell-cli.mjs',
@@ -44,14 +51,6 @@ test('Cell Ajv declaration is limited to its exact host importer and target', ()
       violations(path.join(root, file), allowed, root).includes(
         'undeclared external import',
       ),
-    );
-  for (const target of ['ajv', 'ajv/dist/jtd.js', 'unapproved-runtime'])
-    assert.ok(
-      violations(
-        path.join(root, 'tools/g7-cell.mjs'),
-        `import '${target}';`,
-        root,
-      ).includes('undeclared external import'),
     );
 });
 test('built public entry has no accidental runtime implementation', () =>

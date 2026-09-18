@@ -82,8 +82,8 @@ def decode(data):
     return value
 
 
-def request_valid(v):
-    schema = SCHEMA['adminRequest']
+def request_valid(v, version=1):
+    schema = SCHEMA['adminRequest' if version == 1 else 'adminRequestV2']
     if type(v) is not dict or set(v) != set(schema['required']):
         return False
     for key, rule in schema['properties'].items():
@@ -122,12 +122,15 @@ class Supervisor:
             os.fsync(f.fileno())
         os.fsync(self.directory)
         self.selector = selectors.DefaultSelector()
-        self.server = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-        self.server.bind('/proc/self/fd/%d/admin.sock' % self.directory)
-        os.chmod('admin.sock', 0o600, dir_fd=self.directory, follow_symlinks=False)
-        self.server.listen(LIMITS['adminConnections'])
-        self.server.setblocking(False)
-        self.selector.register(self.server, selectors.EVENT_READ, 'accept')
+        self.servers = {}
+        for version, name in ((1, 'admin.sock'), (2, 'admin-v2.sock')):
+            server = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+            server.bind('/proc/self/fd/%d/%s' % (self.directory, name))
+            os.chmod(name, 0o600, dir_fd=self.directory, follow_symlinks=False)
+            server.listen(LIMITS['adminConnections'])
+            server.setblocking(False)
+            self.servers[server] = version
+            self.selector.register(server, selectors.EVENT_READ, 'accept')
         self.node, self.root_path, self.inputs = node, root, inputs
         self.clients = {}
         self.pending = None
@@ -198,7 +201,7 @@ class Supervisor:
         self.clean_start = False
         if self.starting:
             # Successor validation did not establish accepted identity. No invented
-            # frozen sequence/digest envelope; preserve the known contract gap.
+            # selection envelope. V2 reports uncertified disposition; v1 closes.
             self.snapshot = None
         self.deadline = None
         self.request_deadline = None
@@ -227,14 +230,21 @@ class Supervisor:
     def reply(self, client, request, code):
         if client is None or client not in self.clients:
             return
-        if self.snapshot is None:
-            # Frozen response has no unknown-selection representation. Do not invent
-            # sequence=0/null when publication may have occurred. Close fail-closed.
+        version = self.clients[client]['version']
+        if self.snapshot is None and version == 1:
+            # V1 remains closed and unchanged; never substitute zero or stale data.
             self.close_client(client)
             return
-        value = {'schemaVersion': 'alica.cell-admin-response/v1',
+        # Successor validation is in flight: its cached prior selection is not a
+        # fresh certificate. Keep it internally for comparison, not in v2 envelopes.
+        selection = None if version == 2 and self.starting else self.snapshot
+        if selection is None:
+            # This is a knowledge disposition, not a claim a disposer failed.
+            selection = {'sequence': None, 'acceptedDigest': None, 'status': 'NEEDS_OPERATOR'}
+            code = 'CLEANUP_UNCERTAIN'
+        value = {'schemaVersion': 'alica.cell-admin-response/v%d' % version,
                  'requestId': request['requestId'], 'incarnation': self.incarnation,
-                 **self.snapshot, 'code': code}
+                 **selection, 'code': code}
         if code != 'OK' and not self.reaped:
             # A cached observation is not a new public Kernel liveness report.
             value['status'] = 'NEEDS_OPERATOR'
@@ -256,7 +266,7 @@ class Supervisor:
         if request['incarnation'] != self.incarnation:
             self.reply(client, request, 'DENIED')
         elif self.snapshot is None:
-            self.close_client(client)
+            self.reply(client, request, 'CLEANUP_UNCERTAIN')
         elif request['expectedSequence'] != self.snapshot['sequence']:
             self.reply(client, request, 'CONFLICT')
         elif request['operation'] not in ('status', 'stop', 'start'):
@@ -362,13 +372,14 @@ class Supervisor:
                     else:
                         self.fail()
                 elif kind == 'accept':
-                    client, _ = self.server.accept()
+                    client, _ = obj.accept()
                     _, uid, _ = struct.unpack('3i', client.getsockopt(socket.SOL_SOCKET, socket.SO_PEERCRED, 12))
                     if uid != os.getuid() or len(self.clients) >= LIMITS['adminConnections']:
                         client.close()
                         continue
                     client.setblocking(False)
                     self.clients[client] = {'data': b'', 'output': None,
+                                            'version': self.servers[obj],
                                             'end': time.monotonic() + LIMITS['adminTimeoutMs'] / 1000}
                     self.selector.register(client, selectors.EVENT_READ, 'client')
                 elif kind == 'owner':
@@ -392,6 +403,11 @@ class Supervisor:
                         self.fail()
                 elif isinstance(obj, socket.socket) and obj in self.clients:
                     state = self.clients[obj]
+                    # Recheck at the event itself, including EOF/output. Never admit
+                    # a mutation on an expired connection from a stale select batch.
+                    if now >= state['end']:
+                        self.close_client(obj)
+                        continue
                     try:
                         if state['output'] is not None:
                             n = obj.send(state['output'])
@@ -413,8 +429,11 @@ class Supervisor:
                             if len(buf) < 4 or len(buf) != length + 4:
                                 raise ValueError('INVALID')
                             request = decode(buf[4:])
-                            if not request_valid(request):
+                            if not request_valid(request, state['version']):
                                 raise ValueError('INVALID')
+                            if time.monotonic() >= state['end']:
+                                self.close_client(obj)
+                                continue
                             self.selector.unregister(obj)
                             self.dispatch(obj, request)
                     except (ValueError, OSError, KeyError, TypeError, RecursionError):

@@ -1,0 +1,187 @@
+tools/g7-admin.mjs 76ms
+tests/g7/admin-amendment.test.mjs 87ms
+tests/g7/admin-boundary.mjs 8ms
+
+> alica-v2@0.0.0 test:g7-contracts
+> PYTHONPATH=.tools/python python3 -S tests/g7/test_contract_model.py
+
+test_admin_v2_clone_and_pairs (__main__.Contracts.test_admin_v2_clone_and_pairs) ... ok
+test_all_objects_closed (__main__.Contracts.test_all_objects_closed) ... ok
+test_chain_skips_and_forks (__main__.Contracts.test_chain_skips_and_forks) ... ok
+test_checksum_tampering (__main__.Contracts.test_checksum_tampering) ... ok
+test_commit_only_after_activation (__main__.Contracts.test_commit_only_after_activation) ... ok
+test_crash_model_after_publication_does_not_claim_running (__main__.Contracts.test_crash_model_after_publication_does_not_claim_running) ... ok
+test_crash_model_before_publication_preserves_prior_selection (__main__.Contracts.test_crash_model_before_publication_preserves_prior_selection) ... ok
+test_crash_model_corrupt_selection_fails_closed (__main__.Contracts.test_crash_model_corrupt_selection_fails_closed) ... ok
+test_crash_model_trust_and_reap_required (__main__.Contracts.test_crash_model_trust_and_reap_required) ... ok
+test_edge_ABORTED_ABORTED (__main__.Contracts.test_edge_ABORTED_ABORTED) ... ok
+test_edge_ABORTED_ACTIVATING (__main__.Contracts.test_edge_ABORTED_ACTIVATING) ... ok
+test_edge_ABORTED_COMMITTED (__main__.Contracts.test_edge_ABORTED_COMMITTED) ... ok
+test_edge_ABORTED_NEEDS_OPERATOR (__main__.Contracts.test_edge_ABORTED_NEEDS_OPERATOR) ... ok
+test_edge_ABORTED_RECOVERING (__main__.Contracts.test_edge_ABORTED_RECOVERING) ... ok
+test_edge_ABORTED_STAGING (__main__.Contracts.test_edge_ABORTED_STAGING) ... ok
+test_edge_ABORTED_VERIFIED (__main__.Contracts.test_edge_ABORTED_VERIFIED) ... ok
+test_edge_ACTIVATING_ABORTED (__main__.Contracts.test_edge_ACTIVATING_ABORTED) ... ok
+test_edge_ACTIVATING_ACTIVATING (__main__.Contracts.test_edge_ACTIVATING_ACTIVATING) ... ok
+test_edge_ACTIVATING_COMMITTED (__main__.Contracts.test_edge_ACTIVATING_COMMITTED) ... ok
+test_edge_ACTIVATING_NEEDS_OPERATOR (__main__.Contracts.test_edge_ACTIVATING_NEEDS_OPERATOR) ... ok
+test_edge_ACTIVATING_RECOVERING (__main__.Contracts.test_edge_ACTIVATING_RECOVERING) ... ok
+test_edge_ACTIVATING_STAGING (__main__.Contracts.test_edge_ACTIVATING_STAGING) ... ok
+test_edge_ACTIVATING_VERIFIED (__main__.Contracts.test_edge_ACTIVATING_VERIFIED) ... ok
+test_edge_COMMITTED_ABORTED (__main__.Contracts.test_edge_COMMITTED_ABORTED) ... ok
+test_edge_COMMITTED_ACTIVATING (__main__.Contracts.test_edge_COMMITTED_ACTIVATING) ... ok
+test_edge_COMMITTED_COMMITTED (__main__.Contracts.test_edge_COMMITTED_COMMITTED) ... ok
+test_edge_COMMITTED_NEEDS_OPERATOR (__main__.Contracts.test_edge_COMMITTED_NEEDS_OPERATOR) ... ok
+test_edge_COMMITTED_RECOVERING (__main__.Contracts.test_edge_COMMITTED_RECOVERING) ... ok
+test_edge_COMMITTED_STAGING (__main__.Contracts.test_edge_COMMITTED_STAGING) ... ok
+test_edge_COMMITTED_VERIFIED (__main__.Contracts.test_edge_COMMITTED_VERIFIED) ... ok
+test_edge_NEEDS_OPERATOR_ABORTED (__main__.Contracts.test_edge_NEEDS_OPERATOR_ABORTED) ... ok
+test_edge_NEEDS_OPERATOR_ACTIVATING (__main__.Contracts.test_edge_NEEDS_OPERATOR_ACTIVATING) ... ok
+test_edge_NEEDS_OPERATOR_COMMITTED (__main__.Contracts.test_edge_NEEDS_OPERATOR_COMMITTED) ... ok
+test_edge_NEEDS_OPERATOR_NEEDS_OPERATOR (__main__.Contracts.test_edge_NEEDS_OPERATOR_NEEDS_OPERATOR) ... ok
+test_edge_NEEDS_OPERATOR_RECOVERING (__main__.Contracts.test_edge_NEEDS_OPERATOR_RECOVERING) ... ok
+test_edge_NEEDS_OPERATOR_STAGING (__main__.Contracts.test_edge_NEEDS_OPERATOR_STAGING) ... ok
+test_edge_NEEDS_OPERATOR_VERIFIED (__main__.Contracts.test_edge_NEEDS_OPERATOR_VERIFIED) ... ok
+test_edge_RECOVERING_ABORTED (__main__.Contracts.test_edge_RECOVERING_ABORTED) ... ok
+test_edge_RECOVERING_ACTIVATING (__main__.Contracts.test_edge_RECOVERING_ACTIVATING) ... ok
+test_edge_RECOVERING_COMMITTED (__main__.Contracts.test_edge_RECOVERING_COMMITTED) ... ok
+test_edge_RECOVERING_NEEDS_OPERATOR (__main__.Contracts.test_edge_RECOVERING_NEEDS_OPERATOR) ... ok
+test_edge_RECOVERING_RECOVERING (__main__.Contracts.test_edge_RECOVERING_RECOVERING) ... ok
+test_edge_RECOVERING_STAGING (__main__.Contracts.test_edge_RECOVERING_STAGING) ... ok
+test_edge_RECOVERING_VERIFIED (__main__.Contracts.test_edge_RECOVERING_VERIFIED) ... ok
+test_edge_STAGING_ABORTED (__main__.Contracts.test_edge_STAGING_ABORTED) ... ok
+test_edge_STAGING_ACTIVATING (__main__.Contracts.test_edge_STAGING_ACTIVATING) ... ok
+test_edge_STAGING_COMMITTED (__main__.Contracts.test_edge_STAGING_COMMITTED) ... ok
+test_edge_STAGING_NEEDS_OPERATOR (__main__.Contracts.test_edge_STAGING_NEEDS_OPERATOR) ... ok
+test_edge_STAGING_RECOVERING (__main__.Contracts.test_edge_STAGING_RECOVERING) ... ok
+test_edge_STAGING_STAGING (__main__.Contracts.test_edge_STAGING_STAGING) ... ok
+test_edge_STAGING_VERIFIED (__main__.Contracts.test_edge_STAGING_VERIFIED) ... ok
+test_edge_VERIFIED_ABORTED (__main__.Contracts.test_edge_VERIFIED_ABORTED) ... ok
+test_edge_VERIFIED_ACTIVATING (__main__.Contracts.test_edge_VERIFIED_ACTIVATING) ... ok
+test_edge_VERIFIED_COMMITTED (__main__.Contracts.test_edge_VERIFIED_COMMITTED) ... ok
+test_edge_VERIFIED_NEEDS_OPERATOR (__main__.Contracts.test_edge_VERIFIED_NEEDS_OPERATOR) ... ok
+test_edge_VERIFIED_RECOVERING (__main__.Contracts.test_edge_VERIFIED_RECOVERING) ... ok
+test_edge_VERIFIED_STAGING (__main__.Contracts.test_edge_VERIFIED_STAGING) ... ok
+test_edge_VERIFIED_VERIFIED (__main__.Contracts.test_edge_VERIFIED_VERIFIED) ... ok
+test_frozen_bundle_path_subset (__main__.Contracts.test_frozen_bundle_path_subset) ... ok
+test_missing_0_cellId (__main__.Contracts.test_missing_0_cellId) ... ok
+test_missing_0_release (__main__.Contracts.test_missing_0_release) ... ok
+test_missing_0_schemaVersion (__main__.Contracts.test_missing_0_schemaVersion) ... ok
+test_missing_0_sequence (__main__.Contracts.test_missing_0_sequence) ... ok
+test_missing_0_transactionId (__main__.Contracts.test_missing_0_transactionId) ... ok
+test_missing_0_trustFloor (__main__.Contracts.test_missing_0_trustFloor) ... ok
+test_missing_1_checksum (__main__.Contracts.test_missing_1_checksum) ... ok
+test_missing_1_record (__main__.Contracts.test_missing_1_record) ... ok
+test_missing_2_capabilities (__main__.Contracts.test_missing_2_capabilities) ... ok
+test_missing_2_events (__main__.Contracts.test_missing_2_events) ... ok
+test_missing_2_profileDigest (__main__.Contracts.test_missing_2_profileDigest) ... ok
+test_missing_2_schemaVersion (__main__.Contracts.test_missing_2_schemaVersion) ... ok
+test_missing_2_secrets (__main__.Contracts.test_missing_2_secrets) ... ok
+test_missing_3_expectedSequence (__main__.Contracts.test_missing_3_expectedSequence) ... ok
+test_missing_3_incarnation (__main__.Contracts.test_missing_3_incarnation) ... ok
+test_missing_3_operation (__main__.Contracts.test_missing_3_operation) ... ok
+test_missing_3_requestId (__main__.Contracts.test_missing_3_requestId) ... ok
+test_missing_3_schemaVersion (__main__.Contracts.test_missing_3_schemaVersion) ... ok
+test_missing_4_acceptedDigest (__main__.Contracts.test_missing_4_acceptedDigest) ... ok
+test_missing_4_code (__main__.Contracts.test_missing_4_code) ... ok
+test_missing_4_incarnation (__main__.Contracts.test_missing_4_incarnation) ... ok
+test_missing_4_requestId (__main__.Contracts.test_missing_4_requestId) ... ok
+test_missing_4_schemaVersion (__main__.Contracts.test_missing_4_schemaVersion) ... ok
+test_missing_4_sequence (__main__.Contracts.test_missing_4_sequence) ... ok
+test_missing_4_status (__main__.Contracts.test_missing_4_status) ... ok
+test_missing_5_accepted (__main__.Contracts.test_missing_5_accepted) ... ok
+test_missing_5_backupId (__main__.Contracts.test_missing_5_backupId) ... ok
+test_missing_5_cellId (__main__.Contracts.test_missing_5_cellId) ... ok
+test_missing_5_createdAtMs (__main__.Contracts.test_missing_5_createdAtMs) ... ok
+test_missing_5_files (__main__.Contracts.test_missing_5_files) ... ok
+test_missing_5_format (__main__.Contracts.test_missing_5_format) ... ok
+test_missing_5_recoveryKeyId (__main__.Contracts.test_missing_5_recoveryKeyId) ... ok
+test_missing_5_schemaVersion (__main__.Contracts.test_missing_5_schemaVersion) ... ok
+test_missing_5_trustFloor (__main__.Contracts.test_missing_5_trustFloor) ... ok
+test_missing_6_approvedAtMs (__main__.Contracts.test_missing_6_approvedAtMs) ... ok
+test_missing_6_authorizationDigest (__main__.Contracts.test_missing_6_authorizationDigest) ... ok
+test_missing_6_backupCipherDigest (__main__.Contracts.test_missing_6_backupCipherDigest) ... ok
+test_missing_6_cellId (__main__.Contracts.test_missing_6_cellId) ... ok
+test_missing_6_minimumFloor (__main__.Contracts.test_missing_6_minimumFloor) ... ok
+test_missing_6_schemaVersion (__main__.Contracts.test_missing_6_schemaVersion) ... ok
+test_missing_6_sourceStopped (__main__.Contracts.test_missing_6_sourceStopped) ... ok
+test_restore_requires_source_stopped (__main__.Contracts.test_restore_requires_source_stopped) ... ok
+test_schema_and_generated_files_match (__main__.Contracts.test_schema_and_generated_files_match) ... ok
+test_secret_and_event_grants_are_not_implicitly_supported (__main__.Contracts.test_secret_and_event_grants_are_not_implicitly_supported) ... ok
+test_trust_never_rolls_back (__main__.Contracts.test_trust_never_rolls_back) ... ok
+test_uncertain_cleanup_cannot_be_successful_abort (__main__.Contracts.test_uncertain_cleanup_cannot_be_successful_abort) ... ok
+test_unknown_0 (__main__.Contracts.test_unknown_0) ... ok
+test_unknown_1 (__main__.Contracts.test_unknown_1) ... ok
+test_unknown_2 (__main__.Contracts.test_unknown_2) ... ok
+test_unknown_3 (__main__.Contracts.test_unknown_3) ... ok
+test_unknown_4 (__main__.Contracts.test_unknown_4) ... ok
+test_unknown_5 (__main__.Contracts.test_unknown_5) ... ok
+test_unknown_6 (__main__.Contracts.test_unknown_6) ... ok
+test_unknown_nested_authority_is_rejected (__main__.Contracts.test_unknown_nested_authority_is_rejected) ... ok
+test_valid_0 (__main__.Contracts.test_valid_0) ... ok
+test_valid_1 (__main__.Contracts.test_valid_1) ... ok
+test_valid_2 (__main__.Contracts.test_valid_2) ... ok
+test_valid_3 (__main__.Contracts.test_valid_3) ... ok
+test_valid_4 (__main__.Contracts.test_valid_4) ... ok
+test_valid_5 (__main__.Contracts.test_valid_5) ... ok
+test_valid_6 (__main__.Contracts.test_valid_6) ... ok
+
+----------------------------------------------------------------------
+Ran 120 tests in 0.292s
+
+OK
+✔ A1+B1 schemas: closed v1, exact cloned request, constrained v2 pairs and strict client version (41.14794ms)
+✔ A1: every header/body split, coalesced/trailing frames, strict parser, exact ceiling, credentials/modes and wrong endpoints (3445.031471ms)
+✔ A1: delayed trailing byte/second frame and unsealed start/stop have no pre-EOF effects (6243.276824ms)
+actual admission deadline observations ms: [
+  30000.845617,
+  30000.855206,
+  30000.727686,
+  30050.765238,
+  30051.009677,
+  30050.909428999996,
+  30050.745198000004,
+  30050.604583
+]
+✔ A1: aggregate eight admitted sockets, actual 30000ms absolute unsealed mutation deadlines; bytes/EOF never reset (32696.719633ms)
+pidfd receipts: HELD
+EXIT boundary: { pid: 151987, boundary: 'after-file-fsync' } prior: false
+✔ B1: held pidfd, stopped/killed actual accepted after-file-fsync, first publication (2587.819747ms)
+pidfd receipts: HELD
+EXIT boundary: { pid: 152017, boundary: 'before-rename' } prior: false
+✔ B1: held pidfd, stopped/killed actual accepted before-rename, first publication (2598.260512ms)
+pidfd receipts: HELD
+EXIT boundary: { pid: 152046, boundary: 'after-rename' } prior: false
+✔ B1: held pidfd, stopped/killed actual accepted after-rename, first publication (2601.814836ms)
+pidfd receipts: HELD
+EXIT boundary: { pid: 152075, boundary: 'before-directory-fsync' } prior: false
+✔ B1: held pidfd, stopped/killed actual accepted before-directory-fsync, first publication (2555.292428ms)
+pidfd receipts: HELD
+EXIT boundary: { pid: 152104, boundary: 'after-directory-fsync' } prior: false
+✔ B1: held pidfd, stopped/killed actual accepted after-directory-fsync, first publication (2551.406767ms)
+pidfd receipts: HELD
+EXIT boundary: { pid: 152158, boundary: 'after-file-fsync' } prior: true
+✔ B1: held pidfd, stopped/killed actual accepted after-file-fsync, prior bytes successor fault (3185.532742ms)
+pidfd receipts: HELD
+EXIT boundary: { pid: 152194, boundary: 'before-rename' } prior: true
+✔ B1: held pidfd, stopped/killed actual accepted before-rename, prior bytes successor fault (3128.67838ms)
+pidfd receipts: HELD
+EXIT boundary: { pid: 152230, boundary: 'after-rename' } prior: true
+✔ B1: held pidfd, stopped/killed actual accepted after-rename, prior bytes successor fault (3112.098438ms)
+pidfd receipts: HELD
+EXIT boundary: { pid: 152266, boundary: 'before-directory-fsync' } prior: true
+✔ B1: held pidfd, stopped/killed actual accepted before-directory-fsync, prior bytes successor fault (3079.64834ms)
+pidfd receipts: HELD
+EXIT boundary: { pid: 152302, boundary: 'after-directory-fsync' } prior: true
+✔ B1: held pidfd, stopped/killed actual accepted after-directory-fsync, prior bytes successor fault (3140.513002ms)
+✔ B1: successor missing accepted data preserves original, no stale response/replay (3060.743449ms)
+✔ B1: successor corrupt accepted data preserves original, no stale response/replay (3044.155062ms)
+✔ B1 client: rejects wrong version/binding, duplicate/trailing response and never connects fallback/replays (6.302122ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 77455.493779

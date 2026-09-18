@@ -35,6 +35,49 @@ class Contracts(unittest.TestCase):
         self.assertEqual(json.loads((m.DRAFT/'contracts.schema.json').read_text()),SCHEMA)
         self.assertEqual(json.loads((m.DRAFT/'limits.json').read_text()),m.LIMITS)
 
+    def test_admin_v2_clone_and_pairs(self):
+        request = copy.deepcopy(SCHEMA['$defs']['adminRequest'])
+        request['properties']['schemaVersion']['const'] = 'alica.cell-admin-request/v2'
+        self.assertEqual(request, SCHEMA['$defs']['adminRequestV2'])
+        base = dict(FIXTURES[4], schemaVersion='alica.cell-admin-response/v2')
+        for sequence, digest_value in [(0, None), (1, D), (m.MAX, D), (None, None)]:
+            value = dict(base, sequence=sequence, acceptedDigest=digest_value)
+            if sequence is None: value.update(status='NEEDS_OPERATOR', code='CLEANUP_UNCERTAIN')
+            V.validate(value)
+            for key in value:
+                missing = dict(value); del missing[key]
+                self.assertFalse(V.is_valid(missing), key)
+            self.assertFalse(V.is_valid(dict(value, extra=True)))
+        for sequence, digest_value in [(None, D), (0, D), (1, None), (-1, D), (m.MAX+1, D), (1.5, D), (True, D)]:
+            self.assertFalse(V.is_valid(dict(base, sequence=sequence, acceptedDigest=digest_value)))
+        for status in ['STOPPED', 'RUNNING', 'FAILED']:
+            self.assertFalse(V.is_valid(dict(base, sequence=None, acceptedDigest=None, status=status, code='CLEANUP_UNCERTAIN')))
+        for code in ['OK', 'CONFLICT', 'DENIED', 'INVALID', 'TIMEOUT']:
+            self.assertFalse(V.is_valid(dict(base, sequence=None, acceptedDigest=None, status='NEEDS_OPERATOR', code=code)))
+        self.assertFalse(V.is_valid(dict(FIXTURES[4], sequence=None, acceptedDigest=None)))
+        self.assertFalse(V.is_valid(dict(FIXTURES[4], selectionKnown=False)))
+
+    def test_real_admin_parser_bounds_and_endpoint_validation(self):
+        spec = importlib.util.spec_from_file_location('admin_server', ROOT / 'tools/g7-supervisor.py')
+        assert spec and spec.loader
+        server = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(server)
+        for version in [1, 2]:
+            request = dict(FIXTURES[3], schemaVersion=f'alica.cell-admin-request/v{version}')
+            self.assertTrue(server.request_valid(server.decode(json.dumps(request).encode()), version))
+            self.assertFalse(server.request_valid(request, 3-version))
+            for sequence in [0, m.MAX]:
+                self.assertTrue(server.request_valid(dict(request, expectedSequence=sequence), version))
+            for sequence in [-1, m.MAX+1, True, None, 1.5]:
+                self.assertFalse(server.request_valid(dict(request, expectedSequence=sequence), version))
+        self.assertEqual(server.decode(('['*32+'0'+']'*32).encode()), json.loads('['*32+'0'+']'*32))
+        self.assertEqual(server.decode('"é"'.encode()), 'é')
+        self.assertEqual(server.decode(b'1e0'), 1)
+        self.assertEqual(server.decode(str(m.MAX).encode()), m.MAX)
+        for body in [b'{"a":1,"a":2}', ('['*33+'0'+']'*33).encode(), b'"\\ud800"', bytes([255]), b'1.0000000000000001', b'1e999999999', b'9007199254740992', b'NaN', b'Infinity', b'{}{}']:
+            with self.assertRaises((ValueError, UnicodeError), msg=repr(body)):
+                server.decode(body)
+
     def test_all_objects_closed(self):
         def walk(v):
             if isinstance(v,dict):
