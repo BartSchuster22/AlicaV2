@@ -1,0 +1,5 @@
+    PID    PPID     ELAPSED COMMAND
+ 290415       1       00:00 /usr/lib/systemd/systemd --user
+ 290416  290415       00:00 (sd-pam)
+ 290565  290520       00:00 sshd: alica-dev@notty
+ 290566  290565       00:00 ps -u alica-dev -o pid,ppid,etime,args

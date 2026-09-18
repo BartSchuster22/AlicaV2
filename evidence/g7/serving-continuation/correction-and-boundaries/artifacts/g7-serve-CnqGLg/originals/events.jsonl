@@ -1,0 +1,21 @@
+{"event":"send","pid":259925,"packet":"GO"}
+{"event":"packet","pid":259925,"child":259932,"packet":"SEALING"}
+{"event":"send","pid":259925,"packet":"SEAL"}
+{"event":"packet","pid":259925,"child":259932,"packet":"CLEAN {\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:b592bb5ee30df9e77274da1a66d812533abcaaf65a4eada1de729e31604212f7\"}"}
+{"event":"send","pid":259925,"packet":"ACK"}
+{"event":"send","pid":259925,"packet":"CLEANUP"}
+{"event":"packet","pid":259925,"child":259932,"packet":"ACK"}
+{"event":"send","pid":259925,"packet":"RESUME"}
+{"event":"packet","pid":259925,"child":259932,"packet":"ACK"}
+{"event":"send","pid":259925,"packet":"CLEANUP"}
+{"event":"packet","pid":259925,"child":259932,"packet":"ACK"}
+{"event":"send","pid":259925,"packet":"RESUME"}
+{"event":"packet","pid":259925,"child":259932,"packet":"ACK"}
+{"event":"send","pid":259925,"packet":"SERVE {\"inputs\":\"/tmp/g7-serve-CnqGLg/input.json\",\"selection\":{\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:b592bb5ee30df9e77274da1a66d812533abcaaf65a4eada1de729e31604212f7\"}}"}
+{"event": "fence-before-retire-link", "pid": 259959}
+{"event": "fence-after-retire-link", "pid": 259959}
+{"event": "fence-after-retire-fsync", "pid": 259959}
+{"event": "fence-after-incarnation-unlink", "pid": 259959}
+{"event": "fence-after-v1-unlink", "pid": 259959}
+{"event": "fence-after-v2-unlink", "pid": 259959}
+{"event": "fence-after-new-incarnation-fsync", "pid": 259959}

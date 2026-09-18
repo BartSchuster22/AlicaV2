@@ -1,0 +1,18 @@
+{"event":"send","pid":259796,"packet":"GO"}
+{"event":"packet","pid":259796,"child":259803,"packet":"SEALING"}
+{"event":"send","pid":259796,"packet":"SEAL"}
+{"event":"packet","pid":259796,"child":259803,"packet":"CLEAN {\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:710322e1a86575f6021185080ddc251e0a4585d94537b279beaf910d5cacc012\"}"}
+{"event":"send","pid":259796,"packet":"ACK"}
+{"event":"send","pid":259796,"packet":"CLEANUP"}
+{"event":"packet","pid":259796,"child":259803,"packet":"ACK"}
+{"event":"send","pid":259796,"packet":"RESUME"}
+{"event":"packet","pid":259796,"child":259803,"packet":"ACK"}
+{"event":"send","pid":259796,"packet":"CLEANUP"}
+{"event":"packet","pid":259796,"child":259803,"packet":"ACK"}
+{"event":"send","pid":259796,"packet":"RESUME"}
+{"event":"packet","pid":259796,"child":259803,"packet":"ACK"}
+{"event":"send","pid":259796,"packet":"SERVE {\"inputs\":\"/tmp/g7-serve-eVGMT3/input.json\",\"selection\":{\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:710322e1a86575f6021185080ddc251e0a4585d94537b279beaf910d5cacc012\"}}"}
+{"event": "fence-before-retire-link", "pid": 259830}
+{"event": "fence-after-retire-link", "pid": 259830}
+{"event": "fence-after-retire-fsync", "pid": 259830}
+{"event": "fence-after-incarnation-unlink", "pid": 259830}

@@ -112,12 +112,15 @@ class Supervisor:
         # Detached custody has no release channel or offline transition.
         return False
 
-    def __init__(self, node, root, inputs):
-        self.root = self.acquire_root(root)
-        # mkdir is exclusive. Never unlink a stale socket/marker based on a PID.
+    def prepare_directory(self):
+        # Detached custody always creates exclusively; no adoption API.
         os.mkdir('supervision', 0o700, dir_fd=self.root)
         os.fsync(self.root)
-        self.directory = os.open('supervision', FLAGS, dir_fd=self.root)
+        return os.open('supervision', FLAGS, dir_fd=self.root)
+
+    def __init__(self, node, root, inputs):
+        self.root = self.acquire_root(root)
+        self.directory = self.prepare_directory()
         self.incarnation = str(uuid.uuid4())
         record = {'incarnation': self.incarnation, 'supervisorPid': os.getpid(),
                   'startMonotonicNs': time.monotonic_ns(),

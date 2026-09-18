@@ -1,0 +1,17 @@
+tools/g7-cell.mjs 189ms (unchanged)
+tools/g7-owned-bridge.mjs 17ms (unchanged)
+tools/g7-owned-cli.mjs 10ms (unchanged)
+tests/g7/serving-continuation.test.mjs 83ms
+tests/g7/serving-driver.mjs 9ms
+tests/g7/serving-faults.mjs 17ms
+✔ repeated maintenance real target denies bad-target-grants (6400.315413ms)
+✔ independent unchanged watchdog contains actual repeated late-clean (35803.572272ms)
+✔ actual successor runtime death before its readiness snapshot cannot certify serving (5954.06667ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 48518.056458

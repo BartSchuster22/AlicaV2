@@ -1,0 +1,1 @@
+PYTHONPATH=.tools/python G7_SERVING_EVIDENCE=evidence/g7/serving-continuation/adversarial-1/artifacts node --experimental-vm-modules --test --test-name-pattern="rechecks|denies|fails closed|uncertain commit" tests/g7/serving-continuation.test.mjs

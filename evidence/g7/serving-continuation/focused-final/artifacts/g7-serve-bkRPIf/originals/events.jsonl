@@ -1,0 +1,20 @@
+{"event":"send","pid":274660,"monotonicNs":"169294976422199","packet":"GO"}
+{"event":"packet","pid":274660,"monotonicNs":"169297519331001","child":274667,"packet":"SEALING"}
+{"event":"send","pid":274660,"monotonicNs":"169297519453310","packet":"SEAL"}
+{"event":"packet","pid":274660,"monotonicNs":"169297748213698","child":274667,"packet":"CLEAN {\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:dc829b253349d4b371b49d7be92b92a5ad85c5fea2ebe9a6ec2ef7ba17d48988\"}"}
+{"event":"send","pid":274660,"monotonicNs":"169297752026967","packet":"ACK"}
+{"event":"send","pid":274660,"monotonicNs":"169297869538035","packet":"CLEANUP"}
+{"event":"packet","pid":274660,"monotonicNs":"169297874837402","child":274667,"packet":"ACK"}
+{"event":"send","pid":274660,"monotonicNs":"169297875939105","packet":"RESUME"}
+{"event":"packet","pid":274660,"monotonicNs":"169297881302042","child":274667,"packet":"ACK"}
+{"event":"send","pid":274660,"monotonicNs":"169297925367921","packet":"CLEANUP"}
+{"event":"packet","pid":274660,"monotonicNs":"169297930693176","child":274667,"packet":"ACK"}
+{"event":"send","pid":274660,"monotonicNs":"169297931156498","packet":"RESUME"}
+{"event":"packet","pid":274660,"monotonicNs":"169297936351840","child":274667,"packet":"ACK"}
+{"event":"send","pid":274660,"monotonicNs":"169297940334808","packet":"SERVE {\"inputs\":\"/tmp/g7-serve-bkRPIf/input.json\",\"selection\":{\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:dc829b253349d4b371b49d7be92b92a5ad85c5fea2ebe9a6ec2ef7ba17d48988\"}}"}
+{"event":"successor","pid":274738,"monotonicNs":"169298218919294","parent":274737}
+{"event":"successor-activation","pid":274738,"monotonicNs":"169298315748687"}
+{"event":"packet","pid":274660,"monotonicNs":"169300212416677","child":274667,"packet":"SERVING"}
+{"event":"send","pid":274660,"monotonicNs":"169300219131959","packet":"SEAL"}
+{"event":"packet","pid":274660,"monotonicNs":"169300444939708","child":274667,"packet":"CLEAN {\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:dc829b253349d4b371b49d7be92b92a5ad85c5fea2ebe9a6ec2ef7ba17d48988\"}"}
+{"event":"send","pid":274660,"monotonicNs":"169300447588214","packet":"ACK"}

@@ -5,7 +5,8 @@ entry inherits a lock/channel but must still install, seal and normally reap the
 real owner and custodian: no descriptor is a supplied clean certificate.
 The original CLI remains read-only stopped verification. The inception-child
 path supports the continuous maintenance parent's reinstall/upgrade operation.
-Supervision residue is deliberately never retired, even on success.
+The original supervision fence is retained. Lexically owned successors archive
+normally reaped predecessor incarnation bytes before rebinding endpoints.
 """
 import ctypes
 import importlib.util
@@ -15,7 +16,9 @@ from pathlib import Path
 import select
 import signal
 import socket
+import stat
 import struct
+import uuid
 import subprocess
 import sys
 import time
@@ -128,9 +131,49 @@ def run(node, root, inputs, inception=None):
         raise RuntimeError('existing custody is not owned')
     control, child_control = pair()
     creator = os.getpid()
+    continuation = None
 
     # The subclass/captured authority is minted here, not from CLI/API fd inputs.
     class OwnedCustodian(base.Supervisor):
+        def prepare_directory(self):
+            if continuation is None:
+                return super().prepare_directory()
+            # Reached only after our exact predecessor custodian AND owner have
+            # normally reaped, and a successful maintenance parent requests serving.
+            # Keep the original fence directory/inode. Preserve every incarnation;
+            # only our reaped predecessor's socket names are retired, never a fence.
+            directory = base.private_root(root + '/supervision')
+            try:
+                for name in ('admin.sock', 'admin-v2.sock'):
+                    s = os.stat(name, dir_fd=directory, follow_symlinks=False)
+                    if not stat.S_ISSOCK(s.st_mode) or s.st_uid != os.getuid() or stat.S_IMODE(s.st_mode) != 0o600:
+                        raise RuntimeError('changed predecessor endpoint')
+                fd = os.open('incarnation.json', os.O_RDONLY | os.O_NOFOLLOW | os.O_CLOEXEC, dir_fd=directory)
+                try:
+                    s = os.fstat(fd)
+                    if not stat.S_ISREG(s.st_mode) or s.st_uid != os.getuid() or stat.S_IMODE(s.st_mode) != 0o600 or s.st_nlink != 1:
+                        raise RuntimeError('changed predecessor incarnation')
+                finally:
+                    os.close(fd)
+                os.link('incarnation.json', 'retired-' + str(uuid.uuid4()) + '.json',
+                        src_dir_fd=directory, dst_dir_fd=directory, follow_symlinks=False)
+                os.fsync(directory)
+                os.unlink('incarnation.json', dir_fd=directory)
+                for name in ('admin.sock', 'admin-v2.sock'):
+                    os.unlink(name, dir_fd=directory)
+                os.fsync(directory)
+                return directory
+            except BaseException:
+                os.close(directory)
+                raise
+
+        def spawn_owner(self, accepted_digest=None):
+            if continuation is not None and self.snapshot is None:
+                self.snapshot = continuation
+                self.starting = True
+                accepted_digest = continuation['acceptedDigest']
+            super().spawn_owner(accepted_digest)
+
         def acquire_root(self, path):
             if os.getppid() != creator:
                 raise RuntimeError('not owned from inception')
@@ -203,38 +246,36 @@ def run(node, root, inputs, inception=None):
                                            'expectedSequence': self.snapshot['sequence'],
                                            'operation': 'stop'})
             elif not self.ready_sent and self.snapshot is not None and self.phase == 'idle':
+                # A genuine public-Kernel FAILED observation is not readiness.
+                # Admin may truthfully report FAILED, but private serving cannot.
+                if self.snapshot['status'] != 'RUNNING':
+                    self.fail()
+                    return False
                 send(child_control, b'READY')
                 self.ready_sent = True
             return False
 
-    pid = os.fork()
-    if pid == 0:
-        try:
-            control.close()
-            os.close(parent_fd)
-            if inception is not None:
-                outer.close()
-            guard_parent(creator)
-            # Parent holds a pidfd before allowing any Cell effects.
-            if until(child_control, creator, os.pidfd_open(creator),
-                     time.monotonic() + LIMITS['adminTimeoutMs'] / 1000) != b'GO':
-                raise RuntimeError('invalid inception')
-            OwnedCustodian().run()
-            os._exit(0)
-        except BaseException:
-            os._exit(1)
-    child_control.close()
-    pidfd = os.pidfd_open(pid)  # Unreaped exact child cannot have its PID recycled.
-    try:
-        inception_end = time.monotonic() + LIMITS['verifyTimeoutMs'] / 1000
-        send(control, b'GO')
-        if until(control, pid, pidfd, inception_end) != b'READY':
-            raise RuntimeError('not ready')
-        if inception is not None:
-            send(outer, b'SEALING')
-            if until(outer, parent, parent_fd, inception_end) != b'SEAL':
-                raise RuntimeError('invalid outer seal')
-        end = time.monotonic() + LIMITS['cleanupTimeoutMs'] / 1000
+    def launch():
+        pid = os.fork()
+        if pid == 0:
+            try:
+                control.close()
+                os.close(parent_fd)
+                if inception is not None:
+                    outer.close()
+                guard_parent(creator)
+                # Parent holds a pidfd before allowing any Cell effects.
+                if until(child_control, creator, os.pidfd_open(creator),
+                         time.monotonic() + LIMITS['adminTimeoutMs'] / 1000) != b'GO':
+                    raise RuntimeError('invalid inception')
+                OwnedCustodian().run()
+                os._exit(0)
+            except BaseException:
+                os._exit(1)
+        child_control.close()
+        return pid, os.pidfd_open(pid)  # Exact child is not yet reaped.
+
+    def seal(pid, pidfd, end):
         send(control, b'SEAL')
         if until(control, pid, pidfd, end) != b'SEALED':
             raise RuntimeError('not sealed')
@@ -245,6 +286,20 @@ def run(node, root, inputs, inception=None):
         if set(stopped) != {'status', 'sequence', 'acceptedDigest'} or stopped['status'] != 'STOPPED':
             raise RuntimeError('invalid clean receipt')
         normal_reap(pid, pidfd, end)
+        return result, stopped
+
+    pid, pidfd = launch()
+    try:
+        inception_end = time.monotonic() + LIMITS['verifyTimeoutMs'] / 1000
+        send(control, b'GO')
+        if until(control, pid, pidfd, inception_end) != b'READY':
+            raise RuntimeError('not ready')
+        if inception is not None:
+            send(outer, b'SEALING')
+            if until(outer, parent, parent_fd, inception_end) != b'SEAL':
+                raise RuntimeError('invalid outer seal')
+        end = time.monotonic() + LIMITS['cleanupTimeoutMs'] / 1000
+        result, stopped = seal(pid, pidfd, end)
         if inception is not None:
             # Only actual normal owned reaps reach this private relationship.
             # Parent authenticates this packet before maintenance. This child
@@ -265,6 +320,45 @@ def run(node, root, inputs, inception=None):
                     packet = until(outer, parent, parent_fd, min(maintenance_end, phase_end))
                     if packet == b'DONE' and not cleaning and not activating:
                         return
+                    if packet.startswith(b'SERVE ') and not cleaning and not activating:
+                        request = base.decode(packet[6:])
+                        if (set(request) != {'inputs', 'selection'} or
+                                not isinstance(request['inputs'], str) or not request['inputs'].startswith('/')):
+                            raise RuntimeError('invalid serving request')
+                        continuation = request['selection']
+                        if (set(continuation) != {'status', 'sequence', 'acceptedDigest'} or
+                                continuation['status'] != 'STOPPED' or type(continuation['sequence']) is not int or
+                                continuation['sequence'] < stopped['sequence'] or
+                                base.re.fullmatch(r'sha256:[0-9a-f]{64}', continuation['acceptedDigest']) is None):
+                            raise RuntimeError('invalid serving selection')
+                        # No detached entry reaches here. Maintenance parent checked
+                        # the committed selection while the original flock stayed held.
+                        inputs = request['inputs']
+                        control.close()
+                        os.close(pidfd)
+                        control, child_control = pair()
+                        pid, pidfd = launch()
+                        serve_end = min(maintenance_end, time.monotonic() + LIMITS['verifyTimeoutMs'] / 1000)
+                        send(control, b'GO')
+                        if until(control, pid, pidfd, serve_end) != b'READY':
+                            raise RuntimeError('successor not ready')
+                        send(outer, b'SERVING')
+                        # Idle serving has no arbitrary lifetime ceiling. All owner
+                        # operations still have the original external phase budgets.
+                        # Observe exact custodian/channel death even without a client.
+                        readable, _, _ = select.select([outer, control, pidfd, parent_fd], [], [])
+                        if outer not in readable or receive(outer, parent) != b'SEAL':
+                            raise RuntimeError('serving custody lost')
+                        end = time.monotonic() + LIMITS['cleanupTimeoutMs'] / 1000
+                        result, stopped = seal(pid, pidfd, end)
+                        send(outer, result)
+                        if until(outer, parent, parent_fd, end) != b'ACK':
+                            raise RuntimeError('invalid repeated acknowledgment')
+                        # A fresh bounded maintenance phase follows NEW actual reaps,
+                        # never a caller heartbeat/reset of an in-flight deadline.
+                        maintenance_end = time.monotonic() + LIMITS['verifyTimeoutMs'] / 1000
+                        phase_end = maintenance_end
+                        continue
                     if packet == b'ACTIVATION' and not cleaning and not activating:
                         activating = True
                         phase_end = min(maintenance_end, time.monotonic() + LIMITS['activationTimeoutMs'] / 1000)

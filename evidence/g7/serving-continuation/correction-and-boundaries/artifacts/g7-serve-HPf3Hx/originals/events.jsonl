@@ -1,0 +1,40 @@
+{"event":"send","pid":259968,"packet":"GO"}
+{"event":"packet","pid":259968,"child":259975,"packet":"SEALING"}
+{"event":"send","pid":259968,"packet":"SEAL"}
+{"event":"packet","pid":259968,"child":259975,"packet":"CLEAN {\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:012ca64f71f238c0eaa4ae4ea2e29a38246fcdbba1d645826af0921ebcf10c8a\"}"}
+{"event":"send","pid":259968,"packet":"ACK"}
+{"event":"send","pid":259968,"packet":"CLEANUP"}
+{"event":"packet","pid":259968,"child":259975,"packet":"ACK"}
+{"event":"send","pid":259968,"packet":"RESUME"}
+{"event":"packet","pid":259968,"child":259975,"packet":"ACK"}
+{"event":"send","pid":259968,"packet":"CLEANUP"}
+{"event":"packet","pid":259968,"child":259975,"packet":"ACK"}
+{"event":"send","pid":259968,"packet":"RESUME"}
+{"event":"packet","pid":259968,"child":259975,"packet":"ACK"}
+{"event":"send","pid":259968,"packet":"SERVE {\"inputs\":\"/tmp/g7-serve-HPf3Hx/input.json\",\"selection\":{\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:012ca64f71f238c0eaa4ae4ea2e29a38246fcdbba1d645826af0921ebcf10c8a\"}}"}
+{"event":"successor","pid":260003,"parent":260002}
+{"event":"successor-activation","pid":260003}
+{"event":"packet","pid":259968,"child":259975,"packet":"SERVING"}
+{"event":"send","pid":259968,"packet":"SEAL"}
+{"event":"packet","pid":259968,"child":259975,"packet":"CLEAN {\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:012ca64f71f238c0eaa4ae4ea2e29a38246fcdbba1d645826af0921ebcf10c8a\"}"}
+{"event":"send","pid":259968,"packet":"ACK"}
+{"event":"send","pid":259968,"packet":"CLEANUP"}
+{"event":"packet","pid":259968,"child":259975,"packet":"ACK"}
+{"event":"send","pid":259968,"packet":"RESUME"}
+{"event":"packet","pid":259968,"child":259975,"packet":"ACK"}
+{"event":"send","pid":259968,"packet":"CLEANUP"}
+{"event":"packet","pid":259968,"child":259975,"packet":"ACK"}
+{"event":"send","pid":259968,"packet":"RESUME"}
+{"event":"packet","pid":259968,"child":259975,"packet":"ACK"}
+{"event":"send","pid":259968,"packet":"SERVE {\"inputs\":\"/tmp/g7-serve-HPf3Hx/input.json\",\"selection\":{\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:012ca64f71f238c0eaa4ae4ea2e29a38246fcdbba1d645826af0921ebcf10c8a\"}}"}
+{"event":"successor","pid":260029,"parent":260028}
+{"event":"successor-activation","pid":260029}
+{"event":"packet","pid":259968,"child":259975,"packet":"SERVING"}
+{"event":"send","pid":259968,"packet":"SEAL"}
+{"event":"packet","pid":259968,"child":259975,"packet":"CLEAN {\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:012ca64f71f238c0eaa4ae4ea2e29a38246fcdbba1d645826af0921ebcf10c8a\"}"}
+{"event":"send","pid":259968,"packet":"ACK"}
+{"event":"send","pid":259968,"packet":"CLEANUP"}
+{"event":"packet","pid":259968,"child":259975,"packet":"ACK"}
+{"event":"send","pid":259968,"packet":"RESUME"}
+{"event":"packet","pid":259968,"child":259975,"packet":"ACK"}
+{"event":"send","pid":259968,"packet":"DONE"}

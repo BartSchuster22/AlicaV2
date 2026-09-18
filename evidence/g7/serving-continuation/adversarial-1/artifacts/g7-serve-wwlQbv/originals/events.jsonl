@@ -1,0 +1,16 @@
+{"event":"send","pid":258337,"packet":"GO"}
+{"event":"packet","pid":258337,"child":258344,"packet":"SEALING"}
+{"event":"send","pid":258337,"packet":"SEAL"}
+{"event":"packet","pid":258337,"child":258344,"packet":"CLEAN {\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:a4b54449e89bce571fead24d6a02879214be0a952fb39404ee33554cfaf5f008\"}"}
+{"event":"send","pid":258337,"packet":"ACK"}
+{"event":"send","pid":258337,"packet":"CLEANUP"}
+{"event":"packet","pid":258337,"child":258344,"packet":"ACK"}
+{"event":"send","pid":258337,"packet":"RESUME"}
+{"event":"packet","pid":258337,"child":258344,"packet":"ACK"}
+{"event":"send","pid":258337,"packet":"CLEANUP"}
+{"event":"packet","pid":258337,"child":258344,"packet":"ACK"}
+{"event":"send","pid":258337,"packet":"RESUME"}
+{"event":"packet","pid":258337,"child":258344,"packet":"ACK"}
+{"event":"send","pid":258337,"packet":"SERVE {\"inputs\":\"/tmp/g7-serve-wwlQbv/input.json\",\"selection\":{\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:a4b54449e89bce571fead24d6a02879214be0a952fb39404ee33554cfaf5f008\"}}"}
+{"event":"successor","pid":258372,"parent":258371}
+{"event":"successor-activation","pid":258372}

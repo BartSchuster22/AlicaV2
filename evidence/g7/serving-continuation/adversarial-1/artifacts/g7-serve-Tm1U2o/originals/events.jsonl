@@ -1,0 +1,30 @@
+{"event":"send","pid":258705,"packet":"GO"}
+{"event":"packet","pid":258705,"child":258712,"packet":"SEALING"}
+{"event":"send","pid":258705,"packet":"SEAL"}
+{"event":"packet","pid":258705,"child":258712,"packet":"CLEAN {\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:f0de64b994329c46510c1f97c713c6b1f63e76713a0fc15ec7e3ad7034568131\"}"}
+{"event":"send","pid":258705,"packet":"ACK"}
+{"event":"send","pid":258705,"packet":"CLEANUP"}
+{"event":"packet","pid":258705,"child":258712,"packet":"ACK"}
+{"event":"send","pid":258705,"packet":"RESUME"}
+{"event":"packet","pid":258705,"child":258712,"packet":"ACK"}
+{"event":"send","pid":258705,"packet":"CLEANUP"}
+{"event":"packet","pid":258705,"child":258712,"packet":"ACK"}
+{"event":"send","pid":258705,"packet":"RESUME"}
+{"event":"packet","pid":258705,"child":258712,"packet":"ACK"}
+{"event":"send","pid":258705,"packet":"SERVE {\"inputs\":\"/tmp/g7-serve-Tm1U2o/input.json\",\"selection\":{\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:f0de64b994329c46510c1f97c713c6b1f63e76713a0fc15ec7e3ad7034568131\"}}"}
+{"event":"successor","pid":258740,"parent":258739}
+{"event":"successor-activation","pid":258740}
+{"event":"packet","pid":258705,"child":258712,"packet":"SERVING"}
+{"event":"send","pid":258705,"packet":"SEAL"}
+{"event":"packet","pid":258705,"child":258712,"packet":"CLEAN {\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:f0de64b994329c46510c1f97c713c6b1f63e76713a0fc15ec7e3ad7034568131\"}"}
+{"event":"send","pid":258705,"packet":"ACK"}
+{"event":"send","pid":258705,"packet":"CLEANUP"}
+{"event":"packet","pid":258705,"child":258712,"packet":"ACK"}
+{"event":"send","pid":258705,"packet":"RESUME"}
+{"event":"packet","pid":258705,"child":258712,"packet":"ACK"}
+{"event":"send","pid":258705,"packet":"CLEANUP"}
+{"event":"packet","pid":258705,"child":258712,"packet":"ACK"}
+{"event":"send","pid":258705,"packet":"RESUME"}
+{"event":"packet","pid":258705,"child":258712,"packet":"ACK"}
+{"event":"send","pid":258705,"packet":"ACTIVATION"}
+{"event":"packet","pid":258705,"child":258712,"packet":"ACK"}

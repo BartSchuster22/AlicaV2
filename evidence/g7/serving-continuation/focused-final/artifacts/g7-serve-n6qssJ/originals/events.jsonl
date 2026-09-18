@@ -1,0 +1,16 @@
+{"event":"send","pid":275498,"monotonicNs":"169344649794606","packet":"GO"}
+{"event":"packet","pid":275498,"monotonicNs":"169347162574877","child":275505,"packet":"SEALING"}
+{"event":"send","pid":275498,"monotonicNs":"169347162751760","packet":"SEAL"}
+{"event":"packet","pid":275498,"monotonicNs":"169347385177081","child":275505,"packet":"CLEAN {\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:ead0ac1fbd2e3e79a9f0994984df4224177b21d92978715b06914f3faedbddd5\"}"}
+{"event":"send","pid":275498,"monotonicNs":"169347390051997","packet":"ACK"}
+{"event":"send","pid":275498,"monotonicNs":"169347507095565","packet":"CLEANUP"}
+{"event":"packet","pid":275498,"monotonicNs":"169347513156677","child":275505,"packet":"ACK"}
+{"event":"send","pid":275498,"monotonicNs":"169347514277437","packet":"RESUME"}
+{"event":"packet","pid":275498,"monotonicNs":"169347519621326","child":275505,"packet":"ACK"}
+{"event":"send","pid":275498,"monotonicNs":"169347575059476","packet":"CLEANUP"}
+{"event":"packet","pid":275498,"monotonicNs":"169347580520055","child":275505,"packet":"ACK"}
+{"event":"send","pid":275498,"monotonicNs":"169347581088936","packet":"RESUME"}
+{"event":"packet","pid":275498,"monotonicNs":"169347586324974","child":275505,"packet":"ACK"}
+{"event":"send","pid":275498,"monotonicNs":"169347589399252","packet":"SERVE {\"inputs\":\"/tmp/g7-serve-n6qssJ/input.json\",\"selection\":{\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:ead0ac1fbd2e3e79a9f0994984df4224177b21d92978715b06914f3faedbddd5\"}}"}
+{"event":"successor","pid":275533,"monotonicNs":"169347844931430","parent":275532}
+{"event":"successor-activation","pid":275533,"monotonicNs":"169347943338001"}

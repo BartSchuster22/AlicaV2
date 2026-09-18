@@ -9,19 +9,61 @@ let cell;
 try {
   const [operation, root, inputs, ...extra] = process.argv.slice(2);
   if (
-    !['exact-reinstall', 'upgrade'].includes(operation) ||
+    !['exact-reinstall', 'upgrade', 'serve', 'cycle'].includes(operation) ||
     !root ||
     !inputs ||
-    extra.length !== (operation === 'upgrade' ? 1 : 0)
+    (operation !== 'cycle' &&
+      extra.length !== (operation === 'upgrade' ? 1 : 0))
   )
     throw new Error('INVALID');
   // Held for the process lifetime; never treat parent loss as clean cleanup.
   native.guardLauncher();
   cell = new CellPreparation(resolve(root));
-  const result =
-    operation === 'upgrade'
-      ? await cell.ownedUpgrade(resolve(inputs), resolve(extra[0]))
-      : await cell.ownedReinstall(resolve(inputs));
+  let result;
+  if (operation === 'serve' || operation === 'cycle') {
+    // Foreground orchestration, not a new live admin operation. Signals request
+    // sealing; they are never interpreted as clean-reap authority.
+    let requestStop;
+    const stop = new Promise((resolve) => {
+      requestStop = resolve;
+    });
+    const keepAlive = setInterval(() => {}, 1000);
+    process.once('SIGINT', requestStop);
+    process.once('SIGTERM', requestStop);
+    let current = resolve(inputs);
+    await cell.ownedBegin(current);
+    result = await cell.ownedServe(current);
+    console.log(
+      JSON.stringify({
+        operation,
+        event: 'SERVING',
+        accepted: result.accepted,
+      }),
+    );
+    if (operation === 'serve') await Promise.race([stop, cell.ownedWait()]);
+    else
+      for (const target of extra) {
+        await cell.ownedMaintain(current, resolve(target));
+        current = resolve(target);
+        result = await cell.ownedServe(current);
+        console.log(
+          JSON.stringify({
+            operation,
+            event: 'SERVING',
+            accepted: result.accepted,
+          }),
+        );
+      }
+    await cell.ownedMaintain(current);
+    result = await cell.ownedFinish();
+    clearInterval(keepAlive);
+    process.removeListener('SIGINT', requestStop);
+    process.removeListener('SIGTERM', requestStop);
+  } else
+    result =
+      operation === 'upgrade'
+        ? await cell.ownedUpgrade(resolve(inputs), resolve(extra[0]))
+        : await cell.ownedReinstall(resolve(inputs));
   console.log(
     JSON.stringify({
       operation,

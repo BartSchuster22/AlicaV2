@@ -1,0 +1,31 @@
+{"event":"send","pid":259049,"packet":"GO"}
+{"event":"packet","pid":259049,"child":259056,"packet":"SEALING"}
+{"event":"send","pid":259049,"packet":"SEAL"}
+{"event":"packet","pid":259049,"child":259056,"packet":"CLEAN {\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:a0d26eaf0fe515eb3210a35bf3179348bf02b2cb16a42e7a2176e843f35df4e0\"}"}
+{"event":"send","pid":259049,"packet":"ACK"}
+{"event":"send","pid":259049,"packet":"CLEANUP"}
+{"event":"packet","pid":259049,"child":259056,"packet":"ACK"}
+{"event":"send","pid":259049,"packet":"RESUME"}
+{"event":"packet","pid":259049,"child":259056,"packet":"ACK"}
+{"event":"send","pid":259049,"packet":"CLEANUP"}
+{"event":"packet","pid":259049,"child":259056,"packet":"ACK"}
+{"event":"send","pid":259049,"packet":"RESUME"}
+{"event":"packet","pid":259049,"child":259056,"packet":"ACK"}
+{"event":"send","pid":259049,"packet":"SERVE {\"inputs\":\"/tmp/g7-serve-BWa3mj/input.json\",\"selection\":{\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:a0d26eaf0fe515eb3210a35bf3179348bf02b2cb16a42e7a2176e843f35df4e0\"}}"}
+{"event":"successor","pid":259084,"parent":259083}
+{"event":"successor-activation","pid":259084}
+{"event":"packet","pid":259049,"child":259056,"packet":"SERVING"}
+{"event":"send","pid":259049,"packet":"SEAL"}
+{"event":"packet","pid":259049,"child":259056,"packet":"CLEAN {\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:a0d26eaf0fe515eb3210a35bf3179348bf02b2cb16a42e7a2176e843f35df4e0\"}"}
+{"event":"send","pid":259049,"packet":"ACK"}
+{"event":"send","pid":259049,"packet":"CLEANUP"}
+{"event":"packet","pid":259049,"child":259056,"packet":"ACK"}
+{"event":"send","pid":259049,"packet":"RESUME"}
+{"event":"packet","pid":259049,"child":259056,"packet":"ACK"}
+{"event":"send","pid":259049,"packet":"CLEANUP"}
+{"event":"packet","pid":259049,"child":259056,"packet":"ACK"}
+{"event":"send","pid":259049,"packet":"RESUME"}
+{"event":"packet","pid":259049,"child":259056,"packet":"ACK"}
+{"event":"send","pid":259049,"packet":"ACTIVATION"}
+{"event":"packet","pid":259049,"child":259056,"packet":"ACK"}
+{"event":"accepted-renamed","pid":259049}

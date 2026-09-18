@@ -1,0 +1,14 @@
+{"event":"send","pid":258457,"packet":"GO"}
+{"event":"packet","pid":258457,"child":258464,"packet":"SEALING"}
+{"event":"send","pid":258457,"packet":"SEAL"}
+{"event":"packet","pid":258457,"child":258464,"packet":"CLEAN {\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:7b8aae4f7761ed0f147779cf9bb5a12ec3fac4e2131cb0c18c9005fa89d4ad3f\"}"}
+{"event":"send","pid":258457,"packet":"ACK"}
+{"event":"send","pid":258457,"packet":"CLEANUP"}
+{"event":"packet","pid":258457,"child":258464,"packet":"ACK"}
+{"event":"send","pid":258457,"packet":"RESUME"}
+{"event":"packet","pid":258457,"child":258464,"packet":"ACK"}
+{"event":"send","pid":258457,"packet":"CLEANUP"}
+{"event":"packet","pid":258457,"child":258464,"packet":"ACK"}
+{"event":"send","pid":258457,"packet":"RESUME"}
+{"event":"packet","pid":258457,"child":258464,"packet":"ACK"}
+{"event":"send","pid":258457,"packet":"SERVE {\"inputs\":\"/tmp/g7-serve-Uflygl/input.json\",\"selection\":{\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:7b8aae4f7761ed0f147779cf9bb5a12ec3fac4e2131cb0c18c9005fa89d4ad3f\"}}"}

@@ -1,0 +1,20 @@
+{"event":"send","pid":259882,"packet":"GO"}
+{"event":"packet","pid":259882,"child":259889,"packet":"SEALING"}
+{"event":"send","pid":259882,"packet":"SEAL"}
+{"event":"packet","pid":259882,"child":259889,"packet":"CLEAN {\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:bf03bbec8256a1e5766a0983fa71b0c72c42c01cabbd8087c1bfd826fda6bf6f\"}"}
+{"event":"send","pid":259882,"packet":"ACK"}
+{"event":"send","pid":259882,"packet":"CLEANUP"}
+{"event":"packet","pid":259882,"child":259889,"packet":"ACK"}
+{"event":"send","pid":259882,"packet":"RESUME"}
+{"event":"packet","pid":259882,"child":259889,"packet":"ACK"}
+{"event":"send","pid":259882,"packet":"CLEANUP"}
+{"event":"packet","pid":259882,"child":259889,"packet":"ACK"}
+{"event":"send","pid":259882,"packet":"RESUME"}
+{"event":"packet","pid":259882,"child":259889,"packet":"ACK"}
+{"event":"send","pid":259882,"packet":"SERVE {\"inputs\":\"/tmp/g7-serve-2crlju/input.json\",\"selection\":{\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:bf03bbec8256a1e5766a0983fa71b0c72c42c01cabbd8087c1bfd826fda6bf6f\"}}"}
+{"event": "fence-before-retire-link", "pid": 259916}
+{"event": "fence-after-retire-link", "pid": 259916}
+{"event": "fence-after-retire-fsync", "pid": 259916}
+{"event": "fence-after-incarnation-unlink", "pid": 259916}
+{"event": "fence-after-v1-unlink", "pid": 259916}
+{"event": "fence-after-v2-unlink", "pid": 259916}

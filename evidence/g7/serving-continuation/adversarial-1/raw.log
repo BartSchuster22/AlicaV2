@@ -1,0 +1,39 @@
+✔ maintenance rechecks current revoked; original accepted artifacts remain intact (6218.869892ms)
+✔ maintenance rechecks current equivocation; original accepted artifacts remain intact (6107.038365ms)
+✔ maintenance rechecks current grants; original accepted artifacts remain intact (5913.953183ms)
+✔ successor rechecks current revoked; original accepted artifacts remain intact (3999.28801ms)
+✔ successor rechecks current equivocation; original accepted artifacts remain intact (3950.113883ms)
+✔ successor rechecks current grants; original accepted artifacts remain intact (3863.869228ms)
+✔ repeated maintenance real target denies bad-target-grants (6320.139993ms)
+✔ repeated maintenance real target denies bad-target-readiness (6833.141717ms)
+✔ repeated maintenance real target denies bad-target-call (8160.088123ms)
+✔ continuous custody fails closed at forged-selection (4118.116908ms)
+✔ continuous custody fails closed at kill-owner (4137.557997ms)
+✖ continuous custody fails closed at kill-coordinator (23151.295864ms)
+✔ continuous custody fails closed at crash-before-serve (3966.418469ms)
+✔ continuous custody fails closed at crash-after-serve (3836.353426ms)
+✔ continuous custody fails closed at forged-clean (6427.342806ms)
+✔ continuous custody fails closed at crash-after-clean (6363.84369ms)
+✔ repeated upgrade uncertain commit retains original history: crash-before-accepted (8162.239703ms)
+✔ repeated upgrade uncertain commit retains original history: crash-after-accepted (8159.563175ms)
+✔ repeated upgrade uncertain commit retains original history: uncertain-rename (8308.856897ms)
+✔ repeated upgrade uncertain commit retains original history: uncertain-fsync (8157.279526ms)
+✔ repeated upgrade uncertain commit retains original history: crash-after-commit (8025.962898ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 20
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 144531.120375
+
+✖ failing tests:
+
+test at tests/g7/serving-continuation.test.mjs:154:3
+✖ continuous custody fails closed at kill-coordinator (23151.295864ms)
+  Error: condition timed out
+      at wait (file:///home/alica-dev/AlicaV2/tests/g7/serving-continuation.test.mjs:18:9)
+      at async TestContext.<anonymous> (file:///home/alica-dev/AlicaV2/tests/g7/serving-continuation.test.mjs:158:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)

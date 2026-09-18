@@ -13,6 +13,20 @@ const native = createRequire(import.meta.url)(
 const limits = JSON.parse(
   readFileSync(new URL('../docs/g7/draft/limits.json', import.meta.url)),
 );
+function clean(packet) {
+  check(packet.subarray(0, 6).toString() === 'CLEAN ', 'PERMISSION_DENIED');
+  const stopped = parse(packet.subarray(6));
+  check(
+    Object.keys(stopped).sort().join(',') ===
+      'acceptedDigest,sequence,status' &&
+      stopped.status === 'STOPPED' &&
+      Number.isSafeInteger(stopped.sequence) &&
+      stopped.sequence > 0 &&
+      /^sha256:[0-9a-f]{64}$/.test(stopped.acceptedDigest),
+    'PERMISSION_DENIED',
+  );
+  return stopped;
+}
 export async function ownedStop(root, inputs, held) {
   const [control, childControl] = native.packetPair();
   let child,
@@ -20,6 +34,14 @@ export async function ownedStop(root, inputs, held) {
     exit,
     failed,
     end = performance.now() + limits.verifyTimeoutMs;
+  let finished = false,
+    rejectLost;
+  const lost = new Promise((_, reject) => {
+    rejectLost = reject;
+  });
+  // The lexical Cell always observes this promise after admission. Setup failure
+  // must not create an unhandled rejection or turn death into clean authority.
+  lost.catch(() => {});
   const assert = () => {
     check(!failed && performance.now() < end, 'TIMEOUT');
   };
@@ -68,6 +90,14 @@ export async function ownedStop(root, inputs, held) {
     });
     child.on('exit', (code, signal) => {
       exit = { code, signal };
+      if (!finished) {
+        failed = true;
+        rejectLost(
+          Object.assign(new Error('Owned coordinator lost'), {
+            code: 'FAILED_PRECONDITION',
+          }),
+        );
+      }
     });
     closeSync(childControl);
     check(child.pid, 'FAILED_PRECONDITION');
@@ -76,28 +106,47 @@ export async function ownedStop(root, inputs, held) {
     check((await receive()).toString() === 'SEALING', 'PERMISSION_DENIED');
     end = performance.now() + limits.cleanupTimeoutMs;
     send('SEAL');
-    const packet = await receive();
-    check(packet.subarray(0, 6).toString() === 'CLEAN ', 'PERMISSION_DENIED');
-    const stopped = parse(packet.subarray(6));
-    check(
-      Object.keys(stopped).sort().join(',') ===
-        'acceptedDigest,sequence,status' &&
-        stopped.status === 'STOPPED' &&
-        Number.isSafeInteger(stopped.sequence) &&
-        stopped.sequence > 0 &&
-        /^sha256:[0-9a-f]{64}$/.test(stopped.acceptedDigest),
-      'PERMISSION_DENIED',
-    );
+    let stopped = clean(await receive());
     // The child coordinator retains the same flock and watchdog, and its exact
     // custodian AND original owner are normally reaped before this packet exists.
     send('ACK');
     end = performance.now() + limits.verifyTimeoutMs;
-    let finished = false;
+    let serving = false;
     return {
-      stopped,
+      lost,
+      get stopped() {
+        return stopped;
+      },
       assert: alive,
+      async serve(inputs, selection) {
+        check(!finished && !serving, 'FAILED_PRECONDITION');
+        alive();
+        send('SERVE ' + JSON.stringify({ inputs, selection }));
+        check((await receive()).toString() === 'SERVING', 'PERMISSION_DENIED');
+        alive();
+        stopped = selection;
+        serving = true;
+        end = Infinity; // Only idle serving, never an in-flight phase reset.
+      },
+      async seal() {
+        check(!finished && serving, 'FAILED_PRECONDITION');
+        alive();
+        end = performance.now() + limits.cleanupTimeoutMs;
+        send('SEAL');
+        const next = clean(await receive());
+        check(
+          next.sequence === stopped.sequence &&
+            next.acceptedDigest === stopped.acceptedDigest,
+          'CONFLICT',
+        );
+        alive();
+        send('ACK');
+        stopped = next;
+        serving = false;
+        end = performance.now() + limits.verifyTimeoutMs;
+      },
       async send(message) {
-        check(!finished, 'FAILED_PRECONDITION');
+        check(!finished && !serving, 'FAILED_PRECONDITION');
         const phase = {
           cleanup: 'CLEANUP',
           resume: 'RESUME',
@@ -108,7 +157,7 @@ export async function ownedStop(root, inputs, held) {
         check((await receive()).toString() === 'ACK', 'PERMISSION_DENIED');
       },
       async finish() {
-        check(!finished, 'FAILED_PRECONDITION');
+        check(!finished && !serving, 'FAILED_PRECONDITION');
         finished = true;
         try {
           send('DONE');

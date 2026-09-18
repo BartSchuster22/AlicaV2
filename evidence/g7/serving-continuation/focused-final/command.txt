@@ -1,0 +1,1 @@
+python3 -m py_compile tools/g7-supervisor.py tools/g7-owned-coordinator.py tests/g7/serving-python.py && PYTHONPATH=.tools/python G7_SERVING_EVIDENCE=evidence/g7/serving-continuation/focused-final/artifacts node --experimental-vm-modules --test tests/g7/*.test.mjs

@@ -1,0 +1,26 @@
+tools/g7-cell.mjs 194ms
+tools/g7-owned-bridge.mjs 18ms
+tools/g7-owned-cli.mjs 10ms
+tests/g7/serving-continuation.test.mjs 79ms
+tests/g7/serving-driver.mjs 9ms
+tests/g7/serving-faults.mjs 14ms
+✔ continuous original Cell: serve, admin stop/start v1/v2, exact reinstall, real upgrade, repeated serving and maintenance (16252.739088ms)
+✔ continuous custody fails closed at kill-coordinator (6008.184483ms)
+✔ successor real filesystem crash preserves original fence: fence-before-retire-link (3602.753378ms)
+✔ successor real filesystem crash preserves original fence: fence-after-retire-link (3611.167578ms)
+✔ successor real filesystem crash preserves original fence: fence-after-retire-fsync (3470.218537ms)
+✔ successor real filesystem crash preserves original fence: fence-after-incarnation-unlink (3528.012921ms)
+✔ successor real filesystem crash preserves original fence: fence-after-v1-unlink (3490.824189ms)
+✔ successor real filesystem crash preserves original fence: fence-after-v2-unlink (3503.58367ms)
+✔ successor real filesystem crash preserves original fence: fence-after-new-incarnation-fsync (3680.657581ms)
+✔ successor shared eight admissions, EOF sealing, wrong version and stale incarnation retain exact wire behavior (8744.694882ms)
+✔ same flock competitor excluded through serving, actual upgrade and repeated owned reaps (10661.62081ms)
+✔ public foreground serve closes by actual seal/reaps, not signal-as-clean (6040.255098ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 72959.677433

@@ -1,0 +1,1 @@
+npm run build:g7-native && PYTHONPATH=.tools/python G7_SERVING_EVIDENCE=evidence/g7/serving-continuation/focused-1/artifacts node --experimental-vm-modules --test tests/g7/serving-continuation.test.mjs

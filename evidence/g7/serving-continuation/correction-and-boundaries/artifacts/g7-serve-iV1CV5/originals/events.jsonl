@@ -1,0 +1,17 @@
+{"event":"send","pid":259591,"packet":"GO"}
+{"event":"packet","pid":259591,"child":259598,"packet":"SEALING"}
+{"event":"send","pid":259591,"packet":"SEAL"}
+{"event":"packet","pid":259591,"child":259598,"packet":"CLEAN {\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:480976a60c6d52135f6fb1067e1ca6773cf5dc6ff54a906e445722024afdb969\"}"}
+{"event":"send","pid":259591,"packet":"ACK"}
+{"event":"send","pid":259591,"packet":"CLEANUP"}
+{"event":"packet","pid":259591,"child":259598,"packet":"ACK"}
+{"event":"send","pid":259591,"packet":"RESUME"}
+{"event":"packet","pid":259591,"child":259598,"packet":"ACK"}
+{"event":"send","pid":259591,"packet":"CLEANUP"}
+{"event":"packet","pid":259591,"child":259598,"packet":"ACK"}
+{"event":"send","pid":259591,"packet":"RESUME"}
+{"event":"packet","pid":259591,"child":259598,"packet":"ACK"}
+{"event":"send","pid":259591,"packet":"SERVE {\"inputs\":\"/tmp/g7-serve-iV1CV5/input.json\",\"selection\":{\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:480976a60c6d52135f6fb1067e1ca6773cf5dc6ff54a906e445722024afdb969\"}}"}
+{"event":"successor","pid":259626,"parent":259625}
+{"event":"successor-activation","pid":259626}
+{"event":"packet","pid":259591,"child":259598,"packet":"SERVING"}

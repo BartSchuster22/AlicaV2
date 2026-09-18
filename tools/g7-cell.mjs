@@ -260,6 +260,8 @@ export class CellPreparation {
   #channel;
   #root;
   #owned = false;
+  #session = false;
+  #serving = false;
   #watch;
   #failed = false;
   #busy = false;
@@ -276,7 +278,113 @@ export class CellPreparation {
   ownedUpgrade(priorInputs, targetInputs) {
     return this.#ownedLifecycle(priorInputs, targetInputs);
   }
-  #ownedLifecycle(inputs, targetInputs) {
+  // Foreground orchestration only. This never accepts a receipt or adopts a
+  // detached Cell. Each maintenance entry seals admission and normally reaps
+  // a newly owned custodian/owner before any original Cell access.
+  ownedBegin(inputs) {
+    return this.#ownedLifecycle(inputs, undefined, true);
+  }
+  ownedWait() {
+    this.#guard();
+    check(this.#session && this.#watch, 'FAILED_PRECONDITION');
+    return this.#watch.lost;
+  }
+  #local(input) {
+    const path = resolve(input),
+      fd = openPrivateRoot(dirname(path));
+    let current;
+    try {
+      current = parse(readPrivate(fd, basename(path)));
+    } finally {
+      closeSync(fd);
+    }
+    check(
+      Object.keys(current).sort().join(',') === 'archive,authorization,trust',
+    );
+    return current;
+  }
+  #ownedOperation(operation) {
+    return this.#run(async () => {
+      check(this.#session && this.#watch && !this.#host, 'FAILED_PRECONDITION');
+      try {
+        return await operation();
+      } catch (error) {
+        this.#failed = true;
+        this.#stopped = false;
+        this.#watch.abandon();
+        throw outcome(error, 'NEEDS_OPERATOR');
+      }
+    }, true);
+  }
+  ownedServe(inputs) {
+    return this.#ownedOperation(async () => {
+      check(!this.#serving && this.#stopped, 'FAILED_PRECONDITION');
+      const current = this.#local(inputs);
+      const result = await this.#stage(
+        current.archive,
+        current.trust,
+        current.authorization,
+        true,
+      );
+      const selection = {
+        status: 'STOPPED',
+        sequence: result.accepted.sequence,
+        acceptedDigest: digest(result.accepted),
+      };
+      this.#stopped = false;
+      await this.#watch.serve(resolve(inputs), selection);
+      this.#serving = true;
+      // This reports the just-observed readiness, not cached future liveness.
+      // Subsequent status/stop/start remain on the unchanged live admin protocol.
+      return { ...result, runtime: 'RUNNING' };
+    });
+  }
+  ownedMaintain(inputs, targetInputs) {
+    return this.#ownedOperation(async () => {
+      check(this.#serving, 'FAILED_PRECONDITION');
+      await this.#watch.seal();
+      this.#serving = false;
+      const status = this.#status();
+      check(
+        status.accepted &&
+          status.accepted.sequence === this.#watch.stopped.sequence &&
+          digest(status.accepted) === this.#watch.stopped.acceptedDigest,
+        'CONFLICT',
+      );
+      this.#stopped = true;
+      const current = this.#local(inputs);
+      let result = await this.#stage(
+        current.archive,
+        current.trust,
+        current.authorization,
+        true,
+      );
+      if (targetInputs !== undefined) {
+        const target = this.#local(targetInputs);
+        await this.#stage(
+          target.archive,
+          target.trust,
+          target.authorization,
+          true,
+          true,
+        );
+        await this.#shutdown();
+        result = this.#status();
+      }
+      return result;
+    });
+  }
+  ownedFinish() {
+    return this.#ownedOperation(async () => {
+      check(!this.#serving && this.#stopped, 'FAILED_PRECONDITION');
+      const result = this.#status();
+      await this.#watch.finish();
+      this.#watch = undefined;
+      this.#session = false;
+      return result;
+    });
+  }
+  #ownedLifecycle(inputs, targetInputs, continuous = false) {
     return this.#run(async () => {
       check(
         !this.#channel &&
@@ -288,6 +396,11 @@ export class CellPreparation {
       this.#owned = true;
       try {
         this.#watch = await ownedStop(this.#root, resolve(inputs), this.#fd);
+        this.#watch.lost.catch(() => {
+          this.#failed = true;
+          this.#stopped = false;
+          this.#serving = false;
+        });
         const status = this.#status();
         check(
           status.accepted &&
@@ -298,22 +411,7 @@ export class CellPreparation {
         this.#stopped = true;
         // Re-read independent operator inputs AFTER clean owned reaps, not the
         // initial child's cached trust or an archive-supplied authorization.
-        const local = (input) => {
-          const path = resolve(input),
-            fd = openPrivateRoot(dirname(path));
-          let current;
-          try {
-            current = parse(readPrivate(fd, basename(path)));
-          } finally {
-            closeSync(fd);
-          }
-          check(
-            Object.keys(current).sort().join(',') ===
-              'archive,authorization,trust',
-          );
-          return current;
-        };
-        const current = local(inputs);
+        const current = this.#local(inputs);
         let result = await this.#stage(
           current.archive,
           current.trust,
@@ -321,7 +419,7 @@ export class CellPreparation {
           true,
         );
         if (targetInputs !== undefined) {
-          const target = local(targetInputs);
+          const target = this.#local(targetInputs);
           result = await this.#stage(
             target.archive,
             target.trust,
@@ -332,8 +430,11 @@ export class CellPreparation {
           await this.#shutdown();
           result = this.#status();
         }
-        await this.#watch.finish();
-        this.#watch = undefined;
+        if (continuous) this.#session = true;
+        else {
+          await this.#watch.finish();
+          this.#watch = undefined;
+        }
         return result;
       } catch (error) {
         this.#failed = true;
@@ -434,6 +535,7 @@ export class CellPreparation {
     }
   }
   shutdown() {
+    check(!this.#session, 'CONFLICT');
     check(!this.#busy, 'CONFLICT');
     this.#busy = true;
     return this.#shutdown().finally(() => {
@@ -474,8 +576,10 @@ export class CellPreparation {
       await (this.#channel ?? this.#watch)?.send({ phase: 'resume' });
     }
   }
-  async #run(operation) {
+  async #run(operation, ownedOperation = false) {
     this.#guard();
+    check(!this.#session || ownedOperation, 'CONFLICT');
+    check(!this.#owned || this.#watch, 'FAILED_PRECONDITION');
     check(!this.#busy, 'CONFLICT');
     this.#busy = true;
     try {
@@ -526,6 +630,7 @@ export class CellPreparation {
     }
   }
   close() {
+    check(!this.#session && !this.#watch, 'CONFLICT');
     check(!this.#owned || !this.#failed, 'FAILED_PRECONDITION');
     check(!this.#busy && !this.#host, 'CONFLICT');
     if (this.#fd !== undefined) closeSync(this.#fd);
@@ -670,6 +775,7 @@ export class CellPreparation {
     });
   }
   status() {
+    check(!this.#serving, 'CONFLICT');
     check(!this.#busy, 'CONFLICT');
     return this.#status();
   }

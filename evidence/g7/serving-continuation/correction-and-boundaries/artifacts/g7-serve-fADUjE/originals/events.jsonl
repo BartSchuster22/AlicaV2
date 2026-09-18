@@ -1,0 +1,51 @@
+{"event":"send","pid":260055,"packet":"GO"}
+{"event":"packet","pid":260055,"child":260062,"packet":"SEALING"}
+{"event":"send","pid":260055,"packet":"SEAL"}
+{"event":"packet","pid":260055,"child":260062,"packet":"CLEAN {\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:ca9b75c9a8400095415fed6c2534d81a26b1dbebbafca3a9759d366261950b35\"}"}
+{"event":"send","pid":260055,"packet":"ACK"}
+{"event":"send","pid":260055,"packet":"CLEANUP"}
+{"event":"packet","pid":260055,"child":260062,"packet":"ACK"}
+{"event":"send","pid":260055,"packet":"RESUME"}
+{"event":"packet","pid":260055,"child":260062,"packet":"ACK"}
+{"event":"send","pid":260055,"packet":"CLEANUP"}
+{"event":"packet","pid":260055,"child":260062,"packet":"ACK"}
+{"event":"send","pid":260055,"packet":"RESUME"}
+{"event":"packet","pid":260055,"child":260062,"packet":"ACK"}
+{"event":"send","pid":260055,"packet":"SERVE {\"inputs\":\"/tmp/g7-serve-fADUjE/input.json\",\"selection\":{\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:ca9b75c9a8400095415fed6c2534d81a26b1dbebbafca3a9759d366261950b35\"}}"}
+{"event":"successor","pid":260091,"parent":260090}
+{"event":"successor-activation","pid":260091}
+{"event":"packet","pid":260055,"child":260062,"packet":"SERVING"}
+{"event":"send","pid":260055,"packet":"SEAL"}
+{"event":"packet","pid":260055,"child":260062,"packet":"CLEAN {\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:ca9b75c9a8400095415fed6c2534d81a26b1dbebbafca3a9759d366261950b35\"}"}
+{"event":"send","pid":260055,"packet":"ACK"}
+{"event":"send","pid":260055,"packet":"CLEANUP"}
+{"event":"packet","pid":260055,"child":260062,"packet":"ACK"}
+{"event":"send","pid":260055,"packet":"RESUME"}
+{"event":"packet","pid":260055,"child":260062,"packet":"ACK"}
+{"event":"send","pid":260055,"packet":"CLEANUP"}
+{"event":"packet","pid":260055,"child":260062,"packet":"ACK"}
+{"event":"send","pid":260055,"packet":"RESUME"}
+{"event":"packet","pid":260055,"child":260062,"packet":"ACK"}
+{"event":"send","pid":260055,"packet":"ACTIVATION"}
+{"event":"packet","pid":260055,"child":260062,"packet":"ACK"}
+{"event":"accepted-renamed","pid":260055}
+{"event":"send","pid":260055,"packet":"CLEANUP"}
+{"event":"packet","pid":260055,"child":260062,"packet":"ACK"}
+{"event":"send","pid":260055,"packet":"RESUME"}
+{"event":"packet","pid":260055,"child":260062,"packet":"ACK"}
+{"event":"send","pid":260055,"packet":"CLEANUP"}
+{"event":"packet","pid":260055,"child":260062,"packet":"ACK"}
+{"event":"send","pid":260055,"packet":"RESUME"}
+{"event":"packet","pid":260055,"child":260062,"packet":"ACK"}
+{"event":"send","pid":260055,"packet":"SERVE {\"inputs\":\"/tmp/g7-serve-fADUjE/target.json\",\"selection\":{\"status\":\"STOPPED\",\"sequence\":2,\"acceptedDigest\":\"sha256:95b9ff303d80c2fb5306aa790462bcfdbb93deb908a308bd118824ca2f6f7193\"}}"}
+{"event":"successor","pid":260135,"parent":260134}
+{"event":"successor-activation","pid":260135}
+{"event":"packet","pid":260055,"child":260062,"packet":"SERVING"}
+{"event":"send","pid":260055,"packet":"SEAL"}
+{"event":"packet","pid":260055,"child":260062,"packet":"CLEAN {\"status\":\"STOPPED\",\"sequence\":2,\"acceptedDigest\":\"sha256:95b9ff303d80c2fb5306aa790462bcfdbb93deb908a308bd118824ca2f6f7193\"}"}
+{"event":"send","pid":260055,"packet":"ACK"}
+{"event":"send","pid":260055,"packet":"CLEANUP"}
+{"event":"packet","pid":260055,"child":260062,"packet":"ACK"}
+{"event":"send","pid":260055,"packet":"RESUME"}
+{"event":"packet","pid":260055,"child":260062,"packet":"ACK"}
+{"event":"send","pid":260055,"packet":"DONE"}

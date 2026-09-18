@@ -1,0 +1,17 @@
+{"event":"send","pid":257899,"packet":"GO"}
+{"event":"packet","pid":257899,"child":257906,"packet":"SEALING"}
+{"event":"send","pid":257899,"packet":"SEAL"}
+{"event":"packet","pid":257899,"child":257906,"packet":"CLEAN {\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:5dc831909842a099215d35a54894746be6e382b9224d07d6ef14250c152b9eca\"}"}
+{"event":"send","pid":257899,"packet":"ACK"}
+{"event":"send","pid":257899,"packet":"CLEANUP"}
+{"event":"packet","pid":257899,"child":257906,"packet":"ACK"}
+{"event":"send","pid":257899,"packet":"RESUME"}
+{"event":"packet","pid":257899,"child":257906,"packet":"ACK"}
+{"event":"send","pid":257899,"packet":"CLEANUP"}
+{"event":"packet","pid":257899,"child":257906,"packet":"ACK"}
+{"event":"send","pid":257899,"packet":"RESUME"}
+{"event":"packet","pid":257899,"child":257906,"packet":"ACK"}
+{"event":"send","pid":257899,"packet":"SERVE {\"inputs\":\"/tmp/g7-serve-2aeZlp/input.json\",\"selection\":{\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:5dc831909842a099215d35a54894746be6e382b9224d07d6ef14250c152b9eca\"}}"}
+{"event":"paused-serve","pid":257899}
+{"event":"successor","pid":257937,"parent":257936}
+{"event":"successor-activation","pid":257937}

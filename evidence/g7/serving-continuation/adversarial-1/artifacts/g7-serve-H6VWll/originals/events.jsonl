@@ -1,0 +1,35 @@
+{"event":"send","pid":258877,"packet":"GO"}
+{"event":"packet","pid":258877,"child":258884,"packet":"SEALING"}
+{"event":"send","pid":258877,"packet":"SEAL"}
+{"event":"packet","pid":258877,"child":258884,"packet":"CLEAN {\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:6b991e34c3705e6e735497aea7b12750871e6f9b83237144b81f01d8ae06b549\"}"}
+{"event":"send","pid":258877,"packet":"ACK"}
+{"event":"send","pid":258877,"packet":"CLEANUP"}
+{"event":"packet","pid":258877,"child":258884,"packet":"ACK"}
+{"event":"send","pid":258877,"packet":"RESUME"}
+{"event":"packet","pid":258877,"child":258884,"packet":"ACK"}
+{"event":"send","pid":258877,"packet":"CLEANUP"}
+{"event":"packet","pid":258877,"child":258884,"packet":"ACK"}
+{"event":"send","pid":258877,"packet":"RESUME"}
+{"event":"packet","pid":258877,"child":258884,"packet":"ACK"}
+{"event":"send","pid":258877,"packet":"SERVE {\"inputs\":\"/tmp/g7-serve-H6VWll/input.json\",\"selection\":{\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:6b991e34c3705e6e735497aea7b12750871e6f9b83237144b81f01d8ae06b549\"}}"}
+{"event":"successor","pid":258912,"parent":258911}
+{"event":"successor-activation","pid":258912}
+{"event":"packet","pid":258877,"child":258884,"packet":"SERVING"}
+{"event":"send","pid":258877,"packet":"SEAL"}
+{"event":"packet","pid":258877,"child":258884,"packet":"CLEAN {\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:6b991e34c3705e6e735497aea7b12750871e6f9b83237144b81f01d8ae06b549\"}"}
+{"event":"send","pid":258877,"packet":"ACK"}
+{"event":"send","pid":258877,"packet":"CLEANUP"}
+{"event":"packet","pid":258877,"child":258884,"packet":"ACK"}
+{"event":"send","pid":258877,"packet":"RESUME"}
+{"event":"packet","pid":258877,"child":258884,"packet":"ACK"}
+{"event":"send","pid":258877,"packet":"CLEANUP"}
+{"event":"packet","pid":258877,"child":258884,"packet":"ACK"}
+{"event":"send","pid":258877,"packet":"RESUME"}
+{"event":"packet","pid":258877,"child":258884,"packet":"ACK"}
+{"event":"send","pid":258877,"packet":"ACTIVATION"}
+{"event":"packet","pid":258877,"child":258884,"packet":"ACK"}
+{"event":"accepted-renamed","pid":258877}
+{"event":"send","pid":258877,"packet":"CLEANUP"}
+{"event":"packet","pid":258877,"child":258884,"packet":"ACK"}
+{"event":"send","pid":258877,"packet":"RESUME"}
+{"event":"packet","pid":258877,"child":258884,"packet":"ACK"}
