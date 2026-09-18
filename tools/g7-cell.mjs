@@ -1,5 +1,6 @@
 // Lifetime-locked Cell. Supervised custody is host-only; upgrade remains unavailable.
 import { OwnerChannel } from './g7-owner-channel.mjs';
+import { ownedStop } from './g7-owned-bridge.mjs';
 import {
   closeSync,
   readFileSync,
@@ -9,7 +10,7 @@ import {
   rmSync,
 } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { join, resolve, dirname, basename } from 'node:path';
 import { createRequire } from 'node:module';
 import { randomUUID } from 'node:crypto';
 import { Ajv2020 } from 'ajv/dist/2020.js';
@@ -167,6 +168,73 @@ export function validateJournal(rows) {
   }
   return prior.record;
 }
+// Cross-transaction validation is independent of UUID/directory ordering.
+// Committed history must be contiguous and unique; aborted attempts may share a
+// revision but must bind the actual committed prior, never a caller's substitute.
+export function validateHistory(journals, accepted, cellId, floor) {
+  const committed = new Map();
+  const starts = new Map();
+  const pending = [];
+  for (const { rows, last } of journals) {
+    check(last.cellId === cellId, 'FAILED_PRECONDITION');
+    monotonic(last.trustFloor, floor);
+    check(
+      (last.priorRevision === 0) === (last.prior === null),
+      'FAILED_PRECONDITION',
+    );
+    check(
+      last.operation !== 'install' || last.priorRevision === 0,
+      'FAILED_PRECONDITION',
+    );
+    check(
+      last.operation !== 'upgrade' || last.priorRevision > 0,
+      'FAILED_PRECONDITION',
+    );
+    if (last.state === 'COMMITTED') {
+      check(!committed.has(last.targetRevision), 'FAILED_PRECONDITION');
+      committed.set(last.targetRevision, last);
+      starts.set(last.targetRevision, rows[0].record.trustFloor);
+    } else if (last.state !== 'ABORTED') pending.push(last);
+  }
+  check(pending.length <= 1, 'FAILED_PRECONDITION');
+  for (let revision = 1; revision <= committed.size; revision++)
+    check(committed.has(revision), 'FAILED_PRECONDITION');
+  for (const { rows, last } of journals) {
+    if (last.priorRevision > 0) {
+      const prior = committed.get(last.priorRevision);
+      check(prior && same(prior.target, last.prior), 'FAILED_PRECONDITION');
+      monotonic(prior.trustFloor, rows[0].record.trustFloor);
+    }
+    check(last.priorRevision <= committed.size, 'FAILED_PRECONDITION');
+    if (last.state === 'ABORTED' && starts.has(last.targetRevision))
+      monotonic(last.trustFloor, starts.get(last.targetRevision));
+  }
+  const tip = committed.get(committed.size);
+  if (pending.length)
+    check(pending[0].priorRevision === committed.size, 'FAILED_PRECONDITION');
+  if (!accepted) check(!tip, 'FAILED_PRECONDITION');
+  else {
+    const selected = committed.get(accepted.sequence);
+    if (selected)
+      check(
+        selected === tip &&
+          selected.transactionId === accepted.transactionId &&
+          same(selected.target, accepted.release),
+        'FAILED_PRECONDITION',
+      );
+    else
+      check(
+        pending.length === 1 &&
+          pending[0].transactionId === accepted.transactionId &&
+          pending[0].targetRevision === accepted.sequence &&
+          ['ACTIVATING', 'RECOVERING', 'NEEDS_OPERATOR'].includes(
+            pending[0].state,
+          ) &&
+          same(pending[0].target, accepted.release),
+        'FAILED_PRECONDITION',
+      );
+  }
+}
 function configuration(cellId, rootScope) {
   return canonical({
     cellId,
@@ -190,12 +258,92 @@ function configuration(cellId, rootScope) {
 export class CellPreparation {
   #fd;
   #channel;
+  #root;
+  #owned = false;
+  #watch;
   #failed = false;
   #busy = false;
   #host;
   #stopped = false;
   #running = false;
   #cleanupUncertain = false;
+  // Starts the actual coordinator relationship, not adoption of stopped residue.
+  // No clean/PID/socket/receipt input exists. Only the lexical child lifecycle
+  // below may confer #stopped on this independently running maintenance process.
+  ownedReinstall(inputs) {
+    return this.#ownedLifecycle(inputs);
+  }
+  ownedUpgrade(priorInputs, targetInputs) {
+    return this.#ownedLifecycle(priorInputs, targetInputs);
+  }
+  #ownedLifecycle(inputs, targetInputs) {
+    return this.#run(async () => {
+      check(
+        !this.#channel &&
+          !this.#owned &&
+          !this.#host &&
+          !listPrivate(this.#fd).includes('supervision'),
+        'FAILED_PRECONDITION',
+      );
+      this.#owned = true;
+      try {
+        this.#watch = await ownedStop(this.#root, resolve(inputs), this.#fd);
+        const status = this.#status();
+        check(
+          status.accepted &&
+            status.accepted.sequence === this.#watch.stopped.sequence &&
+            digest(status.accepted) === this.#watch.stopped.acceptedDigest,
+          'CONFLICT',
+        );
+        this.#stopped = true;
+        // Re-read independent operator inputs AFTER clean owned reaps, not the
+        // initial child's cached trust or an archive-supplied authorization.
+        const local = (input) => {
+          const path = resolve(input),
+            fd = openPrivateRoot(dirname(path));
+          let current;
+          try {
+            current = parse(readPrivate(fd, basename(path)));
+          } finally {
+            closeSync(fd);
+          }
+          check(
+            Object.keys(current).sort().join(',') ===
+              'archive,authorization,trust',
+          );
+          return current;
+        };
+        const current = local(inputs);
+        let result = await this.#stage(
+          current.archive,
+          current.trust,
+          current.authorization,
+          true,
+        );
+        if (targetInputs !== undefined) {
+          const target = local(targetInputs);
+          result = await this.#stage(
+            target.archive,
+            target.trust,
+            target.authorization,
+            true,
+            true,
+          );
+          await this.#shutdown();
+          result = this.#status();
+        }
+        await this.#watch.finish();
+        this.#watch = undefined;
+        return result;
+      } catch (error) {
+        this.#failed = true;
+        this.#stopped = false;
+        this.#watch?.abandon();
+        this.#watch = undefined;
+        throw outcome(error, 'NEEDS_OPERATOR');
+      }
+    });
+  }
   install(archivePath, material, authorization) {
     return this.#run(() =>
       this.#stage(
@@ -296,7 +444,7 @@ export class CellPreparation {
     this.#running = false;
     if (!this.#host) return;
     try {
-      await this.#channel?.send({ phase: 'cleanup' });
+      await (this.#channel ?? this.#watch)?.send({ phase: 'cleanup' });
       const budget = deadline(limits.cleanupTimeoutMs);
       // A second Kernel shutdown can return an interim inspect report. Never
       // use that as proof that the original shutdown completed.
@@ -323,7 +471,7 @@ export class CellPreparation {
       this.#stopped = false;
       throw outcome(error, 'NEEDS_OPERATOR');
     } finally {
-      await this.#channel?.send({ phase: 'resume' });
+      await (this.#channel ?? this.#watch)?.send({ phase: 'resume' });
     }
   }
   async #run(operation) {
@@ -354,6 +502,7 @@ export class CellPreparation {
     );
   }
   constructor(root, custody) {
+    this.#root = resolve(root);
     this.#fd = openPrivateRoot(root);
     try {
       if (custody !== undefined) {
@@ -377,11 +526,13 @@ export class CellPreparation {
     }
   }
   close() {
+    check(!this.#owned || !this.#failed, 'FAILED_PRECONDITION');
     check(!this.#busy && !this.#host, 'CONFLICT');
     if (this.#fd !== undefined) closeSync(this.#fd);
     this.#fd = undefined;
   }
   #guard() {
+    this.#watch?.assert();
     if (this.#failed)
       throw outcome(
         Object.assign(new Error('Cell requires operator review'), {
@@ -401,7 +552,10 @@ export class CellPreparation {
       durableWrite(this.#fd, p, bytes(v), {
         replace,
         maximum: limits.jsonBytes,
-        boundary: () => budget?.assert(),
+        boundary: () => {
+          budget?.assert();
+          this.#watch?.assert();
+        },
       });
     } catch (e) {
       this.#failed = true;
@@ -426,7 +580,7 @@ export class CellPreparation {
             'transactions',
             'releases',
             'accepted.json',
-            ...(this.#channel ? ['supervision'] : []),
+            ...(this.#channel || this.#owned ? ['supervision'] : []),
           ].includes(n) || /^g6-[A-Za-z0-9]{6}$/.test(n),
       ),
       'FAILED_PRECONDITION',
@@ -559,25 +713,7 @@ export class CellPreparation {
           'FAILED_PRECONDITION',
         );
     }
-    for (const { last } of journals) {
-      check(
-        last.cellId === id.cellId &&
-          last.prior === null &&
-          last.priorRevision === 0 &&
-          last.targetRevision === 1,
-        'FAILED_PRECONDITION',
-      );
-      monotonic(last.trustFloor, floor);
-      if (last.state === 'COMMITTED')
-        check(
-          accepted?.transactionId === last.transactionId,
-          'FAILED_PRECONDITION',
-        );
-    }
-    check(
-      journals.filter((j) => j.last.state !== 'ABORTED').length <= 1,
-      'FAILED_PRECONDITION',
-    );
+    validateHistory(journals, accepted, id.cellId, floor);
     const live = this.#running ? this.#host.inspect() : undefined;
     return {
       cellId: id.cellId,
@@ -614,7 +750,10 @@ export class CellPreparation {
           String(record.sequence).padStart(6, '0') +
           '.json',
         bytes(item),
-        { maximum: limits.journalRecordBytes },
+        {
+          maximum: limits.journalRecordBytes,
+          boundary: () => this.#watch?.assert(),
+        },
       );
     } catch (e) {
       this.#failed = true;
@@ -712,10 +851,16 @@ export class CellPreparation {
       if (!this.#host) rmSync(directory, { recursive: true });
     }
   }
-  async #stage(archivePath, material, authorization, activate = false) {
+  async #stage(
+    archivePath,
+    material,
+    authorization,
+    activate = false,
+    upgrade = false,
+  ) {
     const verification = deadline(limits.verifyTimeoutMs);
     const status = this.#status();
-    if (status.accepted) {
+    if (status.accepted && !upgrade) {
       check(activate, 'CONFLICT');
       return this.#exactReinstall(
         archivePath,
@@ -725,8 +870,33 @@ export class CellPreparation {
         verification,
       );
     }
+    if (upgrade) {
+      check(
+        status.accepted &&
+          this.#stopped &&
+          !this.#host &&
+          !this.#running &&
+          this.#watch,
+        'FAILED_PRECONDITION',
+      );
+      const candidate = inspectRelease(
+        archivePath,
+        material,
+        status.trustFloor,
+      );
+      if (candidate.bundleDigest === status.accepted.release.bundleDigest)
+        return this.#exactReinstall(
+          archivePath,
+          material,
+          authorization,
+          status,
+          verification,
+        );
+    }
     check(
-      status.transactions.every((t) => t.state === 'ABORTED'),
+      status.transactions.every(
+        (t) => t.state === 'ABORTED' || (upgrade && t.state === 'COMMITTED'),
+      ),
       'CONFLICT',
     );
     const floor = this.#advance(material, status.trustFloor);
@@ -769,11 +939,11 @@ export class CellPreparation {
       cellId: status.cellId,
       transactionId,
       sequence: 1,
-      priorRevision: 0,
-      targetRevision: 1,
-      operation: 'install',
+      priorRevision: status.accepted?.sequence ?? 0,
+      targetRevision: (status.accepted?.sequence ?? 0) + 1,
+      operation: upgrade ? 'upgrade' : 'install',
       state: 'STAGING',
-      prior: null,
+      prior: status.accepted?.release ?? null,
       target,
       trustFloor: floor,
       previousHash: null,
@@ -808,7 +978,13 @@ export class CellPreparation {
           this.#fd,
           prefix + '/' + entry.path,
           archive.read(entry.path),
-          { maximum: limits.fileBytes },
+          {
+            maximum: limits.fileBytes,
+            boundary: () => {
+              verification.assert();
+              this.#watch?.assert();
+            },
+          },
         );
       }
       this.#write(prefix + '/authorization.json', authorization);
@@ -969,7 +1145,7 @@ export class CellPreparation {
     );
   }
   async #activate(prefix, inspected, material, cellId, authorization, rows) {
-    await this.#channel?.send({ phase: 'activation' });
+    await (this.#channel ?? this.#watch)?.send({ phase: 'activation' });
     const budget = deadline(limits.activationTimeoutMs);
     let publishing = false;
     let floor = this.#advance(material, this.#read('floor.json'));

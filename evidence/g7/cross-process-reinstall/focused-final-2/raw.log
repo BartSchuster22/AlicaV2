@@ -1,0 +1,116 @@
+✔ anonymous packet channel authenticates exact real child credentials; pidfd pins lifetime (31.559793ms)
+✔ same-uid grandchild cannot forge exact coordinator credentials on inherited channel (25.059764ms)
+✔ rejects unauthenticated ancillary/truncated/empty packet: rights (22.500676ms)
+✔ rejects unauthenticated ancillary/truncated/empty packet: oversize (28.096874ms)
+✔ rejects unauthenticated ancillary/truncated/empty packet: empty (31.062876ms)
+✔ cross-process exact reinstall: actual original Cell/Kernel bytes and inodes preserved, fence retained (4355.938242ms)
+✔ cross-process rejects same-version-equivocation (4098.721905ms)
+✔ cross-process rejects revoked-bundle (3947.448481ms)
+✔ cross-process rejects authorization (3985.690969ms)
+✔ cross-process rejects archive (4095.300939ms)
+✔ cross-process rejects forged-clean (3979.805533ms)
+✔ cross-process rejects kill-coordinator (3993.227066ms)
+✔ continuous separate flock competitor and concurrent constructors cannot enter owned lifecycle (6942.553337ms)
+✔ maintenance parent death contains exact pidfd-pinned coordinator; fence is not clean authority (3658.036019ms)
+✔ buffered authentic CLEAN returned after real cleanup deadline is not authority (34587.106069ms)
+✔ owned upgrade denies bad-target-grants without reviving or replacing prior (3730.96918ms)
+✔ owned upgrade denies bad-target-readiness without reviving or replacing prior (4677.412904ms)
+✔ owned upgrade denies bad-target-call without reviving or replacing prior (5829.876189ms)
+✔ owned upgrade commits a distinct immutable target with original prior history and actual new IPC readiness (5706.950129ms)
+✔ owned upgrade conservative publication: crash-before-accepted (5816.977506ms)
+✔ owned upgrade conservative publication: crash-after-accepted (5918.038211ms)
+✔ owned upgrade conservative publication: crash-after-accepted-fsync (5945.828302ms)
+✔ owned upgrade conservative publication: uncertain-rename (6013.80748ms)
+✔ owned upgrade conservative publication: uncertain-directory-fsync (5820.574828ms)
+✔ owned upgrade conservative publication: crash-before-commit (5903.396262ms)
+✔ owned upgrade conservative publication: crash-after-commit (5916.269336ms)
+✔ owned upgrade conservative publication: uncertain-commit-fsync (5878.274517ms)
+✔ independent watchdog contains synchronous block-cleanup at real deadline (33390.156102ms)
+✔ independent watchdog contains synchronous block-activation at real deadline (33595.56637ms)
+✔ independent watchdog contains synchronous block-maintenance at real deadline (303322.966541ms)
+✔ exact reinstall under continuous same-owner clean custody is a byte/inode/mtime preserving no-op, repeatedly (2821.330865ms)
+✔ exact reinstall fails closed without writes: retained-artifact (2397.826928ms)
+✔ exact reinstall fails closed without writes: retained-extra (2478.969094ms)
+✔ exact reinstall fails closed without writes: retained-missing (2338.914569ms)
+✔ exact reinstall fails closed without writes: authorization (2447.74655ms)
+✔ exact reinstall fails closed without writes: accepted (2465.023588ms)
+✔ exact reinstall fails closed without writes: journal (2381.310987ms)
+✔ exact reinstall fails closed without writes: kernel-malformed (2463.036752ms)
+✔ exact reinstall fails closed without writes: kernel-backward-clock (2444.063295ms)
+✔ exact reinstall fails closed without writes: floor-backward-clock (2377.532205ms)
+✔ exact reinstall fails closed without writes: expired (2449.725953ms)
+✔ exact reinstall fails closed without writes: revoked-bundle (2528.231253ms)
+✔ exact reinstall fails closed without writes: revoked-publisher (2741.34046ms)
+✔ exact reinstall fails closed without writes: revoked-package (2445.001197ms)
+✔ exact reinstall fails closed without writes: same-version-equivocation (2536.827588ms)
+✔ exact reinstall fails closed without writes: missing-trust (2421.001455ms)
+✔ exact reinstall fails closed without writes: candidate-tamper (2514.272045ms)
+✔ exact reinstall fails closed without writes: different-valid-candidate (2273.783482ms)
+✔ normal owner close/reopen cannot reconstruct clean custody from accepted bytes or journal (2306.076683ms)
+✔ unmodified CLI path establishes custody from inception and refuses later residue adoption (3784.817618ms)
+✔ owned coordinator: independent custodian and owner normal reaps precede real stopped verification; original Cell preserved (3571.157049ms)
+✔ owned coordinator loss retains fence at before-fsync-1 (395.321901ms)
+✔ owned coordinator loss retains fence at after-fsync-1 (414.420261ms)
+✔ owned coordinator loss retains fence at before-fsync-2 (349.001647ms)
+✔ owned coordinator loss retains fence at after-fsync-2 (372.4197ms)
+✔ owned coordinator loss retains fence at before-fsync-3 (396.191898ms)
+✔ owned coordinator loss retains fence at after-fsync-3 (348.388422ms)
+✔ owned coordinator loss retains fence at before-READY (3104.434343ms)
+✔ owned coordinator loss retains fence at after-READY (2969.695727ms)
+✔ owned coordinator loss retains fence at before-SEALED (3064.245084ms)
+✔ owned coordinator loss retains fence at after-SEALED (3107.873626ms)
+✔ owned coordinator loss retains fence at before-CLEAN (3418.753028ms)
+✔ owned coordinator loss retains fence at after-CLEAN (3187.422425ms)
+✔ owned coordinator loss retains fence at after-reap (3446.845492ms)
+✔ owned coordinator loss retains fence at before-maintenance (3363.941511ms)
+✔ owned coordinator loss retains fence at after-maintenance (3659.18952ms)
+✔ custodian abnormal death cannot become stopped permission at before-fsync-1 (238.179323ms)
+✔ custodian abnormal death cannot become stopped permission at after-fsync-1 (242.763453ms)
+✔ custodian abnormal death cannot become stopped permission at before-fsync-2 (242.726213ms)
+✔ custodian abnormal death cannot become stopped permission at after-fsync-2 (237.464327ms)
+✔ custodian abnormal death cannot become stopped permission at before-fsync-3 (236.62171ms)
+✔ custodian abnormal death cannot become stopped permission at after-fsync-3 (227.955713ms)
+✔ custodian abnormal death cannot become stopped permission at before-READY (2742.195085ms)
+✔ custodian abnormal death cannot become stopped permission at before-SEALED (2861.045758ms)
+✔ custodian abnormal death cannot become stopped permission at after-SEALED (2680.950797ms)
+✔ custodian abnormal death cannot become stopped permission at before-CLEAN (2862.742114ms)
+✔ custodian abnormal death cannot become stopped permission at after-CLEAN (2940.073684ms)
+✔ exact owner pidfd death denies maintenance at after-READY (2660.920791ms)
+✔ exact owner pidfd death denies maintenance at before-SEALED (2673.245184ms)
+✔ exact owner pidfd death denies maintenance at after-SEALED (2666.785178ms)
+✔ requests queued before seal cannot restart after the seal linearization point (3223.13826ms)
+✔ sealing excludes concurrent v1/v2 starts stops and mutations without a successor (3278.295247ms)
+✔ stopped verification rejects retained tamper without Cell writes (3305.828864ms)
+✔ stopped verification rejects archive tamper without Cell writes (3284.695159ms)
+✔ stopped verification rejects current-trust tamper without Cell writes (3474.455948ms)
+test_actual_guarded_parent_death_contains_child_with_held_pidfd (__main__.Channels.test_actual_guarded_parent_death_contains_child_with_held_pidfd) ... ok
+test_authenticated_receive_return_late_is_not_permission (__main__.Channels.test_authenticated_receive_return_late_is_not_permission) ... ok
+test_forced_child_exit_is_never_normal_reap (__main__.Channels.test_forced_child_exit_is_never_normal_reap) ... ok
+test_late_real_normal_exit_is_not_a_reap_permit (__main__.Channels.test_late_real_normal_exit_is_not_a_reap_permit) ... ok
+test_non_parent_guard_is_rejected (__main__.Channels.test_non_parent_guard_is_rejected) ... ok
+test_plain_inherited_stream_fd_and_closed_channel_are_not_credentials (__main__.Channels.test_plain_inherited_stream_fd_and_closed_channel_are_not_credentials) ... ok
+test_real_child_credentials_and_held_pidfd_normal_reap (__main__.Channels.test_real_child_credentials_and_held_pidfd_normal_reap) ... ok
+test_socketpair_creator_is_not_actual_child_credential (__main__.Channels.test_socketpair_creator_is_not_actual_child_credential) ... ok
+test_syscall_return_late_normal_reap_is_not_permission (__main__.Channels.test_syscall_return_late_normal_reap_is_not_permission) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.147s
+
+OK
+
+✔ stopped verification rejects authorization tamper without Cell writes (3245.683076ms)
+✔ real Unix credentials reject forged/unowned/closed inherited channels and abnormal/late pidfd reaps (255.331752ms)
+✔ independent stopped worker blocked IO expires unchanged verification budget without release (303012.104033ms)
+✔ coordinator death kills the guarded independent stopped worker while retaining residue (3071.168755ms)
+✔ real owner blocked IO expires unchanged cleanup budget without offline admission (32611.792593ms)
+✔ real owner blocked IO expires unchanged verification budget without offline admission (300243.008503ms)
+✔ buffered genuine CLEAN and normal child exit cannot certify after the unchanged reap deadline (33489.880116ms)
+✔ blocked seal acknowledgement expires the actual unchanged cleanup budget without maintenance (32623.635126ms)
+ℹ tests 93
+ℹ suites 0
+ℹ pass 93
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 788176.488912

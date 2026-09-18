@@ -1,0 +1,18 @@
+{"event":"send","pid":233903,"packet":"GO"}
+{"event":"packet","pid":233903,"child":233910,"packet":"SEALING"}
+{"event":"send","pid":233903,"packet":"SEAL"}
+{"event":"packet","pid":233903,"child":233910,"packet":"CLEAN {\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:828707d3e5ce86feaddf3432a8cf23497c0e8596d1a68696235869bed849bc25\"}"}
+{"event":"clean-boundary","pid":233903}
+{"event":"send","pid":233903,"packet":"ACK"}
+{"event":"send","pid":233903,"packet":"CLEANUP"}
+{"event":"packet","pid":233903,"child":233910,"packet":"ACK"}
+{"event":"send","pid":233903,"packet":"RESUME"}
+{"event":"packet","pid":233903,"child":233910,"packet":"ACK"}
+{"event":"send","pid":233903,"packet":"CLEANUP"}
+{"event":"packet","pid":233903,"child":233910,"packet":"ACK"}
+{"event":"send","pid":233903,"packet":"RESUME"}
+{"event":"packet","pid":233903,"child":233910,"packet":"ACK"}
+{"event":"send","pid":233903,"packet":"ACTIVATION"}
+{"event":"packet","pid":233903,"child":233910,"packet":"ACK"}
+{"event":"accepted-renamed","pid":233903}
+{"event":"accepted-directory-fsync","pid":233903}

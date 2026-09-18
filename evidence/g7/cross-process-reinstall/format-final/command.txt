@@ -1,0 +1,1 @@
+./node_modules/.bin/prettier --write tools/g7-cell.mjs tools/g7-owned-bridge.mjs tools/g7-owned-cli.mjs tests/g7/cross-process-reinstall.test.mjs tests/g7/cross-process-block.mjs tests/g7/cross-process-channel.test.mjs tests/g7/cross-process-target.mjs && python3 -m py_compile tools/g7-owned-coordinator.py && git diff --check

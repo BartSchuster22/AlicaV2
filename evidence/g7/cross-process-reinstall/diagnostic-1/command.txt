@@ -1,0 +1,1 @@
+G7_CROSS_EVIDENCE="$PWD/evidence/g7/cross-process-reinstall/diagnostic-1/process" node --experimental-vm-modules --test --test-name-pattern="actual original" tests/g7/cross-process-reinstall.test.mjs

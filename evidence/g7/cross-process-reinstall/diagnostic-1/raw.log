@@ -1,0 +1,19 @@
+✖ cross-process exact reinstall: actual original Cell/Kernel bytes and inodes preserved, fence retained (20190.229981ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 20485.47681
+
+✖ failing tests:
+
+test at tests/g7/cross-process-reinstall.test.mjs:48:1
+✖ cross-process exact reinstall: actual original Cell/Kernel bytes and inodes preserved, fence retained (20190.229981ms)
+  Error: condition timed out
+      at wait (file:///home/alica-dev/AlicaV2/tests/g7/cross-process-reinstall.test.mjs:16:8)
+      at async TestContext.<anonymous> (file:///home/alica-dev/AlicaV2/tests/g7/cross-process-reinstall.test.mjs:50:2)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)

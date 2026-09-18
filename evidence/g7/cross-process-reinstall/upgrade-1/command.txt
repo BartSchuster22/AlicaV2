@@ -1,0 +1,1 @@
+npm run build:g7-native && G7_CROSS_EVIDENCE="$PWD/evidence/g7/cross-process-reinstall/upgrade-1/process" node --experimental-vm-modules --test --test-name-pattern="owned upgrade|cross-process exact" tests/g7/cross-process-reinstall.test.mjs

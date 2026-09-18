@@ -1,0 +1,119 @@
+{
+  "purpose": "integrity and test qualification only, not custody authority or G7 acceptance",
+  "inventories": {
+    "local": {
+      "head": "bd90730511bb20950bd5564cb394055e82105fe8",
+      "originalFiles": 10083,
+      "changedOriginalFiles": [
+        "native/g7/ownership.c",
+        "tools/g7-cell.mjs",
+        "tools/g7-owned-coordinator.py"
+      ],
+      "addedNonEvidenceFiles": [
+        "docs/g7/R1-CROSS-PROCESS-REINSTALL-CHECKPOINT.md",
+        "docs/g7/R1-CROSS-PROCESS-REINSTALL-EXECUTION.md",
+        "tests/g7/cross-process-block.mjs",
+        "tests/g7/cross-process-channel.test.mjs",
+        "tests/g7/cross-process-reinstall.test.mjs",
+        "tests/g7/cross-process-target.mjs",
+        "tools/g7-owned-bridge.mjs",
+        "tools/g7-owned-cli.mjs"
+      ],
+      "unchangedOriginalEvidenceFiles": 9720,
+      "beforeSha256": "c27011608994792f6ea7f5efdd7aae995bf02108168e47b6feaf70ad5580edb5",
+      "afterSha256": "dc71c548eb8be6dcf0ac277132b09b2d9606350de221d91412b80beb28732bf1"
+    },
+    "development": {
+      "head": "bd90730511bb20950bd5564cb394055e82105fe8",
+      "originalFiles": 11652,
+      "changedOriginalFiles": [
+        "native/g7/ownership.c",
+        "tools/g7-cell.mjs",
+        "tools/g7-owned-coordinator.py"
+      ],
+      "addedNonEvidenceFiles": [
+        "docs/g7/R1-CROSS-PROCESS-REINSTALL-CHECKPOINT.md",
+        "docs/g7/R1-CROSS-PROCESS-REINSTALL-EXECUTION.md",
+        "tests/g7/cross-process-block.mjs",
+        "tests/g7/cross-process-channel.test.mjs",
+        "tests/g7/cross-process-reinstall.test.mjs",
+        "tests/g7/cross-process-target.mjs",
+        "tools/g7-owned-bridge.mjs",
+        "tools/g7-owned-cli.mjs"
+      ],
+      "unchangedOriginalEvidenceFiles": 11271,
+      "beforeSha256": "ee03f711a0846568cf60f620e3ef68b7b48d8eb910cced2948896bdee3f4a160",
+      "afterSha256": "527fdb58f6d00a39e8a1024ee55015600aa25b145084a4a274bc966366c4ecdf"
+    }
+  },
+  "runs": {
+    "focused-final-2": {
+      "exit": 0,
+      "rawLogSha256": "ee97cc06e8d7c8160890a8d93ae4000c5bf4c0a017b34077d426ded8ad1c4d2b",
+      "sourceBeforeAfterSha256": "e3388a43e76a751170ae7825d3b310c98798e5342371fe44c8876032dab9555b",
+      "sourceFileCount": 9,
+      "summaries": [
+        "\u2139 tests 93",
+        "\u2139 suites 0",
+        "\u2139 pass 93",
+        "\u2139 fail 0",
+        "\u2139 cancelled 0",
+        "\u2139 skipped 0",
+        "\u2139 todo 0",
+        "\u2139 duration_ms 788176.488912"
+      ]
+    },
+    "full-final": {
+      "exit": 0,
+      "rawLogSha256": "5a4e57f94668f6fe8ffe0f2ac576123be03a026d53e09e95068b0862f9873eef",
+      "sourceBeforeAfterSha256": "63690260ce9a12b88e9adda7333a6efe847e58ff8951b4ef25a022f029618444",
+      "sourceFileCount": 11,
+      "summaries": [
+        "\u2139 tests 170",
+        "\u2139 suites 0",
+        "\u2139 pass 170",
+        "\u2139 fail 0",
+        "\u2139 cancelled 0",
+        "\u2139 skipped 0",
+        "\u2139 todo 0",
+        "\u2139 duration_ms 6028.535718",
+        "\u2139 tests 162",
+        "\u2139 suites 0",
+        "\u2139 pass 162",
+        "\u2139 fail 0",
+        "\u2139 cancelled 0",
+        "\u2139 skipped 0",
+        "\u2139 todo 0",
+        "\u2139 duration_ms 165311.561559",
+        "\u2139 tests 302",
+        "\u2139 suites 0",
+        "\u2139 pass 302",
+        "\u2139 fail 0",
+        "\u2139 cancelled 0",
+        "\u2139 skipped 0",
+        "\u2139 todo 0",
+        "\u2139 duration_ms 963409.912318"
+      ]
+    }
+  },
+  "sourceHashes": {
+    "native/g7/ownership.c": "3eda0895c8839ad52f66cf7301f14598fc9c5d2fefd88e85fc3cd6f860dfb55e",
+    "tools/g7-owned-coordinator.py": "9205fef3c4cd18369df68e941f0257a8ce816460058d6f7e99b416a35e462800",
+    "tools/g7-cell.mjs": "1670e4a27c94901a863e61e07eaadc3ca91752c891147c998993ecc75d047029",
+    "tools/g7-owned-bridge.mjs": "88a82539fa60a7d6f766c12dcb990a460efcc70341220441b4de47b086075c6c",
+    "tools/g7-owned-cli.mjs": "e56894ff1c4237d8c93ce183255bde938eebda822ea4eeaa6c29269c75a067c6",
+    "tests/g7/cross-process-reinstall.test.mjs": "925369bc7dda1d5d31fdee2c3fd9996381b409fdc53c5f8cc2d2a6e76a5447c5",
+    "tests/g7/cross-process-block.mjs": "bd579e459aa509f9e832906e32e3d571e66d1d91b8ccb8e0728059ad6f0e9662",
+    "tests/g7/cross-process-channel.test.mjs": "4558994281c02754176c9ee04c26ff87c7f58b8b9264dbc313a6bba66b24b797",
+    "tests/g7/cross-process-target.mjs": "d41588117bb8e0c58142bb6acdc4dfb2e34574fbfaaca6f1ea850692f61e4da9"
+  },
+  "documentHashes": {
+    "docs/g7/R1-CROSS-PROCESS-REINSTALL-CHECKPOINT.md": "6efddf301eb41fd1d9813dcb92cd178450911f6026aeb734da06bcb054930ba3",
+    "docs/g7/R1-CROSS-PROCESS-REINSTALL-EXECUTION.md": "8fa4ee97065d41cb196fa533344d29497b18e7d468f529d1d02a4c5650390ca4"
+  },
+  "nativeBuild": {
+    "receiptSha256": "efcd883ba860abb4068d7db2c0fe6d51b89eb7f34cea17fddff63c46a1d0daf9",
+    "sourceSha256": "3eda0895c8839ad52f66cf7301f14598fc9c5d2fefd88e85fc3cd6f860dfb55e",
+    "outputSha256": "ee9831332c517f4e8a9ab85b28a726a9d4fae9b7ccedc1d503d5c459c221793a"
+  }
+}

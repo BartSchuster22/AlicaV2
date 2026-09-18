@@ -1,0 +1,5 @@
+{"event":"send","pid":229108,"packet":"GO"}
+{"event":"packet","pid":229108,"child":229115,"packet":"SEALING"}
+{"event":"send","pid":229108,"packet":"SEAL"}
+{"event":"packet","pid":229108,"child":229115,"packet":"CLEAN {\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:b02bce38f7ca2fdc63a8787b24420ac7a00dcd003f4296f813e4f09549607e39\"}"}
+{"event":"clean-boundary","pid":229108}

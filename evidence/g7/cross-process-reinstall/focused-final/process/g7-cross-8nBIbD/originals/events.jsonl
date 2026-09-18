@@ -1,0 +1,21 @@
+{"event":"send","pid":233230,"packet":"GO"}
+{"event":"packet","pid":233230,"child":233240,"packet":"SEALING"}
+{"event":"send","pid":233230,"packet":"SEAL"}
+{"event":"packet","pid":233230,"child":233240,"packet":"CLEAN {\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:cdaf9c8cc9664889bb1a406c38fa4a724da2c69432dc81fc3536d235f6389b64\"}"}
+{"event":"clean-boundary","pid":233230}
+{"event":"send","pid":233230,"packet":"ACK"}
+{"event":"send","pid":233230,"packet":"CLEANUP"}
+{"event":"packet","pid":233230,"child":233240,"packet":"ACK"}
+{"event":"send","pid":233230,"packet":"RESUME"}
+{"event":"packet","pid":233230,"child":233240,"packet":"ACK"}
+{"event":"send","pid":233230,"packet":"CLEANUP"}
+{"event":"packet","pid":233230,"child":233240,"packet":"ACK"}
+{"event":"send","pid":233230,"packet":"RESUME"}
+{"event":"packet","pid":233230,"child":233240,"packet":"ACK"}
+{"event":"send","pid":233230,"packet":"ACTIVATION"}
+{"event":"packet","pid":233230,"child":233240,"packet":"ACK"}
+{"event":"send","pid":233230,"packet":"CLEANUP"}
+{"event":"packet","pid":233230,"child":233240,"packet":"ACK"}
+{"event":"send","pid":233230,"packet":"RESUME"}
+{"event":"packet","pid":233230,"child":233240,"packet":"ACK"}
+{"event":"commit-linked","pid":233230}

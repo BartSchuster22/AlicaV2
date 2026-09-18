@@ -1,0 +1,15 @@
+Post-test collection issue (not a test failure)
+
+Full npm run check and focused-final-2 had completed with exit 0 before this issue.
+The first finalization helper collected the after inventories and status, then its
+read-only SSH receipt fetch failed because nested Python quotes were not shell-escaped.
+Observed remote stderr:
+  File "<string>", line 1
+    from pathlib import Path; print(Path(native/g7/build/receipt.json).read_text(),end=)
+                                                                                   ^^^^
+SyntaxError: expected argument value expression
+The helper exited 1 before running the verifier or generating a success manifest.
+The receipt-fetch command was corrected with shlex.quote. No runtime/test source,
+test outcome, deadline, historical evidence or accepted Cell was changed. Final
+collection/verification was then rerun; its actual result is in verification.json.
+This note records the tool-visible collection failure; it is not a synthetic raw log.

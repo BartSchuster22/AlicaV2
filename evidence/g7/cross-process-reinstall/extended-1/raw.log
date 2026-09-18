@@ -1,0 +1,35 @@
+✔ anonymous packet channel authenticates exact real child credentials; pidfd pins lifetime (29.237068ms)
+✔ same-uid grandchild cannot forge exact coordinator credentials on inherited channel (28.506743ms)
+✔ rejects unauthenticated ancillary/truncated/empty packet: rights (23.170805ms)
+✔ rejects unauthenticated ancillary/truncated/empty packet: oversize (22.90709ms)
+✔ rejects unauthenticated ancillary/truncated/empty packet: empty (21.129191ms)
+✔ cross-process exact reinstall: actual original Cell/Kernel bytes and inodes preserved, fence retained (3243.578115ms)
+✔ cross-process rejects same-version-equivocation (3216.897754ms)
+✔ cross-process rejects revoked-bundle (3191.642689ms)
+✔ cross-process rejects authorization (3193.106148ms)
+✔ cross-process rejects archive (3279.984818ms)
+✔ cross-process rejects forged-clean (3124.149135ms)
+✔ cross-process rejects kill-coordinator (3122.548577ms)
+✖ continuous separate flock competitor and concurrent constructors cannot enter owned lifecycle (30025.482285ms)
+✔ owned upgrade commits a distinct immutable target with original prior history and actual new IPC readiness (5513.841877ms)
+✔ owned upgrade conservative publication: crash-before-accepted (5371.59431ms)
+✔ owned upgrade conservative publication: crash-after-accepted (5300.238359ms)
+✔ owned upgrade conservative publication: crash-after-accepted-fsync (5380.649922ms)
+✔ owned upgrade conservative publication: uncertain-rename (5431.71938ms)
+✔ owned upgrade conservative publication: uncertain-directory-fsync (5420.006804ms)
+✔ independent watchdog contains synchronous block-cleanup at real deadline (33198.271147ms)
+✔ independent watchdog contains synchronous block-maintenance at real deadline (303142.868565ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 1
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 421439.564491
+
+✖ failing tests:
+
+test at tests/g7/cross-process-reinstall.test.mjs:86:1
+✖ continuous separate flock competitor and concurrent constructors cannot enter owned lifecycle (30025.482285ms)
+  'test timed out after 30000ms'

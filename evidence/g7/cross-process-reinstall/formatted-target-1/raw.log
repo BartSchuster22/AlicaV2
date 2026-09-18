@@ -1,0 +1,92 @@
+tools/g7-cell.mjs 202ms
+tools/g7-owned-bridge.mjs 17ms
+tools/g7-owned-cli.mjs 5ms
+tests/g7/cross-process-reinstall.test.mjs 56ms
+tests/g7/cross-process-block.mjs 13ms
+tests/g7/cross-process-channel.test.mjs 8ms
+tests/g7/cross-process-target.mjs 16ms
+✔ continuous separate flock competitor and concurrent constructors cannot enter owned lifecycle (5677.058274ms)
+✔ maintenance parent death contains exact pidfd-pinned coordinator; fence is not clean authority (3152.615732ms)
+✔ buffered authentic CLEAN returned after real cleanup deadline is not authority (34220.027463ms)
+✖ owned upgrade denies bad-target-grants without reviving or replacing prior (20174.432748ms)
+✖ owned upgrade denies bad-target-readiness without reviving or replacing prior (20150.450114ms)
+✖ owned upgrade denies bad-target-call without reviving or replacing prior (20168.474894ms)
+✔ owned upgrade commits a distinct immutable target with original prior history and actual new IPC readiness (5475.655973ms)
+✔ owned upgrade conservative publication: crash-before-accepted (5414.01869ms)
+✔ owned upgrade conservative publication: crash-after-accepted (5549.826037ms)
+✔ owned upgrade conservative publication: crash-after-accepted-fsync (5424.160215ms)
+✔ owned upgrade conservative publication: uncertain-rename (5701.668765ms)
+✔ owned upgrade conservative publication: uncertain-directory-fsync (5480.641598ms)
+✖ owned upgrade conservative publication: crash-before-commit (5343.044277ms)
+✖ owned upgrade conservative publication: crash-after-commit (5519.516558ms)
+✔ owned upgrade conservative publication: uncertain-commit-fsync (5803.807224ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 10
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 153571.785204
+
+✖ failing tests:
+
+test at tests/g7/cross-process-reinstall.test.mjs:346:3
+✖ owned upgrade denies bad-target-grants without reviving or replacing prior (20174.432748ms)
+  Error: condition timed out
+      at wait (file:///home/alica-dev/AlicaV2/tests/g7/cross-process-reinstall.test.mjs:37:9)
+      at async TestContext.<anonymous> (file:///home/alica-dev/AlicaV2/tests/g7/cross-process-reinstall.test.mjs:351:7)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/g7/cross-process-reinstall.test.mjs:346:3
+✖ owned upgrade denies bad-target-readiness without reviving or replacing prior (20150.450114ms)
+  Error: condition timed out
+      at wait (file:///home/alica-dev/AlicaV2/tests/g7/cross-process-reinstall.test.mjs:37:9)
+      at async TestContext.<anonymous> (file:///home/alica-dev/AlicaV2/tests/g7/cross-process-reinstall.test.mjs:351:7)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/g7/cross-process-reinstall.test.mjs:346:3
+✖ owned upgrade denies bad-target-call without reviving or replacing prior (20168.474894ms)
+  Error: condition timed out
+      at wait (file:///home/alica-dev/AlicaV2/tests/g7/cross-process-reinstall.test.mjs:37:9)
+      at async TestContext.<anonymous> (file:///home/alica-dev/AlicaV2/tests/g7/cross-process-reinstall.test.mjs:351:7)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/g7/cross-process-reinstall.test.mjs:461:3
+✖ owned upgrade conservative publication: crash-before-commit (5343.044277ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'COMMITTED'
+  - 'ACTIVATING'
+  
+      at TestContext.<anonymous> (file:///home/alica-dev/AlicaV2/tests/g7/cross-process-reinstall.test.mjs:478:14)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'COMMITTED',
+    expected: 'ACTIVATING',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/g7/cross-process-reinstall.test.mjs:461:3
+✖ owned upgrade conservative publication: crash-after-commit (5519.516558ms)
+  Error [AcapError]: INVALID_ARGUMENT
+      at fail (file:///home/alica-dev/AlicaV2/packages/acap-contracts/dist/validation.js:31:11)
+      at check (file:///home/alica-dev/AlicaV2/packages/acap-contracts/dist/validation.js:35:9)
+      at validateJournal (file:///home/alica-dev/AlicaV2/tools/g7-cell.mjs:145:7)
+      at file:///home/alica-dev/AlicaV2/tests/g7/cross-process-reinstall.test.mjs:378:26
+      at Array.map (<anonymous>)
+      at journals (file:///home/alica-dev/AlicaV2/tests/g7/cross-process-reinstall.test.mjs:372:56)
+      at TestContext.<anonymous> (file:///home/alica-dev/AlicaV2/tests/g7/cross-process-reinstall.test.mjs:476:18)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    code: 'INVALID_ARGUMENT',
+    correlationId: 'f62cfd5b-ca0c-4c1f-9729-45570512e911',
+    retryable: false
+  }

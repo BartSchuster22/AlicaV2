@@ -1,0 +1,61 @@
+bd90730511bb20950bd5564cb394055e82105fe8
+ M native/g7/ownership.c
+ M tools/g7-cell.mjs
+ M tools/g7-owned-coordinator.py
+?? G6-APPROVED-IMPLEMENTATION-STATUS.md
+?? G6-CORRECTION-BASELINE.json
+?? G6-CORRECTION-FIX-BASELINE.json
+?? G6-CORRECTION-FIX-STATUS.md
+?? G6-CORRECTION-FIX-TRANSFER.json
+?? G6-CORRECTION-STATUS.md
+?? G6-CORRECTION-TRANSFER.json
+?? G6-FULL-QUALIFICATION-BASELINE.json
+?? G6-FULL-QUALIFICATION-STATUS.md
+?? G6-FULL-QUALIFICATION-TRANSFER.json
+?? G6-HOST-INTEGRATION-STATUS.md
+?? G6-IMPLEMENTATION-TRANSFER.json
+?? G6-ISOLATION-BASELINE.json
+?? G6-ISOLATION-STATUS.md
+?? G6-ISOLATION-TRANSFER.json
+?? G6-PRODUCTION-CLOSURE-BASELINE.json
+?? G6-PRODUCTION-CLOSURE-STATUS.md
+?? G6-PRODUCTION-CLOSURE-TRANSFER.json
+?? docs/g7/R1-CROSS-PROCESS-REINSTALL-CHECKPOINT.md
+?? docs/g7/R1-CROSS-PROCESS-REINSTALL-EXECUTION.md
+?? evidence/g6-runtime/correction-fix-local-syntax.log
+?? evidence/g6-runtime/correction-fix-parent-run.log
+?? evidence/g6-runtime/correction-local-syntax.log
+?? evidence/g6-runtime/correction-parent-run.log
+?? evidence/g6-runtime/final-isolation-repeat.log
+?? evidence/g6-runtime/full-qualification-first-target.log
+?? evidence/g6-runtime/full-qualification-local-check.log
+?? evidence/g6-runtime/isolation-diagnostic-repeat.log
+?? evidence/g6-runtime/isolation-diagnostic-trace.log
+?? evidence/g6-runtime/isolation-open-diagnostic.log
+?? evidence/g6-runtime/isolation-regressions-and-repeat.log
+?? evidence/g6-runtime/isolation-target.log
+?? evidence/g6-runtime/parent-components.log
+?? evidence/g6-runtime/post-regression-process-check.json
+?? evidence/g6-runtime/pre-isolation-full-ipc.log
+?? evidence/g6-runtime/pre-isolation-regressions.log
+?? evidence/g6-runtime/production-closure-diagnostic-2.log
+?? evidence/g6-runtime/production-closure-runtime-target.log
+?? evidence/g6-runtime/production-closure-target.log
+?? evidence/g6-runtime/publication-check.log
+?? evidence/g6-runtime/restart-check.log
+?? evidence/g6-runtime/restart-preserved.tar.gz
+?? evidence/g6-runtime/runtime-build.log
+?? evidence/g6-runtime/scheduler-test.log
+?? evidence/g7/admin-amendment-process/
+?? evidence/g7/cross-process-reinstall/
+?? tests/g7/cross-process-block.mjs
+?? tests/g7/cross-process-channel.test.mjs
+?? tests/g7/cross-process-reinstall.test.mjs
+?? tests/g7/cross-process-target.mjs
+?? tools/g7-owned-bridge.mjs
+?? tools/g7-owned-cli.mjs
+    PID    PPID     ELAPSED COMMAND
+ 247820       1       00:02 /usr/lib/systemd/systemd --user
+ 247822  247820       00:02 (sd-pam)
+ 247934  247889       00:00 sshd: alica-dev@notty
+ 247935  247934       00:00 ps -u alica-dev -o pid,ppid,etime,args

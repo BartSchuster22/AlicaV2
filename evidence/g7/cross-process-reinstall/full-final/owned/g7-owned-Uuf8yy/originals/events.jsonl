@@ -1,0 +1,23 @@
+{"event": "before-GO", "pid": 244921, "parent": 244221, "monotonic": 163579.799564541}
+{"event": "after-GO", "pid": 244921, "parent": 244221, "monotonic": 163579.79976521}
+{"event": "before-fsync", "pid": 244922, "parent": 244921, "monotonic": 163579.800686062}
+{"event": "before-fsync-1", "pid": 244922, "parent": 244921, "monotonic": 163579.80076953}
+{"event": "after-fsync-1", "pid": 244922, "parent": 244921, "monotonic": 163579.801751949}
+{"event": "after-fsync", "pid": 244922, "parent": 244921, "monotonic": 163579.801830919}
+{"event": "before-fsync", "pid": 244922, "parent": 244921, "monotonic": 163579.802055872}
+{"event": "before-fsync-2", "pid": 244922, "parent": 244921, "monotonic": 163579.802117338}
+{"event": "after-fsync-2", "pid": 244922, "parent": 244921, "monotonic": 163579.802982046}
+{"event": "after-fsync", "pid": 244922, "parent": 244921, "monotonic": 163579.803060143}
+{"event": "before-fsync", "pid": 244922, "parent": 244921, "monotonic": 163579.803119645}
+{"event": "before-fsync-3", "pid": 244922, "parent": 244921, "monotonic": 163579.803161313}
+{"event": "after-fsync-3", "pid": 244922, "parent": 244921, "monotonic": 163579.803828078}
+{"event": "after-fsync", "pid": 244922, "parent": 244921, "monotonic": 163579.803887971}
+{"event": "owner-spawn", "pid": 244922, "parent": 244921, "monotonic": 163579.804770643, "child": 244923, "pidfd": 11}
+{"event": "before-READY", "pid": 244922, "parent": 244921, "monotonic": 163582.240319933}
+{"event": "after-READY", "pid": 244922, "parent": 244921, "monotonic": 163582.240493529}
+{"event": "before-SEAL", "pid": 244921, "parent": 244221, "monotonic": 163582.2407169}
+{"event": "after-SEAL", "pid": 244921, "parent": 244221, "monotonic": 163582.24082874}
+{"event": "before-SEALED", "pid": 244922, "parent": 244921, "monotonic": 163582.290942887}
+{"event": "after-SEALED", "pid": 244922, "parent": 244921, "monotonic": 163582.291127765}
+{"event": "owner-waitpid", "pid": 244922, "parent": 244921, "monotonic": 163582.465175574, "child": 244923, "pidfd": 11, "status": 0}
+{"event": "before-CLEAN", "pid": 244922, "parent": 244921, "monotonic": 163582.465339021}

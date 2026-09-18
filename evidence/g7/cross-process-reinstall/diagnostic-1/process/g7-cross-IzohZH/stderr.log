@@ -1,0 +1,9 @@
+TEST-ONLY Error: Unauthenticated packet
+    at native.packetReceive (file:///home/alica-dev/AlicaV2/tests/g7/cross-process-block.mjs:23:20)
+    at receive (file:///home/alica-dev/AlicaV2/tools/g7-owned-bridge.mjs:22:29)
+    at async ownedStop (file:///home/alica-dev/AlicaV2/tools/g7-owned-bridge.mjs:43:12)
+    at async file:///home/alica-dev/AlicaV2/tools/g7-cell.mjs:212:23
+    at async #run (file:///home/alica-dev/AlicaV2/tools/g7-cell.mjs:373:14)
+    at async CellPreparation.ownedReinstall (file:///home/alica-dev/AlicaV2/tests/g7/cross-process-block.mjs:9:16)
+    at async file:///home/alica-dev/AlicaV2/tools/g7-owned-cli.mjs:14:18
+{"status":"NEEDS_OPERATOR","fence":"RETAINED"}

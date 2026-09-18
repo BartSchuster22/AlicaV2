@@ -1,0 +1,17 @@
+{"event":"send","pid":229455,"packet":"GO"}
+{"event":"packet","pid":229455,"child":229462,"packet":"SEALING"}
+{"event":"send","pid":229455,"packet":"SEAL"}
+{"event":"packet","pid":229455,"child":229462,"packet":"CLEAN {\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:500b9d35ecfb8db89618dfc633101c874fa5c52087297471bba389854c6063a0\"}"}
+{"event":"clean-boundary","pid":229455}
+{"event":"send","pid":229455,"packet":"ACK"}
+{"event":"send","pid":229455,"packet":"CLEANUP"}
+{"event":"packet","pid":229455,"child":229462,"packet":"ACK"}
+{"event":"send","pid":229455,"packet":"RESUME"}
+{"event":"packet","pid":229455,"child":229462,"packet":"ACK"}
+{"event":"send","pid":229455,"packet":"CLEANUP"}
+{"event":"packet","pid":229455,"child":229462,"packet":"ACK"}
+{"event":"send","pid":229455,"packet":"RESUME"}
+{"event":"packet","pid":229455,"child":229462,"packet":"ACK"}
+{"event":"send","pid":229455,"packet":"ACTIVATION"}
+{"event":"packet","pid":229455,"child":229462,"packet":"ACK"}
+{"event":"accepted-renamed","pid":229455}

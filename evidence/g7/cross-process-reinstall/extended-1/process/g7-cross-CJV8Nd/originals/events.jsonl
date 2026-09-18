@@ -1,0 +1,11 @@
+{"event":"send","pid":227469,"packet":"GO"}
+{"event":"packet","pid":227469,"child":227476,"packet":"SEALING"}
+{"event":"send","pid":227469,"packet":"SEAL"}
+{"event":"packet","pid":227469,"child":227476,"packet":"CLEAN {\"status\":\"STOPPED\",\"sequence\":1,\"acceptedDigest\":\"sha256:eb49fa9db83429e4692139bad39ed0994da6398f7aedeb6b6109f73e55d634e3\"}"}
+{"event":"clean-boundary","pid":227469}
+{"event":"send","pid":227469,"packet":"ACK"}
+{"event":"send","pid":227469,"packet":"CLEANUP"}
+{"event":"packet","pid":227469,"child":227476,"packet":"ACK"}
+{"event":"send","pid":227469,"packet":"RESUME"}
+{"event":"packet","pid":227469,"child":227476,"packet":"ACK"}
+{"event":"send","pid":227469,"packet":"DONE"}

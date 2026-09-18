@@ -1,0 +1,25 @@
+{"event": "before-GO", "pid": 245732, "parent": 244221, "monotonic": 163613.498612085}
+{"event": "after-GO", "pid": 245732, "parent": 244221, "monotonic": 163613.498765474}
+{"event": "before-fsync", "pid": 245734, "parent": 245732, "monotonic": 163613.499446246}
+{"event": "before-fsync-1", "pid": 245734, "parent": 245732, "monotonic": 163613.499616967}
+{"event": "after-fsync-1", "pid": 245734, "parent": 245732, "monotonic": 163613.500795756}
+{"event": "after-fsync", "pid": 245734, "parent": 245732, "monotonic": 163613.500872952}
+{"event": "before-fsync", "pid": 245734, "parent": 245732, "monotonic": 163613.501135395}
+{"event": "before-fsync-2", "pid": 245734, "parent": 245732, "monotonic": 163613.501191812}
+{"event": "after-fsync-2", "pid": 245734, "parent": 245732, "monotonic": 163613.502312182}
+{"event": "after-fsync", "pid": 245734, "parent": 245732, "monotonic": 163613.502373166}
+{"event": "before-fsync", "pid": 245734, "parent": 245732, "monotonic": 163613.502422459}
+{"event": "before-fsync-3", "pid": 245734, "parent": 245732, "monotonic": 163613.502473064}
+{"event": "after-fsync-3", "pid": 245734, "parent": 245732, "monotonic": 163613.503259125}
+{"event": "after-fsync", "pid": 245734, "parent": 245732, "monotonic": 163613.503305622}
+{"event": "owner-spawn", "pid": 245734, "parent": 245732, "monotonic": 163613.504103163, "child": 245740, "pidfd": 11}
+{"event": "before-READY", "pid": 245734, "parent": 245732, "monotonic": 163615.936618587}
+{"event": "after-READY", "pid": 245734, "parent": 245732, "monotonic": 163615.936731581}
+{"event": "before-SEAL", "pid": 245732, "parent": 244221, "monotonic": 163615.936904426}
+{"event": "after-SEAL", "pid": 245732, "parent": 244221, "monotonic": 163615.936993123}
+{"event": "before-SEALED", "pid": 245734, "parent": 245732, "monotonic": 163615.987124481}
+{"event": "owner-killed", "pid": 245734, "parent": 245732, "monotonic": 163615.987291816, "child": 245740, "pidfd": 11}
+{"event": "after-SEALED", "pid": 245734, "parent": 245732, "monotonic": 163615.987394299}
+{"event": "owner-waitpid", "pid": 245734, "parent": 245732, "monotonic": 163616.002129741, "child": 245740, "pidfd": 11, "status": -9}
+{"event": "before-UNCERTAIN", "pid": 245734, "parent": 245732, "monotonic": 163616.002236352}
+{"event": "after-UNCERTAIN", "pid": 245734, "parent": 245732, "monotonic": 163616.002304039}

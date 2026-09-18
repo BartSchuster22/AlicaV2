@@ -1,8 +1,10 @@
 """CLI-owned lifecycle, never a detached-custodian adoption API.
 
-Only run() creates the fork/channel/lock relationship. No supplied fd, PID,
-clean flag, socket path or persisted receipt can construct an owned lifecycle.
-The first offline action is read-only stopped release verification, NOT reinstall.
+Only run() creates the actual fork/channel lifecycle. The private inception-child
+entry inherits a lock/channel but must still install, seal and normally reap the
+real owner and custodian: no descriptor is a supplied clean certificate.
+The original CLI remains read-only stopped verification. The inception-child
+path supports the continuous maintenance parent's reinstall/upgrade operation.
 Supervision residue is deliberately never retired, even on success.
 """
 import ctypes
@@ -93,12 +95,34 @@ def normal_reap(pid, pidfd, end):
         raise RuntimeError('not a normal exact child reap')
 
 
-def run(node, root, inputs):
+def run(node, root, inputs, inception=None):
     parent = os.getppid()
     parent_fd = os.pidfd_open(parent)
     guard_parent(parent)
-    held = base.private_root(root)
-    base.fcntl.flock(held, base.fcntl.LOCK_EX | base.fcntl.LOCK_NB)
+    if inception is None:
+        held = base.private_root(root)
+        base.fcntl.flock(held, base.fcntl.LOCK_EX | base.fcntl.LOCK_NB)
+    else:
+        # An inherited lock is an inception input, NEVER supplied clean authority.
+        # This branch still performs the entire actual install/seal/reap lifecycle.
+        held, outer = inception
+        checked = base.private_root(root)
+        try:
+            a, b = os.fstat(held), os.fstat(checked)
+            if (a.st_dev, a.st_ino) != (b.st_dev, b.st_ino):
+                raise RuntimeError('root changed')
+            try:
+                base.fcntl.flock(checked, base.fcntl.LOCK_EX | base.fcntl.LOCK_NB)
+            except BlockingIOError:
+                pass
+            else:
+                raise RuntimeError('inception custody absent')
+            base.fcntl.flock(held, base.fcntl.LOCK_EX | base.fcntl.LOCK_NB)
+        finally:
+            os.close(checked)
+        if until(outer, parent, parent_fd,
+                 time.monotonic() + LIMITS['adminTimeoutMs'] / 1000) != b'GO':
+            raise RuntimeError('invalid inception')
     # No adopting an arbitrary detached supervisor, even if it is already stopped.
     if 'supervision' in os.listdir(held):
         raise RuntimeError('existing custody is not owned')
@@ -188,6 +212,8 @@ def run(node, root, inputs):
         try:
             control.close()
             os.close(parent_fd)
+            if inception is not None:
+                outer.close()
             guard_parent(creator)
             # Parent holds a pidfd before allowing any Cell effects.
             if until(child_control, creator, os.pidfd_open(creator),
@@ -204,6 +230,10 @@ def run(node, root, inputs):
         send(control, b'GO')
         if until(control, pid, pidfd, inception_end) != b'READY':
             raise RuntimeError('not ready')
+        if inception is not None:
+            send(outer, b'SEALING')
+            if until(outer, parent, parent_fd, inception_end) != b'SEAL':
+                raise RuntimeError('invalid outer seal')
         end = time.monotonic() + LIMITS['cleanupTimeoutMs'] / 1000
         send(control, b'SEAL')
         if until(control, pid, pidfd, end) != b'SEALED':
@@ -215,6 +245,42 @@ def run(node, root, inputs):
         if set(stopped) != {'status', 'sequence', 'acceptedDigest'} or stopped['status'] != 'STOPPED':
             raise RuntimeError('invalid clean receipt')
         normal_reap(pid, pidfd, end)
+        if inception is not None:
+            # Only actual normal owned reaps reach this private relationship.
+            # Parent authenticates this packet before maintenance. This child
+            # remains its watchdog and must be normally reaped before SUCCESS.
+            send(outer, result)
+            if until(outer, parent, parent_fd, end) != b'ACK':
+                raise RuntimeError('invalid outer acknowledgment')
+            # Independent external watchdog while the original lock stays held.
+            # Node can block in synchronous filesystem/Kernel IO; its own timer
+            # is not the cleanup/verification watchdog. Parent pidfd is containment
+            # only, never authority to resume or retire the fence.
+            maintenance_end = time.monotonic() + LIMITS['verifyTimeoutMs'] / 1000
+            phase_end = maintenance_end
+            cleaning = False
+            activating = False
+            try:
+                while True:
+                    packet = until(outer, parent, parent_fd, min(maintenance_end, phase_end))
+                    if packet == b'DONE' and not cleaning and not activating:
+                        return
+                    if packet == b'ACTIVATION' and not cleaning and not activating:
+                        activating = True
+                        phase_end = min(maintenance_end, time.monotonic() + LIMITS['activationTimeoutMs'] / 1000)
+                    elif packet == b'CLEANUP' and not cleaning:
+                        cleaning = True
+                        phase_end = min(maintenance_end, time.monotonic() + LIMITS['cleanupTimeoutMs'] / 1000)
+                    elif packet == b'RESUME' and cleaning:
+                        cleaning = False
+                        activating = False
+                        phase_end = maintenance_end
+                    else:
+                        raise RuntimeError('invalid maintenance phase')
+                    send(outer, b'ACK')
+            except BaseException:
+                signal.pidfd_send_signal(parent_fd, signal.SIGKILL)
+                raise
         # Custodian plus its actual prior owner are now normally reaped. This
         # lexical path alone reaches maintenance; no serialized clean flag API.
         verification = maintenance(node, root, inputs, held)
@@ -289,6 +355,12 @@ def maintenance(node, root, inputs, held):
 
 if __name__ == '__main__':
     os.umask(0o077)
-    if len(sys.argv) != 5 or sys.argv[1] != 'run-verify-stopped':
+    if len(sys.argv) == 7 and sys.argv[1] == 'inception-child':
+        outer = socket.socket(fileno=int(sys.argv[6]))
+        outer.setsockopt(socket.SOL_SOCKET, socket.SO_PASSCRED, 1)
+        outer.setblocking(False)
+        run(*sys.argv[2:5], inception=(int(sys.argv[5]), outer))
+    elif len(sys.argv) == 5 and sys.argv[1] == 'run-verify-stopped':
+        run(*sys.argv[2:])
+    else:
         raise SystemExit('usage: g7-owned-coordinator.py run-verify-stopped TRUSTED_NODE ABSOLUTE_INITIALIZED_CELL PRIVATE_INPUTS')
-    run(*sys.argv[2:])

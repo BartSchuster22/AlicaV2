@@ -1,0 +1,1 @@
+./node_modules/.bin/prettier --write docs/g7/R1-CROSS-PROCESS-REINSTALL-CHECKPOINT.md docs/g7/R1-CROSS-PROCESS-REINSTALL-EXECUTION.md && git diff --check

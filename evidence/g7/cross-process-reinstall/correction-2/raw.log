@@ -1,0 +1,22 @@
+tools/g7-cell.mjs 205ms (unchanged)
+tools/g7-owned-bridge.mjs 17ms (unchanged)
+tests/g7/cross-process-reinstall.test.mjs 53ms
+✔ owned upgrade denies bad-target-grants without reviving or replacing prior (3511.249463ms)
+✔ owned upgrade denies bad-target-readiness without reviving or replacing prior (4148.346226ms)
+✔ owned upgrade denies bad-target-call without reviving or replacing prior (5292.112216ms)
+✔ owned upgrade conservative publication: crash-before-accepted (5497.937875ms)
+✔ owned upgrade conservative publication: crash-after-accepted (5577.975247ms)
+✔ owned upgrade conservative publication: crash-after-accepted-fsync (5451.805864ms)
+✔ owned upgrade conservative publication: uncertain-rename (5774.054515ms)
+✔ owned upgrade conservative publication: uncertain-directory-fsync (5318.3603ms)
+✔ owned upgrade conservative publication: crash-before-commit (5506.162879ms)
+✔ owned upgrade conservative publication: crash-after-commit (5383.774202ms)
+✔ owned upgrade conservative publication: uncertain-commit-fsync (5570.427425ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 57344.630542

@@ -1,0 +1,7 @@
+TEST-ONLY Error: Packet unavailable
+    at native.packetSend (file:///home/alica-dev/AlicaV2/tests/g7/cross-process-block.mjs:40:12)
+    at send (file:///home/alica-dev/AlicaV2/tools/g7-owned-bridge.mjs:18:45)
+    at Object.send (file:///home/alica-dev/AlicaV2/tools/g7-owned-bridge.mjs:63:9)
+    at #shutdown (file:///home/alica-dev/AlicaV2/tools/g7-cell.mjs:365:45)
+    at async #exactReinstall (file:///home/alica-dev/AlicaV2/tools/g7-cell.mjs:743:7)
+{"status":"NEEDS_OPERATOR","fence":"RETAINED"}
