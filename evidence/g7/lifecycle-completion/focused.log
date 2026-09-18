@@ -1,0 +1,39 @@
+✔ in-process IPC install: actual echo and unchanged consumer readiness, exact frozen selection, lifetime ownership and real shutdown (2947.714192ms)
+✔ external SIGKILL at activating-durable preserves selection and requires operator without inventing reap (1238.497805ms)
+✔ external SIGKILL at accepted-rename preserves selection and requires operator without inventing reap (3198.173604ms)
+✔ external SIGKILL at committed-durable preserves selection and requires operator without inventing reap (3208.371149ms)
+✔ fresh recovery rejects committed corruption: wrong-sequence (2609.892366ms)
+✔ fresh recovery rejects committed corruption: wrong-release (2681.348681ms)
+✔ fresh recovery rejects committed corruption: unknown-field (2612.544855ms)
+✔ fresh recovery rejects committed corruption: missing-selection (2604.941999ms)
+✔ fresh recovery rejects committed corruption: corrupt-journal (2578.939723ms)
+✔ real provider activation failure never publishes accepted selection and records clean rollback (858.809918ms)
+✔ post-activation recovery still enforces Kernel same-version policy digest continuity (2720.703737ms)
+✔ expired grants cannot continue to report a ready RUNNING Cell (7507.435378ms)
+✔ exact reinstall under continuous same-owner clean custody is a byte/inode/mtime preserving no-op, repeatedly (2571.076585ms)
+✔ exact reinstall fails closed without writes: retained-artifact (2240.675113ms)
+✔ exact reinstall fails closed without writes: retained-extra (2252.141639ms)
+✔ exact reinstall fails closed without writes: retained-missing (2234.40734ms)
+✔ exact reinstall fails closed without writes: authorization (2295.040552ms)
+✔ exact reinstall fails closed without writes: accepted (2221.384459ms)
+✔ exact reinstall fails closed without writes: journal (2253.712592ms)
+✔ exact reinstall fails closed without writes: kernel-malformed (2265.408518ms)
+✔ exact reinstall fails closed without writes: kernel-backward-clock (2392.103614ms)
+✔ exact reinstall fails closed without writes: floor-backward-clock (2205.120144ms)
+✔ exact reinstall fails closed without writes: expired (2252.08335ms)
+✔ exact reinstall fails closed without writes: revoked-bundle (2367.532529ms)
+✔ exact reinstall fails closed without writes: revoked-publisher (2230.881749ms)
+✔ exact reinstall fails closed without writes: revoked-package (2280.737962ms)
+✔ exact reinstall fails closed without writes: same-version-equivocation (2254.102515ms)
+✔ exact reinstall fails closed without writes: missing-trust (2314.091743ms)
+✔ exact reinstall fails closed without writes: candidate-tamper (2175.217768ms)
+✔ exact reinstall fails closed without writes: different-valid-candidate (2297.945763ms)
+✔ normal owner close/reopen cannot reconstruct clean custody from accepted bytes or journal (2203.183355ms)
+ℹ tests 31
+ℹ suites 0
+ℹ pass 31
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 43634.057419

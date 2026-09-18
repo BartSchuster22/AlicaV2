@@ -1,0 +1,34 @@
+import hashlib,json,subprocess,tarfile
+from pathlib import Path
+R=Path('/home/herman/g7-implementation'); E=R/'evidence/g7/lifecycle-completion'
+CODE=['tools/g7-cell.mjs','tests/g7/exact-reinstall.test.mjs']
+DOCS=['docs/g7/R1-LIFECYCLE-COMPLETION-CHECKPOINT.md','docs/g7/R1-LIFECYCLE-COMPLETION-EXECUTION.md']
+def sha(p): return hashlib.sha256(p.read_bytes()).hexdigest()
+def load(name): return json.loads((E/name).read_text())
+local_before=load('local-before.json'); remote_before=load('remote-before.json')
+local_after=load('local-after.json'); remote_after=load('remote-after.json')
+result={}
+for label,before,after in [('local',local_before,local_after),('remote',remote_before,remote_after)]:
+    changed={f:{'before':h,'after':after.get(f)} for f,h in before.items() if f not in CODE and after.get(f)!=h}
+    result[label+'_preserved_original_files']=sum(f not in CODE for f in before)
+    result[label+'_unexpected_changes']=changed
+    assert not changed,(label,changed)
+source={f:sha(R/f) for f in CODE+DOCS}
+assert all(remote_after.get(f)==h for f,h in source.items())
+result['final_local_remote_source_hashes']=source
+text=(E/'full-check.log').read_text()
+for f in CODE:
+    assert text.count(source[f]+'  '+f)==2,(f,'full check hash binding')
+assert (E/'full-check.exit').read_text().strip()=='0'
+assert (E/'focused.exit').read_text().strip()=='0'
+result['focused_exit']=0; result['full_check_exit']=0
+result['full_check_log_sha256']=sha(E/'full-check.log')
+result['focused_log_sha256']=sha(E/'focused.log')
+manifest=load('process-hashes.json')
+for f,h in manifest.items(): assert sha(R/f)==h,f
+result['returned_process_receipts']=len(manifest)
+result['baseline']=subprocess.check_output(['git','rev-parse','HEAD'],cwd=R,text=True).strip()
+assert result['baseline']=='0ccc6048660cc3f3330588c2e979a37a7edc763e'
+subprocess.run(['git','diff','--check'],cwd=R,check=True)
+(E/'source-and-preservation-verification.json').write_text(json.dumps(result,indent=2,sort_keys=True)+'\n')
+print(json.dumps(result,indent=2,sort_keys=True))

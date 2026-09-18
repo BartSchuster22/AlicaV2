@@ -1,0 +1,678 @@
+{
+  "before": {
+    "": {
+      "mode": 16832,
+      "ino": 520000,
+      "mtimeMs": 1789714917734.38
+    },
+    "accepted.json": {
+      "mode": 33152,
+      "ino": 520126,
+      "mtimeMs": 1789714917588.379,
+      "bytes": 789,
+      "sha256": "4699b6ee6d861167ebbea64454103852307a4a98d76ef67069c449fdaf1b9901"
+    },
+    "floor.json": {
+      "mode": 33152,
+      "ino": 520123,
+      "mtimeMs": 1789714917586.379,
+      "bytes": 154,
+      "sha256": "67783e8fca3d3ad6f51a2071d70ea4b01567ecba7807184f4f4db819e86a9143"
+    },
+    "identity.json": {
+      "mode": 33152,
+      "ino": 520003,
+      "mtimeMs": 1789714915572.3662,
+      "bytes": 90,
+      "sha256": "f22db98702c18e72eff2a3f49bee33b2f61f2c0ee69c2414fdabda3468b33aa4"
+    },
+    "kernel.json": {
+      "mode": 33152,
+      "ino": 520019,
+      "mtimeMs": 1789714917725.38,
+      "bytes": 380,
+      "sha256": "b8bb910cf3aea10a17d2f048939874bb101b83940f7e821a6051863adac8da57"
+    },
+    "releases": {
+      "mode": 16832,
+      "ino": 520013,
+      "mtimeMs": 1789714915607.3662
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344": {
+      "mode": 16832,
+      "ino": 519999,
+      "mtimeMs": 1789714915684.3667
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/authorization.json": {
+      "mode": 33152,
+      "ino": 520122,
+      "mtimeMs": 1789714915683.3667,
+      "bytes": 427,
+      "sha256": "cc2d2c5ac902bcb65235368faa8f2c499e2e2b411fc753c613cd6972f7fe99a4"
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/bundle-signature.json": {
+      "mode": 33152,
+      "ino": 520016,
+      "mtimeMs": 1789714915610.3665,
+      "bytes": 208,
+      "sha256": "686cebeb16225e74ea2e615d96e39bf232b36c149824f3ec5afbd7bb0d78effe"
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/bundle.json": {
+      "mode": 33152,
+      "ino": 520015,
+      "mtimeMs": 1789714915608.3665,
+      "bytes": 3549,
+      "sha256": "faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344"
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/docs": {
+      "mode": 16832,
+      "ino": 520014,
+      "mtimeMs": 1789714915614.3665
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/docs/fixture.txt": {
+      "mode": 33152,
+      "ino": 520017,
+      "mtimeMs": 1789714915613.3665,
+      "bytes": 13,
+      "sha256": "23472d77cf14065f05744d9159c2c53595dc0c3126867382ca47091106f1a3ba"
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/plugins": {
+      "mode": 16832,
+      "ino": 520020,
+      "mtimeMs": 1789714915638.3665
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/plugins/org.alica.client": {
+      "mode": 16832,
+      "ino": 520021,
+      "mtimeMs": 1789714915623.3665
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/plugins/org.alica.client/code": {
+      "mode": 16832,
+      "ino": 520022,
+      "mtimeMs": 1789714915619.3665
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/plugins/org.alica.client/code/index.js": {
+      "mode": 33152,
+      "ino": 520024,
+      "mtimeMs": 1789714915617.3665,
+      "bytes": 35,
+      "sha256": "ef2ed2a9ec4c6f3cd911387ade1ea2823f0962502579211f9281cbb94fab9121"
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/plugins/org.alica.client/index.json": {
+      "mode": 33152,
+      "ino": 520025,
+      "mtimeMs": 1789714915620.3665,
+      "bytes": 370,
+      "sha256": "69bfa3ce25fe967bbfa054888d22f42a2a2aa958d77138d84c54ebeda05279bd"
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/plugins/org.alica.client/manifest.json": {
+      "mode": 33152,
+      "ino": 520023,
+      "mtimeMs": 1789714915622.3665,
+      "bytes": 367,
+      "sha256": "107541f5de58c2adac4698bd172abbe4f3dc53a4dbbe95a204ad834a446dc6b0"
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/plugins/org.alica.consumer": {
+      "mode": 16832,
+      "ino": 520026,
+      "mtimeMs": 1789714915637.3665
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/plugins/org.alica.consumer/code": {
+      "mode": 16832,
+      "ino": 520027,
+      "mtimeMs": 1789714915627.3665
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/plugins/org.alica.consumer/code/index.js": {
+      "mode": 33152,
+      "ino": 520031,
+      "mtimeMs": 1789714915626.3665,
+      "bytes": 1144,
+      "sha256": "e0522ba07461ff9cfe69a3350866107ad5766c2804a05ee6323e6fd7c18e2b69"
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/plugins/org.alica.consumer/contracts": {
+      "mode": 16832,
+      "ino": 520038,
+      "mtimeMs": 1789714915631.3665
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/plugins/org.alica.consumer/contracts/c0.json": {
+      "mode": 33152,
+      "ino": 520030,
+      "mtimeMs": 1789714915630.3665,
+      "bytes": 428,
+      "sha256": "0ef2f30880956bd7e5d2bbab948573d55bd9d756170881193f25259c0c8fd000"
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/plugins/org.alica.consumer/index.json": {
+      "mode": 33152,
+      "ino": 520008,
+      "mtimeMs": 1789714915633.3665,
+      "bytes": 498,
+      "sha256": "a0f8143f73812f9f9fc7f8d0856523397a4c3fdb77b0e74a35bfd8b1313aab75"
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/plugins/org.alica.consumer/manifest.json": {
+      "mode": 33152,
+      "ino": 520041,
+      "mtimeMs": 1789714915635.3665,
+      "bytes": 550,
+      "sha256": "f8b2e71b3b10b3bedc4d1ed90ca95f434a1cce705aa3ba2d9c3b6893ad11ddfd"
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/plugins/org.alica.echoa": {
+      "mode": 16832,
+      "ino": 520043,
+      "mtimeMs": 1789714915649.3667
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/plugins/org.alica.echoa/code": {
+      "mode": 16832,
+      "ino": 520047,
+      "mtimeMs": 1789714915641.3665
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/plugins/org.alica.echoa/code/index.js": {
+      "mode": 33152,
+      "ino": 520049,
+      "mtimeMs": 1789714915640.3665,
+      "bytes": 845,
+      "sha256": "9c6e00f7fa07f8b0fb579e2ed03f1afa7023b2bfe0692936114e37383a1e5dfe"
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/plugins/org.alica.echoa/contracts": {
+      "mode": 16832,
+      "ino": 520052,
+      "mtimeMs": 1789714915644.3665
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/plugins/org.alica.echoa/contracts/c0.json": {
+      "mode": 33152,
+      "ino": 520046,
+      "mtimeMs": 1789714915643.3665,
+      "bytes": 424,
+      "sha256": "58ee9f01fb4948faf71ed7a3468d55563f3117faccecb8a3b1ebc81ff0aee649"
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/plugins/org.alica.echoa/index.json": {
+      "mode": 33152,
+      "ino": 520050,
+      "mtimeMs": 1789714915646.3665,
+      "bytes": 494,
+      "sha256": "bbbfe40e40f220301de43bcb18edd7c85e0e85162176dde109363ed869fff356"
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/plugins/org.alica.echoa/manifest.json": {
+      "mode": 33152,
+      "ino": 520054,
+      "mtimeMs": 1789714915648.3667,
+      "bytes": 451,
+      "sha256": "4ad8c2ede6a8224c643078807f644c053fca29179546889ad59e28fbebe09e0b"
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/profile": {
+      "mode": 16832,
+      "ino": 520056,
+      "mtimeMs": 1789714915655.3667
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/profile/lock.json": {
+      "mode": 33152,
+      "ino": 520058,
+      "mtimeMs": 1789714915652.3667,
+      "bytes": 1338,
+      "sha256": "5e764add694183590fc2d37f4b7d56fe881b9e4dea8dbd153cbcfd98f8479fab"
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/profile/profile.json": {
+      "mode": 33152,
+      "ino": 520060,
+      "mtimeMs": 1789714915654.3667,
+      "bytes": 559,
+      "sha256": "a48428faaf22d426078feb215a2adde17e7aa1d6de9b4290fb9c297cf10f654a"
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/provenance": {
+      "mode": 16832,
+      "ino": 520063,
+      "mtimeMs": 1789714915659.3667
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/provenance/build.json": {
+      "mode": 33152,
+      "ino": 520065,
+      "mtimeMs": 1789714915657.3667,
+      "bytes": 16,
+      "sha256": "ffbc2dfc402782325da71132100e74ff511d1585dd80e4ea196ed4bcace3fef2"
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/runtime": {
+      "mode": 16832,
+      "ino": 520067,
+      "mtimeMs": 1789714915662.3667
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/runtime/fixture.txt": {
+      "mode": 33152,
+      "ino": 520068,
+      "mtimeMs": 1789714915661.3667,
+      "bytes": 11,
+      "sha256": "999d412febdcd686cbcb86c753139405308ed372566ff1c188578e67b79c979a"
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/sbom": {
+      "mode": 16832,
+      "ino": 520071,
+      "mtimeMs": 1789714915666.3667
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/sbom/sbom.json": {
+      "mode": 33152,
+      "ino": 520072,
+      "mtimeMs": 1789714915665.3667,
+      "bytes": 16,
+      "sha256": "ffbc2dfc402782325da71132100e74ff511d1585dd80e4ea196ed4bcace3fef2"
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/schemas": {
+      "mode": 16832,
+      "ino": 520073,
+      "mtimeMs": 1789714915669.3667
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/schemas/fixture.json": {
+      "mode": 33152,
+      "ino": 520074,
+      "mtimeMs": 1789714915668.3667,
+      "bytes": 2,
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/trust": {
+      "mode": 16832,
+      "ino": 520057,
+      "mtimeMs": 1789714915681.3667
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/trust/policy-signature.json": {
+      "mode": 33152,
+      "ino": 520087,
+      "mtimeMs": 1789714915672.3667,
+      "bytes": 208,
+      "sha256": "d98ee6d667e5b7aacafcebacc89fd013abb63bd4ce7e77ffb908430ff1c5c62b"
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/trust/policy.json": {
+      "mode": 33152,
+      "ino": 520114,
+      "mtimeMs": 1789714915675.3667,
+      "bytes": 373,
+      "sha256": "780540a6816df7e1e5a5d443f8c1a29387281ad5fe31956f76bfd7de10f49e45"
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/trust/revocation-signature.json": {
+      "mode": 33152,
+      "ino": 520119,
+      "mtimeMs": 1789714915678.3667,
+      "bytes": 208,
+      "sha256": "6979b5cff6befa154301933642ec16387411532dc4265db9bd95235e58f519c2"
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/trust/revocation.json": {
+      "mode": 33152,
+      "ino": 520121,
+      "mtimeMs": 1789714915680.3667,
+      "bytes": 153,
+      "sha256": "9fe8a4192b5c2eb5d022555204745e1a3539a7931cc7831c437991ce03e9782e"
+    },
+    "transactions": {
+      "mode": 16832,
+      "ino": 520006,
+      "mtimeMs": 1789714915601.3662
+    },
+    "transactions/99bdac18-7219-43a2-ba6c-c74bbbae64c5": {
+      "mode": 16832,
+      "ino": 520004,
+      "mtimeMs": 1789714917592.379
+    },
+    "transactions/99bdac18-7219-43a2-ba6c-c74bbbae64c5/000001.json": {
+      "mode": 33152,
+      "ino": 520012,
+      "mtimeMs": 1789714915602.3662,
+      "bytes": 1013,
+      "sha256": "53c836809a3fc5d181b49fe8a7ddaa6528033f1665b86511d41affd6f8cbddaa"
+    },
+    "transactions/99bdac18-7219-43a2-ba6c-c74bbbae64c5/000002.json": {
+      "mode": 33152,
+      "ino": 520005,
+      "mtimeMs": 1789714915776.3674,
+      "bytes": 1083,
+      "sha256": "69cc5969e9653c7d404ea12481ed5a8bea594527b6d10bd2d7c714d34bf89ace"
+    },
+    "transactions/99bdac18-7219-43a2-ba6c-c74bbbae64c5/000003.json": {
+      "mode": 33152,
+      "ino": 520125,
+      "mtimeMs": 1789714915782.3674,
+      "bytes": 1085,
+      "sha256": "8de4ea02a2f5ab5c5fc6701b1cc7dea660de383b8c722a159096be28b430cfa1"
+    },
+    "transactions/99bdac18-7219-43a2-ba6c-c74bbbae64c5/000004.json": {
+      "mode": 33152,
+      "ino": 520130,
+      "mtimeMs": 1789714917590.379,
+      "bytes": 1079,
+      "sha256": "1687bc2e96e6977c3231de99d83eda2cb5a00191247484d6c7c41671dad04f32"
+    }
+  },
+  "after": {
+    "": {
+      "mode": 16832,
+      "ino": 520000,
+      "mtimeMs": 1789714917734.38
+    },
+    "accepted.json": {
+      "mode": 33152,
+      "ino": 520126,
+      "mtimeMs": 1789714917588.379,
+      "bytes": 789,
+      "sha256": "4699b6ee6d861167ebbea64454103852307a4a98d76ef67069c449fdaf1b9901"
+    },
+    "floor.json": {
+      "mode": 33152,
+      "ino": 520123,
+      "mtimeMs": 1789714917586.379,
+      "bytes": 154,
+      "sha256": "67783e8fca3d3ad6f51a2071d70ea4b01567ecba7807184f4f4db819e86a9143"
+    },
+    "identity.json": {
+      "mode": 33152,
+      "ino": 520003,
+      "mtimeMs": 1789714915572.3662,
+      "bytes": 90,
+      "sha256": "f22db98702c18e72eff2a3f49bee33b2f61f2c0ee69c2414fdabda3468b33aa4"
+    },
+    "kernel.json": {
+      "mode": 33152,
+      "ino": 520019,
+      "mtimeMs": 1789714917725.38,
+      "bytes": 380,
+      "sha256": "b8bb910cf3aea10a17d2f048939874bb101b83940f7e821a6051863adac8da57"
+    },
+    "releases": {
+      "mode": 16832,
+      "ino": 520013,
+      "mtimeMs": 1789714915607.3662
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344": {
+      "mode": 16832,
+      "ino": 519999,
+      "mtimeMs": 1789714915684.3667
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/authorization.json": {
+      "mode": 33152,
+      "ino": 520122,
+      "mtimeMs": 1789714915683.3667,
+      "bytes": 427,
+      "sha256": "cc2d2c5ac902bcb65235368faa8f2c499e2e2b411fc753c613cd6972f7fe99a4"
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/bundle-signature.json": {
+      "mode": 33152,
+      "ino": 520016,
+      "mtimeMs": 1789714915610.3665,
+      "bytes": 208,
+      "sha256": "686cebeb16225e74ea2e615d96e39bf232b36c149824f3ec5afbd7bb0d78effe"
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/bundle.json": {
+      "mode": 33152,
+      "ino": 520015,
+      "mtimeMs": 1789714915608.3665,
+      "bytes": 3549,
+      "sha256": "faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344"
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/docs": {
+      "mode": 16832,
+      "ino": 520014,
+      "mtimeMs": 1789714915614.3665
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/docs/fixture.txt": {
+      "mode": 33152,
+      "ino": 520017,
+      "mtimeMs": 1789714915613.3665,
+      "bytes": 13,
+      "sha256": "23472d77cf14065f05744d9159c2c53595dc0c3126867382ca47091106f1a3ba"
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/plugins": {
+      "mode": 16832,
+      "ino": 520020,
+      "mtimeMs": 1789714915638.3665
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/plugins/org.alica.client": {
+      "mode": 16832,
+      "ino": 520021,
+      "mtimeMs": 1789714915623.3665
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/plugins/org.alica.client/code": {
+      "mode": 16832,
+      "ino": 520022,
+      "mtimeMs": 1789714915619.3665
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/plugins/org.alica.client/code/index.js": {
+      "mode": 33152,
+      "ino": 520024,
+      "mtimeMs": 1789714915617.3665,
+      "bytes": 35,
+      "sha256": "ef2ed2a9ec4c6f3cd911387ade1ea2823f0962502579211f9281cbb94fab9121"
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/plugins/org.alica.client/index.json": {
+      "mode": 33152,
+      "ino": 520025,
+      "mtimeMs": 1789714915620.3665,
+      "bytes": 370,
+      "sha256": "69bfa3ce25fe967bbfa054888d22f42a2a2aa958d77138d84c54ebeda05279bd"
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/plugins/org.alica.client/manifest.json": {
+      "mode": 33152,
+      "ino": 520023,
+      "mtimeMs": 1789714915622.3665,
+      "bytes": 367,
+      "sha256": "107541f5de58c2adac4698bd172abbe4f3dc53a4dbbe95a204ad834a446dc6b0"
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/plugins/org.alica.consumer": {
+      "mode": 16832,
+      "ino": 520026,
+      "mtimeMs": 1789714915637.3665
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/plugins/org.alica.consumer/code": {
+      "mode": 16832,
+      "ino": 520027,
+      "mtimeMs": 1789714915627.3665
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/plugins/org.alica.consumer/code/index.js": {
+      "mode": 33152,
+      "ino": 520031,
+      "mtimeMs": 1789714915626.3665,
+      "bytes": 1144,
+      "sha256": "e0522ba07461ff9cfe69a3350866107ad5766c2804a05ee6323e6fd7c18e2b69"
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/plugins/org.alica.consumer/contracts": {
+      "mode": 16832,
+      "ino": 520038,
+      "mtimeMs": 1789714915631.3665
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/plugins/org.alica.consumer/contracts/c0.json": {
+      "mode": 33152,
+      "ino": 520030,
+      "mtimeMs": 1789714915630.3665,
+      "bytes": 428,
+      "sha256": "0ef2f30880956bd7e5d2bbab948573d55bd9d756170881193f25259c0c8fd000"
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/plugins/org.alica.consumer/index.json": {
+      "mode": 33152,
+      "ino": 520008,
+      "mtimeMs": 1789714915633.3665,
+      "bytes": 498,
+      "sha256": "a0f8143f73812f9f9fc7f8d0856523397a4c3fdb77b0e74a35bfd8b1313aab75"
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/plugins/org.alica.consumer/manifest.json": {
+      "mode": 33152,
+      "ino": 520041,
+      "mtimeMs": 1789714915635.3665,
+      "bytes": 550,
+      "sha256": "f8b2e71b3b10b3bedc4d1ed90ca95f434a1cce705aa3ba2d9c3b6893ad11ddfd"
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/plugins/org.alica.echoa": {
+      "mode": 16832,
+      "ino": 520043,
+      "mtimeMs": 1789714915649.3667
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/plugins/org.alica.echoa/code": {
+      "mode": 16832,
+      "ino": 520047,
+      "mtimeMs": 1789714915641.3665
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/plugins/org.alica.echoa/code/index.js": {
+      "mode": 33152,
+      "ino": 520049,
+      "mtimeMs": 1789714915640.3665,
+      "bytes": 845,
+      "sha256": "9c6e00f7fa07f8b0fb579e2ed03f1afa7023b2bfe0692936114e37383a1e5dfe"
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/plugins/org.alica.echoa/contracts": {
+      "mode": 16832,
+      "ino": 520052,
+      "mtimeMs": 1789714915644.3665
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/plugins/org.alica.echoa/contracts/c0.json": {
+      "mode": 33152,
+      "ino": 520046,
+      "mtimeMs": 1789714915643.3665,
+      "bytes": 424,
+      "sha256": "58ee9f01fb4948faf71ed7a3468d55563f3117faccecb8a3b1ebc81ff0aee649"
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/plugins/org.alica.echoa/index.json": {
+      "mode": 33152,
+      "ino": 520050,
+      "mtimeMs": 1789714915646.3665,
+      "bytes": 494,
+      "sha256": "bbbfe40e40f220301de43bcb18edd7c85e0e85162176dde109363ed869fff356"
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/plugins/org.alica.echoa/manifest.json": {
+      "mode": 33152,
+      "ino": 520054,
+      "mtimeMs": 1789714915648.3667,
+      "bytes": 451,
+      "sha256": "4ad8c2ede6a8224c643078807f644c053fca29179546889ad59e28fbebe09e0b"
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/profile": {
+      "mode": 16832,
+      "ino": 520056,
+      "mtimeMs": 1789714915655.3667
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/profile/lock.json": {
+      "mode": 33152,
+      "ino": 520058,
+      "mtimeMs": 1789714915652.3667,
+      "bytes": 1338,
+      "sha256": "5e764add694183590fc2d37f4b7d56fe881b9e4dea8dbd153cbcfd98f8479fab"
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/profile/profile.json": {
+      "mode": 33152,
+      "ino": 520060,
+      "mtimeMs": 1789714915654.3667,
+      "bytes": 559,
+      "sha256": "a48428faaf22d426078feb215a2adde17e7aa1d6de9b4290fb9c297cf10f654a"
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/provenance": {
+      "mode": 16832,
+      "ino": 520063,
+      "mtimeMs": 1789714915659.3667
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/provenance/build.json": {
+      "mode": 33152,
+      "ino": 520065,
+      "mtimeMs": 1789714915657.3667,
+      "bytes": 16,
+      "sha256": "ffbc2dfc402782325da71132100e74ff511d1585dd80e4ea196ed4bcace3fef2"
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/runtime": {
+      "mode": 16832,
+      "ino": 520067,
+      "mtimeMs": 1789714915662.3667
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/runtime/fixture.txt": {
+      "mode": 33152,
+      "ino": 520068,
+      "mtimeMs": 1789714915661.3667,
+      "bytes": 11,
+      "sha256": "999d412febdcd686cbcb86c753139405308ed372566ff1c188578e67b79c979a"
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/sbom": {
+      "mode": 16832,
+      "ino": 520071,
+      "mtimeMs": 1789714915666.3667
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/sbom/sbom.json": {
+      "mode": 33152,
+      "ino": 520072,
+      "mtimeMs": 1789714915665.3667,
+      "bytes": 16,
+      "sha256": "ffbc2dfc402782325da71132100e74ff511d1585dd80e4ea196ed4bcace3fef2"
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/schemas": {
+      "mode": 16832,
+      "ino": 520073,
+      "mtimeMs": 1789714915669.3667
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/schemas/fixture.json": {
+      "mode": 33152,
+      "ino": 520074,
+      "mtimeMs": 1789714915668.3667,
+      "bytes": 2,
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/trust": {
+      "mode": 16832,
+      "ino": 520057,
+      "mtimeMs": 1789714915681.3667
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/trust/policy-signature.json": {
+      "mode": 33152,
+      "ino": 520087,
+      "mtimeMs": 1789714915672.3667,
+      "bytes": 208,
+      "sha256": "d98ee6d667e5b7aacafcebacc89fd013abb63bd4ce7e77ffb908430ff1c5c62b"
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/trust/policy.json": {
+      "mode": 33152,
+      "ino": 520114,
+      "mtimeMs": 1789714915675.3667,
+      "bytes": 373,
+      "sha256": "780540a6816df7e1e5a5d443f8c1a29387281ad5fe31956f76bfd7de10f49e45"
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/trust/revocation-signature.json": {
+      "mode": 33152,
+      "ino": 520119,
+      "mtimeMs": 1789714915678.3667,
+      "bytes": 208,
+      "sha256": "6979b5cff6befa154301933642ec16387411532dc4265db9bd95235e58f519c2"
+    },
+    "releases/faa4f43390655d0f50166e94b02ba0a08f6c400ac0cb391002c7abf73584e344/trust/revocation.json": {
+      "mode": 33152,
+      "ino": 520121,
+      "mtimeMs": 1789714915680.3667,
+      "bytes": 153,
+      "sha256": "9fe8a4192b5c2eb5d022555204745e1a3539a7931cc7831c437991ce03e9782e"
+    },
+    "transactions": {
+      "mode": 16832,
+      "ino": 520006,
+      "mtimeMs": 1789714915601.3662
+    },
+    "transactions/99bdac18-7219-43a2-ba6c-c74bbbae64c5": {
+      "mode": 16832,
+      "ino": 520004,
+      "mtimeMs": 1789714917592.379
+    },
+    "transactions/99bdac18-7219-43a2-ba6c-c74bbbae64c5/000001.json": {
+      "mode": 33152,
+      "ino": 520012,
+      "mtimeMs": 1789714915602.3662,
+      "bytes": 1013,
+      "sha256": "53c836809a3fc5d181b49fe8a7ddaa6528033f1665b86511d41affd6f8cbddaa"
+    },
+    "transactions/99bdac18-7219-43a2-ba6c-c74bbbae64c5/000002.json": {
+      "mode": 33152,
+      "ino": 520005,
+      "mtimeMs": 1789714915776.3674,
+      "bytes": 1083,
+      "sha256": "69cc5969e9653c7d404ea12481ed5a8bea594527b6d10bd2d7c714d34bf89ace"
+    },
+    "transactions/99bdac18-7219-43a2-ba6c-c74bbbae64c5/000003.json": {
+      "mode": 33152,
+      "ino": 520125,
+      "mtimeMs": 1789714915782.3674,
+      "bytes": 1085,
+      "sha256": "8de4ea02a2f5ab5c5fc6701b1cc7dea660de383b8c722a159096be28b430cfa1"
+    },
+    "transactions/99bdac18-7219-43a2-ba6c-c74bbbae64c5/000004.json": {
+      "mode": 33152,
+      "ino": 520130,
+      "mtimeMs": 1789714917590.379,
+      "bytes": 1079,
+      "sha256": "1687bc2e96e6977c3231de99d83eda2cb5a00191247484d6c7c41671dad04f32"
+    }
+  }
+}

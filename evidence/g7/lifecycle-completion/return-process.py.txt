@@ -1,0 +1,26 @@
+import hashlib,json,subprocess,tarfile
+from pathlib import Path
+R=Path('/home/herman/g7-implementation'); E=R/'evidence/g7/lifecycle-completion'
+SSH=['ssh','-i','/home/herman/.ssh/alica_v2_vps_ed25519','-o','IdentitiesOnly=yes','-o','BatchMode=yes','-o','StrictHostKeyChecking=yes','-o','UserKnownHostsFile=/home/herman/.ssh/alica_v2_known_hosts','alica-dev@167.233.135.142']
+remote="""import hashlib,json,tarfile,sys
+from pathlib import Path
+base=Path('evidence/g7/lifecycle-completion/process')
+paths=sorted(p for p in base.rglob('*') if p.is_file() and not p.is_symlink())
+manifest={str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in paths}
+print(json.dumps(manifest),file=sys.stderr)
+with tarfile.open(fileobj=sys.stdout.buffer,mode='w|') as t:
+ for p in paths:t.add(p,arcname=str(p),recursive=False)
+"""
+import shlex
+with (E/'process-return.tar').open('wb') as out:
+    p=subprocess.run(SSH+['cd /home/alica-dev/AlicaV2 && python3 -c '+shlex.quote(remote)],stdout=out,stderr=subprocess.PIPE)
+assert p.returncode==0,p.stderr
+manifest=json.loads(p.stderr)
+(E/'process-hashes.json').write_text(json.dumps(manifest,indent=2,sort_keys=True)+'\n')
+with tarfile.open(E/'process-return.tar') as t:
+    assert {m.name for m in t.getmembers()}==set(manifest)
+    for m in t.getmembers():
+        assert m.isfile() and m.name.startswith('evidence/g7/lifecycle-completion/process/') and '..' not in Path(m.name).parts
+        b=t.extractfile(m).read(); assert hashlib.sha256(b).hexdigest()==manifest[m.name]
+        dest=R/m.name; dest.parent.mkdir(parents=True,exist_ok=True); dest.write_bytes(b)
+print('Returned and hash-verified process receipts:',len(manifest))

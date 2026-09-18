@@ -1,0 +1,24 @@
+{
+  "scope": "same-owner exact reinstall only; NOT G7 acceptance",
+  "exit": 0,
+  "node": [
+    "170",
+    "160",
+    "228"
+  ],
+  "python": [
+    "193",
+    "30",
+    "11",
+    "121"
+  ],
+  "source": {
+    "docs/g7/R1-LIFECYCLE-COMPLETION-CHECKPOINT.md": "9e0bc07a42c7189e61334588b7a5d3a740e011542522d990c1337b462dfdc552",
+    "docs/g7/R1-LIFECYCLE-COMPLETION-EXECUTION.md": "4901f1b5eeba56587e00df216a863aadfe46cd250b6cb611ba1858259abb438b",
+    "tests/g7/exact-reinstall.test.mjs": "c0e7fd138b40458dff84b76711f5d7c19d033c207be9380541db38027ceb2909",
+    "tools/g7-cell.mjs": "3bcfd00e59943e6516aa54c9ea3d9a983fc6963c55a1c427b60d1787af6f46dc"
+  },
+  "beforeAfterLocalMatch": true,
+  "workerManifestEntriesVerified": 67,
+  "rawLogSha256": "f6e36971763075803cf8f650d6b92d235e5e2fb2a45af0e967bddfe1668b0228"
+}

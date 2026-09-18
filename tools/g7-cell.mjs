@@ -1,6 +1,15 @@
 // Lifetime-locked Cell. Supervised custody is host-only; upgrade remains unavailable.
 import { OwnerChannel } from './g7-owner-channel.mjs';
-import { closeSync, readFileSync, statfsSync } from 'node:fs';
+import {
+  closeSync,
+  readFileSync,
+  statfsSync,
+  mkdtempSync,
+  writeFileSync,
+  rmSync,
+} from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { createRequire } from 'node:module';
 import { randomUUID } from 'node:crypto';
 import { Ajv2020 } from 'ajv/dist/2020.js';
@@ -624,9 +633,98 @@ export class CellPreparation {
       outcome,
     });
   }
+  async #exactReinstall(archivePath, material, authorization, status, budget) {
+    // This flag is set ONLY by this object's clean public Kernel shutdown, under
+    // its continuously held flock. A new object, readable journal, or STOPPED
+    // admin reply cannot supply it. This is not offline custody transfer.
+    check(
+      this.#stopped && !this.#host && !this.#running,
+      'FAILED_PRECONDITION',
+    );
+    check(
+      status.transactions.every((t) =>
+        ['COMMITTED', 'ABORTED'].includes(t.state),
+      ),
+      'FAILED_PRECONDITION',
+    );
+    const accepted = status.accepted;
+    cellSchema('authorization', authorization);
+    check(
+      digest(authorization) === accepted.release.authorizationDigest,
+      'PERMISSION_DENIED',
+    );
+    const prefix = 'releases/' + accepted.release.bundleDigest.slice(7);
+    check(
+      same(this.#read(prefix + '/authorization.json'), authorization),
+      'PERMISSION_DENIED',
+    );
+    // Validate BOTH the existing accepted inventory and the entire requested tar.
+    // A matching manifest digest alone is not an exact-reinstall certificate.
+    const stored = inspectStoredRelease(
+      this.#fd,
+      prefix,
+      material,
+      status.trustFloor,
+    );
+    const requested = inspectRelease(archivePath, material, status.trustFloor);
+    for (const k of [
+      'bundleDigest',
+      'profileDigest',
+      'lockDigest',
+      'policyDigest',
+    ])
+      check(
+        stored[k] === accepted.release[k] &&
+          requested[k] === accepted.release[k],
+        'CONTRACT_MISMATCH',
+      );
+    budget.assert();
+    // Public Kernel bootstrap enforces its own opaque high-water semantics,
+    // including same-version digest continuity and clock rollback. It persists
+    // on bootstrap, so validate a verbatim private working copy, NEVER rewrite
+    // or decode the original Kernel state to manufacture a read-only result.
+    const original = readPrivate(this.#fd, 'kernel.json');
+    const directory = mkdtempSync(join(tmpdir(), 'g7-reinstall-trust-'));
+    try {
+      const statePath = join(directory, 'kernel.json');
+      writeFileSync(statePath, original, { mode: 0o600, flag: 'wx' });
+      this.#host = bootstrap(
+        configuration(
+          status.cellId,
+          stored.profile.scopes.find((s) => s.parent === null).id,
+        ),
+        {
+          trust: material,
+          statePath,
+          initialize: false,
+        },
+      );
+      // No packages, grants, providers or synthetic mutations are started for a no-op.
+      await this.#shutdown();
+      budget.assert();
+      check(original.equals(readPrivate(this.#fd, 'kernel.json')), 'CONFLICT');
+      check(same(this.#status(), status), 'CONFLICT');
+      this.#trust(material, status.trustFloor);
+      budget.assert();
+      return status;
+    } finally {
+      // Uncertain cleanup retains the host, lock and private diagnostic residue.
+      if (!this.#host) rmSync(directory, { recursive: true });
+    }
+  }
   async #stage(archivePath, material, authorization, activate = false) {
     const verification = deadline(limits.verifyTimeoutMs);
     const status = this.#status();
+    if (status.accepted) {
+      check(activate, 'CONFLICT');
+      return this.#exactReinstall(
+        archivePath,
+        material,
+        authorization,
+        status,
+        verification,
+      );
+    }
     check(
       status.transactions.every((t) => t.state === 'ABORTED'),
       'CONFLICT',

@@ -1,0 +1,14 @@
+import hashlib,json,subprocess,sys
+from pathlib import Path
+root=Path.cwd()
+paths=set(subprocess.check_output(['git','ls-files','-co','--exclude-standard','-z']).decode().split('\0'))-{''}
+for folder in ('docs','evidence'):
+    paths.update(str(p.relative_to(root)) for p in (root/folder).rglob('*') if p.is_file() and not p.is_symlink())
+result={}
+for name in sorted(paths):
+    if name.startswith('evidence/g7/lifecycle-completion/'):
+        continue
+    p=root/name
+    if p.is_file() and not p.is_symlink():
+        result[name]=hashlib.sha256(p.read_bytes()).hexdigest()
+print(json.dumps(result,indent=2,sort_keys=True))

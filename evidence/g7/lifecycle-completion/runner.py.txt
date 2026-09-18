@@ -1,0 +1,26 @@
+import hashlib,json,subprocess,sys,tarfile,time
+from pathlib import Path
+ROOT=Path('/home/herman/g7-implementation'); E=ROOT/'evidence/g7/lifecycle-completion'
+SSH=['ssh','-i','/home/herman/.ssh/alica_v2_vps_ed25519','-o','IdentitiesOnly=yes','-o','BatchMode=yes','-o','StrictHostKeyChecking=yes','-o','UserKnownHostsFile=/home/herman/.ssh/alica_v2_known_hosts','alica-dev@167.233.135.142']
+FILES=['tools/g7-cell.mjs','tests/g7/exact-reinstall.test.mjs']
+def run(label,command):
+    full='cd /home/alica-dev/AlicaV2 && export PATH="$PWD/.tools/node/bin:$PATH"; '+command
+    with (E/(label+'.log')).open('wb') as log:
+        p=subprocess.run(SSH+[full],stdout=log,stderr=subprocess.STDOUT)
+    (E/(label+'.exit')).write_text(str(p.returncode)+'\n')
+    with (E/'commands.jsonl').open('a') as out: out.write(json.dumps({'time':time.time(),'label':label,'command':full,'exit':p.returncode})+'\n')
+    print(label,p.returncode,flush=True)
+    return p.returncode
+if sys.argv[1]=='transfer':
+    (E/'source-allowlist.txt').write_text('\n'.join(FILES)+'\n')
+    hashes={f:hashlib.sha256((ROOT/f).read_bytes()).hexdigest() for f in FILES}
+    (E/'transfer-input-hashes.json').write_text(json.dumps(hashes,indent=2)+'\n')
+    with tarfile.open(E/'source-input.tar','w') as t:
+        for f in FILES: t.add(ROOT/f,arcname=f,recursive=False)
+    with (E/'source-input.tar').open('rb') as inp:
+        p=subprocess.run(SSH+['cd /home/alica-dev/AlicaV2 && tar -xf - tools/g7-cell.mjs tests/g7/exact-reinstall.test.mjs'],stdin=inp,capture_output=True)
+    (E/'transfer.log').write_bytes(p.stdout+p.stderr); assert p.returncode==0
+    sys.exit(run('transferred-hashes','sha256sum '+' '.join(FILES)))
+if sys.argv[1]=='format': sys.exit(run('format','./node_modules/.bin/prettier --write '+' '.join(FILES)))
+if sys.argv[1]=='focused': sys.exit(run('focused','G7_LIFECYCLE_EVIDENCE="$PWD/evidence/g7/lifecycle-completion/process/focused" node --experimental-vm-modules --test tests/g7/exact-reinstall.test.mjs tests/g7/cell-activation.test.mjs'))
+if sys.argv[1]=='full': sys.exit(run('full-check','sha256sum '+' '.join(FILES)+'; G7_LIFECYCLE_EVIDENCE="$PWD/evidence/g7/lifecycle-completion/process/full" npm run check; result=$?; sha256sum '+' '.join(FILES)+'; exit "$result"'))
