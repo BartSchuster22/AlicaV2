@@ -6,7 +6,7 @@ import { parse, digest } from '@alica/acap-contracts';
 import { CellPreparation } from './g7-cell.mjs';
 import { OwnerChannel } from './g7-owner-channel.mjs';
 import { openPrivateRoot, readPrivate } from './g7-durable.mjs';
-const [root, input, rootFD, channelFD] = process.argv.slice(2);
+const [root, input, rootFD, channelFD, acceptedDigest] = process.argv.slice(2);
 // Socket-close callbacks cannot interrupt synchronous IO. Establish the OS
 // parent-death guard before adopting custody or executing any Cell operation.
 createRequire(import.meta.url)('../native/g7/build/ownership.node').guardParent(
@@ -34,7 +34,9 @@ try {
   }
   if (Object.keys(f).sort().join(',') !== 'archive,authorization,trust')
     throw new Error('INVALID');
-  await cell.install(f.archive, f.trust, f.authorization);
+  if (acceptedDigest !== undefined)
+    await cell.startAccepted(f.trust, f.authorization, acceptedDigest);
+  else await cell.install(f.archive, f.trust, f.authorization);
   for (;;) {
     const command = channel.next();
     await channel.send({ snapshot: snapshot() });

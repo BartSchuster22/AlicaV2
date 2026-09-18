@@ -1,0 +1,2711 @@
+v24.21.0
+11.19.0
+Python 3.12.3
+a978ad5d4cdc18e941a722d16caaa468e59250d34aaddf6203c4b5046eeaa3f4  tools/g7-cell-owner.mjs
+0ebd888f7231c01b6420f5e7b9fc665abe0f15bf7cac1e1a782375b06bf5e36c  tools/g7-cell.mjs
+764dcbb05601052d5382ebc7893a2ef2dda670761b17506d08f47a1493ff79fa  tools/g7-release.mjs
+e68d92d10183d74a6f54a13a5515673dc27e9de2df0bf7bfb00570f9a48e3a7d  tools/g7-supervisor.py
+3f7838f3c4bf9a6161607f78d0704cd03f9dd79f9696f40d922946364a331e95  tests/g7/supervision.test.mjs
+bf39a1b90cd45a3ab005b84d58564b98f31a0666bbe317d260719e30702c19eb  tests/g7/clean-start-block.mjs
+917e9ab5aa42e9fd344ca380fee1bb4ba7ab53e1044e41e6d2fb4583b0fadc32  docs/g7/draft/contracts.schema.json
+75a0fa6abe34d1c6bbfba24d10e509b32e2bbc40fba3ab372583de07d975d7d2  docs/g7/draft/limits.json
+
+> alica-v2@0.0.0 check
+> node tools/check-toolchain.mjs && npm run format:check && npm run build && npm run typecheck && npm run test && node tools/check-schema-sync.mjs && npm run schema && npm run boundaries && npm run secrets && npm run dependencies && npm run test:isolated && node tools/check-sdk-api.mjs && npm run test:external && npm run test:g6-design && npm run build:g6-native && npm run test:g6-native && npm run test:g7-bootstrap && npm run test:g7-contracts
+
+Pinned Node/npm verified
+
+> alica-v2@0.0.0 format:check
+> prettier --check package.json package-lock.json tsconfig*.json packages tools/*.mjs tests/foundation tests/kernel tests/contracts .github/workflows tests/sdk tests/ipc tests/g7
+
+Checking formatting...
+All matched files use Prettier code style!
+
+> alica-v2@0.0.0 build
+> node tools/build.mjs
+
+
+> alica-v2@0.0.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> alica-v2@0.0.0 test
+> node --experimental-vm-modules --test tests/foundation/*.test.mjs tests/kernel/*.test.mjs tests/contracts/*.test.mjs tests/sdk/*.test.mjs
+
+✔ CLI init/validate/generators run and preserve existing operator files (1814.484278ms)
+✔ CLI rejects invalid syntax/unknown flags, duplicate JSON, and redacts diagnostics (772.14887ms)
+✔ CLI plugin/bundle/profile validation checks linked artifacts and raw inventory (1033.518818ms)
+✔ CLI plugin validation denies symlink escape even for a syntactically valid path (279.81642ms)
+✔ CLI conformance has human and machine reports and nonzero exit for wrong behavior (834.661119ms)
+✔ CLI validates expected descriptor digest before running conformance (251.35803ms)
+✔ stream-only provider passes conformance without unary assumptions (237.183206ms)
+✔ generated descriptor preserves prototype-named keys as JSON data (303.487783ms)
+✔ public descriptor schema and canonical digest reject semantic and unknown-field violations (10.643178ms)
+✔ required versus optional features, version range and digest negotiation (9.771136ms)
+✔ closed wire protocol validates digest, unknown operations, payloads and spoofed identity (4.679225ms)
+✔ authentication runs before revealing malformed contract details (1.79128ms)
+✔ wire behavior survives JSON round trips and non-local plain exceptions (3.450612ms)
+✔ invalid provider output has normalized contract mismatch (4.759425ms)
+✔ absolute expiration causes zero provider invocations and maximum budget clamps (1.831507ms)
+✔ cancellation before completion is terminal exactly once (26.366104ms)
+✔ cancellation during completion is terminal exactly once (26.275022ms)
+✔ cancellation after completion is terminal exactly once (46.959764ms)
+✔ request IDs are unique while outstanding; explicit cancel is idempotent (2.787315ms)
+✔ parent cancellation and deadlines propagate across sessions (61.191284ms)
+✔ instance idempotency: replay, conflict, in-flight duplicate and scope isolation (32.859481ms)
+✔ idempotency retention, reset and finite capacity never silently evict live keys (25.064253ms)
+✔ none rejects keys; stream idempotency is invalid; durable claim is not faked (3.38509ms)
+✔ stream yields detached validated items and exactly one iterator completion (3.562503ms)
+✔ stream invalid item and explicit cancellation terminate without late items (4.067985ms)
+(node:141505) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ stream rechecks authority before each item delivery (3.143376ms)
+✔ bounded event primitive terminates on overflow and never leaks subsequent queued data (1.482921ms)
+✔ event envelope validates exact descriptor and broker identity fields (2.321488ms)
+✔ generation is byte deterministic and descriptor changes change generated bindings (6.311005ms)
+✔ profile validation rejects duplicate roots, cycles, and unknown pins (2.892894ms)
+✔ conformance fails an incorrect provider instead of just validating descriptor (5.843326ms)
+✔ Kernel dispatch supports stream and revocation without Kernel imports in provider (112.970918ms)
+✔ Kernel instance-idempotency cache is shared across consumer handles (118.327106ms)
+✔ monotonic budget prevents late success when wall clock does not advance (13.702895ms)
+✔ terminal release callback runs once on both success and cancellation (29.00068ms)
+✔ wire diagnostic correlation is preserved without exception identity (0.596192ms)
+✔ closed provider refuses both unary and streaming execution (1.558453ms)
+✔ conformance does not confuse its own oracle mismatch with a provider error (3.025974ms)
+✔ credit starts at zero, bounds grants, and cancellation releases waiting producer (2.47147ms)
+✔ slow stream reader applies backpressure rather than consuming unseen items (11.36201ms)
+✔ stream values and terminal errors cross JSON without local exception identity (2.862205ms)
+✔ stream decoder rejects missing terminal, bad sequence, and unknown fields (0.39875ms)
+✔ prototype-named JSON properties remain data through descriptor and invocation (1.499933ms)
+✔ finite payload interpreter enforces all G1 type constraints without coercion (0.654833ms)
+✔ boundary CLI fails on planted source violation (302.894615ms)
+✔ Cell Ajv declaration is limited to its exact host importer and target (7.49859ms)
+✔ built public entry has no accidental runtime implementation (0.215145ms)
+✔ reject deep import (0.7067ms)
+✔ reject cross-package relative (0.637419ms)
+✔ reject V1 absolute (0.312527ms)
+✔ reject dynamic computed (1.420913ms)
+✔ reject undeclared external (0.252135ms)
+✔ reject developer tooling from package (0.419479ms)
+✔ reject host dependency from package (0.690808ms)
+✔ reject escape to repo tools (0.229531ms)
+✔ accept public type import (0.24947ms)
+✔ package exports reject deep runtime import (30.893873ms)
+✔ planted synthetic token is rejected without leaking its value (45.60764ms)
+✔ ordinary public data passes secret scanner (48.542362ms)
+(node:141566) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ same capability/version with different digest is rejected before activation (71.270561ms)
+✔ duplicate visible provider identity is conflict, not load-order selection (40.620465ms)
+✔ version/feature exclusions explain deterministic ranking and optional negotiation (152.606178ms)
+✔ planning is registry/lifecycle read-only; profile pin controls real calls and lock (416.622377ms)
+✔ invalid profile pin fails before evaluating any module (22.658387ms)
+✔ cancellation first terminal outcome wins over immediate provider success (86.069847ms)
+✔ call values are detached in both directions, not live objects (82.117159ms)
+✔ pending uncooperative call is reported instead of falsely clean disposal (95.889695ms)
+✔ expired trust stops new calls and quiesces all live instances (144.431987ms)
+✔ secret grant rechecked immediately before result delivery (38.273088ms)
+✔ nested scopes destroyed before parent owner and stale contexts never revive (35.258516ms)
+✔ nested calls cannot extend inherited deadline (204.28952ms)
+✔ same-version altered trust metadata and corrupted durable state are rejected (11.461246ms)
+(node:141573) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ independent Echo A passes unchanged consumer suite (379.086195ms)
+✔ independent Echo B passes unchanged consumer suite (337.33399ms)
+✔ selection invariant under order a,b (203.011026ms)
+✔ selection invariant under order b,a (180.410459ms)
+✔ strict parser rejects {"a":1,"a":2} (0.317877ms)
+✔ strict parser rejects {"a":1e0} (0.192502ms)
+✔ strict parser rejects {"a":1.0} (0.152968ms)
+✔ strict parser rejects {"a":9007199254740992} (0.213151ms)
+✔ strict parser rejects {"a":"\ud800"} (0.206018ms)
+✔ strict parser rejects {"é":1} (0.191179ms)
+✔ strict parser rejects [1,] (0.129404ms)
+✔ strict parser rejects {"a":true}x (0.131058ms)
+✔ bounded parsing/canonicalization rejects deep, cyclic, accessor, sparse and oversized values (1.585423ms)
+✔ runtime canonical digest matches G1 descriptor and Unicode/control rules (0.363033ms)
+✔ configuration is closed and secrets cannot be placed in config (7.472871ms)
+✔ verification rejects signature before evaluation (20.622134ms)
+✔ verification rejects file before evaluation (18.697693ms)
+✔ verification rejects unknown-manifest before evaluation (15.939994ms)
+✔ verification rejects duplicate-json before evaluation (18.711139ms)
+✔ verification rejects untrusted-key before evaluation (21.515486ms)
+✔ verification rejects invalid-stream-idempotency before evaluation (17.564161ms)
+✔ loaded bytes are immutable after verification (33.557335ms)
+✔ unverified module imports cannot be linked or evaluated (21.742161ms)
+✔ missing mandatory dependency blocks ACTIVE (25.389175ms)
+✔ incompatible mandatory dependency blocks ACTIVE (45.453009ms)
+✔ denied mandatory dependency blocks ACTIVE (44.05629ms)
+✔ mandatory cycles rejected; no participant becomes ACTIVE (48.533325ms)
+✔ partial activation never publishes; effects clean in reverse order; disposal idempotent (43.419432ms)
+✔ staged registration invisible while activation awaits (75.035303ms)
+✔ cleanup failures remain FAILED, remaining disposers still execute (34.131696ms)
+✔ uncooperative disposer times out and requires restart (48.138712ms)
+✔ capability denial and optional absence are distinct (48.585013ms)
+✔ revoked grant invalidates retained handle (79.466081ms)
+✔ expired grant invalidates retained handle (77.984402ms)
+✔ wrong principal/instance/scope generation and widened child grants rejected (41.653869ms)
+✔ child scope teardown invalidates handles and removes only owned resources (82.175038ms)
+✔ parent cannot see child registrations (60.080213ms)
+✔ mandatory provider loss quiesces consumer transitively without rebinding (161.447245ms)
+✔ revocation during call prevents result delivery (108.41793ms)
+✔ unload during call cancels delivery and cleans call tracking (92.906332ms)
+✔ deadline, cancellation, input/output validation and no idempotent replay (167.400468ms)
+✔ provider errors and invalid output normalized without value leakage (77.400834ms)
+✔ secret access requires declaration and separate grant; inspection redacts values (53.981356ms)
+✔ events deliver FIFO broker identity; disposer removes listener (86.584435ms)
+✔ event rechecks revoked subscription and publisher; handler failures isolated (72.228281ms)
+✔ bounded event overflow terminates affected subscription and cleanup reclaims listener (115.351085ms)
+✔ audit exhaustion blocks mutation but never emergency revocation (30.777533ms)
+✔ expired trust and backward clock fail closed (24.533975ms)
+✔ trust revocation quiesces running providers (125.118224ms)
+✔ persistent trust state rejects rollback and missing-state recovery (13.720567ms)
+✔ root rotation requires both old and new signatures plus exact next policy (39.885041ms)
+(node:141658) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ runtime matches frozen Python/OpenSSL vector C-00 (2.179101ms)
+✔ runtime matches frozen Python/OpenSSL vector C-01 (0.192161ms)
+✔ runtime matches frozen Python/OpenSSL vector C-02 (0.171983ms)
+✔ runtime matches frozen Python/OpenSSL vector C-03 (0.147146ms)
+✔ runtime matches frozen Python/OpenSSL vector C-04 (0.287581ms)
+✔ runtime matches frozen Python/OpenSSL vector C-05 (0.277712ms)
+✔ runtime matches frozen Python/OpenSSL vector C-06 (0.149401ms)
+✔ runtime matches frozen Python/OpenSSL vector C-07 (0.144882ms)
+✔ runtime matches frozen Python/OpenSSL vector C-08 (0.308472ms)
+✔ runtime matches frozen Python/OpenSSL vector C-09 (0.231455ms)
+✔ runtime matches frozen Python/OpenSSL vector C-10 (0.750332ms)
+✔ runtime matches frozen Python/OpenSSL vector C-11 (0.120057ms)
+✔ runtime matches frozen Python/OpenSSL vector C-12 (0.11686ms)
+✔ runtime matches frozen Python/OpenSSL vector C-13 (0.086332ms)
+✔ runtime matches frozen Python/OpenSSL vector C-14 (0.102584ms)
+✔ runtime matches frozen Python/OpenSSL vector C-15 (0.691031ms)
+✔ runtime matches frozen Python/OpenSSL vector C-16 (0.150223ms)
+✔ runtime matches frozen Python/OpenSSL vector C-17 (0.10619ms)
+✔ mandatory activation binding cannot silently switch after catalog changes (182.878452ms)
+✔ plugin log admits only fixed safe metadata and quiesce is idempotent (42.778687ms)
+(node:141692) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ real Kernel verifies and activates SDK-only signed relative module graph (137.841565ms)
+✔ real Kernel rejects tampered dependent module before evaluation (16.27809ms)
+✔ production linker rejects @alica/kernel before evaluation (22.078966ms)
+✔ production linker rejects @alica/testkit before evaluation (24.246204ms)
+✔ production linker rejects node:fs before evaluation (26.687377ms)
+✔ production linker rejects ../../escape.js before evaluation (30.614778ms)
+✔ production linker rejects ./missing.js before evaluation (21.501359ms)
+✔ production linker rejects @alica/plugin-sdk/dist/index.js before evaluation (29.242695ms)
+✔ real SDK optional cannot turn a denied capability into absence (74.155257ms)
+✔ public SDK provides, resolves, and bridges generated endpoints (21.158193ms)
+✔ independently implemented provider substitutes without consumer changes (5.890084ms)
+✔ missing optional returns null but denied optional does not hide permissions (1.834172ms)
+✔ optional does not hide incompatible present provider (2.976941ms)
+✔ idempotent disposer shares result and rejection without executing twice (0.397868ms)
+✔ owned effects clean in reverse order and partial acquisition cleans immediately (1.997929ms)
+✔ activation injection rolls back staged providers and acquired effects (2.685553ms)
+✔ revocation injection rejects existing handle before provider dispatch (2.727371ms)
+✔ timeout injection is deterministic, one-shot, and not elapsed-time simulation (2.097617ms)
+✔ cleanup injection is reported while remaining cleanups continue (0.827929ms)
+✔ cleanup timeout is visible and does not hang disposal (6.449727ms)
+✔ destroyed child handles cannot escape their owning scope (3.690443ms)
+✔ provider disposal invalidates old handles instead of rebinding (1.692515ms)
+✔ typed events validate payloads and deliver immutable broker envelopes (5.231885ms)
+✔ secret references are scoped and logs refuse arbitrary data fields (1.025119ms)
+✔ invalid input and unknown operation retain exact ACAP rejection codes (2.376402ms)
+✔ uncooperative event handler is reported as incomplete cleanup (5.809331ms)
+✔ optional validates malformed requirement before reporting absence (0.903549ms)
+ℹ tests 170
+ℹ suites 0
+ℹ pass 170
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5838.54648
+Runtime schemas match frozen G1 schema sources
+
+> alica-v2@0.0.0 schema
+> python3 -S tools/run-design.py
+
+test_authorized (test_g1_completion.AuthorityLifecycle.test_authorized) ... ok
+test_changed_instance (test_g1_completion.AuthorityLifecycle.test_changed_instance) ... ok
+test_changed_principal (test_g1_completion.AuthorityLifecycle.test_changed_principal) ... ok
+test_deadline_inheritance (test_g1_completion.AuthorityLifecycle.test_deadline_inheritance) ... ok
+test_every_transition (test_g1_completion.AuthorityLifecycle.test_every_transition) ... ok
+test_expiry_boundary (test_g1_completion.AuthorityLifecycle.test_expiry_boundary) ... ok
+test_future_issuance (test_g1_completion.AuthorityLifecycle.test_future_issuance) ... ok
+test_offline_backward_clock (test_g1_completion.AuthorityLifecycle.test_offline_backward_clock) ... ok
+test_offline_expired (test_g1_completion.AuthorityLifecycle.test_offline_expired) ... ok
+test_offline_fresh (test_g1_completion.AuthorityLifecycle.test_offline_fresh) ... ok
+test_offline_old_metadata (test_g1_completion.AuthorityLifecycle.test_offline_old_metadata) ... ok
+test_offline_rollback_metadata (test_g1_completion.AuthorityLifecycle.test_offline_rollback_metadata) ... ok
+test_partial_cleanup_keeps_failure (test_g1_completion.AuthorityLifecycle.test_partial_cleanup_keeps_failure) ... ok
+test_reused_scope (test_g1_completion.AuthorityLifecycle.test_reused_scope) ... ok
+test_revision_revoke (test_g1_completion.AuthorityLifecycle.test_revision_revoke) ... ok
+test_revoked_flag (test_g1_completion.AuthorityLifecycle.test_revoked_flag) ... ok
+test_sibling_scope (test_g1_completion.AuthorityLifecycle.test_sibling_scope) ... ok
+test_terminal_first_wins (test_g1_completion.AuthorityLifecycle.test_terminal_first_wins) ... ok
+test_wrong_operation (test_g1_completion.AuthorityLifecycle.test_wrong_operation) ... ok
+test_semantic_positive_bundle (test_g1_completion.CompleteSchemas.test_semantic_positive_bundle) ... ok
+test_semantic_positive_call (test_g1_completion.CompleteSchemas.test_semantic_positive_call) ... ok
+test_semantic_positive_capability (test_g1_completion.CompleteSchemas.test_semantic_positive_capability) ... ok
+test_semantic_positive_error (test_g1_completion.CompleteSchemas.test_semantic_positive_error) ... ok
+test_semantic_positive_event (test_g1_completion.CompleteSchemas.test_semantic_positive_event) ... ok
+test_semantic_positive_event_descriptor (test_g1_completion.CompleteSchemas.test_semantic_positive_event_descriptor) ... ok
+test_semantic_positive_event_grant (test_g1_completion.CompleteSchemas.test_semantic_positive_event_grant) ... ok
+test_semantic_positive_grant (test_g1_completion.CompleteSchemas.test_semantic_positive_grant) ... ok
+test_semantic_positive_package_index (test_g1_completion.CompleteSchemas.test_semantic_positive_package_index) ... ok
+test_semantic_positive_plugin (test_g1_completion.CompleteSchemas.test_semantic_positive_plugin) ... ok
+test_semantic_positive_profile (test_g1_completion.CompleteSchemas.test_semantic_positive_profile) ... ok
+test_semantic_positive_resolution_lock (test_g1_completion.CompleteSchemas.test_semantic_positive_resolution_lock) ... ok
+test_semantic_positive_response (test_g1_completion.CompleteSchemas.test_semantic_positive_response) ... ok
+test_semantic_positive_revocation (test_g1_completion.CompleteSchemas.test_semantic_positive_revocation) ... ok
+test_semantic_positive_root_rotation (test_g1_completion.CompleteSchemas.test_semantic_positive_root_rotation) ... ok
+test_semantic_positive_secret_grant (test_g1_completion.CompleteSchemas.test_semantic_positive_secret_grant) ... ok
+test_semantic_positive_signature (test_g1_completion.CompleteSchemas.test_semantic_positive_signature) ... ok
+test_semantic_positive_trust_policy (test_g1_completion.CompleteSchemas.test_semantic_positive_trust_policy) ... ok
+test_dual_root_and_openssl (test_g1_completion.CryptoVectors.test_dual_root_and_openssl) ... ok
+test_missing_rotation_signature (test_g1_completion.CryptoVectors.test_missing_rotation_signature) ... ok
+test_tampered_record (test_g1_completion.CryptoVectors.test_tampered_record) ... ok
+test_wrong_domain (test_g1_completion.CryptoVectors.test_wrong_domain) ... ok
+test_wrong_root (test_g1_completion.CryptoVectors.test_wrong_root) ... ok
+test_both_reject_nonascii_key (test_g1_completion.Digests.test_both_reject_nonascii_key) ... ok
+test_both_reject_surrogate (test_g1_completion.Digests.test_both_reject_surrogate) ... ok
+test_golden_vectors (test_g1_completion.Digests.test_golden_vectors) ... ok
+test_reject_duplicates_raw (test_g1_completion.Digests.test_reject_duplicates_raw) ... ok
+test_reject_oversize_raw (test_g1_completion.Digests.test_reject_oversize_raw) ... ok
+test_const_enum_mismatch (test_g1_completion.NegativeSemantic.test_const_enum_mismatch) ... ok
+test_const_wrong_type (test_g1_completion.NegativeSemantic.test_const_wrong_type) ... ok
+test_dependency_duplicates (test_g1_completion.NegativeSemantic.test_dependency_duplicates) ... ok
+test_empty_capability_operations (test_g1_completion.NegativeSemantic.test_empty_capability_operations) ... ok
+test_enum_duplicate (test_g1_completion.NegativeSemantic.test_enum_duplicate) ... ok
+test_enum_wrong_type (test_g1_completion.NegativeSemantic.test_enum_wrong_type) ... ok
+test_event_descriptor_fixture_binding (test_g1_completion.NegativeSemantic.test_event_descriptor_fixture_binding) ... ok
+test_event_duplicate_declaration (test_g1_completion.NegativeSemantic.test_event_duplicate_declaration) ... ok
+test_event_instance_required (test_g1_completion.NegativeSemantic.test_event_instance_required) ... ok
+test_event_scope_generation_required (test_g1_completion.NegativeSemantic.test_event_scope_generation_required) ... ok
+test_event_unknown_metadata (test_g1_completion.NegativeSemantic.test_event_unknown_metadata) ... ok
+test_event_wrong_operation (test_g1_completion.NegativeSemantic.test_event_wrong_operation) ... ok
+test_expired_interval (test_g1_completion.NegativeSemantic.test_expired_interval) ... ok
+test_feature_overlap (test_g1_completion.NegativeSemantic.test_feature_overlap) ... ok
+test_inverted_version_range (test_g1_completion.NegativeSemantic.test_inverted_version_range) ... ok
+test_lock_duplicate_binding (test_g1_completion.NegativeSemantic.test_lock_duplicate_binding) ... ok
+test_lock_plugin_order (test_g1_completion.NegativeSemantic.test_lock_plugin_order) ... ok
+test_lock_unknown_provider (test_g1_completion.NegativeSemantic.test_lock_unknown_provider) ... ok
+test_lock_wrong_package (test_g1_completion.NegativeSemantic.test_lock_wrong_package) ... ok
+test_missing_idempotency_policy (test_g1_completion.NegativeSemantic.test_missing_idempotency_policy) ... ok
+test_package_duplicate_path (test_g1_completion.NegativeSemantic.test_package_duplicate_path) ... ok
+test_package_missing_manifest (test_g1_completion.NegativeSemantic.test_package_missing_manifest) ... ok
+test_payload_range (test_g1_completion.NegativeSemantic.test_payload_range) ... ok
+test_payload_wrong_keyword (test_g1_completion.NegativeSemantic.test_payload_wrong_keyword) ... ok
+test_pin_unknown_provider (test_g1_completion.NegativeSemantic.test_pin_unknown_provider) ... ok
+test_policy_for_none (test_g1_completion.NegativeSemantic.test_policy_for_none) ... ok
+test_required_missing_property (test_g1_completion.NegativeSemantic.test_required_missing_property) ... ok
+test_response_both_outcomes (test_g1_completion.NegativeSemantic.test_response_both_outcomes) ... ok
+test_rotation_same_key (test_g1_completion.NegativeSemantic.test_rotation_same_key) ... ok
+test_rotation_skips_version (test_g1_completion.NegativeSemantic.test_rotation_skips_version) ... ok
+test_scope_cycle (test_g1_completion.NegativeSemantic.test_scope_cycle) ... ok
+test_scope_two_roots (test_g1_completion.NegativeSemantic.test_scope_two_roots) ... ok
+test_secret_wrong_operation (test_g1_completion.NegativeSemantic.test_secret_wrong_operation) ... ok
+test_stream_idempotency (test_g1_completion.NegativeSemantic.test_stream_idempotency) ... ok
+test_unknown_parent (test_g1_completion.NegativeSemantic.test_unknown_parent) ... ok
+test_version_component_overflow (test_g1_completion.NegativeSemantic.test_version_component_overflow) ... ok
+test_catalog_permutations (test_g1_completion.Negotiation.test_catalog_permutations) ... ok
+test_conflicting_descriptor (test_g1_completion.Negotiation.test_conflicting_descriptor) ... ok
+test_max_minor (test_g1_completion.Negotiation.test_max_minor) ... ok
+test_optional_features (test_g1_completion.Negotiation.test_optional_features) ... ok
+test_optional_features_absent (test_g1_completion.Negotiation.test_optional_features_absent) ... ok
+test_bool_not_integer (test_specifications.CanonicalTests.test_bool_not_integer) ... ok
+test_depth (test_specifications.CanonicalTests.test_depth) ... ok
+test_descriptor_digest (test_specifications.CanonicalTests.test_descriptor_digest) ... ok
+test_duplicate_keys (test_specifications.CanonicalTests.test_duplicate_keys) ... ok
+test_exponent (test_specifications.CanonicalTests.test_exponent) ... ok
+test_fixed_bytes (test_specifications.CanonicalTests.test_fixed_bytes) ... ok
+test_float (test_specifications.CanonicalTests.test_float) ... ok
+test_key_order (test_specifications.CanonicalTests.test_key_order) ... ok
+test_nan (test_specifications.CanonicalTests.test_nan) ... ok
+test_negative_zero (test_specifications.CanonicalTests.test_negative_zero) ... ok
+test_nonascii_key (test_specifications.CanonicalTests.test_nonascii_key) ... ok
+test_range (test_specifications.CanonicalTests.test_range) ... ok
+test_size (test_specifications.CanonicalTests.test_size) ... ok
+test_surrogate (test_specifications.CanonicalTests.test_surrogate) ... ok
+test_denied_grant (test_specifications.DesignExamples.test_denied_grant) ... ok
+test_invisible_provider (test_specifications.DesignExamples.test_invisible_provider) ... ok
+test_missing_feature (test_specifications.DesignExamples.test_missing_feature) ... ok
+test_missing_operation (test_specifications.DesignExamples.test_missing_operation) ... ok
+test_missing_pin_no_fallback (test_specifications.DesignExamples.test_missing_pin_no_fallback) ... ok
+test_numeric_version (test_specifications.DesignExamples.test_numeric_version) ... ok
+test_pin (test_specifications.DesignExamples.test_pin) ... ok
+test_shuffle_resolution (test_specifications.DesignExamples.test_shuffle_resolution) ... ok
+test_untrusted_provider (test_specifications.DesignExamples.test_untrusted_provider) ... ok
+test_wrong_major (test_specifications.DesignExamples.test_wrong_major) ... ok
+test_absolute_path (test_specifications.NegativeTests.test_absolute_path) ... ok
+test_backslash_path (test_specifications.NegativeTests.test_backslash_path) ... ok
+test_bad_grant_interval (test_specifications.NegativeTests.test_bad_grant_interval) ... ok
+test_duplicate_bundle_path (test_specifications.NegativeTests.test_duplicate_bundle_path) ... ok
+test_duplicate_features (test_specifications.NegativeTests.test_duplicate_features) ... ok
+test_duplicate_operation (test_specifications.NegativeTests.test_duplicate_operation) ... ok
+test_duplicate_profile_plugin (test_specifications.NegativeTests.test_duplicate_profile_plugin) ... ok
+test_leading_zero_version (test_specifications.NegativeTests.test_leading_zero_version) ... ok
+test_path_traversal (test_specifications.NegativeTests.test_path_traversal) ... ok
+test_prerelease (test_specifications.NegativeTests.test_prerelease) ... ok
+test_remote_schema (test_specifications.NegativeTests.test_remote_schema) ... ok
+test_retry_denial (test_specifications.NegativeTests.test_retry_denial) ... ok
+test_secret_value_in_profile (test_specifications.NegativeTests.test_secret_value_in_profile) ... ok
+test_unknown_mode (test_specifications.NegativeTests.test_unknown_mode) ... ok
+test_missing_field_bundle (test_specifications.SchemaTests.test_missing_field_bundle) ... ok
+test_missing_field_call (test_specifications.SchemaTests.test_missing_field_call) ... ok
+test_missing_field_capability (test_specifications.SchemaTests.test_missing_field_capability) ... ok
+test_missing_field_error (test_specifications.SchemaTests.test_missing_field_error) ... ok
+test_missing_field_event (test_specifications.SchemaTests.test_missing_field_event) ... ok
+test_missing_field_event_descriptor (test_specifications.SchemaTests.test_missing_field_event_descriptor) ... ok
+test_missing_field_event_grant (test_specifications.SchemaTests.test_missing_field_event_grant) ... ok
+test_missing_field_grant (test_specifications.SchemaTests.test_missing_field_grant) ... ok
+test_missing_field_package_index (test_specifications.SchemaTests.test_missing_field_package_index) ... ok
+test_missing_field_plugin (test_specifications.SchemaTests.test_missing_field_plugin) ... ok
+test_missing_field_profile (test_specifications.SchemaTests.test_missing_field_profile) ... ok
+test_missing_field_resolution_lock (test_specifications.SchemaTests.test_missing_field_resolution_lock) ... ok
+test_missing_field_response (test_specifications.SchemaTests.test_missing_field_response) ... ok
+test_missing_field_revocation (test_specifications.SchemaTests.test_missing_field_revocation) ... ok
+test_missing_field_root_rotation (test_specifications.SchemaTests.test_missing_field_root_rotation) ... ok
+test_missing_field_secret_grant (test_specifications.SchemaTests.test_missing_field_secret_grant) ... ok
+test_missing_field_signature (test_specifications.SchemaTests.test_missing_field_signature) ... ok
+test_missing_field_trust_policy (test_specifications.SchemaTests.test_missing_field_trust_policy) ... ok
+test_unknown_field_bundle (test_specifications.SchemaTests.test_unknown_field_bundle) ... ok
+test_unknown_field_call (test_specifications.SchemaTests.test_unknown_field_call) ... ok
+test_unknown_field_capability (test_specifications.SchemaTests.test_unknown_field_capability) ... ok
+test_unknown_field_error (test_specifications.SchemaTests.test_unknown_field_error) ... ok
+test_unknown_field_event (test_specifications.SchemaTests.test_unknown_field_event) ... ok
+test_unknown_field_event_descriptor (test_specifications.SchemaTests.test_unknown_field_event_descriptor) ... ok
+test_unknown_field_event_grant (test_specifications.SchemaTests.test_unknown_field_event_grant) ... ok
+test_unknown_field_grant (test_specifications.SchemaTests.test_unknown_field_grant) ... ok
+test_unknown_field_package_index (test_specifications.SchemaTests.test_unknown_field_package_index) ... ok
+test_unknown_field_plugin (test_specifications.SchemaTests.test_unknown_field_plugin) ... ok
+test_unknown_field_profile (test_specifications.SchemaTests.test_unknown_field_profile) ... ok
+test_unknown_field_resolution_lock (test_specifications.SchemaTests.test_unknown_field_resolution_lock) ... ok
+test_unknown_field_response (test_specifications.SchemaTests.test_unknown_field_response) ... ok
+test_unknown_field_revocation (test_specifications.SchemaTests.test_unknown_field_revocation) ... ok
+test_unknown_field_root_rotation (test_specifications.SchemaTests.test_unknown_field_root_rotation) ... ok
+test_unknown_field_secret_grant (test_specifications.SchemaTests.test_unknown_field_secret_grant) ... ok
+test_unknown_field_signature (test_specifications.SchemaTests.test_unknown_field_signature) ... ok
+test_unknown_field_trust_policy (test_specifications.SchemaTests.test_unknown_field_trust_policy) ... ok
+test_valid_bundle (test_specifications.SchemaTests.test_valid_bundle) ... ok
+test_valid_call (test_specifications.SchemaTests.test_valid_call) ... ok
+test_valid_capability (test_specifications.SchemaTests.test_valid_capability) ... ok
+test_valid_error (test_specifications.SchemaTests.test_valid_error) ... ok
+test_valid_event (test_specifications.SchemaTests.test_valid_event) ... ok
+test_valid_event_descriptor (test_specifications.SchemaTests.test_valid_event_descriptor) ... ok
+test_valid_event_grant (test_specifications.SchemaTests.test_valid_event_grant) ... ok
+test_valid_grant (test_specifications.SchemaTests.test_valid_grant) ... ok
+test_valid_package_index (test_specifications.SchemaTests.test_valid_package_index) ... ok
+test_valid_plugin (test_specifications.SchemaTests.test_valid_plugin) ... ok
+test_valid_profile (test_specifications.SchemaTests.test_valid_profile) ... ok
+test_valid_resolution_lock (test_specifications.SchemaTests.test_valid_resolution_lock) ... ok
+test_valid_response (test_specifications.SchemaTests.test_valid_response) ... ok
+test_valid_revocation (test_specifications.SchemaTests.test_valid_revocation) ... ok
+test_valid_root_rotation (test_specifications.SchemaTests.test_valid_root_rotation) ... ok
+test_valid_secret_grant (test_specifications.SchemaTests.test_valid_secret_grant) ... ok
+test_valid_signature (test_specifications.SchemaTests.test_valid_signature) ... ok
+test_valid_trust_policy (test_specifications.SchemaTests.test_valid_trust_policy) ... ok
+test_activation_staging (test_specifications.ScopeLifecycleExamples.test_activation_staging) ... ok
+test_ancestor_visible (test_specifications.ScopeLifecycleExamples.test_ancestor_visible) ... ok
+test_bad_signature_padding (test_specifications.ScopeLifecycleExamples.test_bad_signature_padding) ... ok
+test_call_cannot_assert_authority (test_specifications.ScopeLifecycleExamples.test_call_cannot_assert_authority) ... ok
+test_child_hidden_from_parent (test_specifications.ScopeLifecycleExamples.test_child_hidden_from_parent) ... ok
+test_grant_expiry_boundary (test_specifications.ScopeLifecycleExamples.test_grant_expiry_boundary) ... ok
+test_grant_intersection (test_specifications.ScopeLifecycleExamples.test_grant_intersection) ... ok
+test_reverse_disposal_order (test_specifications.ScopeLifecycleExamples.test_reverse_disposal_order) ... ok
+test_revoked_revision (test_specifications.ScopeLifecycleExamples.test_revoked_revision) ... ok
+test_scope_self_visible (test_specifications.ScopeLifecycleExamples.test_scope_self_visible) ... ok
+test_sibling_hidden (test_specifications.ScopeLifecycleExamples.test_sibling_hidden) ... ok
+test_stale_generation (test_specifications.ScopeLifecycleExamples.test_stale_generation) ... ok
+test_terminal_state (test_specifications.ScopeLifecycleExamples.test_terminal_state) ... ok
+
+----------------------------------------------------------------------
+Ran 193 tests in 0.275s
+
+OK
+
+> alica-v2@0.0.0 boundaries
+> node tools/check-boundaries.mjs
+
+Public import boundaries passed
+
+> alica-v2@0.0.0 secrets
+> python3 tools/check-secrets.py
+
+Secret pattern check passed
+
+> alica-v2@0.0.0 dependencies
+> python3 -S tools/check-dependencies.py
+
+npm @types/node 24.13.5 MIT
+npm ajv 8.20.0 MIT
+npm fast-deep-equal 3.1.3 MIT
+npm fast-uri 3.1.8 BSD-3-Clause
+npm json-schema-traverse 1.0.0 MIT
+npm prettier 3.9.7 MIT
+npm require-from-string 2.0.2 MIT
+npm typescript 6.0.3 Apache-2.0
+npm undici-types 7.18.2 MIT
+python attrs 26.1.0 MIT
+python cffi 2.1.1 MIT-0
+python cryptography 50.0.1 Apache-2.0 OR BSD-3-Clause
+python jsonschema 4.26.0 MIT
+python jsonschema-specifications 2025.9.1 MIT
+python pycparser 3.0 BSD-3-Clause
+python referencing 0.37.0 MIT
+python rpds-py 2026.6.3 MIT
+python typing_extensions 4.16.0 PSF-2.0
+Exact dependencies and reviewed license allowlist passed; not a vulnerability scan
+
+> alica-v2@0.0.0 test:isolated
+> node tools/test-isolated.mjs
+
+{"schemaVersion":"alica.isolated-conformance/v1","passed":true,"installedPackages":["@alica/acap-types","@alica/acap-contracts","@alica/alicac"],"kernelInstalled":false,"generatedArtifactsDeterministic":true,"generatedTypesChecked":true,"wireRoundTrip":true,"conformance":{"checks":[{"name":"fixture:independent-add","passed":true},{"name":"fixture:recorded-replay","passed":true},{"name":"fixture:changed-payload-conflict","passed":true},{"name":"fixture:stream-count","passed":true},{"name":"fixture:empty-stream","passed":true},{"name":"wrong-digest","passed":true},{"name":"unknown-operation","passed":true},{"name":"expired-request","passed":true},{"name":"caller-spoof","passed":true},{"name":"incompatible-negotiation","passed":true}],"descriptorDigest":"sha256:8766c5d4a8e68a5194a76fc0ce18ed3b50b86ce8765508fc95c05de0d83bff21","passed":true,"schemaVersion":"alica.conformance/v1"}}
+ISOLATED_CONSUMER_PASS kernelUnavailable=true generatedClient=true wireRoundTrip=true idempotentInvocations=1
+SDK/testkit runtime exports and declaration snapshots passed
+
+> alica-v2@0.0.0 test:external
+> node tools/test-external-sdk.mjs
+
+{"schemaVersion":"alica.g5-external/v1","level":"PROVIDER","sourceRevision":"59f5eef3bf792d89a7193d753df0a85158a9a62c","runtime":"v24.21.0","publicImportsOnly":true,"authorProjectHasNoKernel":true,"separateOperatorProject":true,"deterministicGeneration":true,"negativeTypeCheck":true,"packageFiles":["consumer.plugin.json","contracts/math.json","contracts/result.json","dist/consumer.d.ts","dist/consumer.js","dist/provider.d.ts","dist/provider.js","generated/client.d.mts","generated/client.mjs","generated/provider.d.mts","generated/provider.mjs","package.json","provider.plugin.json"],"conformance":{"checks":[{"name":"fixture:positive","passed":true},{"name":"fixture:negative","passed":true},{"name":"fixture:zero","passed":true},{"name":"fixture:invalid-input","passed":true},{"name":"wrong-digest","passed":true},{"name":"unknown-operation","passed":true},{"name":"expired-request","passed":true},{"name":"caller-spoof","passed":true},{"name":"incompatible-negotiation","passed":true}],"descriptorDigest":"sha256:19bfc82bed3b4f3478966a8b6a86a1d7c14999387231d2f1dbb6ff239cd1167e","passed":true,"schemaVersion":"alica.conformance/v1"},"production":{"level":"PROVIDER","transport":"inproc","signedPackageVerified":true,"inventoryOnlyModules":true,"publicSdk":true,"result":42,"cleanup":{"completedDisposers":2,"failedDisposers":[],"restartRequired":false,"state":"DISPOSED","timedOutResources":0},"providerActivated":true},"commands":[["npm","pack","/home/alica-dev/AlicaV2/packages/acap-types","--pack-destination","$TMP/artifacts","--json","--ignore-scripts"],["npm","pack","/home/alica-dev/AlicaV2/packages/acap-contracts","--pack-destination","$TMP/artifacts","--json","--ignore-scripts"],["npm","pack","/home/alica-dev/AlicaV2/packages/plugin-sdk","--pack-destination","$TMP/artifacts","--json","--ignore-scripts"],["npm","pack","/home/alica-dev/AlicaV2/packages/testkit","--pack-destination","$TMP/artifacts","--json","--ignore-scripts"],["npm","pack","/home/alica-dev/AlicaV2/packages/alicac","--pack-destination","$TMP/artifacts","--json","--ignore-scripts"],["npm","pack","/home/alica-dev/AlicaV2/packages/kernel","--pack-destination","$TMP/artifacts","--json","--ignore-scripts"],["npm","install","--no-save","--ignore-scripts","--no-audit","--no-fund","$TMP/artifacts/alica-acap-types-0.0.0.tgz","$TMP/artifacts/alica-acap-contracts-0.0.0.tgz","$TMP/artifacts/alica-plugin-sdk-0.1.0.tgz","$TMP/artifacts/alica-testkit-0.1.0.tgz","$TMP/artifacts/alica-alicac-0.0.0.tgz"],["/tmp/alica-g5-external-rGLO8q/author/node_modules/.bin/alicac","capability","init","--id","org.tutorial.math","--out","starter.json","--json"],["/tmp/alica-g5-external-rGLO8q/author/node_modules/.bin/alicac","capability","validate","contracts/math.json","--json"],["npm","run","build"],["npm","run","build"],["npm","test"],["/tmp/alica-g5-external-rGLO8q/author/node_modules/.bin/alicac","conformance","run","--provider","dist/provider.js","--fixtures","conformance.json","--json"],["npm","run","verify"],["npm","run","run"],["node","--input-type=module","-e","import assert from 'node:assert/strict';import {createRequire} from 'node:module';const require=createRequire(import.meta.url);assert.throws(()=>require.resolve('@alica/kernel'),e=>e.code==='MODULE_NOT_FOUND');for(const p of ['@alica/plugin-sdk/dist/index.js','@alica/testkit/dist/index.js'])assert.throws(()=>require.resolve(p),e=>e.code==='ERR_PACKAGE_PATH_NOT_EXPORTED')"],["node","node_modules/typescript/bin/tsc","--noEmit","-p","tsconfig.json"],["npm","pack","--pack-destination","$TMP/artifacts","--json","--ignore-scripts"],["npm","install","--no-save","--ignore-scripts","--no-audit","--no-fund","$TMP/artifacts/alica-acap-types-0.0.0.tgz","$TMP/artifacts/alica-acap-contracts-0.0.0.tgz","$TMP/artifacts/alica-plugin-sdk-0.1.0.tgz","$TMP/artifacts/alica-kernel-0.0.0.tgz","$TMP/artifacts/tutorial-plugins-0.1.0.tgz"],["node","--experimental-vm-modules","operator-run.mjs"]]}
+
+> alica-v2@0.0.0 test:g6-design
+> python3 -S tools/check-g6-design.py && python3 -S tools/test-g6-context-model.py
+
+{
+  "level": "SCHEMA-DESIGN-ONLY",
+  "schemaChecksPassed": 248,
+  "runtimeQualification": false,
+  "cases": [
+    {
+      "case": "valid-hello",
+      "passed": true,
+      "expectedValid": true,
+      "direction": null
+    },
+    {
+      "case": "closed-hello-envelope",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "closed-hello-body",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "generation-required-hello",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "valid-accepted",
+      "passed": true,
+      "expectedValid": true,
+      "direction": null
+    },
+    {
+      "case": "closed-accepted-envelope",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "closed-accepted-body",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "generation-required-accepted",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "valid-request",
+      "passed": true,
+      "expectedValid": true,
+      "direction": null
+    },
+    {
+      "case": "closed-request-envelope",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "closed-request-body",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "generation-required-request",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "valid-response",
+      "passed": true,
+      "expectedValid": true,
+      "direction": null
+    },
+    {
+      "case": "closed-response-envelope",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "closed-response-body",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "generation-required-response",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "valid-error",
+      "passed": true,
+      "expectedValid": true,
+      "direction": null
+    },
+    {
+      "case": "closed-error-envelope",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "closed-error-body",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "generation-required-error",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "valid-cancel",
+      "passed": true,
+      "expectedValid": true,
+      "direction": null
+    },
+    {
+      "case": "closed-cancel-envelope",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "closed-cancel-body",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "generation-required-cancel",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "valid-stream-item",
+      "passed": true,
+      "expectedValid": true,
+      "direction": null
+    },
+    {
+      "case": "closed-stream-item-envelope",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "closed-stream-item-body",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "generation-required-stream-item",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "valid-stream-credit",
+      "passed": true,
+      "expectedValid": true,
+      "direction": null
+    },
+    {
+      "case": "closed-stream-credit-envelope",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "closed-stream-credit-body",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "generation-required-stream-credit",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "valid-stream-end",
+      "passed": true,
+      "expectedValid": true,
+      "direction": null
+    },
+    {
+      "case": "closed-stream-end-envelope",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "closed-stream-end-body",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "generation-required-stream-end",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "valid-event",
+      "passed": true,
+      "expectedValid": true,
+      "direction": null
+    },
+    {
+      "case": "closed-event-envelope",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "closed-event-body",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "generation-required-event",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "valid-ping",
+      "passed": true,
+      "expectedValid": true,
+      "direction": null
+    },
+    {
+      "case": "closed-ping-envelope",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "closed-ping-body",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "generation-required-ping",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "valid-pong",
+      "passed": true,
+      "expectedValid": true,
+      "direction": null
+    },
+    {
+      "case": "closed-pong-envelope",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "closed-pong-body",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "generation-required-pong",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "valid-scope-check",
+      "passed": true,
+      "expectedValid": true,
+      "direction": null
+    },
+    {
+      "case": "closed-scope-check-envelope",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "closed-scope-check-body",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "generation-required-scope-check",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "valid-log",
+      "passed": true,
+      "expectedValid": true,
+      "direction": null
+    },
+    {
+      "case": "closed-log-envelope",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "closed-log-body",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "generation-required-log",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "hello-from-provider",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "toBroker"
+    },
+    {
+      "case": "hello-not-from-broker",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "toProvider"
+    },
+    {
+      "case": "accepted-from-broker",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "toProvider"
+    },
+    {
+      "case": "accepted-not-from-provider",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "toBroker"
+    },
+    {
+      "case": "broker-invoke",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "toProvider"
+    },
+    {
+      "case": "provider-cannot-send-broker-invoke",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "toBroker"
+    },
+    {
+      "case": "outbound-shape",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "toBroker"
+    },
+    {
+      "case": "outbound-rejects-caller-assertion",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "toBroker"
+    },
+    {
+      "case": "invalid-header-contextId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "invalid-header-sessionId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "invalid-header-generation",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "invalid-header-sequence",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "invalid-header-schemaVersion",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "invalid-header-tag",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "credit-shape-0",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "credit-shape-257",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "credit-shape-1.5",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "handshake-shape-protocolMajor",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "handshake-shape-packageDigest",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "handshake-shape-challenge",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "reject-non-acap-value-76",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "reject-non-acap-value-77",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "reject-non-acap-value-78",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "accept-acap-value-79",
+      "passed": true,
+      "expectedValid": true,
+      "direction": null
+    },
+    {
+      "case": "accept-acap-value-80",
+      "passed": true,
+      "expectedValid": true,
+      "direction": null
+    },
+    {
+      "case": "accept-acap-value-81",
+      "passed": true,
+      "expectedValid": true,
+      "direction": null
+    },
+    {
+      "case": "accept-acap-value-82",
+      "passed": true,
+      "expectedValid": true,
+      "direction": null
+    },
+    {
+      "case": "accept-acap-value-83",
+      "passed": true,
+      "expectedValid": true,
+      "direction": null
+    },
+    {
+      "case": "control-context-ready",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "toBroker"
+    },
+    {
+      "case": "control-not-from-broker-context-ready",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "toProvider"
+    },
+    {
+      "case": "control-task-open",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "toBroker"
+    },
+    {
+      "case": "control-not-from-broker-task-open",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "toProvider"
+    },
+    {
+      "case": "control-event-ack",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "toBroker"
+    },
+    {
+      "case": "control-not-from-broker-event-ack",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "toProvider"
+    },
+    {
+      "case": "control-bind",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "toBroker"
+    },
+    {
+      "case": "control-not-from-broker-bind",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "toProvider"
+    },
+    {
+      "case": "control-register",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "toBroker"
+    },
+    {
+      "case": "control-not-from-broker-register",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "toProvider"
+    },
+    {
+      "case": "control-withdraw",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "toBroker"
+    },
+    {
+      "case": "control-not-from-broker-withdraw",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "toProvider"
+    },
+    {
+      "case": "control-secret",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "toBroker"
+    },
+    {
+      "case": "control-not-from-broker-secret",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "toProvider"
+    },
+    {
+      "case": "control-subscribe",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "toBroker"
+    },
+    {
+      "case": "control-not-from-broker-subscribe",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "toProvider"
+    },
+    {
+      "case": "control-unsubscribe",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "toBroker"
+    },
+    {
+      "case": "control-not-from-broker-unsubscribe",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "toProvider"
+    },
+    {
+      "case": "control-scope-create",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "toBroker"
+    },
+    {
+      "case": "control-not-from-broker-scope-create",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "toProvider"
+    },
+    {
+      "case": "control-scope-check",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "toBroker"
+    },
+    {
+      "case": "control-not-from-broker-scope-check",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "toProvider"
+    },
+    {
+      "case": "control-log",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "toBroker"
+    },
+    {
+      "case": "control-not-from-broker-log",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "toProvider"
+    },
+    {
+      "case": "valid-digest-shape-does-not-authenticate",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "toBroker"
+    },
+    {
+      "case": "valid-name-shape-does-not-authenticate",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "toBroker"
+    },
+    {
+      "case": "invoke-on-work-lane",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "invoke-not-on-control-lane",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "controlToProvider"
+    },
+    {
+      "case": "hello-on-control-lane",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "controlToBroker"
+    },
+    {
+      "case": "hello-not-on-work-lane",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "context-ready-control-lane",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "controlToBroker"
+    },
+    {
+      "case": "context-ready-not-work-lane",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "task-open-control-lane",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "controlToBroker"
+    },
+    {
+      "case": "task-open-not-work-lane",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "outbound-cannot-use-control-channel",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "controlToBroker"
+    },
+    {
+      "case": "outbound-work-channel",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "required-context-feature-hello",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "event-digests-required-hello",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "required-context-feature-accepted",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "event-digests-required-accepted",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "r2-reject-asserted-parentWireId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "toBroker"
+    },
+    {
+      "case": "r2-reject-asserted-caller",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "toBroker"
+    },
+    {
+      "case": "context-required",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "single-active-is-not-r2",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "toProvider"
+    },
+    {
+      "case": "offer-shape",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "broker-native-carrier"
+    },
+    {
+      "case": "offer-reject-descriptorCount-0",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "broker-native-carrier"
+    },
+    {
+      "case": "offer-reject-descriptorCount-2",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "broker-native-carrier"
+    },
+    {
+      "case": "offer-reject-generation-0",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "broker-native-carrier"
+    },
+    {
+      "case": "offer-reject-contextId-",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "broker-native-carrier"
+    },
+    {
+      "case": "offer-reject-purpose-arbitrary",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "broker-native-carrier"
+    },
+    {
+      "case": "offer-reject-parentWireId-1",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "broker-native-carrier"
+    },
+    {
+      "case": "offer-reject-fd-12",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "broker-native-carrier"
+    },
+    {
+      "case": "offer-reject-caller-{}",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "broker-native-carrier"
+    },
+    {
+      "case": "offer-requires-schemaVersion",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "broker-native-carrier"
+    },
+    {
+      "case": "offer-requires-sessionId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "broker-native-carrier"
+    },
+    {
+      "case": "offer-requires-generation",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "broker-native-carrier"
+    },
+    {
+      "case": "offer-requires-offerId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "broker-native-carrier"
+    },
+    {
+      "case": "offer-requires-contextId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "broker-native-carrier"
+    },
+    {
+      "case": "offer-requires-purpose",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "broker-native-carrier"
+    },
+    {
+      "case": "offer-requires-descriptorCount",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "broker-native-carrier"
+    },
+    {
+      "case": "offer-requires-remainingMs",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "broker-native-carrier"
+    },
+    {
+      "case": "sdk-positive-0",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-wrong-lane-0-controlToBroker",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "controlToBroker"
+    },
+    {
+      "case": "sdk-wrong-lane-0-controlToProvider",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "controlToProvider"
+    },
+    {
+      "case": "sdk-wrong-lane-0-workToProvider",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-required-0-kind",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-required-0-wireId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-required-0-scopeId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-required-0-scopeGeneration",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-closed-0",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-positive-1",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-wrong-lane-1-controlToBroker",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "controlToBroker"
+    },
+    {
+      "case": "sdk-wrong-lane-1-controlToProvider",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "controlToProvider"
+    },
+    {
+      "case": "sdk-wrong-lane-1-workToProvider",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-required-1-kind",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-required-1-wireId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-required-1-scopeId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-required-1-scopeGeneration",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-required-1-record",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-closed-1",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-positive-2",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-wrong-lane-2-controlToBroker",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "controlToBroker"
+    },
+    {
+      "case": "sdk-wrong-lane-2-controlToProvider",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "controlToProvider"
+    },
+    {
+      "case": "sdk-wrong-lane-2-workToProvider",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-required-2-kind",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-required-2-wireId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-required-2-scopeId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-required-2-scopeGeneration",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-required-2-callbackId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-closed-2",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-positive-3",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-wrong-lane-3-controlToBroker",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "controlToBroker"
+    },
+    {
+      "case": "sdk-wrong-lane-3-controlToProvider",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "controlToProvider"
+    },
+    {
+      "case": "sdk-wrong-lane-3-workToProvider",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-required-3-kind",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-required-3-wireId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-required-3-effectId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-closed-3",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-positive-4",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-wrong-lane-4-controlToBroker",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "controlToBroker"
+    },
+    {
+      "case": "sdk-wrong-lane-4-controlToProvider",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "controlToProvider"
+    },
+    {
+      "case": "sdk-wrong-lane-4-workToBroker",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-required-4-kind",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-required-4-wireId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-required-4-effectId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-required-4-callbackId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-required-4-remainingMs",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-closed-4",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-positive-5",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-wrong-lane-5-controlToBroker",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "controlToBroker"
+    },
+    {
+      "case": "sdk-wrong-lane-5-controlToProvider",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "controlToProvider"
+    },
+    {
+      "case": "sdk-wrong-lane-5-workToProvider",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-required-5-kind",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-required-5-wireId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-required-5-effectId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-closed-5",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-positive-6",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-wrong-lane-6-controlToBroker",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "controlToBroker"
+    },
+    {
+      "case": "sdk-wrong-lane-6-controlToProvider",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "controlToProvider"
+    },
+    {
+      "case": "sdk-wrong-lane-6-workToProvider",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-required-6-kind",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-required-6-wireId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-required-6-effectId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-required-6-error",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-closed-6",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-positive-7",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-wrong-lane-7-controlToBroker",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "controlToBroker"
+    },
+    {
+      "case": "sdk-wrong-lane-7-controlToProvider",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "controlToProvider"
+    },
+    {
+      "case": "sdk-wrong-lane-7-workToBroker",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-required-7-kind",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-required-7-wireId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-required-7-value",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-closed-7",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-positive-8",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-wrong-lane-8-controlToBroker",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "controlToBroker"
+    },
+    {
+      "case": "sdk-wrong-lane-8-controlToProvider",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "controlToProvider"
+    },
+    {
+      "case": "sdk-wrong-lane-8-workToBroker",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-required-8-kind",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-required-8-wireId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-required-8-value",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-closed-8",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-positive-9",
+      "passed": true,
+      "expectedValid": true,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-wrong-lane-9-controlToBroker",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "controlToBroker"
+    },
+    {
+      "case": "sdk-wrong-lane-9-controlToProvider",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "controlToProvider"
+    },
+    {
+      "case": "sdk-wrong-lane-9-workToBroker",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToBroker"
+    },
+    {
+      "case": "sdk-required-9-kind",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-required-9-wireId",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-required-9-value",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-closed-9",
+      "passed": true,
+      "expectedValid": false,
+      "direction": "workToProvider"
+    },
+    {
+      "case": "sdk-no-minor-zero-hello",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "scope-no-minor-one-hello",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "sdk-mandatory-hello-wire.contexts",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "sdk-mandatory-hello-wire.sdkresults",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "sdk-mandatory-hello-wire.scopedeffects",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "sdk-mandatory-hello-wire.scopevalidation",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "sdk-no-minor-zero-accepted",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "scope-no-minor-one-accepted",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "sdk-mandatory-accepted-wire.contexts",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "sdk-mandatory-accepted-wire.sdkresults",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "sdk-mandatory-accepted-wire.scopedeffects",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "sdk-mandatory-accepted-wire.scopevalidation",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "sdk-invalid-effect-limit-0",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "sdk-invalid-effect-limit-4097",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    },
+    {
+      "case": "sdk-invalid-effect-limit-1.5",
+      "passed": true,
+      "expectedValid": false,
+      "direction": null
+    }
+  ]
+}
+test_bytes_aggregate_across_contexts (__main__.Design.test_bytes_aggregate_across_contexts) ... ok
+test_caller_identity_not_inherited (__main__.Design.test_caller_identity_not_inherited) ... ok
+test_cancel_descendants_not_unrelated (__main__.Design.test_cancel_descendants_not_unrelated) ... ok
+test_capacity_exhaustion_not_queued_deadlock (__main__.Design.test_capacity_exhaustion_not_queued_deadlock) ... ok
+test_child_budget_charged_at_admission (__main__.Design.test_child_budget_charged_at_admission) ... ok
+test_claimed_parent_and_caller_rejected (__main__.Design.test_claimed_parent_and_caller_rejected) ... ok
+test_consumer_grant_does_not_authorize_provider (__main__.Design.test_consumer_grant_does_not_authorize_provider) ... ok
+test_descriptor_offer_success_then_replay (__main__.Design.test_descriptor_offer_success_then_replay) ... ok
+test_descriptor_offer_swap_extra_and_truncation (__main__.Design.test_descriptor_offer_swap_extra_and_truncation) ... ok
+test_endpoint_cannot_be_retargeted_by_header (__main__.Design.test_endpoint_cannot_be_retargeted_by_header) ... ok
+test_expired_a_not_renewed_by_live_b (__main__.Design.test_expired_a_not_renewed_by_live_b) ... ok
+test_expired_pending_offer_retains_slot_until_consumed (__main__.Design.test_expired_pending_offer_retains_slot_until_consumed) ... ok
+test_foreign_offer_ack_cannot_cancel_victims_context (__main__.Design.test_foreign_offer_ack_cannot_cancel_victims_context) ... ok
+test_foreign_scoped_handle_rejected (__main__.Design.test_foreign_scoped_handle_rejected) ... ok
+test_frame_budget_and_exactly_once_release (__main__.Design.test_frame_budget_and_exactly_once_release) ... ok
+test_lifecycle_reserved_capacity (__main__.Design.test_lifecycle_reserved_capacity) ... ok
+test_max_depth (__main__.Design.test_max_depth) ... ok
+test_nested_reserve_survives_ordinary_saturation (__main__.Design.test_nested_reserve_survives_ordinary_saturation) ... ok
+test_offer_timeout_releases_slot (__main__.Design.test_offer_timeout_releases_slot) ... ok
+test_one_offer_per_context (__main__.Design.test_one_offer_per_context) ... ok
+test_overlap_and_independent_deadlines (__main__.Design.test_overlap_and_independent_deadlines) ... ok
+test_process_failure_shared_not_per_call_isolation (__main__.Design.test_process_failure_shared_not_per_call_isolation) ... ok
+test_queue_bound (__main__.Design.test_queue_bound) ... ok
+test_queue_fifo_and_original_deadline (__main__.Design.test_queue_fifo_and_original_deadline) ... ok
+test_restart_does_not_rebind_old_endpoint (__main__.Design.test_restart_does_not_rebind_old_endpoint) ... ok
+test_revocation_before_delivery_cascades (__main__.Design.test_revocation_before_delivery_cascades) ... ok
+test_shared_process_valid_other_capability_is_not_intent_proof (__main__.Design.test_shared_process_valid_other_capability_is_not_intent_proof) ... G6 R2 DESIGN MODEL ONLY; runtime qualification=False; tests=30
+ok
+test_state_is_shared_not_replicated (__main__.Design.test_state_is_shared_not_replicated) ... ok
+test_successful_a_b_a_reentry (__main__.Design.test_successful_a_b_a_reentry) ... ok
+test_unconsumed_offer_fails_shared_session_at_hard_timeout (__main__.Design.test_unconsumed_offer_fails_shared_session_at_hard_timeout) ... ok
+
+----------------------------------------------------------------------
+Ran 30 tests in 0.002s
+
+OK
+
+> alica-v2@0.0.0 build:g6-native
+> python3 tools/build-g6-native.py
+
+{
+  "level": "NATIVE-BUILD-ONLY",
+  "runtimeQualification": false,
+  "compiler": "0.15.2",
+  "compilerArchiveSha256": "02aa270f183da276e5b5920b1dac44a63f1a49e55050ebde3aecc9eb82f93239",
+  "compilerExecutableSha256": "2858dc89dbbfdd08cceda1b841e7fd0a793a1a67b49f150bc3d0d1de44ed7f51",
+  "artifacts": {
+    "bridge.node": "7bb4d660d72986ad6feeb851100ce262d994db1034f2d6b41460bf578b533951",
+    "launcher": "a493f78a308f49c23dd192ac8d501c727f37032794b988e6a695397ca57ee8e6"
+  }
+}
+
+> alica-v2@0.0.0 test:g6-native
+> node --experimental-vm-modules --test tests/ipc/*.test.mjs
+
+✔ session qualification permissions are exact and do not leak to adjacent tests or SDK (14.596777ms)
+✔ isolation regressions retain exact private importer-target permissions (7.346995ms)
+✔ private component tests can import only their enumerated runtime modules (1.798685ms)
+✔ component exceptions do not authorize private Host, Trust or transport imports (1.634095ms)
+✔ adjacent tests and plugin packages cannot inherit component exceptions (2.632203ms)
+✔ scope qualification permissions remain exact importer-target pairs (1.409503ms)
+✔ scheduler and reap exceptions do not widen external dependency permissions (0.957052ms)
+(node:142494) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ unchanged public KernelContext consumer: inproc signed factory (1201.061314ms)
+✔ unchanged public KernelContext consumer: ipc signed factory (4583.377047ms)
+✔ IPC execution requires explicit signed publisher execution-mode authorization (13.197414ms)
+✔ real Host IPC rejects delayed continuations rather than opening replacement tasks (1620.044462ms)
+✔ signed real Host IPC package cannot read operator files, write or spawn (708.921485ms)
+✔ pre-offer phase 3 DEADLINE_EXCEEDED preserves the real session and releases admission (1107.645403ms)
+✔ pre-offer phase 4 DEADLINE_EXCEEDED preserves the real session and releases admission (1137.739552ms)
+✔ pre-offer phase 4 PERMISSION_DENIED preserves the real session and releases admission (1156.659243ms)
+✔ worker deadline abort does not close a broker-live work socket (1162.398412ms)
+✔ reply after observed broker closure is endpoint-local, not physical EPIPE failure (1113.164038ms)
+✔ scope-check write racing broker closure rejects locally and preserves sibling (1066.857892ms)
+✔ unexpected worker EOF on broker-live work still fails the physical session (1099.304458ms)
+✔ effect-release write racing broker closure still fails the real worker (1113.015208ms)
+✔ cancelled read-only scope observation retires only its RPC (2.118417ms)
+✔ synchronous scope observation timeout is local, malformed response remains fatal (0.743439ms)
+✔ unanswered SDK mutation and effect-release remain fail-closed on endpoint abort (0.699146ms)
+✔ owned descriptors close exactly once and do not follow FD reuse (1.704337ms)
+✔ sealed capsule resists write and close leaves no owned FD (0.370537ms)
+✔ native atomic carrier preserves payload and unique endpoint; closure releases all handles (0.954677ms)
+✔ native receive rejects a packet without ancillary rights (0.354578ms)
+✔ native rejection closes received kernel FDs: file (40.789084ms)
+✔ native rejection closes received kernel FDs: extra (31.764291ms)
+✔ native rejection closes received kernel FDs: truncated (40.173645ms)
+✔ native rejection closes received kernel FDs: oversize (32.777046ms)
+✔ disconnected socket write fails without SIGPIPE termination (0.643491ms)
+✔ actual launched PID plus final Node sandbox: reads, writes, symlinks, socket/exec/inspection/signal denial (70.067987ms)
+✔ post-seal FD handover supports two overlapping contexts with one shared state (61.525723ms)
+✔ pidfd terminates and observes an uncooperative sealed Node process (64.55259ms)
+(node:142550) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ buffered event grant invalidation preserves healthy siblings: inproc (333.258641ms)
+✔ buffered event scope invalidation preserves healthy siblings: inproc (360.728461ms)
+✔ buffered event grant invalidation preserves healthy siblings: ipc (1272.902646ms)
+✔ buffered event scope invalidation preserves healthy siblings: ipc (1416.277184ms)
+✔ production streams metadata credit and buffered grant revocation: inproc (227.769282ms)
+ℹ sameSourceSHA256=7d454da3a88c06f0b991c265c04694d989093681c0a3f454e5843acfebcdb8ba
+✔ production stream stall and schema error retain first terminal: inproc (287.817976ms)
+✔ production overload bounds active and queued callbacks: inproc (260.235675ms)
+ℹ sameSourceSHA256=93684641f1853e6bc80d33776ded76658262f3d044441a349bca49c7ebdf1fed
+✔ registered acquisition rollback races scope closure without duplicate cleanup: inproc (253.450778ms)
+✔ registered acquisition timeout rolls back exactly once: inproc (1751.800157ms)
+✔ production streams metadata credit and buffered grant revocation: ipc (889.433314ms)
+ℹ sameSourceSHA256=7d454da3a88c06f0b991c265c04694d989093681c0a3f454e5843acfebcdb8ba
+✔ production stream stall and schema error retain first terminal: ipc (970.727465ms)
+✔ production overload bounds active and queued callbacks: ipc (1152.137465ms)
+ℹ sameSourceSHA256=93684641f1853e6bc80d33776ded76658262f3d044441a349bca49c7ebdf1fed
+✔ registered acquisition rollback races scope closure without duplicate cleanup: ipc (1141.088854ms)
+✔ registered acquisition timeout rolls back exactly once: ipc (2560.545331ms)
+(node:142713) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ same-source matrix consumer inproc: ancestry, authority and live sibling independence (1230.064359ms)
+ℹ {"consumerSHA256":"6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb","providerASHA256":"9746fbf0ad5898e51a35a6209e80d09aedbe2126817a97da831192fc9244449d","providerBSHA256":"a82f9788b6336be98163ce077838f99a7e2a60bad4c58fc78054f110a62a9179"}
+✔ same-source matrix consumer ipc: ancestry, authority and live sibling independence (4330.317077ms)
+ℹ {"consumerSHA256":"6eebc4e3204c8f3d37fc0695b922e5d231588a3aabbc799149817d6f9b1dbefb","providerASHA256":"9746fbf0ad5898e51a35a6209e80d09aedbe2126817a97da831192fc9244449d","providerBSHA256":"a82f9788b6336be98163ce077838f99a7e2a60bad4c58fc78054f110a62a9179"}
+✔ observed exit returns the actual receipt, without timeout side effects (21.381954ms)
+✔ unobserved reap rejects within a bound and does not release quarantine (21.809399ms)
+✔ late exit cannot change the first rejected observation (10.540012ms)
+✔ independent observation clocks do not inherit sibling timeout (30.564242ms)
+✔ ordinary overlap, FIFO roots and reserved nested/lifecycle admission (6.498418ms)
+✔ actual queued timeout retains original clock and never dispatches (21.723687ms)
+✔ selected absolute cleanup deadline caps queue, offer and nested handover (32.869962ms)
+✔ fractional scheduler timers never reject queued work before the selected end (228.913546ms)
+✔ A to B to A ancestry succeeds; parent cancellation does not affect sibling (1.103998ms)
+✔ depth eight succeeds, nine rejects immediately (1.071085ms)
+✔ expired unconsumed offer retains slot/bytes; foreign ACK cannot release it (0.795196ms)
+✔ hard offer expiry quarantines until physical reap, not logical failure (1101.392688ms)
+✔ queued authorization is rechecked; rejected head cannot block following work (1.261775ms)
+✔ pre-abort and shared byte exhaustion leave no partial admission (0.624584ms)
+(node:142775) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ overlapping inline cleanup preserves sibling causality: inproc (310.222554ms)
+✔ child-context log retains child scope: inproc (131.721871ms)
+✔ zero-cleanup acquisition rechecks closed child scope: inproc (213.390798ms)
+✔ overlapping inline cleanup preserves sibling causality: ipc (1115.803775ms)
+✔ child-context log retains child scope: ipc (769.140119ms)
+✔ zero-cleanup acquisition rechecks closed child scope: ipc (963.01464ms)
+(node:142809) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ scope-check is read-only even with the real Host effect budget exhausted (1214.150043ms)
+✔ live Host authority rejects stale/foreign scopes and replay without changing the held endpoint (928.544501ms)
+✔ closed-child preflight prevents acquisition without creating a resource (841.402836ms)
+✔ completion rejection rolls back already scope-selected cleanup without redispatch (1053.483106ms)
+✔ real simultaneous siblings cleanup uses distinct authenticated descriptors (1063.226791ms)
+✔ real simultaneous nested cleanup uses distinct authenticated descriptors (1174.346335ms)
+✔ first-selected cleanup coalesces releases from another actual live endpoint (1113.524246ms)
+✔ bounded cleanup capacity fails before descriptor dispatch and leaves no reservation (1194.672451ms)
+✔ real native worker rejects duplicate-cleanup on an already claimed cleanup descriptor (1303.809725ms)
+✔ real native worker rejects wrong-dispatch-role on an already claimed cleanup descriptor (1379.503127ms)
+✔ cancelling an unanswered effect-release closes descendants and fails the shared session (1418.342161ms)
+✔ ordinary cancellation without an unanswered SDK mutation preserves unrelated work (970.884701ms)
+✔ minor2 closed scoped log: exact fields, integers, directions (8.44916ms)
+✔ minor2 closed scoped scope-check: exact fields, integers, directions (2.296691ms)
+✔ minor2 mandatory negotiation in hello (2.277857ms)
+✔ minor2 mandatory negotiation in accepted (3.843172ms)
+✔ cleanup can precede registration reply; binding remains one-to-one (3.352989ms)
+✔ registration reply may precede cleanup; callback reuse/foreign binding fails (0.402156ms)
+✔ completed effects remain charged; definite rejection releases only unbound reservation (0.410422ms)
+✔ cleanup first error is cached, including throwing undefined (0.518116ms)
+✔ cleanup deadline wins over late success and fails the physical session once (10.43181ms)
+✔ registerCleanup returns void; synchronous rejection stops acquisition (1.110059ms)
+✔ failed acquisition closes registration before reverse rollback awaits (0.653399ms)
+✔ uncertain registration retains callback charge, fails session and never retries (0.459095ms)
+✔ pending publication accepts zero/multiple but never substitutes ack (1.646748ms)
+✔ wrong endpoint and wrong effect cannot settle pending operations (0.840682ms)
+✔ RPC IDs are never reused across endpoints and retired replies remain endpoint-bound (0.782882ms)
+✔ 64 pending requests shared across endpoints reject before send (2.748953ms)
+✔ synchronous pending RPC pumps until actual reply, not a Promise surrogate (0.534957ms)
+✔ broker registrations consume the same Host-owned lifetime effect ledger (0.65838ms)
+(node:142844) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ real Host package admission rejects invalid signature, forged publisher and descriptor bytes without a launch (819.395204ms)
+✔ native queued cleanup keeps its selected deadline and never dispatches expired callback (1034.948651ms)
+ℹ {"dispatched":[{"scope":"67b9fbbe-99ab-411d-b17d-3a9cec1553d2","at":1896.040214,"remainingMs":980}],"identity":{"runtimeDigest":"sha256:7fde7b8afa198da66257f42ee2001d874c7355631e6d1579a5fb5ef1f246df4c","bridgeDigest":"sha256:7bb4d660d72986ad6feeb851100ce262d994db1034f2d6b41460bf578b533951","launcherDigest":"sha256:a493f78a308f49c23dd192ac8d501c727f37032794b988e6a695397ca57ee8e6","workerDigest":"sha256:773a0b091486adea4a6102b84975f582fa3358a3180cd016b0057904ac577c26"},"report":{"completedDisposers":2,"failedDisposers":["DEADLINE_EXCEEDED"],"restartRequired":true,"state":"FAILED","timedOutResources":1}}
+✔ real authenticated session rejects forged-name and preserves victim (1181.282657ms)
+ℹ {"receipt":{"pid":142903,"code":1,"signal":null,"elapsedMs":454.0197879999996},"victim":{"pid":142889,"rssKiB":70064,"childFDObservation":"not measured: production victim has no diagnostic dispatcher; required FD counts are measured on sealed qualification children","brokerFDs":25,"managed":3},"brokerAlive":142844}
+✔ real authenticated session rejects forged-digest and preserves victim (1221.72718ms)
+ℹ {"receipt":{"pid":142923,"code":1,"signal":null,"elapsedMs":459.76710200000025},"victim":{"pid":142909,"rssKiB":70792,"childFDObservation":"not measured: production victim has no diagnostic dispatcher; required FD counts are measured on sealed qualification children","brokerFDs":25,"managed":3},"brokerAlive":142844}
+✔ real authenticated session rejects hello-contract-digest and preserves victim (1193.978767ms)
+ℹ {"receipt":{"pid":142943,"code":1,"signal":null,"elapsedMs":466.54939399999967},"victim":{"pid":142933,"rssKiB":70444,"childFDObservation":"not measured: production victim has no diagnostic dispatcher; required FD counts are measured on sealed qualification children","brokerFDs":25,"managed":3},"brokerAlive":142844}
+✔ real authenticated session rejects hello-contract-duplicate and preserves victim (1187.059376ms)
+ℹ {"receipt":{"pid":142963,"code":1,"signal":null,"elapsedMs":457.5819110000002},"victim":{"pid":142953,"rssKiB":70500,"childFDObservation":"not measured: production victim has no diagnostic dispatcher; required FD counts are measured on sealed qualification children","brokerFDs":25,"managed":3},"brokerAlive":142844}
+✔ real authenticated session rejects forged-publisher and preserves victim (1233.598199ms)
+ℹ {"receipt":{"pid":142983,"code":1,"signal":null,"elapsedMs":509.386571},"victim":{"pid":142973,"rssKiB":70360,"childFDObservation":"not measured: production victim has no diagnostic dispatcher; required FD counts are measured on sealed qualification children","brokerFDs":25,"managed":3},"brokerAlive":142844}
+✔ real authenticated session rejects stale-challenge and preserves victim (1218.913155ms)
+ℹ {"receipt":{"pid":143003,"code":1,"signal":null,"elapsedMs":481.14010099999905},"victim":{"pid":142993,"rssKiB":70760,"childFDObservation":"not measured: production victim has no diagnostic dispatcher; required FD counts are measured on sealed qualification children","brokerFDs":25,"managed":3},"brokerAlive":142844}
+✔ real authenticated session rejects stale-generation and preserves victim (1182.806313ms)
+ℹ {"receipt":{"pid":143023,"code":1,"signal":null,"elapsedMs":473.2292150000012},"victim":{"pid":143013,"rssKiB":70516,"childFDObservation":"not measured: production victim has no diagnostic dispatcher; required FD counts are measured on sealed qualification children","brokerFDs":25,"managed":3},"brokerAlive":142844}
+✔ real launched PID accepts exact package and excludes parent environment sentinel (1205.286355ms)
+ℹ {"identity":{"runtimeDigest":"sha256:7fde7b8afa198da66257f42ee2001d874c7355631e6d1579a5fb5ef1f246df4c","bridgeDigest":"sha256:7bb4d660d72986ad6feeb851100ce262d994db1034f2d6b41460bf578b533951","launcherDigest":"sha256:a493f78a308f49c23dd192ac8d501c727f37032794b988e6a695397ca57ee8e6","workerDigest":"sha256:02780ca85d20627b515d01f7c9092342ac2300888cfc6733f37b070944d58fdc"},"observed":{"pid":143043,"rssKiB":65176,"fds":20,"scannedFDLimit":64,"sentinelPresent":false,"childFDObservation":"actual bounded child fstat via native transport","brokerFDs":28,"managed":6}}
+ℹ {"receipt":{"pid":143043,"code":1,"signal":null,"elapsedMs":469.95793799999956},"victim":{"pid":143029,"rssKiB":70776,"childFDObservation":"not measured: production victim has no diagnostic dispatcher; required FD counts are measured on sealed qualification children","brokerFDs":25,"managed":3},"brokerAlive":142844}
+✔ real wrong OS peer is closed before exact launched PID is authenticated (1223.428584ms)
+ℹ {"receipt":{"pid":143063,"code":1,"signal":null,"elapsedMs":506.9481230000001},"victim":{"pid":143049,"rssKiB":70656,"childFDObservation":"not measured: production victim has no diagnostic dispatcher; required FD counts are measured on sealed qualification children","brokerFDs":25,"managed":3},"brokerAlive":142844}
+✔ real session exit: bounded failure, reap and independent victim (1166.368923ms)
+ℹ {"mode":"exit","elapsedMs":11.449733999999808}
+ℹ {"receipt":{"pid":143077,"code":37,"signal":null,"elapsedMs":458.24709299999995},"victim":{"pid":143070,"rssKiB":70372,"childFDObservation":"not measured: production victim has no diagnostic dispatcher; required FD counts are measured on sealed qualification children","brokerFDs":25,"managed":3},"brokerAlive":142844}
+✔ real session unresponsive: bounded failure, reap and independent victim (21274.000712ms)
+ℹ {"mode":"unresponsive","elapsedMs":19552.295222}
+ℹ {"receipt":{"pid":143090,"code":null,"signal":"SIGKILL","elapsedMs":20511.569146},"victim":{"pid":143083,"rssKiB":69908,"childFDObservation":"not measured: production victim has no diagnostic dispatcher; required FD counts are measured on sealed qualification children","brokerFDs":25,"managed":3},"brokerAlive":142844}
+✔ real session heartbeat-stall: bounded failure, reap and independent victim (20704.526416ms)
+ℹ {"mode":"heartbeat-stall","elapsedMs":19517.423969000003}
+ℹ {"receipt":{"pid":143103,"code":1,"signal":null,"elapsedMs":20013.175713999997},"victim":{"pid":143096,"rssKiB":70512,"childFDObservation":"not measured: production victim has no diagnostic dispatcher; required FD counts are measured on sealed qualification children","brokerFDs":25,"managed":3},"brokerAlive":142844}
+✔ real session partial-control: bounded failure, reap and independent victim (3235.355795ms)
+ℹ {"mode":"partial-control","elapsedMs":2006.2139000000025}
+ℹ {"receipt":{"pid":143116,"code":1,"signal":null,"elapsedMs":2454.391316000001},"victim":{"pid":143109,"rssKiB":65572,"childFDObservation":"not measured: production victim has no diagnostic dispatcher; required FD counts are measured on sealed qualification children","brokerFDs":25,"managed":3},"brokerAlive":142844}
+✔ real session malformed-control: bounded failure, reap and independent victim (1365.797762ms)
+ℹ {"mode":"malformed-control","elapsedMs":5.70911299999716}
+ℹ {"receipt":{"pid":143129,"code":1,"signal":null,"elapsedMs":522.3880070000014},"victim":{"pid":143122,"rssKiB":70504,"childFDObservation":"not measured: production victim has no diagnostic dispatcher; required FD counts are measured on sealed qualification children","brokerFDs":25,"managed":3},"brokerAlive":142844}
+✔ real session replayed-control: bounded failure, reap and independent victim (1237.756574ms)
+ℹ {"mode":"replayed-control","elapsedMs":10.055540999994264}
+ℹ {"receipt":{"pid":143142,"code":1,"signal":null,"elapsedMs":506.7439000000013},"victim":{"pid":143135,"rssKiB":70792,"childFDObservation":"not measured: production victim has no diagnostic dispatcher; required FD counts are measured on sealed qualification children","brokerFDs":25,"managed":3},"brokerAlive":142844}
+✔ real session partial-work: bounded failure, reap and independent victim (3172.471085ms)
+ℹ {"mode":"partial-work","elapsedMs":2011.8163840000052}
+ℹ {"receipt":{"pid":143155,"code":1,"signal":null,"elapsedMs":2455.7050979999985},"victim":{"pid":143148,"rssKiB":70448,"childFDObservation":"not measured: production victim has no diagnostic dispatcher; required FD counts are measured on sealed qualification children","brokerFDs":25,"managed":3},"brokerAlive":142844}
+✔ real session malformed-work: bounded failure, reap and independent victim (1205.239567ms)
+ℹ {"mode":"malformed-work","elapsedMs":7.194518000003882}
+ℹ {"receipt":{"pid":143168,"code":1,"signal":null,"elapsedMs":502.59818899999664},"victim":{"pid":143161,"rssKiB":70092,"childFDObservation":"not measured: production victim has no diagnostic dispatcher; required FD counts are measured on sealed qualification children","brokerFDs":25,"managed":3},"brokerAlive":142844}
+✔ real session retargeted-work: bounded failure, reap and independent victim (1157.658304ms)
+ℹ {"mode":"retargeted-work","elapsedMs":6.9787019999930635}
+ℹ {"receipt":{"pid":143181,"code":1,"signal":null,"elapsedMs":465.7183409999998},"victim":{"pid":143174,"rssKiB":70540,"childFDObservation":"not measured: production victim has no diagnostic dispatcher; required FD counts are measured on sealed qualification children","brokerFDs":25,"managed":3},"brokerAlive":142844}
+✔ real session offer-starvation: bounded failure, reap and independent victim (2181.86829ms)
+ℹ {"mode":"offer-starvation","elapsedMs":1002.7618769999972}
+ℹ {"receipt":{"pid":143194,"code":1,"signal":null,"elapsedMs":1484.2889240000077},"victim":{"pid":143187,"rssKiB":70520,"childFDObservation":"not measured: production victim has no diagnostic dispatcher; required FD counts are measured on sealed qualification children","brokerFDs":25,"managed":3},"brokerAlive":142844}
+✔ real non-reading work socket triggers partial-write deadline and releases charged bytes (3177.471496ms)
+ℹ {"socket":{"sendBuffer":212992,"receiveBuffer":212992,"queuedWrite":222720,"queuedRead":0},"wire":{"bytes":900506,"frames":2,"control":0}}
+ℹ {"receipt":{"pid":143207,"code":1,"signal":null,"elapsedMs":2498.6809349999967},"victim":{"pid":143200,"rssKiB":70548,"childFDObservation":"not measured: production victim has no diagnostic dispatcher; required FD counts are measured on sealed qualification children","brokerFDs":25,"managed":3},"brokerAlive":142844}
+✔ real carrier wrong-session: reject transferred rights and preserve victim (1177.602634ms)
+ℹ {"receipt":{"pid":143221,"code":1,"signal":null,"elapsedMs":463.66883500000404},"victim":{"pid":143214,"rssKiB":70488,"childFDObservation":"not measured: production victim has no diagnostic dispatcher; required FD counts are measured on sealed qualification children","brokerFDs":25,"managed":3},"brokerAlive":142844}
+✔ real carrier wrong-generation: reject transferred rights and preserve victim (1144.001857ms)
+ℹ {"receipt":{"pid":143236,"code":1,"signal":null,"elapsedMs":468.1209729999973},"victim":{"pid":143229,"rssKiB":70516,"childFDObservation":"not measured: production victim has no diagnostic dispatcher; required FD counts are measured on sealed qualification children","brokerFDs":25,"managed":3},"brokerAlive":142844}
+✔ real carrier wrong-nonce: reject transferred rights and preserve victim (1178.934039ms)
+ℹ {"receipt":{"pid":143249,"code":1,"signal":null,"elapsedMs":466.81056699999317},"victim":{"pid":143242,"rssKiB":70072,"childFDObservation":"not measured: production victim has no diagnostic dispatcher; required FD counts are measured on sealed qualification children","brokerFDs":25,"managed":3},"brokerAlive":142844}
+✔ real carrier replayed-packet: reject transferred rights and preserve victim (1128.25149ms)
+ℹ {"receipt":{"pid":143262,"code":1,"signal":null,"elapsedMs":450.2628100000002},"victim":{"pid":143255,"rssKiB":70536,"childFDObservation":"not measured: production victim has no diagnostic dispatcher; required FD counts are measured on sealed qualification children","brokerFDs":25,"managed":3},"brokerAlive":142844}
+✔ real carrier truncated-packet: reject transferred rights and preserve victim (1148.915253ms)
+ℹ {"receipt":{"pid":143275,"code":1,"signal":null,"elapsedMs":454.4481459999952},"victim":{"pid":143268,"rssKiB":70556,"childFDObservation":"not measured: production victim has no diagnostic dispatcher; required FD counts are measured on sealed qualification children","brokerFDs":25,"managed":3},"brokerAlive":142844}
+✔ real carrier wrong-socket-type: reject transferred rights and preserve victim (1232.716251ms)
+ℹ {"receipt":{"pid":143288,"code":1,"signal":null,"elapsedMs":546.2365849999915},"victim":{"pid":143281,"rssKiB":70372,"childFDObservation":"not measured: production victim has no diagnostic dispatcher; required FD counts are measured on sealed qualification children","brokerFDs":25,"managed":3},"brokerAlive":142844}
+✔ real carrier multiple-rights: reject transferred rights and preserve victim (1175.949142ms)
+ℹ {"receipt":{"pid":143302,"code":1,"signal":null,"elapsedMs":495.034375999996},"victim":{"pid":143295,"rssKiB":70520,"childFDObservation":"not measured: production victim has no diagnostic dispatcher; required FD counts are measured on sealed qualification children","brokerFDs":25,"managed":3},"brokerAlive":142844}
+✔ real carrier no-rights: reject transferred rights and preserve victim (1182.483387ms)
+ℹ {"receipt":{"pid":143316,"code":1,"signal":null,"elapsedMs":497.4007100000017},"victim":{"pid":143309,"rssKiB":70768,"childFDObservation":"not measured: production victim has no diagnostic dispatcher; required FD counts are measured on sealed qualification children","brokerFDs":25,"managed":3},"brokerAlive":142844}
+✔ real carrier oversized-packet: reject transferred rights and preserve victim (1182.296196ms)
+ℹ {"receipt":{"pid":143330,"code":1,"signal":null,"elapsedMs":508.3255760000029},"victim":{"pid":143323,"rssKiB":70612,"childFDObservation":"not measured: production victim has no diagnostic dispatcher; required FD counts are measured on sealed qualification children","brokerFDs":25,"managed":3},"brokerAlive":142844}
+✔ real unreaped process remains quarantined and charged until actual exit (3092.193179ms)
+ℹ {"quarantineReported":true,"actualExit":{"pid":143344,"code":null,"signal":"SIGKILL","elapsedMs":2416.929523999992}}
+✔ production reconnect never replays an in-flight committed mutation (2470.614894ms)
+✔ production Host recovery uses 1/2/4/8 backoff without hello-pong budget reset or old-handle rebind (49145.50936ms)
+ℹ {"recovery":[{"attempt":1,"delayMs":1174.0585449999926,"pid":143382,"generation":2},{"attempt":2,"delayMs":2181.9312079999945,"pid":143388,"generation":3},{"attempt":3,"delayMs":4180.780342999991,"pid":143394,"generation":4},{"attempt":4,"delayMs":8175.123359999998,"pid":143400,"generation":5}]}
+✔ production unload cancels queued reconnect before a replacement can launch (2089.719164ms)
+✔ Host never reports DISPOSED while its actual worker remains unreaped (2078.98333ms)
+✔ real session sustained queued work: bounded descriptors, RSS and released retired contexts (3671.796997ms)
+ℹ {"before":{"pid":143427,"rssKiB":65420,"fds":20,"scannedFDLimit":64,"sentinelPresent":false,"childFDObservation":"actual bounded child fstat via native transport","brokerFDs":28,"managed":6},"samples":[{"pid":143427,"rssKiB":65424,"fds":23,"scannedFDLimit":64,"sentinelPresent":false,"childFDObservation":"actual bounded child fstat via native transport","brokerFDs":32,"managed":10,"socket":{"sendBuffer":212992,"receiveBuffer":212992,"queuedWrite":0,"queuedRead":0},"usage":{"ordinary":4,"nested":0,"lifecycle":0,"queued":32,"records":36,"offers":0,"failed":false},"wire":{"bytes":9216,"frames":36,"control":0}},{"pid":143427,"rssKiB":65544,"fds":23,"scannedFDLimit":64,"sentinelPresent":false,"childFDObservation":"actual bounded child fstat via native transport","brokerFDs":32,"managed":10,"socket":{"sendBuffer":212992,"receiveBuffer":212992,"queuedWrite":0,"queuedRead":0},"usage":{"ordinary":4,"nested":0,"lifecycle":0,"queued":32,"records":36,"offers":0,"failed":false},"wire":{"bytes":9216,"frames":36,"control":0}},{"pid":143427,"rssKiB":65616,"fds":23,"scannedFDLimit":64,"sentinelPresent":false,"childFDObservation":"actual bounded child fstat via native transport","brokerFDs":32,"managed":10,"socket":{"sendBuffer":212992,"receiveBuffer":212992,"queuedWrite":0,"queuedRead":0},"usage":{"ordinary":4,"nested":0,"lifecycle":0,"queued":32,"records":36,"offers":0,"failed":false},"wire":{"bytes":9216,"frames":36,"control":0}},{"pid":143427,"rssKiB":67872,"fds":23,"scannedFDLimit":64,"sentinelPresent":false,"childFDObservation":"actual bounded child fstat via native transport","brokerFDs":32,"managed":10,"socket":{"sendBuffer":212992,"receiveBuffer":212992,"queuedWrite":0,"queuedRead":0},"usage":{"ordinary":4,"nested":0,"lifecycle":0,"queued":32,"records":36,"offers":0,"failed":false},"wire":{"bytes":9216,"frames":36,"control":0}},{"pid":143427,"rssKiB":67872,"fds":23,"scannedFDLimit":64,"sentinelPresent":false,"childFDObservation":"actual bounded child fstat via native transport","brokerFDs":32,"managed":10,"socket":{"sendBuffer":212992,"receiveBuffer":212992,"queuedWrite":0,"queuedRead":0},"usage":{"ordinary":4,"nested":0,"lifecycle":0,"queued":32,"records":36,"offers":0,"failed":false},"wire":{"bytes":9216,"frames":36,"control":0}},{"pid":143427,"rssKiB":70324,"fds":23,"scannedFDLimit":64,"sentinelPresent":false,"childFDObservation":"actual bounded child fstat via native transport","brokerFDs":32,"managed":10,"socket":{"sendBuffer":212992,"receiveBuffer":212992,"queuedWrite":0,"queuedRead":0},"usage":{"ordinary":4,"nested":0,"lifecycle":0,"queued":32,"records":36,"offers":0,"failed":false},"wire":{"bytes":9216,"frames":36,"control":0}},{"pid":143427,"rssKiB":70324,"fds":23,"scannedFDLimit":64,"sentinelPresent":false,"childFDObservation":"actual bounded child fstat via native transport","brokerFDs":32,"managed":10,"socket":{"sendBuffer":212992,"receiveBuffer":212992,"queuedWrite":0,"queuedRead":0},"usage":{"ordinary":4,"nested":0,"lifecycle":0,"queued":32,"records":36,"offers":0,"failed":false},"wire":{"bytes":9216,"frames":36,"control":0}},{"pid":143427,"rssKiB":70324,"fds":23,"scannedFDLimit":64,"sentinelPresent":false,"childFDObservation":"actual bounded child fstat via native transport","brokerFDs":32,"managed":10,"socket":{"sendBuffer":212992,"receiveBuffer":212992,"queuedWrite":0,"queuedRead":0},"usage":{"ordinary":4,"nested":0,"lifecycle":0,"queued":32,"records":36,"offers":0,"failed":false},"wire":{"bytes":9216,"frames":36,"control":0}},{"pid":143427,"rssKiB":70324,"fds":23,"scannedFDLimit":64,"sentinelPresent":false,"childFDObservation":"actual bounded child fstat via native transport","brokerFDs":32,"managed":10,"socket":{"sendBuffer":212992,"receiveBuffer":212992,"queuedWrite":0,"queuedRead":0},"usage":{"ordinary":4,"nested":0,"lifecycle":0,"queued":32,"records":36,"offers":0,"failed":false},"wire":{"bytes":9216,"frames":36,"control":0}},{"pid":143427,"rssKiB":70324,"fds":23,"scannedFDLimit":64,"sentinelPresent":false,"childFDObservation":"actual bounded child fstat via native transport","brokerFDs":32,"managed":10,"socket":{"sendBuffer":212992,"receiveBuffer":212992,"queuedWrite":0,"queuedRead":0},"usage":{"ordinary":4,"nested":0,"lifecycle":0,"queued":32,"records":36,"offers":0,"failed":false},"wire":{"bytes":9216,"frames":36,"control":0}},{"pid":143427,"rssKiB":70324,"fds":23,"scannedFDLimit":64,"sentinelPresent":false,"childFDObservation":"actual bounded child fstat via native transport","brokerFDs":32,"managed":10,"socket":{"sendBuffer":212992,"receiveBuffer":212992,"queuedWrite":0,"queuedRead":0},"usage":{"ordinary":4,"nested":0,"lifecycle":0,"queued":32,"records":36,"offers":0,"failed":false},"wire":{"bytes":9216,"frames":36,"control":0}},{"pid":143427,"rssKiB":70452,"fds":23,"scannedFDLimit":64,"sentinelPresent":false,"childFDObservation":"actual bounded child fstat via native transport","brokerFDs":32,"managed":10,"socket":{"sendBuffer":212992,"receiveBuffer":212992,"queuedWrite":0,"queuedRead":0},"usage":{"ordinary":4,"nested":0,"lifecycle":0,"queued":32,"records":36,"offers":0,"failed":false},"wire":{"bytes":9216,"frames":36,"control":0}}],"after":{"pid":143427,"rssKiB":70452,"fds":20,"scannedFDLimit":64,"sentinelPresent":false,"childFDObservation":"actual bounded child fstat via native transport","brokerFDs":28,"managed":6},"identity":{"runtimeDigest":"sha256:7fde7b8afa198da66257f42ee2001d874c7355631e6d1579a5fb5ef1f246df4c","bridgeDigest":"sha256:7bb4d660d72986ad6feeb851100ce262d994db1034f2d6b41460bf578b533951","launcherDigest":"sha256:a493f78a308f49c23dd192ac8d501c727f37032794b988e6a695397ca57ee8e6","workerDigest":"sha256:02780ca85d20627b515d01f7c9092342ac2300888cfc6733f37b070944d58fdc"}}
+ℹ {"receipt":{"pid":143427,"code":1,"signal":null,"elapsedMs":3004.0959489999805},"victim":{"pid":143420,"rssKiB":70436,"childFDObservation":"not measured: production victim has no diagnostic dispatcher; required FD counts are measured on sealed qualification children","brokerFDs":25,"managed":3},"brokerAlive":142844}
+✔ wire reference agreement and closed envelope/body: hello (35.627549ms)
+✔ wire reference agreement and closed envelope/body: accepted (9.612368ms)
+✔ wire reference agreement and closed envelope/body: request (5.891837ms)
+✔ wire reference agreement and closed envelope/body: response (4.547558ms)
+✔ wire reference agreement and closed envelope/body: error (2.988923ms)
+✔ wire reference agreement and closed envelope/body: cancel (4.265968ms)
+✔ wire reference agreement and closed envelope/body: stream-item (3.161108ms)
+✔ wire reference agreement and closed envelope/body: stream-credit (2.478755ms)
+✔ wire reference agreement and closed envelope/body: stream-end (2.693088ms)
+✔ wire reference agreement and closed envelope/body: event (2.80041ms)
+✔ wire reference agreement and closed envelope/body: ping (2.537614ms)
+✔ wire reference agreement and closed envelope/body: pong (2.335885ms)
+✔ wire reference agreement and closed envelope/body: scope-check (2.656799ms)
+✔ wire reference agreement and closed envelope/body: log (3.201945ms)
+✔ wire malformed and noncanonical encodings are rejected (0.716368ms)
+✔ wire rejects duplicate logical handshake vectors and obsolete feature spelling (2.35983ms)
+✔ carrier codec accepts only an exact complete bounded canonical packet (1.31726ms)
+✔ pull reader supports every two-part body split and preserves lease ownership (151.516647ms)
+✔ reader closes and releases partial assemblies on all framing failures (0.555616ms)
+✔ partial deadline is monotonic and applies without new input (0.354375ms)
+✔ shared budget enforces frame/byte bounds and independent control reserve (0.440869ms)
+✔ endpoint fence rejects retargeting, replay, closed endpoint and sequence wrap (0.666545ms)
+ℹ tests 160
+ℹ suites 0
+ℹ pass 160
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 160890.40869
+
+> alica-v2@0.0.0 test:g7-bootstrap
+> npm run build:g7-native && PYTHONPATH=.tools/python python3 -S tests/g7/test_bootstrap.py && PYTHONPATH=.tools/python node --experimental-vm-modules --test tests/g7/*.test.mjs
+
+
+> alica-v2@0.0.0 build:g7-native
+> python3 tools/build-g7-native.py
+
+{
+  "qualification": "HOST-OWNERSHIP-ONLY",
+  "command": [
+    "/home/alica-dev/AlicaV2/.tools/zig-x86_64-linux-0.15.2/zig",
+    "cc",
+    "-target",
+    "x86_64-linux-gnu",
+    "-std=c11",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-fstack-protector-strong",
+    "-D_FORTIFY_SOURCE=2",
+    "-fPIC",
+    "-shared",
+    "-Wl,-z,relro,-z,now",
+    "-DNAPI_VERSION=9",
+    "-I/home/alica-dev/AlicaV2/.tools/node/include/node",
+    "/home/alica-dev/AlicaV2/native/g7/ownership.c",
+    "-o",
+    "/home/alica-dev/AlicaV2/native/g7/build/ownership.node"
+  ],
+  "compilerArchiveSha256": "02aa270f183da276e5b5920b1dac44a63f1a49e55050ebde3aecc9eb82f93239",
+  "compilerExecutableSha256": "2858dc89dbbfdd08cceda1b841e7fd0a793a1a67b49f150bc3d0d1de44ed7f51",
+  "inputs": {
+    "native/g7/ownership.c": "b4f9cf253e1f1784d09416f9ed4b113d102c9dd99b144d2fb4d938c37b522563",
+    "tools/build-g7-native.py": "a2b66b8758fe4d75dd6b906a8a57bf999e8eb1d825d0737ff2b55de6bb4542fc",
+    "native/g6/toolchain.lock.json": "c3ce193c7bd0a2dfe828c688ea32966824e6f24ff75ffc52fda1b31c6b081fbb",
+    "toolchain.lock.json": "078cc50770b1ede31fcf4346a1ad316c97d1ffe6d0a55fe44a929d8a1fb612f6",
+    ".tools/node/include/node/js_native_api.h": "8808ef8899a1691411928ef5dd7dae0537aedc93d3a34e223b2d89692e79c788",
+    ".tools/node/include/node/js_native_api_types.h": "4f19cb90d240765cc0961d92a1ee20f65fdc50db7de1ab0a5cb6bc227224e1a0",
+    ".tools/node/include/node/node.h": "e7252ed1e9812d1336093315ec3f1e08296ae9965e055754f28d9b7bcbbe5d98",
+    ".tools/node/include/node/node_api.h": "2d4560831e525b47b060ec8a0864ab73993df9e20215ce9f0fe7b24cd31af32a",
+    ".tools/node/include/node/node_api_types.h": "a25356630d3058f0a0c8937d9f297e9471e037fda58c2696d8a505c2bd99cb00",
+    ".tools/node/include/node/node_buffer.h": "48077ade87e863a88e75a74c61fd948cb9ae16d7546cc5d61e1207fc95a7ac48",
+    ".tools/node/include/node/node_object_wrap.h": "47bc10f599b4f518374e13501cf05de4273dfb0a7bfe21bc72d6714f9b6336b5",
+    ".tools/node/include/node/node_version.h": "bd056729fddf4bfa58687036219f07417c334c4ecfcb513ac256fa254451bfc9",
+    ".tools/node/include/node/uv.h": "bb9ed99b80cd22c58361bffdfbb2aa7029ce0391cde616745c0072a6f3c03219",
+    ".tools/node/include/node/v8-array-buffer.h": "5ab664c31420db10083db3efb9712666eb0fa1c14c71f4bbbf9c11f9e3ae991e",
+    ".tools/node/include/node/v8-callbacks.h": "8fe95d3b62906b8b5ff5c7c7cfb02d10dcc71e1a8328728422d3887634926eb4",
+    ".tools/node/include/node/v8-container.h": "30c8fce13776a8b02e0268f55ba604a0cc359f28b91bcda84c07e7d87343e1e6",
+    ".tools/node/include/node/v8-context.h": "8059e175eea93b622aae4d4dbd796b39fcdd5d15fa502bfb2aa86019fa5a8e8e",
+    ".tools/node/include/node/v8-cppgc.h": "112b01dbcd87a407e1e4efe467641a1da2cce2d233b2c1fe9582998205a9ba19",
+    ".tools/node/include/node/v8-data.h": "e2755bf6e3ddab5fd36176b0c79ff3ac9cf01c85502a74f2973b60ff1d8d910f",
+    ".tools/node/include/node/v8-date.h": "bcb25002ce911e826fe66fc8f788d3c70b17d77713cce8a43851c3fcf1390130",
+    ".tools/node/include/node/v8-debug.h": "2c5776228c8a010d10e920e153c4368d35dec80a97a671c2789cca6321ab6ea8",
+    ".tools/node/include/node/v8-embedder-heap.h": "94317e3b040d721f21867d5a5333fa5aa2850d0228df4c2301ac93070fa1aa61",
+    ".tools/node/include/node/v8-embedder-state-scope.h": "8ac9da5d0502946981ecadec567a9e6658bb97591da5e585a3247cc7ccf924c3",
+    ".tools/node/include/node/v8-exception.h": "a56b9a825bd5a95e3a091f16e1f49c9e56b0aa7392fd584d34e3bf3452b4f6f3",
+    ".tools/node/include/node/v8-extension.h": "ad2783655342544e49ad5323e04aefd112facbf5f6630d2f3050fbee1da4bcd0",
+    ".tools/node/include/node/v8-external.h": "234042362502bc29d2e5fa652b3ca50aeff60bbacbb045a3e9e4ca10b3bb59fd",
+    ".tools/node/include/node/v8-forward.h": "13a977a548417301d77359e6116a9a06a27d3b60cdeefed2614bf832aa95fc37",
+    ".tools/node/include/node/v8-function-callback.h": "0a04fb5fe15f0956db82c286cee3ab21a5630b37b1c89249a5beda79358a5064",
+    ".tools/node/include/node/v8-function.h": "335c745cdc90804e34ea3694da3bd5db88492e73c4e94c5169c55b67a8604b74",
+    ".tools/node/include/node/v8-handle-base.h": "a39ce35b295ac1225e6842ab5f3a422384a5c5dbe13b5c5f384a245252670b14",
+    ".tools/node/include/node/v8-initialization.h": "7c88a037f0b4396f8e285ff3e62fc4c1b34ea4d8e7d5c7f149d8d1f1316df533",
+    ".tools/node/include/node/v8-internal.h": "eb74fc0740b7f858a03e319e077c1698d2083325f3154c67771b120fb48f8520",
+    ".tools/node/include/node/v8-isolate.h": "db213aa2a3c1e381588583ab3fbae8c282be4384d57fa498863a0065f1c8aa29",
+    ".tools/node/include/node/v8-json.h": "7ac22ac74ebac312a5901478e398ef1d3a29f0ef56accb6d6736d47e0dbb4cdc",
+    ".tools/node/include/node/v8-local-handle.h": "f2d45e5b71ebde65715bd08460ca1a19ac7d096f95257df33e15cea23694ba4d",
+    ".tools/node/include/node/v8-locker.h": "a3f67133e57b85f46482e312ec1400ba00cf831fe4fe4556872d270b000a72e9",
+    ".tools/node/include/node/v8-maybe.h": "4b34196e6643c7b0757ea2fb1179a15c031ac2961ea6f99bbeab2df816b11b00",
+    ".tools/node/include/node/v8-memory-span.h": "294c6c5271329d65fcc1253f4a6c72b36fbada6eb8ac85b407ae5e583c3ba824",
+    ".tools/node/include/node/v8-message.h": "ce6fcfeeafa8d6528e7be5c5b9d58f09927b88a110a0bfacb5fbb0dc9ad0aa96",
+    ".tools/node/include/node/v8-microtask-queue.h": "4616dbb7376a61a1c0643e8006c14642b7c78c78e314fdf6651ddd51c961d285",
+    ".tools/node/include/node/v8-microtask.h": "e055cf06808240053f30672c424716db7d87cd15029a1dbd1cf2a2f9a3b3dc3b",
+    ".tools/node/include/node/v8-object.h": "fa891650c8d9279a552136e76d416ef6fafbbc73dca9db4d981644b0d42fca15",
+    ".tools/node/include/node/v8-persistent-handle.h": "92dc3b3241a2e42f08e4e959b0bea9814ed2863303e5fea23c175ad019b7a0f6",
+    ".tools/node/include/node/v8-platform.h": "44a7fb139483b65dd5e962665d79d25fdf632910690632222991bda5e063f326",
+    ".tools/node/include/node/v8-primitive-object.h": "d9c187b42f7ee96ec20ad4d9ac91a9a1eed3efc227a831736bba362f9c2b22ba",
+    ".tools/node/include/node/v8-primitive.h": "22b7f84fc79e55144323a29be18ccb657e09fa3be5d2a2fd5380cbe4c82e4a28",
+    ".tools/node/include/node/v8-profiler.h": "5e4e427164d4c886edcd978100a9b43851cf754a28576a3884b9a853d43eecf6",
+    ".tools/node/include/node/v8-promise.h": "d9e1d89bde1ba8998d3d9aea60f1c5635ad9b36714b91a48bf0bde9b14410908",
+    ".tools/node/include/node/v8-proxy.h": "0883885e2477071a1176151443b38754edde22b04a0a05d05fe3764ae44622b5",
+    ".tools/node/include/node/v8-regexp.h": "8bdbcbb83463c77495973fe30294273d00a5c5cff90e8428415f5d2f034d0a8a",
+    ".tools/node/include/node/v8-sandbox.h": "e3831b68766d59f1bfeeed2f629b1d0085c02fe2543175b1acdee63dcd1aeb82",
+    ".tools/node/include/node/v8-script.h": "d753f702cf724070eaa683a8314313995535384dd74ca7b5a54a3f06152d5b0a",
+    ".tools/node/include/node/v8-snapshot.h": "4228f27fc7794598efdc0d465268d70707212155b12a7c347d5fd8a0c137c779",
+    ".tools/node/include/node/v8-source-location.h": "4e7890937c1d3de89bce3ff8749f9e6560994251385acf927b599f1f77a66a66",
+    ".tools/node/include/node/v8-statistics.h": "f9547cff9044e7a8a518287ff20867a29a2c198a87ec070fd8b252825d997dac",
+    ".tools/node/include/node/v8-template.h": "3527a7124e8fdb555102f1d9616a6010aa8de2bd94cfbb07496332b6afaacbc7",
+    ".tools/node/include/node/v8-traced-handle.h": "c190953ea39cdfed8058e67b23c74255376c065c8c565c9f821fa467997756f8",
+    ".tools/node/include/node/v8-typed-array.h": "4af778470c542677ea099ca334a042c448ce3b9f4d3b96a7fa6d599492651c64",
+    ".tools/node/include/node/v8-unwinder.h": "2e27b3e40167e2eeb3d2ba53ad4723ed41d12dd5a1fe2d572344ab0062ca7756",
+    ".tools/node/include/node/v8-value-serializer.h": "bc1d30d03ee47dd548b3ce30609a66fc47d252b3454603dffa28a3a9c1dd1cb6",
+    ".tools/node/include/node/v8-value.h": "4bdb297358d309e003ea09279f2cf0e94024dbdafdd34a106513344b70d1685c",
+    ".tools/node/include/node/v8-version.h": "7a945b923eec649417fc366a50b1439af006869ca764f37d1d07be15eed47802",
+    ".tools/node/include/node/v8-wasm.h": "f6e41223234a00ea662b8706cc080acccca476a9c5d253e9ad2347eb3fcf12c1",
+    ".tools/node/include/node/v8-weak-callback-info.h": "ffe109dcb5b0364c7d0653470c845f01c10573e6a5ab369f4dc7a0ccedc689d8",
+    ".tools/node/include/node/v8.h": "e27a005daa45f342845ffb9b33409686c380b1d5a97f46f3ab4749517a213d25",
+    ".tools/node/include/node/v8config.h": "7454d35a34b52b23a50f9ef2742dc0c57025cd9eb1f85c27b7618fe2b269bacf",
+    ".tools/node/include/node/zconf.h": "5ad08c16565403aa7823d165050c5bfac211b8748717eec8a2bb8bc6efd56981",
+    ".tools/node/include/node/zlib.h": "0ff41598d145693759a8322bb90bc4f2c57dcdcb3635fdf5b2195bf13df15b54"
+  },
+  "outputSha256": "edb414fc42019eb32ba792b87f7281adec8b40780724466a0efcd6182cadbd19"
+}
+test_canonical_golden_vectors (__main__.BootstrapTests.test_canonical_golden_vectors) ... ok
+test_crash_before_publish_preserves_staging_without_accepted_target (__main__.BootstrapTests.test_crash_before_publish_preserves_staging_without_accepted_target) ... ok
+test_depth (__main__.BootstrapTests.test_depth) ... ok
+test_distinct_keys_and_clock (__main__.BootstrapTests.test_distinct_keys_and_clock) ... ok
+test_duplicate_keys_and_oversize (__main__.BootstrapTests.test_duplicate_keys_and_oversize) ... ok
+test_existing_symlink_target_refused (__main__.BootstrapTests.test_existing_symlink_target_refused) ... ok
+test_file_checks (__main__.BootstrapTests.test_file_checks) ... ok
+test_initial_publication_and_no_overwrite (__main__.BootstrapTests.test_initial_publication_and_no_overwrite) ... ok
+test_invalid_json_values (__main__.BootstrapTests.test_invalid_json_values) ... ok
+test_pinned_record (__main__.BootstrapTests.test_pinned_record) ... ok
+test_separate_signature_domains (__main__.BootstrapTests.test_separate_signature_domains) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.024s
+
+OK
+✔ Python root signatures are accepted by the unchanged production Kernel verifier (14.382957ms)
+✔ root policy authorizes only the designated publisher and IPC execution (1.122619ms)
+✔ signature domains are not interchangeable (1.251081ms)
+✔ tampered policy is rejected (5.238172ms)
+✔ prohibited inproc trust expansion is rejected (2.179726ms)
+✔ root substitution is rejected (0.91054ms)
+✔ wrong public bytes under approved key ID are rejected (1.095518ms)
+✔ missing signature is rejected (1.482887ms)
+✔ noncanonical signature encoding is rejected (0.817886ms)
+✔ tampered revocation metadata is rejected (2.419657ms)
+✔ metadata issued in the future is rejected (1.017191ms)
+✔ expired revocation metadata is rejected (1.591491ms)
+✔ old policy age also blocks activation despite nominal policy expiry (1.542719ms)
+✔ unknown policy fields are rejected (0.855268ms)
+✔ backward clock movement fails closed (13.177892ms)
+✔ existing high-water state cannot be reset using initialize=true (10.737667ms)
+✔ in-process IPC install: actual echo and unchanged consumer readiness, exact frozen selection, lifetime ownership and real shutdown (3034.567693ms)
+✔ external SIGKILL at activating-durable preserves selection and requires operator without inventing reap (1227.431343ms)
+✔ external SIGKILL at accepted-rename preserves selection and requires operator without inventing reap (3239.080582ms)
+✔ external SIGKILL at committed-durable preserves selection and requires operator without inventing reap (3182.521137ms)
+✔ fresh recovery rejects committed corruption: wrong-sequence (2720.979902ms)
+✔ fresh recovery rejects committed corruption: wrong-release (2523.599878ms)
+✔ fresh recovery rejects committed corruption: unknown-field (2612.477746ms)
+✔ fresh recovery rejects committed corruption: missing-selection (2621.944583ms)
+✔ fresh recovery rejects committed corruption: corrupt-journal (2678.573825ms)
+✔ real provider activation failure never publishes accepted selection and records clean rollback (939.875023ms)
+✔ post-activation recovery still enforces Kernel same-version policy digest continuity (2648.659984ms)
+✔ expired grants cannot continue to report a ready RUNNING Cell (7412.868382ms)
+✔ real syscall fault remains conservative and cannot publish later: accepted-rename (5069.752636ms)
+✔ real syscall fault remains conservative and cannot publish later: accepted-directory (4897.249412ms)
+✔ real syscall fault remains conservative and cannot publish later: journal-link (5148.93071ms)
+✔ real syscall fault remains conservative and cannot publish later: enospc (2685.880658ms)
+✔ real syscall fault remains conservative and cannot publish later: accepted-file-delay (35894.752098ms)
+✔ activation hangs: actual IPC, no late accepted publication (32814.780334ms)
+✔ activation resolves late: actual IPC, no late accepted publication (33300.212715ms)
+✔ readiness shares activation budget: actual IPC, no late accepted publication (32836.581971ms)
+✔ throwing IPC activation preserves clean same-object status and safe conflict on retained candidate (917.43967ms)
+✔ actual IPC readiness fails closed: throw new Error("readiness failure"); (3801.935476ms)
+✔ actual IPC readiness fails closed: await new Promise(r => setTimeout(r, 1500)); return x; (5179.875124ms)
+✔ actual IPC readiness fails closed: await new Promise(() => {}); (4768.708196ms)
+✔ actual hanging IPC disposer cannot claim STOPPED or reopen admission (5112.59399ms)
+✔ actual committed corruption has structured conservative error and is not repaired (2151.405435ms)
+✔ real staged transaction, separate-process status/recovery, persistent identity/floor and no accepted selection (1395.622899ms)
+✔ OS flock contention is immediate across processes and releases on SIGKILL without PID guessing (407.2982ms)
+✔ external SIGKILL at staging-durable with fresh-process readback (814.357774ms)
+✔ external SIGKILL at verified-durable with fresh-process readback (951.121083ms)
+✔ external SIGKILL at journal-link with fresh-process readback (762.629471ms)
+✔ external SIGKILL at floor-rename with fresh-process readback (721.044373ms)
+✔ private-root attack rejects symlink-root (81.999762ms)
+✔ private-root attack rejects root-mode (76.873329ms)
+✔ private-root attack rejects identity-hardlink (75.287239ms)
+✔ private-root attack rejects floor-symlink (73.744881ms)
+✔ private-root attack rejects floor-mode (64.765579ms)
+✔ private-root attack rejects unknown-root (65.833475ms)
+✔ private-root attack rejects missing-kernel (87.686048ms)
+✔ private-root attack rejects accepted-selection (87.001201ms)
+✔ stage rejects wrong-root without accepted publication (65.341951ms)
+✔ stage rejects clock-floor without accepted publication (74.522603ms)
+✔ stage rejects metadata-floor without accepted publication (86.478508ms)
+✔ stage rejects intent-profile without accepted publication (92.502097ms)
+✔ stage rejects intent-operation without accepted publication (235.034315ms)
+✔ stage rejects intent-duplicate without accepted publication (91.780822ms)
+✔ stage rejects intent-secret without accepted publication (110.274192ms)
+✔ stage rejects source-corruption without accepted publication (86.488347ms)
+✔ journal corruption, unknown shape, checksum-valid illegal edge and rollback deny (2305.911034ms)
+✔ install, upgrade, start, stop, verify and backup are explicitly unavailable; no root mutation (1873.966838ms)
+✔ native custody requires matching private inode and the actual held flock description (3.93847ms)
+✔ R1 actual deterministic USTAR assembly, signature and graph inspection is read-only (36.189023ms)
+✔ R1 denies wrong-domain (5.793206ms)
+✔ R1 denies expired (5.109441ms)
+✔ R1 denies revoked-signer (7.623726ms)
+✔ R1 denies future-floor (6.268239ms)
+✔ R1 denies old-policy (6.15197ms)
+✔ R1 denies wrong-root (4.496319ms)
+✔ R1 denies inproc-authority (4.365623ms)
+✔ R1 rejects duplicate-key through real archive decoding (8.187505ms)
+✔ R1 rejects unsafe-integer through real archive decoding (7.537915ms)
+✔ R1 rejects bad-unicode through real archive decoding (10.009299ms)
+✔ R1 rejects depth through real archive decoding (11.421643ms)
+✔ R1 rejects utf8 through real archive decoding (16.085376ms)
+✔ R1 rejects size through real archive decoding (12.905621ms)
+✔ R1 rejects unknown closed lock fields and wrong policy binding (16.706222ms)
+✔ USTAR rejects checksum (1.913104ms)
+✔ USTAR rejects symlink (1.532069ms)
+✔ USTAR rejects hardlink (1.571224ms)
+✔ USTAR rejects directory (1.728278ms)
+✔ USTAR rejects pax (1.608502ms)
+✔ USTAR rejects gnu (1.85257ms)
+✔ USTAR rejects base256 (2.055291ms)
+✔ USTAR rejects nul-alias (1.985161ms)
+✔ USTAR rejects traversal (2.852179ms)
+✔ USTAR rejects padding (1.946908ms)
+✔ USTAR rejects tail (1.792547ms)
+✔ USTAR rejects link-target (2.169056ms)
+✔ USTAR exact EOF, duplicate/case aliases, path bounds and symlink input (3.389519ms)
+✔ USTAR rechecks descriptor bytes after source modification (2.030316ms)
+✔ durable owner-only no-follow writes and exclusive publication (6.608739ms)
+✔ real SIGKILL at durable replacement open (520.294318ms)
+✔ real SIGKILL at durable replacement write (480.006404ms)
+✔ real SIGKILL at durable replacement file-fsync (436.768548ms)
+✔ real SIGKILL at durable replacement rename (456.986168ms)
+✔ real SIGKILL at durable replacement directory-fsync (478.653394ms)
+✔ public Kernel admission boundary: release-wide signature is not a per-package signature (23.859965ms)
+✔ read-only inspection CLI actually runs and redacts failure paths (521.46927ms)
+✔ trust verifier does not write floors (3.126536ms)
+✔ USTAR enforces real input size, entry count and parent aliases (1666.275529ms)
+✔ USTAR supports canonical long paths without prefix aliases (2.67167ms)
+✔ release inventory rejects corrupt payloads, extra files and missing inventory members (17.133396ms)
+✔ public release admission: authentic archive inspection, exact resolution and unchanged IPC consumer (2545.127606ms)
+ℹ Real IPC provider -> unchanged compiled consumer -> client: five consumerSuite cases; selected copies survived input mutation. Not Cell activation.
+✔ admission callback helper is runtime-private, not a public verification bypass (23.921391ms)
+✔ public release admission rejects prefix-other-package (14.929775ms)
+✔ public release admission rejects prefix-traversal (21.507325ms)
+✔ public release admission rejects prefix-case (14.565641ms)
+✔ public release admission rejects prefix-missing (10.570082ms)
+✔ public release admission rejects prefix-empty (13.356759ms)
+✔ public release admission rejects raw-index-whitespace (13.425206ms)
+✔ public release admission rejects raw-profile-whitespace (16.859702ms)
+✔ public release admission rejects wrong-profile (15.850966ms)
+✔ public release admission rejects code-byte (14.052135ms)
+✔ public release admission rejects missing-file (15.962025ms)
+✔ public release admission rejects extra-file (16.837259ms)
+✔ public release admission rejects file-alias (15.378117ms)
+✔ public release admission rejects package-transplant (15.356597ms)
+✔ public release admission rejects signature-substitution (16.326509ms)
+✔ public release admission rejects wrong-signer (16.437378ms)
+✔ public release admission rejects wrong-domain (23.816354ms)
+✔ public release admission rejects release-substitution (17.157842ms)
+✔ public release admission rejects one-file-resource-limit (14.013653ms)
+✔ public release admission rejects flat-envelope-on-release-api (11.935287ms)
+✔ signed release rejects extra-selected-artifact (11.014828ms)
+✔ signed release rejects wrong-kind (11.060755ms)
+✔ signed release rejects duplicate-path (11.865156ms)
+✔ signed release rejects case-alias (10.993007ms)
+✔ signed release rejects parent-alias (10.008287ms)
+✔ signed release rejects missing-index (10.694135ms)
+✔ signed release rejects index-length (10.254029ms)
+✔ signed release rejects index-digest (10.343998ms)
+✔ signed release rejects profile-kind (10.888992ms)
+✔ signed release rejects profile-length (26.119652ms)
+✔ signed release rejects profile-digest (14.400379ms)
+✔ signed release rejects duplicate-selection (15.417ms)
+✔ signed release rejects wrong-canonical-package (16.48073ms)
+✔ signed release rejects wrong-canonical-profile (15.258443ms)
+✔ signed release rejects duplicate-index-file (15.915477ms)
+✔ current revocation denies release signer at discovery and after admission (37.705623ms)
+✔ current revocation denies release release at discovery and after admission (40.779169ms)
+✔ current revocation denies release package at discovery and after admission (59.243815ms)
+✔ current revocation denies release profile at discovery and after admission (50.836096ms)
+✔ current revocation denies release index-raw at discovery and after admission (41.842998ms)
+✔ current revocation denies release code-raw at discovery and after admission (41.620911ms)
+✔ expiry and backward clock deny new release admission without resetting floors (17.755785ms)
+✔ mixed authentic releases cannot transplant signatures, profiles or changed package bytes (96.036794ms)
+✔ legacy flat discovery retains positive behavior and stable release-wide rejection (49.652222ms)
+✔ unrelated runtime bytes remain inspector responsibility, not selected-package verification (25.418905ms)
+✔ selected package aggregate bound remains 16 MiB with individually bounded files (64.135128ms)
+✔ clean stop then authenticated same-revision start uses preserved bytes and new exact owner (7804.492919ms)
+✔ same-revision start: expired grants stay FAILED until clean stop and fresh issuance (12526.285622ms)
+✔ same-revision start rechecks newer current revocation while preserving accepted bytes and floor monotonicity (5266.070814ms)
+✔ same-revision start refuses fresh validation failure: authorization (3004.94534ms)
+✔ same-revision start refuses fresh validation failure: trust-signature (3014.061017ms)
+✔ same-revision start refuses fresh validation failure: revoked-bundle (2967.225386ms)
+✔ same-revision start refuses fresh validation failure: expired-trust (3087.938443ms)
+✔ same-revision start refuses fresh validation failure: policy-continuity (2979.390408ms)
+✔ same-revision start refuses fresh validation failure: accepted-sequence (3006.128712ms)
+✔ same-revision start refuses fresh validation failure: missing-selection (3119.247492ms)
+✔ same-revision start refuses fresh validation failure: journal (3098.050983ms)
+✔ same-revision start refuses fresh validation failure: artifact (2996.659762ms)
+✔ same-revision start refuses fresh validation failure: extra-file (3102.255481ms)
+✔ same-revision start refuses fresh validation failure: symlink (2985.51149ms)
+✔ same-revision start refuses fresh validation failure: future-floor (3012.967804ms)
+✔ same-revision start refuses fresh validation failure: kernel-residue (2957.326576ms)
+✔ same-revision start waits for actual prior owner reap, not its clean stopped message (2730.318613ms)
+✔ same-revision successor launch is not readiness; concurrent start conflicts and disconnect is not cancellation (7499.075389ms)
+✔ same-revision successor retains parent-death guard while blocked and residue denies takeover (3106.204283ms)
+✔ actual publication rename uncertainty forbids start and preserves selection without rollback (2778.275948ms)
+✔ actual floor-publication rename uncertainty forbids start and preserves selection without rollback (2959.806383ms)
+✔ same accepted provider fails actual successor activation without replacing artifacts (11108.397ms)
+✔ same accepted provider fails actual successor readiness without replacing artifacts (12301.541417ms)
+✔ same-revision successor external 30s expiry is sticky and cannot authorize another owner (33084.801034ms)
+✔ same-revision successor-cleanup external 30s expiry is sticky and cannot authorize another owner (34841.325637ms)
+✔ clean stopped residue is not a restart permit after supervisor death (2744.684006ms)
+✔ restricted framing requires write EOF; delayed trailing bytes never execute stop (32812.84597ms)
+✔ supervised real IPC install, exact local admin status/stop, retained custody (2622.408606ms)
+✔ external SIGKILL of actual owner never proves descendants reaped; fence survives supervisor death (2634.869559ms)
+✔ real synchronous FIFO IO during outer cleanup: responsive admin, 30s external expiry, no restart (32487.926353ms)
+✔ activation blocked in real synchronous IO is externally killed without publication or new admission (30834.690906ms)
+✔ actual Unix peer credentials, malformed/duplicate/oversized frames and eight-connection ceiling (2902.576907ms)
+✔ launcher exits before real first-install completes; owner remains alive for authenticated status and clean stop (2680.469147ms)
+✔ supervisor SIGKILL terminates the blocked owner without an event-loop callback (682.598972ms)
+ℹ tests 189
+ℹ suites 0
+ℹ pass 189
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 306800.122428
+
+> alica-v2@0.0.0 test:g7-contracts
+> PYTHONPATH=.tools/python python3 -S tests/g7/test_contract_model.py
+
+test_all_objects_closed (__main__.Contracts.test_all_objects_closed) ... ok
+test_chain_skips_and_forks (__main__.Contracts.test_chain_skips_and_forks) ... ok
+test_checksum_tampering (__main__.Contracts.test_checksum_tampering) ... ok
+test_commit_only_after_activation (__main__.Contracts.test_commit_only_after_activation) ... ok
+test_crash_model_after_publication_does_not_claim_running (__main__.Contracts.test_crash_model_after_publication_does_not_claim_running) ... ok
+test_crash_model_before_publication_preserves_prior_selection (__main__.Contracts.test_crash_model_before_publication_preserves_prior_selection) ... ok
+test_crash_model_corrupt_selection_fails_closed (__main__.Contracts.test_crash_model_corrupt_selection_fails_closed) ... ok
+test_crash_model_trust_and_reap_required (__main__.Contracts.test_crash_model_trust_and_reap_required) ... ok
+test_edge_ABORTED_ABORTED (__main__.Contracts.test_edge_ABORTED_ABORTED) ... ok
+test_edge_ABORTED_ACTIVATING (__main__.Contracts.test_edge_ABORTED_ACTIVATING) ... ok
+test_edge_ABORTED_COMMITTED (__main__.Contracts.test_edge_ABORTED_COMMITTED) ... ok
+test_edge_ABORTED_NEEDS_OPERATOR (__main__.Contracts.test_edge_ABORTED_NEEDS_OPERATOR) ... ok
+test_edge_ABORTED_RECOVERING (__main__.Contracts.test_edge_ABORTED_RECOVERING) ... ok
+test_edge_ABORTED_STAGING (__main__.Contracts.test_edge_ABORTED_STAGING) ... ok
+test_edge_ABORTED_VERIFIED (__main__.Contracts.test_edge_ABORTED_VERIFIED) ... ok
+test_edge_ACTIVATING_ABORTED (__main__.Contracts.test_edge_ACTIVATING_ABORTED) ... ok
+test_edge_ACTIVATING_ACTIVATING (__main__.Contracts.test_edge_ACTIVATING_ACTIVATING) ... ok
+test_edge_ACTIVATING_COMMITTED (__main__.Contracts.test_edge_ACTIVATING_COMMITTED) ... ok
+test_edge_ACTIVATING_NEEDS_OPERATOR (__main__.Contracts.test_edge_ACTIVATING_NEEDS_OPERATOR) ... ok
+test_edge_ACTIVATING_RECOVERING (__main__.Contracts.test_edge_ACTIVATING_RECOVERING) ... ok
+test_edge_ACTIVATING_STAGING (__main__.Contracts.test_edge_ACTIVATING_STAGING) ... ok
+test_edge_ACTIVATING_VERIFIED (__main__.Contracts.test_edge_ACTIVATING_VERIFIED) ... ok
+test_edge_COMMITTED_ABORTED (__main__.Contracts.test_edge_COMMITTED_ABORTED) ... ok
+test_edge_COMMITTED_ACTIVATING (__main__.Contracts.test_edge_COMMITTED_ACTIVATING) ... ok
+test_edge_COMMITTED_COMMITTED (__main__.Contracts.test_edge_COMMITTED_COMMITTED) ... ok
+test_edge_COMMITTED_NEEDS_OPERATOR (__main__.Contracts.test_edge_COMMITTED_NEEDS_OPERATOR) ... ok
+test_edge_COMMITTED_RECOVERING (__main__.Contracts.test_edge_COMMITTED_RECOVERING) ... ok
+test_edge_COMMITTED_STAGING (__main__.Contracts.test_edge_COMMITTED_STAGING) ... ok
+test_edge_COMMITTED_VERIFIED (__main__.Contracts.test_edge_COMMITTED_VERIFIED) ... ok
+test_edge_NEEDS_OPERATOR_ABORTED (__main__.Contracts.test_edge_NEEDS_OPERATOR_ABORTED) ... ok
+test_edge_NEEDS_OPERATOR_ACTIVATING (__main__.Contracts.test_edge_NEEDS_OPERATOR_ACTIVATING) ... ok
+test_edge_NEEDS_OPERATOR_COMMITTED (__main__.Contracts.test_edge_NEEDS_OPERATOR_COMMITTED) ... ok
+test_edge_NEEDS_OPERATOR_NEEDS_OPERATOR (__main__.Contracts.test_edge_NEEDS_OPERATOR_NEEDS_OPERATOR) ... ok
+test_edge_NEEDS_OPERATOR_RECOVERING (__main__.Contracts.test_edge_NEEDS_OPERATOR_RECOVERING) ... ok
+test_edge_NEEDS_OPERATOR_STAGING (__main__.Contracts.test_edge_NEEDS_OPERATOR_STAGING) ... ok
+test_edge_NEEDS_OPERATOR_VERIFIED (__main__.Contracts.test_edge_NEEDS_OPERATOR_VERIFIED) ... ok
+test_edge_RECOVERING_ABORTED (__main__.Contracts.test_edge_RECOVERING_ABORTED) ... ok
+test_edge_RECOVERING_ACTIVATING (__main__.Contracts.test_edge_RECOVERING_ACTIVATING) ... ok
+test_edge_RECOVERING_COMMITTED (__main__.Contracts.test_edge_RECOVERING_COMMITTED) ... ok
+test_edge_RECOVERING_NEEDS_OPERATOR (__main__.Contracts.test_edge_RECOVERING_NEEDS_OPERATOR) ... ok
+test_edge_RECOVERING_RECOVERING (__main__.Contracts.test_edge_RECOVERING_RECOVERING) ... ok
+test_edge_RECOVERING_STAGING (__main__.Contracts.test_edge_RECOVERING_STAGING) ... ok
+test_edge_RECOVERING_VERIFIED (__main__.Contracts.test_edge_RECOVERING_VERIFIED) ... ok
+test_edge_STAGING_ABORTED (__main__.Contracts.test_edge_STAGING_ABORTED) ... ok
+test_edge_STAGING_ACTIVATING (__main__.Contracts.test_edge_STAGING_ACTIVATING) ... ok
+test_edge_STAGING_COMMITTED (__main__.Contracts.test_edge_STAGING_COMMITTED) ... ok
+test_edge_STAGING_NEEDS_OPERATOR (__main__.Contracts.test_edge_STAGING_NEEDS_OPERATOR) ... ok
+test_edge_STAGING_RECOVERING (__main__.Contracts.test_edge_STAGING_RECOVERING) ... ok
+test_edge_STAGING_STAGING (__main__.Contracts.test_edge_STAGING_STAGING) ... ok
+test_edge_STAGING_VERIFIED (__main__.Contracts.test_edge_STAGING_VERIFIED) ... ok
+test_edge_VERIFIED_ABORTED (__main__.Contracts.test_edge_VERIFIED_ABORTED) ... ok
+test_edge_VERIFIED_ACTIVATING (__main__.Contracts.test_edge_VERIFIED_ACTIVATING) ... ok
+test_edge_VERIFIED_COMMITTED (__main__.Contracts.test_edge_VERIFIED_COMMITTED) ... ok
+test_edge_VERIFIED_NEEDS_OPERATOR (__main__.Contracts.test_edge_VERIFIED_NEEDS_OPERATOR) ... ok
+test_edge_VERIFIED_RECOVERING (__main__.Contracts.test_edge_VERIFIED_RECOVERING) ... ok
+test_edge_VERIFIED_STAGING (__main__.Contracts.test_edge_VERIFIED_STAGING) ... ok
+test_edge_VERIFIED_VERIFIED (__main__.Contracts.test_edge_VERIFIED_VERIFIED) ... ok
+test_frozen_bundle_path_subset (__main__.Contracts.test_frozen_bundle_path_subset) ... ok
+test_missing_0_cellId (__main__.Contracts.test_missing_0_cellId) ... ok
+test_missing_0_release (__main__.Contracts.test_missing_0_release) ... ok
+test_missing_0_schemaVersion (__main__.Contracts.test_missing_0_schemaVersion) ... ok
+test_missing_0_sequence (__main__.Contracts.test_missing_0_sequence) ... ok
+test_missing_0_transactionId (__main__.Contracts.test_missing_0_transactionId) ... ok
+test_missing_0_trustFloor (__main__.Contracts.test_missing_0_trustFloor) ... ok
+test_missing_1_checksum (__main__.Contracts.test_missing_1_checksum) ... ok
+test_missing_1_record (__main__.Contracts.test_missing_1_record) ... ok
+test_missing_2_capabilities (__main__.Contracts.test_missing_2_capabilities) ... ok
+test_missing_2_events (__main__.Contracts.test_missing_2_events) ... ok
+test_missing_2_profileDigest (__main__.Contracts.test_missing_2_profileDigest) ... ok
+test_missing_2_schemaVersion (__main__.Contracts.test_missing_2_schemaVersion) ... ok
+test_missing_2_secrets (__main__.Contracts.test_missing_2_secrets) ... ok
+test_missing_3_expectedSequence (__main__.Contracts.test_missing_3_expectedSequence) ... ok
+test_missing_3_incarnation (__main__.Contracts.test_missing_3_incarnation) ... ok
+test_missing_3_operation (__main__.Contracts.test_missing_3_operation) ... ok
+test_missing_3_requestId (__main__.Contracts.test_missing_3_requestId) ... ok
+test_missing_3_schemaVersion (__main__.Contracts.test_missing_3_schemaVersion) ... ok
+test_missing_4_acceptedDigest (__main__.Contracts.test_missing_4_acceptedDigest) ... ok
+test_missing_4_code (__main__.Contracts.test_missing_4_code) ... ok
+test_missing_4_incarnation (__main__.Contracts.test_missing_4_incarnation) ... ok
+test_missing_4_requestId (__main__.Contracts.test_missing_4_requestId) ... ok
+test_missing_4_schemaVersion (__main__.Contracts.test_missing_4_schemaVersion) ... ok
+test_missing_4_sequence (__main__.Contracts.test_missing_4_sequence) ... ok
+test_missing_4_status (__main__.Contracts.test_missing_4_status) ... ok
+test_missing_5_accepted (__main__.Contracts.test_missing_5_accepted) ... ok
+test_missing_5_backupId (__main__.Contracts.test_missing_5_backupId) ... ok
+test_missing_5_cellId (__main__.Contracts.test_missing_5_cellId) ... ok
+test_missing_5_createdAtMs (__main__.Contracts.test_missing_5_createdAtMs) ... ok
+test_missing_5_files (__main__.Contracts.test_missing_5_files) ... ok
+test_missing_5_format (__main__.Contracts.test_missing_5_format) ... ok
+test_missing_5_recoveryKeyId (__main__.Contracts.test_missing_5_recoveryKeyId) ... ok
+test_missing_5_schemaVersion (__main__.Contracts.test_missing_5_schemaVersion) ... ok
+test_missing_5_trustFloor (__main__.Contracts.test_missing_5_trustFloor) ... ok
+test_missing_6_approvedAtMs (__main__.Contracts.test_missing_6_approvedAtMs) ... ok
+test_missing_6_authorizationDigest (__main__.Contracts.test_missing_6_authorizationDigest) ... ok
+test_missing_6_backupCipherDigest (__main__.Contracts.test_missing_6_backupCipherDigest) ... ok
+test_missing_6_cellId (__main__.Contracts.test_missing_6_cellId) ... ok
+test_missing_6_minimumFloor (__main__.Contracts.test_missing_6_minimumFloor) ... ok
+test_missing_6_schemaVersion (__main__.Contracts.test_missing_6_schemaVersion) ... ok
+test_missing_6_sourceStopped (__main__.Contracts.test_missing_6_sourceStopped) ... ok
+test_restore_requires_source_stopped (__main__.Contracts.test_restore_requires_source_stopped) ... ok
+test_schema_and_generated_files_match (__main__.Contracts.test_schema_and_generated_files_match) ... ok
+test_secret_and_event_grants_are_not_implicitly_supported (__main__.Contracts.test_secret_and_event_grants_are_not_implicitly_supported) ... ok
+test_trust_never_rolls_back (__main__.Contracts.test_trust_never_rolls_back) ... ok
+test_uncertain_cleanup_cannot_be_successful_abort (__main__.Contracts.test_uncertain_cleanup_cannot_be_successful_abort) ... ok
+test_unknown_0 (__main__.Contracts.test_unknown_0) ... ok
+test_unknown_1 (__main__.Contracts.test_unknown_1) ... ok
+test_unknown_2 (__main__.Contracts.test_unknown_2) ... ok
+test_unknown_3 (__main__.Contracts.test_unknown_3) ... ok
+test_unknown_4 (__main__.Contracts.test_unknown_4) ... ok
+test_unknown_5 (__main__.Contracts.test_unknown_5) ... ok
+test_unknown_6 (__main__.Contracts.test_unknown_6) ... ok
+test_unknown_nested_authority_is_rejected (__main__.Contracts.test_unknown_nested_authority_is_rejected) ... ok
+test_valid_0 (__main__.Contracts.test_valid_0) ... ok
+test_valid_1 (__main__.Contracts.test_valid_1) ... ok
+test_valid_2 (__main__.Contracts.test_valid_2) ... ok
+test_valid_3 (__main__.Contracts.test_valid_3) ... ok
+test_valid_4 (__main__.Contracts.test_valid_4) ... ok
+test_valid_5 (__main__.Contracts.test_valid_5) ... ok
+test_valid_6 (__main__.Contracts.test_valid_6) ... ok
+
+----------------------------------------------------------------------
+Ran 119 tests in 0.249s
+
+OK
+a978ad5d4cdc18e941a722d16caaa468e59250d34aaddf6203c4b5046eeaa3f4  tools/g7-cell-owner.mjs
+0ebd888f7231c01b6420f5e7b9fc665abe0f15bf7cac1e1a782375b06bf5e36c  tools/g7-cell.mjs
+764dcbb05601052d5382ebc7893a2ef2dda670761b17506d08f47a1493ff79fa  tools/g7-release.mjs
+e68d92d10183d74a6f54a13a5515673dc27e9de2df0bf7bfb00570f9a48e3a7d  tools/g7-supervisor.py
+3f7838f3c4bf9a6161607f78d0704cd03f9dd79f9696f40d922946364a331e95  tests/g7/supervision.test.mjs
+bf39a1b90cd45a3ab005b84d58564b98f31a0666bbe317d260719e30702c19eb  tests/g7/clean-start-block.mjs
+917e9ab5aa42e9fd344ca380fee1bb4ba7ab53e1044e41e6d2fb4583b0fadc32  docs/g7/draft/contracts.schema.json
+75a0fa6abe34d1c6bbfba24d10e509b32e2bbc40fba3ab372583de07d975d7d2  docs/g7/draft/limits.json

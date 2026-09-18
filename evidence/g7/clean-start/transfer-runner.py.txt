@@ -1,0 +1,40 @@
+import subprocess, pathlib, json, hashlib, sys, datetime
+ROOT=pathlib.Path('/home/herman/g7-implementation')
+EV=ROOT/'evidence/g7/clean-start'
+SSH=['ssh','-i','/home/herman/.ssh/alica_v2_vps_ed25519','-o','IdentitiesOnly=yes','-o','BatchMode=yes','-o','StrictHostKeyChecking=yes','-o','UserKnownHostsFile=/home/herman/.ssh/alica_v2_known_hosts','alica-dev@167.233.135.142']
+def run(name, command, data=None):
+    with (EV/'commands.jsonl').open('a') as f: f.write(json.dumps({'time':datetime.datetime.now(datetime.timezone.utc).isoformat(),'name':name,'command':command})+'\n')
+    with (EV/(name+'.log')).open('xb') as f:
+        p=subprocess.run(command,input=data,stdout=f,stderr=subprocess.STDOUT)
+    print(name,p.returncode,flush=True)
+    (EV/(name+'.exit')).write_text(str(p.returncode)+'\n')
+    if p.returncode: sys.exit(p.returncode)
+mode=sys.argv[1]
+paths=(EV/'transfer-allowlist.txt').read_text().splitlines()
+if mode=='before':
+    code="import subprocess,pathlib,hashlib,json; paths=subprocess.check_output(['git','ls-files','--cached','--others','--exclude-standard'],text=True).splitlines(); print(json.dumps({p:hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest() for p in paths},sort_keys=True,indent=2))"
+    import shlex
+    run('before-development',SSH+['cd /home/alica-dev/AlicaV2 && python3 -c '+shlex.quote(code)])
+elif mode=='send':
+    import io,tarfile
+    data=io.BytesIO()
+    with tarfile.open(fileobj=data,mode='w') as t:
+        for p in paths:t.add(ROOT/p,arcname=p,recursive=False)
+    run(sys.argv[2],SSH+['cd /home/alica-dev/AlicaV2 && tar -xf - -- '+ ' '.join(paths)],data.getvalue())
+elif mode=='run':
+    run(sys.argv[2],SSH+['cd /home/alica-dev/AlicaV2 && export PATH="$PWD/.tools/node/bin:$PATH"; '+sys.argv[3]])
+elif mode=='return':
+    label=sys.argv[2] if len(sys.argv)>2 else 'return'
+    command=SSH+['cd /home/alica-dev/AlicaV2 && tar -cf - -- '+' '.join(paths)]
+    with (EV/'commands.jsonl').open('a') as f: f.write(json.dumps({'time':datetime.datetime.now(datetime.timezone.utc).isoformat(),'name':label,'command':command})+'\n')
+    p=subprocess.run(command,capture_output=True)
+    with (EV/(label+'-transfer.stderr.log')).open('xb') as f:f.write(p.stderr)
+    (EV/(label+'.exit')).write_text(str(p.returncode)+'\n')
+    if p.returncode:raise SystemExit(p.returncode)
+    import io,tarfile
+    with tarfile.open(fileobj=io.BytesIO(p.stdout)) as t:
+        assert t.getnames()==paths
+        for m in t:
+            assert m.isfile()
+            (ROOT/m.name).write_bytes(t.extractfile(m).read())
+    (EV/(label+'-source.json')).write_text(json.dumps({p:hashlib.sha256((ROOT/p).read_bytes()).hexdigest() for p in paths},indent=2)+'\n')

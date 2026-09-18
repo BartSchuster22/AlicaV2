@@ -1,0 +1,48 @@
+import subprocess, pathlib, hashlib, json, shlex, os, datetime, re
+R=pathlib.Path('/home/herman/g7-implementation')
+E=R/'evidence/g7/clean-start'
+assert (E/'full-check-corrected.exit').read_text().strip()=='0'
+code='''import subprocess,pathlib,hashlib,json,os
+paths=subprocess.check_output(['git','ls-files','--cached','--others','--exclude-standard'],text=True).splitlines()
+files={p:hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest() for p in paths}
+processes=[];errors=[]
+for p in pathlib.Path('/proc').iterdir():
+ if not p.name.isdigit():continue
+ try:
+  if p.stat().st_uid!=os.getuid():continue
+  args=(p/'cmdline').read_bytes().decode(errors='replace').split('\\0')
+  if any(a.endswith('/g7-supervisor.py') or a.endswith('/g7-cell-owner.mjs') for a in args):processes.append({'pid':p.name,'args':args})
+ except FileNotFoundError:pass
+ except PermissionError as e:errors.append(str(e))
+print(json.dumps({'files':files,'processes':processes,'permissionErrors':errors,'head':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'status':subprocess.check_output(['git','status','--short'],text=True)},sort_keys=True,indent=2))'''
+subprocess.run(['python3','/tmp/g7-clean-start-run.py','run','after-development','python3 -c '+shlex.quote(code)],check=True)
+after=json.loads((E/'after-development.log').read_text())
+before=json.loads((E/'before-development.log').read_text())
+local_before=json.loads((E/'before-local.json').read_text())
+allow=(E/'transfer-allowlist.txt').read_text().splitlines()
+local={p:hashlib.sha256((R/p).read_bytes()).hexdigest() for p in allow}
+changed=[p for p in before if after['files'].get(p)!=before[p]]
+removed=[p for p in before if p not in after['files']]
+added=sorted(set(after['files'])-set(before))
+assert set(changed)<=set(allow),changed
+assert not removed,removed
+assert set(added)<=set(allow),added
+assert not after['processes'],after['processes']
+assert not after['permissionErrors'],after['permissionErrors']
+assert after['head']=='59f5eef3bf792d89a7193d753df0a85158a9a62c'
+assert all(local[p]==after['files'][p] for p in allow)
+assert all(hashlib.sha256((R/p).read_bytes()).hexdigest()==h for p,h in local_before.items() if p not in allow)
+full=(E/'full-check-corrected.log').read_text()
+for p in allow+['docs/g7/draft/contracts.schema.json','docs/g7/draft/limits.json']:
+ h=hashlib.sha256((R/p).read_bytes()).hexdigest()
+ assert full.count(h+'  '+p)==2,(p,'full log before/after hash missing')
+with (E/'local-final-checks.log').open('xb') as out:
+ for cmd in [['git','diff','--check'],['python3','tools/check-secrets.py']]:
+  out.write((repr(cmd)+'\n').encode());out.flush()
+  subprocess.run(cmd,cwd=R,stdout=out,stderr=subprocess.STDOUT,check=True)
+python_counts=re.findall(r'Ran (\d+) tests? in ([0-9.]+)s',full)
+node_counts=re.findall(r'ℹ tests (\d+)\nℹ suites \d+\nℹ pass (\d+)\nℹ fail (\d+)\nℹ cancelled (\d+)\nℹ skipped (\d+)',full)
+assert node_counts and all(t==p and f==c==s=='0' for t,p,f,c,s in node_counts),node_counts
+report={'baseline':after['head'],'verifiedAt':datetime.datetime.now(datetime.timezone.utc).isoformat(),'allowlist':allow,'sourceSha256':local,'developmentChangedExistingFiles':changed,'developmentAddedFiles':added,'developmentRemovedFiles':removed,'unchangedDevelopmentOnlyPriorFiles':len(set(before)-set(local_before)),'unchangedPriorDevelopmentFiles':len(before)-len(changed),'baselineTrackedOutsideAllowlistUnchanged':True,'sourceMatchesDevelopment':True,'fullLogBeforeAfterSourceHashesMatch':True,'frozenContractsAndLimitsUnchanged':True,'noRemainingG7OwnerOrSupervisor':True,'processInspectionPermissionErrors':after['permissionErrors'],'nodeSuites':[dict(zip(['tests','pass','fail','cancelled','skipped'],map(int,x))) for x in node_counts],'pythonSuites':[{'tests':int(n),'seconds':float(sec)} for n,sec in python_counts],'formatFirstAttemptExit':int((E/'full-check.exit').read_text()),'fullCorrectedExit':int((E/'full-check-corrected.exit').read_text()),'targetedExit':int((E/'targeted-final-candidate.exit').read_text()),'localFinalChecksExit':0}
+(E/'source-and-preservation-verification.json').write_text(json.dumps(report,indent=2)+'\n')
+print(json.dumps(report,indent=2))

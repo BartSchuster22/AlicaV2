@@ -15,6 +15,49 @@ import {
   freeze,
 } from '@alica/acap-contracts';
 import { openArchive, safePath, writeArchive } from './g7-archive.mjs';
+import { readPrivate, listPrivate } from './g7-durable.mjs';
+import { readFileSync } from 'node:fs';
+const limits = JSON.parse(
+  readFileSync(new URL('../docs/g7/draft/limits.json', import.meta.url)),
+);
+
+// Reinspect the actual retained release, not a reconstructed archive or caller report.
+export function inspectStoredRelease(fd, prefix, material, floor) {
+  const read = (p) => readPrivate(fd, prefix + '/' + p, limits.fileBytes);
+  const bundle = schema('bundle', parse(read('bundle.json')));
+  const paths = [
+    'bundle.json',
+    'bundle-signature.json',
+    ...bundle.artifacts.map((a) => a.path),
+    'authorization.json',
+  ];
+  check(new Set(paths).size === paths.length, 'CONFLICT');
+  const directories = new Map([['', new Set()]]);
+  for (const path of paths) {
+    const parts = safePath(path).split('/');
+    let parent = '';
+    for (let i = 0; i < parts.length; i++) {
+      if (!directories.has(parent)) directories.set(parent, new Set());
+      directories.get(parent).add(parts[i]);
+      parent += (parent ? '/' : '') + parts[i];
+    }
+  }
+  for (const [directory, children] of directories)
+    check(
+      canonical(
+        listPrivate(fd, prefix + (directory ? '/' + directory : '')).sort(),
+      ) === canonical([...children].sort()),
+      'CONTRACT_MISMATCH',
+    );
+  let total = 0;
+  const entries = paths.slice(0, -1).map((path) => {
+    const b = read(path);
+    total += b.length;
+    check(total <= limits.expandedBytes, 'RESOURCE_EXHAUSTED');
+    return { path, bytes: b.length, digest: rawDigest(b) };
+  });
+  return inspectSource({ entries, read }, material, floor);
+}
 const ascii = (a, b) => (a < b ? -1 : a > b ? 1 : 0);
 export function verifySignature(data, signature, domain, keys, expected) {
   schema('signature', signature);
@@ -216,187 +259,191 @@ function resolveLock(profile, packages, policyDigest) {
   };
 }
 export function inspectRelease(file, material, floor) {
-  const trust = verifyCurrentTrust(material, floor),
-    archive = openArchive(file);
+  verifyCurrentTrust(material, floor);
+  const archive = openArchive(file);
   try {
-    check(
-      archive.entries[0]?.path === 'bundle.json' &&
-        archive.entries[1]?.path === 'bundle-signature.json',
-    );
-    const bundle = schema('bundle', parse(archive.read('bundle.json')));
-    const signature = schema(
-      'signature',
-      parse(archive.read('bundle-signature.json')),
-    );
-    const publisher = trust.policy.publishers.find(
-      (p) => p.id === 'org.aquiero.alica',
-    );
-    check(
-      publisher.keyIds.includes(signature.keyId) &&
-        !trust.revocation.revokedKeyIds.includes(signature.keyId),
-      'PERMISSION_DENIED',
-    );
-    verifySignature(
-      bundle,
-      signature,
-      'ALICA-BUNDLE-v1',
-      trust.keys,
-      signature.keyId,
-    );
-    check(
-      !trust.revocation.revokedArtifactDigests.includes(digest(bundle)),
-      'PERMISSION_DENIED',
-    );
-    check(bundle.artifacts.length === archive.entries.length - 2);
-    const inventory = new Map();
-    for (const a of bundle.artifacts) {
-      check(!inventory.has(a.path), 'CONFLICT');
-      check(a.kind === artifactKind(a.path));
-      inventory.set(a.path, a);
-    }
-    for (const e of archive.entries.slice(2)) {
-      const a = inventory.get(e.path);
-      check(
-        a && a.bytes === e.bytes && a.digest === e.digest,
-        'CONTRACT_MISMATCH',
-      );
-      check(
-        !trust.revocation.revokedArtifactDigests.includes(e.digest),
-        'PERMISSION_DENIED',
-      );
-    }
-    const read = (p) => {
-      check(inventory.has(p), 'NOT_FOUND');
-      return archive.read(p);
-    };
-    const profile = validateProfile(
-      canonical(parse(read('profile/profile.json'))),
-    );
-    check(digest(profile) === bundle.profileDigest, 'CONTRACT_MISMATCH');
-    const lock = schema('resolution-lock', parse(read('profile/lock.json')));
-    check(lock.policyDigest === digest(trust.policy), 'PERMISSION_DENIED');
-    // Immutable candidate snapshot cannot become a replacement for current authority.
-    for (const [name, value] of [
-      ['policy', trust.policy],
-      ['policy-signature', trust.policySignature],
-    ])
-      check(
-        canonical(parse(read('trust/' + name + '.json'))) === canonical(value),
-        'CONTRACT_MISMATCH',
-      );
-    const snapshot = schema('revocation', parse(read('trust/revocation.json')));
-    verifySignature(
-      snapshot,
-      parse(read('trust/revocation-signature.json')),
-      'ALICA-REVOCATION-v1',
-      trust.keys,
-      trust.rootKeyId,
-    );
-    check(snapshot.version <= trust.revocation.version, 'PERMISSION_DENIED');
-    if (snapshot.version === trust.revocation.version)
-      check(digest(snapshot) === digest(trust.revocation), 'PERMISSION_DENIED');
-    const packages = new Map(),
-      owned = new Set();
-    for (const selection of profile.plugins) {
-      const base = 'plugins/' + selection.id + '/';
-      const index = schema('package-index', parse(read(base + 'index.json')));
-      check(
-        index.manifestPath === 'manifest.json' &&
-          index.pluginId === selection.id &&
-          index.version === selection.version &&
-          digest(index) === selection.packageDigest,
-        'CONTRACT_MISMATCH',
-      );
-      check(
-        !trust.revocation.revokedArtifactDigests.includes(
-          selection.packageDigest,
-        ),
-        'PERMISSION_DENIED',
-      );
-      const members = new Map();
-      let total = 0;
-      owned.add(base + 'index.json');
-      for (const f of index.files) {
-        check(!members.has(f.path) && f.path !== 'index.json', 'CONFLICT');
-        check(
-          f.path === 'manifest.json' ||
-            f.path.startsWith('code/') ||
-            f.path.startsWith('contracts/'),
-        );
-        const b = read(base + f.path);
-        total += b.length;
-        check(total <= 16777216, 'RESOURCE_EXHAUSTED');
-        check(
-          b.length === f.bytes && rawDigest(b) === f.digest,
-          'CONTRACT_MISMATCH',
-        );
-        members.set(f.path, b);
-        owned.add(base + f.path);
-      }
-      const get = (p) => {
-        const b = members.get(p);
-        check(b, 'NOT_FOUND');
-        return b;
-      };
-      const m = validatePlugin(canonical(parse(get('manifest.json'))), get);
-      check(
-        m.id === selection.id &&
-          m.version === selection.version &&
-          m.publisher === 'org.aquiero.alica' &&
-          m.execution === 'ipc',
-        'PERMISSION_DENIED',
-      );
-      check(
-        m.secretReferences.length === 0 &&
-          m.publishedEvents.length === 0 &&
-          m.subscribedEvents.length === 0,
-        'PERMISSION_DENIED',
-      );
-      const descriptors = m.provides.map((d) =>
-        descriptor(get(d.descriptorPath)),
-      );
-      for (const d of descriptors)
-        check(
-          !d.operations.some(
-            (o) => o.idempotencyPolicy?.persistence === 'durable',
-          ),
-          'FAILED_PRECONDITION',
-        );
-      packages.set(m.id, {
-        manifest: m,
-        descriptors,
-        packageDigest: selection.packageDigest,
-      });
-    }
-    for (const p of inventory.keys())
-      if (p.startsWith('plugins/')) check(owned.has(p), 'CONTRACT_MISMATCH');
-    check(
-      canonical(lock) ===
-        canonical(resolveLock(profile, packages, digest(trust.policy))),
-      'CONTRACT_MISMATCH',
-    );
-    // Presence and strict parsing are NOT a claim of provenance/SBOM completeness.
-    parse(read('sbom/sbom.json'));
-    parse(read('provenance/build.json'));
-    check(
-      [...inventory.keys()].some((p) => p.startsWith('runtime/')) &&
-        [...inventory.keys()].some((p) => p.startsWith('schemas/')) &&
-        [...inventory.keys()].some((p) => p.startsWith('docs/')),
-    );
-    verifyCurrentTrust(trust, floor);
-    return freeze({
-      bundleDigest: digest(bundle),
-      profileDigest: digest(profile),
-      lockDigest: digest(lock),
-      policyDigest: digest(trust.policy),
-      artifacts: bundle.artifacts.length,
-      profile,
-      lock,
-      qualification: 'NOT_QUALIFIED',
-    });
+    return inspectSource(archive, material, floor);
   } finally {
     archive.close();
   }
+}
+function inspectSource(archive, material, floor) {
+  const trust = verifyCurrentTrust(material, floor);
+  check(
+    archive.entries[0]?.path === 'bundle.json' &&
+      archive.entries[1]?.path === 'bundle-signature.json',
+  );
+  const bundle = schema('bundle', parse(archive.read('bundle.json')));
+  const signature = schema(
+    'signature',
+    parse(archive.read('bundle-signature.json')),
+  );
+  const publisher = trust.policy.publishers.find(
+    (p) => p.id === 'org.aquiero.alica',
+  );
+  check(
+    publisher.keyIds.includes(signature.keyId) &&
+      !trust.revocation.revokedKeyIds.includes(signature.keyId),
+    'PERMISSION_DENIED',
+  );
+  verifySignature(
+    bundle,
+    signature,
+    'ALICA-BUNDLE-v1',
+    trust.keys,
+    signature.keyId,
+  );
+  check(
+    !trust.revocation.revokedArtifactDigests.includes(digest(bundle)),
+    'PERMISSION_DENIED',
+  );
+  check(bundle.artifacts.length === archive.entries.length - 2);
+  const inventory = new Map();
+  for (const a of bundle.artifacts) {
+    check(!inventory.has(a.path), 'CONFLICT');
+    check(a.kind === artifactKind(a.path));
+    inventory.set(a.path, a);
+  }
+  for (const e of archive.entries.slice(2)) {
+    const a = inventory.get(e.path);
+    check(
+      a && a.bytes === e.bytes && a.digest === e.digest,
+      'CONTRACT_MISMATCH',
+    );
+    check(
+      !trust.revocation.revokedArtifactDigests.includes(e.digest),
+      'PERMISSION_DENIED',
+    );
+  }
+  const read = (p) => {
+    check(inventory.has(p), 'NOT_FOUND');
+    return archive.read(p);
+  };
+  const profile = validateProfile(
+    canonical(parse(read('profile/profile.json'))),
+  );
+  check(digest(profile) === bundle.profileDigest, 'CONTRACT_MISMATCH');
+  const lock = schema('resolution-lock', parse(read('profile/lock.json')));
+  check(lock.policyDigest === digest(trust.policy), 'PERMISSION_DENIED');
+  // Immutable candidate snapshot cannot become a replacement for current authority.
+  for (const [name, value] of [
+    ['policy', trust.policy],
+    ['policy-signature', trust.policySignature],
+  ])
+    check(
+      canonical(parse(read('trust/' + name + '.json'))) === canonical(value),
+      'CONTRACT_MISMATCH',
+    );
+  const snapshot = schema('revocation', parse(read('trust/revocation.json')));
+  verifySignature(
+    snapshot,
+    parse(read('trust/revocation-signature.json')),
+    'ALICA-REVOCATION-v1',
+    trust.keys,
+    trust.rootKeyId,
+  );
+  check(snapshot.version <= trust.revocation.version, 'PERMISSION_DENIED');
+  if (snapshot.version === trust.revocation.version)
+    check(digest(snapshot) === digest(trust.revocation), 'PERMISSION_DENIED');
+  const packages = new Map(),
+    owned = new Set();
+  for (const selection of profile.plugins) {
+    const base = 'plugins/' + selection.id + '/';
+    const index = schema('package-index', parse(read(base + 'index.json')));
+    check(
+      index.manifestPath === 'manifest.json' &&
+        index.pluginId === selection.id &&
+        index.version === selection.version &&
+        digest(index) === selection.packageDigest,
+      'CONTRACT_MISMATCH',
+    );
+    check(
+      !trust.revocation.revokedArtifactDigests.includes(
+        selection.packageDigest,
+      ),
+      'PERMISSION_DENIED',
+    );
+    const members = new Map();
+    let total = 0;
+    owned.add(base + 'index.json');
+    for (const f of index.files) {
+      check(!members.has(f.path) && f.path !== 'index.json', 'CONFLICT');
+      check(
+        f.path === 'manifest.json' ||
+          f.path.startsWith('code/') ||
+          f.path.startsWith('contracts/'),
+      );
+      const b = read(base + f.path);
+      total += b.length;
+      check(total <= 16777216, 'RESOURCE_EXHAUSTED');
+      check(
+        b.length === f.bytes && rawDigest(b) === f.digest,
+        'CONTRACT_MISMATCH',
+      );
+      members.set(f.path, b);
+      owned.add(base + f.path);
+    }
+    const get = (p) => {
+      const b = members.get(p);
+      check(b, 'NOT_FOUND');
+      return b;
+    };
+    const m = validatePlugin(canonical(parse(get('manifest.json'))), get);
+    check(
+      m.id === selection.id &&
+        m.version === selection.version &&
+        m.publisher === 'org.aquiero.alica' &&
+        m.execution === 'ipc',
+      'PERMISSION_DENIED',
+    );
+    check(
+      m.secretReferences.length === 0 &&
+        m.publishedEvents.length === 0 &&
+        m.subscribedEvents.length === 0,
+      'PERMISSION_DENIED',
+    );
+    const descriptors = m.provides.map((d) =>
+      descriptor(get(d.descriptorPath)),
+    );
+    for (const d of descriptors)
+      check(
+        !d.operations.some(
+          (o) => o.idempotencyPolicy?.persistence === 'durable',
+        ),
+        'FAILED_PRECONDITION',
+      );
+    packages.set(m.id, {
+      manifest: m,
+      descriptors,
+      packageDigest: selection.packageDigest,
+    });
+  }
+  for (const p of inventory.keys())
+    if (p.startsWith('plugins/')) check(owned.has(p), 'CONTRACT_MISMATCH');
+  check(
+    canonical(lock) ===
+      canonical(resolveLock(profile, packages, digest(trust.policy))),
+    'CONTRACT_MISMATCH',
+  );
+  // Presence and strict parsing are NOT a claim of provenance/SBOM completeness.
+  parse(read('sbom/sbom.json'));
+  parse(read('provenance/build.json'));
+  check(
+    [...inventory.keys()].some((p) => p.startsWith('runtime/')) &&
+      [...inventory.keys()].some((p) => p.startsWith('schemas/')) &&
+      [...inventory.keys()].some((p) => p.startsWith('docs/')),
+  );
+  verifyCurrentTrust(trust, floor);
+  return freeze({
+    bundleDigest: digest(bundle),
+    profileDigest: digest(profile),
+    lockDigest: digest(lock),
+    policyDigest: digest(trust.policy),
+    artifacts: bundle.artifacts.length,
+    profile,
+    lock,
+    qualification: 'NOT_QUALIFIED',
+  });
 }
 // No key arguments: signing is a separate owner action. Supplied signatures are checked by inspection.
 export function assembleRelease(

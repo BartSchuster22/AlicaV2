@@ -1,0 +1,11 @@
+d8a37aea4276e6cc84d3bb1cdee78009bf7ee576f580ef91fd0907b073b53dd3  tools/g7-cell.mjs
+tools/g7-cell.mjs 170ms
+0ebd888f7231c01b6420f5e7b9fc665abe0f15bf7cac1e1a782375b06bf5e36c  tools/g7-cell.mjs
+
+> alica-v2@0.0.0 format:check
+> prettier --check package.json package-lock.json tsconfig*.json packages tools/*.mjs tests/foundation tests/kernel tests/contracts .github/workflows tests/sdk tests/ipc tests/g7
+
+Checking formatting...
+All matched files use Prettier code style!
+Checking formatting...
+All matched files use Prettier code style!

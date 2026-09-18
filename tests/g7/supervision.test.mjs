@@ -8,6 +8,8 @@ import {
   existsSync,
   statSync,
   rmSync,
+  readdirSync,
+  symlinkSync,
 } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
@@ -15,7 +17,8 @@ import { spawn, spawnSync } from 'node:child_process';
 import { once } from 'node:events';
 import { connect } from 'node:net';
 import { setTimeout as delay } from 'node:timers/promises';
-import { canonical } from '@alica/acap-contracts';
+import { canonical, rawDigest } from '@alica/acap-contracts';
+import { signature, echo } from '../../tools/g3-fixtures.mjs';
 import { CellPreparation, cellSchema } from '../../tools/g7-cell.mjs';
 import { cellFixture } from './cell-fixture.mjs';
 
@@ -63,9 +66,9 @@ function request(f, operation = 'status', extra = {}, raw) {
     });
   });
 }
-async function setup(t, block = false) {
+async function setup(t, block = false, fixtureOptions = {}) {
   const dir = mkdtempSync(join(tmpdir(), 'g7-supervisor-'));
-  const f = await cellFixture(dir),
+  const f = await cellFixture(dir, fixtureOptions),
     root = join(dir, 'cell');
   mkdirSync(root, { mode: 0o700 });
   const c = new CellPreparation(root);
@@ -88,6 +91,19 @@ async function setup(t, block = false) {
     env.G7_TEST_FIFO = fifo;
     if (block === 'activation') env.G7_TEST_PHASE = 'activation';
     env.NODE_OPTIONS = '--import=' + resolve('tests/g7/supervision-block.mjs');
+    if (
+      [
+        'successor',
+        'stop-exit',
+        'successor-cleanup',
+        'publication',
+        'floor-publication',
+      ].includes(block)
+    ) {
+      env.G7_TEST_START_BLOCK = block;
+      env.NODE_OPTIONS =
+        '--import=' + resolve('tests/g7/clean-start-block.mjs');
+    }
   }
   const supervisor = spawn(
     'python3',
@@ -118,13 +134,14 @@ async function setup(t, block = false) {
   );
   const result = {
     ...f,
+    rootKey: f.root,
     dir,
     root,
     input,
     supervisor,
     incarnation: JSON.parse(readFileSync(record)).incarnation,
   };
-  if (block !== 'activation') {
+  if (!['activation', 'publication'].includes(block)) {
     await waitFor(async () => {
       assert.equal(supervisor.exitCode, null, stderr);
       return (await request(result))?.status === 'RUNNING';
@@ -132,6 +149,489 @@ async function setup(t, block = false) {
   }
   return result;
 }
+function treeHashes(root) {
+  return Object.fromEntries(
+    readdirSync(root, { recursive: true })
+      .filter((p) => statSync(join(root, p)).isFile())
+      .sort()
+      .map((p) => [p, rawDigest(readFileSync(join(root, p)))]),
+  );
+}
+function children(f) {
+  return readFileSync(
+    `/proc/${f.supervisor.pid}/task/${f.supervisor.pid}/children`,
+    'utf8',
+  )
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean);
+}
+
+test(
+  'clean stop then authenticated same-revision start uses preserved bytes and new exact owner',
+  { timeout: 30000 },
+  async (t) => {
+    const f = await setup(t);
+    const accepted = readFileSync(join(f.root, 'accepted.json'));
+    const identity = readFileSync(join(f.root, 'identity.json'));
+    const releases = treeHashes(join(f.root, 'releases'));
+    const journals = treeHashes(join(f.root, 'transactions'));
+    const first = children(f);
+    assert.equal(first.length, 1);
+    const before = await request(f);
+    assert.equal((await request(f, 'stop')).status, 'STOPPED');
+    assert.deepEqual(children(f), []); // waitpid completed, not merely a stopped message.
+    excluded(f);
+    assert.equal(
+      (await request(f, 'start', { incarnation: 'wrong' })).code,
+      'DENIED',
+    );
+    assert.equal(
+      (await request(f, 'start', { expectedSequence: 0 })).code,
+      'CONFLICT',
+    );
+    assert.deepEqual(children(f), []);
+    // No original archive dependency, no reconstructed or replacement candidate.
+    rmSync(f.archive);
+    const started = await request(f, 'start');
+    assert.equal(started?.code, 'OK');
+    assert.equal(started.status, 'RUNNING');
+    assert.equal(started.sequence, before.sequence);
+    assert.equal(started.acceptedDigest, before.acceptedDigest);
+    assert.equal(started.incarnation, before.incarnation);
+    assert.equal(children(f).length, 1);
+    assert.notDeepEqual(children(f), first);
+    assert.deepEqual(readFileSync(join(f.root, 'accepted.json')), accepted);
+    assert.deepEqual(readFileSync(join(f.root, 'identity.json')), identity);
+    assert.equal((await request(f, 'start')).code, 'DENIED');
+    excluded(f);
+    assert.equal((await request(f, 'stop')).status, 'STOPPED');
+    assert.deepEqual(children(f), []);
+    assert.equal((await request(f, 'start')).status, 'RUNNING');
+    assert.equal((await request(f, 'stop')).status, 'STOPPED');
+    assert.deepEqual(readFileSync(join(f.root, 'accepted.json')), accepted);
+    assert.deepEqual(treeHashes(join(f.root, 'releases')), releases);
+    assert.deepEqual(treeHashes(join(f.root, 'transactions')), journals);
+  },
+);
+
+test(
+  'same-revision start: expired grants stay FAILED until clean stop and fresh issuance',
+  { timeout: 30000 },
+  async (t) => {
+    const f = await setup(t, false, { grantLifetimeMs: 7000 });
+    await delay(7500);
+    assert.equal((await request(f)).status, 'FAILED');
+    assert.equal((await request(f, 'start')).code, 'DENIED');
+    assert.equal((await request(f, 'stop')).status, 'STOPPED');
+    assert.equal((await request(f, 'start')).status, 'RUNNING');
+    assert.equal((await request(f, 'stop')).status, 'STOPPED');
+  },
+);
+
+test(
+  'same-revision start rechecks newer current revocation while preserving accepted bytes and floor monotonicity',
+  { timeout: 30000 },
+  async (t) => {
+    const f = await setup(t);
+    const accepted = readFileSync(join(f.root, 'accepted.json'));
+    assert.equal((await request(f, 'stop')).status, 'STOPPED');
+    const input = JSON.parse(readFileSync(f.input));
+    input.trust.revocation.version += 1;
+    input.trust.revocationSignature = signature(
+      input.trust.revocation,
+      'ALICA-REVOCATION-v1',
+      f.rootKey,
+    );
+    writeFileSync(f.input, canonical(input));
+    assert.equal((await request(f, 'start')).status, 'RUNNING');
+    assert.equal(
+      JSON.parse(readFileSync(join(f.root, 'floor.json'))).revocationVersion,
+      2,
+    );
+    assert.deepEqual(readFileSync(join(f.root, 'accepted.json')), accepted);
+    assert.equal((await request(f, 'stop')).status, 'STOPPED');
+    // Restoring earlier operator metadata cannot lower either persisted high-water.
+    input.trust = f.trust;
+    writeFileSync(f.input, canonical(input));
+    assert.equal(await request(f, 'start'), null);
+    await waitFor(() => children(f).length === 0);
+    assert.equal(
+      JSON.parse(readFileSync(join(f.root, 'floor.json'))).revocationVersion,
+      2,
+    );
+    assert.deepEqual(readFileSync(join(f.root, 'accepted.json')), accepted);
+    excluded(f);
+  },
+);
+
+for (const kind of [
+  'authorization',
+  'trust-signature',
+  'revoked-bundle',
+  'expired-trust',
+  'policy-continuity',
+  'accepted-sequence',
+  'missing-selection',
+  'journal',
+  'artifact',
+  'extra-file',
+  'symlink',
+  'future-floor',
+  'kernel-residue',
+]) {
+  test(
+    'same-revision start refuses fresh validation failure: ' + kind,
+    { timeout: 30000 },
+    async (t) => {
+      const f = await setup(t);
+      assert.equal((await request(f, 'stop')).status, 'STOPPED');
+      const selected = join(f.root, 'accepted.json');
+      const original = readFileSync(selected);
+      const accepted = JSON.parse(original);
+      const release = join(
+        f.root,
+        'releases',
+        accepted.release.bundleDigest.slice(7),
+      );
+      const input = JSON.parse(readFileSync(f.input));
+      if (kind === 'authorization')
+        input.authorization.capabilities[0].lifetimeMs -= 1;
+      if (kind === 'trust-signature') input.trust.policy.expiresAtMs += 1;
+      if (kind === 'revoked-bundle' || kind === 'expired-trust') {
+        input.trust.revocation.version += 1;
+        if (kind === 'revoked-bundle')
+          input.trust.revocation.revokedArtifactDigests.push(
+            accepted.release.bundleDigest,
+          );
+        else input.trust.revocation.expiresAtMs = Date.now() - 1;
+        // Existing disposable fixture signer ONLY, never custody or production keys.
+        input.trust.revocationSignature = signature(
+          input.trust.revocation,
+          'ALICA-REVOCATION-v1',
+          f.rootKey,
+        );
+      }
+      if (kind === 'policy-continuity') {
+        input.trust.policy.expiresAtMs += 1;
+        input.trust.policySignature = signature(
+          input.trust.policy,
+          'ALICA-TRUST-POLICY-v1',
+          f.rootKey,
+        );
+      }
+      if (kind === 'accepted-sequence') {
+        accepted.sequence += 1;
+        writeFileSync(selected, canonical(accepted));
+      }
+      if (kind === 'missing-selection') rmSync(selected);
+      if (kind === 'journal') {
+        const tx = readdirSync(join(f.root, 'transactions'))[0];
+        writeFileSync(join(f.root, 'transactions', tx, '000004.json'), '{}');
+      }
+      if (kind === 'artifact')
+        writeFileSync(join(release, 'profile/profile.json'), '{}');
+      if (kind === 'extra-file')
+        writeFileSync(join(release, 'docs/extra.txt'), 'not accepted', {
+          mode: 0o600,
+        });
+      if (kind === 'symlink') {
+        rmSync(join(release, 'profile/profile.json'));
+        symlinkSync(f.input, join(release, 'profile/profile.json'));
+      }
+      if (kind === 'future-floor') {
+        const path = join(f.root, 'floor.json'),
+          floor = JSON.parse(readFileSync(path));
+        floor.lastWallMs = Date.now() + 60000;
+        writeFileSync(path, canonical(floor));
+      }
+      if (kind === 'kernel-residue')
+        writeFileSync(join(f.root, 'kernel.json.next'), '{}', { mode: 0o600 });
+      writeFileSync(f.input, canonical(input));
+      const before = existsSync(selected) ? readFileSync(selected) : null;
+      // Fail closed rather than manufacture a known-selection response on failure.
+      assert.equal(await request(f, 'start'), null);
+      await waitFor(() => children(f).length === 0);
+      assert.equal(await request(f, 'start'), null);
+      assert.deepEqual(children(f), []);
+      excluded(f);
+      assert.deepEqual(
+        existsSync(selected) ? readFileSync(selected) : null,
+        before,
+      );
+    },
+  );
+}
+
+test(
+  'same-revision start waits for actual prior owner reap, not its clean stopped message',
+  { timeout: 30000 },
+  async (t) => {
+    const f = await setup(t, 'stop-exit');
+    const old = children(f);
+    const stopping = request(f, 'stop');
+    await waitFor(() => existsSync(join(f.dir, 'block.fifo.entered')));
+    assert.deepEqual(children(f), old);
+    assert.equal((await request(f, 'start')).code, 'CONFLICT');
+    excluded(f);
+    // Force-killing even AFTER the real clean Kernel report does not grant restart.
+    killOwner(f);
+    assert.equal((await stopping)?.status, 'NEEDS_OPERATOR');
+    assert.equal((await request(f, 'start')).code, 'DENIED');
+    assert.deepEqual(children(f), []);
+  },
+);
+
+test(
+  'same-revision successor launch is not readiness; concurrent start conflicts and disconnect is not cancellation',
+  { timeout: 30000 },
+  async (t) => {
+    const f = await setup(t, 'successor');
+    const accepted = readFileSync(join(f.root, 'accepted.json'));
+    assert.equal((await request(f, 'stop')).status, 'STOPPED');
+    const starting = request(f, 'start');
+    await waitFor(() => existsSync(join(f.dir, 'block.fifo.entered')));
+    assert.equal(children(f).length, 1);
+    assert.equal((await request(f)).code, 'CONFLICT');
+    const conflict = await request(f, 'start');
+    assert.equal(conflict.code, 'CONFLICT');
+    assert.notEqual(conflict.status, 'RUNNING');
+    excluded(f);
+    // Release the real blocking syscall, not a simulated Kernel readiness receipt.
+    const unblock = spawnSync(
+      'python3',
+      [
+        '-c',
+        `import os;fd=os.open(${JSON.stringify(join(f.dir, 'block.fifo'))},os.O_WRONLY);os.close(fd)`,
+      ],
+      { timeout: 5000 },
+    );
+    assert.equal(unblock.status, 0);
+    assert.equal((await starting).status, 'RUNNING');
+    assert.deepEqual(readFileSync(join(f.root, 'accepted.json')), accepted);
+    assert.equal((await request(f, 'stop')).status, 'STOPPED');
+    rmSync(join(f.dir, 'block.fifo.entered'));
+    const disconnected = connect(join(f.root, 'supervision/admin.sock'));
+    disconnected.on('error', () => {});
+    await once(disconnected, 'connect');
+    const payload = Buffer.from(
+      JSON.stringify({
+        schemaVersion: 'alica.cell-admin-request/v1',
+        requestId: 'disconnected',
+        incarnation: f.incarnation,
+        expectedSequence: 1,
+        operation: 'start',
+      }),
+    );
+    const header = Buffer.alloc(4);
+    header.writeUInt32BE(payload.length);
+    disconnected.end(Buffer.concat([header, payload]));
+    await waitFor(() => existsSync(join(f.dir, 'block.fifo.entered')));
+    disconnected.destroy();
+    assert.equal((await request(f, 'start')).code, 'CONFLICT');
+    const release = spawnSync(
+      'python3',
+      [
+        '-c',
+        `import os;fd=os.open(${JSON.stringify(join(f.dir, 'block.fifo'))},os.O_WRONLY);os.close(fd)`,
+      ],
+      { timeout: 5000 },
+    );
+    assert.equal(release.status, 0);
+    await waitFor(async () => (await request(f))?.status === 'RUNNING');
+    assert.equal(children(f).length, 1);
+    assert.equal((await request(f, 'stop')).status, 'STOPPED');
+  },
+);
+
+test(
+  'same-revision successor retains parent-death guard while blocked and residue denies takeover',
+  { timeout: 30000 },
+  async (t) => {
+    const f = await setup(t, 'successor');
+    assert.equal((await request(f, 'stop')).status, 'STOPPED');
+    const starting = request(f, 'start');
+    await waitFor(() => existsSync(join(f.dir, 'block.fifo.entered')));
+    const owner = Number(readFileSync(join(f.dir, 'block.fifo.entered')));
+    const result = spawnSync(
+      'python3',
+      [
+        '-c',
+        `import os,signal,select\nofd=os.pidfd_open(${owner});sfd=os.pidfd_open(${f.supervisor.pid})\nsignal.pidfd_send_signal(sfd,signal.SIGKILL)\nobserved=bool(select.select([ofd],[],[],5)[0])\nif not observed: signal.pidfd_send_signal(ofd,signal.SIGKILL)\nos.close(ofd);os.close(sfd)\nassert observed, 'successor survived supervisor death'`,
+      ],
+      { encoding: 'utf8', timeout: 12000 },
+    );
+    assert.equal(result.status, 0, result.stderr);
+    assert.equal(await starting, null);
+    await waitFor(() => f.supervisor.signalCode !== null);
+    assert.throws(() => new CellPreparation(f.root), {
+      code: 'FAILED_PRECONDITION',
+    });
+  },
+);
+
+for (const boundary of ['publication', 'floor-publication']) {
+  test(
+    'actual ' +
+      boundary +
+      ' rename uncertainty forbids start and preserves selection without rollback',
+    { timeout: 30000 },
+    async (t) => {
+      const f = await setup(t, boundary);
+      let before;
+      if (boundary === 'floor-publication') {
+        assert.equal((await request(f, 'stop')).status, 'STOPPED');
+        before = readFileSync(join(f.root, 'accepted.json'));
+        assert.equal(await request(f, 'start'), null);
+      }
+      await waitFor(() => existsSync(join(f.dir, 'block.fifo.entered')));
+      await waitFor(() => children(f).length === 0);
+      const accepted = readFileSync(join(f.root, 'accepted.json'));
+      if (before) assert.deepEqual(accepted, before);
+      assert.equal(await request(f, 'start'), null);
+      assert.equal(await request(f), null);
+      assert.deepEqual(children(f), []);
+      assert.deepEqual(readFileSync(join(f.root, 'accepted.json')), accepted);
+      excluded(f);
+    },
+  );
+}
+
+for (const failure of ['activation', 'readiness']) {
+  test(
+    'same accepted provider fails actual successor ' +
+      failure +
+      ' without replacing artifacts',
+    { timeout: 40000 },
+    async (t) => {
+      const end = Date.now() + 10000;
+      const providerCode = `export async function activate(ctx) {
+      ${failure === 'activation' ? `if (Date.now() >= ${end}) throw new Error('aged fixture activation');` : ''}
+      ctx.provide(${JSON.stringify(echo)}, { echo: async x => {
+        ${failure === 'readiness' ? `if (Date.now() >= ${end}) return { text: 'not-the-readiness-request' };` : ''}
+        return x;
+      }});
+    }`;
+      const f = await setup(t, false, { providerCode });
+      const accepted = readFileSync(join(f.root, 'accepted.json'));
+      const release = treeHashes(join(f.root, 'releases'));
+      assert.equal((await request(f, 'stop')).status, 'STOPPED');
+      await delay(Math.max(0, end - Date.now() + 50));
+      assert.equal(await request(f, 'start'), null);
+      await waitFor(() => children(f).length === 0);
+      assert.deepEqual(readFileSync(join(f.root, 'accepted.json')), accepted);
+      assert.deepEqual(treeHashes(join(f.root, 'releases')), release);
+      assert.equal(await request(f, 'start'), null);
+      excluded(f);
+    },
+  );
+}
+
+for (const phase of ['successor', 'successor-cleanup']) {
+  test(
+    'same-revision ' +
+      phase +
+      ' external 30s expiry is sticky and cannot authorize another owner',
+    { timeout: 50000 },
+    async (t) => {
+      const f = await setup(t, phase);
+      assert.equal((await request(f, 'stop')).status, 'STOPPED');
+      let pending;
+      if (phase === 'successor') pending = request(f, 'start');
+      else {
+        assert.equal((await request(f, 'start')).status, 'RUNNING');
+        pending = request(f, 'stop');
+      }
+      const start = performance.now();
+      await waitFor(() => existsSync(join(f.dir, 'block.fifo.entered')));
+      assert.equal((await request(f, 'start')).code, 'CONFLICT');
+      excluded(f);
+      await pending;
+      await waitFor(() => children(f).length === 0, 35000);
+      assert(performance.now() - start >= 29000);
+      const result = await request(f, 'start');
+      if (phase === 'successor') assert.equal(result, null);
+      else assert.equal(result.code, 'DENIED');
+      assert.deepEqual(children(f), []);
+      excluded(f);
+    },
+  );
+}
+
+test(
+  'clean stopped residue is not a restart permit after supervisor death',
+  { timeout: 30000 },
+  async (t) => {
+    const f = await setup(t);
+    assert.equal((await request(f, 'stop')).status, 'STOPPED');
+    assert.deepEqual(children(f), []);
+    const accepted = readFileSync(join(f.root, 'accepted.json'));
+    const exited = once(f.supervisor, 'exit');
+    f.supervisor.kill('SIGKILL');
+    await exited;
+    assert.throws(() => new CellPreparation(f.root), {
+      code: 'FAILED_PRECONDITION',
+    });
+    const retry = spawnSync(
+      'python3',
+      ['tools/g7-supervisor.py', process.execPath, f.root, f.input],
+      { encoding: 'utf8', timeout: 5000 },
+    );
+    assert.notEqual(retry.status, 0);
+    assert.deepEqual(readFileSync(join(f.root, 'accepted.json')), accepted);
+  },
+);
+
+test(
+  'restricted framing requires write EOF; delayed trailing bytes never execute stop',
+  { timeout: 45000 },
+  async (t) => {
+    const f = await setup(t);
+    const body = Buffer.from(
+      JSON.stringify({
+        schemaVersion: 'alica.cell-admin-request/v1',
+        requestId: 'unsealed',
+        incarnation: f.incarnation,
+        expectedSequence: 1,
+        operation: 'stop',
+      }),
+    );
+    const header = Buffer.alloc(4);
+    header.writeUInt32BE(body.length);
+    const frame = Buffer.concat([header, body]);
+    const c = connect(join(f.root, 'supervision/admin.sock'));
+    c.on('error', () => {});
+    await once(c, 'connect');
+    c.write(frame);
+    await delay(100);
+    assert.equal((await request(f)).status, 'RUNNING');
+    c.end(Buffer.from('x'));
+    let data = '';
+    c.on('data', (b) => {
+      data += b;
+    });
+    await once(c, 'close');
+    assert.equal(data, '');
+    assert.equal((await request(f)).status, 'RUNNING');
+    const unsealed = connect(join(f.root, 'supervision/admin.sock'));
+    await once(unsealed, 'connect');
+    const start = performance.now();
+    unsealed.write(frame);
+    let output = '';
+    unsealed.on('data', (b) => {
+      output += b;
+    });
+    await once(unsealed, 'end');
+    unsealed.destroy();
+    assert(performance.now() - start >= 29000);
+    assert.equal(output, '');
+    assert.equal(children(f).length, 1);
+    // Grants naturally expired; absence of STOPPED is not falsely labeled RUNNING.
+    assert.equal((await request(f)).status, 'FAILED');
+    assert.equal((await request(f, 'stop')).status, 'STOPPED');
+  },
+);
+
 function excluded(f) {
   assert.throws(() => new CellPreparation(f.root), { code: 'CONFLICT' });
 }

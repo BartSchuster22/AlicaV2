@@ -1,0 +1,40 @@
+a978ad5d4cdc18e941a722d16caaa468e59250d34aaddf6203c4b5046eeaa3f4  tools/g7-cell-owner.mjs
+06413f207836c649c325ea701e39e5128df80fb0f3cbf75b3d840e041a3d3b67  tools/g7-cell.mjs
+c7af59cbf280189726a6bee6c64cf8b67b05923c64b9eb43dc251a8dabb56e29  tools/g7-release.mjs
+f7b0f8d46aebf3906bd02d9bf123655ec2f31f84708cab45ccf254aed4ae97c8  tools/g7-supervisor.py
+a6a97fe4a59a8e38a9e873badfbd3db194c10214b6124cb46c364e1336ec169b  tests/g7/supervision.test.mjs
+f67d5626ef8276c4e98d4f63456f0fd6efa1e1a576388a14c82c119e4b8b2c87  tests/g7/clean-start-block.mjs
+✔ native custody requires matching private inode and the actual held flock description (2.844031ms)
+✔ clean stop then authenticated same-revision start uses preserved bytes and new exact owner (7350.041667ms)
+✔ same-revision start: expired grants stay FAILED until clean stop and fresh issuance (12573.23654ms)
+✔ same-revision start refuses fresh validation failure: authorization (2957.988839ms)
+✔ same-revision start refuses fresh validation failure: trust-signature (3114.687457ms)
+✔ same-revision start refuses fresh validation failure: revoked-bundle (3010.033188ms)
+✔ same-revision start refuses fresh validation failure: expired-trust (3043.449206ms)
+✔ same-revision start refuses fresh validation failure: policy-continuity (2957.962585ms)
+✔ same-revision start refuses fresh validation failure: accepted-sequence (3043.206922ms)
+✔ same-revision start refuses fresh validation failure: missing-selection (3115.913641ms)
+✔ same-revision start refuses fresh validation failure: journal (2978.84896ms)
+✔ same-revision start refuses fresh validation failure: artifact (3118.786ms)
+✔ same-revision start refuses fresh validation failure: extra-file (2984.438621ms)
+✔ same-revision start refuses fresh validation failure: symlink (3018.50366ms)
+✔ same-revision start refuses fresh validation failure: future-floor (3071.556397ms)
+✔ same-revision start refuses fresh validation failure: kernel-residue (2865.390521ms)
+✔ same-revision start waits for actual prior owner reap, not its clean stopped message (2636.106898ms)
+✔ same-revision successor launch is not readiness; concurrent start conflicts and disconnect is not cancellation (4878.638339ms)
+✔ same-revision successor retains parent-death guard while blocked and residue denies takeover (3106.282095ms)
+✔ supervised real IPC install, exact local admin status/stop, retained custody (2761.891533ms)
+✔ external SIGKILL of actual owner never proves descendants reaped; fence survives supervisor death (2615.83547ms)
+✔ real synchronous FIFO IO during outer cleanup: responsive admin, 30s external expiry, no restart (32428.533784ms)
+✔ activation blocked in real synchronous IO is externally killed without publication or new admission (30818.684253ms)
+✔ actual Unix peer credentials, malformed/duplicate/oversized frames and eight-connection ceiling (2826.125005ms)
+✔ launcher exits before real first-install completes; owner remains alive for authenticated status and clean stop (2719.633508ms)
+✔ supervisor SIGKILL terminates the blocked owner without an event-loop callback (715.943956ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 26
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 145022.285305

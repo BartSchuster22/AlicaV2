@@ -1,0 +1,31 @@
+v24.21.0
+11.19.0
+Python 3.12.3
+a978ad5d4cdc18e941a722d16caaa468e59250d34aaddf6203c4b5046eeaa3f4  tools/g7-cell-owner.mjs
+d8a37aea4276e6cc84d3bb1cdee78009bf7ee576f580ef91fd0907b073b53dd3  tools/g7-cell.mjs
+764dcbb05601052d5382ebc7893a2ef2dda670761b17506d08f47a1493ff79fa  tools/g7-release.mjs
+e68d92d10183d74a6f54a13a5515673dc27e9de2df0bf7bfb00570f9a48e3a7d  tools/g7-supervisor.py
+3f7838f3c4bf9a6161607f78d0704cd03f9dd79f9696f40d922946364a331e95  tests/g7/supervision.test.mjs
+bf39a1b90cd45a3ab005b84d58564b98f31a0666bbe317d260719e30702c19eb  tests/g7/clean-start-block.mjs
+917e9ab5aa42e9fd344ca380fee1bb4ba7ab53e1044e41e6d2fb4583b0fadc32  docs/g7/draft/contracts.schema.json
+75a0fa6abe34d1c6bbfba24d10e509b32e2bbc40fba3ab372583de07d975d7d2  docs/g7/draft/limits.json
+
+> alica-v2@0.0.0 check
+> node tools/check-toolchain.mjs && npm run format:check && npm run build && npm run typecheck && npm run test && node tools/check-schema-sync.mjs && npm run schema && npm run boundaries && npm run secrets && npm run dependencies && npm run test:isolated && node tools/check-sdk-api.mjs && npm run test:external && npm run test:g6-design && npm run build:g6-native && npm run test:g6-native && npm run test:g7-bootstrap && npm run test:g7-contracts
+
+Pinned Node/npm verified
+
+> alica-v2@0.0.0 format:check
+> prettier --check package.json package-lock.json tsconfig*.json packages tools/*.mjs tests/foundation tests/kernel tests/contracts .github/workflows tests/sdk tests/ipc tests/g7
+
+Checking formatting...
+[warn] tools/g7-cell.mjs
+[warn] Code style issues found in the above file. Run Prettier with --write to fix.
+a978ad5d4cdc18e941a722d16caaa468e59250d34aaddf6203c4b5046eeaa3f4  tools/g7-cell-owner.mjs
+d8a37aea4276e6cc84d3bb1cdee78009bf7ee576f580ef91fd0907b073b53dd3  tools/g7-cell.mjs
+764dcbb05601052d5382ebc7893a2ef2dda670761b17506d08f47a1493ff79fa  tools/g7-release.mjs
+e68d92d10183d74a6f54a13a5515673dc27e9de2df0bf7bfb00570f9a48e3a7d  tools/g7-supervisor.py
+3f7838f3c4bf9a6161607f78d0704cd03f9dd79f9696f40d922946364a331e95  tests/g7/supervision.test.mjs
+bf39a1b90cd45a3ab005b84d58564b98f31a0666bbe317d260719e30702c19eb  tests/g7/clean-start-block.mjs
+917e9ab5aa42e9fd344ca380fee1bb4ba7ab53e1044e41e6d2fb4583b0fadc32  docs/g7/draft/contracts.schema.json
+75a0fa6abe34d1c6bbfba24d10e509b32e2bbc40fba3ab372583de07d975d7d2  docs/g7/draft/limits.json

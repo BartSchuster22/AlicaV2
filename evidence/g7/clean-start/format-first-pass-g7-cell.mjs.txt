@@ -851,13 +851,15 @@ export class CellPreparation {
       );
       check(intent, 'PERMISSION_DENIED');
       const bound = await budget.wait(() =>
-        h.context(ids.get(intent.principal)).require({
-          capabilityId,
-          major: 1,
-          minMinor: 0,
-          operations: ['echo'],
-          features: [],
-        }),
+        h
+          .context(ids.get(intent.principal))
+          .require({
+            capabilityId,
+            major: 1,
+            minMinor: 0,
+            operations: ['echo'],
+            features: [],
+          }),
       );
       const text = 'g7-readiness-' + randomUUID();
       const result = await budget.wait(() =>

@@ -1,0 +1,16 @@
+['git', 'diff', '--check']
+['python3', 'tools/check-secrets.py']
+Secret pattern check passed
+['git', 'status', '--short']
+ M tests/g7/supervision.test.mjs
+ M tools/g7-cell-owner.mjs
+ M tools/g7-cell.mjs
+ M tools/g7-release.mjs
+ M tools/g7-supervisor.py
+?? docs/g7/R1-ADMIN-OWNER-DECISION-BRIEF.md
+?? docs/g7/R1-CLEAN-START-CHECKPOINT.md
+?? docs/g7/R1-CLEAN-START-EXECUTION.md
+?? evidence/g7/clean-start/
+?? tests/g7/clean-start-block.mjs
+['git', 'rev-parse', 'HEAD']
+59f5eef3bf792d89a7193d753df0a85158a9a62c

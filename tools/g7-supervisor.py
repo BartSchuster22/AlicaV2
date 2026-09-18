@@ -1,7 +1,8 @@
-"""Linux local custodian for an initialized, never-installed Cell.
-Trusted development runtime only. No service installation, restart or reconciliation.
+"""Linux local custodian: first install and explicit clean same-revision start.
+Trusted development runtime only. No service installation or crash reconciliation.
 The initiating shell may detach this process with start_new_session; no client lifetime
-is used as custody. Durable supervision residue always requires operator review.
+is used as custody. Residue never grants takeover. Only this custodian's in-memory
+clean shutdown plus exact-child reap permits a successor under the SAME held flock.
 """
 import fcntl
 from decimal import Decimal, DecimalException
@@ -127,19 +128,7 @@ class Supervisor:
         self.server.listen(LIMITS['adminConnections'])
         self.server.setblocking(False)
         self.selector.register(self.server, selectors.EVENT_READ, 'accept')
-        self.control, child = socket.socketpair()
-        self.owner = subprocess.Popen(
-            [node, '--experimental-vm-modules', str(R / 'tools/g7-cell-owner.mjs'),
-             root, inputs, str(self.root), str(child.fileno())],
-            pass_fds=(self.root, child.fileno()), stdin=subprocess.DEVNULL,
-            stdout=subprocess.DEVNULL, stderr=None, close_fds=True)
-        child.close()
-        # Exact child remains unreaped until poll(), so PID cannot be recycled here.
-        self.pidfd = os.pidfd_open(self.owner.pid)
-        self.selector.register(self.pidfd, selectors.EVENT_READ, 'death')
-        self.control.setblocking(False)
-        self.selector.register(self.control, selectors.EVENT_READ, 'owner')
-        self.buffer = b''
+        self.node, self.root_path, self.inputs = node, root, inputs
         self.clients = {}
         self.pending = None
         self.snapshot = None
@@ -151,11 +140,66 @@ class Supervisor:
         self.saved = None
         self.request_deadline = None
         self.stop_phase_requested = False
+        self.clean_start = False
+        self.starting = False
+        self.spawn_owner()
+
+    def spawn_owner(self, accepted_digest=None):
+        # Initial invocation or a consumed in-memory clean-reap permit ONLY.
+        # Never reconstruct this permission from filesystem residue or a PID.
+        self.phase = 'verify'
+        self.deadline = time.monotonic() + LIMITS['verifyTimeoutMs'] / 1000
+        self.reaped = False
+        self.stopping = None
+        self.saved = None
+        self.buffer = b''
+        self.control, child = socket.socketpair()
+        try:
+            self.owner = subprocess.Popen(
+                [self.node, '--experimental-vm-modules', str(R / 'tools/g7-cell-owner.mjs'),
+                 self.root_path, self.inputs, str(self.root), str(child.fileno())] +
+                ([accepted_digest] if accepted_digest is not None else []),
+                pass_fds=(self.root, child.fileno()), stdin=subprocess.DEVNULL,
+                stdout=subprocess.DEVNULL, stderr=None, close_fds=True)
+        finally:
+            child.close()
+        # Exact child remains unreaped until poll(), so PID cannot be recycled here.
+        self.pidfd = os.pidfd_open(self.owner.pid)
+        self.selector.register(self.pidfd, selectors.EVENT_READ, 'death')
+        self.control.setblocking(False)
+        self.selector.register(self.control, selectors.EVENT_READ, 'owner')
+
+    def start_owner(self, client, request):
+        if not (self.clean_start and self.reaped and self.stopping is not None and
+                self.snapshot['status'] == 'STOPPED'):
+            self.reply(client, request, 'DENIED')
+            return
+        self.clean_start = False
+        self.starting = True
+        self.pending = (client, request)
+        try:
+            try:
+                self.selector.unregister(self.control)
+            except KeyError:
+                pass
+            self.control.close()
+            os.close(self.pidfd)
+            self.spawn_owner(self.snapshot['acceptedDigest'])
+        except BaseException as error:
+            # Fail the custodian closed rather than reuse any stale owner/pidfd.
+            # A launched child must pass guardParent before adopting custody;
+            # parent death thereafter is guarded by the OS. Residue denies takeover.
+            raise RuntimeError('owner setup failed; custody residue retained') from error
 
     def fail(self):
         if self.uncertain:
             return
         self.uncertain = True
+        self.clean_start = False
+        if self.starting:
+            # Successor validation did not establish accepted identity. No invented
+            # frozen sequence/digest envelope; preserve the known contract gap.
+            self.snapshot = None
         self.deadline = None
         self.request_deadline = None
         # No claim about descendants, even after waitpid establishes owner death.
@@ -215,12 +259,16 @@ class Supervisor:
             self.close_client(client)
         elif request['expectedSequence'] != self.snapshot['sequence']:
             self.reply(client, request, 'CONFLICT')
-        elif request['operation'] not in ('status', 'stop'):
+        elif request['operation'] not in ('status', 'stop', 'start'):
+            self.reply(client, request, 'DENIED')
+        elif request['operation'] == 'start' and self.uncertain:
             self.reply(client, request, 'DENIED')
         elif self.uncertain:
             self.reply(client, request, 'CLEANUP_UNCERTAIN')
         elif self.pending or self.phase != 'idle':
             self.reply(client, request, 'CONFLICT')
+        elif request['operation'] == 'start':
+            self.start_owner(client, request)
         elif self.reaped:
             self.reply(client, request, 'OK')
         else:
@@ -263,14 +311,18 @@ class Supervisor:
             else:
                 raise ValueError('INVALID')
         elif set(v) == {'snapshot'} and self.phase in ('activation', 'idle'):
+            if self.starting and any(v['snapshot'][k] != self.snapshot[k] for k in ('sequence', 'acceptedDigest')):
+                raise ValueError('INVALID')
             self.snapshot = v['snapshot']
             if self.snapshot['status'] not in ('RUNNING', 'FAILED'):
                 raise ValueError('INVALID')
+            self.starting = False
             self.phase, self.deadline = 'idle', None
             self.finish('OK')
         elif set(v) == {'stopped'} and self.phase == 'idle' and self.pending:
             self.stopping = v['stopped']
-            if self.stopping['status'] != 'STOPPED' or self.pending[1]['operation'] != 'stop':
+            if (self.stopping['status'] != 'STOPPED' or self.pending[1]['operation'] != 'stop' or
+                    any(self.stopping[k] != self.snapshot[k] for k in ('sequence', 'acceptedDigest'))):
                 raise ValueError('INVALID')
             # STOPPED only becomes externally visible after exact-child waitpid.
         elif v == {'uncertain': True}:
@@ -292,6 +344,9 @@ class Supervisor:
                 if now >= state['end']:
                     self.close_client(client)
             for key, _ in self.selector.select(0.05):
+                now = time.monotonic()
+                if any(d is not None and now >= d for d in (self.deadline, self.request_deadline)):
+                    self.fail()
                 kind, obj = key.data, key.fileobj
                 if kind == 'death':
                     result = self.owner.poll()  # waitpid on OUR exact child, not PID polling.
@@ -301,6 +356,7 @@ class Supervisor:
                     self.selector.unregister(self.pidfd)
                     if result == 0 and self.stopping is not None and not self.uncertain:
                         self.snapshot = self.stopping
+                        self.clean_start = True
                         self.phase, self.deadline = 'idle', None
                         self.finish('OK')
                     else:
@@ -316,6 +372,8 @@ class Supervisor:
                                             'end': time.monotonic() + LIMITS['adminTimeoutMs'] / 1000}
                     self.selector.register(client, selectors.EVENT_READ, 'client')
                 elif kind == 'owner':
+                    if obj is not self.control:
+                        continue
                     try:
                         data = self.control.recv(65536)
                         if not data:

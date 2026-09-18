@@ -1,0 +1,60 @@
+tools/g7-cell-owner.mjs 56ms (unchanged)
+tools/g7-cell.mjs 113ms
+tools/g7-release.mjs 46ms
+tests/g7/supervision.test.mjs 87ms
+tests/g7/clean-start-block.mjs 6ms
+a978ad5d4cdc18e941a722d16caaa468e59250d34aaddf6203c4b5046eeaa3f4  tools/g7-cell-owner.mjs
+d8a37aea4276e6cc84d3bb1cdee78009bf7ee576f580ef91fd0907b073b53dd3  tools/g7-cell.mjs
+764dcbb05601052d5382ebc7893a2ef2dda670761b17506d08f47a1493ff79fa  tools/g7-release.mjs
+e68d92d10183d74a6f54a13a5515673dc27e9de2df0bf7bfb00570f9a48e3a7d  tools/g7-supervisor.py
+3f7838f3c4bf9a6161607f78d0704cd03f9dd79f9696f40d922946364a331e95  tests/g7/supervision.test.mjs
+bf39a1b90cd45a3ab005b84d58564b98f31a0666bbe317d260719e30702c19eb  tests/g7/clean-start-block.mjs
+✔ native custody requires matching private inode and the actual held flock description (2.341006ms)
+✔ clean stop then authenticated same-revision start uses preserved bytes and new exact owner (7414.242378ms)
+✔ same-revision start: expired grants stay FAILED until clean stop and fresh issuance (12476.289821ms)
+✔ same-revision start rechecks newer current revocation while preserving accepted bytes and floor monotonicity (5232.413049ms)
+✔ same-revision start refuses fresh validation failure: authorization (2981.609521ms)
+✔ same-revision start refuses fresh validation failure: trust-signature (2974.784439ms)
+✔ same-revision start refuses fresh validation failure: revoked-bundle (3001.359547ms)
+✔ same-revision start refuses fresh validation failure: expired-trust (3115.63763ms)
+✔ same-revision start refuses fresh validation failure: policy-continuity (2964.995413ms)
+✔ same-revision start refuses fresh validation failure: accepted-sequence (3117.073745ms)
+✔ same-revision start refuses fresh validation failure: missing-selection (2935.112815ms)
+✔ same-revision start refuses fresh validation failure: journal (2982.839802ms)
+✔ same-revision start refuses fresh validation failure: artifact (2951.209294ms)
+✔ same-revision start refuses fresh validation failure: extra-file (3076.341182ms)
+✔ same-revision start refuses fresh validation failure: symlink (3108.693149ms)
+✔ same-revision start refuses fresh validation failure: future-floor (2880.738825ms)
+✔ same-revision start refuses fresh validation failure: kernel-residue (2992.072139ms)
+✔ same-revision start waits for actual prior owner reap, not its clean stopped message (2691.492588ms)
+✔ same-revision successor launch is not readiness; concurrent start conflicts and disconnect is not cancellation (7285.298953ms)
+✔ same-revision successor retains parent-death guard while blocked and residue denies takeover (2992.584024ms)
+✔ actual publication rename uncertainty forbids start and preserves selection without rollback (2621.012159ms)
+✔ actual floor-publication rename uncertainty forbids start and preserves selection without rollback (3014.200349ms)
+✔ same accepted provider fails actual successor activation without replacing artifacts (11056.475475ms)
+✔ same accepted provider fails actual successor readiness without replacing artifacts (12204.667136ms)
+✔ same-revision successor external 30s expiry is sticky and cannot authorize another owner (33034.123574ms)
+✔ same-revision successor-cleanup external 30s expiry is sticky and cannot authorize another owner (34786.490964ms)
+✔ clean stopped residue is not a restart permit after supervisor death (2866.80434ms)
+✔ restricted framing requires write EOF; delayed trailing bytes never execute stop (32829.42024ms)
+✔ supervised real IPC install, exact local admin status/stop, retained custody (2592.922008ms)
+✔ external SIGKILL of actual owner never proves descendants reaped; fence survives supervisor death (2533.61416ms)
+✔ real synchronous FIFO IO during outer cleanup: responsive admin, 30s external expiry, no restart (32515.528582ms)
+✔ activation blocked in real synchronous IO is externally killed without publication or new admission (30855.124214ms)
+✔ actual Unix peer credentials, malformed/duplicate/oversized frames and eight-connection ceiling (2927.296854ms)
+✔ launcher exits before real first-install completes; owner remains alive for authenticated status and clean stop (2645.362686ms)
+✔ supervisor SIGKILL terminates the blocked owner without an event-loop callback (657.641864ms)
+ℹ tests 35
+ℹ suites 0
+ℹ pass 35
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 284642.226336
+a978ad5d4cdc18e941a722d16caaa468e59250d34aaddf6203c4b5046eeaa3f4  tools/g7-cell-owner.mjs
+d8a37aea4276e6cc84d3bb1cdee78009bf7ee576f580ef91fd0907b073b53dd3  tools/g7-cell.mjs
+764dcbb05601052d5382ebc7893a2ef2dda670761b17506d08f47a1493ff79fa  tools/g7-release.mjs
+e68d92d10183d74a6f54a13a5515673dc27e9de2df0bf7bfb00570f9a48e3a7d  tools/g7-supervisor.py
+3f7838f3c4bf9a6161607f78d0704cd03f9dd79f9696f40d922946364a331e95  tests/g7/supervision.test.mjs
+bf39a1b90cd45a3ab005b84d58564b98f31a0666bbe317d260719e30702c19eb  tests/g7/clean-start-block.mjs

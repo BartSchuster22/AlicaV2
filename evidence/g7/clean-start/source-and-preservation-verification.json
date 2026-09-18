@@ -1,0 +1,84 @@
+{
+  "baseline": "59f5eef3bf792d89a7193d753df0a85158a9a62c",
+  "verifiedAt": "2026-09-18T00:24:40.529048+00:00",
+  "allowlist": [
+    "tools/g7-cell-owner.mjs",
+    "tools/g7-cell.mjs",
+    "tools/g7-release.mjs",
+    "tools/g7-supervisor.py",
+    "tests/g7/supervision.test.mjs",
+    "tests/g7/clean-start-block.mjs"
+  ],
+  "sourceSha256": {
+    "tools/g7-cell-owner.mjs": "a978ad5d4cdc18e941a722d16caaa468e59250d34aaddf6203c4b5046eeaa3f4",
+    "tools/g7-cell.mjs": "0ebd888f7231c01b6420f5e7b9fc665abe0f15bf7cac1e1a782375b06bf5e36c",
+    "tools/g7-release.mjs": "764dcbb05601052d5382ebc7893a2ef2dda670761b17506d08f47a1493ff79fa",
+    "tools/g7-supervisor.py": "e68d92d10183d74a6f54a13a5515673dc27e9de2df0bf7bfb00570f9a48e3a7d",
+    "tests/g7/supervision.test.mjs": "3f7838f3c4bf9a6161607f78d0704cd03f9dd79f9696f40d922946364a331e95",
+    "tests/g7/clean-start-block.mjs": "bf39a1b90cd45a3ab005b84d58564b98f31a0666bbe317d260719e30702c19eb"
+  },
+  "developmentChangedExistingFiles": [
+    "tests/g7/supervision.test.mjs",
+    "tools/g7-cell-owner.mjs",
+    "tools/g7-cell.mjs",
+    "tools/g7-release.mjs",
+    "tools/g7-supervisor.py"
+  ],
+  "developmentAddedFiles": [
+    "tests/g7/clean-start-block.mjs"
+  ],
+  "developmentRemovedFiles": [],
+  "unchangedDevelopmentOnlyPriorFiles": 42,
+  "unchangedPriorDevelopmentFiles": 528,
+  "baselineTrackedOutsideAllowlistUnchanged": true,
+  "sourceMatchesDevelopment": true,
+  "fullLogBeforeAfterSourceHashesMatch": true,
+  "frozenContractsAndLimitsUnchanged": true,
+  "noRemainingG7OwnerOrSupervisor": true,
+  "processInspectionPermissionErrors": [],
+  "nodeSuites": [
+    {
+      "tests": 170,
+      "pass": 170,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    {
+      "tests": 160,
+      "pass": 160,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    {
+      "tests": 189,
+      "pass": 189,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    }
+  ],
+  "pythonSuites": [
+    {
+      "tests": 193,
+      "seconds": 0.275
+    },
+    {
+      "tests": 30,
+      "seconds": 0.002
+    },
+    {
+      "tests": 11,
+      "seconds": 0.024
+    },
+    {
+      "tests": 119,
+      "seconds": 0.249
+    }
+  ],
+  "formatFirstAttemptExit": 1,
+  "fullCorrectedExit": 0,
+  "targetedExit": 0,
+  "localFinalChecksExit": 0
+}
