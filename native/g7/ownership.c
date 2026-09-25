@@ -12,6 +12,84 @@
 #include <sys/syscall.h>
 #include <string.h>
 #include <poll.h>
+#include <pthread.h>
+#include <stdlib.h>
+#include <stdint.h>
+#include <sys/eventfd.h>
+
+/* Containment ONLY, never a stopped/reap/custody certificate. A native thread
+ * observes a duplicated exact-child pidfd even when JS is blocked. GC cannot
+ * disarm it. The lexical caller may disarm only after its protected work ends;
+ * child death takes precedence over simultaneous disarm. */
+struct child_containment {
+  int child, stop, active;
+  pthread_t thread;
+};
+static const napi_type_tag containment_tag = {0x6737636f6e746169ULL, 0x6d656e7476310001ULL};
+static void *contain_child(void *arg) {
+  struct child_containment *g = arg;
+  struct pollfd fds[2] = {{g->child, POLLIN, 0}, {g->stop, POLLIN, 0}};
+  int n;
+  do { n = poll(fds, 2, -1); } while (n < 0 && errno == EINTR);
+  if (n > 0 && !fds[0].revents && fds[1].revents == POLLIN) {
+    /* Recheck the child rather than selecting cancellation over a ready death. */
+    struct pollfd child = {g->child, POLLIN, 0};
+    do { n = poll(&child, 1, 0); } while (n < 0 && errno == EINTR);
+    if (n == 0) return NULL;
+  }
+  /* Do not run JS callbacks, release locks or claim cleanup on watch loss. */
+  kill(getpid(), SIGKILL);
+  _exit(127);
+}
+static void containment_gc(napi_env env, void *data, void *hint) {
+  (void)env; (void)hint;
+  struct child_containment *g = data;
+  /* Dropping the JS token is NOT release authority. Keep the armed watcher. */
+  if (!g->active) free(g);
+}
+static napi_value arm_containment(napi_env env, napi_callback_info info) {
+  size_t count = 1; napi_value args[1], result; int32_t fd;
+  if (napi_get_cb_info(env, info, &count, args, NULL, NULL) != napi_ok || count != 1 ||
+      napi_get_value_int32(env, args[0], &fd) != napi_ok) {
+    napi_throw_error(env, "PERMISSION_DENIED", "Invalid watch"); return NULL;
+  }
+  struct child_containment *g = calloc(1, sizeof(*g));
+  if (!g) { napi_throw_error(env, "INTERNAL", "Watch unavailable"); return NULL; }
+  g->child = fcntl(fd, F_DUPFD_CLOEXEC, 3);
+  g->stop = eventfd(0, EFD_CLOEXEC | EFD_NONBLOCK);
+  if (g->child < 0 || g->stop < 0) goto fail;
+  if (napi_create_object(env, &result) != napi_ok ||
+      napi_type_tag_object(env, result, &containment_tag) != napi_ok ||
+      napi_wrap(env, result, g, containment_gc, NULL, NULL) != napi_ok) goto fail;
+  g->active = 1;
+  if (pthread_create(&g->thread, NULL, contain_child, g)) {
+    /* No thread exists. The successful wrap still owns g: do not free it
+     * behind a finalizer if removing the wrap were to fail. */
+    close(g->child); close(g->stop); g->active = 0;
+    napi_throw_error(env, "INTERNAL", "Watch unavailable"); return NULL;
+  }
+  return result;
+fail:
+  if (g->child >= 0) close(g->child);
+  if (g->stop >= 0) close(g->stop);
+  free(g);
+  napi_throw_error(env, "INTERNAL", "Watch unavailable"); return NULL;
+}
+static napi_value end_containment(napi_env env, napi_callback_info info) {
+  size_t count = 1; napi_value args[1], result; bool tagged = false;
+  struct child_containment *g = NULL;
+  if (napi_get_cb_info(env, info, &count, args, NULL, NULL) != napi_ok || count != 1 ||
+      napi_check_object_type_tag(env, args[0], &containment_tag, &tagged) != napi_ok || !tagged ||
+      napi_unwrap(env, args[0], (void **)&g) != napi_ok || !g || !g->active) {
+    napi_throw_error(env, "PERMISSION_DENIED", "Invalid watch release"); return NULL;
+  }
+  uint64_t one = 1;
+  if (write(g->stop, &one, sizeof(one)) != sizeof(one) || pthread_join(g->thread, NULL)) {
+    kill(getpid(), SIGKILL); _exit(127);
+  }
+  close(g->child); close(g->stop); g->active = 0;
+  napi_get_undefined(env, &result); return result;
+}
 
 /* Private anonymous packet channels. Per-message credentials, not the socketpair
  * creator's SO_PEERCRED, authenticate the exact spawned child. No PID is an
@@ -175,6 +253,10 @@ static napi_value guard_parent(napi_env env, napi_callback_info info) {
 }
 static napi_value init(napi_env env, napi_value exports) {
   napi_value fn;
+  napi_create_function(env, "armChildContainment", NAPI_AUTO_LENGTH, arm_containment, NULL, &fn);
+  napi_set_named_property(env, exports, "armChildContainment", fn);
+  napi_create_function(env, "endChildContainment", NAPI_AUTO_LENGTH, end_containment, NULL, &fn);
+  napi_set_named_property(env, exports, "endChildContainment", fn);
   napi_create_function(env, "lockRoot", NAPI_AUTO_LENGTH, lock_root, NULL, &fn);
   napi_set_named_property(env, exports, "lockRoot", fn);
   napi_create_function(env, "adoptRoot", NAPI_AUTO_LENGTH, adopt_root, NULL, &fn);
