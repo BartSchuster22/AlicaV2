@@ -129,6 +129,7 @@ export async function stageBackupTransport(
     };
     child.on('error', fail);
     child.stdin.on('error', fail);
+    child.stdout.on('error', fail);
     child.stdout.on('data', (chunk) => {
       try {
         // Live lexical authority must still hold while plaintext is emitted,

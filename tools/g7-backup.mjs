@@ -129,6 +129,7 @@ export async function encryptBackup(
     };
     child.on('error', fail);
     child.stdin.on('error', fail);
+    child.stdout.on('error', fail);
     child.stdout.on('data', (chunk) => {
       try {
         count += chunk.length;
