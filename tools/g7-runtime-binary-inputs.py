@@ -45,22 +45,28 @@ def build_audit_tool():
 
 def member_bytes(archive, name):
     member = archive.getmember(name)
-    assert member.isfile() and member.size <= 268435456
+    if not (member.isfile() and member.size <= 268435456):
+        raise AssertionError
     stream = archive.extractfile(member)
-    assert stream is not None
+    if not (stream is not None):
+        raise AssertionError
     data = stream.read()
-    assert len(data) == member.size
+    if not (len(data) == member.size):
+        raise AssertionError
     return data
 
 
 def elf(data):
-    assert data[:6] == b'\x7fELF\x02\x01' and struct.unpack_from('<H', data, 18)[0] == 62
+    if not (data[:6] == b'\x7fELF\x02\x01' and struct.unpack_from('<H', data, 18)[0] == 62):
+        raise AssertionError
     start = struct.unpack_from('<Q', data, 32)[0]
     size, count = struct.unpack_from('<HH', data, 54)
-    assert size == 56 and count < 1024 and start + size * count <= len(data)
+    if not (size == 56 and count < 1024 and start + size * count <= len(data)):
+        raise AssertionError
     headers = [struct.unpack_from('<IIQQQQQQ', data, start+i*size) for i in range(count)]
     for h in headers:
-        assert h[2]+h[5] <= len(data)
+        if not (h[2]+h[5] <= len(data)):
+            raise AssertionError
     dynamic = next((h for h in headers if h[0] == 2), None)
     entries = []
     if dynamic:
@@ -88,21 +94,25 @@ def elf(data):
             return data[at:data.index(b'\0', at)].decode()
         needs = next((v for k, v in entries if k == 0x6ffffffe), None)
         count = next((v for k, v in entries if k == 0x6fffffff), 0)
-        assert 0 <= count <= 1024
+        if not (0 <= count <= 1024):
+            raise AssertionError
         if needs is not None:
             at = address(needs)
             for i in range(count):
                 version, n, library, auxiliary, following = struct.unpack_from('<HHIII', data, at)
-                assert version == 1 and n <= 1024
+                if not (version == 1 and n <= 1024):
+                    raise AssertionError
                 cursor = at+auxiliary
                 names = []
                 for j in range(n):
                     _, flags, _, name, more = struct.unpack_from('<IHHII', data, cursor)
                     names.append({'name':text(name),'flags':flags})
-                    assert j == n-1 or more >= 16
+                    if not (j == n-1 or more >= 16):
+                        raise AssertionError
                     cursor += more
                 version_requirements.append({'library':text(library),'versions':names})
-                assert i == count-1 or following >= 16
+                if not (i == count-1 or following >= 16):
+                    raise AssertionError
                 at += following
     interpreter = next((data[h[2]:h[2]+h[5]].rstrip(b'\0').decode() for h in headers if h[0] == 3), None)
     return {'sha256': sha(data), 'bytes': len(data), 'interpreter': interpreter, 'dynamicDependencies': dependencies, 'versionRequirements': version_requirements}
@@ -111,16 +121,20 @@ def elf(data):
 def fdlibm_symbols(node, symbols):
     section_start = struct.unpack_from('<Q', node, 40)[0]
     section_size, section_count = struct.unpack_from('<HH', node, 58)
-    assert section_size == 64 and section_start + section_size * section_count <= len(node)
+    if not (section_size == 64 and section_start + section_size * section_count <= len(node)):
+        raise AssertionError
     defined = []
     for line in symbols.decode().splitlines():
         fields = line.split()
         if len(fields) == 8 and fields[3] == 'FUNC' and fields[6].isdigit() and 'v84base7ieee754' in fields[7]:
             index = int(fields[6])
-            assert 0 < index < section_count
-            assert struct.unpack_from('<Q', node, section_start + index * section_size + 8)[0] & 4
+            if not (0 < index < section_count):
+                raise AssertionError
+            if not (struct.unpack_from('<Q', node, section_start + index * section_size + 8)[0] & 4):
+                raise AssertionError
             defined.append({'name':fields[7],'address':fields[1],'bytes':int(fields[2]),'sectionIndex':index})
-    assert defined
+    if not (defined):
+        raise AssertionError
     return sorted({s['name']:s for s in defined}.values(), key=lambda s:s['name'])
 
 
@@ -128,48 +142,59 @@ def observe(root):
     root = Path(root)
     lock = json.loads((root/'toolchain.lock.json').read_bytes())['node']
     archive = root/'.tools/node.tar.xz'
-    assert sha(archive.read_bytes()) == lock['sha256']
+    if not (sha(archive.read_bytes()) == lock['sha256']):
+        raise AssertionError
     with tarfile.open(archive) as t:
         prefix = 'node-'+lock['version']+'-linux-x64/'
         node = member_bytes(t, prefix+'bin/node')
         license_bytes = member_bytes(t, prefix+'LICENSE')
-    assert node == (root/'.tools/node/bin/node').read_bytes()
+    if not (node == (root/'.tools/node/bin/node').read_bytes()):
+        raise AssertionError
     versions = json.loads(subprocess.check_output([str(root/'.tools/node/bin/node'), '--no-global-search-paths', '-p', 'JSON.stringify(process.versions)'], cwd='/', env={'PATH':'/usr/bin:/bin','LANG':'C.UTF-8'}))
-    assert 'v'+versions['node'] == lock['version']
+    if not ('v'+versions['node'] == lock['version']):
+        raise AssertionError
     source_helper = root/'tools/g7-runtime-node-source.py'
     spec = importlib.util.spec_from_file_location('g7_node_source', source_helper)
-    assert spec is not None and spec.loader is not None
+    if not (spec is not None and spec.loader is not None):
+        raise AssertionError
     helper = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(helper)
     supplement = helper.observe(root, root/'evidence/g7/runtime-assembly/node-source-inputs')
-    assert base64.b64decode(supplement['files']['runtime/licenses/node-supplement/node-source-LICENSE']) == license_bytes
+    if not (base64.b64decode(supplement['files']['runtime/licenses/node-supplement/node-source-LICENSE']) == license_bytes):
+        raise AssertionError
     sqlite = json.loads(subprocess.check_output([
         str(root/'.tools/node/bin/node'), '--no-global-search-paths', '--input-type=module', '-e',
         'import {DatabaseSync} from "node:sqlite"; const db=new DatabaseSync(":memory:"); console.log(JSON.stringify(db.prepare("select sqlite_version() as version, sqlite_source_id() as sourceId").get())); db.close();',
     ], cwd='/', env={'PATH':'/usr/bin:/bin','LANG':'C.UTF-8'}))
-    assert sqlite['version'] == versions['sqlite'] == supplement['sqlite']['version']
-    assert sqlite['sourceId'] == supplement['sqlite']['sourceId']
+    if not (sqlite['version'] == versions['sqlite'] == supplement['sqlite']['version']):
+        raise AssertionError
+    if not (sqlite['sourceId'] == supplement['sqlite']['sourceId']):
+        raise AssertionError
     supplement['binarySqliteObservation'] = sqlite
     supplement['helperSha256'] = sha(source_helper.read_bytes())
     notices = []
     for match in re.finditer(rb'^- ([^\n]+), located at ([^\n]+), is licensed as follows:', license_bytes, re.M):
         notices.append({'name':match[1].decode(),'upstreamPath':match[2].decode(),'licenseOffset':match.start(),'licenses':['runtime/licenses/node-LICENSE']})
-    assert notices
+    if not (notices):
+        raise AssertionError
     native_lock = json.loads((root/'native/g6/toolchain.lock.json').read_bytes())
     compiler_archive = root/'.tools/g6-zig.tar.xz'
-    assert sha(compiler_archive.read_bytes()) == native_lock['sha256']
+    if not (sha(compiler_archive.read_bytes()) == native_lock['sha256']):
+        raise AssertionError
     files, native_notices = supplement.pop('files'), []
     with tarfile.open(compiler_archive) as t:
         for m in t.getmembers():
             if m.isfile() and re.fullmatch(r'(?i)(LICENSE|LICENCE|COPYING|NOTICE|PATENTS)(?:[.-].*)?', Path(m.name).name):
-                assert m.size <= 1048576
+                if not (m.size <= 1048576):
+                    raise AssertionError
                 data = member_bytes(t, m.name)
                 path = 'runtime/licenses/native-support/notice-'+str(len(native_notices))+'.txt'
                 files[path] = base64.b64encode(data).decode()
                 native_notices.append({'sourceMember':m.name,'output':path,'sha256':sha(data)})
     native_helper = root/'tools/g7-runtime-native-notices.py'
     spec = importlib.util.spec_from_file_location('native_notices', native_helper)
-    assert spec is not None and spec.loader is not None
+    if not (spec is not None and spec.loader is not None):
+        raise AssertionError
     native_module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(native_module)
     native_attribution = native_module.observe(root)
@@ -192,5 +217,6 @@ def observe(root):
 
 
 if __name__ == '__main__':
-    assert len(sys.argv) == 2
+    if not (len(sys.argv) == 2):
+        raise AssertionError
     print(json.dumps(observe(Path(sys.argv[1]).resolve()), sort_keys=True))

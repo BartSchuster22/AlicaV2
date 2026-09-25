@@ -1,0 +1,9 @@
+# Optimization-resistant ordinary input validation
+
+SOURCE-REVIEWED UNEXECUTED WIP. Parent read the complete patch and author review, verified exact patch/candidate hashes and isolated-index application, and independently reversed the check conversions in complete ASTs to compare with exact-base syntax. Binary input consumer:26 asserts; Node-source consumer:11. All become explicit if-not/raise AssertionError; conditions/order and other executable syntax preserved, candidate asserts zero. No message expressions existed. Default exception type/empty args preserved under ordinary unmodified builtins. Traceback locations and optimized-mode execution of previously stripped conditions necessarily change.
+
+New standalone synthetic regression SOURCE compiles/executes actual whole consumer modules at optimize=0/1/2 when separately authorized to run. Five unittest methods cover member bounds/streams/length, ELF short-circuit, section bound, early identity checks and CLI arity. External I/O/helper/archive/child boundaries are mocked; real-input suites are not imported. This is not complete branch, cryptographic, archive, ELF, subprocess startup or native qualification. No regression was run and no PASS is claimed.
+
+No artifact-location wiring, protected inputs, native parser/notice change, schema, argv/environment/interpreter policy, cap or grant change. Runtime closure/fit and artifact admission remain OPEN. This removes the two consumers' assert-removal weakness in source, not every hostile-input/optimized-runtime risk. Prior assembly scope document records the pre-fix limitation historically; this commit supersedes only that specific source issue.
+
+Publication uses [skip ci]; no broad CI/build/test request. Static Python AST and Git/identity checks only. No protected/cache payload read/copy/hash/load, test/fixture generation, product import, native/build/setup action or borrowed execution allowance.

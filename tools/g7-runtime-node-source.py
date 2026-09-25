@@ -24,22 +24,29 @@ def observe(root, directory):
     lock = json.loads((root/'toolchain.lock.json').read_bytes())['node']
     receipt = json.loads((directory/'receipt.json').read_bytes())
     sums = (directory/'SHASUMS256.txt').read_bytes()
-    assert sha(sums) == receipt['metadata']['sha256']
+    if not (sha(sums) == receipt['metadata']['sha256']):
+        raise AssertionError
     checksums = dict((line.split()[1], line.split()[0]) for line in sums.decode('ascii').splitlines())
     prefix = 'node-'+lock['version']
-    assert checksums[prefix+'-linux-x64.tar.xz'] == lock['sha256'] == receipt['binaryArchiveSha256']
+    if not (checksums[prefix+'-linux-x64.tar.xz'] == lock['sha256'] == receipt['binaryArchiveSha256']):
+        raise AssertionError
     archive = directory/(prefix+'.tar.xz')
-    assert archive.stat().st_size == receipt['source']['bytes']
-    assert sha(archive.read_bytes()) == checksums[archive.name] == receipt['source']['sha256']
+    if not (archive.stat().st_size == receipt['source']['bytes']):
+        raise AssertionError
+    if not (sha(archive.read_bytes()) == checksums[archive.name] == receipt['source']['sha256']):
+        raise AssertionError
     files, inputs = {}, []
     with tarfile.open(fileobj=io.BytesIO(lzma.decompress(archive.read_bytes())), mode='r:') as t:
         def read(name):
             m = t.getmember(prefix+'/'+name)
-            assert m.isfile() and m.size <= 16777216
+            if not (m.isfile() and m.size <= 16777216):
+                raise AssertionError
             stream = t.extractfile(m)
-            assert stream is not None
+            if not (stream is not None):
+                raise AssertionError
             b = stream.read()
-            assert len(b) == m.size
+            if not (len(b) == m.size):
+                raise AssertionError
             inputs.append({'member':m.name,'bytes':len(b),'sha256':sha(b)})
             return b
         def put(path, b):
@@ -48,10 +55,12 @@ def observe(root, directory):
         amalgamation = read('deps/sqlite/sqlite3.c')
         version = re.search(rb'^#define SQLITE_VERSION +"([^"]+)"', header, re.M)[1].decode()
         source_id = re.search(rb'^#define SQLITE_SOURCE_ID +"([^"]+)"', header, re.M)[1].decode()
-        assert source_id.encode() in amalgamation
+        if not (source_id.encode() in amalgamation):
+            raise AssertionError
         # Verbatim complete first comment, not a fabricated public-domain license.
         notice = header[:header.index(b'*/')+2]+b'\n'
-        assert b'The author disclaims copyright' in notice
+        if not (b'The author disclaims copyright' in notice):
+            raise AssertionError
         put('runtime/licenses/node-supplement/sqlite-header-notice.txt', notice)
         put('runtime/licenses/node-supplement/nbytes-LICENSE', read('deps/nbytes/LICENSE'))
         # ncrypto is Node internal implementation; keep exact upstream description
@@ -70,7 +79,8 @@ def observe(root, directory):
                 nested.append({'sourceMember':member.name,'sha256':sha(b),'bytes':len(b),'output':out,
                                'basis':'Conservative upstream named-notice superset; individual binary use unestablished'})
         fdlibm = read('deps/v8/src/base/ieee754.cc')
-        assert b'Developed at SunSoft' in fdlibm
+        if not (b'Developed at SunSoft' in fdlibm):
+            raise AssertionError
         put('runtime/licenses/node-supplement/ieee754-source.txt', fdlibm)
         license_bytes = read('LICENSE')
         put('runtime/licenses/node-supplement/node-source-LICENSE', license_bytes)
@@ -90,5 +100,6 @@ def observe(root, directory):
 
 
 if __name__ == '__main__':
-    assert len(sys.argv) == 3
+    if not (len(sys.argv) == 3):
+        raise AssertionError
     print(json.dumps(observe(*sys.argv[1:]), sort_keys=True))
