@@ -43,9 +43,43 @@ def select_artifact_paths(root, locations=None):
     return paths
 
 
-def observe(root, archive=None, mapped=None, artifact_locations=None):
+DEFAULT_LOCATIONS = object()
+
+
+def select_native_inputs(root, locations=DEFAULT_LOCATIONS):
+    """Closed M4 source references, not filesystem admission or custody proof.
+
+    Fixed filenames retain the receipt and three-role binding/map contracts.
+    An explicit selection must supply BOTH directories; never fill partial input.
+    """
     root = Path(root)
-    paths = select_artifact_paths(root, artifact_locations)
+    if locations is DEFAULT_LOCATIONS:
+        return select_artifact_paths(root), root/'evidence/g7/runtime-assembly/native-attribution-inputs'
+    require(type(locations) is dict and
+            set(locations) == {'ownershipDirectory', 'attributionDirectory'},
+            'complete native locations required')
+    role = 'native/g7/build/ownership.node'
+    paths = select_artifact_paths(root, {role: locations['ownershipDirectory']})
+    # Apply the same canonical, single-slash, outside-root lexical convention.
+    selected = select_artifact_paths(root, {role: locations['attributionDirectory']})
+    return paths, selected[role][0].parent
+
+
+def observe(root, archive=None, mapped=None, artifact_locations=None, *,
+            native_locations=DEFAULT_LOCATIONS):
+    root = Path(root)
+    if native_locations is not DEFAULT_LOCATIONS:
+        require(mapped is None and artifact_locations is None,
+                'conflicting native locations')
+        paths, mapped = select_native_inputs(root, native_locations)
+    else:
+        paths = select_artifact_paths(root, artifact_locations)
+        # Legacy ownership overrides cannot silently consume original maps.
+        if artifact_locations is not None:
+            require(mapped is not None, 'explicit ownership requires explicit mapped evidence')
+            role = 'native/g7/build/ownership.node'
+            selected = select_artifact_paths(root, {role: str(mapped)})
+            mapped = selected[role][0].parent
     archive = Path(archive) if archive else root/'.tools/g6-zig.tar.xz'
     mapped = Path(mapped) if mapped else root/'evidence/g7/runtime-assembly/native-attribution-inputs'
     lock = json.loads((root/'native/g6/toolchain.lock.json').read_bytes())
@@ -83,6 +117,9 @@ def observe(root, archive=None, mapped=None, artifact_locations=None):
             observation = debug.source_paths(data)
             refs = []
             receipt = json.loads(paths[path][1].read_bytes())
+            expected = (receipt['outputSha256'] if path == 'native/g7/build/ownership.node'
+                        else receipt['artifacts'][name])
+            require(sha(data) == expected, 'native receipt output digest')
             for p in observation['paths']:
                 if p.startswith('.tools/'+prefix):
                     member = p.removeprefix('.tools/')

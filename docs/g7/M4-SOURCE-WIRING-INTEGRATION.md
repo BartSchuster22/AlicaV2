@@ -1,0 +1,11 @@
+# M4 selected native input SOURCE wiring
+
+Owner approved source-only M4 wiring and independent review. Independent full five-path review disposition: PUBLISH-SOURCE-WIP, no blocking defect. Parent verified exact patch/base/candidate hashes, isolated-index application, Python AST and whitespace. UNEXECUTED. No runtime, provenance, legal or G7 acceptance.
+
+Optional ownershipDirectory and attributionDirectory flow from assembler/CLI through binary observation to notice observation. Both are required together as canonical absolute external directory strings; omitted input preserves defaults, explicit null/partial/unknown/invalid inputs reject. Only ownership.node/receipt.json and the complete three-role binding/maps are selected; G6 artifacts/receipt and runtime output roles stay fixed. No fallback to original inputs when selected inputs are absent. Legacy ownership override requires explicit external mapped directory; mapped-only behavior is preserved.
+
+Receipt output membership, ELF/notice/output digest comparisons, binding/map observations and unique full role membership are checked. The assembler ships the same output/receipt buffers checked. Default helper-loading order and existing input-validation regressions remain compatible; optimized-Python explicit checks are retained. CLI extra arguments reject. Lexical selection is not filesystem custody or authentication.
+
+Two synthetic regression SOURCES added, not run. JS vm harness needs separate --experimental-vm-modules invocation and deliberately is not enrolled by *.test.mjs. Python test discovery is not execution authority. Mocks do not prove cryptography, parsers, real helper/native loading or complete assembly. Some CLI and mismatch cases lack dedicated behavioral coverage. No historical PASS transfers.
+
+Publication [skip ci]; no build/test/workflow dispatch requested. No protected source/artifact/compiler/receipt/map/archive/licensing payload reads, copies, hashes or probes performed. No grant spent/renewed, cap change or execution-policy change. Installed/native mismatch remains unblessed. Fresh input custody/admission, failure-inclusive resource fit, actual compiler/native/interface qualification, provenance/legal/relinkability and final acceptance stay open. Source references are not approved runtime input values.

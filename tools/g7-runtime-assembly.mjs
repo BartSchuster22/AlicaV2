@@ -45,7 +45,36 @@ const tools = [
   'g7-supervisor.py',
   'g7-owned-coordinator.py',
 ];
-export function assembleRuntime(source, destination, ageRoot, agePin) {
+// Lexical source selection only. Physical custody/admission is a separate gate.
+export function selectNativeInputs(source, locations = undefined) {
+  source = resolve(source);
+  const roles = ['native/g6/build/bridge.node', 'native/g6/build/launcher',
+    'native/g7/build/ownership.node'];
+  const paths = Object.fromEntries(roles.map((p) => [p, resolve(source, p)]));
+  let receipt = resolve(source, 'native/g7/build/receipt.json');
+  let mapped = resolve(source, 'evidence/g7/runtime-assembly/native-attribution-inputs');
+  if (locations !== undefined) {
+    fail(locations !== null && typeof locations === 'object' &&
+      !Array.isArray(locations) &&
+      Object.keys(locations).sort().join(',') === 'attributionDirectory,ownershipDirectory',
+      'complete native locations required');
+    for (const value of Object.values(locations)) {
+      fail(typeof value === 'string' && value.startsWith('/') &&
+        !value.startsWith('//') && !value.includes('\0') && value !== '/' &&
+        posix.normalize(value) === value && !value.endsWith('/') &&
+        value !== source && !value.startsWith(source === '/' ? '/' : source + '/'),
+        'canonical absolute destination outside original root required');
+    }
+    paths[roles[2]] = locations.ownershipDirectory + '/ownership.node';
+    receipt = locations.ownershipDirectory + '/receipt.json';
+    mapped = locations.attributionDirectory;
+  }
+  return { paths, receipt, mapped };
+}
+
+export function assembleRuntime(source, destination, ageRoot, agePin, nativeLocations = undefined) {
+  // Reject incomplete/invalid explicit references before age or other payload I/O.
+  const selectedNative = selectNativeInputs(source, nativeLocations);
   const age = ageInputs(ageRoot, agePin);
   source = resolve(source);
   destination = resolve(destination);
@@ -58,13 +87,19 @@ export function assembleRuntime(source, destination, ageRoot, agePin) {
   const files = new Map(),
     inputs = new Map(),
     transformations = [];
+  const externalNative = new Set(nativeLocations === undefined ? [] : [
+    selectedNative.paths['native/g7/build/ownership.node'], selectedNative.receipt,
+    ...['binding.json', 'bridge.node.map', 'launcher.map', 'ownership.node.map']
+      .map((name) => selectedNative.mapped + '/' + name),
+  ]);
   const read = (p) => {
-    const s = lstatSync(join(source, p));
+    const physical = externalNative.has(p) ? p : join(source, p);
+    const s = lstatSync(physical);
     fail(
       s.isFile() && !s.isSymbolicLink() && s.nlink === 1 && s.size <= 268435456,
       'nonregular input: ' + p,
     );
-    const b = readFileSync(join(source, p));
+    const b = readFileSync(physical);
     inputs.set(p, sha(b));
     return b;
   };
@@ -245,8 +280,9 @@ export function assembleRuntime(source, destination, ageRoot, agePin) {
   );
   const native = [];
   for (const generation of ['g6', 'g7']) {
-    const receiptPath = 'native/' + generation + '/build/receipt.json',
-      receipt = JSON.parse(read(receiptPath));
+    const receiptPath = generation === 'g7' && nativeLocations !== undefined
+      ? selectedNative.receipt : 'native/' + generation + '/build/receipt.json',
+      receiptBytes = read(receiptPath), receipt = JSON.parse(receiptBytes);
     for (const [p, h] of Object.entries(receipt.sources ?? receipt.inputs))
       fail(sha(read(p)) === h, 'stale native source receipt: ' + p);
     fail(
@@ -267,27 +303,36 @@ export function assembleRuntime(source, destination, ageRoot, agePin) {
       generation === 'g6'
         ? receipt.artifacts
         : { 'ownership.node': receipt.outputSha256 };
+    fail(Object.keys(outputs).sort().join(',') ===
+      (generation === 'g6' ? 'bridge.node,launcher' : 'ownership.node'),
+      'native output membership');
     for (const [name, h] of Object.entries(outputs)) {
       const p = 'native/' + generation + '/build/' + name;
-      fail(sha(read(p)) === h, 'stale native output');
-      copy(p);
+      const input = generation === 'g7' && nativeLocations !== undefined
+        ? selectedNative.paths[p] : p;
+      const bytes = read(input);
+      fail(sha(bytes) === h, 'stale native output');
+      put('runtime/' + p, bytes);
       native.push({ path: 'runtime/' + p, sha256: h });
     }
-    copy(receiptPath, 'runtime/receipts/' + generation + '.json');
+    put('runtime/receipts/' + generation + '.json', receiptBytes);
   }
   read('tools/g7-runtime-binary-inputs.py');
   read('tools/g7-runtime-node-source.py');
   read('tools/g7-runtime-native-debug.py');
   read('tools/g7-runtime-native-notices.py');
-  read('evidence/g7/runtime-assembly/native-attribution-inputs/binding.json');
+  const mapped = nativeLocations === undefined
+    ? 'evidence/g7/runtime-assembly/native-attribution-inputs' : selectedNative.mapped;
+  read(mapped + '/binding.json');
   for (const name of ['bridge.node', 'launcher', 'ownership.node'])
     read(
-      'evidence/g7/runtime-assembly/native-attribution-inputs/' + name + '.map',
+      mapped + '/' + name + '.map',
     );
   const binaryInputs = JSON.parse(
     execFileSync(
       '/usr/bin/python3',
-      ['-I', '-B', join(source, 'tools/g7-runtime-binary-inputs.py'), source],
+      ['-I', '-B', join(source, 'tools/g7-runtime-binary-inputs.py'), source,
+        ...(nativeLocations === undefined ? [] : [JSON.stringify(nativeLocations)])],
       {
         maxBuffer: 16777216,
         env: {
@@ -300,6 +345,19 @@ export function assembleRuntime(source, destination, ageRoot, agePin) {
       },
     ),
   );
+  fail(binaryInputs.nativeAttribution.artifacts.length === native.length &&
+    new Set(binaryInputs.nativeAttribution.artifacts.map((a) => a.path)).size === native.length,
+    'native attribution membership');
+  fail(binaryInputs.nativeAttribution.bindingSha256 === inputs.get(mapped + '/binding.json'),
+    'native binding observation differs from assembly input');
+  for (const artifact of binaryInputs.nativeAttribution.artifacts)
+    fail(artifact.mapSha256 === inputs.get(mapped + '/' + posix.basename(artifact.path) + '.map'),
+      'native map observation differs from assembly input');
+  for (const { path, sha256 } of native) {
+    fail(binaryInputs.elf[path]?.sha256 === sha256 &&
+      binaryInputs.nativeAttribution.artifacts.some((a) => a.path === path && a.sha256 === sha256),
+      'native observation differs from shipped output');
+  }
   for (const [p, encoded] of Object.entries(binaryInputs.files))
     put(p, Buffer.from(encoded, 'base64'));
   delete binaryInputs.files;
@@ -525,12 +583,13 @@ if (
   resolve(process.argv[1]) === fileURLToPath(import.meta.url)
 ) {
   fail(
-    process.argv.length === 6,
-    'usage: g7-runtime-assembly.mjs SOURCE NEW_DESTINATION VERIFIED_AGE_ROOT INDEPENDENT_AGE_INVENTORY_SHA256',
+    process.argv.length === 6 || process.argv.length === 7,
+    'usage: g7-runtime-assembly.mjs SOURCE NEW_DESTINATION VERIFIED_AGE_ROOT INDEPENDENT_AGE_INVENTORY_SHA256 [NATIVE_LOCATIONS_JSON]',
   );
   console.log(
     JSON.stringify({
-      files: assembleRuntime(...process.argv.slice(2)).inventory.length,
+      files: assembleRuntime(...process.argv.slice(2, 6),
+        ...(process.argv.length === 7 ? [JSON.parse(process.argv[6])] : [])).inventory.length,
     }),
   );
 }

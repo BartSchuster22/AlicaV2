@@ -138,8 +138,41 @@ def fdlibm_symbols(node, symbols):
     return sorted({s['name']:s for s in defined}.values(), key=lambda s:s['name'])
 
 
-def observe(root):
+DEFAULT_LOCATIONS = object()
+
+
+def native_selection(root, locations=DEFAULT_LOCATIONS):
+    """Load ordinary selector only; selection never probes selected inputs."""
+    native_helper = root/'tools/g7-runtime-native-notices.py'
+    spec = importlib.util.spec_from_file_location('native_notices', native_helper)
+    if not (spec is not None and spec.loader is not None):
+        raise AssertionError
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    kwargs = {} if locations is DEFAULT_LOCATIONS else {'native_locations': locations}
+    paths, _ = (module.select_native_inputs(root) if not kwargs else
+                module.select_native_inputs(root, locations))
+    return module, paths, kwargs, native_helper
+
+
+def observe_native(root, selection):
+    module, paths, kwargs, helper = selection
+    attribution = module.observe(root, **kwargs)
+    attribution['helperSha256'] = sha(helper.read_bytes())
+    artifacts = {'runtime/'+role: elf(path.read_bytes())
+                 for role, (path, _) in paths.items()}
+    # Same role/digest must describe the bytes shipped, never the source location.
+    for entry in attribution['artifacts']:
+        if not (artifacts[entry['path']]['sha256'] == entry['sha256']):
+            raise AssertionError
+    return attribution, artifacts
+
+
+def observe(root, native_locations=DEFAULT_LOCATIONS):
     root = Path(root)
+    # Explicit invalid/partial locations reject before any payload access.
+    selection = (None if native_locations is DEFAULT_LOCATIONS else
+                 native_selection(root, native_locations))
     lock = json.loads((root/'toolchain.lock.json').read_bytes())['node']
     archive = root/'.tools/node.tar.xz'
     if not (sha(archive.read_bytes()) == lock['sha256']):
@@ -191,14 +224,8 @@ def observe(root):
                 path = 'runtime/licenses/native-support/notice-'+str(len(native_notices))+'.txt'
                 files[path] = base64.b64encode(data).decode()
                 native_notices.append({'sourceMember':m.name,'output':path,'sha256':sha(data)})
-    native_helper = root/'tools/g7-runtime-native-notices.py'
-    spec = importlib.util.spec_from_file_location('native_notices', native_helper)
-    if not (spec is not None and spec.loader is not None):
-        raise AssertionError
-    native_module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(native_module)
-    native_attribution = native_module.observe(root)
-    native_attribution['helperSha256'] = sha(native_helper.read_bytes())
+    native_attribution, native_artifacts = observe_native(
+        root, selection if selection is not None else native_selection(root))
     files.update(native_attribution.pop('files'))
     # Defined FUNC symbols in executable sections, not byte-substring linkage.
     tool, audit_env = build_audit_tool()
@@ -207,8 +234,7 @@ def observe(root):
     supplement['fdlibm']['artifactSha256'] = sha(node)
     supplement['fdlibm']['readelfOutputSha256'] = sha(symbols)
     artifacts = {'runtime/bin/node':elf(node)}
-    for p in ['native/g6/build/bridge.node','native/g6/build/launcher','native/g7/build/ownership.node']:
-        artifacts['runtime/'+p] = elf((root/p).read_bytes())
+    artifacts.update(native_artifacts)
     return {'files':files,'node':{'sourceSupplement':supplement,'versions':versions,'licenseSha256':sha(license_bytes),'noticeSections':notices,
             'boundary':'Exact upstream complete LICENSE and all top-level notice sections; includes upstream tooling notices, not assertion each is linked. Versions are actual binary self-report; ABI identifiers are not components.'},
             'nativeSupport':{'compilerVersion':native_lock['version'],'compilerArchiveSha256':native_lock['sha256'],
@@ -217,6 +243,7 @@ def observe(root):
 
 
 if __name__ == '__main__':
-    if not (len(sys.argv) == 2):
+    if not (len(sys.argv) in (2, 3)):
         raise AssertionError
-    print(json.dumps(observe(Path(sys.argv[1]).resolve()), sort_keys=True))
+    locations = DEFAULT_LOCATIONS if len(sys.argv) == 2 else json.loads(sys.argv[2])
+    print(json.dumps(observe(Path(sys.argv[1]).resolve(), locations), sort_keys=True))
