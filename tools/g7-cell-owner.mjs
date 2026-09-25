@@ -2,11 +2,11 @@
 import { closeSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { resolve, dirname, basename } from 'node:path';
-import { parse, digest } from '@alica/acap-contracts';
+import { parse, digest, check } from '@alica/acap-contracts';
 import { CellPreparation } from './g7-cell.mjs';
 import { OwnerChannel } from './g7-owner-channel.mjs';
 import { openPrivateRoot, readPrivate } from './g7-durable.mjs';
-const [root, input, rootFD, channelFD, acceptedDigest] = process.argv.slice(2);
+const [root, input, rootFD, channelFD, acceptedDigest, inputDigest] = process.argv.slice(2);
 // Socket-close callbacks cannot interrupt synchronous IO. Establish the OS
 // parent-death guard before adopting custody or executing any Cell operation.
 createRequire(import.meta.url)('../native/g7/build/ownership.node').guardParent(
@@ -34,6 +34,10 @@ try {
   }
   if (Object.keys(f).sort().join(',') !== 'archive,authorization,trust')
     throw new Error('INVALID');
+  // Private inception binding, not authority supplied by a checkpoint/candidate.
+  // Check this same parsed snapshot before floor advancement or readiness.
+  if (inputDigest !== undefined)
+    check(acceptedDigest !== undefined && digest(f) === inputDigest, 'CONFLICT');
   if (acceptedDigest !== undefined)
     await cell.startAccepted(f.trust, f.authorization, acceptedDigest);
   else await cell.install(f.archive, f.trust, f.authorization);

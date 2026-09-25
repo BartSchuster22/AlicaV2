@@ -158,9 +158,11 @@ class Supervisor:
         self.starting = False
         self.spawn_owner()
 
-    def spawn_owner(self, accepted_digest=None):
+    def spawn_owner(self, accepted_digest=None, input_digest=None):
         # Initial invocation or a consumed in-memory clean-reap permit ONLY.
         # Never reconstruct this permission from filesystem residue or a PID.
+        if input_digest is not None and accepted_digest is None:
+            raise RuntimeError('input binding without accepted selection')
         self.phase = 'verify'
         self.deadline = time.monotonic() + LIMITS['verifyTimeoutMs'] / 1000
         self.reaped = False
@@ -172,7 +174,8 @@ class Supervisor:
             self.owner = subprocess.Popen(
                 [self.node, '--experimental-vm-modules', str(R / 'tools/g7-cell-owner.mjs'),
                  self.root_path, self.inputs, str(self.root), str(child.fileno())] +
-                ([accepted_digest] if accepted_digest is not None else []),
+                ([accepted_digest] if accepted_digest is not None else []) +
+                ([input_digest] if input_digest is not None else []),
                 pass_fds=(self.root, child.fileno()), stdin=subprocess.DEVNULL,
                 stdout=subprocess.DEVNULL, stderr=None, close_fds=True)
         finally:
