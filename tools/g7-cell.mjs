@@ -1685,7 +1685,7 @@ export class CellPreparation {
         durableWrite(
           this.#fd,
           prefix + '/' + entry.path,
-          archive.read(entry.path),
+          archive.read(entry.path, limits.fileBytes),
           {
             maximum: limits.fileBytes,
             boundary: () => {
