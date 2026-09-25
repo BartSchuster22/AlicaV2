@@ -1,6 +1,8 @@
 // Lifetime-locked Cell. Supervised custody is host-only; upgrade remains unavailable.
 import { OwnerChannel } from './g7-owner-channel.mjs';
 import { ownedStop } from './g7-owned-bridge.mjs';
+import { recoveryRecipientId } from './g7-backup.mjs';
+import { stageBackupTransport } from './g7-restore.mjs';
 import {
   closeSync,
   readFileSync,
@@ -15,14 +17,14 @@ import { createRequire } from 'node:module';
 import { randomUUID } from 'node:crypto';
 import { Ajv2020 } from 'ajv/dist/2020.js';
 import { bootstrap } from '@alica/kernel';
-import { canonical, parse, digest, check } from '@alica/acap-contracts';
+import { canonical, parse, digest, rawDigest, check } from '@alica/acap-contracts';
 import {
   openPrivateRoot,
   readPrivate,
   listPrivate,
   durableWrite,
 } from './g7-durable.mjs';
-import { openArchive } from './g7-archive.mjs';
+import { openArchive, safePath } from './g7-archive.mjs';
 import {
   inspectRelease,
   inspectStoredRelease,
@@ -429,6 +431,374 @@ export class CellPreparation {
       this.#priorRecovery = undefined;
       return result;
     });
+  }
+  // SOURCE-ONLY WIP: runtime use is gated on separately admitted native
+  // containment artifact/contracts and exact-composition qualification.
+  // No method presence, stage result or source review grants that admission.
+  // R1 96-102, bounded first milestone: no accepted destination, extraction,
+  // fresh runtime or portable source-absence receipt. Exact same-source snapshot
+  // only; an older/different opaque Kernel state fails rather than being reset.
+  ownedRestoreStage(recoveryInput, options) {
+    return this.#ownedRestore(recoveryInput, options);
+  }
+  // Bounded construction, NOT accepted publication or a transferable permit.
+  // restore-payload is deliberately outside the closed Cell root inventory.
+  ownedRestoreConstruct(recoveryInput, options) {
+    return this.#ownedRestore(recoveryInput, options, true);
+  }
+  ownedRestoreRun(recoveryInput, options) {
+    return this.#ownedRestore(recoveryInput, options, false, true);
+  }
+  #ownedRestore(recoveryInput, options, construct = false, runtime = false) {
+    return this.#run(async () => {
+      check(
+        this.#session &&
+          this.#watch &&
+          this.#stopped &&
+          !this.#serving &&
+          !this.#running &&
+          !this.#host &&
+          !this.#cleanupUncertain &&
+          !this.#priorRecovery,
+        'FAILED_PRECONDITION',
+      );
+      options = parse(canonical(options));
+      check(
+        Object.keys(options).sort().join(',') ===
+          (runtime ? 'age,cipher,construction,destination,identity,recipient,runtimeInput' : construct
+            ? 'age,cipher,construction,destination,identity,recipient'
+            : 'age,cipher,destination,identity,recipient'),
+      );
+      if (construct || runtime) options.construction = resolve(options.construction);
+      if (runtime) options.runtimeInput = resolve(options.runtimeInput);
+      for (const key of ['age', 'cipher', 'destination', 'identity'])
+        options[key] = resolve(options[key]);
+      const separate = (a, b) =>
+        a !== b && !a.startsWith(b + '/') && !b.startsWith(a + '/');
+      for (const p of [
+        this.#root,
+        options.cipher,
+        options.identity,
+        resolve(recoveryInput),
+      ])
+        check(separate(options.destination, p), 'PERMISSION_DENIED');
+      check(
+        separate(this.#root, options.identity) &&
+          separate(this.#root, resolve(recoveryInput)),
+        'PERMISSION_DENIED',
+      );
+      const load = () => {
+        const p = resolve(recoveryInput),
+          fd = openPrivateRoot(dirname(p));
+        try {
+          return parse(readPrivate(fd, basename(p)));
+        } finally {
+          closeSync(fd);
+        }
+      };
+      if (construct || runtime)
+        for (const p of [this.#root, options.destination, options.cipher,
+          options.identity, options.age, resolve(recoveryInput)])
+          check(separate(options.construction, p), 'PERMISSION_DENIED');
+      // Operator-owned independent delivery; no recovery approval is read from tar.
+      // This local wrapper introduces no signed protocol or serialized authority.
+      const current = load();
+      const runtimeInputs = runtime ? this.#local(options.runtimeInput) : undefined;
+      if (runtime) {
+        check(separate(options.construction, options.runtimeInput) &&
+          separate(options.destination, options.runtimeInput), 'PERMISSION_DENIED');
+        check(same(runtimeInputs.trust, current.trust) &&
+          same(runtimeInputs.authorization, current.authorization), 'PERMISSION_DENIED');
+      }
+      check(
+        Object.keys(current).sort().join(',') ===
+          'approval,authorization,checkpoint,trust',
+      );
+      const approval = cellSchema('recoveryApproval', current.approval);
+      cellSchema('floor', current.checkpoint);
+      cellSchema('authorization', current.authorization);
+      const status = this.#status();
+      check(
+        status.accepted &&
+          status.runtime === 'STOPPED' &&
+          status.accepted.sequence === this.#watch.stopped.sequence &&
+          digest(status.accepted) === this.#watch.stopped.acceptedDigest &&
+          status.transactions.every((t) =>
+            ['COMMITTED', 'ABORTED'].includes(t.state),
+          ),
+        'FAILED_PRECONDITION',
+      );
+      check(
+        approval.cellId === status.cellId &&
+          approval.approvedAtMs <= Date.now() &&
+          approval.authorizationDigest ===
+            status.accepted.release.authorizationDigest &&
+          digest(current.authorization) === approval.authorizationDigest &&
+          current.authorization.secrets.length === 0 &&
+          current.authorization.events.length === 0,
+        'PERMISSION_DENIED',
+      );
+      monotonic(approval.minimumFloor, current.checkpoint);
+      monotonic(status.trustFloor, current.checkpoint);
+      this.#trust(current.trust, current.checkpoint);
+      const prefix =
+        'releases/' + status.accepted.release.bundleDigest.slice(7);
+      const stored = inspectStoredRelease(
+        this.#fd,
+        prefix,
+        current.trust,
+        current.checkpoint,
+      );
+      for (const k of [
+        'bundleDigest',
+        'profileDigest',
+        'lockDigest',
+        'policyDigest',
+      ])
+        check(stored[k] === status.accepted.release[k], 'CONTRACT_MISMATCH');
+      check(
+        same(this.#read(prefix + '/authorization.json'), current.authorization),
+        'PERMISSION_DENIED',
+      );
+      const bundle = this.#read(prefix + '/bundle.json');
+      const paths = [
+        'identity.json',
+        'accepted.json',
+        'floor.json',
+        'kernel.json',
+        ...[
+          'bundle.json',
+          'bundle-signature.json',
+          'authorization.json',
+          ...bundle.artifacts.map((a) => a.path),
+        ].map((p) => prefix + '/' + p),
+      ];
+      for (const journal of this.#journals())
+        for (let i = 0; i < journal.rows.length; i++)
+          paths.push(
+            'transactions/' +
+              journal.last.transactionId +
+              '/' +
+              String(i + 1).padStart(6, '0') +
+              '.json',
+          );
+      check(paths.length + 1 <= limits.tarEntries, 'RESOURCE_EXHAUSTED');
+      const inventory = paths.sort().map((path) => {
+        const b = readPrivate(this.#fd, path, limits.fileBytes);
+        return { path, bytes: b.length, digest: rawDigest(b) };
+      });
+      const certify = () => {
+        this.#guard();
+        check(
+          same(this.#status(), status) && same(load(), current),
+          'CONFLICT',
+        );
+        this.#trust(current.trust, current.checkpoint);
+        check(
+          same(
+            inspectStoredRelease(
+              this.#fd,
+              prefix,
+              current.trust,
+              current.checkpoint,
+            ),
+            stored,
+          ),
+          'CONFLICT',
+        );
+        for (const item of inventory) {
+          const b = readPrivate(this.#fd, item.path, limits.fileBytes);
+          check(
+            b.length === item.bytes && rawDigest(b) === item.digest,
+            'CONFLICT',
+          );
+        }
+        this.#guard();
+      };
+      const recipient = recoveryRecipientId(options.recipient);
+      // No callback/receipt may release source custody during this lexical scope.
+      // Native containment also observes watch death while JS is in synchronous IO.
+      // Transport scope has no destination execution; only the runtime branch
+      // below prepares acceptance and launches, under its separate gates.
+      const releaseProtection = this.#watch.protect();
+      let staged;
+      try {
+      staged = await stageBackupTransport(
+        options,
+        approval.backupCipherDigest,
+        certify,
+        (archive) => {
+          check(
+            archive.entries[0]?.path === 'backup.json',
+            'CONTRACT_MISMATCH',
+          );
+          const manifest = cellSchema(
+            'backup',
+            parse(archive.read('backup.json')),
+          );
+          check(
+            manifest.cellId === status.cellId &&
+              same(manifest.accepted, status.accepted) &&
+              same(manifest.trustFloor, status.trustFloor) &&
+              manifest.recoveryKeyId === recipient &&
+              manifest.createdAtMs <= approval.approvedAtMs,
+            'PERMISSION_DENIED',
+          );
+          monotonic(manifest.trustFloor, current.checkpoint);
+          check(
+            same(
+              [...manifest.files].sort((a, b) =>
+                a.path < b.path ? -1 : a.path > b.path ? 1 : 0,
+              ),
+              inventory,
+            ),
+            'CONTRACT_MISMATCH',
+          );
+          const actual = archive.entries
+            .slice(1)
+            .map(({ path, bytes, digest }) => ({ path, bytes, digest }))
+            .sort((a, b) => (a.path < b.path ? -1 : a.path > b.path ? 1 : 0));
+          check(same(actual, inventory), 'CONTRACT_MISMATCH');
+          // The exact inventory is already schema/history/release validated from the
+          // live held source, including opaque Kernel bytes. No candidate code runs.
+          if (construct) {
+            // Preflight ALL mapped paths under unchanged 240-byte/16-component
+            // limits. Never expose a runnable nested Cell or a loadable entrypoint.
+            const mapped = inventory.map((item) => ({ ...item,
+              target: safePath('restore-payload/' + item.path + '.quarantined'),
+            }));
+            const destination = openPrivateRoot(options.construction);
+            try {
+              lockRoot(destination);
+              check(listPrivate(destination).length === 0, 'CONFLICT');
+              certify();
+              for (const item of mapped) {
+                certify();
+                const content = archive.read(item.path, limits.fileBytes);
+                check(content.length === item.bytes && rawDigest(content) === item.digest,
+                  'CONTRACT_MISMATCH');
+                durableWrite(destination, item.target, content, {
+                  maximum: limits.fileBytes,
+                  boundary: () => this.#guard(),
+                });
+                certify();
+                check(rawDigest(readPrivate(destination, item.target, limits.fileBytes)) ===
+                  item.digest, 'CONFLICT');
+              }
+              certify();
+            } finally {
+              closeSync(destination);
+            }
+          }
+          return {
+            ...(construct ? {
+              construction: 'DURABLE_NONACTIVATABLE_QUARANTINE',
+              acceptanceBlocked: true,
+            } : {}),
+            cellId: status.cellId,
+            backupCipherDigest: approval.backupCipherDigest,
+            checkpoint: current.checkpoint,
+            files: inventory.length,
+          };
+        },
+        certify,
+      );
+      } finally {
+        // Transport has closed its archive, reaped age and closed construction.
+        // The following runtime branch arms its own destination composition
+        // synchronously, while the same source fd/watch and busy scope remain.
+        releaseProtection();
+      }
+      if (!runtime) return staged;
+      try {
+        const runtimeCertify = () => {
+          certify();
+          check(same(this.#local(options.runtimeInput), runtimeInputs), 'CONFLICT');
+        };
+        const result = await this.#watch.destinationScope(options.construction,
+          options.runtimeInput, async (scope) => {
+            scope.assert(); runtimeCertify();
+            return { cellId: status.cellId, accepted: status.accepted,
+              restoredAcceptance: true, freshApplicationIPC: true };
+          }, async (destination) => {
+            const archive = openArchive(join(options.destination, 'validated.tar'));
+            const budget = deadline(limits.verifyTimeoutMs);
+            const boundary = () => { budget.assert(); runtimeCertify(); };
+            try {
+              boundary();
+              const actual = archive.entries.slice(1)
+                .map(({ path, bytes, digest }) => ({ path, bytes, digest }))
+                .sort((a, b) => a.path < b.path ? -1 : a.path > b.path ? 1 : 0);
+              check(same(actual, inventory), 'CONTRACT_MISMATCH');
+              // accepted.json stays absent until payload and opaque Kernel checks.
+              for (const item of inventory.filter(i => i.path !== 'accepted.json')) {
+                boundary();
+                const content = archive.read(item.path, limits.fileBytes);
+                check(rawDigest(content) === item.digest && content.length === item.bytes,
+                  'CONTRACT_MISMATCH');
+                durableWrite(destination, safePath(item.path), content,
+                  { maximum: limits.fileBytes, boundary });
+              }
+              let checkpointKernel, checkpointFloor = status.trustFloor;
+              const verifyDestination = (advanced = false) => {
+                boundary();
+                if (advanced) check(
+                  same(parse(readPrivate(destination, 'floor.json')), checkpointFloor) &&
+                  rawDigest(readPrivate(destination, 'kernel.json')) === checkpointKernel,
+                  'CONFLICT');
+                for (const item of inventory.filter(i => i.path !== 'accepted.json' &&
+                  (!advanced || !['kernel.json', 'floor.json'].includes(i.path))))
+                  check(rawDigest(readPrivate(destination, item.path, limits.fileBytes)) ===
+                    item.digest, 'CONFLICT');
+                check(!listPrivate(destination).includes('accepted.json'), 'CONFLICT');
+                const requested = inspectRelease(runtimeInputs.archive, current.trust, current.checkpoint);
+                const restored = inspectStoredRelease(destination, prefix, current.trust, current.checkpoint);
+                for (const k of ['bundleDigest', 'profileDigest', 'lockDigest', 'policyDigest'])
+                  check(requested[k] === stored[k] && restored[k] === stored[k], 'CONTRACT_MISMATCH');
+              };
+              verifyDestination();
+              // No initialize, decode, repair, grants, or candidate execution.
+              const h = bootstrap(configuration(status.cellId,
+                stored.profile.scopes.find(s => s.parent === null).id), {
+                trust: current.trust,
+                statePath: '/proc/' + process.pid + '/fd/' + destination + '/kernel.json',
+                initialize: false,
+              });
+              const report = await budget.wait(() => h.shutdown());
+              check(report.unsettledWork === 0 &&
+                Object.values(report.resources).every(n => n === 0) && report.instances.length === 0,
+                'FAILED_PRECONDITION');
+              checkpointKernel = rawDigest(readPrivate(destination, 'kernel.json'));
+              verifyDestination(true);
+              const floor = { rootKeyId: current.trust.rootKeyId,
+                policyVersion: current.trust.policy.version,
+                revocationVersion: current.trust.revocation.version, lastWallMs: Date.now() };
+              monotonic(status.trustFloor, floor); monotonic(current.checkpoint, floor);
+              this.#trust(current.trust, floor);
+              durableWrite(destination, 'floor.json', bytes(floor), { replace: true, boundary });
+              checkpointFloor = floor;
+              boundary(); verifyDestination(true);
+              durableWrite(destination, 'accepted.json', archive.read('accepted.json'), { boundary });
+              boundary();
+              check(same(parse(readPrivate(destination, 'accepted.json')), status.accepted), 'CONFLICT');
+              return { inputs: options.runtimeInput, selection: {
+                sequence: status.accepted.sequence, acceptedDigest: digest(status.accepted),
+                inputDigest: digest(runtimeInputs) } };
+            } finally {
+              archive.close();
+              // No ownership release on uncertain cleanup. The bridge retains
+              // both locks and native containment through its failure branch.
+            }
+          });
+        runtimeCertify();
+        return { ...staged, ...result, stage: 'RESTORED_RUNTIME_EXACTLY_REAPED',
+          exactDestinationReap: true, sourceScopeRetained: true };
+      } catch (error) {
+        this.#failed = true; this.#stopped = false;
+        this.#watch.abandon();
+        throw outcome(error, 'NEEDS_OPERATOR');
+      }
+    }, true);
   }
   ownedFinish() {
     return this.#ownedOperation(async () => {

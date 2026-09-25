@@ -98,7 +98,25 @@ def normal_reap(pid, pidfd, end):
         raise RuntimeError('not a normal exact child reap')
 
 
+def initial_selection(packet):
+    """Private authenticated-channel intent, never a cleanup/adoption receipt."""
+    if packet == b'GO':
+        return None
+    if not isinstance(packet, bytes) or len(packet) > LIMITS['adminFrameBytes'] or not packet.startswith(b'RESTORE '):
+        raise RuntimeError('invalid inception')
+    selection = base.decode(packet[8:])
+    if (type(selection) is not dict or set(selection) != {'sequence', 'acceptedDigest', 'inputDigest'} or
+            type(selection['sequence']) is not int or selection['sequence'] < 1 or
+            not isinstance(selection['acceptedDigest'], str) or
+            base.re.fullmatch(r'sha256:[0-9a-f]{64}', selection['acceptedDigest']) is None or
+            not isinstance(selection['inputDigest'], str) or
+            base.re.fullmatch(r'sha256:[0-9a-f]{64}', selection['inputDigest']) is None):
+        raise RuntimeError('invalid restored selection')
+    return selection
+
+
 def run(node, root, inputs, inception=None):
+    restored_selection = None
     parent = os.getppid()
     parent_fd = os.pidfd_open(parent)
     guard_parent(parent)
@@ -123,9 +141,9 @@ def run(node, root, inputs, inception=None):
             base.fcntl.flock(held, base.fcntl.LOCK_EX | base.fcntl.LOCK_NB)
         finally:
             os.close(checked)
-        if until(outer, parent, parent_fd,
-                 time.monotonic() + LIMITS['adminTimeoutMs'] / 1000) != b'GO':
-            raise RuntimeError('invalid inception')
+        initial = until(outer, parent, parent_fd,
+                        time.monotonic() + LIMITS['adminTimeoutMs'] / 1000)
+        restored_selection = initial_selection(initial)
     # No adopting an arbitrary detached supervisor, even if it is already stopped.
     if 'supervision' in os.listdir(held):
         raise RuntimeError('existing custody is not owned')
@@ -168,11 +186,20 @@ def run(node, root, inputs, inception=None):
                 raise
 
         def spawn_owner(self, accepted_digest=None):
+            if continuation is None and restored_selection is not None and self.snapshot is None:
+                self.snapshot = {k: restored_selection[k] for k in ('sequence', 'acceptedDigest')}
+                self.snapshot['status'] = 'UNAVAILABLE'
+                self.starting = True
+                accepted_digest = restored_selection['acceptedDigest']
             if continuation is not None and self.snapshot is None:
                 self.snapshot = continuation
                 self.starting = True
                 accepted_digest = continuation['acceptedDigest']
-            super().spawn_owner(accepted_digest)
+            # Preserve the independently approved snapshot across BOTH initial
+            # restored startup and the normally reaped serving successor. Never
+            # derive this binding from destination files or a SERVE selection.
+            super().spawn_owner(accepted_digest,
+                                restored_selection['inputDigest'] if restored_selection else None)
 
         def acquire_root(self, path):
             if os.getppid() != creator:
@@ -390,6 +417,14 @@ def run(node, root, inputs, inception=None):
             signal.pidfd_send_signal(pidfd, signal.SIGKILL)
         except ProcessLookupError:
             pass
+        if inception is not None:
+            # Forward the existing internal negative disposition to the exact
+            # inception parent. Notification grants no clean-reap authority and
+            # does not release custody. A broken/full channel stays fail-closed.
+            try:
+                send(outer, b'UNCERTAIN')
+            except (OSError, RuntimeError):
+                pass
         print(json.dumps({'status': 'NEEDS_OPERATOR', 'fence': 'RETAINED'}), flush=True)
         while True:
             select.select([parent_fd], [], [])

@@ -2,7 +2,8 @@
 // Cell calls this while holding its originally acquired flock. The only child
 // program is the shipped coordinator; no caller-selected executable or protocol.
 import { spawn } from 'node:child_process';
-import { closeSync, readFileSync } from 'node:fs';
+import { closeSync, readFileSync, fstatSync } from 'node:fs';
+import { openPrivateRoot, listPrivate } from './g7-durable.mjs';
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 import { setTimeout as delay } from 'node:timers/promises';
@@ -28,6 +29,14 @@ function clean(packet) {
   return stopped;
 }
 export async function ownedStop(root, inputs, held) {
+  return startOwned(root, inputs, held);
+}
+// Selection is internal startup intent, never clean-reap authority. Only the
+// newly locked/materialized destination branch below supplies it.
+// SOURCE-ONLY WIP: armChildContainment/endChildContainment require a
+// separately admitted exact native artifact. Availability is not qualification;
+// no fallback, fabricated containment result or runtime admission is provided.
+async function startOwned(root, inputs, held, restoredSelection) {
   const [control, childControl] = native.packetPair();
   let child,
     pidfd,
@@ -62,7 +71,19 @@ export async function ownedStop(root, inputs, held) {
       assert();
       const packet = native.packetReceive(control, child.pid);
       assert();
-      if (packet !== null) return packet;
+      if (packet !== null) {
+        // packetReceive has authenticated the exact coordinator credentials.
+        // Negative custody is sticky, never a STOPPED/ACK/reap certificate.
+        if (packet.equals(Buffer.from('UNCERTAIN'))) {
+          failed = true;
+          const error = Object.assign(new Error('Owned custody uncertain'), {
+            code: 'FAILED_PRECONDITION',
+          });
+          rejectLost(error);
+          throw error;
+        }
+        return packet;
+      }
       check(!exit, 'FAILED_PRECONDITION');
       await delay(5);
     }
@@ -102,7 +123,7 @@ export async function ownedStop(root, inputs, held) {
     closeSync(childControl);
     check(child.pid, 'FAILED_PRECONDITION');
     pidfd = native.childPidfd(child.pid);
-    send('GO');
+    send(restoredSelection ? 'RESTORE ' + JSON.stringify(restoredSelection) : 'GO');
     check((await receive()).toString() === 'SEALING', 'PERMISSION_DENIED');
     end = performance.now() + limits.cleanupTimeoutMs;
     send('SEAL');
@@ -111,15 +132,92 @@ export async function ownedStop(root, inputs, held) {
     // custodian AND original owner are normally reaped before this packet exists.
     send('ACK');
     end = performance.now() + limits.verifyTimeoutMs;
-    let serving = false;
+    let serving = false, protectedScopes = 0;
     return {
       lost,
       get stopped() {
         return stopped;
       },
       assert: alive,
+      protect() {
+        check(!finished && !serving && protectedScopes === 0, 'FAILED_PRECONDITION');
+        alive();
+        const guard = native.armChildContainment(pidfd);
+        protectedScopes++;
+        let released = false;
+        return () => {
+          check(!released, 'FAILED_PRECONDITION');
+          alive();
+          native.endChildContainment(guard);
+          released = true;
+          protectedScopes--;
+        };
+      },
+      // Host-internal restore composition requires a strictly EMPTY root and
+      // mandatory Cell preparation; no unstaged initialized-root fallback.
+      // Only trusted Cell preparation receives its retained descriptor;
+      // the runtime callback receives no fd, selection, or clean-reap permit.
+      async destinationScope(destinationRoot, destinationInputs, operation, prepareRestored) {
+        check(!finished && !serving && protectedScopes === 0 &&
+          typeof operation === 'function' && typeof prepareRestored === 'function',
+          'FAILED_PRECONDITION');
+        alive();
+        const destinationFd = openPrivateRoot(destinationRoot);
+        try {
+          const a = fstatSync(held), b = fstatSync(destinationFd);
+          check(a.dev !== b.dev || a.ino !== b.ino, 'PERMISSION_DENIED');
+          native.lockRoot(destinationFd);
+          const names = listPrivate(destinationFd);
+          check(names.length === 0, 'FAILED_PRECONDITION');
+        } catch (error) {
+          closeSync(destinationFd);
+          throw error;
+        }
+        let destination, guard, active = false;
+        try {
+          alive();
+          guard = native.armChildContainment(pidfd);
+          protectedScopes++;
+          const restored = await prepareRestored(destinationFd);
+          alive();
+          destinationInputs = restored.inputs;
+          destination = await startOwned(destinationRoot, destinationInputs, destinationFd,
+            restored.selection);
+          destination.lost.catch((error) => {
+            failed = true;
+            rejectLost(error);
+          });
+          alive();
+          await destination.serve(destinationInputs, destination.stopped);
+          active = true;
+          const scope = Object.freeze({ assert() {
+            check(active, 'FAILED_PRECONDITION');
+            alive(); destination.assert();
+          } });
+          const result = await operation(scope);
+          scope.assert();
+          active = false;
+          await destination.seal(); // exact owner AND custodian normal reaps
+          alive();
+          await destination.finish(); // exact coordinator normal reap
+          alive();
+          native.endChildContainment(guard);
+          protectedScopes--;
+          closeSync(destinationFd);
+          return result;
+        } catch (error) {
+          active = false;
+          failed = true;
+          destination?.abandon();
+          rejectLost(error);
+          // No finally release. Keep BOTH locks, fences and native containment;
+          // the original external watchdog deadline remains in force. Neither a
+          // callback exception nor PID absence can authorize source restart.
+          throw error;
+        }
+      },
       async serve(inputs, selection) {
-        check(!finished && !serving, 'FAILED_PRECONDITION');
+        check(!finished && !serving && protectedScopes === 0, 'FAILED_PRECONDITION');
         alive();
         send('SERVE ' + JSON.stringify({ inputs, selection }));
         check((await receive()).toString() === 'SERVING', 'PERMISSION_DENIED');
@@ -146,7 +244,7 @@ export async function ownedStop(root, inputs, held) {
         end = performance.now() + limits.verifyTimeoutMs;
       },
       async send(message) {
-        check(!finished && !serving, 'FAILED_PRECONDITION');
+        check(!finished && !serving && protectedScopes === 0, 'FAILED_PRECONDITION');
         const phase = {
           cleanup: 'CLEANUP',
           resume: 'RESUME',
@@ -157,7 +255,8 @@ export async function ownedStop(root, inputs, held) {
         check((await receive()).toString() === 'ACK', 'PERMISSION_DENIED');
       },
       async finish() {
-        check(!finished && !serving, 'FAILED_PRECONDITION');
+        check(!finished && !serving && protectedScopes === 0, 'FAILED_PRECONDITION');
+        alive();
         finished = true;
         try {
           send('DONE');
