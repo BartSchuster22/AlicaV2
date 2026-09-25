@@ -1,0 +1,40 @@
+# Trust inspection API — source-only finite slice
+
+Status: SOURCE / UNEXECUTED / LOCAL ONLY; parent source review complete; UNEXECUTED WIP. No qualification/publication/execution permission/full Cell rotation adoption. Inherited exclusive lease untouched; no MemoryV4/successor.
+
+## Exact touched files and before identities
+Repository: /home/herman/g7-implementation
+- packages/kernel/src/index.ts: BEFORE SHA256 ce437c9421a0be3c47fdec8bc131a9f8200027309e087d07ec428fca58fa0909. Only two additive export lines.
+- packages/kernel/src/trust-inspection.ts: BEFORE ABSENT; new implementation.
+- tests/g7/trust-inspection.test.mjs: BEFORE ABSENT; focused test SOURCE.
+- docs/g7/TRUST-INSPECTION-API-SOURCE.md: BEFORE ABSENT; this bounded record/API documentation.
+- /home/herman/g7-control/CURRENT.md: BEFORE SHA256 088db7761423af21e4208425e6ffbcd58ffd2b6d7e07b366dfb6caf9c8f8153d; current result/next parent review only.
+Preservation anchor (NOT touched): packages/kernel/src/trust.ts SHA256 085a42051a9f021857639045258b41860283949f5c1eb5561cc8c533f7c108e7, unchanged before/after. No broad inventory/copy/staging/reset/checkout/commit/push. Existing mixed work/index preserved.
+
+After source identities:
+- index.ts: 61989B SHA256 a104955f0679c666ac7a7279e502d4fd85949cf130407fd926f3d6cfcd01bf20
+- trust-inspection.ts: 9663B SHA256 388fcefd9d92bbbf30eb998195a514fd50cbd723e30bfc2e51a86f2743a8527b
+- trust-inspection.test.mjs: 12598B SHA256 7de7a1f12dc20629017f08b79383b439407bc207120b863ee33a89dabf726475
+
+## Minimal public contract
+inspectPersistedTrust(configText, options), with exported TrustInspectionOptions and discriminated TrustInspection. Existing Config text shape/limits required, strictly typed; timeTrusted=true is a configuration requirement, NOT time observation or certification. No clock callback or filesystem descriptor accepted.
+options is closed: statePath, priorTrust, nextTrust, rotation, independentPin. Existing TrustMaterial and dual-signed root-rotation formats unchanged. This deliberately inspects ONE cross-root edge, not same-root updates, full historical chains, Cell rotation execution or repair.
+independentPin is closed: {cellId, priorTrustDigest, nextTrustDigest, rotationDigest}. Digests use existing Kernel canonical digest over the COMPLETE respective public material/envelope. The trusted operator must independently provision this exact prior checkpoint and authorized next/rotation intent for that Cell, including prior lineage/retired-root checks; deriving these pins from the submitted request defeats the contract. No claim that an untrusted caller's assertion becomes independent authority. Full-material pins also bind revocations, which the existing rotation record does not directly include. No new signed schema or crypto/write-format change.
+
+EXACT_PRIOR/EXACT_NEXT returns frozen closed {schemaVersion:'alica.trust-inspection/v1',cellId,classification,policyVersion,policyDigest,revocationVersion,revocationDigest,lastWallMs}. Tuple fields come from the authenticated selected material, never unchecked state. Cell/root/version/digest matching is exact, not >=. No raw state/root-key map escapes.
+All other cases return frozen {schemaVersion:'alica.trust-inspection/v1',classification:'UNRESOLVED'} with NO Cell/floor/time. This includes malformed options/config/state, wrong pins/signatures/tuple, unsupported state fields, missing file, IO/read/stat/close errors and unavailable safety flags. No raw exception/path/native details in the result.
+
+## Validation and preservation
+Existing pure canonical/parse/schema/digest/unique validators reused. Canonical snapshot rejects accessors/toJSON/exotic data, cycles, non-safe numbers and excessive depth/bytes; parser rejects duplicate keys and malformed UTF-8. This API is not an isolation boundary against hostile in-process JavaScript/proxies.
+Closed state shape is the unchanged G6 Water representation (no schemaVersion field). Strict strings/digests, positive safe integer versions and nonnegative safe time required. Material schemas/signatures and root-key raw32/base64/digest identity validated. Ed25519 verification uses the same domains/canonical representation/SPKI prefix as existing private Trust.signature; existing Trust code is untouched and never constructed. Historical signatures deliberately do not call fresh() or enforce present expiry. Rotation binds distinct prior/next keys, policy digests and consecutive policy versions, both signatures, and nondecreasing revocation version/equal-version digest. State time cannot precede selected material issuance.
+Historical signature validity and lastWallMs observation are NOT current freshness. No Date.now/Host/scopes/grants/timers/audit persistence/initialization/write/.next cleanup. Bootstrap/update/persistence/crypto remain unchanged. No controllers/dependencies/Cell implementation.
+
+## IO boundaries
+Read-only path string; final-component O_NOFOLLOW plus O_NONBLOCK, fail closed if unavailable. One newly owned fd, regular file only, 1..4096B, read at most size+1, require complete exact length and matching before/after dev/ino/size/mtimeNs/ctimeNs. Strict parse inside Kernel. Finally closes that fd exactly once; no close retry (ownership after error uncertain). No caller fd accepted or closed. No mkdir/create/chmod/chown/rename/unlink/fsync/fallback. Existing .next remains untouched on every path.
+The 4096B inspection ceiling fits canonical G6 Water fields, not a new resource grant. Oversized whitespace/state is unresolved. Ordinary reads may affect filesystem access-time metadata; no atime restoration writes are attempted. Ancestor paths may traverse symlinks/mounts; no-follow final open is NOT a filesystem sandbox. Trusted caller selects the path and supplies genuine continuing custody; arbitrary special files/hostile filesystems are not an authorized safe target. fstat comparison is best effort, NOT concurrency/TOCTOU/custody proof. Loss of custody invalidates the observation. Unsigned state cannot prove latest state, anti-rollback, which invocation wrote it, or authenticate arbitrary wall time. Independent history/high-water/current eligibility and custody checks remain separate. Classification/time never authorizes activation, custody transfer, replay or repair.
+
+## Test SOURCE and actual checks
+Focused test SOURCE: exact prior/next public fields; post-expiry historical classification; wrong independent pin/Cell; bad policy/revocation and dual signatures; repinned cryptographic failures and authentically signed wrong tuple; mismatched state tuples/types/missing fields/unsupported shape; malformed/duplicate/unsafe-number/oversized/missing state; unexpected options/config/accessor; no mutation/timers/clock traps; structural no Host/Trust-construction guard; unchanged bytes/.next/ownership metadata; owned vs caller fd; bounded short reads; injected open/read/stat/close/changed-stat failures; directory/symlink denial. Runtime disposable key generation/signing occurs ONLY if this source is separately admitted and run; none occurred during authoring.
+Actual tool results: targeted git diff --check PASS. Data-only Python hash/byte/text checks PASS: removing exactly the two new export lines reproduces before index hash; trust.ts unchanged; limited forbidden-token and trailing-whitespace checks pass. Python read source as data, never parsed/imported/executed candidate code. These are NOT TypeScript syntax/type checks, build/tests, crypto/IO behavior verification or independent review. Tool file writers reported TypeScript shell lint skipped and no MJS linter; no compiler invoked. Tests NOT RUN; candidate/import/native/version/compiler/signing/root/network/protected custody/NULL/services/config untouched. No parser/native grant borrowed or renewed; all original caps/costs/liabilities/grants unchanged.
+
+Parent read full implementation/tests and compared Config/Trust validation. Source-only WIP accepted, not typechecked or behavior-qualified. Full-material pin provisioning/lineage remains caller responsibility; duplicated pure validation risks drift. Tests require separate admission; no G7-09 closure.
