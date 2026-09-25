@@ -1,4 +1,4 @@
-"""Unexecuted synthetic SOURCE. No real payload/archive/native code required.
+"""Synthetic SOURCE wiring. No real payload/archive/native code required.
 Whole ordinary consumers with I/O/ELF/archive/hash boundary doubles. These tests
 exercise selection and propagation, NOT cryptography, native or legal admission.
 """
@@ -7,7 +7,7 @@ from pathlib import Path
 from types import ModuleType, SimpleNamespace
 import json
 import unittest
-from unittest.mock import Mock, patch
+from unittest.mock import patch
 
 ROOT = Path(__file__).absolute().parents[2]
 R = Path('/synthetic/project')
@@ -72,7 +72,6 @@ class Wiring(unittest.TestCase):
                         if failure == 'elf-binding': binding[-1]['sha256'] = 'bad'
                         if failure == 'map-digest': binding[-1]['mapSha256'] = 'bad'
                         data = {R/'native/g6/toolchain.lock.json': json.dumps({'version': '1', 'sha256': 'pin'}).encode(),
-                                R/'.tools/g6-zig.tar.xz': b'synthetic archive token',
                                 mapped/'binding.json': json.dumps(binding).encode(),
                                 R/'tools/g7-runtime-native-notices.py': b'synthetic helper token'}
                         for role, (artifact, receipt) in paths.items():
@@ -90,10 +89,7 @@ class Wiring(unittest.TestCase):
                             return data[p]
                         debug = SimpleNamespace(source_paths=lambda _: {'paths': [], 'debugLineSha256': 'pin'})
                         loader = SimpleNamespace(exec_module=lambda module: None)
-                        tar = Mock()
-                        tar.__enter__ = Mock(return_value=tar)
-                        tar.__exit__ = Mock(return_value=False)
-                        tar.extractfile.return_value.read.return_value = b'synthetic notice token'
+                        member = 'zig-x86_64-linux-1/lib/libc/glibc/LICENSES'
                         kwargs = {'native_locations': LOCATIONS} if explicit else {}
                         selection = (n, paths, kwargs, R/'tools/g7-runtime-native-notices.py')
                         with ExitStack() as s:
@@ -101,15 +97,17 @@ class Wiring(unittest.TestCase):
                             s.enter_context(patch.object(n, 'sha', return_value='pin'))
                             s.enter_context(patch.object(b, 'sha', return_value='pin'))
                             s.enter_context(patch.object(b, 'elf', return_value={'sha256': 'pin'}))
-                            s.enter_context(patch.object(n.lzma, 'decompress', return_value=b''))
-                            s.enter_context(patch.object(n.tarfile, 'open', return_value=tar))
+                            archive = s.enter_context(patch.object(
+                                n, 'archive_members', return_value={member: b'synthetic notice token'}))
                             s.enter_context(patch.object(n.importlib.util, 'spec_from_file_location', return_value=SimpleNamespace(loader=loader)))
                             s.enter_context(patch.object(n.importlib.util, 'module_from_spec', return_value=debug))
                             if failure:
                                 with self.assertRaises((AssertionError, FileNotFoundError)):
                                     b.observe_native(R, selection)
+                                archive.assert_not_called()
                             else:
                                 attribution, artifacts = b.observe_native(R, selection)
+                                archive.assert_called_once_with(R/'.tools/g6-zig.tar.xz', 'pin', {member})
                                 self.assertEqual(set(artifacts), {'runtime/'+p for p in ROLES})
                                 self.assertEqual({a['path'] for a in attribution['artifacts']}, set(artifacts))
                                 for p in paths[O]: self.assertIn(p, reads)
