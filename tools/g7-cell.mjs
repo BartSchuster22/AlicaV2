@@ -1,7 +1,7 @@
 // Lifetime-locked Cell. Supervised custody is host-only; upgrade remains unavailable.
 import { OwnerChannel } from './g7-owner-channel.mjs';
 import { ownedStop } from './g7-owned-bridge.mjs';
-import { recoveryRecipientId } from './g7-backup.mjs';
+import { encryptBackup, recoveryRecipientId } from './g7-backup.mjs';
 import { stageBackupTransport } from './g7-restore.mjs';
 import {
   closeSync,
@@ -431,6 +431,182 @@ export class CellPreparation {
       this.#priorRecovery = undefined;
       return result;
     });
+  }
+  // Only this continuously owned, normally reaped maintenance session may capture.
+  // No detached receipt, PID, caller-supplied fd or stopped boolean is accepted.
+  ownedBackup(inputs, options) {
+    return this.#run(async () => {
+      check(
+        this.#session &&
+          this.#watch &&
+          this.#stopped &&
+          !this.#serving &&
+          !this.#running &&
+          !this.#host &&
+          !this.#cleanupUncertain &&
+          !this.#priorRecovery,
+        'FAILED_PRECONDITION',
+      );
+      options = parse(canonical(options));
+      check(
+        Object.keys(options).sort().join(',') === 'age,destination,recipient',
+        'INVALID_ARGUMENT',
+      );
+      const destination = resolve(options.destination);
+      check(
+        destination !== this.#root &&
+          !destination.startsWith(this.#root + '/') &&
+          !this.#root.startsWith(destination + '/'),
+        'PERMISSION_DENIED',
+      );
+      options.destination = destination;
+      const recoveryKeyId = recoveryRecipientId(options.recipient);
+      const current = this.#local(inputs),
+        status = this.#status();
+      check(
+        status.accepted &&
+          status.runtime === 'STOPPED' &&
+          status.accepted.sequence === this.#watch.stopped.sequence &&
+          digest(status.accepted) === this.#watch.stopped.acceptedDigest &&
+          status.transactions.every((t) =>
+            ['COMMITTED', 'ABORTED'].includes(t.state),
+          ),
+        'FAILED_PRECONDITION',
+      );
+      cellSchema('authorization', current.authorization);
+      check(
+        digest(current.authorization) ===
+          status.accepted.release.authorizationDigest,
+        'PERMISSION_DENIED',
+      );
+      // IPC-only profile has no persisted local-secret store. Never silently omit one:
+      // #base rejects unknown root entries and authorization requires empty secrets/events.
+      check(
+        current.authorization.secrets.length === 0 &&
+          current.authorization.events.length === 0,
+        'PERMISSION_DENIED',
+      );
+      const prefix =
+        'releases/' + status.accepted.release.bundleDigest.slice(7);
+      const stored = inspectStoredRelease(
+        this.#fd,
+        prefix,
+        current.trust,
+        status.trustFloor,
+      );
+      for (const k of [
+        'bundleDigest',
+        'profileDigest',
+        'lockDigest',
+        'policyDigest',
+      ])
+        check(stored[k] === status.accepted.release[k], 'CONTRACT_MISMATCH');
+      check(
+        same(this.#read(prefix + '/authorization.json'), current.authorization),
+        'PERMISSION_DENIED',
+      );
+      const bundle = this.#read(prefix + '/bundle.json');
+      const paths = [
+        'identity.json',
+        'accepted.json',
+        'floor.json',
+        'kernel.json',
+        ...[
+          'bundle.json',
+          'bundle-signature.json',
+          'authorization.json',
+          ...bundle.artifacts.map((a) => a.path),
+        ].map((p) => prefix + '/' + p),
+      ];
+      // Retain sealed history needed by existing validateHistory, including the latest
+      // accepted journal. No synthesized journal or reset of accepted.sequence.
+      for (const journal of this.#journals())
+        for (let i = 0; i < journal.rows.length; i++)
+          paths.push(
+            'transactions/' +
+              journal.last.transactionId +
+              '/' +
+              String(i + 1).padStart(6, '0') +
+              '.json',
+          );
+      check(paths.length + 1 <= limits.tarEntries, 'RESOURCE_EXHAUSTED');
+      let total = 0;
+      const entries = paths.sort().map((path) => {
+        this.#guard();
+        const data = readPrivate(this.#fd, path, limits.fileBytes);
+        total += data.length;
+        check(total <= limits.expandedBytes, 'RESOURCE_EXHAUSTED');
+        return [path, data];
+      });
+      const manifest = cellSchema('backup', {
+        schemaVersion: 'alica.cell-backup/v1',
+        backupId: randomUUID(),
+        cellId: status.cellId,
+        createdAtMs: Date.now(),
+        accepted: status.accepted,
+        trustFloor: status.trustFloor,
+        recoveryKeyId,
+        format: 'age-encryption.org/v1',
+        files: entries.map(([path, data]) => ({
+          path,
+          bytes: data.length,
+          digest: rawDigest(data),
+        })),
+      });
+      const manifestBytes = bytes(manifest);
+      check(manifestBytes.length <= limits.jsonBytes, 'RESOURCE_EXHAUSTED');
+      const certify = () => {
+        this.#guard();
+        check(same(this.#status(), status), 'CONFLICT');
+        const fresh = this.#local(inputs);
+        check(same(fresh, current), 'CONFLICT');
+        this.#trust(fresh.trust, status.trustFloor);
+        // Re-enumerate the exact accepted inventory at publication, not only
+        // the earlier captured paths: a late extra/symlink must also deny.
+        const rechecked = inspectStoredRelease(
+          this.#fd,
+          prefix,
+          fresh.trust,
+          status.trustFloor,
+        );
+        check(same(rechecked, stored), 'CONFLICT');
+        for (const [path, data] of entries)
+          check(
+            data.equals(readPrivate(this.#fd, path, limits.fileBytes)),
+            'CONFLICT',
+          );
+        this.#guard();
+      };
+      // SOURCE-ONLY WIP: protect requires separately admitted exact native
+      // armChildContainment/endChildContainment artifacts; no fallback or admission.
+      // Keep the original held lock/watch and external watchdog deadline intact
+      // across asynchronous encryption and synchronous final certification/publication.
+      const releaseProtection = this.#watch.protect();
+      let result;
+      try {
+        result = await encryptBackup(
+          [['backup.json', manifestBytes], ...entries],
+          options,
+          certify,
+        );
+      } finally {
+        // The transport has settled its encryption child before this release.
+        // Lost custody makes release fail closed; never manufacture a clean receipt.
+        releaseProtection();
+      }
+      // Public evidence only: this is NOT an independent recovery approval.
+      return {
+        ...result,
+        backupId: manifest.backupId,
+        cellId: status.cellId,
+        acceptedDigest: digest(status.accepted),
+        authorizationDigest: status.accepted.release.authorizationDigest,
+        trustFloor: status.trustFloor,
+        recoveryKeyId,
+        files: paths.length,
+        runtime: 'STOPPED',
+      };
+    }, true);
   }
   // SOURCE-ONLY WIP: runtime use is gated on separately admitted native
   // containment artifact/contracts and exact-composition qualification.

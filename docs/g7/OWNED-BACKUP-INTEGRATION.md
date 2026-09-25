@@ -1,0 +1,11 @@
+# Owned backup source integration
+
+Source-reviewed UNEXECUTED WIP. Existing ownedBackup method and encryptBackup import recovered into the latest Cell source; existing standalone stopped-backup qualification suite retained unchanged. Parent read full patch and independently verified candidate hashes, suite byte equality, inverse Cell composition, isolated-index application and whitespace. Author reported syntax-only JS checks. No product execution or test run.
+
+The capture requires a continuously owned stopped accepted source, settled history, current authorization/trust and exact stored release identities. It captures opaque Kernel state plus original accepted history without adopting old supervision receipts. Manifest binds recipient and per-file identities; source/current authority are recertified before publication.
+
+Adaptation: existing watch.protect release-function interface surrounds encryption/publication under the original lock/watch/deadline. Native armChildContainment/endChildContainment artifact and exact runtime behavior remain separately UNADMITTED/UNQUALIFIED. No native source/artifact read, copy, hash, load or build occurred. No fallback or clean-reap authority is fabricated. Runtime failure/cleanup races are not proved here.
+
+Historical seven-scenario suite source matches this retained test, but historical Cell source does NOT match this modified composition. No PASS transfers. Suite includes real native/process/crypto operations and disposable key generation: separate exact-composition execution admission, resource fit and artifact qualification are required before invocation. Generic rejection assertions, pre-operation custody-loss injection and early-generation/abnormal-exit key-cleanup limitations are retained and not overstated. New protection-scope interleavings still need evidence.
+
+Existing restore narrowing, coordinator/bridge regressions, transport stdout fixes and owner FD behavior remain unchanged. No diagnostics, archive-limit/interpreter changes, native/NULL edits, package dependencies or embedded private keys were selected. Source screen is not legal/native licensing clearance. Backup/restore acceptance and WP3 qualification remain OPEN.
