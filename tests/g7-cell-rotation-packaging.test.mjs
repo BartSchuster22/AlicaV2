@@ -15,8 +15,12 @@ assert.equal(corrected, baseline.replace("  'g7-cell.mjs',\n", "  'g7-cell.mjs',
 const assembly = mode === 'baseline' ? baseline : corrected;
 const cell = readFileSync(new URL('tools/g7-cell.mjs', root), 'utf8');
 const helper = readFileSync(new URL('tools/g7-cell-rotation.mjs', root), 'utf8');
-assert.equal(sha(cell), '148a8058d1d9ae6746aa283534c20cbe1b75b30b40e1be8607cdf0966aa95b08');
-assert.equal(sha(helper), 'a0a1a25541db473d296d1fdbb2dbc43bcd118cf9f08dcf25a3c4c581dd9a7d34');
+// Deliberate candidate pins for the history slice. Historical b2b8c7b0 pins:
+// Cell 148a8058d1d9ae6746aa283534c20cbe1b75b30b40e1be8607cdf0966aa95b08
+// helper a0a1a25541db473d296d1fdbb2dbc43bcd118cf9f08dcf25a3c4c581dd9a7d34
+// The immutable assembler fixture and every selection/provenance check remain.
+assert.equal(sha(cell), 'e6df0ce4d136a871c6ca23eb298c49bec3646b38bcb69b599b42cbe6fb352bef');
+assert.equal(sha(helper), '95d4ec5514869f7bdcca839cb6f6c6a77fb6a75c7254e743847462256e637213');
 function slice(start, end) {
   assert.equal(assembly.split(start).length, 2, 'unique start');
   assert.equal(assembly.split(end).length, 2, 'unique end');
@@ -105,4 +109,4 @@ assert.equal(files.size, names.length);
 assert.equal(inventory.length, names.length);
 assert.equal(writes.size, names.length);
 console.log('PASS: literal closed-list selection -> transform -> output/inventory/provenance at ' + outputPath);
-console.log('Mock I/O only; pinned reviewed Cell/helper unchanged; no module evaluation/native/build/signing');
+console.log('Mock I/O only; deliberately pinned history-slice Cell/helper; no module evaluation/native/build/signing');
