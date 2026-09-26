@@ -31,6 +31,16 @@ function owned(fd, directory) {
   );
   return s;
 }
+// A pending error wins over cleanup errors. Run every cleanup exactly once.
+// A cleanup-only failure still escapes; Linux released descriptors are never retried.
+function cleanup(failed, primary, actions) {
+  for (const action of actions) {
+    try { action(); } catch (e) {
+      if (!failed) { failed = true; primary = e; }
+    }
+  }
+  if (failed) throw primary;
+}
 export function openPrivateRoot(absolute) {
   check(
     process.platform === 'linux' &&
@@ -43,14 +53,16 @@ export function openPrivateRoot(absolute) {
   try {
     for (const p of parts) {
       const next = openSync('/proc/self/fd/' + fd + '/' + p, dirFlags);
-      closeSync(fd);
-      fd = next;
+      const closing = fd;
+      fd = next; // Transfer ownership before close can report a released-FD error.
+      closeSync(closing);
     }
     owned(fd, true);
     return fd;
   } catch (e) {
-    closeSync(fd);
-    throw e;
+    const closing = fd;
+    fd = undefined;
+    cleanup(true, e, [() => closeSync(closing)]);
   }
 }
 function parent(root, path, create, boundary) {
@@ -75,26 +87,30 @@ function parent(root, path, create, boundary) {
       try {
         owned(next, true);
       } catch (e) {
-        closeSync(next);
-        throw e;
+        cleanup(true, e, [() => closeSync(next)]);
       }
-      closeSync(fd);
-      fd = next;
+      const closing = fd;
+      fd = next; // Transfer ownership before close can report a released-FD error.
+      closeSync(closing);
     }
     return { fd, path: '/proc/self/fd/' + fd + '/' + leaf };
   } catch (e) {
-    closeSync(fd);
-    throw e;
+    const closing = fd;
+    fd = undefined;
+    cleanup(true, e, [() => closeSync(closing)]);
   }
 }
 export function listPrivate(root, relative) {
   owned(root, true);
   if (relative === undefined) return readdirSync('/proc/self/fd/' + root);
   const p = parent(root, relative + '/sentinel', false, () => {});
+  let failed = false, primary;
   try {
     return readdirSync('/proc/self/fd/' + p.fd);
+  } catch (e) {
+    failed = true; primary = e;
   } finally {
-    closeSync(p.fd);
+    cleanup(failed, primary, [() => closeSync(p.fd)]);
   }
 }
 // Bounded enumeration for read-only preflight. Unlike readdirSync, this stops
@@ -106,7 +122,7 @@ export function listPrivateBounded(root, relative, maximum) {
   owned(root, true);
   const p = relative === undefined ? null
     : parent(root, relative + '/sentinel', false, () => {});
-  let directory;
+  let directory, primary, failed = false;
   try {
     directory = opendirSync('/proc/self/fd/' + (p ? p.fd : root), { bufferSize: 1 });
     const names = [];
@@ -115,14 +131,18 @@ export function listPrivateBounded(root, relative, maximum) {
       names.push(entry.name);
     }
     return names.sort();
+  } catch (e) {
+    failed = true; primary = e;
   } finally {
-    try { if (directory) directory.closeSync(); }
-    finally { if (p) closeSync(p.fd); }
+    cleanup(failed, primary, [
+      () => { if (directory) directory.closeSync(); },
+      () => { if (p) closeSync(p.fd); },
+    ]);
   }
 }
 export function readPrivate(root, relative, maximum = 1048576) {
   const p = parent(root, relative, false, () => {});
-  let fd;
+  let fd, primary, failed = false;
   try {
     fd = openSync(p.path, C.O_RDONLY | C.O_NOFOLLOW | C.O_NONBLOCK);
     const before = owned(fd, false);
@@ -142,9 +162,15 @@ export function readPrivate(root, relative, maximum = 1048576) {
       'CONFLICT',
     );
     return b;
+  } catch (e) {
+    failed = true; primary = e;
   } finally {
-    if (fd !== undefined) closeSync(fd);
-    closeSync(p.fd);
+    const closing = fd;
+    fd = undefined;
+    cleanup(failed, primary, [
+      () => { if (closing !== undefined) closeSync(closing); },
+      () => closeSync(p.fd),
+    ]);
   }
 }
 // Each boundary is after the named real syscall, usable by external SIGKILL tests.
@@ -167,7 +193,7 @@ export function durableWrite(
   );
   const p = parent(root, relative, true, boundary),
     temporary = '/proc/self/fd/' + p.fd + '/next-' + randomUUID();
-  let fd;
+  let fd, primary, failed = false;
   try {
     fd = openSync(
       temporary,
@@ -184,16 +210,22 @@ export function durableWrite(
     }
     fsyncSync(fd);
     boundary('file-fsync');
-    closeSync(fd);
+    // Linux close releases the descriptor even when it reports an I/O error.
+    // Clear it first: retrying in finally can mask the error and leak p.fd.
+    const closing = fd;
     fd = undefined;
+    closeSync(closing);
     if (replace) {
       // Reject unsafe existing selections before atomic replacement; no contents are followed.
       try {
         const old = openSync(p.path, C.O_RDONLY | C.O_NOFOLLOW | C.O_NONBLOCK);
+        let oldFailed = false, oldError;
         try {
           owned(old, false);
+        } catch (e) {
+          oldFailed = true; oldError = e;
         } finally {
-          closeSync(old);
+          cleanup(oldFailed, oldError, [() => closeSync(old)]);
         }
       } catch (e) {
         if (e.code !== 'ENOENT') throw e;
@@ -209,8 +241,14 @@ export function durableWrite(
     fsyncSync(p.fd);
     boundary('directory-fsync');
     return rawDigest(bytes);
+  } catch (e) {
+    failed = true; primary = e;
   } finally {
-    if (fd !== undefined) closeSync(fd);
-    closeSync(p.fd);
+    const closing = fd;
+    fd = undefined;
+    cleanup(failed, primary, [
+      () => { if (closing !== undefined) closeSync(closing); },
+      () => closeSync(p.fd),
+    ]);
   }
 }
