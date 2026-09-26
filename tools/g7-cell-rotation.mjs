@@ -117,9 +117,9 @@ export function classifyStoppedRotationRecovery(observation) {
 }
 
 // INTERNAL candidate record format, not a newly admitted writer/wire schema.
-// Validates ONE rotation's immutable prefix. The caller must independently
-// authenticate the full retained lineage, including previousTransitionDigest,
-// root retirement and its inventory/checkpoint. Not a full-chain backup reader.
+// Default: ONE rotation's immutable prefix. Optional lineage mode below also
+// checks retained cross-rotation structure. The caller must still independently
+// authenticate history/inventory/checkpoints. Not a full-chain backup reader.
 // Recovery/ABORTED/unknown records are deliberately unsupported and fail closed.
 const historyBindingFields = [
   'cellId', 'rotationId', 'priorAcceptedDigest', 'priorRevision',
@@ -194,8 +194,9 @@ const structuralDenial = () => Object.freeze({
 // expected is a separately obtained structural anchor, NOT accepted from rows.
 // entries = [{path, item:{record,checksum}}], in exact sequence order.
 // expected = {binding, inventory:[{transactionId,terminalChecksum}]}.
-export function validateRotationHistoryStructure(entries, expected, hashText) {
+export function validateRotationHistoryStructure(entries, expected, hashText, lineage = null) {
   try {
+    if (lineage !== null) return rotationLineage(entries, expected, hashText, lineage).history;
     requireHistory(typeof hashText === 'function');
     // Normalize a data-only snapshot once. Subsequent reads never call getters.
     const e = JSON.parse(historyJSON(expected));
@@ -284,6 +285,150 @@ export function validateRotationHistoryStructure(entries, expected, hashText) {
   }
 }
 
+// Optional FULL retained-lineage mode of the SAME published validator/seam.
+// Fourth validator / sixth classifier argument:
+// {predecessors:[{entries,expected}], genesis:{accepted,trustDigest,floor},
+//  latest:{rotationId,terminalDigest}, accepted, currentFloor}.
+// Genesis/latest MUST be independently pinned, not reconstructed from candidate
+// rows. accepted is the independently read selected internal accepted summary.
+// Digests here bind canonical internal summaries, NOT persisted wire envelopes.
+// Null preserves the older prefix-only interface, NEVER a full-lineage claim.
+// Strict supported subset: consecutive completed rotations then one prefix;
+// no intervening ordinary acceptance, ABORTED/recovery records or compaction.
+// Omission/branch checks apply to this supplied retained snapshot, not raw disk.
+// An authenticated complete filesystem inventory and latest/fresh checkpoint
+// still require independent evidence. Structural hashes grant none of these.
+//
+// Bound the WHOLE candidate + anchors BEFORE hashing or chain validation. Token
+// accounting precedes joins/parse, includes escaped keys/UTF-8, and is shared
+// across all prefixes. 256KiB canonical input, 32768 nodes, depth32, arrays/maps
+// <=256, strings/keys <=16384, <=32 rotations and <=3 rows each. These finite
+// supported-input limits are not owner-cap changes or raw-IO/lifetime admission.
+function lineageSnapshot(value) {
+  let bytes = 262144, nodes = 32768;
+  const tokens = [];
+  const emit = (s) => {
+    for (const c of s) {
+      const n = c.codePointAt(0);
+      bytes -= n <= 0x7f ? 1 : n <= 0x7ff ? 2 : n <= 0xffff ? 3 : 4;
+      requireHistory(bytes >= 0);
+    }
+    tokens.push(s);
+  };
+  const string = (s) => { requireHistory(s.length <= 16384); emit(JSON.stringify(s)); };
+  const visit = (v, depth) => {
+    requireHistory(depth <= 32 && --nodes >= 0);
+    if (v === null || typeof v === 'boolean') { emit(JSON.stringify(v)); return; }
+    if (typeof v === 'number') {
+      requireHistory(Number.isSafeInteger(v)); emit(JSON.stringify(v)); return;
+    }
+    if (typeof v === 'string') { string(v); return; }
+    requireHistory(v !== null && typeof v === 'object');
+    const keys = Reflect.ownKeys(v);
+    if (Array.isArray(v)) {
+      requireHistory(v.length <= 256 && keys.length === v.length + 1);
+      emit('[');
+      for (let i = 0; i < v.length; i++) {
+        const d = Object.getOwnPropertyDescriptor(v, String(i));
+        requireHistory(d && 'value' in d && d.enumerable);
+        if (i) emit(','); visit(d.value, depth + 1);
+      }
+      emit(']'); return;
+    }
+    requireHistory(keys.length <= 256 && keys.every(k => typeof k === 'string' &&
+      k.length <= 16384) && closed(v, keys));
+    emit('{');
+    for (const [i, k] of keys.sort().entries()) {
+      if (i) emit(','); string(k); emit(':');
+      visit(Object.getOwnPropertyDescriptor(v, k).value, depth + 1);
+    }
+    emit('}');
+  };
+  visit(value, 0);
+  return JSON.parse(tokens.join(''));
+}
+function historyAccepted(a, cellId) {
+  requireHistory(closed(a, ['cellId', 'transactionId', 'revision', 'releaseDigest', 'floor']) &&
+    a.cellId === cellId && uuid(a.transactionId) && natural(a.revision) &&
+    a.revision > 0 && hexDigest(a.releaseDigest));
+  historyFloor(a.floor);
+}
+function rotationLineage(entries, expected, hashText, lineage) {
+  requireHistory(typeof hashText === 'function');
+  const s = lineageSnapshot({ entries, expected, lineage });
+  const l = s.lineage;
+  requireHistory(closed(l, ['predecessors', 'genesis', 'latest', 'accepted', 'currentFloor']) &&
+    Array.isArray(l.predecessors) && l.predecessors.length <= 31 &&
+    closed(l.genesis, ['accepted', 'trustDigest', 'floor']) &&
+    closed(l.latest, ['rotationId', 'terminalDigest']) &&
+    uuid(l.latest.rotationId) && hexDigest(l.latest.terminalDigest) &&
+    hexDigest(l.genesis.trustDigest));
+  const chain = [...l.predecessors, { entries: s.entries, expected: s.expected }];
+  const hash = v => { const h = hashText(historyJSON(v)); requireHistory(hexDigest(h)); return h; };
+  const equal = (a, b) => historyJSON(a) === historyJSON(b);
+  const cellId = s.expected.binding.cellId;
+  let accepted = l.genesis.accepted, floor = l.genesis.floor;
+  historyAccepted(accepted, cellId); historyMonotonic(accepted.floor, floor);
+  let trust = l.genesis.trustDigest, previous = null, finalHistory;
+  const roots = new Set([floor.rootKeyId]), rotations = new Set(), edges = new Set();
+  const transactions = new Set([accepted.transactionId]), terminals = new Map();
+  let selection, classification;
+  for (let i = 0; i < chain.length; i++) {
+    const p = chain[i], last = i === chain.length - 1;
+    requireHistory(closed(p, ['entries', 'expected']) && Array.isArray(p.entries) &&
+      p.entries.length >= 1 && p.entries.length <= 3);
+    const h = validateRotationHistoryStructure(p.entries, p.expected, hashText);
+    requireHistory(h.structurallyValid && (last || h.phase === 'COMPLETE'));
+    const b = p.expected.binding, rows = p.entries.map(r => r.item.record);
+    requireHistory(b.cellId === cellId && b.previousTransitionDigest === previous &&
+      b.priorAcceptedDigest === hash(accepted) && b.priorRevision === accepted.revision &&
+      b.priorTrustDigest === trust && !rotations.has(b.rotationId) &&
+      !edges.has(b.rotationDigest) && !transactions.has(b.targetTransactionId) &&
+      !terminals.has(b.targetTransactionId));
+    historyMonotonic(floor, b.oldFloor);
+    const next = rows[0].details.nextTrust;
+    requireHistory(!roots.has(next.rootKeyId)); // includes genesis and every retired root
+    rotations.add(b.rotationId); edges.add(b.rotationDigest); roots.add(next.rootKeyId);
+    transactions.add(b.targetTransactionId);
+    const inventory = new Map(p.expected.inventory.map(t => [t.transactionId, t.terminalChecksum]));
+    for (const [id, checksum] of terminals) requireHistory(inventory.get(id) === checksum);
+    requireHistory(inventory.has(accepted.transactionId));
+    for (const [id, checksum] of inventory) terminals.set(id, checksum);
+    if (last) {
+      requireHistory(l.latest.rotationId === b.rotationId && l.latest.terminalDigest === h.terminalDigest);
+      historyAccepted(l.accepted, cellId); historyFloor(l.currentFloor);
+      if (equal(l.accepted, accepted)) {
+        requireHistory(h.phase !== 'COMPLETE'); selection = 'PRIOR';
+      } else {
+        requireHistory(h.phase !== 'PREPARED' && l.accepted.transactionId === b.targetTransactionId &&
+          l.accepted.revision === b.targetRevision && l.accepted.releaseDigest === b.targetReleaseDigest);
+        historyMonotonic(rows[1].details.nextFloor, l.accepted.floor);
+        if (h.phase === 'COMPLETE') requireHistory(equal(l.accepted, rows[2].details.accepted));
+        selection = 'TARGET';
+      }
+      if (l.currentFloor.rootKeyId === b.oldFloor.rootKeyId) {
+        requireHistory(h.phase === 'PREPARED' && selection === 'PRIOR');
+        historyMonotonic(b.oldFloor, l.currentFloor); classification = 'EXACT_PRIOR';
+      } else {
+        // Root identity relates floors only; does NOT supply inspectPersistedTrust.
+        const nextFloor = rows.length >= 2 ? rows[1].details.nextFloor : {
+          rootKeyId: next.rootKeyId, policyVersion: next.policy.version,
+          policyDigest: hash(next.policy), revocationVersion: next.revocation.version,
+          revocationDigest: hash(next.revocation), lastWallMs: b.oldFloor.lastWallMs };
+        historyMonotonic(nextFloor, l.currentFloor);
+        if (selection === 'TARGET') historyMonotonic(l.accepted.floor, l.currentFloor);
+        if (h.phase === 'COMPLETE') historyMonotonic(rows[2].details.finalFloor, l.currentFloor);
+        classification = 'EXACT_NEXT';
+      }
+      finalHistory = h;
+    } else {
+      accepted = rows[2].details.accepted; floor = rows[2].details.finalFloor;
+      trust = b.nextTrustDigest; previous = h.terminalDigest;
+    }
+  }
+  return { history: finalHistory, expected: s.expected, selection, classification };
+}
+
 // Concrete caller seam to the existing decision layer. A future stopped entry
 // must derive expected and observation from independent custody-bound reads.
 // Structural success may restrict, NEVER supply, authenticatedHistory or any
@@ -292,12 +437,15 @@ export function validateRotationHistoryStructure(entries, expected, hashText) {
 // separate requirements. Neither this seam nor the old classifier is a writer.
 // target is the observed/proposed transaction binding, NOT an eligibility token.
 // Fresh recovery must name a new transaction, the SAME release, at prior+1.
-export function classifyRotationHistoryRecovery(entries, expected, observation, hashText, target = null) {
+export function classifyRotationHistoryRecovery(entries, expected, observation, hashText, target = null, lineage = null) {
   try {
-    const e = JSON.parse(historyJSON(expected));
-    const h = validateRotationHistoryStructure(entries, e, hashText);
+    const chain = lineage === null ? null : rotationLineage(entries, expected, hashText, lineage);
+    const e = chain ? chain.expected : JSON.parse(historyJSON(expected));
+    const h = chain ? chain.history : validateRotationHistoryStructure(entries, e, hashText);
     if (!h.structurallyValid || !closed(observation, fields) ||
-        !closed(observation.checks, checkFields) || observation.phase !== h.phase)
+        !closed(observation.checks, checkFields) || observation.phase !== h.phase ||
+        (chain && (observation.selection !== chain.selection ||
+          observation.classification !== chain.classification)))
       return unresolved();
     const decision = classifyStoppedRotationRecovery(observation);
     if (decision.disposition === 'ABORT_PRIOR') return target === null ? decision : unresolved();
