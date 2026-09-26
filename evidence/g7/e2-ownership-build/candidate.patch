@@ -1,0 +1,87 @@
+--- a/tools/build-g7-native.py
++++ b/tools/build-g7-native.py
+@@ -1,29 +1,73 @@
+-"""Host-only flock bridge; reuse authenticated, already provisioned G6 compiler. No downloads."""
++"""Host-only ownership build; explicit fresh output, pinned installed baseline. No addon loading."""
+ from pathlib import Path
++import argparse
+ import hashlib
+ import json
+ import os
+ import subprocess
++import shlex
+ 
+ R = Path(__file__).resolve().parents[1]
+ T = R / '.tools'
++parser = argparse.ArgumentParser()
++parser.add_argument('--output-directory', type=Path, required=True)
++args = parser.parse_args()
++build = args.output_directory.resolve(strict=True)
++if any(build.iterdir()):
++    raise SystemExit('Fresh empty output required')
+ lock = json.loads((R / 'native/g6/toolchain.lock.json').read_text())
+ def sha(p):
+-    return hashlib.sha256(p.read_bytes()).hexdigest()
++    h = hashlib.sha256()
++    with p.open('rb') as f:
++        for b in iter(lambda: f.read(1048576), b''):
++            h.update(b)
++    return h.hexdigest()
+ archive = T / 'g6-zig.tar.xz'
+ if archive.stat().st_size != lock['bytes'] or sha(archive) != lock['sha256']:
+     raise SystemExit('Pinned compiler archive mismatch')
+ zig = T / ('zig-x86_64-linux-' + lock['version']) / 'zig'
+-if subprocess.check_output([zig, 'version'], text=True).strip() != lock['version']:
+-    raise SystemExit('Compiler mismatch')
++if sha(zig) != '2858dc89dbbfdd08cceda1b841e7fd0a793a1a67b49f150bc3d0d1de44ed7f51':
++    raise SystemExit('Pinned installed compiler mismatch')
+ headers = T / 'node/include/node'
+ source = R / 'native/g7/ownership.c'
+-build = R / 'native/g7/build'
+-build.mkdir(parents=True, exist_ok=True)
+ output = build / 'ownership.node'
+-command = [str(zig), 'cc', '-target', 'x86_64-linux-gnu', '-std=c11', '-O2', '-Wall', '-Wextra', '-Werror', '-pthread', '-fstack-protector-strong', '-D_FORTIFY_SOURCE=2', '-fPIC', '-shared', '-Wl,-z,relro,-z,now', '-DNAPI_VERSION=9', '-I' + str(headers), str(source), '-o', str(output)]
+-subprocess.run(command, cwd=R, check=True, env={**os.environ, 'ZIG_GLOBAL_CACHE_DIR': str(T/'zig-global-cache'), 'ZIG_LOCAL_CACHE_DIR': str(T/'zig-local-cache')})
++mapfile = build / 'ownership.node.map'
++for name in ('cache-global', 'cache-local', 'tmp', 'home'):
++    (build/name).mkdir()
++env = {'PATH': '/usr/bin:/bin', 'LANG': 'C', 'HOME': str(build/'home'), 'TMPDIR': str(build/'tmp'), 'ZIG_LIB_DIR': str(zig.parent/'lib'), 'ZIG_GLOBAL_CACHE_DIR': str(build/'cache-global'), 'ZIG_LOCAL_CACHE_DIR': str(build/'cache-local')}
++if subprocess.check_output([zig, 'version'], text=True, env=env).strip() != lock['version']:
++    raise SystemExit('Compiler mismatch')
++command = [str(zig), 'cc', '-target', 'x86_64-linux-gnu', '-std=c11', '-O2', '-Wall', '-Wextra', '-Werror', '-pthread', '-fstack-protector-strong', '-D_FORTIFY_SOURCE=2', '-fPIC', '-shared', '-Wl,-z,relro,-z,now', '-DNAPI_VERSION=9', '-I' + str(headers), str(source), '-o', str(output), '-v']
+ inputs = [source, Path(__file__), R/'native/g6/toolchain.lock.json', R/'toolchain.lock.json', *sorted(headers.glob('*.h'))]
+-receipt = {'qualification': 'HOST-OWNERSHIP-ONLY', 'command': command, 'compilerArchiveSha256': sha(archive), 'compilerExecutableSha256': sha(zig), 'inputs': {str(p.relative_to(R)): sha(p) for p in inputs}, 'outputSha256': sha(output)}
+-(build/'receipt.json').write_text(json.dumps(receipt, indent=2)+'\n')
+-print(json.dumps(receipt, indent=2))
++before = {str(p.relative_to(R)): sha(p) for p in inputs}
++print(json.dumps({'event': 'compile-start', 'command': command, 'environment': env, 'inputs': before}), flush=True)
++proc = subprocess.Popen(command, cwd=build, env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
++log = proc.stdout.read(65537)
++if len(log) > 65536:
++    proc.kill(); proc.wait(); raise SystemExit('Compiler capture overflow')
++rc = proc.wait()
++with (build/'compiler.log').open('xb') as f:
++    f.write(log)
++if rc:
++    print(log.decode(errors='replace'), flush=True)
++    raise SystemExit(rc)
++links = []
++for line in log.decode().splitlines():
++    if not line.startswith('ld.lld '):
++        continue
++    args = shlex.split(line)
++    if '-o' in args and args[args.index('-o')+1] == str(output):
++        links.append([str(zig), *args])
++assert len(links) == 1 and links[0][:2] == [str(zig), 'ld.lld']
++link = links[0]
++assert link[link.index('-o')+1] == str(output)
++before_map = sha(output)
++link.append('-Map=' + str(mapfile))
++subprocess.run(link, cwd=build, check=True, env=env)
++assert sha(output) == before_map, 'Map relink changed ELF bytes'
++assert before == {str(p.relative_to(R)): sha(p) for p in inputs}
++receipt = {'qualification': 'HOST-OWNERSHIP-ONLY', 'command': command, 'environment': env, 'compilerArchiveSha256': sha(archive), 'compilerExecutableSha256': sha(zig), 'inputs': before, 'outputSha256': sha(output), 'mapSha256': sha(mapfile), 'sourceProvenance': {'publishedRef': 'a1a6a4fd015128e850b0dadaa915d376f2d8a9d3', 'ownership': 'published exact SHA256 f19c65e61cb3b437526f618eaa4b5465fa3e00437e46a5d9e1fe87fd39a99a8d; production WIP preserved separately, not integrated', 'recipe': 'E2 explicit-output candidate, unpublished'}, 'builderUid': os.getuid()}
++receipt.update({'mapCommand': link, 'compilerLogSha256': sha(build/'compiler.log'), 'mapRelinkSameElf': True})
++with (build/'receipt.json').open('x') as f:
++    f.write(json.dumps(receipt, indent=2)+'\n')
++print(json.dumps({'event': 'compile-complete', 'receipt': receipt}), flush=True)
