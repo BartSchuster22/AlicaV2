@@ -1,0 +1,14 @@
+# SOURCE_READY — G7-07 TEST-ONLY independent review
+Base 4df51e7590e4aa5316779817f9c208a467e3c7ae. Unchanged test rerun: 8/8 PASS, exit0, serial, cwd=/; new scratch-xe13aE retained. No production fix/helper change. Not published/accepted; row07/WP6 open.
+
+Read full test and three dependencies. Exact git show bytes equal slice copies; SHA256 identities/command in review/verification.json. Test paths are import.meta.url-relative, not old absolute slice paths. Package name/export/index binds @alica/acap-contracts to validation; VM uses exact finite excerpts, not installed dist/Ajv integration. Base binding is external review evidence, not a future runtime pin.
+
+Erasure removes annotations/readonly, preserves retryable=false, UUID default, Error superclass, code assignment after super, correlationId/name, fail/check default INVALID_ARGUMENT and real crypto rawDigest. Only createHash/randomUUID are runtime excerpt dependencies. Equivalent for exercised behavior; reflection/property ordering of erased declaration-only fields unqualified. Each replacement occurs exactly once; linker rejects unknown imports. Only writeSync is wrapped; other fs/crypto calls real. Executed closure has no child/network calls; not syscall containment.
+
+Failure: first real write returns3, next offset=3, retained prefix proves three real bytes before zero/ENOSPC/EFBIG. Create/replace verify prior bytes, ino/size/mode/nlink/mtimeNs/ctimeNs; create target absent. Same injected Error escapes ENOSPC/EFBIG; zero uses actual check/fail. Boundaries exactly open,write. One next-* residue with exact3 bytes/mode0600 checked, not global cleanup/all metadata. FD counts before/after durableWrite equal; source finally closes temp/parent and test finally closes root. Net-count plus source audit, not descriptor-identity tracing.
+
+Short writes: ten real writes complete19 bytes, exact offsets/lengths/digest/readback, no temp names. Test asserts rename/link presence and final directory-fsync, not whole callback sequence. Source confirms file-fsync then close, rename OR link/unlink, parent-fsync; no crash/power-loss claim.
+
+Original RESULT.md pending-review text is chronological; unchanged. Original Wasm --jitless failure and corrected log retained; no installs. Linux /proc, private writable tree, free space and VM-modules required; not cross-platform qualification.
+
+Publication: test + original result + this addendum; exact hashes in review/publication-set.json. Manual/regex secret screen clean for those files; first-party, builtins only, private UNLICENSED root/package. No helper copies to publish. Limits30+5wall/20CPU/2GiB/64FD/64KiB/core0 per process. Headroom: review/accounting.json; 980MiB commitments/prior192MiB breach retained, no refunds. No actual ENOSPC, native/fullCell or EFBIG-limit qualification. Next: existing G7-10 durability-boundary source tests; not started.
