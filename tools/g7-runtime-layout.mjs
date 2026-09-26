@@ -22,6 +22,7 @@ const safe = (p) =>
   );
 export function dependencyLayout(inventory) {
   const seen = new Set();
+  const directories = new Set();
   return inventory.map((entry) => {
     const source = entry.path;
     if (
@@ -41,9 +42,15 @@ export function dependencyLayout(inventory) {
           .map((part) => (part.startsWith('.') ? 'dot-' + part.slice(1) : part))
           .join('/');
     }
-    if (!safe(path) || seen.has(path.toLowerCase()))
+    const key = path.toLowerCase();
+    const parts = key.split('/');
+    const parents = parts.slice(0, -1).map((_, i) => parts.slice(0, i + 1).join('/'));
+    // An output file cannot also be an ancestor directory, in either order.
+    if (!safe(path) || seen.has(key) || directories.has(key) ||
+        parents.some((parent) => seen.has(parent)))
       throw new Error('invalid or colliding dependency output');
-    seen.add(path.toLowerCase());
+    seen.add(key);
+    for (const parent of parents) directories.add(parent);
     return { ...entry, source, path };
   });
 }
