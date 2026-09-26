@@ -1,4 +1,3 @@
-import { lookupOwnerCheckpointConfirmation } from './g7-owner-ingress.mjs';
 // Stopped rotation decision layer. Pure: no IO, Kernel, crypto, clock or grants.
 // Structural history and its classifier seam below share this already-packaged
 // module; no new runtime dependency or security-policy implementation is added.
@@ -465,10 +464,12 @@ export function classifyRotationHistoryRecovery(entries, expected, observation, 
   }
 }
 
-// Private lookup into the isolated authenticated ingress. Unconfigured singleton
-// returns undefined. Neither caller claims nor checkpoint data populate records.
-function readOwnerCheckpointConfirmation(cellId, checkpointDigest) {
-  return lookupOwnerCheckpointConfirmation(cellId, checkpointDigest);
+// Production bridge UNCONFIGURED. Only a future authenticated owner/control-plane
+// ingress may implement this read-only lookup. No request, checkpoint, environment,
+// path/mode, display name, same-UID token or public setter supplies authority.
+// Tests replace this lexical function in an isolated VM, explicitly TEST ONLY.
+function readOwnerCheckpointConfirmation() {
+  return undefined;
 }
 
 // Binding adapter, not an authenticator. The lexical lookup above must obtain
@@ -480,7 +481,7 @@ export function inspectCheckpointOrigin(cellId, checkpointDigest) {
   const unavailable = 'UNAVAILABLE';
   const reject = () => { throw Object.assign(new Error('CHECKPOINT_ORIGIN_MISMATCH'),
     { code: 'CHECKPOINT_ORIGIN_MISMATCH' }); };
-  const record = readOwnerCheckpointConfirmation(cellId, checkpointDigest);
+  const record = readOwnerCheckpointConfirmation();
   if (record === undefined) return unavailable;
   if (!record || typeof record !== 'object' || Array.isArray(record)) return reject();
   const fields = ['authority', 'channel', 'cellId', 'checkpointDigest', 'purpose',

@@ -1,0 +1,21 @@
+--- a/gateway/platforms/telegram.py
++++ b/gateway/platforms/telegram.py
+@@ -19,6 +19,8 @@
+ import urllib.request
+ from datetime import datetime, timezone
+ from typing import Dict, List, Optional, Any
++
++from gateway.platforms.g7_owner_ingress import ingest_raw_confirmation
+ 
+ logger = logging.getLogger(__name__)
+ 
+@@ -5063,6 +5065,9 @@
+         rapid successive text messages from the same user/chat and aggregate
+         them into a single MessageEvent before dispatching.
+         """
++        # Raw authenticated Telegram boundary, before normalization/aggregation.
++        if await ingest_raw_confirmation(update):
++            return
+         msg = self._effective_update_message(update)
+         if not msg or not msg.text:
+             return

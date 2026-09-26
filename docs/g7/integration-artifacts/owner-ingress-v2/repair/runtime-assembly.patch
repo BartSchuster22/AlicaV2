@@ -1,0 +1,39 @@
+--- a/tools/g7-runtime-assembly.mjs
++++ b/tools/g7-runtime-assembly.mjs
+@@ -32,6 +32,8 @@
+   'g7-archive.mjs',
+   'g7-cell.mjs',
+   'g7-cell-rotation.mjs',
++  'g7-owner-ingress.mjs',
++  'g7-owner-ingress-config.mjs',
+   'g7-backup.mjs',
+   'g7-restore.mjs',
+   'g7-cell-cli.mjs',
+@@ -88,6 +90,7 @@
+   const files = new Map(),
+     inputs = new Map(),
+     transformations = [];
++  const relativeEdges = [];
+   const externalNative = new Set(nativeLocations === undefined ? [] : [
+     selectedNative.paths['native/g7/build/ownership.node'], selectedNative.receipt,
+     ...['binding.json', 'bridge.node.map', 'launcher.map', 'ownership.node.map']
+@@ -180,6 +183,7 @@
+           !target.startsWith('../') && lstatSync(join(source, target)).isFile(),
+           'unresolved relative edge',
+         );
++        relativeEdges.push({ from: p, target });
+         return;
+       }
+       if (spec.startsWith('ajv/')) {
+@@ -568,6 +572,11 @@
+         e.path.split('/').length <= 16,
+       'invalid bundle path ' + e.path,
+     );
++  // Source existence is insufficient: every relative edge must be shipped and pinned.
++  const pinnedPaths = new Set(inventory.map(e => e.path));
++  for (const { from, target } of relativeEdges)
++    fail(pinnedPaths.has('runtime/' + target),
++      'unpackaged relative edge: ' + from + ' -> ' + target);
+   const result = {
+     schemaVersion: 'alica.runtime-inventory/v1',
+     qualification: 'DEVELOPMENT_RUNTIME_NOT_PRODUCTION_SIGNED',

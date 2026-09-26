@@ -1,0 +1,161 @@
+{
+  "status": "PROPOSED EXACT MAP ONLY; future focused independent re-review required, NO publication authority exercised",
+  "ALICA_baseline": "4d1db95d20ab5bff72c4f5283335487a9d155484",
+  "artifacts": [
+    {
+      "project": "ALICA",
+      "candidate": "tools/g7-runtime-assembly.mjs",
+      "destination": "tools/g7-runtime-assembly.mjs",
+      "sha256": "74b4e3193ac96660c4f381fa190fbfe985b813978a61733d0f24e1605b131651",
+      "baseline": "4d1db95d20ab5bff72c4f5283335487a9d155484",
+      "baselineSHA256": "066261cbb0729045d389f10c5e421186d5a0ab77b2ebbcad6e9a8b0cf0e3f1a0",
+      "mode": "replace exact baseline",
+      "runtimeOutput": null
+    },
+    {
+      "project": "ALICA",
+      "candidate": "tools/g7-cell-rotation.mjs",
+      "destination": "tools/g7-cell-rotation.mjs",
+      "sha256": "c0c4afce1f3ca28e6e5c61d19434e3cb7019c4177f36b01675589bb2287ccd73",
+      "baseline": "4d1db95d20ab5bff72c4f5283335487a9d155484",
+      "baselineSHA256": "116739f6c86c953f9c8fa41b842d75874da2521ed7af4c779444070389ca5347",
+      "mode": "replace exact baseline",
+      "runtimeOutput": "runtime/tools/g7-cell-rotation.mjs"
+    },
+    {
+      "project": "ALICA",
+      "candidate": "tools/g7-owner-ingress.mjs",
+      "destination": "tools/g7-owner-ingress.mjs",
+      "sha256": "2331efffc3a2a94b119f0f3216687c05338593bee9122688f90c0cf539980c03",
+      "baseline": "4d1db95d20ab5bff72c4f5283335487a9d155484",
+      "baselineSHA256": null,
+      "mode": "add",
+      "runtimeOutput": "runtime/tools/g7-owner-ingress.mjs"
+    },
+    {
+      "project": "ALICA",
+      "candidate": "tools/g7-owner-ingress-config.mjs",
+      "destination": "tools/g7-owner-ingress-config.mjs",
+      "sha256": "51073415372dd63ee05361337f74b488cdde0de2ce4e8d68e12a717fc8cfad35",
+      "baseline": "4d1db95d20ab5bff72c4f5283335487a9d155484",
+      "baselineSHA256": null,
+      "mode": "add",
+      "runtimeOutput": "runtime/tools/g7-owner-ingress-config.mjs"
+    },
+    {
+      "project": "Hermes",
+      "candidate": "gateway/platforms/g7_owner_ingress.py",
+      "destination": "gateway/platforms/g7_owner_ingress.py",
+      "sha256": "2515c6b32c31a44ff45dc624ecc27f37de47ec91553028b0e60c6999c3de38b6",
+      "baseline": "new module",
+      "baselineSHA256": null,
+      "mode": "add",
+      "runtimeOutput": null
+    },
+    {
+      "project": "Hermes",
+      "candidate": "gateway/platforms/g7_owner_ingress_config.py",
+      "destination": "gateway/platforms/g7_owner_ingress_config.py",
+      "sha256": "c871728a8326a895f98653fc0ce640d2d4b64c1ea2e6cbe84357c674fedab554",
+      "baseline": "new module",
+      "baselineSHA256": null,
+      "mode": "add",
+      "runtimeOutput": null
+    },
+    {
+      "project": "Hermes",
+      "candidate": "telegram.patch",
+      "destination": "gateway/platforms/telegram.py",
+      "mode": "apply unchanged exact patch",
+      "patchSHA256": "d300c4d34c11113469701e71fefb42648e9cf899b820276f5ab29cdf2fc8b42d",
+      "baselineSHA256": "5918579ac04a6ebe25dd55922f0137dbdf1e9ccab8f69cde19a124ddefa2c1f3",
+      "resultSource": "not copied here; unchanged exact original patch/raw fragment retained"
+    },
+    {
+      "project": "ALICA",
+      "candidate": "tools/g7-cell.mjs",
+      "destination": "tools/g7-cell.mjs",
+      "sha256": "056c397ff370c4c4504943d468a69671d6fc104f61eebe0c04bd1536c9393aa4",
+      "mode": "baseline dependency/read-only fixture; no change to publish",
+      "baseline": "4d1db95d20ab5bff72c4f5283335487a9d155484"
+    },
+    {
+      "project": "ALICA",
+      "candidate": "tools/g7-durable.mjs",
+      "destination": "tools/g7-durable.mjs",
+      "sha256": "7df0c4b46b9729017ce1638f96e6cbc0b9481f3621aaa2feb6f960330cd2eb50",
+      "mode": "baseline dependency/read-only fixture; no change to publish",
+      "baseline": "4d1db95d20ab5bff72c4f5283335487a9d155484"
+    },
+    {
+      "project": "synthetic evidence",
+      "candidate": "tests/deadline_gateway.py",
+      "destination": "isolated ingress evidence/tests/deadline_gateway.py",
+      "sha256": "4bb631eec33df87ea427eabd598f1eedeec69d1bc517a18c9382b79d77ab9f7f",
+      "mode": "test-only, NEVER runtime configuration or identity; no publication performed"
+    },
+    {
+      "project": "synthetic evidence",
+      "candidate": "tests/deadline_receiver.mjs",
+      "destination": "isolated ingress evidence/tests/deadline_receiver.mjs",
+      "sha256": "e22dea39a0fc6b4d41e24df83212c8493a3a158d625f3ca489182fc5b7bdd4c8",
+      "mode": "test-only, NEVER runtime configuration or identity; no publication performed"
+    },
+    {
+      "project": "synthetic evidence",
+      "candidate": "tests/g7-cell-recovery-preflight.test.mjs",
+      "destination": "isolated ingress evidence/tests/g7-cell-recovery-preflight.test.mjs",
+      "sha256": "a12b315c10e7b8ab4d776bb6690f031bb85d8434d9939f411a1fe66f3f76b90b",
+      "mode": "test-only, NEVER runtime configuration or identity; no publication performed"
+    },
+    {
+      "project": "synthetic evidence",
+      "candidate": "tests/gateway_test.py",
+      "destination": "isolated ingress evidence/tests/gateway_test.py",
+      "sha256": "386237eb3af566476b680c12c69780cc4c7c6f6c20bb30395d910daedb50d952",
+      "mode": "test-only, NEVER runtime configuration or identity; no publication performed"
+    },
+    {
+      "project": "synthetic evidence",
+      "candidate": "tests/packaging_test.mjs",
+      "destination": "isolated ingress evidence/tests/packaging_test.mjs",
+      "sha256": "d0622be0ba4659efe6d840257d7efabda49bebdb60c543055df92b0e8cee6e96",
+      "mode": "test-only, NEVER runtime configuration or identity; no publication performed"
+    },
+    {
+      "project": "synthetic evidence",
+      "candidate": "tests/raw-handler.py",
+      "destination": "isolated ingress evidence/tests/raw-handler.py",
+      "sha256": "f6783999dcb0b28efade362ecb5108cef812b3859d16cef0fdb2d0d0d4ebca6b",
+      "mode": "test-only, NEVER runtime configuration or identity; no publication performed"
+    },
+    {
+      "project": "synthetic evidence",
+      "candidate": "tests/receiver_test.mjs",
+      "destination": "isolated ingress evidence/tests/receiver_test.mjs",
+      "sha256": "fc9971acd6ee9cedd2fae4c9f83b480e601c731d2d4531315758058e5e137fdc",
+      "mode": "test-only, NEVER runtime configuration or identity; no publication performed"
+    },
+    {
+      "project": "synthetic evidence",
+      "candidate": "tests/synthetic.frame",
+      "destination": "isolated ingress evidence/tests/synthetic.frame",
+      "sha256": "fe419744ea3f59c8630c32d08dbf212d09bbd8b9753a85982a8c530fd46fdf30",
+      "mode": "test-only, NEVER runtime configuration or identity; no publication performed"
+    }
+  ],
+  "runtimeClosure": [
+    "tools/g7-cell-rotation.mjs",
+    "tools/g7-owner-ingress.mjs",
+    "tools/g7-owner-ingress-config.mjs"
+  ],
+  "builtinClosure": [
+    "node:tls",
+    "node:crypto",
+    "node:perf_hooks",
+    "node:timers"
+  ],
+  "HermesDependencies": "existing raw Telegram adapter plus Python stdlib hashlib,re,os,socket,ssl,struct,time,ipaddress; no new packages",
+  "runtimeDefaults": "export default null / CONFIG=None; no endpoint/owner/key provisioning",
+  "testIntegration": "tests remain isolated at this exact relative layout; relocation would require review, not blind copy into live repositories"
+}
