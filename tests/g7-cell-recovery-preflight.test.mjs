@@ -59,7 +59,7 @@ import { inspectPersistedTrust, verifyHistoricalTrustTransition } from '@alica/k
 import { parse, canonical, digest, rawDigest, check } from '@alica/acap-contracts';
 import { readPrivate, listPrivateBounded, openPrivateRoot, closeSync } from 'mock:durable-boundary';
 import { resolve, dirname, basename } from 'node:path';
-import { validateRotationHistoryStructure } from './g7-cell-rotation.mjs';
+import { validateRotationHistoryStructure, inspectCheckpointOrigin } from './g7-cell-rotation.mjs';
 import { cellSchema, limits, outcome } from 'mock:existing-cell-validation';
 ${constants}\n${configuration}
 export class Harness {

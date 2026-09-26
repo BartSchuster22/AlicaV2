@@ -463,3 +463,48 @@ export function classifyRotationHistoryRecovery(entries, expected, observation, 
     return unresolved();
   }
 }
+
+// Production bridge UNCONFIGURED. Only a future authenticated owner/control-plane
+// ingress may implement this read-only lookup. No request, checkpoint, environment,
+// path/mode, display name, same-UID token or public setter supplies authority.
+// Tests replace this lexical function in an isolated VM, explicitly TEST ONLY.
+function readOwnerCheckpointConfirmation() {
+  return undefined;
+}
+
+// Binding adapter, not an authenticator. The lexical lookup above must obtain
+// explicit confirmation in the designated owner Telegram chat, after authenticating
+// the owner independently of request/history. No production record exists today.
+// All returned data is snapshotted to primitive values; no mutable approval alias
+// escapes. Hostile in-process JS/proxies are NOT an authority isolation boundary.
+export function inspectCheckpointOrigin(cellId, checkpointDigest) {
+  const unavailable = 'UNAVAILABLE';
+  const reject = () => { throw Object.assign(new Error('CHECKPOINT_ORIGIN_MISMATCH'),
+    { code: 'CHECKPOINT_ORIGIN_MISMATCH' }); };
+  const record = readOwnerCheckpointConfirmation();
+  if (record === undefined) return unavailable;
+  if (!record || typeof record !== 'object' || Array.isArray(record)) return reject();
+  const fields = ['authority', 'channel', 'cellId', 'checkpointDigest', 'purpose',
+    'confirmationEvidence', 'independentAnchors'];
+  const descriptors = Object.getOwnPropertyDescriptors(record);
+  if (Object.keys(descriptors).length !== fields.length) return reject();
+  const values = {};
+  for (const name of fields) {
+    const d = descriptors[name];
+    if (!d || !Object.hasOwn(d, 'value') || typeof d.value !== 'string') return reject();
+    values[name] = d.value;
+  }
+  if (values.authority !== 'owner' || values.channel !== 'designated-owner-telegram-chat' ||
+      values.purpose !== 'historical rotation pins only' ||
+      values.independentAnchors !== 'genesis/latest/expected independently established' ||
+      !/^[A-Za-z0-9][A-Za-z0-9_-]{0,127}$/.test(cellId) ||
+      values.cellId !== cellId || !/^sha256:[0-9a-f]{64}$/.test(checkpointDigest) ||
+      values.checkpointDigest !== checkpointDigest ||
+      values.confirmationEvidence !== 'explicit owner confirmation\nCellID=' + cellId +
+        '\nSHA256=' + checkpointDigest + '\npurpose=historical rotation pins only') return reject();
+  // Evidence is the exact binding attested by the authenticated ingress after
+  // verifying the explicit message, NOT a display name, boolean or self-approved
+  // digest. Its authenticity is the missing ingress prerequisite, not inferred
+  // from this string. The ingress must not normalize an unrelated approval.
+  return 'ESTABLISHED';
+}

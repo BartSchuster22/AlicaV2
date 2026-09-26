@@ -23,8 +23,8 @@ assert.equal(sha(durable), '7df0c4b46b9729017ce1638f96e6cbc0b9481f3621aaa2feb6f9
 // Cell 148a8058d1d9ae6746aa283534c20cbe1b75b30b40e1be8607cdf0966aa95b08
 // helper a0a1a25541db473d296d1fdbb2dbc43bcd118cf9f08dcf25a3c4c581dd9a7d34
 // The immutable assembler fixture and every selection/provenance check remain.
-assert.equal(sha(cell), 'cba61a09295b6166577a4cf9f52f11dc216fbfae861e0dd8c3139769a6ca0155');
-assert.equal(sha(helper), '7c0d4d6dad87d99e0fdd44fb7a37b68ea8b101b41c2388551cfa628b41648d1d');
+assert.equal(sha(cell), '056c397ff370c4c4504943d468a69671d6fc104f61eebe0c04bd1536c9393aa4');
+assert.equal(sha(helper), '116739f6c86c953f9c8fa41b842d75874da2521ed7af4c779444070389ca5347');
 function slice(start, end) {
   assert.equal(assembly.split(start).length, 2, 'unique start');
   assert.equal(assembly.split(end).length, 2, 'unique end');
@@ -120,4 +120,4 @@ assert.equal(files.size, names.length);
 assert.equal(inventory.length, names.length);
 assert.equal(writes.size, names.length);
 console.log('PASS: literal closed-list selection -> transform -> output/inventory/provenance at ' + outputPath);
-console.log('Mock I/O only; pinned preflight Cell/durable and unchanged lineage helper; no module evaluation/native/build/signing');
+console.log('Mock I/O only; pinned preflight Cell/durable/helper; unchanged lineage logic; no module evaluation/native/build/signing');

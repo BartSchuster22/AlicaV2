@@ -1,5 +1,5 @@
 // Lifetime-locked Cell. Supervised custody is host-only; upgrade remains unavailable.
-import { requireOrdinaryCellRoot, validateRotationHistoryStructure } from './g7-cell-rotation.mjs';
+import { requireOrdinaryCellRoot, validateRotationHistoryStructure, inspectCheckpointOrigin } from './g7-cell-rotation.mjs';
 // Pure internal assessment only; no stopped-rotation executor is exposed yet.
 export { classifyStoppedRotationRecovery } from './g7-cell-rotation.mjs';
 // Structural-only seam; no ownedRotate/ownedRotateRecover executor or admission.
@@ -1312,7 +1312,17 @@ export class CellPreparation {
       };
       const closed = (v, keys) => check(v && typeof v === 'object' && !Array.isArray(v) &&
         same(Object.keys(v).sort(), keys.slice().sort()), 'SOURCE_MAPPING_UNAVAILABLE');
-      const checkpoint = json(checkpointFd, basename(path), 65536);
+      const checkpointBytes = read(checkpointFd, basename(path), 65536);
+      const identity = json(this.#fd, 'identity.json');
+      closed(identity, ['schemaVersion', 'cellId']);
+      check(identity.schemaVersion === 'alica.cell-identity/v1', 'ANCHORS_UNAVAILABLE');
+      guard();
+      check(--remainingOperations >= 0, 'RESOURCE_EXHAUSTED');
+      // Compare exact untrimmed bytes BEFORE parsing/interpreting the checkpoint.
+      // The lookup has no request/approval argument and is unavailable by default.
+      const historicalPinProvenance = inspectCheckpointOrigin(identity.cellId, rawDigest(checkpointBytes));
+      guard();
+      const checkpoint = parse(checkpointBytes, 65536);
       closed(checkpoint, ['schemaVersion', 'cellId', 'lineage']);
       check(checkpoint.schemaVersion === 'alica.cell-rotation-checkpoint/v1', 'ANCHORS_UNAVAILABLE');
       // Mandatory lineage: NO null/undefined/prefix-only fallback.
@@ -1326,10 +1336,7 @@ export class CellPreparation {
         /^g6-[A-Za-z0-9]{6}$/.test(n)), 'SOURCE_MAPPING_UNAVAILABLE');
       for (const n of ['identity.json', 'accepted.json', 'floor.json', 'kernel.json', 'transactions', 'rotations'])
         check(names.includes(n), 'SOURCE_MAPPING_UNAVAILABLE');
-      const identity = json(this.#fd, 'identity.json');
-      closed(identity, ['schemaVersion', 'cellId']);
-      check(identity.schemaVersion === 'alica.cell-identity/v1' &&
-        identity.cellId === checkpoint.cellId, 'ANCHORS_UNAVAILABLE');
+      check(identity.cellId === checkpoint.cellId, 'ANCHORS_UNAVAILABLE');
       const accepted = cellSchema('accepted', json(this.#fd, 'accepted.json'));
       const floor = cellSchema('floor', json(this.#fd, 'floor.json'));
       check(accepted.cellId === identity.cellId &&
@@ -1499,17 +1506,21 @@ export class CellPreparation {
         floor.rootKeyId === material.rootKeyId && floor.policyVersion === inspection.policyVersion &&
         floor.revocationVersion === inspection.revocationVersion, 'INSPECTION_BINDING_MISMATCH');
       guard();
-      // Byte authentication is NOT independent pin provenance or eligibility.
-      // No production checkpoint-provisioning attestation exists at this seam.
+      // Origin alone never promotes authenticatedHistory or any action. No
+      // production bridge is configured; only an independently trusted binding
+      // can establish origin, and every existing crypto/eligibility gate remains.
       return result('UNAVAILABLE', chain.length > 1
-        ? (historicalAPI ? 'HISTORICAL_PIN_PROVENANCE_UNAVAILABLE' : 'HISTORICAL_AUTHENTICATION_UNAVAILABLE')
+        ? (!historicalAPI ? 'HISTORICAL_AUTHENTICATION_UNAVAILABLE'
+          : historicalPinProvenance !== 'ESTABLISHED' ? 'HISTORICAL_PIN_PROVENANCE_UNAVAILABLE'
+          : 'ADMISSION_EVIDENCE_UNAVAILABLE')
         : 'ADMISSION_EVIDENCE_UNAVAILABLE', {
         historicalTransitionsVerified,
-        historicalPinProvenance: 'UNAVAILABLE',
+        historicalPinProvenance,
         structurallyValid: true, classification: inspection.classification,
         latestTransitionInspection: 'EXACT_TUPLE',
         missing: Object.freeze([
-          ...(chain.length > 1 ? [historicalAPI ? 'independentHistoricalPinProvenance' : 'historicalSignatureAPI'] : []),
+          ...(chain.length > 1 ? (!historicalAPI ? ['historicalSignatureAPI']
+            : historicalPinProvenance !== 'ESTABLISHED' ? ['independentHistoricalPinProvenance'] : []) : []),
           'currentEligibility', 'independentReplacementAuthorization',
           'durabilityEvidence', 'failureInclusiveNumericFit',
         ]),

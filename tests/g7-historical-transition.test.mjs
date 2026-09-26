@@ -7,6 +7,15 @@ import crypto from 'node:crypto';
 import vm from 'node:vm';
 import {createRequire} from 'node:module';
 const root = new URL('../', import.meta.url);
+// Actual UNMODIFIED production helper; this is NOT the TEST ingress below.
+const productionHelperText=fs.readFileSync(new URL('tools/g7-cell-rotation.mjs',root),'utf8');
+assert.equal(productionHelperText.split('function readOwnerCheckpointConfirmation() {\n  return undefined;\n}').length,2);
+const productionHelper=new vm.SourceTextModule(productionHelperText);
+await productionHelper.link(spec=>{throw Error('unexpected import '+spec);});
+await productionHelper.evaluate({timeout:1000});
+for(const claim of [undefined,true,false,{}, {authority:'owner'}, {confirmed:true}, {displayName:'owner',mode:384,path:'/anchors/checkpoint.json'}])
+ assert.equal(productionHelper.namespace.inspectCheckpointOrigin('cell1','sha256:'+'0'.repeat(64),claim),'UNAVAILABLE');
+console.log('PASS production bridge default unavailable: 7 caller-claim negatives');
 const require = createRequire(import.meta.url);
 const ts = require('typescript');
 const {Ajv2020} = require('ajv/dist/2020.js');
@@ -100,7 +109,17 @@ replace("revocation:{version:1,mock:'UNSIGNED'}","revocation:{version:n,mock:'UN
 replace("const rotation={mock:'UNSIGNED edge '+n};","const rotation=n===1 ? clone(publicFixture.rotation) : {mock:'UNSIGNED edge '+n};");
 replace("const details=[{priorTrust:trust(n),nextTrust:trust(n+1),rotation},", "if(n===1) Object.assign(b, publicFixture.independentPin);\n    const details=[{priorTrust:trust(n),nextTrust:trust(n+1),rotation},");
 replace('verifyHistoricalTrustTransition: undefined,','verifyHistoricalTrustTransition: realHistorical,');
-source = "import { publicFixture, realHistorical, stats, setMode } from 'test:crypto';\n"+source;
+// Extra caller approval arguments cannot configure the production ingress.
+replace("instance.ownedInspectRotationRecovery('/anchors/checkpoint.json')",
+ "instance.ownedInspectRotationRecovery('/anchors/checkpoint.json', {authority:'owner', confirmed:true, displayName:'owner'})");
+// TEST ONLY: replace the unconfigured lexical ingress inside the isolated VM.
+// No product setter/token/approval argument exists. Synthetic records below are
+// not owner/operator proof and are never persisted as production approvals.
+replace("const context = vm.createContext({ Buffer, process:",
+  "const context = vm.createContext({ Buffer, testReadConfirmation, process:");
+replace("new vm.SourceTextModule(helper, { context, importModuleDynamically: deny })",
+  "new vm.SourceTextModule(helper.replace('function readOwnerCheckpointConfirmation() {\\n  return undefined;\\n}', 'function readOwnerCheckpointConfirmation() {\\n  return testReadConfirmation();\\n}'), { context, importModuleDynamically: deny })");
+source = "import { publicFixture, realHistorical, stats, setMode } from 'test:crypto';\nimport { testReadConfirmation, setConfirmation } from 'test:origin';\n"+source;
 source+=`\n
 let integrationCases=0;
 const successful=await run('actual predecessor crypto',()=>{},'UNAVAILABLE','HISTORICAL_PIN_PROVENANCE_UNAVAILABLE',2);
@@ -140,6 +159,57 @@ await run('failed prior release before real historical API',f=>{
 assert.equal(stats.calls,beforePrior);assert.equal(calls,0);integrationCases++;
 console.log('PASS actual Cell full-method real predecessor integration:',integrationCases,'cases; FS/custody/latest-inspection explicitly mocked; production provenance UNAVAILABLE');
 `;
+// All bindings are synthetic TEST records, built only for fixture bytes.
+source+=`
+
+let originCases=0;
+const approve=f=>setConfirmation({authority:'owner',channel:'designated-owner-telegram-chat',
+ cellId,checkpointDigest:sha(f.files.get('CHECKPOINT')),purpose:'historical rotation pins only',
+ confirmationEvidence:'explicit owner confirmation\\nCellID='+cellId+'\\nSHA256='+sha(f.files.get('CHECKPOINT'))+'\\npurpose=historical rotation pins only',
+ independentAnchors:'genesis/latest/expected independently established'});
+const established=await run('TEST trusted exact binding + real predecessor',approve,'UNAVAILABLE','ADMISSION_EVIDENCE_UNAVAILABLE',2);
+assert.equal(established.historicalPinProvenance,'ESTABLISHED');
+assert.equal(established.historicalTransitionsVerified,1);
+assert.deepEqual(Array.from(established.missing),['currentEligibility','independentReplacementAuthorization','durabilityEvidence','failureInclusiveNumericFit']);originCases++;
+for(const field of ['authority','channel','cellId','checkpointDigest','purpose','confirmationEvidence','independentAnchors']) {
+ for(const value of [undefined,'wrong','']) {
+  const before=stats.calls;
+  await run('TEST missing/wrong '+field,f=>{const c=approve(f); if(value===undefined)delete c[field];else c[field]=value;},'DENIED','CHECKPOINT_ORIGIN_MISMATCH',2);
+  assert.equal(stats.calls,before);assert.equal(calls,0);originCases++;
+ }
+}
+for(const record of [null,true,false,{}, {displayName:'owner'}, {confirmed:true}]) {
+ await run('TEST untrusted-shaped record rejected',()=>setConfirmation(record),'DENIED','CHECKPOINT_ORIGIN_MISMATCH',2);originCases++;
+}
+for(const suffix of ['\\n',' ','\\n  ']) {
+ await run('TEST exact bytes changed after approval',f=>{approve(f); f.files.set('CHECKPOINT',Buffer.concat([f.files.get('CHECKPOINT'),Buffer.from(suffix)]));},'DENIED','CHECKPOINT_ORIGIN_MISMATCH',2);originCases++;
+ const exact=await run('TEST explicitly confirmed exact whitespace bytes',f=>{f.files.set('CHECKPOINT',Buffer.concat([f.files.get('CHECKPOINT'),Buffer.from(suffix)]));approve(f);},'UNAVAILABLE','ADMISSION_EVIDENCE_UNAVAILABLE',2);
+ assert.equal(exact.historicalPinProvenance,'ESTABLISHED');originCases++;
+}
+await run('TEST malformed tamper rejected BEFORE parse',f=>{approve(f);f.files.set('CHECKPOINT',Buffer.from('{bad json'));},'DENIED','CHECKPOINT_ORIGIN_MISMATCH',2);originCases++;
+await run('TEST approved bytes changed during inspection',f=>{approve(f);mutation=x=>x.files.set('CHECKPOINT',Buffer.from('{}'));},'DENIED','SNAPSHOT_CHANGED',2);originCases++;
+await run('TEST custody loss after confirmed origin',f=>{approve(f);mutation=()=>{lost=true;};},'DENIED','CUSTODY_LOST',2);originCases++;
+const aliased=await run('TEST mutable ingress object cannot change saved provenance',f=>{const c=approve(f);mutation=()=>{c.cellId='other';c.checkpointDigest=sha('other');};},'UNAVAILABLE','ADMISSION_EVIDENCE_UNAVAILABLE',2);
+assert.equal(aliased.historicalPinProvenance,'ESTABLISHED');originCases++;
+await run('TEST retained alias next invocation rejected',()=>{},'DENIED','CHECKPOINT_ORIGIN_MISMATCH',2);originCases++;
+await run('TEST trusted ingress exception fails closed',()=>setConfirmation('TEST_THROW'),'DENIED','TEST_INGRESS_UNAVAILABLE',2);originCases++;
+await run('TEST extra ingress field rejected',f=>{const c=approve(f);c.confirmed=true;},'DENIED','CHECKPOINT_ORIGIN_MISMATCH',2);originCases++;
+
+let getterCalls=0;
+await run('TEST ingress accessor rejected without call',f=>{const c=approve(f);Object.defineProperty(c,'authority',{get(){getterCalls++;return 'owner';}});},'DENIED','CHECKPOINT_ORIGIN_MISMATCH',2);
+assert.equal(getterCalls,0);originCases++;
+const noPredecessor=await run('TEST one edge no historical call',approve,'UNAVAILABLE','ADMISSION_EVIDENCE_UNAVAILABLE',1);
+assert.equal(noPredecessor.historicalTransitionsVerified,0);assert.equal(noPredecessor.historicalPinProvenance,'ESTABLISHED');originCases++;
+await run('TEST zero history still invalid',f=>{f.checkpoint.lineage.expected=[];f.put('CHECKPOINT',f.checkpoint);approve(f);},'DENIED','ANCHORS_UNAVAILABLE',1);originCases++;
+await run('TEST origin cannot bless unsigned second predecessor',approve,'DENIED','HISTORICAL_AUTHENTICATION_UNAVAILABLE',3);originCases++;
+setConfirmation(undefined);
+const missing=await run('TEST absent confirmation stays unavailable',()=>{},'UNAVAILABLE','HISTORICAL_PIN_PROVENANCE_UNAVAILABLE',2);
+assert.equal(missing.historicalPinProvenance,'UNAVAILABLE');originCases++;
+console.log('PASS TEST-only checkpoint origin + actual Cell + real historical verifier:',originCases,'cases; no production operator proof');
+`;
+let testConfirmation;
+const originBoundary=synthetic({testReadConfirmation:()=>{if(testConfirmation==='TEST_THROW')throw Object.assign(Error('TEST ingress unavailable'),{code:'TEST_INGRESS_UNAVAILABLE'});return testConfirmation;},
+ setConfirmation:c=>{testConfirmation=c;return c;}});
 const stats={calls:0};let mode='real';
 const boundary=synthetic({publicFixture:fixture,stats,setMode:x=>{mode=x;},realHistorical:o=>{
  stats.calls++;const actual=invoke(clone(o));
@@ -152,7 +222,7 @@ const method=new vm.SourceTextModule(source,{identifier:'actual-cell-preflight-h
 const allowed={'node:assert/strict':assert,'node:fs':fs,'node:crypto':crypto,'node:vm':vm};
 const path=await import('node:path');allowed['node:path']=path;
 const builtins=new Map(Object.entries(allowed).map(([k,v])=>[k,synthetic({...v,default:v})]));
-await method.link(spec=>{if(spec==='test:crypto')return boundary;assert(builtins.has(spec),spec);return builtins.get(spec);});
+await method.link(spec=>{if(spec==='test:origin')return originBoundary;if(spec==='test:crypto')return boundary;assert(builtins.has(spec),spec);return builtins.get(spec);});
 await method.evaluate({timeout:10000});
 assert.equal(effects,0);
 console.log('PASS no historical FS/clock effects; total actual verifies='+verifies+'; keygen=0 signing=0');
