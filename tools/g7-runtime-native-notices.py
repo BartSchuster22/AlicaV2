@@ -193,6 +193,112 @@ def select_native_inputs(root, locations=DEFAULT_LOCATIONS):
     return paths, selected[role][0].parent
 
 
+def unique_json_object(pairs):
+    result = {}
+    for key, value in pairs:
+        require(key not in result, 'duplicate JSON key: '+key)
+        result[key] = value
+    return result
+
+
+def validate_native_binding(root, paths, mapped, archive=None):
+    """Read-only receipt/source/output/map binding, never native execution.
+
+    Uses the existing three-role binding and legacy receipts unchanged. R6's
+    additional map/provenance fields, when present, must agree too. Caller owns
+    readonly filesystem custody; hashes are not build or runtime qualification.
+    """
+    root, mapped = Path(root), Path(mapped)
+    roles = ('native/g6/build/bridge.node', 'native/g6/build/launcher',
+             'native/g7/build/ownership.node')
+    require(set(paths) == set(roles), 'native path membership')
+    binding_bytes = (mapped/'binding.json').read_bytes()
+    binding = json.loads(binding_bytes, object_pairs_hook=unique_json_object)
+    require(type(binding) is list and all(type(e) is dict for e in binding) and
+            sorted(e.get('path', '') for e in binding) == sorted(roles),
+            'native binding membership')
+    lock = json.loads((root/'native/g6/toolchain.lock.json').read_bytes(),
+                      object_pairs_hook=unique_json_object)
+    def digest(path):
+        h = hashlib.sha256()
+        with path.open('rb') as stream:
+            for chunk in iter(lambda: stream.read(65536), b''):
+                h.update(chunk)
+        return h.hexdigest()
+    archive_sha = digest(Path(archive) if archive else root/'.tools/g6-zig.tar.xz')
+    compiler_sha = digest(root/('.tools/zig-x86_64-linux-'+lock['version']+'/zig'))
+    checked = {}
+    for entry in binding:
+        role = entry['path']
+        binary, receipt_path = paths[role]
+        name = Path(role).name
+        canonical = 'inputs' if role == roles[2] else 'sources'
+        cache_key = (receipt_path, canonical)
+        if cache_key not in checked:
+            receipt = json.loads(receipt_path.read_bytes(), object_pairs_hook=unique_json_object)
+            require(not ('sources' in receipt and 'inputs' in receipt),
+                    'ambiguous native receipt inputs')
+            inputs = receipt.get(canonical)
+            require(type(inputs) is dict and inputs, 'native receipt inputs')
+            mandatory = ({'native/g7/ownership.c', 'native/g6/toolchain.lock.json', 'toolchain.lock.json'}
+                         if role == roles[2] else
+                         {'native/g6/bridge.c', 'native/g6/launcher.c', 'native/g6/sandbox.c',
+                          'native/g6/toolchain.lock.json', 'toolchain.lock.json'})
+            require(mandatory <= inputs.keys(), 'native required source membership')
+            for p, expected in inputs.items():
+                require(type(p) is str and p and '\x00' not in p and
+                        all(c not in ('', '.', '..') for c in p.split('/')),
+                        'native receipt source path')
+                require(digest(root/p) == expected, 'stale native source receipt: '+p)
+            require(archive_sha == lock['sha256'] == receipt['compilerArchiveSha256'],
+                    'native compiler archive digest')
+            require(compiler_sha == receipt['compilerExecutableSha256'],
+                    'native compiler executable digest')
+            checked[cache_key] = (receipt, inputs)
+        receipt, inputs = checked[cache_key]
+        outputs = ({'ownership.node': receipt['outputSha256']} if role == roles[2]
+                   else receipt['artifacts'])
+        require(set(outputs) == ({'ownership.node'} if role == roles[2]
+                                else {'bridge.node', 'launcher'}), 'native output membership')
+        require(digest(binary) == entry['sha256'] == outputs[name],
+                'native receipt/binding output digest')
+        map_sha = digest(mapped/(name+'.map'))
+        require(map_sha == entry['mapSha256'], 'native map digest')
+        if role == roles[2]:
+            if 'mapSha256' in receipt:
+                require(map_sha == receipt['mapSha256'], 'native receipt map digest')
+            if 'sourceProvenance' in receipt:
+                require(receipt['sourceProvenance'] == {
+                    'ownershipSha256': inputs['native/g7/ownership.c'],
+                    'recipeSha256': inputs['tools/build-g7-native.py']},
+                    'native receipt source provenance')
+    return binding_bytes, binding
+
+
+def receipt_path_map(root, receipt_path):
+    """Compatibility for the reviewed R6 receipt only, not arbitrary build roots.
+
+    Call AFTER validate_native_binding. Declared source identities are checked
+    there; selected toolchain bytes are authenticated by archive_members in
+    observe. This mapping alone is structural attribution, not source proof.
+    Unknown/legacy receipts retain the historical parser behavior.
+    """
+    raw = receipt_path.read_bytes()
+    if sha(raw) != 'fe9ace315a96759f90e1b675ed3c912187ab6a77c833ccf89bf7f010d666077d':
+        return None
+    receipt = json.loads(raw, object_pairs_hook=unique_json_object)
+    build_root = '/run/g7-e2-integration-current-r6'
+    prefix = '.tools/zig-x86_64-linux-0.15.2/lib/'
+    require(receipt['command'][0] == build_root+'/.tools/zig-x86_64-linux-0.15.2/zig' and
+            build_root+'/native/g7/ownership.c' in receipt['command'], 'pinned build root')
+    paths = set(receipt['inputs'])
+    for p in (Path(root)/prefix).rglob('*'):
+        if p.is_file():
+            paths.add(p.relative_to(root).as_posix())
+            require(len(paths) <= 65536, 'path mapping count')
+    return {build_root+'/'+p: p for p in paths}
+
+
 def observe(root, archive=None, mapped=None, artifact_locations=None, *,
             native_locations=DEFAULT_LOCATIONS):
     root = Path(root)
@@ -210,16 +316,15 @@ def observe(root, archive=None, mapped=None, artifact_locations=None, *,
             mapped = selected[role][0].parent
     archive = Path(archive) if archive else root/'.tools/g6-zig.tar.xz'
     mapped = Path(mapped) if mapped else root/'evidence/g7/runtime-assembly/native-attribution-inputs'
-    lock = json.loads((root/'native/g6/toolchain.lock.json').read_bytes())
-    # Archive hashing and decoding share one opened descriptor below.
+    lock = json.loads((root/'native/g6/toolchain.lock.json').read_bytes(),
+                      object_pairs_hook=unique_json_object)
+    binding_bytes, binding = validate_native_binding(root, paths, mapped, archive)
+    # Archive decoding independently reauthenticates its opened descriptor below.
     spec = importlib.util.spec_from_file_location('native_debug', root/'tools/g7-runtime-native-debug.py')
     if spec is None or spec.loader is None:
         raise AssertionError('debug helper loader')
     debug = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(debug)
-    binding_bytes = (mapped/'binding.json').read_bytes()
-    binding = json.loads(binding_bytes)
-    require(sorted(e['path'] for e in binding) == ['native/g6/build/bridge.node', 'native/g6/build/launcher', 'native/g7/build/ownership.node'], 'native binding membership')
     files, records, artifacts = {}, {}, []
     prefix = 'zig-x86_64-linux-'+lock['version']+'/'
     def put(b):
@@ -244,8 +349,10 @@ def observe(root, archive=None, mapped=None, artifact_locations=None, *,
             if len(fields) == 5 and ':(' in fields[4] and not fields[4].startswith('<internal>'):
                 sections.append({'input':fields[4].split(':(',1)[0], 'section':fields[4].split(':(',1)[1].rstrip(')'), 'bytes':int(fields[2],16)})
         require(sections, 'empty native map sections')
-        observation = debug.source_paths(data)
-        receipt = json.loads(paths[path][1].read_bytes())
+        path_map = receipt_path_map(root, paths[path][1])
+        observation = (debug.source_paths(data) if path_map is None else
+                       debug.source_paths(data, path_map=path_map))
+        receipt = json.loads(paths[path][1].read_bytes(), object_pairs_hook=unique_json_object)
         expected = (receipt['outputSha256'] if path == 'native/g7/build/ownership.node'
                     else receipt['artifacts'][name])
         require(sha(data) == expected, 'native receipt output digest')

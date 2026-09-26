@@ -71,7 +71,22 @@ class Reader:
         return raw.decode('utf-8', 'strict'), len(raw)
 
 
-def source_paths(data):
+def source_paths(data, *, path_map=None):
+    """Optional exact absolute-to-relative mapping supplied by a trusted caller.
+
+    No root guessing, basename stripping, or normalization of ambiguous spellings.
+    Default historical parser behavior is unchanged.
+    """
+    if path_map is not None:
+        need(type(path_map) is dict and len(path_map) <= MAX_FILES, 'path mapping')
+        for absolute, relative in path_map.items():
+            need(type(absolute) is str and type(relative) is str and
+                 absolute.startswith('/') and not relative.startswith('/') and
+                 all(x not in ('', '.', '..') for x in absolute[1:].split('/')) and
+                 all(x not in ('', '.', '..') for x in relative.split('/')) and
+                 len(absolute.encode()) <= MAX_PATH_BYTES and
+                 len(relative.encode()) <= MAX_PATH_BYTES, 'path mapping spelling')
+        need(len(set(path_map.values())) == len(path_map), 'path mapping collision')
     need(64 <= len(data) <= MAX_ELF_BYTES, 'ELF size limit')
     need(data[:6] == b'\x7fELF\x02\x01', 'ELF64 little endian required')
     start = struct.unpack_from('<Q', data, 40)[0]
@@ -135,7 +150,11 @@ def source_paths(data):
 
         def file_entry(reader, filename, filename_bytes):
             nonlocal file_count, emitted
-            need(filename and '/' not in filename and filename not in ('.', '..'), 'file name')
+            if path_map is None:
+                need(filename and '/' not in filename and filename not in ('.', '..'), 'file name')
+            else:
+                need(filename and all(x not in ('', '.', '..') for x in
+                     filename.removeprefix('/').split('/')), 'file name')
             directory = reader.leb()
             reader.leb()                 # modification time, unsigned 64-bit
             reader.leb()                 # file length, unsigned 64-bit
@@ -148,7 +167,18 @@ def source_paths(data):
             # All count/expansion limits checked BEFORE constructing/storing path.
             file_count += 1
             emitted += 2 * path_bytes
-            path = prefix + '/' + filename if directory else filename
+            # Absolute filenames ignore the directory prefix, but its index is
+            # still validated above. Relative filenames retain DWARF semantics.
+            path = filename if filename.startswith('/') else (prefix + '/' + filename if directory else filename)
+            if path_map is not None:
+                need(all(x not in ('', '.', '..') for x in path.removeprefix('/').split('/')),
+                     'source path spelling')
+                need(path in path_map, 'unmapped source path')
+                path = path_map[path]
+                # Mapped output is separately charged; no expansion bypass.
+                mapped_bytes = len(path.encode())
+                need(emitted + 2 * mapped_bytes <= MAX_EMITTED_PATH_BYTES, 'emitted path limit')
+                emitted += 2 * mapped_bytes
             files.append(path)           # indices remain distinct for duplicates
             paths.add(path)
 
