@@ -68,7 +68,7 @@ class Streaming(unittest.TestCase):
 
     def test_truncated_and_malformed_denied(self):
         b = packed([('needed', b'x', tarfile.REGTYPE)])
-        for bad in (b[:-8], b'not xz', lzma.compress(b'not tar')):
+        for bad in (b[:-8], b'not xz', lzma.compress(b'not tar', preset=0)):
             with self.subTest(size=len(bad)), self.assertRaises((AssertionError, lzma.LZMAError, tarfile.TarError)):
                 self.run_archive(bad)
 
