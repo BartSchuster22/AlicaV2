@@ -144,19 +144,7 @@ export function inspectPersistedTrust(configText: string, options: TrustInspecti
     hash(pin.priorTrustDigest); hash(pin.nextTrustDigest); hash(pin.rotationDigest);
     requireValue(digest(o.priorTrust) === pin.priorTrustDigest && digest(o.nextTrust) === pin.nextTrustDigest && digest(o.rotation) === pin.rotationDigest);
     const prior = o.priorTrust, next = o.nextTrust;
-    historical(prior); historical(next);
-    object(o.rotation, ['record', 'oldSignature', 'newSignature']);
-    const r = schema<{ priorVersion: number; nextVersion: number; priorPolicyDigest: string;
-      nextPolicyDigest: string; priorKeyId: string; nextKeyId: string }>('root-rotation', o.rotation.record);
-    requireValue(prior.rootKeyId !== next.rootKeyId &&
-      r.priorKeyId === prior.rootKeyId && r.nextKeyId === next.rootKeyId &&
-      r.priorVersion === prior.policy.version && r.nextVersion === next.policy.version &&
-      r.nextVersion === r.priorVersion + 1 &&
-      r.priorPolicyDigest === digest(prior.policy) && r.nextPolicyDigest === digest(next.policy) &&
-      next.revocation.version >= prior.revocation.version &&
-      (next.revocation.version !== prior.revocation.version || digest(next.revocation) === digest(prior.revocation)));
-    signature(r, o.rotation.oldSignature, 'ALICA-ROOT-ROTATION-v1', prior);
-    signature(r, o.rotation.newSignature, 'ALICA-ROOT-ROTATION-v1', next);
+    authenticateTransition(o);
     const state = readState(o.statePath);
     object(state, ['cellId', 'rootKeyId', 'policyVersion', 'policyDigest', 'revocationVersion', 'revocationDigest', 'timeMs']);
     requireValue(typeof state.cellId === 'string' && state.cellId === pin.cellId);
@@ -174,4 +162,68 @@ export function inspectPersistedTrust(configText: string, options: TrustInspecti
     // Closed deterministic failure, including native/validation/IO/close failures.
   }
   return unresolved;
+}
+
+function authenticateTransition(o: HistoricalTrustTransitionOptions): void {
+  const prior = o.priorTrust, next = o.nextTrust;
+  historical(prior); historical(next);
+  object(o.rotation, ['record', 'oldSignature', 'newSignature']);
+  const r = schema<{ priorVersion: number; nextVersion: number; priorPolicyDigest: string;
+    nextPolicyDigest: string; priorKeyId: string; nextKeyId: string }>('root-rotation', o.rotation.record);
+  requireValue(prior.rootKeyId !== next.rootKeyId &&
+    r.priorKeyId === prior.rootKeyId && r.nextKeyId === next.rootKeyId &&
+    r.priorVersion === prior.policy.version && r.nextVersion === next.policy.version &&
+    r.nextVersion === r.priorVersion + 1 &&
+    r.priorPolicyDigest === digest(prior.policy) && r.nextPolicyDigest === digest(next.policy) &&
+    next.revocation.version >= prior.revocation.version &&
+    (next.revocation.version !== prior.revocation.version || digest(next.revocation) === digest(prior.revocation)));
+  signature(r, o.rotation.oldSignature, 'ALICA-ROOT-ROTATION-v1', prior);
+  signature(r, o.rotation.newSignature, 'ALICA-ROOT-ROTATION-v1', next);
+}
+
+/** Cryptographic byte authentication ONLY; never temporal eligibility or admission. */
+export type HistoricalTrustTransitionOptions = Pick<TrustInspectionOptions,
+  'priorTrust' | 'nextTrust' | 'rotation' | 'independentPin'>;
+export type HistoricalTrustTransition =
+  | Readonly<{ schemaVersion: 'alica.historical-trust-transition/v1'; classification: 'UNRESOLVED' }>
+  | Readonly<{
+      schemaVersion: 'alica.historical-trust-transition/v1';
+      classification: 'AUTHENTICATED';
+      /** Association supplied by the independent pin, NOT a rotation-signed cell ID. */
+      cellId: string;
+      priorTrustDigest: string;
+      nextTrustDigest: string;
+      rotationDigest: string;
+    }>;
+const unresolvedTransition: HistoricalTrustTransition = Object.freeze({
+  schemaVersion: 'alica.historical-trust-transition/v1', classification: 'UNRESOLVED',
+});
+/** Caller MUST provision independentPin outside the request being authenticated.
+ * This API cannot establish pin provenance. It authenticates exact material and
+ * rotation bytes and associates them with that pin's cellId; the rotation does
+ * not sign a cell ID. No FS, clock, signing, recorded-time eligibility, freshness,
+ * current authorization, custody, activation or admission is established.
+ * Ordinary in-process data only; hostile JS/proxies are not a security boundary.
+ */
+export function verifyHistoricalTrustTransition(
+  options: HistoricalTrustTransitionOptions,
+): HistoricalTrustTransition {
+  try {
+    const o = parse(canonical(options)) as unknown as HistoricalTrustTransitionOptions;
+    object(o, ['priorTrust', 'nextTrust', 'rotation', 'independentPin']);
+    const pin = o.independentPin;
+    object(pin, ['cellId', 'priorTrustDigest', 'nextTrustDigest', 'rotationDigest']);
+    requireValue(typeof pin.cellId === 'string' && /^[A-Za-z0-9][A-Za-z0-9_-]{0,127}$/.test(pin.cellId));
+    hash(pin.priorTrustDigest); hash(pin.nextTrustDigest); hash(pin.rotationDigest);
+    requireValue(digest(o.priorTrust) === pin.priorTrustDigest &&
+      digest(o.nextTrust) === pin.nextTrustDigest && digest(o.rotation) === pin.rotationDigest);
+    authenticateTransition(o);
+    return Object.freeze({ schemaVersion: 'alica.historical-trust-transition/v1',
+      classification: 'AUTHENTICATED', cellId: pin.cellId,
+      priorTrustDigest: pin.priorTrustDigest, nextTrustDigest: pin.nextTrustDigest,
+      rotationDigest: pin.rotationDigest });
+  } catch {
+    // No partial bindings escape schema, crypto or bounded canonical failures.
+  }
+  return unresolvedTransition;
 }

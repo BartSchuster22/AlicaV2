@@ -59,7 +59,8 @@ export {
   rawDigest,
 } from './validation.js';
 export type { SignedPackage, ReleasePackage, TrustMaterial } from './trust.js';
-export { inspectPersistedTrust } from './trust-inspection.js';
+export { inspectPersistedTrust, verifyHistoricalTrustTransition } from './trust-inspection.js';
+export type { HistoricalTrustTransitionOptions, HistoricalTrustTransition } from './trust-inspection.js';
 export type { TrustInspectionOptions, TrustInspection } from './trust-inspection.js';
 export interface Config {
   cellId: string;
