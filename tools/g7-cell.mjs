@@ -1001,6 +1001,8 @@ export class CellPreparation {
           !listPrivate(this.#fd).includes('supervision'),
         'FAILED_PRECONDITION',
       );
+      // Reject retained rotation history before coordinator/IPC construction.
+      requireOrdinaryCellRoot(listPrivate(this.#fd));
       this.#owned = true;
       try {
         this.#watch = await ownedStop(this.#root, resolve(inputs), this.#fd);
