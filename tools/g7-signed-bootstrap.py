@@ -313,7 +313,11 @@ def extract(archive, destination):
                         except FileExistsError:
                             pass
                         child = os.open(part, FLAGS | os.O_DIRECTORY, dir_fd=current)
-                        os.close(current); current = child
+                        previous, current = current, child
+                        # Own child before close: Linux may release previous
+                        # even when close raises. Cleanup must close child,
+                        # not retry a released (possibly reused) descriptor.
+                        os.close(previous)
                         runtime.private(os.fstat(current), True)
                     output = os.open(parts[-1], os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW | os.O_CLOEXEC, 0o600, dir_fd=current)
                     try:
