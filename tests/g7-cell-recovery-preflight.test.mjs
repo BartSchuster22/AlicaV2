@@ -55,7 +55,7 @@ const guard = slice(cell, '  #guard() {', '  // Read-only snapshot assessment');
 const methods = slice(cell, '  ownedInspectRotationRecovery(', '  #read(p, max) {');
 assert(!/bootstrap\(|updateTrust\(|#write\(|#advance\(|#stage\(|#status\(|#base\(/.test(methods));
 const assembled = `
-import { inspectPersistedTrust } from '@alica/kernel';
+import { inspectPersistedTrust, verifyHistoricalTrustTransition } from '@alica/kernel';
 import { parse, canonical, digest, rawDigest, check } from '@alica/acap-contracts';
 import { readPrivate, listPrivateBounded, openPrivateRoot, closeSync } from 'mock:durable-boundary';
 import { resolve, dirname, basename } from 'node:path';
@@ -103,7 +103,7 @@ const imports = new Map([
       check(a.length <= max, 'RESOURCE_EXHAUSTED'); return norm(a.slice().sort());
     },
   })],
-  ['@alica/kernel', await synthetic({ inspectPersistedTrust: (configText, options) => {
+  ['@alica/kernel', await synthetic({ verifyHistoricalTrustTransition: undefined, inspectPersistedTrust: (configText, options) => {
     calls++; const config = JSON.parse(configText);
     assert.equal(config.cellId, 'cell1'); assert.equal(config.rootScope, 'root');
     assert.equal(config.timeTrusted, true); assert.equal(config.maxCallMs, 1000);

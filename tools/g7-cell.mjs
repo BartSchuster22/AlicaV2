@@ -21,7 +21,7 @@ import { join, resolve, dirname, basename } from 'node:path';
 import { createRequire } from 'node:module';
 import { randomUUID } from 'node:crypto';
 import { Ajv2020 } from 'ajv/dist/2020.js';
-import { bootstrap, inspectPersistedTrust } from '@alica/kernel';
+import { bootstrap, inspectPersistedTrust, verifyHistoricalTrustTransition } from '@alica/kernel';
 import { canonical, parse, digest, rawDigest, check } from '@alica/acap-contracts';
 import {
   openPrivateRoot,
@@ -1440,6 +1440,31 @@ export class CellPreparation {
       const structure = validateRotationHistoryStructure(last.entries, last.expected,
         text => rawDigest(Buffer.from(text)), lineage);
       check(structure.structurallyValid, 'LINEAGE_INVALID');
+      // Use ONLY pins supplied by the separate checkpoint seam, never hashes
+      // manufactured from the history being checked. Stable private-file custody
+      // is not proof of independent checkpoint provisioning (reported below).
+      const historicalAPI = typeof verifyHistoricalTrustTransition === 'function';
+      let historicalTransitionsVerified = 0;
+      if (historicalAPI) for (const predecessor of chain.slice(0, -1)) {
+        guard();
+        check(--remainingOperations >= 0, 'RESOURCE_EXHAUSTED');
+        const { priorTrust, nextTrust, rotation } = predecessor.entries[0].item.record.details;
+        const b = predecessor.expected.binding;
+        const independentPin = { cellId: checkpoint.cellId,
+          priorTrustDigest: b.priorTrustDigest, nextTrustDigest: b.nextTrustDigest,
+          rotationDigest: b.rotationDigest };
+        const verified = verifyHistoricalTrustTransition({ priorTrust, nextTrust, rotation, independentPin });
+        guard();
+        check(verified && verified.schemaVersion === 'alica.historical-trust-transition/v1' &&
+          verified.classification === 'AUTHENTICATED' && verified.cellId === identity.cellId &&
+          verified.cellId === independentPin.cellId &&
+          verified.priorTrustDigest === independentPin.priorTrustDigest &&
+          verified.nextTrustDigest === independentPin.nextTrustDigest &&
+          verified.rotationDigest === independentPin.rotationDigest,
+          'HISTORICAL_AUTHENTICATION_UNAVAILABLE');
+        historicalTransitionsVerified++;
+      }
+
       const { priorTrust, nextTrust, rotation } = last.entries[0].item.record.details;
       const binding = last.expected.binding;
       // Exact approved ordinary API, without Host/bootstrap/update, fake state,
@@ -1472,14 +1497,17 @@ export class CellPreparation {
         floor.rootKeyId === material.rootKeyId && floor.policyVersion === inspection.policyVersion &&
         floor.revocationVersion === inspection.revocationVersion, 'INSPECTION_BINDING_MISMATCH');
       guard();
-      // No public historical-only verifier for predecessor edges. Even with no
-      // predecessor this snapshot is NOT an executable eligibility/funding probe.
-      return result('UNAVAILABLE', chain.length > 1 ? 'HISTORICAL_AUTHENTICATION_UNAVAILABLE'
+      // Byte authentication is NOT independent pin provenance or eligibility.
+      // No production checkpoint-provisioning attestation exists at this seam.
+      return result('UNAVAILABLE', chain.length > 1
+        ? (historicalAPI ? 'HISTORICAL_PIN_PROVENANCE_UNAVAILABLE' : 'HISTORICAL_AUTHENTICATION_UNAVAILABLE')
         : 'ADMISSION_EVIDENCE_UNAVAILABLE', {
+        historicalTransitionsVerified,
+        historicalPinProvenance: 'UNAVAILABLE',
         structurallyValid: true, classification: inspection.classification,
         latestTransitionInspection: 'EXACT_TUPLE',
         missing: Object.freeze([
-          ...(chain.length > 1 ? ['historicalSignatureAPI'] : []),
+          ...(chain.length > 1 ? [historicalAPI ? 'independentHistoricalPinProvenance' : 'historicalSignatureAPI'] : []),
           'currentEligibility', 'independentReplacementAuthorization',
           'durabilityEvidence', 'failureInclusiveNumericFit',
         ]),

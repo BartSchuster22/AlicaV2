@@ -23,7 +23,7 @@ assert.equal(sha(durable), '7df0c4b46b9729017ce1638f96e6cbc0b9481f3621aaa2feb6f9
 // Cell 148a8058d1d9ae6746aa283534c20cbe1b75b30b40e1be8607cdf0966aa95b08
 // helper a0a1a25541db473d296d1fdbb2dbc43bcd118cf9f08dcf25a3c4c581dd9a7d34
 // The immutable assembler fixture and every selection/provenance check remain.
-assert.equal(sha(cell), 'eb01bb3c10ccd462a88e217a985c953c8f3a8b723e29b49b19e9c445d91b7d4d');
+assert.equal(sha(cell), '5a1b3dd4c9b8b70395af244b5e1bff715532f27482884b2e13d077c7fe04cc45');
 assert.equal(sha(helper), '7c0d4d6dad87d99e0fdd44fb7a37b68ea8b101b41c2388551cfa628b41648d1d');
 function slice(start, end) {
   assert.equal(assembly.split(start).length, 2, 'unique start');
