@@ -14,6 +14,7 @@ import {
   readSync,
   statfsSync,
   readdirSync,
+  opendirSync,
 } from 'node:fs';
 import { randomUUID } from 'node:crypto';
 import { check, rawDigest } from '@alica/acap-contracts';
@@ -94,6 +95,29 @@ export function listPrivate(root, relative) {
     return readdirSync('/proc/self/fd/' + p.fd);
   } finally {
     closeSync(p.fd);
+  }
+}
+// Bounded enumeration for read-only preflight. Unlike readdirSync, this stops
+// after the first over-limit entry rather than allocating the entire directory.
+// Existing no-follow ancestor and owner/mode checks are unchanged.
+export function listPrivateBounded(root, relative, maximum) {
+  check(Number.isSafeInteger(maximum) && maximum >= 0 && maximum <= 256,
+    'INVALID_ARGUMENT');
+  owned(root, true);
+  const p = relative === undefined ? null
+    : parent(root, relative + '/sentinel', false, () => {});
+  let directory;
+  try {
+    directory = opendirSync('/proc/self/fd/' + (p ? p.fd : root), { bufferSize: 1 });
+    const names = [];
+    for (let entry; (entry = directory.readSync()) !== null;) {
+      check(names.length < maximum && entry.name.length <= 255, 'RESOURCE_EXHAUSTED');
+      names.push(entry.name);
+    }
+    return names.sort();
+  } finally {
+    try { if (directory) directory.closeSync(); }
+    finally { if (p) closeSync(p.fd); }
   }
 }
 export function readPrivate(root, relative, maximum = 1048576) {

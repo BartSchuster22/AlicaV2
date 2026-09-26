@@ -1,5 +1,5 @@
 // Lifetime-locked Cell. Supervised custody is host-only; upgrade remains unavailable.
-import { requireOrdinaryCellRoot } from './g7-cell-rotation.mjs';
+import { requireOrdinaryCellRoot, validateRotationHistoryStructure } from './g7-cell-rotation.mjs';
 // Pure internal assessment only; no stopped-rotation executor is exposed yet.
 export { classifyStoppedRotationRecovery } from './g7-cell-rotation.mjs';
 // Structural-only seam; no ownedRotate/ownedRotateRecover executor or admission.
@@ -21,12 +21,13 @@ import { join, resolve, dirname, basename } from 'node:path';
 import { createRequire } from 'node:module';
 import { randomUUID } from 'node:crypto';
 import { Ajv2020 } from 'ajv/dist/2020.js';
-import { bootstrap } from '@alica/kernel';
+import { bootstrap, inspectPersistedTrust } from '@alica/kernel';
 import { canonical, parse, digest, rawDigest, check } from '@alica/acap-contracts';
 import {
   openPrivateRoot,
   readPrivate,
   listPrivate,
+  listPrivateBounded,
   durableWrite,
 } from './g7-durable.mjs';
 import { openArchive, safePath } from './g7-archive.mjs';
@@ -1253,6 +1254,241 @@ export class CellPreparation {
         'NEEDS_OPERATOR',
       );
     check(this.#fd !== undefined, 'FAILED_PRECONDITION');
+  }
+  // Read-only snapshot assessment, NOT ownedRotateRecover or admission. The
+  // separate host/operator checkpoint path must be independently provisioned;
+  // it is never taken from a rotation request, nor treated as authentication.
+  // Existing sessions only: this entry cannot acquire/adopt detached custody.
+  ownedInspectRotationRecovery(checkpointPath) {
+    return this.#run(() => this.#inspectRotationRecovery(checkpointPath), true);
+  }
+  #inspectRotationRecovery(checkpointPath) {
+    const result = (status, reason, extra = {}) => Object.freeze({
+      schemaVersion: 'alica.cell-rotation-preflight/v1',
+      status, reason, assessment: 'READ_ONLY_SNAPSHOT',
+      disposition: 'NEEDS_OPERATOR', executionAuthorized: false,
+      authenticatedHistory: false, updateTrust: false, activationReplay: false,
+      ...extra,
+    });
+    let checkpointFd;
+    try {
+      const guard = () => {
+        this.#guard();
+        check(this.#session && this.#owned && this.#watch && this.#stopped &&
+          !this.#serving && !this.#running && !this.#host &&
+          !this.#cleanupUncertain && !this.#priorRecovery, 'CUSTODY_UNAVAILABLE');
+        this.#watch.assert();
+        check(this.#watch.stopped?.status === 'STOPPED', 'REAP_UNAVAILABLE');
+      };
+      guard(); // No path/file read before lexical custody + normal reap.
+      check(typeof checkpointPath === 'string' && checkpointPath.length <= 4096,
+        'ANCHORS_UNAVAILABLE');
+      const path = resolve(checkpointPath);
+      check(path !== this.#root && !path.startsWith(this.#root + '/'),
+        'ANCHORS_UNAVAILABLE');
+      checkpointFd = openPrivateRoot(dirname(path));
+      let remainingBytes = 262144, remainingOperations = 256;
+      const files = [], directories = [];
+      const read = (fd, p, maximum = 16384, retain = true) => {
+        guard();
+        check(--remainingOperations >= 0 && remainingBytes > 0, 'RESOURCE_EXHAUSTED');
+        const data = readPrivate(fd, p, Math.min(maximum, remainingBytes));
+        remainingBytes -= data.length;
+        check(remainingBytes >= 0, 'RESOURCE_EXHAUSTED');
+        if (retain) files.push({ fd, p, maximum, data });
+        guard();
+        return data;
+      };
+      const json = (fd, p, max) => parse(read(fd, p, max), max ?? 16384);
+      const list = (p, maximum, retain = true) => {
+        guard();
+        check(--remainingOperations >= 0, 'RESOURCE_EXHAUSTED');
+        const names = listPrivateBounded(this.#fd, p, maximum);
+        if (retain) directories.push({ p, maximum, names });
+        guard();
+        return names;
+      };
+      const closed = (v, keys) => check(v && typeof v === 'object' && !Array.isArray(v) &&
+        same(Object.keys(v).sort(), keys.slice().sort()), 'SOURCE_MAPPING_UNAVAILABLE');
+      const checkpoint = json(checkpointFd, basename(path), 65536);
+      closed(checkpoint, ['schemaVersion', 'cellId', 'lineage']);
+      check(checkpoint.schemaVersion === 'alica.cell-rotation-checkpoint/v1', 'ANCHORS_UNAVAILABLE');
+      // Mandatory lineage: NO null/undefined/prefix-only fallback.
+      closed(checkpoint.lineage, ['genesis', 'latest', 'expected']);
+      const anchors = checkpoint.lineage;
+      check(anchors.genesis && anchors.latest && Array.isArray(anchors.expected) &&
+        anchors.expected.length > 0 && anchors.expected.length <= 32, 'ANCHORS_UNAVAILABLE');
+      const names = list(undefined, 32);
+      check(names.every(n => ['identity.json', 'accepted.json', 'floor.json', 'kernel.json',
+        'transactions', 'releases', 'supervision', 'rotations'].includes(n) ||
+        /^g6-[A-Za-z0-9]{6}$/.test(n)), 'SOURCE_MAPPING_UNAVAILABLE');
+      for (const n of ['identity.json', 'accepted.json', 'floor.json', 'kernel.json', 'transactions', 'rotations'])
+        check(names.includes(n), 'SOURCE_MAPPING_UNAVAILABLE');
+      const identity = json(this.#fd, 'identity.json');
+      closed(identity, ['schemaVersion', 'cellId']);
+      check(identity.schemaVersion === 'alica.cell-identity/v1' &&
+        identity.cellId === checkpoint.cellId, 'ANCHORS_UNAVAILABLE');
+      const accepted = cellSchema('accepted', json(this.#fd, 'accepted.json'));
+      const floor = cellSchema('floor', json(this.#fd, 'floor.json'));
+      check(accepted.cellId === identity.cellId &&
+        accepted.sequence === this.#watch.stopped.sequence &&
+        digest(accepted) === this.#watch.stopped.acceptedDigest, 'REAP_BINDING_MISMATCH');
+      // Opaque bytes only; owner/mode/no-follow validation before the Kernel API.
+      read(this.#fd, 'kernel.json', 4096);
+      const ids = list('rotations', 32);
+      check(same(ids, anchors.expected.map(e => e.binding.rotationId).sort()) &&
+        new Set(ids).size === anchors.expected.length, 'SOURCE_MAPPING_UNAVAILABLE');
+      const chain = anchors.expected.map(expected => {
+        const id = expected.binding.rotationId;
+        check(/^[0-9a-f-]{36}$/.test(id), 'SOURCE_MAPPING_UNAVAILABLE');
+        const prefix = 'rotations/' + id, entries = list(prefix, 3).map((name, i) => {
+          check(name === String(i + 1).padStart(6, '0') + '.json', 'SOURCE_MAPPING_UNAVAILABLE');
+          const p = prefix + '/' + name;
+          return { path: p, item: json(this.#fd, p) };
+        });
+        check(entries.length > 0, 'SOURCE_MAPPING_UNAVAILABLE');
+        return { entries, expected };
+      });
+      // Every retained transaction must map to actual bounded journal bytes.
+      const transactions = new Map();
+      for (const id of list('transactions', 64)) {
+        check(/^[0-9a-f-]{36}$/.test(id), 'SOURCE_MAPPING_UNAVAILABLE');
+        const prefix = 'transactions/' + id;
+        const rows = list(prefix, 32).map((name, i) => {
+          check(name === String(i + 1).padStart(6, '0') + '.json', 'SOURCE_MAPPING_UNAVAILABLE');
+          return json(this.#fd, prefix + '/' + name);
+        });
+        const last = validateJournal(rows);
+        check(last.cellId === identity.cellId && last.transactionId === id, 'SOURCE_MAPPING_UNAVAILABLE');
+        transactions.set(id, { rows, last });
+      }
+      const mapped = new Set();
+      for (const { expected } of chain) {
+        for (const entry of expected.inventory) {
+          const journal = transactions.get(entry.transactionId);
+          check(journal && ['COMMITTED', 'ABORTED'].includes(journal.last.state) &&
+            journal.rows.at(-1).checksum === entry.terminalChecksum, 'SOURCE_MAPPING_UNAVAILABLE');
+          mapped.add(entry.transactionId);
+        }
+        const id = expected.binding.targetTransactionId, journal = transactions.get(id);
+        if (journal) {
+          check(journal.last.targetRevision === expected.binding.targetRevision &&
+            digest(journal.last.target) === expected.binding.targetReleaseDigest,
+            'SOURCE_MAPPING_UNAVAILABLE');
+          mapped.add(id);
+        }
+      }
+      check(mapped.size === transactions.size, 'SOURCE_MAPPING_UNAVAILABLE');
+      const selected = transactions.get(accepted.transactionId);
+      check(selected && ['ACTIVATING', 'COMMITTED'].includes(selected.last.state) &&
+        selected.last.targetRevision === accepted.sequence && same(selected.last.target, accepted.release),
+        'SOURCE_MAPPING_UNAVAILABLE');
+      monotonic(selected.last.trustFloor, accepted.trustFloor);
+      if (selected.last.state === 'COMMITTED')
+        check(same(selected.last.trustFloor, accepted.trustFloor), 'SOURCE_MAPPING_UNAVAILABLE');
+      const materials = chain.flatMap(p => {
+        const d = p.entries[0].item.record.details;
+        return [d.priorTrust, d.nextTrust];
+      });
+      // Cell floor envelopes omit digests. Map only an EXACT material tuple,
+      // never infer metadata digests merely from a root or monotonic version.
+      const mapFloor = f => {
+        const matches = materials.filter(m => m.rootKeyId === f.rootKeyId &&
+          m.policy.version === f.policyVersion && m.revocation.version === f.revocationVersion);
+        check(matches.length > 0 && matches.every(m =>
+          digest(m.policy) === digest(matches[0].policy) &&
+          digest(m.revocation) === digest(matches[0].revocation)), 'SOURCE_MAPPING_UNAVAILABLE');
+        return { ...f, policyDigest: digest(matches[0].policy), revocationDigest: digest(matches[0].revocation) };
+      };
+      // Bind every retained accepted summary to its real committed journal,
+      // not merely to another checksum-bearing internal summary.
+      const acceptedSummaries = [anchors.genesis.accepted, ...chain.flatMap(p =>
+        p.entries.length === 3 ? [p.entries[2].item.record.details.accepted] : [])];
+      for (const a of acceptedSummaries) {
+        const journal = transactions.get(a.transactionId);
+        check(journal && journal.last.state === 'COMMITTED' && a.cellId === identity.cellId &&
+          a.revision === journal.last.targetRevision && a.releaseDigest === digest(journal.last.target) &&
+          same(a.floor, mapFloor(journal.last.trustFloor)), 'SOURCE_MAPPING_UNAVAILABLE');
+      }
+      // Bind each target to THAT rotation's preceding acceptance, not the
+      // currently selected (possibly much later) release. Summaries above are
+      // mapped to committed journal bytes; lineage validation below still binds
+      // every priorAcceptedDigest, inventory, floor and completed predecessor.
+      let preceding = anchors.genesis.accepted;
+      for (const p of chain) {
+        const b = p.expected.binding;
+        check(preceding && digest(preceding) === b.priorAcceptedDigest &&
+          preceding.revision === b.priorRevision, 'SOURCE_MAPPING_UNAVAILABLE');
+        const prior = transactions.get(preceding.transactionId);
+        check(prior && digest(prior.last.target) === preceding.releaseDigest,
+          'SOURCE_MAPPING_UNAVAILABLE');
+        const target = transactions.get(b.targetTransactionId);
+        if (target)
+          check(target.last.priorRevision === preceding.revision &&
+            same(target.last.prior, prior.last.target), 'PRIOR_RELEASE_MISMATCH');
+        // A recover transaction uses this same binding when its fresh ID is
+        // actually recorded by history. Never substitute a different selected
+        // ID or relax the existing inventory/accepted/history gates for it.
+        preceding = p.entries.length === 3
+          ? p.entries[2].item.record.details.accepted : undefined;
+      }
+      const summary = { cellId: accepted.cellId, transactionId: accepted.transactionId,
+        revision: accepted.sequence, releaseDigest: digest(accepted.release), floor: mapFloor(accepted.trustFloor) };
+      const last = chain.at(-1);
+      const lineage = { predecessors: chain.slice(0, -1), genesis: anchors.genesis,
+        latest: anchors.latest, accepted: summary, currentFloor: mapFloor(floor) };
+      const structure = validateRotationHistoryStructure(last.entries, last.expected,
+        text => rawDigest(Buffer.from(text)), lineage);
+      check(structure.structurallyValid, 'LINEAGE_INVALID');
+      const { priorTrust, nextTrust, rotation } = last.entries[0].item.record.details;
+      const binding = last.expected.binding;
+      // Exact approved ordinary API, without Host/bootstrap/update, fake state,
+      // supplied clock, request token, or a request-provided authentication bit.
+      check(remainingBytes >= 4096 && --remainingOperations >= 0, 'RESOURCE_EXHAUSTED');
+      remainingBytes -= 4096; // charge API's maximum read, not an assumed zero
+      guard();
+      const inspection = inspectPersistedTrust(configuration(identity.cellId, 'root'), {
+        statePath: '/proc/' + process.pid + '/fd/' + this.#fd + '/kernel.json',
+        priorTrust, nextTrust, rotation,
+        independentPin: { cellId: identity.cellId, priorTrustDigest: binding.priorTrustDigest,
+          nextTrustDigest: binding.nextTrustDigest, rotationDigest: binding.rotationDigest },
+      });
+      guard();
+      // Recheck all observed bytes/inventories, including independent anchors;
+      // stable equality is a snapshot check, never a durability certificate.
+      for (const { fd, p, maximum, data } of files)
+        check(data.equals(read(fd, p, maximum, false)), 'SNAPSHOT_CHANGED');
+      for (const { p, maximum, names } of directories)
+        check(same(names, list(p, maximum, false)), 'SNAPSHOT_CHANGED');
+      check(inspection.schemaVersion === 'alica.trust-inspection/v1' &&
+        inspection.cellId === identity.cellId &&
+        ['EXACT_PRIOR', 'EXACT_NEXT'].includes(inspection.classification), 'AUTHENTICATION_UNAVAILABLE');
+      const material = inspection.classification === 'EXACT_PRIOR' ? priorTrust : nextTrust;
+      check(inspection.policyVersion === material.policy.version &&
+        inspection.revocationVersion === material.revocation.version &&
+        inspection.policyDigest === digest(material.policy) &&
+        inspection.revocationDigest === digest(material.revocation) &&
+        Number.isSafeInteger(inspection.lastWallMs) && inspection.lastWallMs >= floor.lastWallMs &&
+        floor.rootKeyId === material.rootKeyId && floor.policyVersion === inspection.policyVersion &&
+        floor.revocationVersion === inspection.revocationVersion, 'INSPECTION_BINDING_MISMATCH');
+      guard();
+      // No public historical-only verifier for predecessor edges. Even with no
+      // predecessor this snapshot is NOT an executable eligibility/funding probe.
+      return result('UNAVAILABLE', chain.length > 1 ? 'HISTORICAL_AUTHENTICATION_UNAVAILABLE'
+        : 'ADMISSION_EVIDENCE_UNAVAILABLE', {
+        structurallyValid: true, classification: inspection.classification,
+        latestTransitionInspection: 'EXACT_TUPLE',
+        missing: Object.freeze([
+          ...(chain.length > 1 ? ['historicalSignatureAPI'] : []),
+          'currentEligibility', 'independentReplacementAuthorization',
+          'durabilityEvidence', 'failureInclusiveNumericFit',
+        ]),
+      });
+    } catch (error) {
+      return result('DENIED', typeof error.code === 'string' ? error.code : 'SOURCE_MAPPING_UNAVAILABLE');
+    } finally {
+      if (checkpointFd !== undefined) closeSync(checkpointFd);
+    }
   }
   #read(p, max) {
     this.#guard();
