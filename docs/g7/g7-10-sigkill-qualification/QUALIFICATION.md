@@ -1,0 +1,13 @@
+# G7-10 qualification note: scoped PASS, full row OPEN
+Candidate a4b276c9c1ae275902f50b94338f48e2c9784e79; retained v6 evidence independently reviewed, not rerun. Publication-ready ONLY: this note is not published or owner-accepted.
+
+TESTED: Node 24.21.0 ran the five selected original tests in tests/g7/r1-implementation.test.mjs, unchanged SHA256 526eff5fd216cf18e7a37145a7fec0f2eaf2cc023b866dc9cd0068e211a7f03c. TAP records 5 passes, no failures/skips; build/test exits both 0. Each writer stops after the real open/write/file-fsync/rename/directory-fsync syscall, sends its boundary through IPC, receives actual SIGKILL and is awaited with signal assertion. A newly spawned reader exits 0 and asserts prior for the first three boundaries, target for the last two. Original durable-worker and g7-durable bytes match the candidate; no statfs substitution or assertion relaxation.
+
+SCOPE-QUALIFIED: disposable Linux tmpfs durable-replacement process-crash/fresh-reader behavior only. NOT actual Cell transactions, power loss/storage durability, complete G7-10, native/runtime admission, release qualification or typechecking. The changed Kernel index/trust-inspection were really emitted by TypeScript 6.0.3 --noCheck --noResolve and bound read-only into the test namespace. Emitted SHA256:
+index.js 778cc4d007b73a1fc4994e4e8e7599746f31fc54e7ccb2253c19933fc8b66566
+trust-inspection.js b76a270c3b1304489a45b61ce298abf6691e8b9854273be6d17c2678c56d5fb6
+Installed compiled dependencies are hash-pinned, read-only baseline. Their corresponding source identities match the commit; this alone does not prove their emission provenance. Relevant check/rawDigest bodies and reexports were inspected and are consistent, not mocked. No whole-build equivalence claim follows.
+
+Evidence: parent-live-v6.json, parent-execution-v6.log, g7-reconciliation-sigkill-v6-test-v6.tap, build-sha256 and parent-run-evidence exact command/manifests/source-identities. Live limits: RAM 1.5GiB, swap0, tasks56, FD64, FSIZE64KiB; CPU5000/10000 burst0 plus two sequential 5+60+5-second envelopes gives 140s wall/~70.01s CPU bound, not quota alone. Both v6 cgroups absent. Earlier v1-v5 failures remain charged/preserved; excessive parent corrections violated anti-loop discipline, not retroactively excused by PASS.
+
+ONE next acceptance criterion (ledger G7-10): exact-candidate Cell preactivation fresh-process reconciliation after verified-durable SIGKILL must yield ABORTED, unchanged identity and no accepted.json, not an activated target. Parent to execute under ordinary standing authority with scoped admission; not run here. Protected originals/NULL/held restore/signing/production untouched.
