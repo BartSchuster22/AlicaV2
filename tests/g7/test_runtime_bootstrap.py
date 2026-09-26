@@ -33,6 +33,54 @@ class RuntimeDispatch(unittest.TestCase):
                 execute.assert_not_called()
 
 
+class RuntimeReadAtOwnership(unittest.TestCase):
+    # Descriptor doubles only; no fixture, native addon, or OS-close-race claim.
+    def test_close_error_transfers_ownership_without_retry(self):
+        with patch.object(module.os, 'dup', return_value=10), \
+                patch.object(module.os, 'open', return_value=11) as opened, \
+                patch.object(module.os, 'close', side_effect=[OSError('close'), None]) as closed, \
+                patch.object(module, 'private') as private, \
+                patch.object(module.os, 'read') as read:
+            with self.assertRaisesRegex(OSError, 'close'):
+                module.read_at(9, 'runtime/payload.txt', 64, 0)
+            opened.assert_called_once_with('runtime', module.FLAGS | os.O_DIRECTORY, dir_fd=10)
+            self.assertEqual(closed.call_args_list, [call(10), call(11)])
+            private.assert_not_called()
+            read.assert_not_called()
+
+    def test_nested_open_error_releases_current_once(self):
+        with patch.object(module.os, 'dup', return_value=10), \
+                patch.object(module.os, 'open', side_effect=[11, OSError('open')]) as opened, \
+                patch.object(module.os, 'close') as closed, \
+                patch.object(module.os, 'fstat', return_value='metadata') as metadata, \
+                patch.object(module, 'private') as private, \
+                patch.object(module.os, 'read') as read:
+            with self.assertRaisesRegex(OSError, 'open'):
+                module.read_at(9, 'runtime/tools/payload.txt', 64, 0)
+            self.assertEqual(opened.call_args_list, [
+                call('runtime', module.FLAGS | os.O_DIRECTORY, dir_fd=10),
+                call('tools', module.FLAGS | os.O_DIRECTORY, dir_fd=11)])
+            self.assertEqual(closed.call_args_list, [call(10), call(11)])
+            metadata.assert_called_once_with(11)
+            private.assert_called_once_with('metadata', True)
+            read.assert_not_called()
+
+    def test_nested_validation_error_releases_new_once(self):
+        with patch.object(module.os, 'dup', return_value=10), \
+                patch.object(module.os, 'open', return_value=11) as opened, \
+                patch.object(module.os, 'close') as closed, \
+                patch.object(module.os, 'fstat', return_value='metadata') as metadata, \
+                patch.object(module, 'private', side_effect=ValueError('unsafe directory')) as private, \
+                patch.object(module.os, 'read') as read:
+            with self.assertRaisesRegex(ValueError, 'unsafe directory'):
+                module.read_at(9, 'runtime/payload.txt', 64, 0)
+            opened.assert_called_once_with('runtime', module.FLAGS | os.O_DIRECTORY, dir_fd=10)
+            self.assertEqual(closed.call_args_list, [call(10), call(11)])
+            metadata.assert_called_once_with(11)
+            private.assert_called_once_with('metadata', True)
+            read.assert_not_called()
+
+
 class RuntimeAncestors(unittest.TestCase):
     # Controlled descriptor metadata only. Real main -> verify -> helper; no
     # filesystem fixture or inventory read on denial. Not an OS race test.

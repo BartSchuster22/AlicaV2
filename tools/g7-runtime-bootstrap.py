@@ -82,8 +82,10 @@ def read_at(root, path, maximum, deadline):
         parts = path.split('/')
         for part in parts[:-1]:
             child = os.open(part, FLAGS | os.O_DIRECTORY, dir_fd=fd)
-            os.close(fd)
-            fd = child
+            previous, fd = fd, child
+            # Transfer before close, as in open_directory: a Linux close error
+            # must not leak child or retry a possibly reused previous FD.
+            os.close(previous)
             private(os.fstat(fd), True)
         child = os.open(parts[-1], FLAGS | os.O_NONBLOCK, dir_fd=fd)
         try:
