@@ -1,4 +1,7 @@
 // Lifetime-locked Cell. Supervised custody is host-only; upgrade remains unavailable.
+import { requireOrdinaryCellRoot } from './g7-cell-rotation.mjs';
+// Pure internal assessment only; no stopped-rotation executor is exposed yet.
+export { classifyStoppedRotationRecovery } from './g7-cell-rotation.mjs';
 import { OwnerChannel } from './g7-owner-channel.mjs';
 import { ownedStop } from './g7-owned-bridge.mjs';
 import { encryptBackup, recoveryRecipientId } from './g7-backup.mjs';
@@ -1272,6 +1275,7 @@ export class CellPreparation {
   #base() {
     this.#guard();
     const names = listPrivate(this.#fd);
+    requireOrdinaryCellRoot(names);
     // Public Kernel creates private g6-XXXXXX socket directories beside its
     // state file. Validate their ownership/path without treating their presence
     // or absence as authority or proof of worker death.

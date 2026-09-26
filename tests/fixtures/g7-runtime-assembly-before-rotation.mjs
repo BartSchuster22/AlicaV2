@@ -31,7 +31,6 @@ const tools = [
   'g7-admin.mjs',
   'g7-archive.mjs',
   'g7-cell.mjs',
-  'g7-cell-rotation.mjs',
   'g7-backup.mjs',
   'g7-restore.mjs',
   'g7-cell-cli.mjs',
