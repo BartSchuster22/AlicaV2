@@ -131,6 +131,10 @@ export async function stageBackupTransport(
     child.stdin.on('error', fail);
     child.stdout.on('error', fail);
     child.stdout.on('data', (chunk) => {
+      // kill() does not discard already-buffered stdout. Once any transport
+      // failure is latched, drain without further authority calls or writes;
+      // retain the partial prefix and still await close plus feeder settlement.
+      if (failure) return;
       try {
         // Live lexical authority must still hold while plaintext is emitted,
         // not merely before spawn and after a successful full stream.
