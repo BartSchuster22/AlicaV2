@@ -2,9 +2,23 @@
 
 A new, lean capability-oriented substrate: **Kernel → ACAP → SDK**.
 
-## Current stage
+## Phase 1 — verified and frozen
 
-G3, G4 and [G5](docs/gates/G5-OWNER-ACCEPTANCE.md) are accepted by the owner. For the public SDK and external developer experience: see [G5 delivery and limitations](docs/gates/G5.md), the [empty-directory tutorial](docs/sdk/TUTORIAL.md), [SDK API](docs/sdk/API.md), and [mock differences](docs/sdk/TESTKIT.md). G2 progression uses the [owner-approved manual gate](docs/gates/G2-OWNER-DISPOSITION.md); GitHub remains private. [G6 authenticated IPC](docs/gates/G6.md) has implemented runtime, recovery, confinement and qualification evidence; [G6 owner acceptance](docs/gates/G6-OWNER-ACCEPTANCE.md) records accepted candidate `79702d1`, successful authenticated foundation CI and owner approval under the existing manual control. [G7](docs/gates/G7.md) implementation is authorized: OS-environment probes and online custody setup are complete, and operator trust-bootstrap tooling is implemented with component tests. Real initial trust signing and public-Kernel verification are complete. Concrete G7 contract review and packaging/Cell/qualification work remain pending. G7 is not accepted; G8 and higher-level services are not started. Existing V1 artifacts are references, not runtime dependencies.
+**Phase 1 is Kernel + ACAP + SDK only. P1–P10 are complete for the minimal supported in-process plugin flow.**
+
+[Phase 1 completion report, acceptance matrix, evidence and scope explanation](docs/PHASE1-COMPLETION.md)
+
+The existing external SDK tutorial was rebuilt and executed: a separate author project without Kernel installed produced a plugin; a separate operator loaded it through public APIs, invoked its ACAP capability, received `42`, and disposed cleanly. No Kernel source modification was required. The post-build regression suite, type checking and public-import boundary checks passed.
+
+- Frozen source/result: [`phase1-v1.0.0`](https://github.com/BartSchuster22/AlicaV2/tree/phase1-v1.0.0).
+- Latest published work and explanation: [`g7/design-preparation`](https://github.com/BartSchuster22/AlicaV2/tree/g7/design-preparation).
+- [Latest commits on that branch](https://github.com/BartSchuster22/AlicaV2/commits/g7/design-preparation).
+
+The repository is now public. The default branch can lag this delivery branch; use the links above for the latest Phase 1 result. Historical G7 operational qualification is distinct from Phase 1 product acceptance and is not claimed complete. Existing unfinished work is preserved, not included by blanket staging. Optional hardening and testing infrastructure are deferred. No Hermes, MemoryV4, Doghouse, MCP, JEV or other integration is part of Phase 1; Phase 2 requires explicit authorization.
+
+## Historical gate context
+
+G3, G4 and [G5](docs/gates/G5-OWNER-ACCEPTANCE.md) are accepted by the owner. For the public SDK and external developer experience: see [G5 delivery and limitations](docs/gates/G5.md), the [empty-directory tutorial](docs/sdk/TUTORIAL.md), [SDK API](docs/sdk/API.md), and [mock differences](docs/sdk/TESTKIT.md). G2 progression uses the [owner-approved manual gate](docs/gates/G2-OWNER-DISPOSITION.md); GitHub was private during that gate and is now public. [G6 authenticated IPC](docs/gates/G6.md) has implemented runtime, recovery, confinement and qualification evidence; [G6 owner acceptance](docs/gates/G6-OWNER-ACCEPTANCE.md) records accepted candidate `79702d1`, successful authenticated foundation CI and owner approval under the existing manual control. [G7](docs/gates/G7.md) implementation is authorized: OS-environment probes and online custody setup are complete, and operator trust-bootstrap tooling is implemented with component tests. Real initial trust signing and public-Kernel verification are complete. Concrete G7 contract review and packaging/Cell/qualification work remain pending. G7 is not accepted; G8 and higher-level services are not started. Existing V1 artifacts are references, not runtime dependencies.
 
 - [Initiation assessment and building plan](docs/planning/ALICA_V2_Assessment_and_Step1_Building_Plan.md)
 - [Gate status](docs/gates/STATUS.md)
