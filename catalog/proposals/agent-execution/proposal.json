@@ -1,0 +1,16 @@
+{
+  "apiVersion": "catalog.alica.io/proposal-v1",
+  "id": "phase3-agent-execution",
+  "problem": "An external consumer needs a bounded request-scoped agent task through a provider-neutral contract.",
+  "existingInsufficient": "Frozen Catalog 0.1.0 includes only echo, whose unchanged-text semantics cannot represent task execution. No frozen contract is modified.",
+  "abstraction": "One unary execute operation accepts bounded task text and returns bounded result text. Model, tool, credential, transport and session choices remain provider/operator policy, not caller-selectable input.",
+  "providers": ["Hermes adapter candidate (not live-qualified)", "Deterministic read-only fixture reference (not an inference harness)"],
+  "consumers": ["Separate SDK-only task consumer"],
+  "draft": "acap://alica.io/agent/execution@1",
+  "alternatives": "Do not overload echo. Do not create separate model, tool, session or cancellation capabilities. Existing CallOptions carries cancellation/deadline. Direct harness calls would not prove ACAP portability.",
+  "security": "Invocation requires explicit operation authority. Task text cannot grant tools, choose credentials, models or endpoints. Reference implements only its documented finite task; unsupported tasks are INVALID_ARGUMENT. No automatic retries; local cancellation does not promise remote cancellation or refunded billing.",
+  "scopes": "Application/session authority from the existing Host. Execution is request-scoped with no persistence/resume; no authority inheritance.",
+  "compatibility": "New proposed major 1 identity; no mutation to Phase2 echo or snapshot. Namespace agent and release inclusion require maintained candidate policy and a distinct reviewer before promotion.",
+  "genericRationale": "Task-to-result execution can be implemented by different harnesses or a finite deterministic reference without exposing provider classes or wire formats.",
+  "proposer": "Phase3 implementation agent"
+}
