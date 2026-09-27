@@ -2,7 +2,13 @@
 
 A new, lean capability-oriented substrate: **Kernel → ACAP → SDK**.
 
-## Current stage
+## Published product phases
+
+This repository is public. [Phase1 Kernel/ACAP/SDK](https://github.com/BartSchuster22/AlicaV2/tree/phase1-v1.0.0) is frozen. [Phase2 Catalog completion and limitations](https://github.com/BartSchuster22/AlicaV2/blob/phase2-catalog-v1.0.0/docs/phase2/PHASE2-COMPLETION.md) and [executed evidence](https://github.com/BartSchuster22/AlicaV2/blob/phase2-catalog-v1.0.0/docs/phase2/EVIDENCE.md) are published at the annotated `phase2-catalog-v1.0.0` release tag. Phase3 is not authorized. These release pointers do not merge the release code into main.
+
+## Historical stage (retained baseline)
+
+The following stage description is historical, including its private-repository and gate-status statements; the published product phase pointers above are current.
 
 G3, G4 and [G5](docs/gates/G5-OWNER-ACCEPTANCE.md) are accepted by the owner. For the public SDK and external developer experience: see [G5 delivery and limitations](docs/gates/G5.md), the [empty-directory tutorial](docs/sdk/TUTORIAL.md), [SDK API](docs/sdk/API.md), and [mock differences](docs/sdk/TESTKIT.md). G2 progression uses the [owner-approved manual gate](docs/gates/G2-OWNER-DISPOSITION.md); GitHub remains private. The [G6 IPC baseline](docs/gates/G6-BASELINE-APPROVAL.md) is approved for design preparation; implementation remains gated on ADR and frame-schema review. G7–G8 and higher-level services are not started. Existing V1 artifacts are references, not runtime dependencies.
 
