@@ -6,10 +6,16 @@
   "license": "UNLICENSED",
   "exports": {
     ".": "./index.mjs",
-    "./governance": "./governance.mjs"
+    "./governance": "./governance.mjs",
+    "./release": "./release.mjs",
+    "./cli": {
+      "types": "./cli.d.mts",
+      "import": "./cli.mjs"
+    }
   },
   "files": [
     "*.mjs",
+    "*.d.mts",
     "schemas"
   ],
   "dependencies": {

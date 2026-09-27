@@ -90,7 +90,7 @@ export function violations(file, source, root) {
             '@alica/acap-types',
             '@alica/acap-contracts',
             '@alica/plugin-sdk',
-            ...(cli ? ['@alica/catalog'] : []),
+            ...(cli ? ['@alica/catalog', '@alica/catalog/cli'] : []),
           ]
         : [
             '@alica/acap-types',

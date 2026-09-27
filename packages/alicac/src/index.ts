@@ -26,6 +26,7 @@ import {
 import type { Descriptor } from '@alica/acap-types';
 import type { ConformanceCase } from '@alica/acap-contracts';
 import { loadProvider } from './provider-loader.js';
+import { catalogMain } from '@alica/catalog/cli';
 const usage =
   'alicac capability init --id org.example.echo --out capability.json\nalicac capability validate capability.json [--json]\nalicac capability generate-client capability.json --out client.mjs\nalicac capability generate-provider capability.json --out provider.mjs\nalicac plugin validate plugin.json [--json]\nalicac bundle validate bundle.json [--profile profile.json] [--json]\nalicac profile validate profile.json [--json]\nalicac conformance run --provider provider.mjs --fixtures fixtures.json [--descriptor capability.json] [--json]';
 function read(path: string): Uint8Array {
@@ -50,6 +51,7 @@ function reader(file: string) {
   };
 }
 export async function main(args: string[]): Promise<number> {
+  if (args[0] === 'catalog') return catalogMain(args.slice(1));
   const json = args.includes('--json');
   try {
     if (args.length === 0 || args[0] === '--help') {

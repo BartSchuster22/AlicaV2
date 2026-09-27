@@ -52,6 +52,7 @@ try {
     'acap-contracts',
     'plugin-sdk',
     'testkit',
+    'catalog',
     'alicac',
     'kernel',
   ]) {
@@ -106,6 +107,7 @@ try {
         'acap-contracts',
         'plugin-sdk',
         'testkit',
+        'catalog',
         'alicac',
       ].map((n) => packs[n]),
     ],
