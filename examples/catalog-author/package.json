@@ -1,0 +1,15 @@
+{
+  "name": "alica-catalog-external-author",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node verify.mjs"
+  },
+  "dependencies": {
+    "@alica/acap-contracts": "0.0.0",
+    "@alica/plugin-sdk": "0.0.0",
+    "@alica/testkit": "0.0.0",
+    "@alica/catalog": "0.1.0"
+  }
+}
