@@ -84,14 +84,24 @@ def elf(data):
     if strings is not None:
         seg = next(h for h in headers if h[0] == 1 and h[3] <= strings < h[3]+h[5])
         base = seg[2]+strings-seg[3]
+        # DT_STRSZ bounds every dynamic string, including version names.
+        # File bytes after the table are not dependency/provenance evidence.
+        lengths = [v for k, v in entries if k == 10]
+        if not (len(lengths) == 1 and 0 <= lengths[0] <= seg[2]+seg[5]-base):
+            raise AssertionError
+        # An unused empty table is valid; text() rejects every offset into it.
+        string_size = lengths[0]
+        def text(offset):
+            if not (0 <= offset < string_size):
+                raise AssertionError
+            at = base+offset
+            end = data.find(b'\0', at, base+string_size)
+            if not (end >= 0):
+                raise AssertionError
+            return data[at:end].decode()
         for tag, value in entries:
             if tag in (1, 15, 29):
-                at = base+value
-                end = data.index(b'\0', at)
-                dependencies.append({'tag': {1: 'NEEDED', 15: 'RPATH', 29: 'RUNPATH'}[tag], 'value': data[at:end].decode()})
-        def text(offset):
-            at = base+offset
-            return data[at:data.index(b'\0', at)].decode()
+                dependencies.append({'tag': {1: 'NEEDED', 15: 'RPATH', 29: 'RUNPATH'}[tag], 'value': text(value)})
         needs = next((v for k, v in entries if k == 0x6ffffffe), None)
         count = next((v for k, v in entries if k == 0x6fffffff), 0)
         if not (0 <= count <= 1024):
