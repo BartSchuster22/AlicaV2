@@ -6,7 +6,14 @@ import { parse, digest, check } from '@alica/acap-contracts';
 import { CellPreparation } from './g7-cell.mjs';
 import { OwnerChannel } from './g7-owner-channel.mjs';
 import { openPrivateRoot, readPrivate } from './g7-durable.mjs';
-const [root, input, rootFD, channelFD, acceptedDigest, inputDigest] = process.argv.slice(2);
+import { bootOwnerCheckpointIngress } from './g7-owner-ingress-boot.mjs';
+// Trusted launcher opt-in only; no config, credentials or identity on argv.
+// Strip only a trailing pair; validate the entire grammar before dependent IO.
+const args = process.argv.slice(2);
+const ingressOptIn = args.at(-2) === '--owner-checkpoint-ingress';
+const ingressPath = ingressOptIn ? args.pop() : undefined;
+if (ingressOptIn) args.pop();
+const [root, input, rootFD, channelFD, acceptedDigest, inputDigest] = args;
 // Socket-close callbacks cannot interrupt synchronous IO. Establish the OS
 // parent-death guard before adopting custody or executing any Cell operation.
 createRequire(import.meta.url)('../native/g7/build/ownership.node').guardParent(
@@ -23,7 +30,18 @@ function snapshot() {
     acceptedDigest: s.accepted ? digest(s.accepted) : null,
   };
 }
+let ingress;
 try {
+  if (args.length < 4 || args.length > 6 ||
+      args.some(arg => arg.startsWith('--')) ||
+      (ingressOptIn && (typeof ingressPath !== 'string' ||
+        !ingressPath.startsWith('/') || ingressPath.includes('\0') ||
+        Buffer.byteLength(ingressPath) > 104)))
+    throw new Error('INVALID');
+  if (ingressOptIn) {
+    ingress = bootOwnerCheckpointIngress(ingressPath);
+    await ingress.ready; // no dependent Cell operation before listener readiness
+  }
   const path = resolve(input),
     fd = openPrivateRoot(dirname(path));
   let f;
@@ -45,6 +63,8 @@ try {
     const command = channel.next();
     await channel.send({ snapshot: snapshot() });
     if ((await command) === 'STOP') {
+      // close() revokes synchronously; completion precedes shutdown/reporting.
+      await ingress?.close();
       await cell.shutdown();
       const stopped = snapshot();
       if (stopped.status !== 'STOPPED') throw new Error('CLEANUP_UNCERTAIN');
@@ -54,6 +74,8 @@ try {
     }
   }
 } catch {
+  // Revoke immediately; even failed cleanup is uncertainty, never a clean stop.
+  try { await ingress?.close(); } catch {}
   // Never translate failed owner execution into clean reap. Custodian retains lock.
   await channel.send({ uncertain: true });
   process.exit(1);

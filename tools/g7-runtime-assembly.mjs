@@ -27,12 +27,13 @@ const runtimePackages = [
   'plugin-sdk',
   'kernel',
 ];
-const tools = [
+export const runtimeTools = Object.freeze([
   'g7-admin.mjs',
   'g7-archive.mjs',
   'g7-cell.mjs',
   'g7-cell-rotation.mjs',
   'g7-owner-ingress.mjs',
+  'g7-owner-ingress-boot.mjs',
   'g7-owner-ingress-config.mjs',
   'g7-backup.mjs',
   'g7-restore.mjs',
@@ -47,7 +48,7 @@ const tools = [
   'g7-stopped-verify.mjs',
   'g7-supervisor.py',
   'g7-owned-coordinator.py',
-];
+]);
 // Lexical source selection only. Physical custody/admission is a separate gate.
 export function selectNativeInputs(source, locations = undefined) {
   source = resolve(source);
@@ -249,7 +250,7 @@ export function assembleRuntime(source, destination, ageRoot, agePin, nativeLoca
     for (const p of walk('packages/' + name + '/dist'))
       if (p.endsWith('.js')) transform(p);
   }
-  for (const name of tools)
+  for (const name of runtimeTools)
     name.endsWith('.mjs') ? transform('tools/' + name) : copy('tools/' + name);
   for (const p of [
     'docs/g7/draft/contracts.schema.json',
