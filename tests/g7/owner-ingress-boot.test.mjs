@@ -28,6 +28,7 @@ class Socket extends EventEmitter {
   destroy() { this.destroyed=true; this.emit('close'); }
 }
 async function graph({cfg=config, mode='normal', closeMode='normal'}={}) {
+  const closeError=Object.assign(Error('CLOSE_ERROR'),{code:'SYNTHETIC_CLOSE_ERROR'});
   let createCount=0, listenCount=0, server, time=0, serial=0;
   const timers=new Map();
   const setTimeout=(fn,ms)=>{const id=++serial;timers.set(id,{fn,at:time+ms});return id;};
@@ -56,7 +57,7 @@ async function graph({cfg=config, mode='normal', closeMode='normal'}={}) {
       this.closeCalls++;
       if(closeMode==='throw') throw Error('CLOSE_THROW');
       if(closeMode==='hang') return;
-      if(closeMode==='error') { queueMicrotask(()=>callback?.(Error('CLOSE_ERROR'))); return; }
+      if(closeMode==='error') { queueMicrotask(()=>callback?.(closeError)); return; }
       const running=this.listening;
       if(callback) this.once('close',()=>{
         if(!running) this.duplicateErrors++;
@@ -104,7 +105,7 @@ async function graph({cfg=config, mode='normal', closeMode='normal'}={}) {
   assert.equal([...modules.keys()].filter(k=>k.endsWith('/g7-owner-ingress.mjs')).length,1);
   assert.equal(createCount,0);assert.equal(listenCount,0);
   const ns=entry.namespace;
-  return {...ns,advance,timers,modules,get server(){return server;},get createCount(){return createCount;},
+  return {...ns,advance,timers,modules,closeError,get server(){return server;},get createCount(){return createCount;},
     get listenCount(){return listenCount;},
     send(cell, socket=new Socket()) {server.handler(socket);socket.emit('data',pack(cell));socket.emit('end');return socket;},
     inspect(cell){return ns.origin.inspectCheckpointOrigin(cell,digest);},
@@ -225,4 +226,31 @@ test('unknown cleanup cannot succeed from abort alone or a late event',async()=>
   g.advance(2000);await assert.rejects(closed,/CLOSE_TIMEOUT/);
   g.server.unsolicitedClose();await assert.rejects(life.close(),/CLOSE_TIMEOUT/);
   assert.equal(g.inspect('LATE'),'UNAVAILABLE');
+});
+
+test('callback error precedes timeout and close rejection is irreversible',async()=>{
+  const g=await graph({closeMode:'error'});const life=g.start();await life.ready;
+  g.send('BEFORE_CALLBACK');assert.equal(g.inspect('BEFORE_CALLBACK'),'ESTABLISHED');
+  const pending=new Socket();g.server.handler(pending);pending.emit('data',pack('PENDING_CALLBACK'));
+  let settled=false;
+  const closed=life.close();closed.then(()=>{settled=true;},()=>{settled=true;});
+  assert.equal(life.close(),closed);assert.equal(settled,false);
+  assert.equal(g.server.closeCalls,1);assert.equal(g.server.closeEvents,0);
+  assert(g.server.options.signal.aborted);assert(pending.destroyed);
+  pending.emit('end');assert.equal(g.inspect('PENDING_CALLBACK'),'UNAVAILABLE');
+  assert.equal(g.inspect('BEFORE_CALLBACK'),'UNAVAILABLE');
+  g.send('AFTER_CALLBACK_CLOSE');assert.equal(g.inspect('AFTER_CALLBACK_CLOSE'),'UNAVAILABLE');
+  // Keep the cancelled deadline callable to model an already queued late timer.
+  const lateTimers=[...g.timers.values()].map(t=>t.fn);assert.equal(lateTimers.length,1);
+  // Flush queued callback before any advance: TIMEOUT cannot satisfy this check.
+  await Promise.resolve();
+  const original=error=>{assert.equal(error,g.closeError);assert.equal(error.code,'SYNTHETIC_CLOSE_ERROR');return true;};
+  await assert.rejects(closed,original);assert.equal(settled,true);assert.equal(g.timers.size,0);
+  g.server.unsolicitedClose();g.server.emit('listening');
+  for(const timer of lateTimers)timer();g.advance(4000);
+  assert.equal(life.close(),closed);await assert.rejects(life.close(),original);
+  g.send('LATE_CALLBACK');assert.equal(g.inspect('LATE_CALLBACK'),'UNAVAILABLE');
+  assert.throws(()=>g.start(),/ALREADY_BOOTED/);
+  assert.equal(g.server.closeCalls,1);assert.equal(g.server.closeEvents,1);
+  assert.equal(g.server.duplicateErrors,0);assert.equal(g.timers.size,0);
 });
