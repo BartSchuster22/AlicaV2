@@ -1,0 +1,16 @@
+{
+  "apiVersion": "catalog.alica.io/proposal-v1",
+  "id": "echo-reference",
+  "problem": "External plugin authors need a neutral Catalog-to-ACAP interoperability proof.",
+  "existingInsufficient": "The Phase1 baseline has no governed Catalog contract to consume.",
+  "abstraction": "Bounded text round-trip independent of provider implementation.",
+  "providers": ["neutral reference fixture"],
+  "consumers": ["external plugin author example"],
+  "draft": "acap://alica.io/example/echo@1",
+  "alternatives": "Arithmetic is possible but introduces unnecessary numerical semantics.",
+  "security": "Bounded text, no persistence, no authority grants; runtime policy remains external.",
+  "scopes": "Application and session vocabulary only; no self-granted scope.",
+  "compatibility": "Preserve accepted input and promised output; review semantic changes.",
+  "genericRationale": "Echo names no product, runtime, plugin or provider in its definition.",
+  "proposer": "reference-fixture-author"
+}

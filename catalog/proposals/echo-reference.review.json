@@ -1,0 +1,12 @@
+{
+  "proposal": "echo-reference",
+  "reviewer": "reference-fixture-reviewer",
+  "decision": "accepted",
+  "rationale": "Synthetic workflow example: bounded neutral echo separates contract from provider and grants no authority. This record is not an independently authenticated human review or production release approval.",
+  "checks": {
+    "abstraction": true,
+    "security": true,
+    "scopes": true,
+    "compatibility": true
+  }
+}

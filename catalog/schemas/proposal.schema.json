@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://alica.io/catalog/proposal-v1.schema.json",
+  "title": "Catalog Proposal v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "apiVersion",
+    "id",
+    "problem",
+    "existingInsufficient",
+    "abstraction",
+    "providers",
+    "consumers",
+    "draft",
+    "alternatives",
+    "security",
+    "scopes",
+    "compatibility",
+    "genericRationale",
+    "proposer"
+  ],
+  "definitions": {
+    "text": { "type": "string", "pattern": "\\S" },
+    "candidates": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/definitions/text" }
+    }
+  },
+  "properties": {
+    "apiVersion": { "const": "catalog.alica.io/proposal-v1" },
+    "id": { "$ref": "#/definitions/text" },
+    "problem": { "$ref": "#/definitions/text" },
+    "existingInsufficient": { "$ref": "#/definitions/text" },
+    "abstraction": { "$ref": "#/definitions/text" },
+    "providers": { "$ref": "#/definitions/candidates" },
+    "consumers": { "$ref": "#/definitions/candidates" },
+    "draft": { "$ref": "#/definitions/text" },
+    "alternatives": { "$ref": "#/definitions/text" },
+    "security": { "$ref": "#/definitions/text" },
+    "scopes": { "$ref": "#/definitions/text" },
+    "compatibility": { "$ref": "#/definitions/text" },
+    "genericRationale": { "$ref": "#/definitions/text" },
+    "proposer": { "$ref": "#/definitions/text" }
+  }
+}
