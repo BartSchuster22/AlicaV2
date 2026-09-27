@@ -14,9 +14,9 @@ export function createProcessRunner({executable,args,cwd,env,graceMs=50,maxOutpu
   let wire;try{wire=JSON.stringify(input)+'\n';if(Buffer.byteLength(wire)>32768)throw failure('INVALID_ARGUMENT')}catch{return Promise.reject(failure('INVALID_ARGUMENT'))}
   const job={child:null,done:null,stop:null};current=job;
   job.done=new Promise((resolve,reject)=>{
-   let child,output='',bytes=0,code=null,termTimer,hardTimer,deadlineTimer,settled=false;
+   let child,output=[],bytes=0,code=null,termTimer,hardTimer,deadlineTimer,settled=false;
    const finish=()=>{if(settled)return;settled=true;clearTimeout(termTimer);clearTimeout(hardTimer);clearTimeout(deadlineTimer);signal.removeEventListener('abort',abort);if(current===job)current=null;
-    if(code){reject(failure(code));return}try{const value=JSON.parse(output);if(!value||typeof value!=='object'||Array.isArray(value))throw new Error();resolve(value)}catch{reject(failure('INTERNAL'))}
+    if(code){reject(failure(code));return}try{const value=JSON.parse(Buffer.concat(output).toString('utf8'));if(!value||typeof value!=='object'||Array.isArray(value))throw new Error();resolve(value)}catch{reject(failure('INTERNAL'))}
    };
    const stop=reason=>{if(settled||code)return;code=reason;try{kill(child,'SIGTERM')}catch{poisoned=true}
     termTimer=setTimeout(()=>{try{kill(child,'SIGKILL')}catch{poisoned=true}},graceMs);
@@ -25,11 +25,22 @@ export function createProcessRunner({executable,args,cwd,env,graceMs=50,maxOutpu
    const abort=()=>stop(Date.now()>=deadlineMs?'DEADLINE_EXCEEDED':'CANCELLED');job.stop=stop;
    try{child=spawn(executable,fixedArgs,{cwd,env:fixedEnv,stdio:['pipe','pipe','pipe'],detached:true,shell:false});job.child=child;}catch{code='UNAVAILABLE';finish();return}
    child.on('error',()=>{code='UNAVAILABLE';finish()});
-   child.stdout.on('data',chunk=>{bytes+=chunk.length;if(bytes>maxOutputBytes){stop('INTERNAL');return}output+=chunk.toString('utf8')});
+   child.stdout.on('data',chunk=>{bytes+=chunk.length;if(bytes>maxOutputBytes){stop('INTERNAL');return}output.push(chunk)});
    // Bound stderr jointly; never return/log its potentially sensitive content.
    child.stderr.on('data',chunk=>{bytes+=chunk.length;if(bytes>maxOutputBytes)stop('INTERNAL')});
    child.stdin.on('error',()=>stop('UNAVAILABLE'));
-   child.on('close',status=>{try{kill(child,'SIGKILL')}catch{poisoned=true}if(status!==0&&!code)code='UNAVAILABLE';finish()});
+   child.on('close',status=>{
+    if(settled)return;
+    try{kill(child,'SIGKILL')}catch{poisoned=true}
+    if(status!==0&&!code)code='UNAVAILABLE';
+    // A successful signal is not disappearance evidence. ESRCH is the only
+    // positive group-absence observation; unreaped zombies may conservatively
+    // poison this runner. Escaped sessions are outside the trusted-code model.
+    const until=Date.now()+100;
+    const probe=()=>{if(settled)return;try{process.kill(-child.pid,0)}catch(e){if(e.code==='ESRCH'){finish();return}poisoned=true;code ||= 'INTERNAL';finish();return}
+     if(Date.now()>=until){poisoned=true;code ||= 'INTERNAL';finish();return}setTimeout(probe,5);
+    };probe();
+   });
    signal.addEventListener('abort',abort,{once:true});deadlineTimer=setTimeout(()=>stop('DEADLINE_EXCEEDED'),Math.min(120000,Math.max(1,deadlineMs-Date.now())));
    if(signal.aborted)abort();else child.stdin.end(wire);
   });

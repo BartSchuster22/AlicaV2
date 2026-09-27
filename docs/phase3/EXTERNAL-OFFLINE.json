@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "alica.phase3-external/v1",
+  "consumerDigest": "sha256:aaaf85e09346643be3735780918185ff2632958a29a87f57b5caec00034a73aa",
+  "consumerUnchanged": true,
+  "consumerHasNoKernel": true,
+  "publicPackedArtifacts": true,
+  "reports": [
+    {
+      "mode": "neutral",
+      "result": {
+        "text": "ALICA request-scoped fixture"
+      },
+      "snapshotDigest": "sha256:98aa324f38e7a25cbdaeb62174ad0644c1ca0dbbf2964a0f60390cbd76c43559",
+      "deniedBeforeGrant": true,
+      "resources": {
+        "effects": 0,
+        "listeners": 0,
+        "pendingCalls": 0,
+        "registrations": 0
+      },
+      "liveInference": false
+    },
+    {
+      "mode": "hermes-offline",
+      "result": {
+        "text": "ALICA request-scoped fixture"
+      },
+      "snapshotDigest": "sha256:98aa324f38e7a25cbdaeb62174ad0644c1ca0dbbf2964a0f60390cbd76c43559",
+      "deniedBeforeGrant": true,
+      "resources": {
+        "effects": 0,
+        "listeners": 0,
+        "pendingCalls": 0,
+        "registrations": 0
+      },
+      "runner": {
+        "closed": true,
+        "poisoned": false,
+        "pending": 0
+      },
+      "liveInference": false
+    }
+  ],
+  "liveH12": false
+}

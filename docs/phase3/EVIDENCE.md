@@ -1,4 +1,18 @@
-# Phase3 evidence — M1 WIP / M2 candidate
+# Phase3 evidence — tested offline native/external milestone; H12 open
+
+## Latest executed milestone (supersedes earlier open offline/admission claims)
+
+Actual DEV pinned Node24.21.0/npm11.19.0 external runner exited0 after the operator granted mandatory consumer requirements BEFORE activation. The separate ungranted consumer still fails activation with PERMISSION_DENIED. No frozen Kernel change or optional-require workaround.
+
+`PHASE3_EXTERNAL_REPORT=docs/phase3/EXTERNAL-OFFLINE.json node tools/test-external-hermes.mjs` used packed public artifacts and separate consumer/operator installations. Neutral and actual pinned native AIAgent offline providers both returned the fixture through the unchanged SDK-only consumer. Consumer digest sha256:aaaf85e09346643be3735780918185ff2632958a29a87f57b5caec00034a73aa; consumerHasNoKernel=true. Both resource counters zero; native runner closed=true, poisoned=false, pending=0. Synthetic model HTTP traffic is explicitly NOT H12.
+
+Actual governed experimental admission is retained at catalog/proposals/agent-execution/admission.json with its distinct parent source review and explicit limitations (not a human audit or live certification). Snapshot digest sha256:98aa324f38e7a25cbdaeb62174ad0644c1ca0dbbf2964a0f60390cbd76c43559. No stable promotion.
+
+Fresh regression commands on this tested working tree: npm test (170/170), npm run test:catalog (15/15), node --experimental-vm-modules --test integrations/hermes/tests/*.test.mjs catalog/proposals/agent-execution/reference.test.mjs (24/24, includes repeated imported topology tests), npm run test:external (original separate SDK/operator flow passed), npm run secrets (passed). All commands exit0. Retained native successful two-MOCK-send loop/tool/isolation/post-exit cleanup and six native failure cases remain evidence, not paid requests. Upstream git HEAD c04e9a1d0dfa4abbefe4b256428e645abaacfe88 and status clean freshly verified.
+
+Still required: real live entrypoint/H12 with verified designated durable history and minimal temporary auth removal, remaining original H0-H20 acceptance, final relevant Hermes regression/purity/clean reproducibility and public annotated phase3-hermes-v1.0.0. No final completion claim.
+
+## Earlier executed evidence / historical milestone
 
 ALICA frozen parent: 736b37d03c82ca057e7a397644037ef5d1bed991 (phase2-catalog-v1.0.0). Phase1: ab0273e8581fa70cbcf15c07f73e990b5dcc725e. External Hermes: c04e9a1d0dfa4abbefe4b256428e645abaacfe88. DEV: /home/alica-dev/AlicaV2-phase3, branch phase3/hermes. This file describes the tested candidate milestone; Git supplies its exact commit. It is not the final Phase3 release.
 
@@ -31,6 +45,6 @@ Fresh regression 2026-09-27T18:58Z: `npm test` 170/170 pass, `npm run test:catal
 
 Review-ready exact paths and SHA256 are in REVIEW-REQUEST.md. No independent reviewer identity/result, admission, maturity promotion or namespace extension is fabricated.
 
-Owner authorizes Codex, with gpt-5.6 illustrative; maximum 3 inference requests total, 1024 output tokens/request, 120 seconds/task, one task at a time, retries/fallback disabled. Read-only official Codex model catalog GET returned HTTP200 using existing local safe auth reference `/home/herman/.hermes/auth.json` → providers/openai-codex/tokens/access_token; no token printed, refreshed or copied. Raw visible IDs: gpt-6-astra, gpt-6-sol, gpt-6-luna, gpt-5.6-sol, gpt-5.6-terra, gpt-5.6-luna, gpt-5.5. Exact gpt-5.6 was NOT returned. No automatic substitution or inference call made. Pinned upstream explicitly supports max_output_tokens and timeout forwarding in agent/codex_responses_adapter.py; this is source evidence, NOT proven end-to-end cap enforcement. No auth files at the checked DEV `/home/alica-dev` or `/root` .hermes/auth.json or .codex/auth.json locations. Dedicated DEV safe credential reference is not yet established; do not forward tokens or copy a live profile by implication.
+Superseding owner decision: exact Codex gpt-5.6-sol with advertised context272000; maximum3 TOTAL physical inference requests including tool followups,120s outer task ceiling,single-flight,no retries/fallback. The frozen public Kernel deadline remains at most30s. Codex has NO guaranteed provider generation/token/billing ceiling for this slice; omit unsupported token-limit parameters. Local bounds/cancellation do not imply provider cancellation or capped billing. MODEL-METADATA.md records authenticated official metadata without credentials. Temporary minimal dedicated DEV authentication is authorized only for the bounded live acceptance, with verified removal; no whole-profile copy or credential logging. Durable grant/history must be verified before dispatch, never renewed/reset. Live H12 has not run.
 
 No live-success claim. No frozen foundation edits, service changes, cron or MemoryV4 sync under the inherited lock. Milestone publication must include only the enumerated Phase3 files. No final release tag or acceptance is claimed.

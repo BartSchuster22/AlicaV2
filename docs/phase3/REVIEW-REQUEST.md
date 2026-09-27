@@ -39,7 +39,7 @@ bcd25970c24327314cdcfc6e659dd086fdedaddb2c7e983854e36d5cf4623215  integrations/h
   NOT fake model responses represented as Hermes evidence.
 - Supported Codex model selection and dedicated safe DEV credential access await
   owner/parent resolution. Inference used0/3. No copied credentials or model calls.
-- Persistent aggregate request cap, per-request1024 token/no-retry enforcement
+- Persistent aggregate3TOTAL physical-request cap and no-retry enforcement; superseding owner approval withdraws the1024-token requirement. No guaranteed provider token/generation/billing ceiling;120s outer/public30s deadlines remain.
   must be proved before any live model dispatch. No environment/profile inheritance.
 - Provider-independent external project, missing/wrong Hermes version/model/tool
   failure matrix, real H12 and final H18/H20 remain open.
