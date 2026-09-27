@@ -28,6 +28,9 @@ export function violations(file, source, root) {
       'packages' + path.sep + 'acap-contracts' + path.sep,
     );
     const cli = relFile.startsWith('packages' + path.sep + 'alicac' + path.sep);
+    const catalog = relFile.startsWith(
+      'packages' + path.sep + 'catalog' + path.sep,
+    );
     // Exact importer -> exact target allowlist; never expose kernel internals
     // to package code or to arbitrary tests under the same directory.
     const privateG6Targets = {
@@ -75,7 +78,7 @@ export function violations(file, source, root) {
     const privateG6ComponentTest = normalizedFile === 'tests/ipc/wire.test.mjs';
     if (
       packageSource &&
-      ((!kernel && !contract && !cli && name.startsWith('node:')) ||
+      ((!kernel && !contract && !cli && !catalog && name.startsWith('node:')) ||
         name === 'typescript')
     )
       errors.push(
@@ -83,13 +86,19 @@ export function violations(file, source, root) {
       );
     if (name.startsWith('@alica/')) {
       const allowed = packageSource
-        ? ['@alica/acap-types', '@alica/acap-contracts', '@alica/plugin-sdk']
+        ? [
+            '@alica/acap-types',
+            '@alica/acap-contracts',
+            '@alica/plugin-sdk',
+            ...(cli ? ['@alica/catalog'] : []),
+          ]
         : [
             '@alica/acap-types',
             '@alica/acap-contracts',
             '@alica/plugin-sdk',
             '@alica/testkit',
             '@alica/kernel',
+            '@alica/catalog',
           ];
       if (!allowed.includes(name))
         errors.push('non-public or undeclared package import');
@@ -116,7 +125,7 @@ export function violations(file, source, root) {
     } else if (
       !name.startsWith('node:') &&
       name !== 'typescript' &&
-      !(contract && ['ajv', 'ajv/dist/2020.js'].includes(name)) &&
+      !((contract || catalog) && ['ajv', 'ajv/dist/2020.js'].includes(name)) &&
       !(privateG6ComponentTest && name === 'ajv/dist/2020.js') &&
       // Exact host-only R1 Cell/admin validators, using the existing pinned Ajv.
       !(

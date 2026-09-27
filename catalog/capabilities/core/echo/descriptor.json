@@ -1,0 +1,25 @@
+{
+  "schemaVersion": "acap.capability/v1",
+  "id": "io.alica.example.echo",
+  "version": "1.0.0",
+  "features": [],
+  "operations": [
+    {
+      "name": "echo",
+      "kind": "unary",
+      "idempotency": "none",
+      "input": {
+        "type": "object",
+        "properties": { "text": { "type": "string", "maxLength": 4096 } },
+        "required": ["text"],
+        "additionalProperties": false
+      },
+      "output": {
+        "type": "object",
+        "properties": { "text": { "type": "string", "maxLength": 4096 } },
+        "required": ["text"],
+        "additionalProperties": false
+      }
+    }
+  ]
+}

@@ -20,6 +20,11 @@ for (const name of [
 }
 rmSync('packages/acap-contracts/schemas', { recursive: true, force: true });
 mkdirSync('packages/acap-contracts/schemas', { recursive: true });
+rmSync('packages/catalog/schemas', { recursive: true, force: true });
+mkdirSync('packages/catalog/schemas', { recursive: true });
+for (const name of readdirSync('catalog/schemas'))
+  if (name.endsWith('.json'))
+    copyFileSync('catalog/schemas/' + name, 'packages/catalog/schemas/' + name);
 for (const name of readdirSync('specs/schemas'))
   if (name.endsWith('.json'))
     copyFileSync(

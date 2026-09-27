@@ -1,0 +1,26 @@
+{
+  "apiVersion": "catalog.alica.io/v1",
+  "kind": "CapabilityDefinition",
+  "metadata": {
+    "id": "acap://alica.io/example/echo@1",
+    "version": "1.0.0",
+    "maturity": "experimental",
+    "owner": "ALICA maintainers",
+    "summary": "Neutral bounded text round-trip for external-author contract interoperability."
+  },
+  "contract": {
+    "descriptor": "capabilities/core/echo/descriptor.json",
+    "identity": "io.alica.example.echo",
+    "version": "1.0.0",
+    "digest": "sha256:76c2818de1cef99248256d1e0ae2561be259d0175ee5b55b7e4dff686e35649d"
+  },
+  "semantics": {
+    "description": "Returns the supplied text unchanged. No side effects and no persistence or deduplication guarantee.",
+    "cancellation": "supported",
+    "errors": ["INVALID_ARGUMENT", "CANCELLED", "DEADLINE_EXCEEDED"]
+  },
+  "scopes": ["application", "session"],
+  "permissions": ["example.echo"],
+  "dependencies": [],
+  "events": []
+}
