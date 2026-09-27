@@ -1,6 +1,8 @@
 # Capability Catalog (Phase 2)
 
-Status: M1 foundation under execution; not a Phase2 completion claim.
+Status: M1–M4 implemented, tested and published; M5 release acceptance is tracked in the [canonical completion record](../docs/phase2/PHASE2-COMPLETION.md).
+
+Start with the [documentation index](../docs/phase2/README.md), [architecture](../docs/phase2/ARCHITECTURE.md), [author guide](../docs/phase2/AUTHOR-GUIDE.md), [CLI](../docs/phase2/CLI.md), and [executed evidence](../docs/phase2/EVIDENCE.md). The [committed index](generated/index.json) is derived data; definitions and governance remain authoritative.
 
 CapabilityDefinition v1 adds governance to existing executable ACAP descriptors.
 `contract` explicitly maps Catalog URI to ACAP identity/version/canonical digest

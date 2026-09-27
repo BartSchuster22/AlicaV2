@@ -2,7 +2,16 @@
 
 A new, lean capability-oriented substrate: **Kernel → ACAP → SDK**.
 
-## Current stage
+## Public Phase1 and Phase2
+
+This repository is public. [Phase1 completion](https://github.com/BartSchuster22/AlicaV2/blob/phase1-v1.0.0/docs/PHASE1-COMPLETION.md) is frozen at `phase1-v1.0.0`.
+The [Phase2 Capability Catalog](https://github.com/BartSchuster22/AlicaV2/tree/phase2/catalog/docs/phase2) delivers C1–C15 independently of the frozen Kernel/ACAP.
+See its [completion status](https://github.com/BartSchuster22/AlicaV2/blob/phase2/catalog/docs/phase2/PHASE2-COMPLETION.md), [architecture](https://github.com/BartSchuster22/AlicaV2/blob/phase2/catalog/docs/phase2/ARCHITECTURE.md), [author guide](https://github.com/BartSchuster22/AlicaV2/blob/phase2/catalog/docs/phase2/AUTHOR-GUIDE.md), and [executed evidence](https://github.com/BartSchuster22/AlicaV2/blob/phase2/catalog/docs/phase2/EVIDENCE.md).
+The completion record is authoritative for release/freeze status; no Phase3 or integrations are authorized. Historical G7 acceptance is unchanged and is not resumed by Catalog work.
+
+## Historical stage (preserved)
+
+The following records describe the earlier private-repository gate history, not current public availability or authorization.
 
 G3, G4 and [G5](docs/gates/G5-OWNER-ACCEPTANCE.md) are accepted by the owner. For the public SDK and external developer experience: see [G5 delivery and limitations](docs/gates/G5.md), the [empty-directory tutorial](docs/sdk/TUTORIAL.md), [SDK API](docs/sdk/API.md), and [mock differences](docs/sdk/TESTKIT.md). G2 progression uses the [owner-approved manual gate](docs/gates/G2-OWNER-DISPOSITION.md); GitHub remains private. [G6 authenticated IPC](docs/gates/G6.md) has implemented runtime, recovery, confinement and qualification evidence; [G6 owner acceptance](docs/gates/G6-OWNER-ACCEPTANCE.md) records accepted candidate `79702d1`, successful authenticated foundation CI and owner approval under the existing manual control. [G7](docs/gates/G7.md) implementation is authorized: OS-environment probes and online custody setup are complete, and operator trust-bootstrap tooling is implemented with component tests. Real initial trust signing and public-Kernel verification are complete. Concrete G7 contract review and packaging/Cell/qualification work remain pending. G7 is not accepted; G8 and higher-level services are not started. Existing V1 artifacts are references, not runtime dependencies.
 
