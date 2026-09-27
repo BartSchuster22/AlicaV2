@@ -135,6 +135,27 @@ for (const boundary of [
       child.kill('SIGKILL');
       const [, signal] = await exited;
       assert.equal(signal, 'SIGKILL');
+      const durable =
+        boundary === 'staging-durable' || boundary === 'verified-durable';
+      let transactionId, preStates, journalStates;
+      const readJournal = () => {
+        const dir = join(f.root, 'transactions', transactionId);
+        return readdirSync(dir).sort().map((name, i) => {
+          assert.equal(name, String(i + 1).padStart(6, '0') + '.json');
+          return JSON.parse(readFileSync(join(dir, name)));
+        });
+      };
+      if (durable) {
+        const transactions = readdirSync(join(f.root, 'transactions'));
+        assert.equal(transactions.length, 1);
+        [transactionId] = transactions;
+        preStates = boundary === 'staging-durable'
+          ? ['STAGING'] : ['STAGING', 'VERIFIED'];
+        const rows = readJournal(), last = validateJournal(rows);
+        assert.equal(last.transactionId, transactionId);
+        assert.equal(last.cellId, JSON.parse(identity).cellId);
+        assert.deepEqual(rows.map((r) => r.record.state), preStates);
+      }
       const recovered = external(f, 'recover');
       if (boundary === 'journal-link')
         assert.notEqual(
@@ -144,11 +165,26 @@ for (const boundary of [
         );
       else {
         assert.equal(recovered.status, 0, recovered.stderr);
-        assert(
-          JSON.parse(recovered.stdout).transactions.every(
-            (x) => x.state === 'ABORTED',
-          ),
-        );
+        const status = JSON.parse(recovered.stdout);
+        assert(status.transactions.every((x) => x.state === 'ABORTED'));
+        if (durable) {
+          assert.equal(status.transactions.length, 1);
+          assert.equal(status.transactions[0].transactionId, transactionId);
+          assert.equal(status.transactions[0].state, 'ABORTED');
+          assert.equal(status.accepted, null);
+          assert.equal(status.cellId, JSON.parse(identity).cellId);
+          assert.deepEqual(readdirSync(join(f.root, 'transactions')), [transactionId]);
+          const rows = readJournal(), last = validateJournal(rows);
+          assert.equal(last.transactionId, transactionId);
+          assert.equal(last.cellId, status.cellId);
+          assert.equal(last.state, 'ABORTED');
+          journalStates = rows.map((r) => r.record.state);
+          assert.deepEqual(journalStates, [...preStates, 'RECOVERING', 'ABORTED']);
+          t.diagnostic(JSON.stringify({
+            boundary, transactionId, recoveredCount: status.transactions.length,
+            state: status.transactions[0].state, preStates, journalStates,
+          }));
+        }
       }
       assert.deepEqual(readFileSync(join(f.root, 'identity.json')), identity);
       assert(!existsSync(join(f.root, 'accepted.json')));
