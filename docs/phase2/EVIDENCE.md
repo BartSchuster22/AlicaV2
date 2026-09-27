@@ -31,7 +31,7 @@ SHA256 of exact CLI output bytes, including final newline:
 The generated index was absent at M3, so no committed-index comparison was claimed.
 After M4 publication, DEV generated `catalog/generated/index.json`, compared it
 byte-for-byte against another CLI index output, and obtained the same index hash
-above. Final-candidate committed-index verification remains a release check.
+above. Final-candidate committed-index verification subsequently passed as recorded below.
 
 ## M4 external author
 
@@ -64,27 +64,39 @@ The Phase1 tag still peels to `ab0273e8581fa70cbcf15c07f73e990b5dcc725e`.
 Evidence level is explicitly SDK_TESTKIT_NOT_PRODUCTION; trustVerified is false.
 Echo remains experimental. Kernel/ACAP tracked diffs against Phase1 were empty.
 
-## Exact final-candidate acceptance (pending)
+## Exact final-candidate acceptance (executed)
 
-After integrating M5 documentation and the generated index, record the candidate
-commit and execute the affected checks without reopening accepted milestones:
+Tested executable parent: `dc2a4b958ef09c69926ac1f1c7b45a83130f3487`,
+publicly committed on `phase2/catalog`. The final release is its documentation-only
+child, identified by the annotated `phase2-catalog-v1.0.0` tag. Execution below
+belongs to this exact parent, not to a claimed rerun on the documentation child.
 
-```sh
-npm run build
-npm run typecheck
-npm test
-npm run test:catalog
-npm run test:external
-CATALOG_REPORT=/tmp/phase2-final-catalog-report.json node tools/test-external-catalog.mjs
-npm run boundaries
-npm run secrets
-git diff --check
-node packages/alicac/dist/index.js catalog index > /tmp/phase2-final-index.json
-cmp catalog/generated/index.json /tmp/phase2-final-index.json
-```
+Build, typecheck, Phase1 tests (170/170), Catalog tests (15/15), the real separate
+Phase1 external flow, Catalog external runner, boundaries, secrets and tracked
+source diff checks all passed. Retained operator evidence is in
+`/home/alica-dev/phase2-m5-evidence/final/`, including `candidate.txt`, execution
+logs, `catalog-report.json`, reproducibility outputs and `protected.diff`.
+These are operator evidence locations, not files bundled in this public checkout.
 
-Verify clean-checkout deterministic validate/index/snapshot output for the exact
-candidate, document results and ensure Kernel/ACAP/Phase1 tag preservation.
-Only then publish completion, verify public default README discoverability,
-create and verify `phase2-catalog-v1.0.0`, and STOP. This section is a pending
-acceptance procedure, not fabricated execution evidence.
+The Catalog report's sourceRevision equals the full tested parent above. All six
+acceptance booleans are true; both providers passed eight conformance checks,
+all 13 negative cases passed, and the unchanged consumer received neutral results
+twice. Cleanup was DISPOSED; compatibility was BACKWARD_COMPATIBLE.
+Evidence remains SDK_TESTKIT_NOT_PRODUCTION and trustVerified=false.
+
+A fresh detached clone of that exact parent passed `npm ci --ignore-scripts`,
+build and Catalog tests. DEV and clean-clone validate/index/snapshot output was
+byte-identical, as was repeated clean-clone output. Both committed indexes matched
+the regenerated index. Offline snapshot validation passed with one entry and
+trustVerified=false. The output SHA256 values are the three recorded above.
+Both tracked trees remained unchanged; generated packaged schema copies stayed
+untracked and are not part of the release.
+
+Kernel, acap-contracts and acap-types tracked diffs against Phase1 were empty.
+The Phase1 tag still peels to `ab0273e8581fa70cbcf15c07f73e990b5dcc725e`.
+The release child changes only this evidence record and the completion report;
+no further executable retest is attributed to that documentation-only child.
+A separate README-only main commit supplies public release discoverability
+without merging Catalog or unrelated code into main. Publication acceptance
+requires anonymous verification of that pointer, this report and the exact
+annotated release tag. Preserve G7 and STOP before Phase3.
