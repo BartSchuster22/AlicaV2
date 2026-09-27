@@ -10,6 +10,7 @@ import {
   chmodSync,
   symlinkSync,
   linkSync,
+  lstatSync,
   existsSync,
 } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -156,14 +157,62 @@ for (const boundary of [
         assert.equal(last.cellId, JSON.parse(identity).cellId);
         assert.deepEqual(rows.map((r) => r.record.state), preStates);
       }
+      let linkedResidue;
+      const inspectLinkedJournal = () => {
+        const transactions = readdirSync(join(f.root, 'transactions'));
+        assert.equal(transactions.length, 1);
+        const [id] = transactions;
+        assert.match(id, /^[0-9a-f-]{36}$/);
+        const dir = join(f.root, 'transactions', id);
+        const names = readdirSync(dir).sort();
+        assert.equal(names.length, 2);
+        assert.equal(names[0], '000001.json');
+        assert.match(names[1], /^next-[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/);
+        const stats = names.map((name) => lstatSync(join(dir, name)));
+        for (const st of stats) {
+          assert(st.isFile());
+          assert.equal(st.nlink, 2);
+          assert.equal(st.mode & 0o7777, 0o600);
+          assert.equal(st.uid, process.getuid());
+          assert(st.size > 0 && st.size <= 16384);
+        }
+        assert.equal(stats[0].dev, stats[1].dev);
+        assert.equal(stats[0].ino, stats[1].ino);
+        const bytes = names.map((name) => readFileSync(join(dir, name)));
+        assert.deepEqual(bytes[0], bytes[1]);
+        const row = JSON.parse(bytes[0]), last = validateJournal([row]);
+        assert.equal(last.transactionId, id);
+        assert.equal(last.cellId, JSON.parse(identity).cellId);
+        assert.equal(last.state, 'STAGING');
+        assert.equal(last.sequence, 1);
+        assert.equal(last.previousHash, null);
+        assert.equal(last.outcome, 'PENDING');
+        return { transactionId: id, cellId: last.cellId, names,
+          dev: stats[0].dev, ino: stats[0].ino, nlink: stats[0].nlink,
+          bytes: stats[0].size, checksum: row.checksum, state: last.state };
+      };
+      if (boundary === 'journal-link') {
+        linkedResidue = inspectLinkedJournal();
+        t.diagnostic(JSON.stringify({ boundary, beforeRecovery: linkedResidue }));
+      }
       const recovered = external(f, 'recover');
-      if (boundary === 'journal-link')
-        assert.notEqual(
-          recovered.status,
-          0,
-          'hardlinked/incomplete journal must deny recovery',
-        );
-      else {
+      if (boundary === 'journal-link') {
+        t.diagnostic(JSON.stringify({ boundary, status: recovered.status,
+          signal: recovered.signal, spawnError: recovered.error?.code ?? null,
+          stderr: recovered.stderr?.slice(0, 1024),
+          stdout: recovered.stdout?.slice(0, 1024) }));
+        assert.equal(recovered.error, undefined, 'recovery must spawn and complete normally');
+        assert.equal(recovered.signal, null);
+        assert.equal(typeof recovered.status, 'number');
+        assert.equal(recovered.status, 1, 'normal fixture rejection exit');
+        // #journals reads sorted 000001.json before the next-* name;
+        // readPrivate/owned rejects nlink=2 with this exact code.
+        assert.equal(recovered.stderr, 'PERMISSION_DENIED\n');
+        assert.equal(recovered.stdout, '');
+        const afterRecovery = inspectLinkedJournal();
+        t.diagnostic(JSON.stringify({ boundary, afterRecovery }));
+        assert.deepEqual(afterRecovery, linkedResidue);
+      } else {
         assert.equal(recovered.status, 0, recovered.stderr);
         const status = JSON.parse(recovered.stdout);
         assert(status.transactions.every((x) => x.state === 'ABORTED'));
