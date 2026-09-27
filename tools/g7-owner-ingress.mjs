@@ -19,8 +19,17 @@ function transportIdentity(socket) {
 // Factory is a trusted composition seam, not an exposed candidate API. Tests
 // explicitly inject a mock identity reader; production singleton never does.
 export function createIngress(trustedConfig, identify = transportIdentity) {
+  return buildIngress(trustedConfig, identify, false);
+}
+// Lifecycle management is private: no production identity/config injection.
+function buildIngress(trustedConfig, identify, managed) {
   const records = new Map();
-  let active = 0;
+  let active = 0, enabled = !managed, stopped = false;
+  const connections = new Set();
+  const stop = () => {
+    stopped = true; enabled = false; records.clear();
+    for (const close of [...connections]) { try { close(); } catch {} }
+  };
   const valid = trustedConfig && typeof trustedConfig.gatewayCertificateSHA256 === 'string' &&
     trustedConfig.gatewayCertificateSHA256.length === 64 && /^[0-9a-f]{64}$/.test(trustedConfig.gatewayCertificateSHA256) &&
     Number.isSafeInteger(trustedConfig.gatewayUID) && trustedConfig.gatewayUID >= 0 &&
@@ -31,7 +40,7 @@ export function createIngress(trustedConfig, identify = transportIdentity) {
   // UID declarations don't prove isolation; deployment must enforce them. TLS
   // identity and protected credential/code custody are both prerequisites.
   const pin = valid ? trustedConfig.gatewayCertificateSHA256 : null;
-  const read = (cellId, digest) => pin ? records.get(cellId + '\n' + digest) : undefined;
+  const read = (cellId, digest) => pin && enabled && !stopped ? records.get(cellId + '\n' + digest) : undefined;
   const handle = (socket) => {
     let ended = false, data = Buffer.alloc(0), timer;
     const deadline = performance.now() + 2000;
@@ -41,11 +50,13 @@ export function createIngress(trustedConfig, identify = transportIdentity) {
       clearTimeout(timer);
       data = Buffer.alloc(0);
       active--;
+      connections.delete(close);
       try { socket.setTimeout(0); } finally { socket.destroy(); }
     };
     const expired = () => performance.now() >= deadline;
-    if (!pin || active >= 1) { socket.destroy(); return; }
+    if (!pin || !enabled || stopped || active >= 1) { socket.destroy(); return; }
     active++;
+    connections.add(close);
     try { if (identify(socket) !== pin) { close(); return; } } catch { close(); return; }
     // Absolute monotonic frame lifetime, never extended by data/inactivity resets.
     // Timer dispatch depends on the scheduler; data/commit paths also check.
@@ -80,11 +91,13 @@ export function createIngress(trustedConfig, identify = transportIdentity) {
         records.set(key, Object.freeze({ authority: 'owner', channel: 'designated-owner-telegram-chat',
           cellId, checkpointDigest, purpose, independentAnchors: anchors,
           confirmationEvidence: 'explicit owner confirmation\nCellID=' + cellId + '\nSHA256=' + checkpointDigest + '\npurpose=' + purpose }));
+      } catch {
+        // Transport reauthentication can throw at EOF; deny, never crash boot.
       } finally { close(); }
     });
   };
   const createServer = (credentials) => {
-    if (!pin || !credentials?.key || !credentials?.cert || !credentials?.ca)
+    if (stopped || !pin || !credentials?.key || !credentials?.cert || !credentials?.ca)
       throw Error('OWNER_INGRESS_UNCONFIGURED');
     // Trusted existing credentials only; no keygen/signing, no bind/listen here.
     // Closed TLS options: callers cannot relax mutual peer authentication.
@@ -92,11 +105,18 @@ export function createIngress(trustedConfig, identify = transportIdentity) {
       ca: credentials.ca, requestCert: true, rejectUnauthorized: true,
       minVersion: 'TLSv1.2', handshakeTimeout: 2000 }, handle);
     server.maxConnections = 1;
+    if (managed) {
+      server.on('listening', () => { if (!stopped) enabled = true; });
+      server.on('error', stop);
+      server.on('close', stop);
+    }
     return server;
   };
-  return Object.freeze({ handle, read, createServer });
+  return Object.freeze({ handle, read, createServer, stop });
 }
-const ingress = createIngress(config);
+const ingress = buildIngress(config, transportIdentity, true);
+// Irreversible revocation; cannot enable ingress or inject confirmations.
+export const stopOwnerCheckpointReceiver = ingress.stop;
 // Deployment TLS server secureConnection callback must use this handler. TLS
 // server must requestCert/rejectUnauthorized and protect key/config/code custody.
 export const receiveOwnerCheckpointConnection = ingress.handle;
