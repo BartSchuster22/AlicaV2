@@ -10,7 +10,7 @@ A new, lean capability-oriented substrate: **Kernel → ACAP → SDK**.
 
 ## Phase 4 Decision Service
 
-**IMPLEMENTATION / LIVE QUALIFIED — PARENT TECHNICAL REVIEW ACCEPTED; PUBLICATION PENDING**
+**TECHNICAL RELEASE DECLARATION — IMPLEMENTATION PUBLISHED AND COMMITTED-SOURCE REPRODUCED; NOT OWNER ACCEPTED**
 
 The subsequently authorized Revision1.1 Decision Service + TypeSafe Jev adapter now has genuine Noul/Choice/Score/mixed evidence through the public Host, an unchanged SDK/Catalog-only external author, and exact-source offline reproduction. The provider-neutral contract was independently admitted to an EXPERIMENTAL Catalog snapshot; frozen foundations and original release tags are unchanged.
 
@@ -20,7 +20,7 @@ The subsequently authorized Revision1.1 Decision Service + TypeSafe Jev adapter 
 - [Decision Service entry point and architecture](services/decision/README.md)
 - [Completion/release status](docs/phase4/PHASE4-COMPLETION.md)
 
-Live authority is **CLOSED:6/6 consumed,0remaining**. Never replay the live/diagnostic/init/continuation entry points for tests or release. [Independent parent technical review](docs/phase4/FINAL-PARENT-REVIEW.md) accepted this candidate for publication, NOT owner acceptance. The intended technical tag is `phase4-jev-v1.0.0`, not yet claimed here; public delivery/readback remain pending. No Phase5 or excluded integration follows implicitly.
+Live authority is **CLOSED:6/6 consumed,0remaining**. Never replay live/diagnostic/init/continuation entry points. [Independent parent technical review](docs/phase4/FINAL-PARENT-REVIEW.md) accepted publication, NOT owner acceptance. Public implementation commit `be8079bc7e0c5a60c6887b5905ca1f2f7735d018` passed clean committed-source offline reproduction:54/54 tests and both packed public Host fixtures,0authenticated calls. [The final release declaration](docs/phase4/PHASE4-COMPLETION.md) selects immutable `phase4-jev-v1.0.0`; it becomes effective upon exact tag/main public readback, not an unobserved push claim. No Phase5 follows.
 
 ## Public Phase1 and Phase2
 

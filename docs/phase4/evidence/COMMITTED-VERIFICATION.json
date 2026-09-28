@@ -1,0 +1,44 @@
+{
+  "classification": "COMMITTED-SOURCE-OFFLINE-REPRODUCTION",
+  "sourceCommit": "be8079bc7e0c5a60c6887b5905ca1f2f7735d018",
+  "clone": "/home/alica-dev/phase4-committed-9J8FYV",
+  "publicClone": "https://github.com/BartSchuster22/AlicaV2.git",
+  "node": "24.21.0",
+  "sourceDigest": "f85caf078e778a0b2b8984a4f1abff2a64088bc599709af327ecfa71e58b52ab",
+  "counts": {
+    "tests": 54,
+    "pass": 54,
+    "fail": 0,
+    "skipped": 0
+  },
+  "fixtures": {
+    "COMMITTED-EXTERNAL-DEFAULT.json": {
+      "classification": "FIXTURE-TESTED-DEFENSIVE",
+      "level": "PUBLIC_HOST",
+      "authenticatedLiveRequests": 0,
+      "syntheticPhysicalRequests": 5,
+      "consumerHasNoKernel": true,
+      "consumerUnchanged": true,
+      "publicPackedArtifacts": true
+    },
+    "COMMITTED-EXTERNAL-CONTINUATION.json": {
+      "classification": "FIXTURE-TESTED-DEFENSIVE",
+      "level": "PUBLIC_HOST",
+      "authenticatedLiveRequests": 0,
+      "syntheticPhysicalRequests": 4,
+      "consumerHasNoKernel": true,
+      "consumerUnchanged": true,
+      "publicPackedArtifacts": true
+    }
+  },
+  "sha256": {
+    "COMMITTED-REPRO.log": "feb79540dd4ffb72fe6094163b6ff8b7b674b5c449125cb35797d75133c31e8a",
+    "COMMITTED-EXTERNAL-DEFAULT.json": "53f9f2a1d84f85dc001825f8d7c5361ee9e2a75ee70502c460f95997f00d962f",
+    "COMMITTED-EXTERNAL-CONTINUATION.json": "fc0ba5b73cc98483b7fe40bbb2f9469467ca7fbc05d48a26a696cbc66ac37e7d"
+  },
+  "buildTypecheck": "PASS",
+  "trackedSourceDiff": "EMPTY",
+  "secretScan": "PASS",
+  "liveAuthority": "CLOSED6/6; no authenticated calls",
+  "note": "Exact public implementation commit; valid across subsequent docs/evidence-only commit with unchanged source. Prior source-overlay evidence remains historical; tag/main readback not claimed by this pre-tag record."
+}

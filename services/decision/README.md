@@ -1,5 +1,7 @@
 # Phase4 Decision Service — qualified review candidate
 
+Final status supersedes the candidate history below: public implementation be8079bc7e0c5a60c6887b5905ca1f2f7735d018 and clean committed-source54-test/two packed-fixture proof PASS,0authenticated calls. See [technical release declaration](../../docs/phase4/PHASE4-COMPLETION.md) for immutable tag selection and the external tag/main readback boundary. NOT owner acceptance; live authority CLOSED6/6. Final release differences are docs/evidence only.
+
 Provider-neutral Decision Service, neutral reference provider and TypeSafe Jev adapter, exercised through the public Host with an unchanged SDK/Catalog-only external author. Actual Noul/Choice/Score/mixed succeeded on configured jev-latest, resolved jev-1.13.0, with real usage and clean teardown. Independent parent technical review accepted publication (../../docs/phase4/FINAL-PARENT-REVIEW.md); actual publication/tag/readback remain pending. This is not owner acceptance or a self-review certificate.
 
 Start with [acceptance](../../docs/phase4/ACCEPTANCE.md), [actual evidence](../../docs/phase4/EVIDENCE.md), [offline reproduction](../../docs/phase4/REPRODUCE.md) and [completion status](../../docs/phase4/PHASE4-COMPLETION.md). Full governing plan/amendments remain retained. Architecture/contract/mapping/privacy/limitations are in [docs](docs/ARCHITECTURE.md).

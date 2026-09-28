@@ -1,0 +1,398 @@
+v24.21.0
+11.19.0
+be8079bc7e0c5a60c6887b5905ca1f2f7735d018
+catalog/proposals/decision-evaluate/admission.json: OK
+catalog/proposals/decision-evaluate/admit.mjs: OK
+catalog/proposals/decision-evaluate/conformance.json: OK
+catalog/proposals/decision-evaluate/definition.json: OK
+catalog/proposals/decision-evaluate/descriptor.json: OK
+catalog/proposals/decision-evaluate/experimental-definition.json: OK
+catalog/proposals/decision-evaluate/experimental-policy.json: OK
+catalog/proposals/decision-evaluate/namespace-policy.json: OK
+catalog/proposals/decision-evaluate/parent.review.json: OK
+catalog/proposals/decision-evaluate/prepare.mjs: OK
+catalog/proposals/decision-evaluate/proposal.json: OK
+catalog/proposals/decision-evaluate/review.json: OK
+catalog/proposals/decision-evaluate/snapshot.json: OK
+examples/decision-consumer/consumer.mjs: OK
+examples/decision-consumer/continuation-operator.mjs: OK
+examples/decision-consumer/fixture-http.mjs: OK
+examples/decision-consumer/matrix.mjs: OK
+examples/decision-consumer/operator.mjs: OK
+services/decision/package.json: OK
+services/decision/provider/contract.d.mts: OK
+services/decision/provider/contract.mjs: OK
+services/decision/provider/decimal.mjs: OK
+services/decision/provider/neutral.mjs: OK
+services/decision/providers/typesafe-jev/continuation.mjs: OK
+services/decision/providers/typesafe-jev/discovery-diagnostic.mjs: OK
+services/decision/providers/typesafe-jev/index.mjs: OK
+services/decision/providers/typesafe-jev/ledger.mjs: OK
+services/decision/providers/typesafe-jev/mapping.mjs: OK
+services/decision/providers/typesafe-jev/observed-models.json: OK
+services/decision/providers/typesafe-jev/transport.mjs: OK
+services/decision/providers/typesafe-jev/wire.mjs: OK
+services/decision/service/host-link.mjs: OK
+services/decision/service/index.mjs: OK
+services/decision/service/public-host.mjs: OK
+services/decision/tests/contract/decimal.test.mjs: OK
+services/decision/tests/contract/neutral.test.mjs: OK
+services/decision/tests/external/host-link.test.mjs: OK
+services/decision/tests/external/public-host.test.mjs: OK
+services/decision/tests/provider/jev-continuation.test.mjs: OK
+services/decision/tests/provider/jev-diagnostic.test.mjs: OK
+services/decision/tests/provider/jev-mapping.test.mjs: OK
+services/decision/tests/provider/jev-transport.test.mjs: OK
+services/decision/tools/external.mjs: OK
+services/decision/tools/live-diagnostic.mjs: OK
+services/decision/tools/live-init.mjs: OK
+services/decision/tools/verify-continuation.mjs: OK
+
+added 19 packages in 1s
+
+> alica-v2@0.0.0 build
+> node tools/build.mjs
+
+
+> alica-v2@0.0.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+TAP version 13
+# Subtest: canonical decimal grammar, precision and range reject rather than round
+ok 1 - canonical decimal grammar, precision and range reject rather than round
+  ---
+  duration_ms: 2.023425
+  type: 'test'
+  ...
+# Subtest: provider lexical exponent conversion uses the original token exactly
+ok 2 - provider lexical exponent conversion uses the original token exactly
+  ---
+  duration_ms: 0.594512
+  type: 'test'
+  ...
+# Subtest: wire conversion distinguishes exact numbers from ordinary literal strings
+ok 3 - wire conversion distinguishes exact numbers from ordinary literal strings
+  ---
+  duration_ms: 2.569094
+  type: 'test'
+  ...
+# Subtest: structured numeric markers and size/depth limits fail closed
+ok 4 - structured numeric markers and size/depth limits fail closed
+  ---
+  duration_ms: 0.486047
+  type: 'test'
+  ...
+# Subtest: J3 exact decimal lexical rules and frozen ACAP compatibility
+ok 5 - J3 exact decimal lexical rules and frozen ACAP compatibility
+  ---
+  duration_ms: 3.81892
+  type: 'test'
+  ...
+# Subtest: J3 structured fractions are exact numeric wire literals, never ambiguous strings
+ok 6 - J3 structured fractions are exact numeric wire literals, never ambiguous strings
+  ---
+  duration_ms: 1.433794
+  type: 'test'
+  ...
+# Subtest: J4 actual Catalog proposal/definition validation without admission or self-review
+ok 7 - J4 actual Catalog proposal/definition validation without admission or self-review
+  ---
+  duration_ms: 25.845111
+  type: 'test'
+  ...
+# Subtest: J5/J6 neutral mixed semantics and exact round-trip
+ok 8 - J5/J6 neutral mixed semantics and exact round-trip
+  ---
+  duration_ms: 5.168686
+  type: 'test'
+  ...
+# Subtest: J3/J6 malformed inputs, criteria, fractional state and limits rejected
+ok 9 - J3/J6 malformed inputs, criteria, fractional state and limits rejected
+  ---
+  duration_ms: 3.7285
+  type: 'test'
+  ...
+# Subtest: J6 exact correspondence, totals, confidence, range and legend defenses
+ok 10 - J6 exact correspondence, totals, confidence, range and legend defenses
+  ---
+  duration_ms: 3.799626
+  type: 'test'
+  ...
+# Subtest: J7 public SDK testkit vertical substitutes neutral providers, clean disposal
+ok 11 - J7 public SDK testkit vertical substitutes neutral providers, clean disposal
+  ---
+  duration_ms: 44.844706
+  type: 'test'
+  ...
+# Subtest: J7 Host permissions/revocation remain authoritative; no provider dispatch on denied calls
+ok 12 - J7 Host permissions/revocation remain authoritative; no provider dispatch on denied calls
+  ---
+  duration_ms: 19.478376
+  type: 'test'
+  ...
+# Subtest: J7 unload makes handles stale; incompatible major and descriptor mismatches fail
+ok 13 - J7 unload makes handles stale; incompatible major and descriptor mismatches fail
+  ---
+  duration_ms: 22.88402
+  type: 'test'
+  ...
+# Subtest: J7 disable switch prevents invocation
+ok 14 - J7 disable switch prevents invocation
+  ---
+  duration_ms: 19.492533
+  type: 'test'
+  ...
+# Subtest: J7 unknown model and provider errors normalized without echoed state
+ok 15 - J7 unknown model and provider errors normalized without echoed state
+  ---
+  duration_ms: 45.861093
+  type: 'test'
+  ...
+# Subtest: J7 deadline and cancellation forwarded once, no retry
+ok 16 - J7 deadline and cancellation forwarded once, no retry
+  ---
+  duration_ms: 65.204806
+  type: 'test'
+  ...
+# Subtest: handoff returns result; forged reply identity/generation/correlation ignored
+ok 17 - handoff returns result; forged reply identity/generation/correlation ignored
+  ---
+  duration_ms: 6.470211
+  type: 'test'
+  ...
+# Subtest: handoff singleflight rejects competing request with no second backend dispatch
+ok 18 - handoff singleflight rejects competing request with no second backend dispatch
+  ---
+  duration_ms: 1.866709
+  type: 'test'
+  ...
+# Subtest: handoff raw provider failure normalized without message or cause
+ok 19 - handoff raw provider failure normalized without message or cause
+  ---
+  duration_ms: 1.075518
+  type: 'test'
+  ...
+# Subtest: handoff cancel aborts and joins owned request
+ok 20 - handoff cancel aborts and joins owned request
+  ---
+  duration_ms: 2.185722
+  type: 'test'
+  ...
+# Subtest: handoff unload aborts and joins owned request
+ok 21 - handoff unload aborts and joins owned request
+  ---
+  duration_ms: 1.614093
+  type: 'test'
+  ...
+# Subtest: handoff deadline/pre-cancellation/closed state reject before dispatch
+ok 22 - handoff deadline/pre-cancellation/closed state reject before dispatch
+  ---
+  duration_ms: 0.852167
+  type: 'test'
+  ...
+# (node:867462) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: public Host signed inventory, generic neutral call, grant denial and source-preserving caller
+ok 23 - public Host signed inventory, generic neutral call, grant denial and source-preserving caller
+  ---
+  duration_ms: 383.15991
+  type: 'test'
+  ...
+# Subtest: public Host unload/restart and stale handle; fresh instance/grants only
+ok 24 - public Host unload/restart and stale handle; fresh instance/grants only
+  ---
+  duration_ms: 442.947503
+  type: 'test'
+  ...
+# Subtest: public Host disabled provider and incompatible capability version never dispatch
+ok 25 - public Host disabled provider and incompatible capability version never dispatch
+  ---
+  duration_ms: 225.846491
+  type: 'test'
+  ...
+# Subtest: public Host raw backend failure normalized; malformed request rejected before dispatch
+ok 26 - public Host raw backend failure normalized; malformed request rejected before dispatch
+  ---
+  duration_ms: 249.300755
+  type: 'test'
+  ...
+# Subtest: public Host in-flight cancel aborts effect-owned backend and joins cleanup
+ok 27 - public Host in-flight cancel aborts effect-owned backend and joins cleanup
+  ---
+  duration_ms: 224.991648
+  type: 'test'
+  ...
+# Subtest: public Host in-flight deadline aborts effect-owned backend and joins cleanup
+ok 28 - public Host in-flight deadline aborts effect-owned backend and joins cleanup
+  ---
+  duration_ms: 267.600379
+  type: 'test'
+  ...
+# Subtest: public Host in-flight unload aborts effect-owned backend and joins cleanup
+ok 29 - public Host in-flight unload aborts effect-owned backend and joins cleanup
+  ---
+  duration_ms: 190.264229
+  type: 'test'
+  ...
+# Subtest: LIVE-OBSERVED model metadata replay: exact timestamps preserved; prose date still accepted; no other validator relaxed
+ok 30 - LIVE-OBSERVED model metadata replay: exact timestamps preserved; prose date still accepted; no other validator relaxed
+  ---
+  duration_ms: 5.963455
+  type: 'test'
+  ...
+# Subtest: fresh synthetic continuation dispatches only four ordered POSTs, preserves both prefixes and refuses restart/replay
+ok 31 - fresh synthetic continuation dispatches only four ordered POSTs, preserves both prefixes and refuses restart/replay
+  ---
+  duration_ms: 60.371742
+  type: 'test'
+  ...
+# Subtest: first physical or semantic failure stops all later evaluations and keeps consumed slot/evidence
+ok 32 - first physical or semantic failure stops all later evaluations and keeps consumed slot/evidence
+  ---
+  duration_ms: 40.985389
+  type: 'test'
+  ...
+# Subtest: changed historical evidence and unexpected ledger reservation fail before dispatch
+ok 33 - changed historical evidence and unexpected ledger reservation fail before dispatch
+  ---
+  duration_ms: 35.636023
+  type: 'test'
+  ...
+# Subtest: manual diagnostic has its own one-shot path; durable slot2, original prefix, total6 and no seventh
+ok 34 - manual diagnostic has its own one-shot path; durable slot2, original prefix, total6 and no seventh
+  ---
+  duration_ms: 47.614249
+  type: 'test'
+  ...
+# Subtest: modified history, existing evaluation, stale lock and ambiguous diagnostic never dispatch
+ok 35 - modified history, existing evaluation, stale lock and ambiguous diagnostic never dispatch
+  ---
+  duration_ms: 20.367373
+  type: 'test'
+  ...
+# Subtest: diagnostic rejects guard failure before network but preserves consumed reservation
+ok 36 - diagnostic rejects guard failure before network but preserves consumed reservation
+  ---
+  duration_ms: 5.916927
+  type: 'test'
+  ...
+# Subtest: HTTP faults and decoded credential echoes are never exposed in diagnostic output
+ok 37 - HTTP faults and decoded credential echoes are never exposed in diagnostic output
+  ---
+  duration_ms: 24.939344
+  type: 'test'
+  ...
+# Subtest: diagnostic distinguishes documented shape from stricter legacy rejection without fixing mapper
+ok 38 - diagnostic distinguishes documented shape from stricter legacy rejection without fixing mapper
+  ---
+  duration_ms: 2.371662
+  type: 'test'
+  ...
+# Subtest: lexical ambiguity, invalid types, metadata bounds and CLI guards fail closed offline
+ok 39 - lexical ambiguity, invalid types, metadata bounds and CLI guards fail closed offline
+  ---
+  duration_ms: 85.390798
+  type: 'test'
+  ...
+# Subtest: J8 public request mapping: shared state, mixed named questions, exact fractional documents
+ok 40 - J8 public request mapping: shared state, mixed named questions, exact fractional documents
+  ---
+  duration_ms: 3.954276
+  type: 'test'
+  ...
+# Subtest: J9/J10/J11/J12/J17 documented response fields preserved across mixed batch
+ok 41 - J9/J10/J11/J12/J17 documented response fields preserved across mixed batch
+  ---
+  duration_ms: 3.028931
+  type: 'test'
+  ...
+# Subtest: J21 numeric strings and literal reserved marker objects cannot masquerade as wire numbers
+ok 42 - J21 numeric strings and literal reserved marker objects cannot masquerade as wire numbers
+  ---
+  duration_ms: 4.082088
+  type: 'test'
+  ...
+# Subtest: J21 duplicate question/candidate/escaped keys and malformed tokens rejected before overwrite
+ok 43 - J21 duplicate question/candidate/escaped keys and malformed tokens rejected before overwrite
+  ---
+  duration_ms: 0.805108
+  type: 'test'
+  ...
+# Subtest: J10/J11/J12 exact names/types/candidates/levels/legend and rational probability defenses
+ok 44 - J10/J11/J12 exact names/types/candidates/levels/legend and rational probability defenses
+  ---
+  duration_ms: 4.618669
+  type: 'test'
+  ...
+# Subtest: J13 model discovery maps public schema, not hard-coded aliases; malformed/duplicate IDs fail
+ok 45 - J13 model discovery maps public schema, not hard-coded aliases; malformed/duplicate IDs fail
+  ---
+  duration_ms: 1.064778
+  type: 'test'
+  ...
+# Subtest: J14/J18 ledger is explicit, fail-closed, durable before dispatch and never replenished
+ok 46 - J14/J18 ledger is explicit, fail-closed, durable before dispatch and never replenished
+  ---
+  duration_ms: 44.002068
+  type: 'test'
+  ...
+# Subtest: J18 ambiguity consumes slot, repeated matrix kind blocked; missing/corrupt ledgers fail closed
+ok 47 - J18 ambiguity consumes slot, repeated matrix kind blocked; missing/corrupt ledgers fail closed
+  ---
+  duration_ms: 18.363205
+  type: 'test'
+  ...
+# Subtest: J14/J18 singleflight retains lock during whole request; stale lock never auto-cleared
+ok 48 - J14/J18 singleflight retains lock during whole request; stale lock never auto-cleared
+  ---
+  duration_ms: 7.68503
+  type: 'test'
+  ...
+# Subtest: J14/J16/J22 exact endpoint/Bearer/JSON, key reference scoped to request, no secret/state in ledger
+ok 49 - J14/J16/J22 exact endpoint/Bearer/JSON, key reference scoped to request, no secret/state in ledger
+  ---
+  duration_ms: 20.719578
+  type: 'test'
+  ...
+# Subtest: J16 absent/insecure/symlink secret and unsafe directory fail before reservation/send
+ok 50 - J16 absent/insecure/symlink secret and unsafe directory fail before reservation/send
+  ---
+  duration_ms: 12.55361
+  type: 'test'
+  ...
+# Subtest: J14/J21/J22 auth/validation/rate/5xx/redirect responses normalized without retaining body or retry
+ok 51 - J14/J21/J22 auth/validation/rate/5xx/redirect responses normalized without retaining body or retry
+  ---
+  duration_ms: 71.048774
+  type: 'test'
+  ...
+# Subtest: J14 network/aborted response never replayed and consumes physical reservation
+ok 52 - J14 network/aborted response never replayed and consumes physical reservation
+  ---
+  duration_ms: 15.834596
+  type: 'test'
+  ...
+# Subtest: J15 shorter deadlines/cancellation bounded; pre-cancelled requests do not consume slots
+ok 53 - J15 shorter deadlines/cancellation bounded; pre-cancelled requests do not consume slots
+  ---
+  duration_ms: 36.891058
+  type: 'test'
+  ...
+# Subtest: J21 bounded bytes/content-type/UTF8 defenses; no real network in fixture suite
+ok 54 - J21 bounded bytes/content-type/UTF8 defenses; no real network in fixture suite
+  ---
+  duration_ms: 1.28909
+  type: 'test'
+  ...
+1..54
+# tests 54
+# suites 0
+# pass 54
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2473.480748
+{"schema":"alica.phase4-external/v1","runtime":"v24.21.0","level":"PUBLIC_HOST","classification":"FIXTURE-TESTED-DEFENSIVE","consumerDigest":"sha256:f9326697f7c6a3998a728304285e9879311d319ffe61c4891231c303ca044167","consumerUnchanged":true,"consumerHasNoKernel":true,"selectedSnapshot":"sha256:6bfeb23655ddafb37c266cf11b8cd8da386d030cfd212f97cbf4decf4eddd127","trustVerified":false,"hostLocalSignedPackages":true,"stage":"complete","reports":[{"provider":"neutral-reference","classification":"FIXTURE-TESTED-DEFENSIVE","results":[{"model":"neutral-v1","usage":{"inputTokens":0,"outputTokens":0},"answers":[{"kind":"boolean","name":"is_blue","probability":"0.5"}]},{"model":"neutral-v1","usage":{"inputTokens":0,"outputTokens":0},"answers":[{"confidence":"1","distribution":[{"id":"blue","probability":"1"},{"id":"red","probability":"0"}],"kind":"choice","name":"color","selected":"blue"}]},{"model":"neutral-v1","usage":{"inputTokens":0,"outputTokens":0},"answers":[{"confidence":"1","distribution":[{"id":"low","probability":"1"},{"id":"high","probability":"0"}],"expectedScore":"0","kind":"score","name":"blueness"}]},{"model":"neutral-v1","usage":{"inputTokens":0,"outputTokens":0},"answers":[{"kind":"boolean","name":"is_blue","probability":"0.5"},{"confidence":"1","distribution":[{"id":"blue","probability":"1"},{"id":"red","probability":"0"}],"kind":"choice","name":"color","selected":"blue"},{"confidence":"1","distribution":[{"id":"low","probability":"1"},{"id":"high","probability":"0"}],"expectedScore":"0","kind":"score","name":"blueness"}]}],"cleanup":{"resources":{"effects":0,"listeners":0,"pendingCalls":0,"registrations":0},"unsettledWork":0,"instances":[{"principal":"org.phase4.backend","completedDisposers":3,"failedDisposers":[],"restartRequired":false,"state":"DISPOSED","timedOutResources":0},{"principal":"org.phase4.service","completedDisposers":3,"failedDisposers":[],"restartRequired":false,"state":"DISPOSED","timedOutResources":0},{"principal":"org.phase4.consumer1","completedDisposers":0,"failedDisposers":[],"restartRequired":false,"state":"DISPOSED","timedOutResources":0},{"principal":"org.phase4.consumer2","completedDisposers":0,"failedDisposers":[],"restartRequired":false,"state":"FAILED","timedOutResources":0}],"backend":{"closed":true,"pending":0,"dispatched":4}}},{"provider":"typesafe-jev","classification":"FIXTURE-TESTED-DEFENSIVE","results":[{"model":"fixture-resolved","usage":{"inputTokens":123,"outputTokens":17},"answers":[{"kind":"boolean","name":"is_blue","probability":"0.734928"}]},{"model":"fixture-resolved","usage":{"inputTokens":123,"outputTokens":17},"answers":[{"confidence":"0.8","distribution":[{"id":"blue","probability":"0.75"},{"id":"red","probability":"0.25"}],"kind":"choice","name":"color","selected":"blue"}]},{"model":"fixture-resolved","usage":{"inputTokens":123,"outputTokens":17},"answers":[{"confidence":"0.8","distribution":[{"id":"low","probability":"0.25"},{"id":"high","probability":"0.75"}],"expectedScore":"0.75","kind":"score","name":"blueness"}]},{"model":"fixture-resolved","usage":{"inputTokens":123,"outputTokens":17},"answers":[{"kind":"boolean","name":"is_blue","probability":"0.734928"},{"confidence":"0.8","distribution":[{"id":"blue","probability":"0.75"},{"id":"red","probability":"0.25"}],"kind":"choice","name":"color","selected":"blue"},{"confidence":"0.8","distribution":[{"id":"low","probability":"0.25"},{"id":"high","probability":"0.75"}],"expectedScore":"0.75","kind":"score","name":"blueness"}]}],"cleanup":{"resources":{"effects":0,"listeners":0,"pendingCalls":0,"registrations":0},"unsettledWork":0,"instances":[{"principal":"org.phase4.backend","completedDisposers":3,"failedDisposers":[],"restartRequired":false,"state":"DISPOSED","timedOutResources":0},{"principal":"org.phase4.service","completedDisposers":3,"failedDisposers":[],"restartRequired":false,"state":"DISPOSED","timedOutResources":0},{"principal":"org.phase4.consumer1","completedDisposers":0,"failedDisposers":[],"restartRequired":false,"state":"DISPOSED","timedOutResources":0},{"principal":"org.phase4.consumer2","completedDisposers":0,"failedDisposers":[],"restartRequired":false,"state":"FAILED","timedOutResources":0}],"backend":{"closed":true,"pending":0,"dispatched":6}}}],"advertisedModelIds":["fixture-alias"],"configuredModel":"fixture-alias","ledger":{"schema":"alica.phase4.physical-budget/v1","max":6,"timeoutMs":30000,"retries":0,"consumed":5,"remaining":1,"attempts":[{"event":"reserve","kind":"discovery","slot":1,"timeMs":1790593799993,"outcome":"OK"},{"event":"reserve","kind":"noul","slot":2,"timeMs":1790593800272,"outcome":"OK"},{"event":"reserve","kind":"choice","slot":3,"timeMs":1790593800325,"outcome":"OK"},{"event":"reserve","kind":"score","slot":4,"timeMs":1790593800371,"outcome":"OK"},{"event":"reserve","kind":"mixed","slot":5,"timeMs":1790593800425,"outcome":"OK"}]},"authenticatedLiveRequests":0,"syntheticPhysicalRequests":5,"publicPackedArtifacts":true,"separateConsumerAndOperatorInstalls":true}
+{"schema":"alica.phase4-evaluations/v1","classification":"FIXTURE-TESTED-DEFENSIVE","level":"PUBLIC_HOST","stage":"complete","originalLiveSha256":"89e13d7ded6820eee959311d2b7193e60ab9f1807e83d2ad6868d0e4bcc99faa","diagnosticSha256":"7226d13da661879a940fd79f3295202027e7a9b67bb402c5f56cc3971b1e83f6","originalLedgerPrefixSha256":"d355a3b72815f972601d20629502001ebcddf6f199878bfcd790451911e95a84","diagnosticLedgerPrefixSha256":"12e1bf599c86a451fda6f766e8d8b47a259fa1768b3649963fd67226765225fe","sourceDigest":null,"fixtureProof":{"classification":"FIXTURE-TESTED-DEFENSIVE"},"configuredModel":"jev-latest","advertisedModelIds":["jev-latest","jev-preview"],"results":[{"kind":"noul","model":"fixture-resolved","usage":{"inputTokens":123,"outputTokens":17},"answers":[{"kind":"boolean","name":"is_blue","probability":"0.734928"}]},{"kind":"choice","model":"fixture-resolved","usage":{"inputTokens":123,"outputTokens":17},"answers":[{"confidence":"0.8","distribution":[{"id":"blue","probability":"0.75"},{"id":"red","probability":"0.25"}],"kind":"choice","name":"color","selected":"blue"}]},{"kind":"score","model":"fixture-resolved","usage":{"inputTokens":123,"outputTokens":17},"answers":[{"confidence":"0.8","distribution":[{"id":"low","probability":"0.25"},{"id":"high","probability":"0.75"}],"expectedScore":"0.75","kind":"score","name":"blueness"}]},{"kind":"mixed","model":"fixture-resolved","usage":{"inputTokens":123,"outputTokens":17},"answers":[{"kind":"boolean","name":"is_blue","probability":"0.734928"},{"confidence":"0.8","distribution":[{"id":"blue","probability":"0.75"},{"id":"red","probability":"0.25"}],"kind":"choice","name":"color","selected":"blue"},{"confidence":"0.8","distribution":[{"id":"low","probability":"0.25"},{"id":"high","probability":"0.75"}],"expectedScore":"0.75","kind":"score","name":"blueness"}]}],"budget":{"schema":"alica.phase4.physical-budget/v1","max":6,"timeoutMs":30000,"retries":0,"consumed":6,"remaining":0,"attempts":[{"event":"reserve","kind":"discovery","slot":1,"timeMs":1790587209902,"outcome":"OK"},{"event":"reserve","kind":"discovery-diagnostic","slot":2,"timeMs":1790589529009,"outcome":"OK"},{"event":"reserve","kind":"noul","slot":3,"timeMs":1790593805938,"outcome":"OK"},{"event":"reserve","kind":"choice","slot":4,"timeMs":1790593805985,"outcome":"OK"},{"event":"reserve","kind":"score","slot":5,"timeMs":1790593806030,"outcome":"OK"},{"event":"reserve","kind":"mixed","slot":6,"timeMs":1790593806080,"outcome":"OK"}]},"authenticatedLiveRequests":0,"newAuthenticatedRequests":0,"cleanup":{"resources":{"effects":0,"listeners":0,"pendingCalls":0,"registrations":0},"unsettledWork":0,"instances":[{"principal":"org.phase4.backend","completedDisposers":3,"failedDisposers":[],"restartRequired":false,"state":"DISPOSED","timedOutResources":0},{"principal":"org.phase4.service","completedDisposers":3,"failedDisposers":[],"restartRequired":false,"state":"DISPOSED","timedOutResources":0},{"principal":"org.phase4.consumer1","completedDisposers":0,"failedDisposers":[],"restartRequired":false,"state":"DISPOSED","timedOutResources":0}],"backend":{"closed":true,"pending":0,"dispatched":4}},"consumerUnchanged":true,"consumerDigest":"f9326697f7c6a3998a728304285e9879311d319ffe61c4891231c303ca044167","consumerHasNoKernel":true,"selectedSnapshot":"sha256:6bfeb23655ddafb37c266cf11b8cd8da386d030cfd212f97cbf4decf4eddd127","trustVerified":false,"publicPackedArtifacts":true,"separateConsumerAndOperatorInstalls":true,"syntheticPhysicalRequests":4}
+Secret pattern check passed

@@ -1,5 +1,9 @@
 # Phase4 evidence — final implementation review candidate
 
+## Final committed-source/public delivery evidence (supersedes candidate-status prose below)
+Implementation be8079bc7e0c5a60c6887b5905ca1f2f7735d018 was pushed to phase4/jev; anonymous HTTPS refs and raw manifest matched. Fresh public clone of that exact commit, cached/offline pinnedNode24.21.0: install/build/typecheck/54tests0fail0skip and both packed PUBLIC_HOST fixtures PASS,0authenticated calls, unchanged consumer/no Kernel dependency. COMMITTED-VERIFICATION.json SHA2560dd26c51462f892f91b90c57e09b0b0679541787f418e3ee75a5ecda85485c68; COMMITTED-REPRO.log SHA256feb79540dd4ffb72fe6094163b6ff8b7b674b5c449125cb35797d75133c31e8a; default fixture53f9f2a1d84f85dc001825f8d7c5361ee9e2a75ee70502c460f95997f00d962f; continuation fixturefc0ba5b73cc98483b7fe40bbb2f9469467ca7fbc05d48a26a696cbc66ac37e7d (all under evidence/).
+The final release commit is docs/evidence-only; unchanged46-file f85caf…52ab source makes this committed proof applicable without repeating it or relabeling prior overlay evidence. PHASE4-COMPLETION.md declares the immutable technical release boundary. Exact tag/main public readback is external to that pre-tag declaration and recorded by the operator; no unobserved tag push, circular self-hash certificate or owner acceptance is claimed. Live authority remains CLOSED6/6.
+
 R1–R10/revised J0–J26 govern; full source retained in GOVERNING-PLAN-REV1.1.md. Implementation and live qualification are supported. Independent parent technical review ACCEPTED publication (verbatim FINAL-PARENT-REVIEW.md, SHA256 e84f3809894966410cdb0c5b93cb2d6d16dc6951353784df4a90fb8fae79ff49); this is not self-review or owner acceptance. Publication/tag/readback are not yet claimed. All TypeSafe live authority CLOSED,6/6 consumed. No further calls for finalization.
 
 ## Actual chronological evidence

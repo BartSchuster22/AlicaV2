@@ -1,5 +1,7 @@
 # Decision Service architecture — Phase4 Revision1.1 candidate
 
+Final delivery status supersedes the candidate-status paragraph below: public implementation be8079bc7e0c5a60c6887b5905ca1f2f7735d018 has exact committed-source offline54-test/two packed-fixture proof,0authenticated calls. Source remains f85caf…52ab. See ../../../docs/phase4/PHASE4-COMPLETION.md for the docs-only, tag-bound release declaration and external readback boundary; not owner acceptance. Architecture is unchanged.
+
 Status: implementation/live-qualified candidate, independent parent technical review accepted publication (../../../docs/phase4/FINAL-PARENT-REVIEW.md), NOT yet released/owner-accepted. Four real Jev evaluations passed after the retained initial discovery failure and one explicitly authorized diagnostic. Original budget6/6 exhausted; no more calls. See ../../../docs/phase4/ACCEPTANCE.md and ../../../docs/phase4/EVIDENCE.md. R1–R10/revised J0–J26 supersede retained v1.0 numbering. Final46-file source has fresh offline54-test and both packed-fixture reproduction; actual publication/readback remain pending.
 
 Path: separately installed SDK/Catalog-only consumer → granted public Host Decision capability → SDK Decision Service → DecisionProvider → neutral reference or TypeSafe Jev adapter. The selected EXPERIMENTAL snapshot is independent of frozen stable Catalog.
