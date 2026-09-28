@@ -1,0 +1,67 @@
+{
+  "apiVersion": "alica.io/service/v1",
+  "kind": "Service",
+  "metadata": {
+    "id": "org.phase50.stateless",
+    "version": "1.0.0"
+  },
+  "binding": "public-host-inproc-v1",
+  "catalog": {
+    "version": "0.1.0",
+    "digest": "sha256:9ae1e21129397d88624e9c05b1d224739119d9437199c6ad423632c16da10442"
+  },
+  "capabilities": {
+    "provides": [
+      {
+        "uri": "acap://alica.io/example/echo@1",
+        "identity": "io.alica.example.echo",
+        "version": "1.0.0"
+      }
+    ],
+    "requires": []
+  },
+  "scopes": [
+    "application"
+  ],
+  "permissions": [
+    "example.echo"
+  ],
+  "configuration": {
+    "schema": "config.schema.json",
+    "version": "1.0.0",
+    "reload": "restart"
+  },
+  "secrets": [],
+  "health": {
+    "ownedBy": "service",
+    "states": [
+      "READY",
+      "DEGRADED",
+      "UNAVAILABLE"
+    ]
+  },
+  "data": {
+    "authoritative": [],
+    "derived": [],
+    "external": [],
+    "rebuildable": []
+  },
+  "persistence": {
+    "class": "STATELESS",
+    "survivesNormalRestart": false
+  },
+  "events": {
+    "emits": [],
+    "consumes": []
+  },
+  "diagnostics": "sdk-safe-log-v1",
+  "backup": {
+    "required": false,
+    "consistency": "none"
+  },
+  "migration": {
+    "required": false,
+    "compatibility": "no-data"
+  },
+  "ui": []
+}

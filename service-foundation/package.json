@@ -1,0 +1,10 @@
+{
+  "name": "@alica/service-foundation",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "bin": { "alica-service": "tooling/cli.mjs" },
+  "exports": { ".": "./tooling/validate.mjs", "./reference": "./reference/services.mjs", "./native-record-resource": "./reference/file-records.mjs" },
+  "scripts": { "test": "node --experimental-vm-modules --test --test-timeout=15000 tests/*.test.mjs" },
+  "dependencies": { "ajv": "8.20.0", "@alica/acap-contracts": "0.0.0", "@alica/catalog": "0.1.0", "@alica/plugin-sdk": "0.1.0" }
+}

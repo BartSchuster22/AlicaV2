@@ -1,0 +1,71 @@
+{
+  "apiVersion": "alica.io/service/v1",
+  "kind": "Service",
+  "metadata": {
+    "id": "org.phase50.stateful",
+    "version": "1.0.0"
+  },
+  "binding": "public-host-inproc-v1",
+  "catalog": {
+    "version": "0.5.0",
+    "digest": "sha256:6d4f62849279bfa76ee781572ebf5e73ff0a0ebb6f2073b80f3030d4cbdfce26"
+  },
+  "capabilities": {
+    "provides": [
+      {
+        "uri": "acap://alica.io/example/records@1",
+        "identity": "io.alica.example.records",
+        "version": "1.0.0"
+      }
+    ],
+    "requires": []
+  },
+  "scopes": [
+    "application"
+  ],
+  "permissions": [
+    "example.records"
+  ],
+  "configuration": {
+    "schema": "config.schema.json",
+    "version": "1.0.0",
+    "reload": "restart"
+  },
+  "secrets": [],
+  "health": {
+    "ownedBy": "service",
+    "states": [
+      "READY",
+      "DEGRADED",
+      "UNAVAILABLE"
+    ]
+  },
+  "data": {
+    "authoritative": [
+      "example.records"
+    ],
+    "derived": [],
+    "external": [],
+    "rebuildable": []
+  },
+  "persistence": {
+    "class": "STATEFUL",
+    "survivesNormalRestart": true,
+    "schema": "records.schema.json",
+    "version": "1.0.0"
+  },
+  "events": {
+    "emits": [],
+    "consumes": []
+  },
+  "diagnostics": "sdk-safe-log-v1",
+  "backup": {
+    "required": true,
+    "consistency": "stopped"
+  },
+  "migration": {
+    "required": false,
+    "compatibility": "same-schema-only"
+  },
+  "ui": []
+}

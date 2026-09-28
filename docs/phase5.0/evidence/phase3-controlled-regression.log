@@ -1,0 +1,29 @@
+✔ H4/H5 candidate proposal validates; public ACAP reference conformance (14.122989ms)
+✔ H5 neutral SDK consumer, invalid input, denied authority and disposal (testkit only) (12.56483ms)
+(node:877041) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ H6: verified in-process plugin cannot statically import child_process (61.005056ms)
+✔ H6: declared provider cannot defer registration to operator after ACTIVE (41.057031ms)
+✔ H6: public ACTIVE context cannot replace existing root handler (46.344455ms)
+✔ H6: child registration does not solve duplicate provider identity; grants still required (86.097185ms)
+✔ H6/H7 public operator context event/effect bridge crosses verified VM and cleans up (141.241157ms)
+(node:877042) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ H6: verified in-process plugin cannot statically import child_process (56.925692ms)
+✔ H6: declared provider cannot defer registration to operator after ACTIVE (44.593081ms)
+✔ H6: public ACTIVE context cannot replace existing root handler (42.537803ms)
+✔ H6: child registration does not solve duplicate provider identity; grants still required (83.35339ms)
+✔ H7-H11 controlled child public round trip, denied authority, cleanup and stale handle (225.415444ms)
+✔ H10 controlled process crash, malformed output and overflow normalize without raw data (368.337561ms)
+✔ H11 cancellation, single flight, deadline and in-flight shutdown are bounded (506.844501ms)
+✔ H8 process runner rejects missing dependency and pre-aborted task without dispatch (4.142434ms)
+✔ H9 foreign granted event identity cannot dispatch or forge replies (224.284291ms)
+✔ H11 SIGTERM-resistant child escalates and closes without poisoning or residue (124.184235ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2005.768546

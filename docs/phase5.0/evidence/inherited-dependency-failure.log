@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/home/alica-dev/AlicaV2-phase50/tools/check-dependencies.py", line 14, in <module>
+    assert name in {'@alica/acap-types','@alica/acap-contracts','@alica/plugin-sdk','ajv'},name
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: @alica/catalog

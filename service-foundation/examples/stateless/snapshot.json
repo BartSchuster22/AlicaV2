@@ -1,0 +1,117 @@
+{
+  "content": {
+    "apiVersion": "catalog.alica.io/snapshot-v1",
+    "version": "0.1.0",
+    "policy": {
+      "apiVersion": "catalog.alica.io/namespace-v1",
+      "version": "1.0.0",
+      "namespaces": [
+        {
+          "authority": "alica.io",
+          "domain": "example",
+          "kind": "first-party",
+          "owner": "ALICA maintainers"
+        }
+      ],
+      "release": [
+        "acap://alica.io/example/echo@1"
+      ]
+    },
+    "definitions": [
+      {
+        "apiVersion": "catalog.alica.io/v1",
+        "contract": {
+          "descriptor": "capabilities/core/echo/descriptor.json",
+          "digest": "sha256:76c2818de1cef99248256d1e0ae2561be259d0175ee5b55b7e4dff686e35649d",
+          "identity": "io.alica.example.echo",
+          "version": "1.0.0"
+        },
+        "dependencies": [],
+        "events": [],
+        "kind": "CapabilityDefinition",
+        "metadata": {
+          "id": "acap://alica.io/example/echo@1",
+          "maturity": "experimental",
+          "owner": "ALICA maintainers",
+          "summary": "Neutral bounded text round-trip for external-author contract interoperability.",
+          "version": "1.0.0"
+        },
+        "permissions": [
+          "example.echo"
+        ],
+        "scopes": [
+          "application",
+          "session"
+        ],
+        "semantics": {
+          "cancellation": "supported",
+          "description": "Returns the supplied text unchanged. No side effects and no persistence or deduplication guarantee.",
+          "errors": [
+            "INVALID_ARGUMENT",
+            "CANCELLED",
+            "DEADLINE_EXCEEDED"
+          ]
+        }
+      }
+    ],
+    "files": {
+      "capabilities/core/echo/descriptor.json": {
+        "schemaVersion": "acap.capability/v1",
+        "id": "io.alica.example.echo",
+        "version": "1.0.0",
+        "features": [],
+        "operations": [
+          {
+            "name": "echo",
+            "kind": "unary",
+            "idempotency": "none",
+            "input": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "type": "string",
+                  "maxLength": 4096
+                }
+              },
+              "required": [
+                "text"
+              ],
+              "additionalProperties": false
+            },
+            "output": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "type": "string",
+                  "maxLength": 4096
+                }
+              },
+              "required": [
+                "text"
+              ],
+              "additionalProperties": false
+            }
+          }
+        ]
+      }
+    },
+    "index": {
+      "apiVersion": "catalog.alica.io/index-v1",
+      "version": "0.1.0",
+      "entries": [
+        {
+          "id": "acap://alica.io/example/echo@1",
+          "version": "1.0.0",
+          "maturity": "experimental",
+          "identity": "io.alica.example.echo",
+          "digest": "sha256:76c2818de1cef99248256d1e0ae2561be259d0175ee5b55b7e4dff686e35649d"
+        }
+      ]
+    },
+    "compatibility": {
+      "rules": "catalog-v1-bounded",
+      "unknown": "REVIEW_REQUIRED"
+    }
+  },
+  "digest": "sha256:9ae1e21129397d88624e9c05b1d224739119d9437199c6ad423632c16da10442"
+}

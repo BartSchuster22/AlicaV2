@@ -1,0 +1,81 @@
+{
+  "schemaVersion": "acap.capability/v1",
+  "id": "io.alica.example.records",
+  "version": "1.0.0",
+  "features": [],
+  "operations": [
+    {
+      "name": "put",
+      "kind": "unary",
+      "idempotency": "none",
+      "input": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "value": {
+            "type": "string",
+            "maxLength": 4096
+          }
+        },
+        "required": [
+          "key",
+          "value"
+        ],
+        "additionalProperties": false
+      },
+      "output": {
+        "type": "object",
+        "properties": {
+          "stored": {
+            "type": "boolean",
+            "const": true
+          }
+        },
+        "required": [
+          "stored"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "get",
+      "kind": "unary",
+      "idempotency": "none",
+      "input": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          }
+        },
+        "required": [
+          "key"
+        ],
+        "additionalProperties": false
+      },
+      "output": {
+        "type": "object",
+        "properties": {
+          "found": {
+            "type": "boolean"
+          },
+          "value": {
+            "type": "string",
+            "maxLength": 4096
+          }
+        },
+        "required": [
+          "found",
+          "value"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ]
+}

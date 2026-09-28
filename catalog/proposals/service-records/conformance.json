@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "classification": "WORKING_TREE_PUBLIC_HOST_NATIVE_QUALIFICATION",
+  "source": "Worker actual DEV execution, not parent final review or committed-public reproduction",
+  "runtime": "Node24.21.0/npm11.19.0",
+  "tests": 35,
+  "pass": 35,
+  "fail": 0,
+  "skipped": 0,
+  "externalAuthor": "PASS",
+  "nativeEnvironment": "UID1000, no container executables/sockets/nonloopback interfaces, remote endpoint ENETUNREACH",
+  "persistence": "normal stop/start passed; SIGKILL after completed write then fresh operator recovered record; no crash durability guarantee",
+  "authority": "Existing public Host grants; operator-owned native resource; synthetic-test secrets only; local signed shell does not authenticate native bytes",
+  "log": {"path":"docs/phase5.0/evidence/native-slice5.log","sha256":"3f6ce56bed00172b14910186b4b5e6a7774df67857dc1933f724840b59c9720c"},
+  "completeSourceManifest": "docs/phase5.0/slice5-SHA256SUMS",
+  "completeSourceManifestSHA256": "d667aeace3450242290544919abe36af7d30b6d8c418f62d518a63162064026c",
+  "implementationHashes": {
+    "service-foundation/reference/file-records.mjs":"bbbbb6b81f7e925c18792dd929b3661f7f4dce90a455921e1167dafb13e49e7b",
+    "service-foundation/reference/services.mjs":"a2468c853071caa88c69944a6013f79d466e69a5d01aa021db1bed0f838515c1",
+    "service-foundation/tests/public-host.test.mjs":"d4bb50ba4c5494c8f141a1bfe602d3858e9881cc9631fb38667c477cb58ee58c",
+    "service-foundation/tests/storage-errors.test.mjs":"277868de230df99a1a74ff2161c8670125b662b3e533925c507a62403779ad08"
+  },
+  "ownerAcceptance": false,
+  "phaseCompletion": false
+}

@@ -1,0 +1,442 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://alica.io/service/manifest-v1",
+  "type": "object",
+  "properties": {
+    "apiVersion": {
+      "const": "alica.io/service/v1"
+    },
+    "kind": {
+      "const": "Service"
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9]*(?:[.-][a-z0-9]+)+$",
+          "maxLength": 128
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"
+        }
+      },
+      "required": [
+        "id",
+        "version"
+      ],
+      "additionalProperties": false
+    },
+    "binding": {
+      "const": "public-host-inproc-v1"
+    },
+    "catalog": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"
+        },
+        "digest": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        }
+      },
+      "required": [
+        "version",
+        "digest"
+      ],
+      "additionalProperties": false
+    },
+    "capabilities": {
+      "type": "object",
+      "properties": {
+        "provides": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "uri": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "identity": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9]*(?:[.-][a-z0-9]+)+$",
+                "maxLength": 128
+              },
+              "version": {
+                "type": "string",
+                "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"
+              }
+            },
+            "required": [
+              "uri",
+              "identity",
+              "version"
+            ],
+            "additionalProperties": false
+          },
+          "maxItems": 32,
+          "uniqueItems": true
+        },
+        "requires": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "uri": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "identity": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9]*(?:[.-][a-z0-9]+)+$",
+                "maxLength": 128
+              },
+              "version": {
+                "type": "string",
+                "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"
+              },
+              "optional": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "uri",
+              "identity",
+              "version",
+              "optional"
+            ],
+            "additionalProperties": false
+          },
+          "maxItems": 32,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "provides",
+        "requires"
+      ],
+      "additionalProperties": false
+    },
+    "scopes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "application",
+          "session"
+        ]
+      },
+      "maxItems": 2,
+      "uniqueItems": true
+    },
+    "permissions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 256
+      },
+      "maxItems": 32,
+      "uniqueItems": true
+    },
+    "configuration": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]+(?:/[A-Za-z0-9_-]+)*(?:\\.[A-Za-z0-9_-]+)*\\.json$",
+          "maxLength": 256
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"
+        },
+        "reload": {
+          "const": "restart"
+        }
+      },
+      "required": [
+        "schema",
+        "version",
+        "reload"
+      ],
+      "additionalProperties": false
+    },
+    "secrets": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,127}$"
+      },
+      "maxItems": 32,
+      "uniqueItems": true
+    },
+    "health": {
+      "type": "object",
+      "properties": {
+        "ownedBy": {
+          "const": "service"
+        },
+        "states": {
+          "const": [
+            "READY",
+            "DEGRADED",
+            "UNAVAILABLE"
+          ]
+        }
+      },
+      "required": [
+        "ownedBy",
+        "states"
+      ],
+      "additionalProperties": false
+    },
+    "data": {
+      "type": "object",
+      "properties": {
+        "authoritative": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9]*(?:[.-][a-z0-9]+)+$",
+            "maxLength": 128
+          },
+          "maxItems": 32,
+          "uniqueItems": true
+        },
+        "derived": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9]*(?:[.-][a-z0-9]+)+$",
+            "maxLength": 128
+          },
+          "maxItems": 32,
+          "uniqueItems": true
+        },
+        "external": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9]*(?:[.-][a-z0-9]+)+$",
+            "maxLength": 128
+          },
+          "maxItems": 32,
+          "uniqueItems": true
+        },
+        "rebuildable": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9]*(?:[.-][a-z0-9]+)+$",
+            "maxLength": 128
+          },
+          "maxItems": 32,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "authoritative",
+        "derived",
+        "external",
+        "rebuildable"
+      ],
+      "additionalProperties": false
+    },
+    "persistence": {
+      "type": "object",
+      "properties": {
+        "class": {
+          "type": "string",
+          "enum": [
+            "STATELESS",
+            "STATEFUL",
+            "DERIVED_STATE_ONLY",
+            "EXTERNAL_STATE_AUTHORITY"
+          ]
+        },
+        "survivesNormalRestart": {
+          "type": "boolean"
+        },
+        "schema": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]+(?:/[A-Za-z0-9_-]+)*(?:\\.[A-Za-z0-9_-]+)*\\.json$",
+          "maxLength": 256
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"
+        }
+      },
+      "required": [
+        "class",
+        "survivesNormalRestart"
+      ],
+      "additionalProperties": false
+    },
+    "events": {
+      "type": "object",
+      "properties": {
+        "emits": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "identity": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9]*(?:[.-][a-z0-9]+)+$",
+                "maxLength": 128
+              },
+              "version": {
+                "type": "string",
+                "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"
+              }
+            },
+            "required": [
+              "identity",
+              "version"
+            ],
+            "additionalProperties": false
+          },
+          "maxItems": 32,
+          "uniqueItems": true
+        },
+        "consumes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "identity": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9]*(?:[.-][a-z0-9]+)+$",
+                "maxLength": 128
+              },
+              "version": {
+                "type": "string",
+                "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"
+              }
+            },
+            "required": [
+              "identity",
+              "version"
+            ],
+            "additionalProperties": false
+          },
+          "maxItems": 32,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "emits",
+        "consumes"
+      ],
+      "additionalProperties": false
+    },
+    "diagnostics": {
+      "const": "sdk-safe-log-v1"
+    },
+    "backup": {
+      "type": "object",
+      "properties": {
+        "required": {
+          "type": "boolean"
+        },
+        "consistency": {
+          "type": "string",
+          "enum": [
+            "none",
+            "stopped"
+          ]
+        }
+      },
+      "required": [
+        "required",
+        "consistency"
+      ],
+      "additionalProperties": false
+    },
+    "migration": {
+      "type": "object",
+      "properties": {
+        "required": {
+          "type": "boolean"
+        },
+        "compatibility": {
+          "type": "string",
+          "enum": [
+            "no-data",
+            "same-schema-only"
+          ]
+        }
+      },
+      "required": [
+        "required",
+        "compatibility"
+      ],
+      "additionalProperties": false
+    },
+    "ui": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9]*(?:[.-][a-z0-9]+)+$",
+            "maxLength": 128
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "capability": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9]*(?:[.-][a-z0-9]+)+$",
+            "maxLength": 128
+          },
+          "permission": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "capability",
+          "permission"
+        ],
+        "additionalProperties": false
+      },
+      "maxItems": 8,
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "apiVersion",
+    "kind",
+    "metadata",
+    "binding",
+    "catalog",
+    "capabilities",
+    "scopes",
+    "permissions",
+    "configuration",
+    "secrets",
+    "health",
+    "data",
+    "persistence",
+    "events",
+    "diagnostics",
+    "backup",
+    "migration"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,38 @@
+{
+  "apiVersion": "catalog.alica.io/v1",
+  "kind": "CapabilityDefinition",
+  "metadata": {
+    "id": "acap://alica.io/example/records@1",
+    "version": "1.0.0",
+    "maturity": "proposed",
+    "owner": "ALICA maintainers",
+    "summary": "Bounded neutral text records with explicit absence and normal stop/start persistence."
+  },
+  "contract": {
+    "descriptor": "descriptor.json",
+    "identity": "io.alica.example.records",
+    "version": "1.0.0",
+    "digest": "sha256:191eacbb08f83239df26ad626e441dae370a372b8af1139af6191a08f5b0f69b"
+  },
+  "semantics": {
+    "description": "Put replaces one key; get returns found false and empty value only for observed absence, never failure. Maximum32 records. A completed put survives normal stop/start of the service with the same operator-owned data directory. No crash durability, transactions, backup, migration or hostile-code confinement guarantee. See SEMANTICS.md.",
+    "cancellation": "supported",
+    "errors": [
+      "INVALID_ARGUMENT",
+      "PERMISSION_DENIED",
+      "UNAVAILABLE",
+      "CANCELLED",
+      "DEADLINE_EXCEEDED",
+      "RESOURCE_EXHAUSTED"
+    ]
+  },
+  "scopes": [
+    "application",
+    "session"
+  ],
+  "permissions": [
+    "example.records"
+  ],
+  "dependencies": [],
+  "events": []
+}

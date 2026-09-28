@@ -1,0 +1,21 @@
+{
+  "apiVersion": "catalog.alica.io/proposal-v1",
+  "id": "phase50-example-records-v1",
+  "problem": "Phase5.0 requires a tiny stateful reference whose completed writes survive normal service stop/start and whose absence is not confused with failure.",
+  "existingInsufficient": "Echo is explicitly side-effect-free; agent execution and decision evaluation do not offer record persistence. Repurposing any frozen capability would violate its semantics.",
+  "abstraction": "Bounded opaque text key/value put/get with explicit found flag, fixed reference quota and normal restart persistence. No search, embeddings, backup, schema migration or product-specific memory API.",
+  "providers": [
+    "Native single-file reference resource (implemented, qualification pending)",
+    "Independent external-author file resource (planned; same contract and no product dependency)"
+  ],
+  "consumers": [
+    "Unchanged public SDK record consumer in service-foundation/reference/services.mjs"
+  ],
+  "draft": "acap://alica.io/example/records@1",
+  "alternatives": "Do not add stateful semantics to echo; no MemoryV4 dependency or generic storage engine; explicit native service-owned resource rather than modifying frozen Kernel.",
+  "security": "Existing Host grants enforce capability operations. Native resource ownership belongs to operator topology; no filesystem confinement claim. Permission metadata grants nothing; data never included in diagnostics.",
+  "scopes": "Application/session; operation grants put/get, neutral permission label example.records. No new grant or scope type.",
+  "compatibility": "New experimental proposal only; no original definitions/snapshots changed. Admission and separate snapshot require independent parent review and existing Catalog transition.",
+  "genericRationale": "Opaque bounded records demonstrate state ownership and persistence without encoding future products or implementation technology.",
+  "proposer": "Hermes Phase5.0 implementation worker"
+}
