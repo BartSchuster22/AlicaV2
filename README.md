@@ -10,7 +10,9 @@ A new, lean capability-oriented substrate: **Kernel → ACAP → SDK**.
 
 ## Phase 4 Decision Service
 
-**TECHNICAL RELEASE DECLARATION — IMPLEMENTATION PUBLISHED AND COMMITTED-SOURCE REPRODUCED; NOT OWNER ACCEPTED**
+**PHASE 4 — COMPLETE / FROZEN / OWNER ACCEPTED**
+
+[Project Owner Acceptance](https://github.com/BartSchuster22/AlicaV2/blob/phase4-jev-v1.0.0-accepted/docs/phase4/OWNER-ACCEPTANCE.md) records the subsequent formal governance decision. The technical tag `phase4-jev-v1.0.0` and all its evidence remain frozen; `phase4-jev-v1.0.0-accepted` records acceptance only. Historical technical-review statements below describe the earlier delivery, not the current owner-acceptance status. No Phase5 or additional development is authorized.
 
 The subsequently authorized Revision1.1 Decision Service + TypeSafe Jev adapter now has genuine Noul/Choice/Score/mixed evidence through the public Host, an unchanged SDK/Catalog-only external author, and exact-source offline reproduction. The provider-neutral contract was independently admitted to an EXPERIMENTAL Catalog snapshot; frozen foundations and original release tags are unchanged.
 
