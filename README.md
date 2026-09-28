@@ -2,7 +2,9 @@
 
 ## Phase 4 Decision Service — technical release
 
-**PHASE 4 — TECHNICALLY PUBLISHED / FROZEN; NOT OWNER ACCEPTED**
+**PHASE 4 — COMPLETE / FROZEN / OWNER ACCEPTED**
+
+[Project Owner Acceptance](https://github.com/BartSchuster22/AlicaV2/blob/phase4-jev-v1.0.0-accepted/docs/phase4/OWNER-ACCEPTANCE.md) is recorded at documentation-only commit `396f4e1f17e0818d0905ddb888170dc784ad85bb`, tagged [`phase4-jev-v1.0.0-accepted`](https://github.com/BartSchuster22/AlicaV2/tree/phase4-jev-v1.0.0-accepted). The original technical release and evidence remain unchanged.
 
 The independently reviewed Decision Service and TypeSafe Jev adapter are published at immutable annotated [phase4-jev-v1.0.0](https://github.com/BartSchuster22/AlicaV2/tree/phase4-jev-v1.0.0), release commit `003a9f7ce0a1e9845e7bf80d53ecb15c6aede30f`. Origin and anonymous HTTPS tag/object/source readback verified the release. This README-only pointer does not merge release code into main or change prior phase acceptance.
 
@@ -10,7 +12,7 @@ The independently reviewed Decision Service and TypeSafe Jev adapter are publish
 - [J0–J26 qualification](https://github.com/BartSchuster22/AlicaV2/blob/phase4-jev-v1.0.0/docs/phase4/ACCEPTANCE.md) and [independent parent technical review](https://github.com/BartSchuster22/AlicaV2/blob/phase4-jev-v1.0.0/docs/phase4/FINAL-PARENT-REVIEW.md)
 - [Reproduction guide](https://github.com/BartSchuster22/AlicaV2/blob/phase4-jev-v1.0.0/docs/phase4/REPRODUCE.md), [evidence](https://github.com/BartSchuster22/AlicaV2/blob/phase4-jev-v1.0.0/docs/phase4/EVIDENCE.md), and [exact committed-source proof](https://github.com/BartSchuster22/AlicaV2/blob/phase4-jev-v1.0.0/docs/phase4/evidence/COMMITTED-VERIFICATION.json)
 
-Committed-source offline build/typecheck,54/54 tests and both packed public Host fixtures passed with0authenticated calls. The final release differs only in docs/evidence from the tested implementation. Real Noul/Choice/Score/mixed qualification is preserved; live authority is CLOSED6/6, with no replay/init/retry permitted. Original failures and diagnostics remain evidence. This technical release is NOT owner acceptance; no Phase5 or additional integration is authorized. STOP at this boundary.
+Committed-source offline build/typecheck,54/54 tests and both packed public Host fixtures passed with0authenticated calls. The final release differs only in docs/evidence from the tested implementation. Real Noul/Choice/Score/mixed qualification is preserved; live authority is CLOSED6/6, with no replay/init/retry permitted. Original failures and diagnostics remain evidence. The subsequent Project Owner Acceptance records governance only; no Phase5 or additional integration is authorized. STOP at this boundary.
 
 ## Phase 3 Owner Acceptance
 
