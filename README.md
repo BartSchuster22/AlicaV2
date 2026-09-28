@@ -1,5 +1,13 @@
 # ALICA V2
 
+## Phase 5.0 Project Owner Acceptance
+
+**PHASE 5.0 — COMPLETE / FROZEN / OWNER ACCEPTED**
+
+The explicit Project Owner decision is recorded in [OWNER-ACCEPTANCE.md](https://github.com/BartSchuster22/AlicaV2/blob/phase5.0-service-foundation-v1.0.0-accepted/docs/phase5.0/OWNER-ACCEPTANCE.md), under the separate annotated [owner-accepted tag](https://github.com/BartSchuster22/AlicaV2/tree/phase5.0-service-foundation-v1.0.0-accepted). This later documentation-only governance event accepts the documented S0–S20 scope and limitations; it is not a new technical qualification or an agent acceptance decision.
+
+The [original technical release](https://github.com/BartSchuster22/AlicaV2/tree/phase5.0-service-foundation-v1.0.0), commit `af8f2e8504207681e2b1487948293349f97e08c5`, and all evidence remain immutable. Earlier “No Owner Acceptance” statements below describe the prior technical event and are superseded only as current governance status by this later owner decision. All Phase1–4 originals and closed grants remain unchanged. No additional Phase5 development or Phase5.1 MemoryV4 + Adapter is authorized. COMPLETE / FROZEN / OWNER ACCEPTED — STOP.
+
 ## Phase5.0 Service Foundation — technically qualified release
 
 The subsequent explicit owner authorization permits **Phase5.0 ONLY under
