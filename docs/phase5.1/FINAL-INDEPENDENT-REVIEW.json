@@ -1,0 +1,76 @@
+{
+  "reviewType": "fresh-independent-final-candidate-review",
+  "decision": "ACCEPT_FOR_TECHNICAL_PUBLICATION_WITH_CAVEATS",
+  "blockingFindings": [],
+  "candidate": {
+    "commit": "ab09af5022ea81f9088b0b940645b4314543d422",
+    "branch": "phase51-memoryv4",
+    "devWorktree": "/home/alica-dev/AlicaV2-phase51",
+    "localRoot": "/home/herman/g7-control/phase51-final-review",
+    "archive": "/home/herman/g7-control/phase51-final-review-ab09af5.tar",
+    "archiveSha256": "59f630c692f760736fd7843b8a8e668c96bf4942992f4e43e2707ece1fb3050f",
+    "qualifiedSourceArchiveSha256": "e2a390fca4cf1cb5df85667189428f5808b46838537edf758da263dfc2d2bcda",
+    "trackedWorktreeChanges": [],
+    "untracked": [
+      "docs/phase5.1/evidence/phase51-candidate-source.tar.gz",
+      "packages/catalog/schemas/capability-definition.schema.json",
+      "packages/catalog/schemas/proposal.schema.json"
+    ]
+  },
+  "independentVerification": {
+    "archiveFilesMatchingLocalCommittedAndDevWorktree": 148,
+    "qualifiedManifestFilesMatchingLocalAndExecutedSourceArchive": 89,
+    "publicReproductionLogHashesMatched": 14,
+    "mismatches": [],
+    "v1ReviewPacketHashes": "all six match",
+    "v2ReviewPacketHashes": "all ten match",
+    "admissionImplementationAndConformanceHashes": "match",
+    "generatedSchemaHashes": "match recorded canonical hashes",
+    "frozenPackagesFoundationDecisionDiffFromAcceptedPhase50": [],
+    "dependencyAndSecretCheckerDiffFromAcceptedPhase50": [],
+    "candidatePythonSyntax": "PASS, in-memory compile without candidate writes",
+    "secretPatternCheck": {"exitCode": 0, "stdout": "Secret pattern check passed", "limitation": "bounded known-pattern check, not a guarantee of absence of all secrets"},
+    "focusedReproduction": {
+      "suite": "services/memoryv4/tests/test_exchange.py",
+      "exitCode": 0,
+      "stdout": "17 passed in 2.47s",
+      "isolation": "temporary copied product, unshare --net, runuser alica-dev, env -i, disposable store, no pytest cache, PYTHONDONTWRITEBYTECODE=1",
+      "cleanup": "temporary fixture removed in finally"
+    }
+  },
+  "evidenceSha256": {
+    "docs/phase5.1/evidence/final-source-verification.json": "9192667cbff29917d26d4ea49521512a46129f458175b3d3245174b6f2473ea3",
+    "docs/phase5.1/evidence/public-reproduction.json": "1d295e1c7b6b33af90d9edfbd0cadbd03e07ab22dc5e9b3db54057cba12ea5e8",
+    "docs/phase5.1/evidence/native-v2.log": "457f3be7e0f6e299e479b8140e3387f5a41a7d91f7cb9d5f5e53e902b6ca6c81",
+    "docs/phase5.1/evidence/native-python.log": "8bb13907bc30ce8fa3ac84436e6b3e8a9441b1250e62302469e9f4e41c032f85",
+    "docs/phase5.1/evidence/python-final.log": "f29b431b844c9ac2f81278fcce85eb677ac9cba457a1a1fd477d8903b56ec520",
+    "docs/phase5.1/evidence/admitted-m7.json": "4e72c308eb967db4357f022b4a29bee4bafa47c5624d87992d96fe87a1900668",
+    "catalog/proposals/memory-candidates-v2/review-receipt.json": "7f1e21c2477a27f8514b9bbee21ac00714453df5087601f663361bc3b92bd917",
+    "services/memoryv4/provider.mjs": "98db923f111943c3813266250bc118d17418dc8ba6e08f80e3458906efd03003",
+    "services/memoryv4/bridge.py": "3b94cc3de92f83ffc848b84a500da8ab366b751444d315b59d477511b680a18a"
+  },
+  "sourceReview": {
+    "sharedDomainAndHttp": "HTTP delegates governed operations; native and ACAP invoke the same domain/Store. Actual same-record parity test inspected; baseline/refactor and final regression evidence retained. Denial audit and duplicate suppression inspected.",
+    "authority": "Provider-owned resolver receives trusted Host caller principal/instance/scope. Closed public payload cannot supply actor/grants/canonical role. Domain permission and root checks precede create replay; current Host grants also required.",
+    "replay": "Host idempotency none with explicit requestKey. BEGIN IMMEDIATE binds actor/key/operation/request hash/original response, record and audit in one transaction. No ledger eviction in inspected Store. Restart, response-loss, conflicts, actor isolation and reauthorization tests inspected.",
+    "exchange": "Explicit restricted admin export/import and separate canonical preservation authority; normalized closed graph, reference/supersession checks, empty-target check inside write transaction including ledger, deferred foreign keys, rollback, FTS rebuild and retained import audit inspected and focused tests rerun.",
+    "nativeAndCleanup": "Provider bounded child transport, request/response limits, active cap, deadline/cancellation kill, close-event cleanup and effect-owned disposal inspected. Bridge closes Store in finally. Native isolation tool and actual logs inspected; full native suite not rerun.",
+    "failedPatchAlertResolution": "Actual committed provider includes child error and stdin error handling, abort-race check and awaited close-event disposal; bridge includes finally/store.close. Both match executed archive. No inference from mutation verifier or claim that unseen patch bodies were applied.",
+    "consumer": "Independent consumer imports public SDK only and receives selected requirement; no MemoryV4/HTTP/SQLite/private Kernel imports.",
+    "catalog": "Distinct genuine parent design receipt, immutable v1 and v2 packets, frozen governance source and admission tool inspected. Existing experimental admission has matching implementation and conformance hashes. Real M7 snapshot pin is fb9b81e7f0565d963642dbc0bbdfef5d1c11e608a5f447036edc54f328847889. Reviewer did not apply admission or transition.",
+    "reproducibility": "Executed source archive hash and all qualified product/tooling/Catalog bytes independently matched. Fresh-source install/test tooling inspected. This is prepublication clean-source proof, not anonymous published-tag reproduction. Unknown unrun packet script was unnecessary and not executed."
+  },
+  "caveats": [
+    "Anonymous exact published-tag/source reproduction and main README-only discovery verification remain publication-stage work, not completed here.",
+    "Catalog dependency-check remains an inherited exit-1 failure: AssertionError: @alica/catalog. Not green and not a new blocker; frozen checker/package source unchanged.",
+    "Catalog maturity remains experimental; M7 executed/backup/migration status NOT_TESTED and trustVerified=false remain unchanged. Actual native execution is separate evidence.",
+    "25-hour ledger aging is accelerated retention evidence plus no-eviction source inspection, not elapsed 24-hour soak.",
+    "Fresh-domain graph exchange excludes same-domain authoritative replay ledger; it is not a backup substitute or authority import. Artifact bytes are not transferred.",
+    "VM experimental and inherited Python deprecation warnings, existing whitespace limitations and closed live grants remain unchanged.",
+    "Historical proposed/not-yet-built wording inside immutable design/admission provenance is historical; candidate report and actual experimental admission describe current state. Do not rewrite frozen receipts to cosmetically erase history.",
+    "Review is finite and source/evidence-based, not an exhaustive security certification or acceptance based solely on test counts."
+  ],
+  "actionsNotTaken": ["product edits", "candidate edits", "admission", "publication", "production access", "live-provider calls", "Kernel/Foundation changes", "lock reacquire/probe/release", "recall/sync", "subworkers/cron", "Owner Acceptance", "Phase5.2"],
+  "checkpointState": "UNSYNCED; parent sync pending under inherited checkpoint ownership",
+  "nextAction": "Parent may consume this independent acceptance and separately execute the already-owner-authorized scoped technical-publication workflow, preserving ab09af5 product/evidence bytes and frozen references. No product correction is requested. Publish technical completion/tag and README-only discovery with anonymous exact-ref/source verification, then STOP for separate Owner Acceptance. Parent handles sync after inherited lock ownership ends."
+}

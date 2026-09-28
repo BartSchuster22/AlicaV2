@@ -1,5 +1,13 @@
 # ALICA V2
 
+## Phase5.1 MemoryV4 + ACAP — technical release
+
+[Technical completion](docs/phase5.1/PHASE5.1-COMPLETION.md) | [Actual evidence and public-source reproduction](docs/phase5.1/EVIDENCE.md) | [Independent final review](docs/phase5.1/FINAL-INDEPENDENT-REVIEW.md).
+
+Technical release `phase5.1-memoryv4-v1.0.0`; reviewed implementation `ab09af5022ea81f9088b0b940645b4314543d422`, with documentation-only completion child. Anonymous public-source execution passed the scoped matrix with the inherited Catalog dependency failure explicitly retained. Experimental/NOT_TESTED/trustVerified=false and retention-soak limitations remain. After verified tag transport, FREEZE and STOP for separate Owner Acceptance. No Owner Acceptance or Phase5.2 is declared.
+
+The candidate and earlier-phase status paragraphs below are historical records. This technical declaration supersedes their publication status only; their original body, evidence and links remain preserved.
+
 ## Phase5.1 MemoryV4 + ACAP — implementation candidate
 
 The later explicit owner authorization permits Phase5.1 only. Historical STOP/no-Phase5.1 statements below remain verbatim records of earlier decisions, not the current authorization.

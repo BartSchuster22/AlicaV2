@@ -1,0 +1,51 @@
+✔ delivered stateless manifest has separate semantic/declared/not-executed results (44.116134ms)
+✔ delivered stateful manifest has separate semantic/declared/not-executed results (54.08606ms)
+✔ stateful example schema validates actual persisted reference bytes (35.502986ms)
+✔ required/optional dependency consistency checked against substantive Catalog fixture context (115.51721ms)
+✔ supplied existing plugin declaration identity/capability/secret comparison is substantive (79.499424ms)
+✔ local config references cannot escape by symlink; missing local reference fails (1.275363ms)
+(node:903879) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ PUBLIC_HOST stateless native attachment, permission denial and cleanup (305.874359ms)
+✔ PUBLIC_HOST proposed records persist across normal stop/new instance; health and stale handle (470.020551ms)
+✔ PUBLIC_HOST actual required dependency absent, not successful EMPTY (28.350922ms)
+✔ PUBLIC_HOST actual signed startup failure and readiness timeout (210.77315ms)
+✔ PUBLIC_HOST actual secret reference declaration/grant/existence checks (89.502873ms)
+✔ PUBLIC_HOST actual bounded stop timeout is reported, not clean PASS (86.838018ms)
+✔ PUBLIC_HOST service-owned quota health DEGRADED and storage failure UNAVAILABLE (820.966537ms)
+✔ PUBLIC_HOST undeclared data-domain rejected by reference, not filesystem confinement (105.32843ms)
+✔ PUBLIC_HOST scope identity cannot be changed by a forged grant (143.190052ms)
+✔ stateless SDK fixture, unchanged consumer, service-owned health and cleanup (34.723617ms)
+✔ stateful SDK fixture persists across normal disposal/new instance; empty differs from absent (42.037445ms)
+✔ native resource serializes concurrent writes; quota rejects without losing records (29.008963ms)
+✔ corrupt state fails open instead of manufacturing successful EMPTY (4.49812ms)
+✔ native storage errors normalize; failed write retains prior record, never absence (22.608175ms)
+✔ corrupt JSON and malformed persisted shapes fail FAILED_PRECONDITION; IO open fails UNAVAILABLE (5.691119ms)
+✔ three levels are independent; backup/migration execution not tested (41.619346ms)
+✔ structural rejects malformed (0.780681ms)
+✔ structural rejects unsupported binding (0.408961ms)
+✔ structural rejects unknown field (0.414501ms)
+✔ structural rejects executable UI (0.457102ms)
+✔ structural rejects inline secret (0.362482ms)
+✔ structural rejects path traversal (0.262746ms)
+✔ semantic rejects unknown capability (2.58779ms)
+✔ semantic rejects unavailable version (1.768615ms)
+✔ semantic rejects URI major mismatch (2.419752ms)
+✔ semantic rejects wrong identity (2.204475ms)
+✔ semantic rejects wrong Catalog context (1.847954ms)
+✔ semantic rejects missing permission declaration (2.023505ms)
+✔ semantic rejects state hidden by stateless (2.220927ms)
+✔ semantic rejects undeclared UI permission (23.738836ms)
+✔ semantic rejects unsupported secret binding (31.771911ms)
+✔ semantic rejects unowned rebuildable data (1.461866ms)
+✔ configuration required field actually validated (21.277586ms)
+✔ snapshot pin enforced independently from self-reported digest (1.754348ms)
+✔ remote schema references never fetched (1.615736ms)
+ℹ tests 41
+ℹ suites 0
+ℹ pass 41
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2676.051019
