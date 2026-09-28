@@ -1,5 +1,26 @@
 # ALICA V2
 
+## Phase5.0 Service Foundation — technically qualified release
+
+The subsequent explicit owner authorization permits **Phase5.0 ONLY under
+Revision1.1**. Earlier “No Phase5” statements below record the prior frozen Phase4
+boundary; they do not cancel this later authorization. No Phase5.1 is authorized.
+
+[Service standard and public author workflow](https://github.com/BartSchuster22/AlicaV2/tree/phase5.0-service-foundation-v1.0.0/service-foundation)
+| [Actual evidence](https://github.com/BartSchuster22/AlicaV2/blob/phase5.0-service-foundation-v1.0.0/docs/phase5.0/EVIDENCE.md)
+| [Reproduction](https://github.com/BartSchuster22/AlicaV2/blob/phase5.0-service-foundation-v1.0.0/docs/phase5.0/REPRODUCE.md)
+| [Technical release declaration](https://github.com/BartSchuster22/AlicaV2/blob/phase5.0-service-foundation-v1.0.0/docs/phase5.0/PHASE5.0-COMPLETION.md).
+
+Implementation candidate `9b4ec08dac0bf41a3f6dec2e3905e788d86eb426` passed actual
+fresh anonymous-public-clone, pinned offline build and native isolated qualification:
+41/41 tests plus separately installed public author/operator, unchanged consumer,
+normal persistence, completed-write crash/restart and cleanup. Independent parent
+technical review approved scoped publication. This commit declares the technical
+release phase5.0-service-foundation-v1.0.0; tag transport/readback is verified after
+push, not presumed by this declaration. No Owner Acceptance or Phase5.1. All earlier
+source/tag evidence and closed live authorities remain unchanged. Historical phase
+records below are preserved verbatim.
+
 ## Phase 4 Decision Service — technical release
 
 **PHASE 4 — COMPLETE / FROZEN / OWNER ACCEPTED**
