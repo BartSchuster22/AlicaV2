@@ -1,0 +1,208 @@
+Cloning into '/home/alica-dev/phase3-clean-hermes-repro/source'...
+done.
+Note: switching to 'c04e9a1d0dfa4abbefe4b256428e645abaacfe88'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+Updating files:  69% (11408/16517)Updating files:  70% (11562/16517)Updating files:  71% (11728/16517)Updating files:  72% (11893/16517)Updating files:  73% (12058/16517)Updating files:  74% (12223/16517)Updating files:  75% (12388/16517)Updating files:  76% (12553/16517)Updating files:  77% (12719/16517)Updating files:  78% (12884/16517)Updating files:  79% (13049/16517)Updating files:  80% (13214/16517)Updating files:  81% (13379/16517)Updating files:  82% (13544/16517)Updating files:  83% (13710/16517)Updating files:  84% (13875/16517)Updating files:  85% (14040/16517)Updating files:  86% (14205/16517)Updating files:  87% (14370/16517)Updating files:  88% (14535/16517)Updating files:  89% (14701/16517)Updating files:  90% (14866/16517)Updating files:  91% (15031/16517)Updating files:  92% (15196/16517)Updating files:  93% (15361/16517)Updating files:  94% (15526/16517)Updating files:  95% (15692/16517)Updating files:  96% (15857/16517)Updating files:  97% (16022/16517)Updating files:  98% (16187/16517)Updating files:  99% (16352/16517)Updating files: 100% (16517/16517)Updating files: 100% (16517/16517), done.
+HEAD is now at c04e9a1d0d fix(desktop): honour a user-set voice.silence_duration in the voice loop
+
+[0;36m☤ Hermes Agent Setup[0m
+
+[0;36m→[0m Checking for uv...
+[0;36m→[0m Staging pinned uv 0.12.3 (linux-x64) into the pm store...
+[0;32m✓[0m uv installed (uv 0.12.3 (x86_64-unknown-linux-gnu))
+[0;36m→[0m Installing python + tools + dependencies via pm (hash-verified via uv.lock)...
+[0;36m→[0m (first run on a fresh checkout can take 1-5 minutes)
+Downloading cpython-3.14.7-linux-x86_64-gnu (download) (34.3MiB)
+ Downloaded cpython-3.14.7-linux-x86_64-gnu (download)
+Installed Python 3.14.7 in 1.14s
+ + cpython-3.14.7-linux-x86_64-gnu
+Preparing the isolated Hermes runtime…
+  → Installing Python dependencies…
+  ✓ Installing Python dependencies
+  ffmpeg:   2.8%  4.0 MiB / 143.2 MiB
+  ffmpeg:   5.6%  8.0 MiB / 143.2 MiB
+  ffmpeg:   8.4%  12.0 MiB / 143.2 MiB
+  ffmpeg:  11.2%  16.0 MiB / 143.2 MiB
+  ffmpeg:  14.0%  20.0 MiB / 143.2 MiB
+  ffmpeg:  16.8%  24.0 MiB / 143.2 MiB
+  ffmpeg:  19.6%  28.0 MiB / 143.2 MiB
+  ffmpeg:  23.0%  33.0 MiB / 143.2 MiB
+  ffmpeg:  26.5%  38.0 MiB / 143.2 MiB
+  ffmpeg:  29.3%  42.0 MiB / 143.2 MiB
+  ffmpeg:  32.1%  46.0 MiB / 143.2 MiB
+  ffmpeg:  34.9%  50.0 MiB / 143.2 MiB
+  ffmpeg:  37.7%  54.0 MiB / 143.2 MiB
+  ffmpeg:  41.2%  59.0 MiB / 143.2 MiB
+  ffmpeg:  44.0%  63.0 MiB / 143.2 MiB
+  ffmpeg:  46.8%  67.0 MiB / 143.2 MiB
+  ffmpeg:  49.6%  71.0 MiB / 143.2 MiB
+  ffmpeg:  52.4%  75.0 MiB / 143.2 MiB
+  ffmpeg:  55.9%  80.0 MiB / 143.2 MiB
+  ffmpeg:  58.7%  84.0 MiB / 143.2 MiB
+  ffmpeg:  61.5%  88.0 MiB / 143.2 MiB
+  ffmpeg:  65.7%  94.0 MiB / 143.2 MiB
+  ffmpeg:  69.1%  98.9 MiB / 143.2 MiB
+  ffmpeg:  71.9%  102.9 MiB / 143.2 MiB
+  ffmpeg:  74.7%  106.9 MiB / 143.2 MiB
+  ffmpeg:  78.8%  112.8 MiB / 143.2 MiB
+  ffmpeg:  82.2%  117.7 MiB / 143.2 MiB
+  ffmpeg:  85.0%  121.7 MiB / 143.2 MiB
+  ffmpeg:  87.8%  125.7 MiB / 143.2 MiB
+  ffmpeg:  91.2%  130.6 MiB / 143.2 MiB
+  ffmpeg:  94.0%  134.6 MiB / 143.2 MiB
+  ffmpeg:  97.3%  139.4 MiB / 143.2 MiB
+  ffmpeg: 100.0%  143.2 MiB / 143.2 MiB
+  ffmpeg: 100.0%  143.2 MiB / 143.2 MiB
+  ffmpeg: unpacking
+✓ ffmpeg
+  node:  12.5%  4.0 MiB / 32.0 MiB
+  node:  25.0%  8.0 MiB / 32.0 MiB
+  node:  37.5%  12.0 MiB / 32.0 MiB
+  node:  50.0%  16.0 MiB / 32.0 MiB
+  node:  65.6%  21.0 MiB / 32.0 MiB
+  node:  81.3%  26.0 MiB / 32.0 MiB
+  node:  96.9%  31.0 MiB / 32.0 MiB
+  node: 100.0%  32.0 MiB / 32.0 MiB
+  node: 100.0%  32.0 MiB / 32.0 MiB
+  node: unpacking
+✓ node
+  npm: 100.0%  2.9 MiB / 2.9 MiB
+  npm: 100.0%  2.9 MiB / 2.9 MiB
+  npm: unpacking
+✓ npm
+  python:   3.3%  4.0 MiB / 119.7 MiB
+  python:   6.7%  8.0 MiB / 119.7 MiB
+  python:  10.0%  12.0 MiB / 119.7 MiB
+  python:  13.4%  16.0 MiB / 119.7 MiB
+  python:  16.7%  20.0 MiB / 119.7 MiB
+  python:  20.0%  24.0 MiB / 119.7 MiB
+  python:  23.4%  28.0 MiB / 119.7 MiB
+  python:  27.6%  33.0 MiB / 119.7 MiB
+  python:  30.9%  37.0 MiB / 119.7 MiB
+  python:  34.2%  41.0 MiB / 119.7 MiB
+  python:  37.6%  45.0 MiB / 119.7 MiB
+  python:  40.9%  49.0 MiB / 119.7 MiB
+  python:  45.9%  55.0 MiB / 119.7 MiB
+  python:  49.3%  59.0 MiB / 119.7 MiB
+  python:  52.6%  63.0 MiB / 119.7 MiB
+  python:  56.0%  67.0 MiB / 119.7 MiB
+  python:  59.3%  71.0 MiB / 119.7 MiB
+  python:  62.6%  75.0 MiB / 119.7 MiB
+  python:  66.8%  80.0 MiB / 119.7 MiB
+  python:  70.2%  84.0 MiB / 119.7 MiB
+  python:  73.5%  88.0 MiB / 119.7 MiB
+  python:  76.9%  92.0 MiB / 119.7 MiB
+  python:  80.2%  96.0 MiB / 119.7 MiB
+  python:  83.5%  100.0 MiB / 119.7 MiB
+  python:  86.9%  104.0 MiB / 119.7 MiB
+  python:  91.0%  109.0 MiB / 119.7 MiB
+  python:  95.1%  113.9 MiB / 119.7 MiB
+  python:  99.2%  118.7 MiB / 119.7 MiB
+  python: 100.0%  119.7 MiB / 119.7 MiB
+  python: 100.0%  119.7 MiB / 119.7 MiB
+  python: unpacking
+✓ python
+  ripgrep: 100.0%  2.2 MiB / 2.2 MiB
+  ripgrep: 100.0%  2.2 MiB / 2.2 MiB
+  ripgrep: unpacking
+✓ ripgrep
+  → Installing Python dependencies…
+  ✓ Installing Python dependencies
+✓ venv
+  → Resolving Python dependencies…
+  ✓ Resolving Python dependencies
+  → Installing Python dependencies…
+  ✓ Installing Python dependencies
+✓ test environment
+  agent-browser:   2.4%  4.0 MiB / 167.3 MiB
+  agent-browser:   4.8%  8.0 MiB / 167.3 MiB
+  agent-browser:   7.2%  12.0 MiB / 167.3 MiB
+  agent-browser:   9.6%  16.0 MiB / 167.3 MiB
+  agent-browser:  12.0%  20.0 MiB / 167.3 MiB
+  agent-browser:  14.3%  24.0 MiB / 167.3 MiB
+  agent-browser:  16.7%  28.0 MiB / 167.3 MiB
+  agent-browser:  19.1%  32.0 MiB / 167.3 MiB
+  agent-browser:  21.5%  36.0 MiB / 167.3 MiB
+  agent-browser:  23.9%  40.0 MiB / 167.3 MiB
+  agent-browser:  26.3%  44.0 MiB / 167.3 MiB
+  agent-browser:  28.7%  48.0 MiB / 167.3 MiB
+  agent-browser:  31.1%  52.0 MiB / 167.3 MiB
+  agent-browser:  34.0%  56.9 MiB / 167.3 MiB
+  agent-browser:  36.4%  60.9 MiB / 167.3 MiB
+  agent-browser:  38.8%  64.9 MiB / 167.3 MiB
+  agent-browser:  42.4%  70.9 MiB / 167.3 MiB
+  agent-browser:  44.8%  74.9 MiB / 167.3 MiB
+  agent-browser:  47.2%  78.9 MiB / 167.3 MiB
+  agent-browser:  49.6%  82.9 MiB / 167.3 MiB
+  agent-browser:  51.9%  86.9 MiB / 167.3 MiB
+  agent-browser:  54.3%  90.9 MiB / 167.3 MiB
+  agent-browser:  56.7%  94.9 MiB / 167.3 MiB
+  agent-browser:  59.7%  99.9 MiB / 167.3 MiB
+  agent-browser:  62.1%  103.9 MiB / 167.3 MiB
+  agent-browser:  64.5%  107.9 MiB / 167.3 MiB
+  agent-browser:  66.9%  111.9 MiB / 167.3 MiB
+  agent-browser:  69.3%  115.9 MiB / 167.3 MiB
+  agent-browser:  71.7%  119.9 MiB / 167.3 MiB
+  agent-browser:  74.6%  124.8 MiB / 167.3 MiB
+  agent-browser:  77.0%  128.8 MiB / 167.3 MiB
+  agent-browser:  79.4%  132.8 MiB / 167.3 MiB
+  agent-browser:  81.8%  136.8 MiB / 167.3 MiB
+  agent-browser:  84.2%  140.8 MiB / 167.3 MiB
+  agent-browser:  86.6%  144.8 MiB / 167.3 MiB
+  agent-browser:  89.0%  148.8 MiB / 167.3 MiB
+  agent-browser:  91.3%  152.8 MiB / 167.3 MiB
+  agent-browser:  93.7%  156.8 MiB / 167.3 MiB
+  agent-browser:  96.6%  161.6 MiB / 167.3 MiB
+  agent-browser:  99.5%  166.4 MiB / 167.3 MiB
+  agent-browser: 100.0%  167.3 MiB / 167.3 MiB
+  agent-browser: 100.0%  167.3 MiB / 167.3 MiB
+  agent-browser: unpacking
+  agent-browser:  12.9%  4.0 MiB / 31.1 MiB
+  agent-browser:  25.7%  8.0 MiB / 31.1 MiB
+  agent-browser:  38.6%  12.0 MiB / 31.1 MiB
+  agent-browser:  57.9%  18.0 MiB / 31.1 MiB
+  agent-browser:  76.8%  23.9 MiB / 31.1 MiB
+  agent-browser:  91.4%  28.4 MiB / 31.1 MiB
+  agent-browser: 100.0%  31.1 MiB / 31.1 MiB
+  agent-browser: 100.0%  31.1 MiB / 31.1 MiB
+  agent-browser: unpacking
+✓ agent-browser
+[0;32m✓[0m Tools + dependencies installed (hash-verified via pm + uv.lock)
+▶ running per-file parallel test suite via run_tests_parallel.py
+  (TZ=UTC LANG=C.UTF-8 PYTHONHASHSEED=0; clean env)
+▶ pre-compiling bytecode cache
+▶ launching test runner
+Discovered 4 test files (~82 tests) under ['tests/tools/test_registry.py', 'tests/tools/test_toolsets.py', 'tests/agent/test_skip_memory_store.py', 'tests/agent/test_tool_dispatch_helpers.py']; running with -j 2
+[ 31.7% |    26/~82 | ✓32 | ✗ 0] ✓ tests/agent/test_tool_dispatch_helpers.py (32✓, 3.0s)
+[ 34.1% |    28/~82 | ✓34 | ✗ 0] ✓ tests/agent/test_skip_memory_store.py (2✓, 6.3s)
+[ 81.7% |    67/~82 | ✓73 | ✗ 0] ✓ tests/tools/test_registry.py (39✓, 5.8s)
+[100.0% |    82/~82 | ✓88 | ✗ 0] ✓ tests/tools/test_toolsets.py (15✓, 4.7s)
+
+=== Summary: 4 files, 88 tests passed, 0 failed (100% complete) in 11.0s (2 workers) ===
+  Durations cached to test_durations.json (4 files)
+
+=== Per-file subprocess time distribution ===
+  Files:   4
+  Total subprocess CPU-wall: 19.7s  (runner wall: 11.0s, parallelism: 2x)
+  P50: 5.77s  P90: 6.26s  P95: 6.26s  P99: 6.26s  Max: 6.26s
+  <1s: 0 files (0%)  <2s: 0 files (0%)
+  Top 10 slowest:
+      6.26s  tests/agent/test_skip_memory_store.py
+      5.77s  tests/tools/test_registry.py
+      4.67s  tests/tools/test_toolsets.py
+      3.02s  tests/agent/test_tool_dispatch_helpers.py

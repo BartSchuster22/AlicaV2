@@ -1,0 +1,405 @@
+Cloning into '/home/alica-dev/phase3-clean-candidate-dd6ae758'...
+done.
+Updating files:  28% (17027/59930)Updating files:  29% (17380/59930)Updating files:  30% (17979/59930)Updating files:  31% (18579/59930)Updating files:  32% (19178/59930)Updating files:  33% (19777/59930)Updating files:  34% (20377/59930)Updating files:  35% (20976/59930)Updating files:  36% (21575/59930)Updating files:  37% (22175/59930)Updating files:  38% (22774/59930)Updating files:  39% (23373/59930)Updating files:  40% (23972/59930)Updating files:  41% (24572/59930)Updating files:  42% (25171/59930)Updating files:  43% (25770/59930)Updating files:  44% (26370/59930)Updating files:  45% (26969/59930)Updating files:  46% (27568/59930)Updating files:  47% (28168/59930)Updating files:  48% (28767/59930)Updating files:  49% (29366/59930)Updating files:  50% (29965/59930)Updating files:  51% (30565/59930)Updating files:  51% (31031/59930)Updating files:  52% (31164/59930)Updating files:  53% (31763/59930)Updating files:  54% (32363/59930)Updating files:  55% (32962/59930)Updating files:  56% (33561/59930)Updating files:  57% (34161/59930)Updating files:  58% (34760/59930)Updating files:  59% (35359/59930)Updating files:  60% (35958/59930)Updating files:  61% (36558/59930)Updating files:  62% (37157/59930)Updating files:  63% (37756/59930)Updating files:  64% (38356/59930)Updating files:  65% (38955/59930)Updating files:  66% (39554/59930)Updating files:  67% (40154/59930)Updating files:  68% (40753/59930)Updating files:  69% (41352/59930)Updating files:  70% (41951/59930)Updating files:  71% (42551/59930)Updating files:  72% (43150/59930)Updating files:  73% (43749/59930)Updating files:  74% (44349/59930)Updating files:  75% (44948/59930)Updating files:  76% (45547/59930)Updating files:  77% (46147/59930)Updating files:  78% (46746/59930)Updating files:  79% (47345/59930)Updating files:  80% (47944/59930)Updating files:  80% (48193/59930)Updating files:  81% (48544/59930)Updating files:  82% (49143/59930)Updating files:  83% (49742/59930)Updating files:  84% (50342/59930)Updating files:  85% (50941/59930)Updating files:  86% (51540/59930)Updating files:  87% (52140/59930)Updating files:  88% (52739/59930)Updating files:  89% (53338/59930)Updating files:  90% (53937/59930)Updating files:  91% (54537/59930)Updating files:  92% (55136/59930)Updating files:  93% (55735/59930)Updating files:  94% (56335/59930)Updating files:  95% (56934/59930)Updating files:  96% (57533/59930)Updating files:  97% (58133/59930)Updating files:  98% (58732/59930)Updating files:  99% (59331/59930)Updating files: 100% (59930/59930)Updating files: 100% (59930/59930), done.
+HEAD is now at dd6ae758 phase3: qualify bounded native Hermes lifecycle and public failure evidence
+v24.21.0
+11.19.0
+Python 3.14.7
+dd6ae75805fb7e72aa1a4b035a06c8b2c08f18e3
+
+added 19 packages in 830ms
+
+> alica-v2@0.0.0 build
+> node tools/build.mjs
+
+
+> alica-v2@0.0.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> alica-v2@0.0.0 test
+> node --experimental-vm-modules --test tests/foundation/*.test.mjs tests/kernel/*.test.mjs tests/contracts/*.test.mjs tests/sdk/*.test.mjs
+
+✔ CLI init/validate/generators run and preserve existing operator files (2263.395951ms)
+✔ CLI rejects invalid syntax/unknown flags, duplicate JSON, and redacts diagnostics (1023.326211ms)
+✔ CLI plugin/bundle/profile validation checks linked artifacts and raw inventory (1370.988506ms)
+✔ CLI plugin validation denies symlink escape even for a syntactically valid path (352.079367ms)
+✔ CLI conformance has human and machine reports and nonzero exit for wrong behavior (921.622441ms)
+✔ CLI validates expected descriptor digest before running conformance (315.120407ms)
+✔ stream-only provider passes conformance without unary assumptions (288.898234ms)
+✔ generated descriptor preserves prototype-named keys as JSON data (312.404876ms)
+✔ public descriptor schema and canonical digest reject semantic and unknown-field violations (12.104855ms)
+✔ required versus optional features, version range and digest negotiation (8.641243ms)
+✔ closed wire protocol validates digest, unknown operations, payloads and spoofed identity (4.27518ms)
+✔ authentication runs before revealing malformed contract details (1.249357ms)
+✔ wire behavior survives JSON round trips and non-local plain exceptions (4.526887ms)
+✔ invalid provider output has normalized contract mismatch (6.689282ms)
+✔ absolute expiration causes zero provider invocations and maximum budget clamps (1.676351ms)
+✔ cancellation before completion is terminal exactly once (27.284156ms)
+✔ cancellation during completion is terminal exactly once (26.95792ms)
+✔ cancellation after completion is terminal exactly once (47.384105ms)
+✔ request IDs are unique while outstanding; explicit cancel is idempotent (2.297441ms)
+✔ parent cancellation and deadlines propagate across sessions (61.775521ms)
+✔ instance idempotency: replay, conflict, in-flight duplicate and scope isolation (33.875404ms)
+✔ idempotency retention, reset and finite capacity never silently evict live keys (24.465261ms)
+✔ none rejects keys; stream idempotency is invalid; durable claim is not faked (2.777538ms)
+✔ stream yields detached validated items and exactly one iterator completion (2.403202ms)
+✔ stream invalid item and explicit cancellation terminate without late items (2.234602ms)
+(node:852554) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ stream rechecks authority before each item delivery (2.618486ms)
+✔ bounded event primitive terminates on overflow and never leaks subsequent queued data (0.412358ms)
+✔ event envelope validates exact descriptor and broker identity fields (2.509291ms)
+✔ generation is byte deterministic and descriptor changes change generated bindings (3.933176ms)
+✔ profile validation rejects duplicate roots, cycles, and unknown pins (2.375419ms)
+✔ conformance fails an incorrect provider instead of just validating descriptor (4.244453ms)
+✔ Kernel dispatch supports stream and revocation without Kernel imports in provider (128.799549ms)
+✔ Kernel instance-idempotency cache is shared across consumer handles (110.118395ms)
+✔ monotonic budget prevents late success when wall clock does not advance (13.781366ms)
+✔ terminal release callback runs once on both success and cancellation (27.768189ms)
+✔ wire diagnostic correlation is preserved without exception identity (0.617244ms)
+✔ closed provider refuses both unary and streaming execution (1.799652ms)
+✔ conformance does not confuse its own oracle mismatch with a provider error (2.905028ms)
+✔ credit starts at zero, bounds grants, and cancellation releases waiting producer (1.389541ms)
+✔ slow stream reader applies backpressure rather than consuming unseen items (12.344227ms)
+✔ stream values and terminal errors cross JSON without local exception identity (2.417127ms)
+✔ stream decoder rejects missing terminal, bad sequence, and unknown fields (0.426264ms)
+✔ prototype-named JSON properties remain data through descriptor and invocation (1.720323ms)
+✔ finite payload interpreter enforces all G1 type constraints without coercion (0.601864ms)
+✔ boundary CLI fails on planted source violation (339.408413ms)
+✔ Cell/admin Ajv declaration is limited to exact host importers and target (10.887318ms)
+✔ built public entry has no accidental runtime implementation (0.211078ms)
+✔ reject deep import (0.355501ms)
+✔ reject cross-package relative (0.792274ms)
+✔ reject V1 absolute (0.319702ms)
+✔ reject dynamic computed (2.013686ms)
+✔ reject undeclared external (0.352325ms)
+✔ reject developer tooling from package (0.436102ms)
+✔ reject host dependency from package (0.395015ms)
+✔ reject escape to repo tools (0.322948ms)
+✔ accept public type import (0.384166ms)
+✔ package exports reject deep runtime import (40.061057ms)
+✔ planted synthetic token is rejected without leaking its value (58.893537ms)
+✔ ordinary public data passes secret scanner (61.415432ms)
+(node:852608) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ same capability/version with different digest is rejected before activation (61.322888ms)
+✔ duplicate visible provider identity is conflict, not load-order selection (59.614447ms)
+✔ version/feature exclusions explain deterministic ranking and optional negotiation (161.078232ms)
+✔ planning is registry/lifecycle read-only; profile pin controls real calls and lock (497.527858ms)
+✔ invalid profile pin fails before evaluating any module (24.543658ms)
+✔ cancellation first terminal outcome wins over immediate provider success (98.832062ms)
+✔ call values are detached in both directions, not live objects (100.350106ms)
+✔ pending uncooperative call is reported instead of falsely clean disposal (93.946621ms)
+✔ expired trust stops new calls and quiesces all live instances (161.223306ms)
+✔ secret grant rechecked immediately before result delivery (40.150295ms)
+✔ nested scopes destroyed before parent owner and stale contexts never revive (41.419328ms)
+✔ nested calls cannot extend inherited deadline (180.15386ms)
+✔ same-version altered trust metadata and corrupted durable state are rejected (11.05785ms)
+(node:852609) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ independent Echo A passes unchanged consumer suite (404.505647ms)
+✔ independent Echo B passes unchanged consumer suite (413.861871ms)
+✔ selection invariant under order a,b (206.690836ms)
+✔ selection invariant under order b,a (207.791022ms)
+✔ strict parser rejects {"a":1,"a":2} (0.379145ms)
+✔ strict parser rejects {"a":1e0} (0.209966ms)
+✔ strict parser rejects {"a":1.0} (0.180961ms)
+✔ strict parser rejects {"a":9007199254740992} (0.135235ms)
+✔ strict parser rejects {"a":"\ud800"} (0.198574ms)
+✔ strict parser rejects {"é":1} (0.194305ms)
+✔ strict parser rejects [1,] (0.182264ms)
+✔ strict parser rejects {"a":true}x (0.123222ms)
+✔ bounded parsing/canonicalization rejects deep, cyclic, accessor, sparse and oversized values (1.551475ms)
+✔ runtime canonical digest matches G1 descriptor and Unicode/control rules (0.426584ms)
+✔ configuration is closed and secrets cannot be placed in config (9.987512ms)
+✔ verification rejects signature before evaluation (15.523811ms)
+✔ verification rejects file before evaluation (13.975271ms)
+✔ verification rejects unknown-manifest before evaluation (12.796077ms)
+✔ verification rejects duplicate-json before evaluation (13.876796ms)
+✔ verification rejects untrusted-key before evaluation (21.093162ms)
+✔ verification rejects invalid-stream-idempotency before evaluation (17.142774ms)
+✔ loaded bytes are immutable after verification (32.434947ms)
+✔ unverified module imports cannot be linked or evaluated (27.101662ms)
+✔ missing mandatory dependency blocks ACTIVE (32.970026ms)
+✔ incompatible mandatory dependency blocks ACTIVE (41.555075ms)
+✔ denied mandatory dependency blocks ACTIVE (32.790398ms)
+✔ mandatory cycles rejected; no participant becomes ACTIVE (54.352875ms)
+✔ partial activation never publishes; effects clean in reverse order; disposal idempotent (28.625174ms)
+✔ staged registration invisible while activation awaits (68.660744ms)
+✔ cleanup failures remain FAILED, remaining disposers still execute (34.114875ms)
+✔ uncooperative disposer times out and requires restart (44.398937ms)
+✔ capability denial and optional absence are distinct (53.118207ms)
+✔ revoked grant invalidates retained handle (79.380858ms)
+✔ expired grant invalidates retained handle (78.007377ms)
+✔ wrong principal/instance/scope generation and widened child grants rejected (83.81603ms)
+✔ child scope teardown invalidates handles and removes only owned resources (126.753251ms)
+✔ parent cannot see child registrations (73.949215ms)
+✔ mandatory provider loss quiesces consumer transitively without rebinding (180.233179ms)
+✔ revocation during call prevents result delivery (123.957619ms)
+✔ unload during call cancels delivery and cleans call tracking (91.276687ms)
+✔ deadline, cancellation, input/output validation and no idempotent replay (171.744925ms)
+✔ provider errors and invalid output normalized without value leakage (113.445237ms)
+✔ secret access requires declaration and separate grant; inspection redacts values (51.117785ms)
+✔ events deliver FIFO broker identity; disposer removes listener (119.960953ms)
+✔ event rechecks revoked subscription and publisher; handler failures isolated (102.254256ms)
+✔ bounded event overflow terminates affected subscription and cleanup reclaims listener (169.488671ms)
+✔ audit exhaustion blocks mutation but never emergency revocation (38.063231ms)
+✔ expired trust and backward clock fail closed (24.974381ms)
+✔ trust revocation quiesces running providers (130.002427ms)
+✔ persistent trust state rejects rollback and missing-state recovery (17.099962ms)
+✔ root rotation requires both old and new signatures plus exact next policy (50.167654ms)
+(node:852700) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ runtime matches frozen Python/OpenSSL vector C-00 (2.409435ms)
+✔ runtime matches frozen Python/OpenSSL vector C-01 (0.336946ms)
+✔ runtime matches frozen Python/OpenSSL vector C-02 (0.276161ms)
+✔ runtime matches frozen Python/OpenSSL vector C-03 (0.223271ms)
+✔ runtime matches frozen Python/OpenSSL vector C-04 (0.273135ms)
+✔ runtime matches frozen Python/OpenSSL vector C-05 (0.266493ms)
+✔ runtime matches frozen Python/OpenSSL vector C-06 (0.213253ms)
+✔ runtime matches frozen Python/OpenSSL vector C-07 (0.186882ms)
+✔ runtime matches frozen Python/OpenSSL vector C-08 (0.255593ms)
+✔ runtime matches frozen Python/OpenSSL vector C-09 (0.279928ms)
+✔ runtime matches frozen Python/OpenSSL vector C-10 (0.260831ms)
+✔ runtime matches frozen Python/OpenSSL vector C-11 (0.162917ms)
+✔ runtime matches frozen Python/OpenSSL vector C-12 (0.119926ms)
+✔ runtime matches frozen Python/OpenSSL vector C-13 (0.118673ms)
+✔ runtime matches frozen Python/OpenSSL vector C-14 (0.157898ms)
+✔ runtime matches frozen Python/OpenSSL vector C-15 (0.353377ms)
+✔ runtime matches frozen Python/OpenSSL vector C-16 (0.177765ms)
+✔ runtime matches frozen Python/OpenSSL vector C-17 (0.152007ms)
+✔ mandatory activation binding cannot silently switch after catalog changes (219.143367ms)
+✔ plugin log admits only fixed safe metadata and quiesce is idempotent (50.426202ms)
+(node:852737) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ real Kernel verifies and activates SDK-only signed relative module graph (142.210736ms)
+✔ real Kernel rejects tampered dependent module before evaluation (13.816893ms)
+✔ production linker rejects @alica/kernel before evaluation (26.423443ms)
+✔ production linker rejects @alica/testkit before evaluation (30.896457ms)
+✔ production linker rejects node:fs before evaluation (29.472302ms)
+✔ production linker rejects ../../escape.js before evaluation (28.018841ms)
+✔ production linker rejects ./missing.js before evaluation (30.812699ms)
+✔ production linker rejects @alica/plugin-sdk/dist/index.js before evaluation (26.425597ms)
+✔ real SDK optional cannot turn a denied capability into absence (81.801101ms)
+✔ public SDK provides, resolves, and bridges generated endpoints (22.872579ms)
+✔ independently implemented provider substitutes without consumer changes (7.042239ms)
+✔ missing optional returns null but denied optional does not hide permissions (2.40763ms)
+✔ optional does not hide incompatible present provider (6.461233ms)
+✔ idempotent disposer shares result and rejection without executing twice (0.554966ms)
+✔ owned effects clean in reverse order and partial acquisition cleans immediately (3.289153ms)
+✔ activation injection rolls back staged providers and acquired effects (2.819106ms)
+✔ revocation injection rejects existing handle before provider dispatch (3.911677ms)
+✔ timeout injection is deterministic, one-shot, and not elapsed-time simulation (3.291366ms)
+✔ cleanup injection is reported while remaining cleanups continue (0.971372ms)
+✔ cleanup timeout is visible and does not hang disposal (6.810962ms)
+✔ destroyed child handles cannot escape their owning scope (4.796905ms)
+✔ provider disposal invalidates old handles instead of rebinding (3.889964ms)
+✔ typed events validate payloads and deliver immutable broker envelopes (4.090142ms)
+✔ secret references are scoped and logs refuse arbitrary data fields (1.406752ms)
+✔ invalid input and unknown operation retain exact ACAP rejection codes (4.126873ms)
+✔ uncooperative event handler is reported as incomplete cleanup (6.851008ms)
+✔ optional validates malformed requirement before reporting absence (0.819616ms)
+ℹ tests 170
+ℹ suites 0
+ℹ pass 170
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7200.134062
+
+> alica-v2@0.0.0 test:catalog
+> node --test catalog/tests/*.test.mjs
+
+✔ C6 input widening and output narrowing have distinct variance (21.833268ms)
+✔ C6 removed operation, streaming, semantics, permissions, scopes and errors (18.399503ms)
+✔ C9 proposal and independent complete review; rejection never becomes release history (2.261213ms)
+✔ C4 actual previous state, evidence, legal promotion, deprecation and retirement (4.856487ms)
+✔ C4 C5 C6 released version immutable, stable break rejected and semantics reviewed (8.76055ms)
+✔ C1 C2 C5: ACAP-aligned definition and independent catalog/platform versions (14.512304ms)
+✔ C2: malformed shape, maturity, version, descriptor and event references fail (8.889141ms)
+✔ C3: malformed identities, namespace owner, release inclusion and reserved names (3.205564ms)
+✔ C3: duplicate/colliding entries and major mapping fail (5.781081ms)
+✔ C7 C8: dependencies are semantic, declarations cannot grant authority (3.967ms)
+✔ C2: filesystem references stay local including symlinks (1.165879ms)
+✔ early C13: real public ACAP conformance consumes neutral Catalog descriptor (13.057991ms)
+✔ C9 shipped schema, template, proposal and reference review correspond (47.402199ms)
+✔ C11 C12 deterministic index and offline self-contained snapshot (38.343117ms)
+✔ C10 CLI validates, lists, shows, diffs, creates index/snapshot and validates proposals (4255.449479ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5006.520506
+✔ H4/H5 candidate proposal validates; public ACAP reference conformance (15.207395ms)
+✔ H5 neutral SDK consumer, invalid input, denied authority and disposal (testkit only) (13.962477ms)
+(node:853023) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ H6: verified in-process plugin cannot statically import child_process (64.290855ms)
+✔ H6: declared provider cannot defer registration to operator after ACTIVE (34.900456ms)
+✔ H6: public ACTIVE context cannot replace existing root handler (36.459487ms)
+✔ H6: child registration does not solve duplicate provider identity; grants still required (83.982314ms)
+✔ H6/H7 public operator context event/effect bridge crosses verified VM and cleans up (128.267265ms)
+✔ H8/H17 three fresh runner lifetimes, closed predecessor cannot dispatch (119.620651ms)
+✔ H17 absent/invalid trusted process configuration rejects before dispatch (2.454367ms)
+✔ H10 controlled tool-like child failure exposes no stderr canary (56.671969ms)
+(node:853071) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ H6: verified in-process plugin cannot statically import child_process (56.176654ms)
+✔ H6: declared provider cannot defer registration to operator after ACTIVE (27.094308ms)
+✔ H6: public ACTIVE context cannot replace existing root handler (45.589002ms)
+✔ H6: child registration does not solve duplicate provider identity; grants still required (69.678472ms)
+✔ H7-H11 controlled child public round trip, denied authority, cleanup and stale handle (197.942632ms)
+✔ H10 controlled process crash, malformed output and overflow normalize without raw data (424.395662ms)
+✔ H11 cancellation, single flight, deadline and in-flight shutdown are bounded (538.683627ms)
+✔ H8 process runner rejects missing dependency and pre-aborted task without dispatch (4.025479ms)
+✔ H9 foreign granted event identity cannot dispatch or forge replies (284.859589ms)
+✔ H11 SIGTERM-resistant child escalates and closes without poisoning or residue (124.221868ms)
+✔ split UTF8 bytes preserve exact result (143.783372ms)
+✔ descendant releases pipes: bounded cleanup or explicit poison (46.929768ms)
+✔ descendant retains pipes: bounded cleanup or explicit poison (403.765523ms)
+(node:853121) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ H6: verified in-process plugin cannot statically import child_process (51.019891ms)
+✔ H6: declared provider cannot defer registration to operator after ACTIVE (31.067149ms)
+✔ H6: public ACTIVE context cannot replace existing root handler (37.565752ms)
+✔ H6: child registration does not solve duplicate provider identity; grants still required (86.898221ms)
+✔ H8/H17 actual Host unload/reload, new instance, stale handle never rebinds (372.634604ms)
+✔ H8/H17 actual Host recreated scope increments generation; old context/handle stay dead (365.656054ms)
+✔ H17 selected Phase3 snapshot integrity and index mismatch reject (3.413426ms)
+✔ H17 selected capability incompatible major is unavailable through actual Host (117.025928ms)
+PHASE3_PUBLIC_EVIDENCE {"mode":"MOCK","outcome":"success","capability":"io.alica.agent.execution","provider":"org.phase3.remainingprovider","providerInstance":"436f7933-cd51-4034-807c-25c6636821ee","scopeGeneration":1,"lifecycle":["DISCOVERED","VERIFIED","RESOLVED","ACTIVATING","ACTIVE","QUIESCING","DISPOSED"],"execution":{"requestId":"1a33fe76-3f0f-4b53-bfdd-34b8c3780bbe","startMs":1790577708243,"endMs":1790577712684,"code":null,"publicError":null},"cleanup":{"completedDisposers":6,"failedDisposers":[],"restartRequired":false,"state":"DISPOSED","timedOutResources":0},"resources":{"effects":0,"listeners":0,"pendingCalls":0,"registrations":0},"runner":{"closed":true,"poisoned":false,"pending":0},"snapshotDigest":"sha256:98aa324f38e7a25cbdaeb62174ad0644c1ca0dbbf2964a0f60390cbd76c43559","liveH12":false}
+✔ H15/H17 MOCK native public success has bounded reconstructable evidence (4601.780333ms)
+PHASE3_PUBLIC_EVIDENCE {"mode":"MOCK","outcome":"tool-failure","capability":"io.alica.agent.execution","provider":"org.phase3.remainingprovider","providerInstance":"3c056f58-f0f9-4f33-a1b0-3378b9251c31","scopeGeneration":1,"lifecycle":["DISCOVERED","VERIFIED","RESOLVED","ACTIVATING","ACTIVE","QUIESCING","DISPOSED"],"execution":{"requestId":"d7d69000-9e7f-4ec0-b751-805169cf52eb","startMs":1790577712805,"endMs":1790577716202,"code":"UNAVAILABLE","publicError":{"correlationId":"1860eb8d-0fdb-418d-b47f-e179e0a0f6b2","code":"UNAVAILABLE","link":"single-awaited-invocation"}},"cleanup":{"completedDisposers":6,"failedDisposers":[],"restartRequired":false,"state":"DISPOSED","timedOutResources":0},"resources":{"effects":0,"listeners":0,"pendingCalls":0,"registrations":0},"runner":{"closed":true,"poisoned":false,"pending":0},"snapshotDigest":"sha256:98aa324f38e7a25cbdaeb62174ad0644c1ca0dbbf2964a0f60390cbd76c43559","liveH12":false}
+✔ H15/H17 MOCK native public tool-failure has bounded reconstructable evidence (3514.542324ms)
+(node:853143) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ H6: verified in-process plugin cannot statically import child_process (71.9998ms)
+✔ H6: declared provider cannot defer registration to operator after ACTIVE (31.663041ms)
+✔ H6: public ACTIVE context cannot replace existing root handler (41.999633ms)
+✔ H6: child registration does not solve duplicate provider identity; grants still required (90.689299ms)
+ℹ tests 37
+ℹ suites 0
+ℹ pass 37
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10188.758651
+
+> alica-v2@0.0.0 test:external
+> node tools/test-external-sdk.mjs
+
+{"schemaVersion":"alica.g5-external/v1","level":"PROVIDER","sourceRevision":"dd6ae75805fb7e72aa1a4b035a06c8b2c08f18e3","runtime":"v24.21.0","publicImportsOnly":true,"authorProjectHasNoKernel":true,"separateOperatorProject":true,"deterministicGeneration":true,"negativeTypeCheck":true,"packageFiles":["consumer.plugin.json","contracts/math.json","contracts/result.json","dist/consumer.d.ts","dist/consumer.js","dist/provider.d.ts","dist/provider.js","generated/client.d.mts","generated/client.mjs","generated/provider.d.mts","generated/provider.mjs","package.json","provider.plugin.json"],"conformance":{"checks":[{"name":"fixture:positive","passed":true},{"name":"fixture:negative","passed":true},{"name":"fixture:zero","passed":true},{"name":"fixture:invalid-input","passed":true},{"name":"wrong-digest","passed":true},{"name":"unknown-operation","passed":true},{"name":"expired-request","passed":true},{"name":"caller-spoof","passed":true},{"name":"incompatible-negotiation","passed":true}],"descriptorDigest":"sha256:19bfc82bed3b4f3478966a8b6a86a1d7c14999387231d2f1dbb6ff239cd1167e","passed":true,"schemaVersion":"alica.conformance/v1"},"production":{"level":"PROVIDER","transport":"inproc","signedPackageVerified":true,"inventoryOnlyModules":true,"publicSdk":true,"result":42,"cleanup":{"completedDisposers":2,"failedDisposers":[],"restartRequired":false,"state":"DISPOSED","timedOutResources":0},"providerActivated":true},"commands":[["npm","pack","/home/alica-dev/phase3-clean-candidate-dd6ae758/packages/acap-types","--pack-destination","$TMP/artifacts","--json","--ignore-scripts"],["npm","pack","/home/alica-dev/phase3-clean-candidate-dd6ae758/packages/acap-contracts","--pack-destination","$TMP/artifacts","--json","--ignore-scripts"],["npm","pack","/home/alica-dev/phase3-clean-candidate-dd6ae758/packages/plugin-sdk","--pack-destination","$TMP/artifacts","--json","--ignore-scripts"],["npm","pack","/home/alica-dev/phase3-clean-candidate-dd6ae758/packages/testkit","--pack-destination","$TMP/artifacts","--json","--ignore-scripts"],["npm","pack","/home/alica-dev/phase3-clean-candidate-dd6ae758/packages/catalog","--pack-destination","$TMP/artifacts","--json","--ignore-scripts"],["npm","pack","/home/alica-dev/phase3-clean-candidate-dd6ae758/packages/alicac","--pack-destination","$TMP/artifacts","--json","--ignore-scripts"],["npm","pack","/home/alica-dev/phase3-clean-candidate-dd6ae758/packages/kernel","--pack-destination","$TMP/artifacts","--json","--ignore-scripts"],["npm","install","--no-save","--ignore-scripts","--no-audit","--no-fund","$TMP/artifacts/alica-acap-types-0.0.0.tgz","$TMP/artifacts/alica-acap-contracts-0.0.0.tgz","$TMP/artifacts/alica-plugin-sdk-0.1.0.tgz","$TMP/artifacts/alica-testkit-0.1.0.tgz","$TMP/artifacts/alica-catalog-0.1.0.tgz","$TMP/artifacts/alica-alicac-0.0.0.tgz"],["/tmp/alica-g5-external-9cZ39H/author/node_modules/.bin/alicac","capability","init","--id","org.tutorial.math","--out","starter.json","--json"],["/tmp/alica-g5-external-9cZ39H/author/node_modules/.bin/alicac","capability","validate","contracts/math.json","--json"],["npm","run","build"],["npm","run","build"],["npm","test"],["/tmp/alica-g5-external-9cZ39H/author/node_modules/.bin/alicac","conformance","run","--provider","dist/provider.js","--fixtures","conformance.json","--json"],["npm","run","verify"],["npm","run","run"],["node","--input-type=module","-e","import assert from 'node:assert/strict';import {createRequire} from 'node:module';const require=createRequire(import.meta.url);assert.throws(()=>require.resolve('@alica/kernel'),e=>e.code==='MODULE_NOT_FOUND');for(const p of ['@alica/plugin-sdk/dist/index.js','@alica/testkit/dist/index.js'])assert.throws(()=>require.resolve(p),e=>e.code==='ERR_PACKAGE_PATH_NOT_EXPORTED')"],["node","node_modules/typescript/bin/tsc","--noEmit","-p","tsconfig.json"],["npm","pack","--pack-destination","$TMP/artifacts","--json","--ignore-scripts"],["npm","install","--no-save","--ignore-scripts","--no-audit","--no-fund","$TMP/artifacts/alica-acap-types-0.0.0.tgz","$TMP/artifacts/alica-acap-contracts-0.0.0.tgz","$TMP/artifacts/alica-plugin-sdk-0.1.0.tgz","$TMP/artifacts/alica-kernel-0.0.0.tgz","$TMP/artifacts/tutorial-plugins-0.1.0.tgz"],["node","--experimental-vm-modules","operator-run.mjs"]]}
+{"authorProjectHasNoKernel":true,"cleanup":"DISPOSED","compatibility":"BACKWARD_COMPATIBLE","conformance":[{"checks":[{"name":"fixture:round-trip","passed":true},{"name":"fixture:empty","passed":true},{"name":"fixture:invalid-input","passed":true},{"name":"wrong-digest","passed":true},{"name":"unknown-operation","passed":true},{"name":"expired-request","passed":true},{"name":"caller-spoof","passed":true},{"name":"incompatible-negotiation","passed":true}],"descriptorDigest":"sha256:76c2818de1cef99248256d1e0ae2561be259d0175ee5b55b7e4dff686e35649d","passed":true,"schemaVersion":"alica.conformance/v1"},{"checks":[{"name":"fixture:round-trip","passed":true},{"name":"fixture:empty","passed":true},{"name":"fixture:invalid-input","passed":true},{"name":"wrong-digest","passed":true},{"name":"unknown-operation","passed":true},{"name":"expired-request","passed":true},{"name":"caller-spoof","passed":true},{"name":"incompatible-negotiation","passed":true}],"descriptorDigest":"sha256:76c2818de1cef99248256d1e0ae2561be259d0175ee5b55b7e4dff686e35649d","passed":true,"schemaVersion":"alica.conformance/v1"}],"level":"SDK_TESTKIT_NOT_PRODUCTION","manifestCorrespondence":true,"negatives":["untrusted snapshot pin","altered snapshot","missing selected capability","unavailable major","URI version major mismatch","required major mismatch","identity mismatch","mapping digest mismatch","manifest digest mismatch","actual plugin descriptor mismatch","missing mapping","duplicate mapping","required unsupported operation"],"providerAgnosticConsumer":true,"providerRuns":[{"text":"neutral"},{"text":"neutral"}],"publicImportsOnly":true,"schemaVersion":"alica.catalog-external/v1","snapshotDigest":"sha256:9ae1e21129397d88624e9c05b1d224739119d9437199c6ad423632c16da10442","trustVerified":false,"separateExternalProject":true,"deterministicSnapshot":true,"sourceRevision":"dd6ae75805fb7e72aa1a4b035a06c8b2c08f18e3"}
+{"schemaVersion":"alica.phase3-external/v1","consumerDigest":"sha256:aaaf85e09346643be3735780918185ff2632958a29a87f57b5caec00034a73aa","consumerUnchanged":true,"consumerHasNoKernel":true,"publicPackedArtifacts":true,"reports":[{"mode":"neutral","result":{"text":"ALICA request-scoped fixture"},"snapshotDigest":"sha256:98aa324f38e7a25cbdaeb62174ad0644c1ca0dbbf2964a0f60390cbd76c43559","deniedBeforeGrant":true,"resources":{"effects":0,"listeners":0,"pendingCalls":0,"registrations":0},"liveInference":false},{"mode":"hermes-offline","result":{"text":"ALICA request-scoped fixture"},"snapshotDigest":"sha256:98aa324f38e7a25cbdaeb62174ad0644c1ca0dbbf2964a0f60390cbd76c43559","deniedBeforeGrant":true,"resources":{"effects":0,"listeners":0,"pendingCalls":0,"registrations":0},"runner":{"closed":true,"poisoned":false,"pending":0},"liveInference":false}],"qualification":{"mockOnly":true,"liveH12":false,"originalGrantTouched":false,"reports":[{"scenario":"success","authRemoved":true,"requestRootsRemoved":true},{"scenario":"child-failure","authRemoved":true,"requestRootsRemoved":true},{"scenario":"pre-child-failure","authRemoved":true,"requestRootsRemoved":true},{"scenario":"key-generation-failure","authRemoved":true,"requestRootsRemoved":true},{"scenario":"bootstrap-failure","authRemoved":true,"requestRootsRemoved":true}]},"liveH12":false}
+{"mockOnly":true,"originalGrantTouched":false,"liveH12":false,"reports":[{"scenario":"first-allocation-failure","allocations":1,"authRemoved":true,"absenceChecks":1,"dispatches":0,"durableSentinelsUnchanged":true},{"scenario":"invalid-live-invocation","allocations":0,"authRemoved":true,"absenceChecks":1,"dispatches":0,"durableSentinelsUnchanged":true}]}
+(node:853925) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ tools/test-external-hermes-cleanup.mjs (66.397175ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 77.255408
+
+> alica-v2@0.0.0 boundaries
+> node tools/check-boundaries.mjs
+
+Public import boundaries passed
+
+> alica-v2@0.0.0 secrets
+> python3 tools/check-secrets.py
+
+Secret pattern check passed
+?? packages/catalog/schemas/capability-definition.schema.json
+?? packages/catalog/schemas/proposal.schema.json
+test_commit_precedes_wire_and_failure_not_refunded_or_retried (test_request_budget.BudgetTests.test_commit_precedes_wire_and_failure_not_refunded_or_retried) ... ok
+test_concurrent_processes_never_overspend (test_request_budget.BudgetTests.test_concurrent_processes_never_overspend) ... ok
+test_fixed_model_no_unsupported_token_parameters_and_followups (test_request_budget.BudgetTests.test_fixed_model_no_unsupported_token_parameters_and_followups) ... ok
+test_initialization_closes_connection_on_success_and_failure (test_request_budget.BudgetTests.test_initialization_closes_connection_on_success_and_failure) ... ok
+test_missing_and_corrupt_fail_closed (test_request_budget.BudgetTests.test_missing_and_corrupt_fail_closed) ... ok
+test_no_reinitialize_and_restarts_keep_cap (test_request_budget.BudgetTests.test_no_reinitialize_and_restarts_keep_cap) ... ok
+test_wrong_grant_fails_closed (test_request_budget.BudgetTests.test_wrong_grant_fails_closed) ... ok
+test_alternate_client_routes_absent (test_guarded_responses.BoundaryTests.test_alternate_client_routes_absent) ... ok
+test_authorization_header_denied (test_guarded_responses.BoundaryTests.test_authorization_header_denied) ... ok
+test_concurrent_create_rejected_before_wire (test_guarded_responses.BoundaryTests.test_concurrent_create_rejected_before_wire) ... ok
+test_configured_timeout_can_only_shorten_deadline (test_guarded_responses.BoundaryTests.test_configured_timeout_can_only_shorten_deadline) ... ok
+test_correlation_header_newline_denied (test_guarded_responses.BoundaryTests.test_correlation_header_newline_denied) ... ok
+test_deadline_during_iteration_poison (test_guarded_responses.BoundaryTests.test_deadline_during_iteration_poison) ... ok
+test_deadline_prevents_wire (test_guarded_responses.BoundaryTests.test_deadline_prevents_wire) ... ok
+test_each_dispatch_clamps_to_remaining_deadline (test_guarded_responses.BoundaryTests.test_each_dispatch_clamps_to_remaining_deadline) ... ok
+test_early_close_prevents_followup (test_guarded_responses.BoundaryTests.test_early_close_prevents_followup) ... ok
+test_eof_without_terminal_is_failure (test_guarded_responses.BoundaryTests.test_eof_without_terminal_is_failure) ... ok
+test_followups_share_durable_cap (test_guarded_responses.BoundaryTests.test_followups_share_durable_cap) ... ok
+test_incomplete_response_poison (test_guarded_responses.BoundaryTests.test_incomplete_response_poison) ... ok
+test_iterator_setup_failure_closes_raw_and_poison (test_guarded_responses.BoundaryTests.test_iterator_setup_failure_closes_raw_and_poison) ... ok
+test_lazy_failure_poison_blocks_upstream_retry (test_guarded_responses.BoundaryTests.test_lazy_failure_poison_blocks_upstream_retry) ... ok
+test_oversized_timeout_still_denied (test_guarded_responses.BoundaryTests.test_oversized_timeout_still_denied) ... ok
+test_pinned_correlation_headers_stripped (test_guarded_responses.BoundaryTests.test_pinned_correlation_headers_stripped) ... ok
+test_raw_overrides_rejected (test_guarded_responses.BoundaryTests.test_raw_overrides_rejected) ... ok
+test_sdk_retries_rejected (test_guarded_responses.BoundaryTests.test_sdk_retries_rejected) ... ok
+test_send_failure_poison_blocks_upstream_retry (test_guarded_responses.BoundaryTests.test_send_failure_poison_blocks_upstream_retry) ... ok
+test_transport_secret_not_in_formatted_exception (test_guarded_responses.BoundaryTests.test_transport_secret_not_in_formatted_exception) ... ok
+test_unsupported_output_cap_rejected_before_wire (test_guarded_responses.BoundaryTests.test_unsupported_output_cap_rejected_before_wire) ... ok
+test_bulk_collision_rejected_before_reservation (test_pinned_payload.PinnedPayloadTests.test_bulk_collision_rejected_before_reservation) ... ok
+test_bulk_token_override_rejected_before_reservation (test_pinned_payload.PinnedPayloadTests.test_bulk_token_override_rejected_before_reservation) ... ok
+test_bulk_wrong_shape_rejected_before_reservation (test_pinned_payload.PinnedPayloadTests.test_bulk_wrong_shape_rejected_before_reservation) ... ok
+test_real_pinned_transform_payload_preserved_without_unsupported_cap (test_pinned_payload.PinnedPayloadTests.test_real_pinned_transform_payload_preserved_without_unsupported_cap) ... ok
+test_claim_blocks_restart_even_without_dispatch (test_live_authority.LiveAuthorityTests.test_claim_blocks_restart_even_without_dispatch) ... ok
+test_claim_never_consumes_and_followups_share_budget (test_live_authority.LiveAuthorityTests.test_claim_never_consumes_and_followups_share_budget) ... ok
+test_conflicting_identity (test_live_authority.LiveAuthorityTests.test_conflicting_identity) ... ok
+test_corrupt_ledger (test_live_authority.LiveAuthorityTests.test_corrupt_ledger) ... ok
+test_dangling_attempt_marker_blocks (test_live_authority.LiveAuthorityTests.test_dangling_attempt_marker_blocks) ... ok
+test_durability_failure_never_reopens (test_live_authority.LiveAuthorityTests.test_durability_failure_never_reopens) ... ok
+test_exclusive_claim_race (test_live_authority.LiveAuthorityTests.test_exclusive_claim_race) ... ok
+test_insecure_modes (test_live_authority.LiveAuthorityTests.test_insecure_modes) ... ok
+test_missing_never_initializes (test_live_authority.LiveAuthorityTests.test_missing_never_initializes) ... ok
+test_previous_consumption_blocks_new_attempt (test_live_authority.LiveAuthorityTests.test_previous_consumption_blocks_new_attempt) ... ok
+test_symlink_and_hardlink (test_live_authority.LiveAuthorityTests.test_symlink_and_hardlink) ... ok
+test_auth_malformed_removed (test_live_entry.LiveEntry.test_auth_malformed_removed) ... ok
+test_auth_symlink_not_followed (test_live_entry.LiveEntry.test_auth_symlink_not_followed) ... ok
+test_native_entry_failure_cleanup (test_live_entry.LiveEntry.test_native_entry_failure_cleanup) ... ok
+test_native_entry_mock_wire_and_cleanup (test_live_entry.LiveEntry.test_native_entry_mock_wire_and_cleanup) ... ok
+test_redirect_and_exception_revoke_permit (test_live_entry.LiveEntry.test_redirect_and_exception_revoke_permit) ... ok
+test_transport_denies_alternate_routes (test_live_entry.LiveEntry.test_transport_denies_alternate_routes) ... ok
+test_missing_runtime (test_final_native.FinalNative.test_missing_runtime) ... ok
+test_missing_secret_is_not_provisioned (test_final_native.FinalNative.test_missing_secret_is_not_provisioned) ... ok
+test_native_failures (test_final_native.FinalNative.test_native_failures) ... ok
+test_wrong_checkout_rejected_before_isolation (test_final_native.FinalNative.test_wrong_checkout_rejected_before_isolation) ... ok
+
+----------------------------------------------------------------------
+Ran 53 tests in 21.480s
+
+OK
+PASS MOCK native/absent-tool
+PASS MOCK native/disabled-tool
+PASS MOCK native/missing-config
+PASS MOCK native/invalid-config
+PASS MOCK native/tool-failure
+test_success_artifacts_and_parent_cleanup (__main__.NativeSuccessCleanup.test_success_artifacts_and_parent_cleanup) ... PASS native/success: existing real loop assertions, two MOCK sends, post-exit artifact scan, parent cleanup
+ok
+
+----------------------------------------------------------------------
+Ran 1 test in 3.668s
+
+OK
+test_failure_isolation_artifacts_and_parent_cleanup (__main__.NativeFailures.test_failure_isolation_artifacts_and_parent_cleanup) ... PASS native/http401: one physical send, no retry, isolation, artifact scan, parent cleanup
+PASS native/http429: one physical send, no retry, isolation, artifact scan, parent cleanup
+PASS native/http500: one physical send, no retry, isolation, artifact scan, parent cleanup
+PASS native/transport: one physical send, no retry, isolation, artifact scan, parent cleanup
+PASS native/stream: one physical send, no retry, isolation, artifact scan, parent cleanup
+PASS native/incomplete: one physical send, no retry, isolation, artifact scan, parent cleanup
+ok
+
+----------------------------------------------------------------------
+Ran 1 test in 18.375s
+
+OK

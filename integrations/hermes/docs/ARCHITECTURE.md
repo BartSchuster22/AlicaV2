@@ -1,4 +1,4 @@
-# H6 topology decision — implemented candidate, independent review pending
+# ADR H6 — verified VM provider with trusted public-Host process bridge
 
 DEV Node24.21.0 public Host/SDK test on 2026-09-27: 7 passed, 0 failed.
 The original four constraints were rerun through the modified imported fixture.
@@ -19,6 +19,23 @@ is local cleanup, not proof of remote cancellation or billing cessation. Failure
 to confirm bounded cleanup poisons the runner. No retries or fallback.
 
 Synthetic callback and controlled subprocess tests prove topology/lifecycle only.
-Hermes binding, supported model/credential decision, real H12, independent Catalog
-review/admission and full external/regression/publication remain open. This ADR
-selects the minimal topology on executed evidence; it does not self-award review.
+The subsequent real H12 task passed on the historical source recorded in VERSION;
+current candidate dd6ae758 is independently reviewed/MOCK-qualified, not live-rerun.
+Governed EXPERIMENTAL Catalog admission, unchanged packed external consumer and
+actual Host restart/generation/stale-handle tests provide the later evidence.
+The parent independently reviewed the original three-file Host/native evidence
+slice and its two-ID correction and accepted that finite slice after 20/20 PASS.
+This author makes no independent-review or final owner-acceptance claim.
+
+Alternatives: a verified in-process plugin cannot import child_process; deferring
+registration until after ACTIVE or duplicating a child-scope provider fails the
+existing public Host contract (topology.test.mjs). A new generic IPC transport or
+container adds scope with no unmet requirement. The selected public event/effect
+bridge keeps Hermes and process ownership outside the frozen Kernel and retains
+the established ACAP consumer. Existing public dispatch, SDK event grants and
+bounded local stdio framing suffice; no stable contract or Kernel change.
+
+Consequences: trusted operator/child; single-flight finite task; local process
+cleanup is bounded, remote cancellation/billing stop is not guaranteed. No generic
+telemetry, arbitrary plugins, sessions or service integration. Release/publication
+status is separate in docs/phase3/PHASE3-COMPLETION.md.

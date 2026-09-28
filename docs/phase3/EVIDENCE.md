@@ -1,4 +1,32 @@
-# Phase3 evidence — tested offline native/external milestone; H12 open
+# Phase3 evidence — committed MOCK reproduction; historical H12 PASS
+
+## Final-delivery candidate evidence (supersedes status claims below)
+
+Implementation and consumer commit: `dd6ae75805fb7e72aa1a4b035a06c8b2c08f18e3`.
+Exact pin, current/native historical source hashes, toolchain and licenses: integrations/hermes/VERSION.md.
+Original H12 passed on reviewed WIP at base45056ab4, historical native SHA256 f1a7d6a5f9ded6019f101fd64dd50b9917e443e50df540b0b5ba6e46296e68cc. Actual result `ALICA request-scoped fixture`, two physical reservations, original auth absent/both attempts retained, resources zero, runner closed/nonpoisoned/pending0. No original protected state was accessed during final delivery. Current native2fbef324… is only MOCK-qualified; no new inference authorized.
+
+Actual clean standalone install: new clone of pinned upstream, new HOME/HERMES_HOME/runtime-tools, `source ./activate --test-environment`, EXIT0. Pinned source unchanged. Upstream registry/plugin-guard/runtime-disable suite: 91 PASS/16.82s, EXIT0 after exposing installed uv on PATH. The initial missing-uv run (84 PASS/7 setup errors) is retained privately and not represented as green.
+
+Actual clean candidate: `git clone --no-hardlinks` into a new directory, detach dd6ae758, assert empty status, `npm ci --ignore-scripts --no-audit --no-fund`. Explicit Node24.21.0/npm11.19.0 and newly installed isolated Python3.14.7. PHASE3_PYTHON, PHASE3_HERMES and HERMES_PHASE3_SOURCE point only to this new baseline. Full commands are in README. Build/typecheck, foundation170, Catalog15, Phase3 JS37, external SDK/Catalog/Hermes packed workflows, cleanup qualification, boundaries/secrets, Python53 and native success/six model failures all EXIT0. Counts include imported topology repetitions, not distinct acceptance criteria. Clean reproduction emits BOTH actual public evidence records and actual native receipt/scan/cleanup assertions pass. Build generated only two existing untracked schema files; no tracked diff.
+
+### Retained public raw outputs
+
+See [evidence/SHA256SUMS](evidence/SHA256SUMS) for exact output hashes.
+- [Clean pinned Hermes installation](evidence/phase3-final-clean-hermes-baseline.log)
+- [Upstream smoke tests with required uv](evidence/phase3-final-clean-hermes-baseline-tests-with-uv.log)
+- [Clean committed candidate reproduction, both public records and all suites](evidence/phase3-final-clean-candidate-reproduction.log)
+- [Frozen baseline dependency/purity comparison and scoped license evidence](evidence/phase3-final-purity-dependencies.log)
+
+Two-ID diagnostics: execution.requestId is the actual operation ID; publicError.correlationId is the actual fresh normalized AcapError ID. The evidence links them through exactly one awaited invocation and completed single-flight execution, not an invented equality. No foundation patch or raw exception output was needed.
+
+H18 dependency disposition: frozen Phase2 and candidate both EXIT1 at the same @alica/catalog assertion. Exact packages, root manifests/lock, checker and stable Catalog paths compare unchanged. Phase3 adds no npm dependency; Hermes is external MIT, direct openai2.24.0 Apache-2.0/httpx0.28.1 BSD-3-Clause. This is scoped dependency/license evidence, not a passed whole-repository dependency checker or full ecosystem license audit. Original H18 requires no frozen regression: unchanged pre-existing checker failure is explicitly retained, not a newly invented acceptance gate.
+
+Parent independently reviewed and accepted the finite original three-file Host/native test slice and two-ID correction after pinned20/20 PASS. Accepted logging correction stays closed. Final delivery adds no substantive implementation beyond that reviewed/tested candidate; docs are reconciliation, not a new design. Earlier53-test failure and19PASS1FAIL are retained separately in operator evidence. No final owner acceptance is inferred.
+
+Publication/annotated tag/main discoverability remain pending; PHASE3-COMPLETION records actual release state. Original grant consumed2of3 remains closed, remaining1 NOT authority. STOP before JEV/services.
+
+## Historical evidence below — preserve chronology, not current open-gate status
 
 ## Latest executed milestone (supersedes earlier open offline/admission claims)
 
