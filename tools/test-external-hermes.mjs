@@ -1,15 +1,21 @@
 // Reuses original external SDK workflow: packed public artifacts, isolated
-// consumer with no Kernel installed, separate operator. Offline, NOT H12.
+// consumer with no Kernel installed, separate operator. Default is offline.
+// --live is the one original authorized attempt, never an automatic retry.
 import assert from 'node:assert/strict';
-import {mkdtempSync,mkdirSync,cpSync,readFileSync,writeFileSync,rmSync} from 'node:fs';
+import {mkdtempSync,mkdirSync,cpSync,readFileSync,writeFileSync,rmSync,lstatSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {join,resolve} from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {execFileSync} from 'node:child_process';
 import {createHash} from 'node:crypto';
-const repo=process.cwd(),temp=mkdtempSync(join(tmpdir(),'alica-phase3-external-'));
-const run=(cmd,args,cwd)=>execFileSync(cmd,args,{cwd,encoding:'utf8',timeout:180000,env:{...process.env,NODE_PATH:'',NODE_OPTIONS:''},stdio:['ignore','pipe','pipe']});
+const live=process.argv.includes('--live'),qualify=process.argv.includes('--qualify');
+let temp;
 try{
+ assert.ok(process.argv.slice(2).every(x=>['--live','--qualify'].includes(x)));
+ assert.ok(!(live&&qualify),'qualification cannot dispatch the original live attempt');
+ const repo=process.cwd();
+ temp=mkdtempSync(join(tmpdir(),'alica-phase3-external-'));
+ const run=(cmd,args,cwd)=>execFileSync(cmd,args,{cwd,encoding:'utf8',timeout:180000,env:{...process.env,NODE_PATH:'',NODE_OPTIONS:''},stdio:['ignore','pipe','pipe']});
  const artifacts=join(temp,'artifacts'),consumer=join(temp,'consumer'),operator=join(temp,'operator');
  for(const p of [artifacts,consumer,operator])mkdirSync(p);
  const packs={};
@@ -30,16 +36,35 @@ try{
  const config={consumerURL:pathToFileURL(join(consumer,'consumer.mjs')).href,snapshot,
   python:process.env.PHASE3_PYTHON||'/home/alica-dev/phase3-hermes-test-env/bin/python',
   upstream:process.env.HERMES_PHASE3_SOURCE||'/home/alica-dev/hermes-phase3-upstream',
-  entrypoint:resolve(repo,'integrations/hermes/adapter/offline_entry.py')};
+  entrypoint:resolve(repo,'integrations/hermes/adapter/'+(live?'live_entry.py':'offline_entry.py'))};
+ if(live){
+  assert.equal(repo,'/home/alica-dev/AlicaV2-phase3');
+  assert.equal(config.python,'/home/alica-dev/phase3-hermes-test-env/bin/python');
+  assert.equal(config.upstream,'/home/alica-dev/hermes-phase3-upstream');
+ }
  writeFileSync(join(operator,'run.mjs'),`import {runExternal} from './external-operator.mjs';const config=${JSON.stringify(config)};console.log(JSON.stringify(await runExternal({...config,mode:process.argv[2]})));`);
  const bytes=readFileSync(join(consumer,'consumer.mjs'));
  const reports=[];
- for(const mode of ['neutral','hermes-offline']){
+ for(const mode of (live?['hermes-live']:['neutral','hermes-offline'])){
   try{reports.push(JSON.parse(run(process.execPath,['--experimental-vm-modules','run.mjs',mode],operator).trim()))}
   catch(e){console.error(e.stdout?.toString(),e.stderr?.toString());throw new Error('External workflow failed: '+mode)}
   assert.deepEqual(readFileSync(join(consumer,'consumer.mjs')),bytes);
  }
- const report={schemaVersion:'alica.phase3-external/v1',consumerDigest:'sha256:'+createHash('sha256').update(bytes).digest('hex'),consumerUnchanged:true,consumerHasNoKernel:true,publicPackedArtifacts:true,reports,liveH12:false};
+  let qualification;
+ if(qualify){
+  cpSync(join(repo,'tools/test-external-operator.mjs'),join(operator,'qualify.mjs'));
+  writeFileSync(join(operator,'qualification-config.json'),JSON.stringify(config));
+  qualification=JSON.parse(run(process.execPath,['--experimental-vm-modules','--experimental-test-module-mocks','qualify.mjs'],operator).trim());
+  assert.deepEqual(readFileSync(join(consumer,'consumer.mjs')),bytes);
+ }
+ const report={schemaVersion:'alica.phase3-external/v1',consumerDigest:'sha256:'+createHash('sha256').update(bytes).digest('hex'),consumerUnchanged:true,consumerHasNoKernel:true,publicPackedArtifacts:true,reports,qualification,liveH12:live};
  if(process.env.PHASE3_EXTERNAL_REPORT)writeFileSync(process.env.PHASE3_EXTERNAL_REPORT,JSON.stringify(report,null,2)+'\n');
  console.log(JSON.stringify(report));
-}finally{rmSync(temp,{recursive:true,force:true})}
+}finally{
+ try{if(temp!==undefined)rmSync(temp,{recursive:true,force:true})}
+ finally{if(live){
+  const auth='/home/alica-dev/phase3-live-grant/temporary-codex-auth.json';
+  rmSync(auth,{force:true});
+  assert.throws(()=>lstatSync(auth),e=>e.code==='ENOENT');
+ }}
+}

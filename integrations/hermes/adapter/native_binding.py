@@ -5,6 +5,9 @@ fresh isolated child; never attach to an existing Hermes process/profile.
 Owner approved Codex without a guaranteed provider output/billing cap. Live
 provisioning still requires offline qualification. No credentials/grants here.
 """
+import importlib.util
+import logging
+import subprocess
 import json
 import os
 from pathlib import Path
@@ -44,16 +47,55 @@ CONFIG = {
 }
 
 
-def prepare_offline_child(root):
-    """One-way process isolation, BEFORE any Hermes imports. No network allowed.
+HERMES_COMMIT = 'c04e9a1d0dfa4abbefe4b256428e645abaacfe88'
 
-    Audit exclusions apply to trusted Python, not a hostile-code sandbox. Never
-    remove the hook or turn network on in this process. Offline SDK traffic must
-    use MockTransport. Blocking is deliberate even if optional discovery catches
-    the exception; no ambient subprocess/network/credential operation completes.
+
+def verify_native_version():
+    """Reject missing/wrong checkout before imports, isolation or dispatch.
+
+    Trusted operator-owned Git checkout is required, not an arbitrary installed
+    module. No shell, network or user Git configuration is used. This pin is a
+    compatibility check, not protection against a malicious checkout owner.
+    """
+    try:
+        spec = importlib.util.find_spec('run_agent')
+        if spec is None or spec.origin is None:
+            raise ValueError('missing runtime')
+        source = Path(spec.origin).resolve().parent
+        env = {'PATH': '/usr/bin:/bin', 'HOME': '/nonexistent',
+               'GIT_CONFIG_NOSYSTEM': '1', 'GIT_CONFIG_GLOBAL': '/dev/null'}
+        def git(*args):
+            return subprocess.run(['/usr/bin/git', '-C', str(source), *args],
+                                  env=env, capture_output=True, text=True,
+                                  check=True, timeout=5).stdout.strip()
+        if (Path(git('rev-parse', '--show-toplevel')).resolve() != source
+                or git('rev-parse', 'HEAD') != HERMES_COMMIT
+                or git('status', '--porcelain', '--untracked-files=no')):
+            raise ValueError('incompatible runtime')
+    except (OSError, ValueError, ImportError, subprocess.SubprocessError):
+        raise BudgetDenied('FAILED_PRECONDITION') from None
+    return source
+
+
+def prepare_offline_child(root, *, _live_transport=None):
+    """One-way isolation BEFORE Hermes imports; offline by default.
+
+    Live entrypoint supplies its endpoint-locked transport's thread-local socket
+    permit. Only transport I/O may open sockets; native tools/discovery may not.
+    Trusted Python boundary, not a hostile-code sandbox. Never remove the hook.
+    Offline callers omit the permit and must use MockTransport.
     """
     if 'run_agent' in sys.modules or 'model_tools' in sys.modules:
         raise BudgetDenied('FAILED_PRECONDITION')
+    verify_native_version()
+    # This fresh request child never exports arbitrary native diagnostics. Disable
+    # record creation BEFORE native imports/setup: Hermes' fixed WARNING error
+    # sink is not controlled by its configurable primary log level. Stdlib's
+    # process-local override survives native setLevel/setup calls and prevents
+    # exception formatting/queueing, rather than redacting or deleting evidence.
+    # Parent ACAP lifecycle/correlation/normalized-error evidence is unaffected.
+    # Trusted pinned runtime only; this is not hostile-code containment.
+    logging.disable(sys.maxsize)
     root = Path(root).resolve()
     if not root.is_dir() or any(root.iterdir()):
         raise BudgetDenied('FAILED_PRECONDITION')
@@ -73,7 +115,8 @@ def prepare_offline_child(root):
     denied = []
 
     def audit(event, args):
-        if (event.startswith('socket.') and event not in {'socket.__new__'}
+        if ((event.startswith('socket.') and event not in {'socket.__new__'}
+             and not (_live_transport is not None and _live_transport.socket_permitted()))
                 or event in {'subprocess.Popen', 'os.system', 'os.exec', 'os.posix_spawn'}):
             denied.append(event)  # no arguments: they may contain credentials
             raise PermissionError('offline child denies external OS operation')
@@ -99,6 +142,12 @@ def bind_native(client, ledger, workspace, *, deadline):
     if not _OFFLINE_READY or _BINDING_USED or os.environ.get('HERMES_SAFE_MODE') != '1':
         raise BudgetDenied('FAILED_PRECONDITION')
     _BINDING_USED = True
+    try:
+        config = Path(os.environ['HERMES_HOME']) / 'config.yaml'
+        if json.loads(config.read_text(encoding='utf-8')) != CONFIG:
+            raise ValueError('incompatible config')
+    except (KeyError, OSError, ValueError):
+        raise BudgetDenied('FAILED_PRECONDITION') from None
     if str(client.base_url).rstrip('/') != ENDPOINT:
         raise BudgetDenied('PERMISSION_DENIED')
     guard = GuardedResponses(client, ledger, deadline=deadline)

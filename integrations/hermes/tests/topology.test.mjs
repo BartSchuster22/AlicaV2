@@ -10,9 +10,9 @@ import { canonical, digest, rawDigest } from '@alica/acap-contracts';
 import { createPluginContext } from '@alica/plugin-sdk';
 const descriptor = {schemaVersion:'acap.capability/v1',id:'io.alica.phase3.probe',version:'1.0.0',features:[],operations:[{name:'execute',kind:'unary',idempotency:'none',input:{type:'string'},output:{type:'string'}}]};
 const requirement={capabilityId:descriptor.id,major:1,minMinor:0,operations:['execute'],features:[]};
-export function fixture(t, contract=descriptor) {
+export function fixture(t, contract=descriptor, {hostConfig={},consumerRequirement}={}) {
  const descriptor=contract;
- const requirement={capabilityId:descriptor.id,major:1,minMinor:0,operations:['execute'],features:[]};
+ const requirement=consumerRequirement??{capabilityId:descriptor.id,major:1,minMinor:0,operations:['execute'],features:[]};
  const key=()=>{const {publicKey,privateKey}=generateKeyPairSync('ed25519');const bytes=publicKey.export({type:'spki',format:'der'}).subarray(-32);return {privateKey,bytes,id:rawDigest(bytes)}};
  const authority=key(),publisher=key(),now=Date.now();
  const sig=(value,domain,k)=>({algorithm:'ed25519',keyId:k.id,signature:sign(null,Buffer.from(domain+'\n'+canonical(value)),k.privateKey).toString('base64')});
@@ -34,7 +34,7 @@ export function fixture(t, contract=descriptor) {
   return {files,indexText,profileText:canonical(profile),bundleText:canonical(bundle),signature:sig(bundle,'ALICA-BUNDLE-v1',publisher)};
  }
  const dir=mkdtempSync(join(tmpdir(),'phase3-topology-'));
- const host=bootstrap(canonical({cellId:'phase3-probe',rootScope:'root',timeTrusted:true,maxCallMs:1000,cleanupMs:200,activationMs:1000,eventQueue:4,auditCapacity:128,maxInstances:16,maxScopes:16,maxGrants:64,maxEffects:128,maxCalls:16}),{trust,statePath:join(dir,'trust.json'),initialize:true});
+ const host=bootstrap(canonical({cellId:'phase3-probe',rootScope:'root',timeTrusted:true,maxCallMs:1000,cleanupMs:200,activationMs:1000,eventQueue:4,auditCapacity:128,maxInstances:16,maxScopes:16,maxGrants:64,maxEffects:128,maxCalls:16,...hostConfig}),{trust,statePath:join(dir,'trust.json'),initialize:true});
  t.after(async()=>{await host.shutdown();rmSync(dir,{recursive:true,force:true})});
  const grant=(id,scope='root',scopeGeneration=host.identity(id).scopeGeneration)=>host.issueGrant({schemaVersion:'acap.grant/v1',grantId:randomUUID(),...host.identity(id),scope,scopeGeneration,capabilityId:descriptor.id,operations:['execute'],issuedAtMs:now-1,expiresAtMs:now+30000,revision:0});
  return {host,pkg,grant};
