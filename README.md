@@ -1,5 +1,12 @@
 # ALICA V2
 
+## Phase 3 Owner Acceptance
+
+**PHASE 3 — COMPLETE / FROZEN / OWNER ACCEPTED**
+
+[Owner Acceptance](https://github.com/BartSchuster22/AlicaV2/blob/phase3-hermes-v1.0.0-accepted/docs/phase3/OWNER-ACCEPTANCE.md) records the Project Owner's formal decision within the documented scope. The [original technical release](https://github.com/BartSchuster22/AlicaV2/tree/phase3-hermes-v1.0.0) is unchanged. The annotated [owner-accepted tag](https://github.com/BartSchuster22/AlicaV2/tree/phase3-hermes-v1.0.0-accepted) records governance only. Phase 1 and Phase 2 remain authoritative and frozen; no further Phase-3 implementation or Phase 4 is authorized.
+
+
 A new, lean capability-oriented substrate: **Kernel → ACAP → SDK**.
 
 ## Published product phases
