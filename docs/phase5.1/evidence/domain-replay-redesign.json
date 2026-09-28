@@ -1,0 +1,82 @@
+{
+  "status": "ADDITIVE_REDESIGN_DIAGNOSTIC_PASSED_PENDING_INDEPENDENT_REVIEW",
+  "originalPacketPreserved": {
+    "definition.json": "de5b27492636e172c347e9a5a40831dab8383f0b9d1378e50a907015a563e91c",
+    "descriptor.json": "1962770c9bd93091ab644933c91167c43499c6d88e74815ba92daec0b67aaa84",
+    "namespace-policy.json": "c6fbaf3ecb04d90a36df795a30673e7ed1a587c72286b0a9bfc54b4d1a161f8b",
+    "prepare.mjs": "1140e5efcd8c67ce2e2d5de2c8c4e7235c7b747f4b291aaccf06477d62111e23",
+    "proposal.json": "167881a341f9333c228439ac2dc7d507181bed2ea2807beeba4049fc5628ca2b",
+    "SEMANTICS.md": "c1683b7dcfceef96aefe4c0fadb00debe6924efa54e59c65a1e468dcafc97fb0"
+  },
+  "originalReviewReceiptSha256": "a2437eeea121d0d241a9787b00dd6ab4a4669afdeac6afab1f3b67af3d05bfeb",
+  "frozenSourcesUnchanged": {
+    "packages/kernel/src/trust.ts": "085a42051a9f021857639045258b41860283949f5c1eb5561cc8c533f7c108e7",
+    "packages/kernel/src/index.ts": "ce437c9421a0be3c47fdec8bc131a9f8200027309e087d07ec428fca58fa0909",
+    "packages/acap-contracts/src/runtime.ts": "8b87f6aa7ceb5d0ca2328d8e8aae10f3fab74b27e383a2a157e4a047c3677245",
+    "packages/plugin-sdk/src/index.ts": "1d8b9de7814a865ca014c3c76311a0ab7f3af474e55307b50b411693ab3f950a"
+  },
+  "productSourceUnchangedFromPriorWIP": {
+    "services/memoryv4/SOURCE-BASELINE.json": "bdb8c71579afb1367859b56ff844a2b642f8dd15f54a125498be23f234106800",
+    "services/memoryv4/app/__init__.py": "bec34a9d07b5b883f7e7e66235ddbeb241281195d6c45b2167f568f066ba8f74",
+    "services/memoryv4/app/adoption.py": "dc83da754cc9a177edf18c7150bb1407db1f2240c08621bb590c31a0933d882d",
+    "services/memoryv4/app/candidates.py": "9a42a074117ee0f5ef67fedc73f0344dcb66f1ffaa7208876356e931e93578bb",
+    "services/memoryv4/app/contracts.py": "9c1a4fada432f862e3e1751d5d41b19bba92c823a4084c7c8fe921af7fe0060e",
+    "services/memoryv4/app/domain.py": "7411ac2da51f9d83eeec6a90711af5825312b478751acd3201f592fe9554cbb6",
+    "services/memoryv4/app/main.py": "1366aca4f3388c526c657284f29ad89196f404cc8d381a7a9bcea68dc75d1220",
+    "services/memoryv4/app/migrations.py": "17598408b526597ad833a205f1d14b0c77993e22d00f716715fac4c320516e0d",
+    "services/memoryv4/app/pagination.py": "8d498a92b354e346bd44b4342c0da395b3c63834079df943f31e134eb33dbd66",
+    "services/memoryv4/app/ports.py": "041569bb6ddf8be2bd9280fde50f4148b1f089b2b9fda0edde5a67f73434dc92",
+    "services/memoryv4/app/recovery.py": "8187f9644cdf65a92d3a5dcb21ff127966c7214a04d238aa1ed0d3e9fdfefeac",
+    "services/memoryv4/app/schemas.py": "210685df374c130e8cd80148ad9e24d382dcdad81db76352d8ec10f84885cdb2",
+    "services/memoryv4/app/settings.py": "bf2964d4c1efb00c8bdc1776a43b46c50de36ce42e2eb47d1e386c554e917f97",
+    "services/memoryv4/app/sqlite_runtime.py": "c550dd23e68d5b228f1afd652b810aa61ab2baa184988c5002b0cbac14f2238b",
+    "services/memoryv4/app/storage.py": "925c9728576d36bcc20202cef3e4f2519916aff8372223eddb6ad28b79a79f72",
+    "services/memoryv4/bridge.py": "3b94cc3de92f83ffc848b84a500da8ab366b751444d315b59d477511b680a18a",
+    "services/memoryv4/provider.mjs": "1a27f918d0bd8c1339a1ecd9976aac10923a0b8f122db64141cf7f7168d59216",
+    "services/memoryv4/pyproject.toml": "8be82a8eade5abd620b44bc4512eaf74058b81026730091460b8aac235881cb5",
+    "services/memoryv4/requirements-dev.txt": "3bdf0d624689e726f13ffbcf0b5d808c6699208456e88c14c0c5eb7400cf63e4",
+    "services/memoryv4/requirements.txt": "5b4c38e04bc5fdfedb9b825982c6905f3b764a263c2981d26eb2859943a11a37",
+    "services/memoryv4/scripts/qa10.py": "344e4025cda1bc3b57289ad8855186be2967cc832d38eb787b1cab44bd4bc513",
+    "services/memoryv4/test-provider.mjs": "889c7ede0e412943d5e61a835d6d7b9f4ac7424326f0d55d5df19bda5bcf3b4f",
+    "services/memoryv4/tests/test_adoption.py": "ac18fd46ca53835e3be8b94ce899405ab77d6bf18195229da94c0020f04d2128",
+    "services/memoryv4/tests/test_contract.py": "a8fbb0947985031c259dfc365feaa1d09630bd6fd6c73b4ace7bae1a939a5df3",
+    "services/memoryv4/tests/test_core_objects.py": "a7c7766c893027b990753a9a9a7f1ed9789ae901ca5e9ce1ae625cdb96ff7d42",
+    "services/memoryv4/tests/test_foundation.py": "b1821f58d338201f32d0cdbe5d16a18636a42712ace8ea1857a9316bbca777ad",
+    "services/memoryv4/tests/test_governance.py": "584ab73b58ba34e944cca9d3003fc9bb0c9139bf2e6b911f52c5af387a312e32",
+    "services/memoryv4/tests/test_health.py": "9bb3381f93e6a853fc6fa1e590fdfc41beb10c7dab714d295a19435422321f0a",
+    "services/memoryv4/tests/test_lifecycle.py": "3491430a33af83f1269200da2843ef2717fa5a6983cf3e4f1f3b088811b3e0aa",
+    "services/memoryv4/tests/test_operational_apis.py": "907ff8b4c6ecc318e57ed821e6478c632876b5fd331ee0045b4b6bea0cd4a102",
+    "services/memoryv4/tests/test_persistence_recovery.py": "d4a0d5418364f8ac2f260a6792de79228ecdf10f93ea5e50ab077f8c7a87ec35",
+    "services/memoryv4/tests/test_production_qa.py": "eef40c21f41c13e0806839af1dd27ce9612fffa356b1733dfaef635eb81e691c",
+    "services/memoryv4/tests/test_settings.py": "3f4faa10b1e1274af9d3a79ec65c728b7701f3752f76a8d9807023e138e7ffec"
+  },
+  "diagnostic": {
+    "counts": {
+      "tests": 5,
+      "pass": 5,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "logSha256": "8416080a009f6ca947cbf884b4f344f10940105af0384a958a536353ae5c97bf",
+    "retentionEvidence": "25h-aged fixture metadata plus source no-expiry/eviction; NOT elapsed24h soak"
+  },
+  "packetSha256": {
+    "catalog/proposals/memory-candidates-v2/CHANGE.md": "7da9d9be52f5d69e2126d3c0407f8cbab682f4ab0a6076ae7f1ce1952ec88164",
+    "catalog/proposals/memory-candidates-v2/SEMANTICS.md": "0112621f6f62c767b5160e57e4761ac1a021c35e2eb2da5270082e270f88b7a5",
+    "catalog/proposals/memory-candidates-v2/definition.json": "3d47843caa1a90fba2ffd805af588dded0cb67b63ead1817c78cfe5a11bc3e9e",
+    "catalog/proposals/memory-candidates-v2/descriptor.json": "d28314195c0ccdfbc7c28699f2870032aba27dc58adf62426f91dcb1f7298f79",
+    "catalog/proposals/memory-candidates-v2/namespace-policy.json": "c6fbaf3ecb04d90a36df795a30673e7ed1a587c72286b0a9bfc54b4d1a161f8b",
+    "catalog/proposals/memory-candidates-v2/proposal.json": "bfabba3830e13f72e31bec8f35574a78bdf26c8c99ae598ae2acef25174c7b84",
+    "phase51/redesign/prepare.mjs": "d167cfc612c3db31e1f4ef48e430913d5c79cf6a294fd9d760f1f1c67c6dd239",
+    "phase51/redesign/provider.mjs": "31dc8015479d4312dba4fe9ff996e5de586c63dfdfc62adc58520dc9df0e4657",
+    "phase51/redesign/test.mjs": "9e9421746d7bfcea9b9bc4d29de49d555f580094677a53f5f5fda75a315398bd",
+    "phase51/redesign/capture.py": "a7bd34106e3bd9776819400d996ba3cceffe21682e8d336897ac9fca1b4a0d8d"
+  },
+  "reviewed": false,
+  "admitted": false,
+  "kernelChange": false,
+  "productSwitch": false,
+  "published": false,
+  "ownerAccepted": false
+}

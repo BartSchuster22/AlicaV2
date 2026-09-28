@@ -1,0 +1,33 @@
+{
+  "result": {
+    "proposal": "phase51-memory-candidates-v2-domain-replay",
+    "state": "proposed",
+    "review": {
+      "proposal": "phase51-memory-candidates-v2-domain-replay",
+      "reviewer": "Hermes parent independent Catalog reviewer",
+      "decision": "accepted",
+      "checks": {
+        "abstraction": true,
+        "security": true,
+        "scopes": true,
+        "compatibility": true
+      },
+      "rationale": "Parent independently read revised semantics/change explanation, definition/proposal, preparation, provider and five diagnostic tests/capture, verified all ten packet SHA256 against review request, and inspected shared-domain create_record plus Store create_record_idempotent/_idempotency_replay/_save_idempotency. Reviewed descriptor digest sha256:286159e1a40284cc02aa67cd2ab2cf4d1092733260c406f5a1810df2891be033. Abstraction accepted: bounded create/get/search with explicit domain request identity is generic and does not introduce a platform. Security accepted: no Host replay cache, every attempt receives current Host and domain authorization; actor-scoped transactional request/result ledger and audit preserve restart replay and explicit reconciliation after response loss. RequestKey is data, not authority. Namespace prefix is not an isolation boundary against same-actor authorized HTTP calls, as explicitly documented. Scopes accepted: unchanged requested target narrowing, actor isolation, hidden-data protection and no promotion/import grants. Compatibility accepted as explicitly BREAKING major2 with required payload key, old CallOptions key rejected; never silent alias/downgrade. Original v1 packet/review remains immutable evidence of blocked design. Required durability is retained as a normative domain guarantee, not falsely attributed to Host. Original receipt replay differs deliberately from current-state reads; original result never re-promotes or restores data. Replay ledger is authoritative for same-domain restart/recovery and must not be marked rebuildable, even though fresh-domain graph import excludes it. Accelerated25h-age fixture plus no-eviction source inspection is not a wall-clock soak. Five diagnostic tests are design feasibility evidence, not complete M11/M12 or final release conformance. Accept revised design for PROPOSED via existing reviewProposal only. Integrate bounded mapping, revalidate revised preimplementation manifest fixture, then actual conformance/evidence-backed EXPERIMENTAL admission and pinned real-snapshot validation before release qualification. Preserve transaction rollback/commit ambiguity, reauthorization, retention, exact stable IDs and audit requirements in integrated tests. No Kernel/Foundation/public-contract changes, production actions or closed live grants authorized. Final independent release review remains required."
+    }
+  },
+  "reviewSha256": "c022692ee0c5927663cd53b31168d8dd7a77268de770af5ecf0c124366dc66ef",
+  "packetSha256": {
+    "catalog/proposals/memory-candidates-v2/CHANGE.md": "7da9d9be52f5d69e2126d3c0407f8cbab682f4ab0a6076ae7f1ce1952ec88164",
+    "catalog/proposals/memory-candidates-v2/SEMANTICS.md": "0112621f6f62c767b5160e57e4761ac1a021c35e2eb2da5270082e270f88b7a5",
+    "catalog/proposals/memory-candidates-v2/definition.json": "3d47843caa1a90fba2ffd805af588dded0cb67b63ead1817c78cfe5a11bc3e9e",
+    "catalog/proposals/memory-candidates-v2/descriptor.json": "d28314195c0ccdfbc7c28699f2870032aba27dc58adf62426f91dcb1f7298f79",
+    "catalog/proposals/memory-candidates-v2/namespace-policy.json": "c6fbaf3ecb04d90a36df795a30673e7ed1a587c72286b0a9bfc54b4d1a161f8b",
+    "catalog/proposals/memory-candidates-v2/proposal.json": "bfabba3830e13f72e31bec8f35574a78bdf26c8c99ae598ae2acef25174c7b84",
+    "phase51/redesign/prepare.mjs": "d167cfc612c3db31e1f4ef48e430913d5c79cf6a294fd9d760f1f1c67c6dd239",
+    "phase51/redesign/provider.mjs": "31dc8015479d4312dba4fe9ff996e5de586c63dfdfc62adc58520dc9df0e4657",
+    "phase51/redesign/test.mjs": "9e9421746d7bfcea9b9bc4d29de49d555f580094677a53f5f5fda75a315398bd",
+    "phase51/redesign/capture.py": "a7bd34106e3bd9776819400d996ba3cceffe21682e8d336897ac9fca1b4a0d8d"
+  },
+  "admitted": false,
+  "ownerAcceptance": false
+}

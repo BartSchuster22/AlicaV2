@@ -1,0 +1,95 @@
+{
+  "previous": null,
+  "accepted": {
+    "apiVersion": "catalog.alica.io/v1",
+    "contract": {
+      "descriptor": "descriptor.json",
+      "digest": "sha256:286159e1a40284cc02aa67cd2ab2cf4d1092733260c406f5a1810df2891be033",
+      "identity": "io.alica.memory.candidates",
+      "version": "2.0.0"
+    },
+    "dependencies": [],
+    "events": [],
+    "kind": "CapabilityDefinition",
+    "metadata": {
+      "id": "acap://alica.io/memory/candidates@2",
+      "maturity": "experimental",
+      "owner": "ALICA maintainers",
+      "summary": "Governed working candidates with durable domain request replay, stable IDs and bounded retrieval.",
+      "version": "2.0.0"
+    },
+    "permissions": [
+      "memory.create-working",
+      "memory.read",
+      "memory.search"
+    ],
+    "scopes": [
+      "application",
+      "session"
+    ],
+    "semantics": {
+      "cancellation": "supported",
+      "description": "Create requires payload requestKey (8–128 ASCII letters/digits/dot/underscore/hyphen, first alphanumeric). This is domain operation data, NEVER authority. Host idempotency is none: no CallOptions.idempotencyKey is accepted, no Host result/error replay cache. Domain MUST durably bind trusted actor plus operation namespace plus requestKey to normalized complete mutation payload and original result, atomically with mutation/audit, for at least 86400000ms from commit across provider/Host restart. Every attempt reauthorizes current Host grants AND trusted actor/data-root/domain permission before any replay. Same key changed payload is CONFLICT; actor namespace is isolated; original stable ID/result retained. Explicit retry after ambiguous write uses same payload key; no automatic retry or rollback claim. Get/search remain unchanged. See SEMANTICS.md and CHANGE.md. Proposed redesign, not reviewed/admitted.",
+      "errors": [
+        "INVALID_ARGUMENT",
+        "UNAUTHENTICATED",
+        "PERMISSION_DENIED",
+        "NOT_FOUND",
+        "CONFLICT",
+        "FAILED_PRECONDITION",
+        "UNAVAILABLE",
+        "RESOURCE_EXHAUSTED",
+        "CANCELLED",
+        "DEADLINE_EXCEEDED"
+      ]
+    }
+  },
+  "evidence": {
+    "maintainer": "ALICA maintainers",
+    "reference": "docs/phase5.1/evidence/m7-preflight-v2.json",
+    "proposal": {
+      "apiVersion": "catalog.alica.io/proposal-v1",
+      "id": "phase51-memory-candidates-v2-domain-replay",
+      "problem": "An external project worker must create one scoped working note with attributable provenance, retrieve its stable ID, search it, stop/restart the provider, then retrieve it again without direct HTTP/database/framework coupling.",
+      "existingInsufficient": "Frozen echo is side-effect-free; example.records is opaque replaceable key/value without governed scope/provenance/candidate semantics or search. Agent-execution and decision-evaluate do not provide durable governed memory. Changing their semantics is prohibited.",
+      "abstraction": "One generic working-candidate capability create/get/search. Breaking v2 adds mandatory requestKey to create payload and disables Host-level idempotency; persistence is an explicit normative shared-domain guarantee, not an instance cache claim. No new public binding/platform or domain promotion/import authority.",
+      "providers": [
+        "Governed MemoryV4 shared-domain SQLite adapter (authorized planned implementation, not yet built)",
+        "Any independent governed candidate provider satisfying these public semantics; no requirement to implement one speculatively"
+      ],
+      "consumers": [
+        "External public-SDK project working-note consumer; create/get/search/restart/get with no MemoryV4, FastAPI or SQLite imports"
+      ],
+      "draft": "acap://alica.io/memory/candidates@2",
+      "alternatives": "Original durable Host policy is rejected by frozen public Host and ContractProvider. Merely instance relabeling rejected: Host caches success/errors and can bypass current domain reauthorization. Revised v2 uses domain requestKey and transport idempotency none so every call reaches current authority checks. No Kernel/ACAP/Foundation edits.",
+      "security": "Trusted Host caller mapped by operator to actor/data-root/permitted domain operations on EVERY attempt; requestKey is non-authoritative request data. No caller identity/grants in payload. Current domain create authorization precedes durable replay. Same-actor key conflicts on changed scope/content; distinct actor namespace cannot replay another actor result. Retry is explicit after ambiguity; committed mutation and ledger are atomic; no automatic retries or rollback promises.",
+      "scopes": "Existing application/session Catalog labels and Host scope/grants unchanged. Requested memory scope must equal/descend separately mapped data-root; visible ancestor candidates only; no public opt-in or sibling leakage. Catalog permission metadata grants nothing.",
+      "compatibility": "Breaking additive v2 draft, different major and digest. Original reviewed v1 files/receipt remain unchanged; their review/admission does not transfer. Consumer moves from CallOptions.idempotencyKey to payload.requestKey; v1 and v2 never silently resolve as compatible. Existing HTTP API unchanged. Minimum durability remains24h and restart-stable replay; Host generic replay guarantee is explicitly not offered.",
+      "genericRationale": "Scoped attributable working text candidates and lexical retrieval are reusable across project workers/providers; no tenant names, MemoryV4 endpoints or SQLite representation in the contract.",
+      "proposer": "Hermes Phase5.1 implementation worker"
+    },
+    "review": {
+      "proposal": "phase51-memory-candidates-v2-domain-replay",
+      "state": "proposed",
+      "review": {
+        "proposal": "phase51-memory-candidates-v2-domain-replay",
+        "reviewer": "Hermes parent independent Catalog reviewer",
+        "decision": "accepted",
+        "checks": {
+          "abstraction": true,
+          "security": true,
+          "scopes": true,
+          "compatibility": true
+        },
+        "rationale": "Parent independently read revised semantics/change explanation, definition/proposal, preparation, provider and five diagnostic tests/capture, verified all ten packet SHA256 against review request, and inspected shared-domain create_record plus Store create_record_idempotent/_idempotency_replay/_save_idempotency. Reviewed descriptor digest sha256:286159e1a40284cc02aa67cd2ab2cf4d1092733260c406f5a1810df2891be033. Abstraction accepted: bounded create/get/search with explicit domain request identity is generic and does not introduce a platform. Security accepted: no Host replay cache, every attempt receives current Host and domain authorization; actor-scoped transactional request/result ledger and audit preserve restart replay and explicit reconciliation after response loss. RequestKey is data, not authority. Namespace prefix is not an isolation boundary against same-actor authorized HTTP calls, as explicitly documented. Scopes accepted: unchanged requested target narrowing, actor isolation, hidden-data protection and no promotion/import grants. Compatibility accepted as explicitly BREAKING major2 with required payload key, old CallOptions key rejected; never silent alias/downgrade. Original v1 packet/review remains immutable evidence of blocked design. Required durability is retained as a normative domain guarantee, not falsely attributed to Host. Original receipt replay differs deliberately from current-state reads; original result never re-promotes or restores data. Replay ledger is authoritative for same-domain restart/recovery and must not be marked rebuildable, even though fresh-domain graph import excludes it. Accelerated25h-age fixture plus no-eviction source inspection is not a wall-clock soak. Five diagnostic tests are design feasibility evidence, not complete M11/M12 or final release conformance. Accept revised design for PROPOSED via existing reviewProposal only. Integrate bounded mapping, revalidate revised preimplementation manifest fixture, then actual conformance/evidence-backed EXPERIMENTAL admission and pinned real-snapshot validation before release qualification. Preserve transaction rollback/commit ambiguity, reauthorization, retention, exact stable IDs and audit requirements in integrated tests. No Kernel/Foundation/public-contract changes, production actions or closed live grants authorized. Final independent release review remains required."
+      }
+    },
+    "implementation": "services/memoryv4/provider.mjs#sha256=98db923f111943c3813266250bc118d17418dc8ba6e08f80e3458906efd03003",
+    "conformance": "docs/phase5.1/evidence/product-v2.log#sha256=0cf7a5a2741c36f0d1e55230b0f8e897f4ea7d66f3a840a4284eb2938af423e8",
+    "domainConformance": {
+      "path": "docs/phase5.1/evidence/python-qualified.log",
+      "sha256": "103d9cb54bb8c5bf2daddce2e31d4a31069ab1397b8896310f1d7aef27d441ef",
+      "summary": "77 passed, 1 warning in 13.02s"
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "status": "V2_PREIMPLEMENTATION_FIXTURE_VALIDATION",
+  "validation": {
+    "structural": {
+      "level": "STRUCTURAL",
+      "status": "PASS"
+    },
+    "semantic": {
+      "level": "SEMANTIC",
+      "status": "PASS",
+      "context": "sha256:fb9b81e7f0565d963642dbc0bbdfef5d1c11e608a5f447036edc54f328847889",
+      "trustVerified": false,
+      "backup": {
+        "declaration": "VALID",
+        "execution": "NOT_TESTED"
+      },
+      "migration": {
+        "declaration": "VALID",
+        "execution": "NOT_TESTED"
+      },
+      "authority": "DECLARATION_CONSISTENCY_ONLY"
+    },
+    "executed": {
+      "level": "EXECUTED",
+      "status": "NOT_TESTED"
+    }
+  },
+  "hashes": {
+    "config.schema.json": "c84f1e556aec393d24804fca65b867b9882b3dcd55d184c4ec7f202e612e97d2",
+    "store.schema.json": "48523ffcdb8856aa6b5c34acf1ca0cc5ba8b9d1d068a8dae4a1b16632c3ded34",
+    "config.json": "8584fc9a6e62a1ad54cf7ec73d38ed83e1df44e6116ce5b37d2fd4b8c90c84d2",
+    "service.json": "a2e0647949bfb40eaf78d50d57ee65df5c75d67d02dd4cf22e1a4d3de41ce3c4",
+    "fixture-snapshot.json": "efa4850c122c6a2c528b91be08acbdfcd909e1b9dc3cdbd9c471f3ae7f044f13"
+  },
+  "fixture": true,
+  "admittedContext": false,
+  "transitionInvoked": false,
+  "finalM7": "PENDING_REAL_ADMITTED_SNAPSHOT",
+  "reviewSha256": "c022692ee0c5927663cd53b31168d8dd7a77268de770af5ecf0c124366dc66ef",
+  "reviewReceiptSha256": "7f1e21c2477a27f8514b9bbee21ac00714453df5087601f663361bc3b92bd917"
+}

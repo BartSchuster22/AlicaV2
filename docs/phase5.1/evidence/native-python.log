@@ -1,0 +1,10 @@
+{"command": ["/usr/bin/unshare", "--mount", "--net", "--pid", "--fork", "/usr/sbin/chroot", "--userspec=1000:1000", "/home/alica-dev/phase51-native-vx7iny_1", "/work/.tools/memory-python/bin/python", "-I", "-m", "pytest", "-q", "--tb=short", "-o", "cache_dir=/tmp/pytest-cache", "/work/services/memoryv4/tests"], "environment": "empty plus allowlisted native paths", "containerExecutableIncluded": false, "daemonSocketsIncluded": false, "productionConfigIncluded": false, "networkNamespace": "new isolated", "unprivilegedUid": 1000, "exitCode": 0, "suite": "native-python-domain-store-http-portability"}
+........................................................................ [ 92%]
+......                                                                   [100%]
+=============================== warnings summary ===============================
+work/.tools/memory-python/lib/python3.12/site-packages/starlette/testclient.py:40
+  /work/.tools/memory-python/lib/python3.12/site-packages/starlette/testclient.py:40: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = typing.Callable[[], typing.ContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+78 passed, 1 warning in 12.62s

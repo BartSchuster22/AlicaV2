@@ -1,0 +1,42 @@
+{
+  "status": "PREIMPLEMENTATION_FIXTURE_VALIDATION",
+  "validation": {
+    "structural": {
+      "level": "STRUCTURAL",
+      "status": "PASS"
+    },
+    "semantic": {
+      "level": "SEMANTIC",
+      "status": "PASS",
+      "context": "sha256:dc051fbd8f2f8340516de736052afb0c7aeb93a0bdc299778f4631803f9a2b4a",
+      "trustVerified": false,
+      "backup": {
+        "declaration": "VALID",
+        "execution": "NOT_TESTED"
+      },
+      "migration": {
+        "declaration": "VALID",
+        "execution": "NOT_TESTED"
+      },
+      "authority": "DECLARATION_CONSISTENCY_ONLY"
+    },
+    "executed": {
+      "level": "EXECUTED",
+      "status": "NOT_TESTED"
+    }
+  },
+  "hashes": {
+    "config.schema.json": "c84f1e556aec393d24804fca65b867b9882b3dcd55d184c4ec7f202e612e97d2",
+    "store.schema.json": "48523ffcdb8856aa6b5c34acf1ca0cc5ba8b9d1d068a8dae4a1b16632c3ded34",
+    "config.json": "8584fc9a6e62a1ad54cf7ec73d38ed83e1df44e6116ce5b37d2fd4b8c90c84d2",
+    "service.json": "79a2940e257aaa95b0009f9d37857340837ffc59e3387cb555d906b2cec30fff",
+    "fixture-snapshot.json": "ce9f0b22b53e2dfbeac68d8b92fa61702eae22e4bb38a52b4ebebb84a019ac74"
+  },
+  "fixture": true,
+  "admittedContext": false,
+  "transitionInvoked": false,
+  "implementationEvidence": null,
+  "finalM7": "PENDING_REAL_ADMITTED_SNAPSHOT",
+  "reviewSha256": "42b3b03fdaab1ef81e3153d801b0c51fee276dea0e2c0dfc9a68fa74844e3256",
+  "catalogReceipt": "catalog/proposals/memory-candidates/review-receipt.json"
+}

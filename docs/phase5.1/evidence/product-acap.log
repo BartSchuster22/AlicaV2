@@ -1,0 +1,67 @@
+✖ actual Python shared-domain create/get/search, durable restart, scope and forged authority (39.54315ms)
+✖ ambiguous committed write: actual child exit without response, explicit same-key retry (17.680833ms)
+✖ product deadline/cancellation, unavailable executable, disposal stale handle (15.856672ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 0
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 383.367442
+
+✖ failing tests:
+
+test at services/memoryv4/test-provider.mjs:29:1
+✖ actual Python shared-domain create/get/search, durable restart, scope and forged authority (39.54315ms)
+  Error [AcapError]: FAILED_PRECONDITION
+      at normalized (file:///home/alica-dev/AlicaV2-phase51/packages/acap-contracts/dist/validation.js:41:12)
+      at #discoverVerified (file:///home/alica-dev/AlicaV2-phase51/packages/kernel/dist/index.js:220:19)
+      at Host.discover (file:///home/alica-dev/AlicaV2-phase51/packages/kernel/dist/index.js:201:38)
+      at Object.discover (file:///home/alica-dev/AlicaV2-phase51/service-foundation/conformance/host-fixture.mjs:26:15)
+      at setup (file:///home/alica-dev/AlicaV2-phase51/services/memoryv4/test-provider.mjs:17:13)
+      at TestContext.<anonymous> (file:///home/alica-dev/AlicaV2-phase51/services/memoryv4/test-provider.mjs:30:94)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    code: 'FAILED_PRECONDITION',
+    correlationId: '677437af-c315-4928-bcba-aca9faa1117a',
+    retryable: false
+  }
+
+test at services/memoryv4/test-provider.mjs:45:1
+✖ ambiguous committed write: actual child exit without response, explicit same-key retry (17.680833ms)
+  Error [AcapError]: FAILED_PRECONDITION
+      at normalized (file:///home/alica-dev/AlicaV2-phase51/packages/acap-contracts/dist/validation.js:41:12)
+      at #discoverVerified (file:///home/alica-dev/AlicaV2-phase51/packages/kernel/dist/index.js:220:19)
+      at Host.discover (file:///home/alica-dev/AlicaV2-phase51/packages/kernel/dist/index.js:201:38)
+      at Object.discover (file:///home/alica-dev/AlicaV2-phase51/service-foundation/conformance/host-fixture.mjs:26:15)
+      at setup (file:///home/alica-dev/AlicaV2-phase51/services/memoryv4/test-provider.mjs:17:13)
+      at TestContext.<anonymous> (file:///home/alica-dev/AlicaV2-phase51/services/memoryv4/test-provider.mjs:48:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19) {
+    code: 'FAILED_PRECONDITION',
+    correlationId: 'c4b242dc-3942-4299-b564-e152a47a3a1e',
+    retryable: false
+  }
+
+test at services/memoryv4/test-provider.mjs:51:1
+✖ product deadline/cancellation, unavailable executable, disposal stale handle (15.856672ms)
+  Error [AcapError]: FAILED_PRECONDITION
+      at normalized (file:///home/alica-dev/AlicaV2-phase51/packages/acap-contracts/dist/validation.js:41:12)
+      at #discoverVerified (file:///home/alica-dev/AlicaV2-phase51/packages/kernel/dist/index.js:220:19)
+      at Host.discover (file:///home/alica-dev/AlicaV2-phase51/packages/kernel/dist/index.js:201:38)
+      at Object.discover (file:///home/alica-dev/AlicaV2-phase51/service-foundation/conformance/host-fixture.mjs:26:15)
+      at setup (file:///home/alica-dev/AlicaV2-phase51/services/memoryv4/test-provider.mjs:17:13)
+      at TestContext.<anonymous> (file:///home/alica-dev/AlicaV2-phase51/services/memoryv4/test-provider.mjs:52:96)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19) {
+    code: 'FAILED_PRECONDITION',
+    correlationId: 'af8b03e7-341e-45e8-939e-2ab223cefb2e',
+    retryable: false
+  }

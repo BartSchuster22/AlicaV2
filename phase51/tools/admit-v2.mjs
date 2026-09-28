@@ -1,0 +1,27 @@
+// Owner-authorized local experimental admission; genuine independent design review + actual conformance.
+import {readFileSync,writeFileSync,mkdirSync} from 'node:fs';
+import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
+import {validateDefinition,localReader} from '@alica/catalog';
+import {createSnapshot} from '@alica/catalog/release';
+import {transition,reviewProposal} from '@alica/catalog/governance';
+import {validate} from '../../service-foundation/tooling/validate.mjs';
+const base='catalog/proposals/memory-candidates-v2/',out='catalog/releases/phase51-memory-v2/';
+const read=p=>JSON.parse(readFileSync(p,'utf8')),hash=p=>createHash('sha256').update(readFileSync(p)).digest('hex'),write=(p,x)=>writeFileSync(p,JSON.stringify(x,null,2)+'\n');
+const proposal=read(base+'proposal.json'),receipt=read(base+'review-receipt.json'),review=receipt.result;
+assert.deepEqual(reviewProposal(proposal,read(base+'parent.review.json')),review);
+for(const [p,h] of Object.entries(receipt.packetSha256))assert.equal(hash(p),h,p);
+assert.match(readFileSync('docs/phase5.1/evidence/product-v2.log','utf8'),/pass 5\n.*fail 0/s);
+const pyPath='docs/phase5.1/evidence/python-qualified.log',pyLog=readFileSync(pyPath,'utf8');assert.match(pyLog,/77 passed/);assert.doesNotMatch(pyLog,/\d+ failed/);const py={path:pyPath,sha256:hash(pyPath),summary:pyLog.split('\n').find(l=>l.includes('77 passed'))};
+const definition=read(base+'definition.json'),policy=read(base+'namespace-policy.json');definition.metadata.maturity='experimental';policy.release=[definition.metadata.id];
+const reader=localReader(new URL('../../'+base,import.meta.url).pathname),entry=validateDefinition(definition,reader,policy);
+const evidence={maintainer:definition.metadata.owner,reference:'docs/phase5.1/evidence/m7-preflight-v2.json',proposal,review,implementation:'services/memoryv4/provider.mjs#sha256='+hash('services/memoryv4/provider.mjs'),conformance:'docs/phase5.1/evidence/product-v2.log#sha256='+hash('docs/phase5.1/evidence/product-v2.log'),domainConformance:py};
+const admission=transition(null,entry,evidence),snapshot=createSnapshot({release:{version:'0.5.1'},policy,entries:[entry],read:reader});
+const fixture='phase51/preimplementation-fixture-v2/',service=read(fixture+'service.json');service.catalog.digest=snapshot.digest;
+const files=Object.fromEntries(['config.schema.json','store.schema.json','config.json'].map(n=>[n,read(fixture+n)]));
+const validation=validate(service,{snapshot,pin:snapshot.digest,configuration:files['config.json'],readJSON:p=>files[p]});
+assert.equal(validation.structural.status,'PASS');assert.equal(validation.semantic.status,'PASS');assert.equal(validation.executed.status,'NOT_TESTED');
+mkdirSync(out,{recursive:true});write(out+'admission.json',admission);write(out+'snapshot.json',snapshot);write(out+'definition.json',definition);write('services/memoryv4/service.json',service);
+for(const [name,value] of Object.entries(files))write('services/memoryv4/'+name,value);
+write('docs/phase5.1/evidence/admitted-m7.json',{synthetic:false,admission:out+'admission.json',admissionSha256:hash(out+'admission.json'),snapshot:{version:'0.5.1',digest:snapshot.digest},manifestSha256:hash('services/memoryv4/service.json'),validation,publication:false,ownerAcceptance:false});
+console.log(JSON.stringify({experimentalAdmission:true,independentReviewer:review.review.reviewer,realPinnedM7:validation.semantic.status,snapshot:snapshot.digest,publication:false}));

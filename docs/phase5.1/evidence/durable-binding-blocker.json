@@ -1,0 +1,13 @@
+{
+  "status": "BLOCKED_FROZEN_HOST_REJECTS_DURABLE_DESCRIPTOR",
+  "originalRejected": true,
+  "instanceOnlyDiagnosticDiscoveryAccepted": true,
+  "controlActivated": false,
+  "productDescriptorChanged": false,
+  "descriptorFileSha256": "1962770c9bd93091ab644933c91167c43499c6d88e74815ba92daec0b67aaa84",
+  "trustSourceSha256": "085a42051a9f021857639045258b41860283949f5c1eb5561cc8c533f7c108e7",
+  "kernelSourceSha256": "ce437c9421a0be3c47fdec8bc131a9f8200027309e087d07ec428fca58fa0909",
+  "rejection": "packages/kernel/src/trust.ts:522-526",
+  "digestBinding": "packages/kernel/src/index.ts:1451-1453",
+  "requiredDecision": "A separately authorized frozen-architecture change or explicitly revised Catalog contract/design. Neither is performed by this worker."
+}

@@ -1,0 +1,44 @@
+{
+  "apiVersion": "catalog.alica.io/v1",
+  "kind": "CapabilityDefinition",
+  "metadata": {
+    "id": "acap://alica.io/memory/candidates@1",
+    "version": "1.0.0",
+    "maturity": "proposed",
+    "owner": "ALICA maintainers",
+    "summary": "Scoped durable working candidates with attributable provenance, stable IDs and bounded lexical retrieval."
+  },
+  "contract": {
+    "descriptor": "descriptor.json",
+    "identity": "io.alica.memory.candidates",
+    "version": "1.0.0",
+    "digest": "sha256:5de26137740ed9454b07de40970dfbac1af049aead5e29e29a7848ac3f33db08"
+  },
+  "semantics": {
+    "description": "Create active/working author-only candidates; get/search only visible active/working records representable without truncation. Stable IDs and completed creates survive normal restart. Mandatory durable actor-key idempotency for create, at least24h retention. Host operation grants plus independently narrowed data authority; no actor/promotion/import authority in payload. Search records retrieval evidence; absence/outage distinct. See SEMANTICS.md.",
+    "cancellation": "supported",
+    "errors": [
+      "INVALID_ARGUMENT",
+      "UNAUTHENTICATED",
+      "PERMISSION_DENIED",
+      "NOT_FOUND",
+      "CONFLICT",
+      "FAILED_PRECONDITION",
+      "UNAVAILABLE",
+      "RESOURCE_EXHAUSTED",
+      "CANCELLED",
+      "DEADLINE_EXCEEDED"
+    ]
+  },
+  "scopes": [
+    "application",
+    "session"
+  ],
+  "permissions": [
+    "memory.create-working",
+    "memory.read",
+    "memory.search"
+  ],
+  "dependencies": [],
+  "events": []
+}

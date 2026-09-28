@@ -1,0 +1,44 @@
+{
+  "apiVersion": "catalog.alica.io/v1",
+  "kind": "CapabilityDefinition",
+  "metadata": {
+    "id": "acap://alica.io/memory/candidates@2",
+    "version": "2.0.0",
+    "maturity": "proposed",
+    "owner": "ALICA maintainers",
+    "summary": "Governed working candidates with durable domain request replay, stable IDs and bounded retrieval."
+  },
+  "contract": {
+    "descriptor": "descriptor.json",
+    "identity": "io.alica.memory.candidates",
+    "version": "2.0.0",
+    "digest": "sha256:286159e1a40284cc02aa67cd2ab2cf4d1092733260c406f5a1810df2891be033"
+  },
+  "semantics": {
+    "description": "Create requires payload requestKey (8–128 ASCII letters/digits/dot/underscore/hyphen, first alphanumeric). This is domain operation data, NEVER authority. Host idempotency is none: no CallOptions.idempotencyKey is accepted, no Host result/error replay cache. Domain MUST durably bind trusted actor plus operation namespace plus requestKey to normalized complete mutation payload and original result, atomically with mutation/audit, for at least 86400000ms from commit across provider/Host restart. Every attempt reauthorizes current Host grants AND trusted actor/data-root/domain permission before any replay. Same key changed payload is CONFLICT; actor namespace is isolated; original stable ID/result retained. Explicit retry after ambiguous write uses same payload key; no automatic retry or rollback claim. Get/search remain unchanged. See SEMANTICS.md and CHANGE.md. Proposed redesign, not reviewed/admitted.",
+    "cancellation": "supported",
+    "errors": [
+      "INVALID_ARGUMENT",
+      "UNAUTHENTICATED",
+      "PERMISSION_DENIED",
+      "NOT_FOUND",
+      "CONFLICT",
+      "FAILED_PRECONDITION",
+      "UNAVAILABLE",
+      "RESOURCE_EXHAUSTED",
+      "CANCELLED",
+      "DEADLINE_EXCEEDED"
+    ]
+  },
+  "scopes": [
+    "application",
+    "session"
+  ],
+  "permissions": [
+    "memory.create-working",
+    "memory.read",
+    "memory.search"
+  ],
+  "dependencies": [],
+  "events": []
+}

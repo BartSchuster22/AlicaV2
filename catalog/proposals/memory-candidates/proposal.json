@@ -1,0 +1,21 @@
+{
+  "apiVersion": "catalog.alica.io/proposal-v1",
+  "id": "phase51-memory-candidates-v1",
+  "problem": "An external project worker must create one scoped working note with attributable provenance, retrieve its stable ID, search it, stop/restart the provider, then retrieve it again without direct HTTP/database/framework coupling.",
+  "existingInsufficient": "Frozen echo is side-effect-free; example.records is opaque replaceable key/value without governed scope/provenance/candidate semantics or search. Agent-execution and decision-evaluate do not provide durable governed memory. Changing their semantics is prohibited.",
+  "abstraction": "Exactly one generic working-candidate capability with create/get/search, explicit scope as requested target not authority, stable opaque IDs, bounded text/source provenance. No broad memory family, HTTP dispatch, provider-specific table/schema names or promotion/export/admin operations.",
+  "providers": [
+    "Governed MemoryV4 shared-domain SQLite adapter (authorized planned implementation, not yet built)",
+    "Any independent governed candidate provider satisfying these public semantics; no requirement to implement one speculatively"
+  ],
+  "consumers": [
+    "External public-SDK project working-note consumer; create/get/search/restart/get with no MemoryV4, FastAPI or SQLite imports"
+  ],
+  "draft": "acap://alica.io/memory/candidates@1",
+  "alternatives": "Rejected repurposing echo or generic records because existing contracts lack governance; rejected HTTP wrapping/store bypass and a generic memory API. Keep canonical exchange an explicit restricted operator task, outside this worker capability.",
+  "security": "Trusted Host OperationContext.caller supplies identity; operator mapping narrows to actor/data-root/permissions. Body contains no identity/grants. Domain reevaluates scope/create-working/read/search and audits writes/search. Source provenance is asserted content, not authentication. Working-only output cannot promote canonical truth. Deadlines/cancellation do not guarantee rollback; explicit same-key retry only.",
+  "scopes": "Existing application/session Catalog labels and Host scope/grants unchanged. Requested memory scope must equal/descend separately mapped data-root; visible ancestor candidates only; no public opt-in or sibling leakage. Catalog permission metadata grants nothing.",
+  "compatibility": "Additive new candidate descriptor/proposal only; original contracts/catalog snapshots/Foundation unchanged. Independent distinct-parent review before PROPOSED; actual conformance plus existing maintainer transition before EXPERIMENTAL snapshot. No new public language binding.",
+  "genericRationale": "Scoped attributable working text candidates and lexical retrieval are reusable across project workers/providers; no tenant names, MemoryV4 endpoints or SQLite representation in the contract.",
+  "proposer": "Hermes Phase5.1 implementation worker"
+}

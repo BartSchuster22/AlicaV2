@@ -1,0 +1,14 @@
+{
+  "type": "object",
+  "description": "Logical SQLite provider schema metadata declaration, not canonical exchange or SQLite pages. Schema0001 through0005; actual state/integrity validated by the Store migrations.",
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "const": 5
+    }
+  },
+  "required": [
+    "schemaVersion"
+  ],
+  "additionalProperties": false
+}

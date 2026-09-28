@@ -1,0 +1,18 @@
+(node:900187) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ real admitted Catalog snapshot pinned M7; native container absence when isolated (68.241775ms)
+✔ independent public SDK consumer runs unchanged against Catalog-selected v2 (1816.507788ms)
+✔ v2 public Host create/get/search; durable actor/request replay across complete Host restart (3668.42991ms)
+✔ every replay reauthorizes domain mapping, permissions, scope and frozen Host grants (1590.633279ms)
+✔ request conflicts, actor isolation, malformed/forged authority, old wire rejected (2035.05601ms)
+✔ ambiguous committed child loss; explicit retry succeeds in SAME Host without cached transport error (975.711126ms)
+✔ active deadline/cancellation cleanup; sanitized unavailable transport and stale handle (734.511443ms)
+✔ at least24h retention: explicit25h-aged ledger fixture replays after full restart (not wall-clock soak) (1194.94594ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12553.041477

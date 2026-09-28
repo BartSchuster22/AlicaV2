@@ -1,0 +1,19 @@
+{"command": ["/usr/bin/unshare", "--mount", "--net", "--pid", "--fork", "/usr/sbin/chroot", "--userspec=1000:1000", "/home/alica-dev/phase51-native-vx7iny_1", "/node/bin/node", "--experimental-vm-modules", "--test", "/work/services/memoryv4/test-v2.mjs"], "environment": "empty plus allowlisted native paths", "containerExecutableIncluded": false, "daemonSocketsIncluded": false, "productionConfigIncluded": false, "networkNamespace": "new isolated", "unprivilegedUid": 1000, "exitCode": 0}
+(node:7) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ real admitted Catalog snapshot pinned M7; native container absence when isolated (84.649096ms)
+✔ independent public SDK consumer runs unchanged against Catalog-selected v2 (1765.452513ms)
+✔ v2 public Host create/get/search; durable actor/request replay across complete Host restart (4194.25402ms)
+✔ every replay reauthorizes domain mapping, permissions, scope and frozen Host grants (1715.864982ms)
+✔ request conflicts, actor isolation, malformed/forged authority, old wire rejected (2218.652234ms)
+✔ ambiguous committed child loss; explicit retry succeeds in SAME Host without cached transport error (1058.890692ms)
+✔ active deadline/cancellation cleanup; sanitized unavailable transport and stale handle (624.110722ms)
+✔ at least24h retention: explicit25h-aged ledger fixture replays after full restart (not wall-clock soak) (1302.72215ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13410.492576

@@ -1,0 +1,473 @@
+{
+  "content": {
+    "apiVersion": "catalog.alica.io/snapshot-v1",
+    "version": "0.5.1",
+    "policy": {
+      "apiVersion": "catalog.alica.io/namespace-v1",
+      "version": "1.0.0",
+      "namespaces": [
+        {
+          "authority": "alica.io",
+          "domain": "memory",
+          "kind": "first-party",
+          "owner": "ALICA maintainers"
+        }
+      ],
+      "release": [
+        "acap://alica.io/memory/candidates@1"
+      ]
+    },
+    "definitions": [
+      {
+        "apiVersion": "catalog.alica.io/v1",
+        "contract": {
+          "descriptor": "descriptor.json",
+          "digest": "sha256:5de26137740ed9454b07de40970dfbac1af049aead5e29e29a7848ac3f33db08",
+          "identity": "io.alica.memory.candidates",
+          "version": "1.0.0"
+        },
+        "dependencies": [],
+        "events": [],
+        "kind": "CapabilityDefinition",
+        "metadata": {
+          "id": "acap://alica.io/memory/candidates@1",
+          "maturity": "experimental",
+          "owner": "ALICA maintainers",
+          "summary": "Scoped durable working candidates with attributable provenance, stable IDs and bounded lexical retrieval.",
+          "version": "1.0.0"
+        },
+        "permissions": [
+          "memory.create-working",
+          "memory.read",
+          "memory.search"
+        ],
+        "scopes": [
+          "application",
+          "session"
+        ],
+        "semantics": {
+          "cancellation": "supported",
+          "description": "Create active/working author-only candidates; get/search only visible active/working records representable without truncation. Stable IDs and completed creates survive normal restart. Mandatory durable actor-key idempotency for create, at least24h retention. Host operation grants plus independently narrowed data authority; no actor/promotion/import authority in payload. Search records retrieval evidence; absence/outage distinct. See SEMANTICS.md.",
+          "errors": [
+            "INVALID_ARGUMENT",
+            "UNAUTHENTICATED",
+            "PERMISSION_DENIED",
+            "NOT_FOUND",
+            "CONFLICT",
+            "FAILED_PRECONDITION",
+            "UNAVAILABLE",
+            "RESOURCE_EXHAUSTED",
+            "CANCELLED",
+            "DEADLINE_EXCEEDED"
+          ]
+        }
+      }
+    ],
+    "files": {
+      "descriptor.json": {
+        "schemaVersion": "acap.capability/v1",
+        "id": "io.alica.memory.candidates",
+        "version": "1.0.0",
+        "features": [],
+        "operations": [
+          {
+            "name": "create",
+            "kind": "unary",
+            "idempotency": "provider",
+            "idempotencyPolicy": {
+              "retentionMs": 86400000,
+              "persistence": "durable"
+            },
+            "input": {
+              "type": "object",
+              "properties": {
+                "scope": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 1000
+                },
+                "title": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 240
+                },
+                "content": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 8192
+                },
+                "sourceRefs": {
+                  "type": "array",
+                  "maxItems": 8,
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  }
+                },
+                "provenance": {
+                  "type": "object",
+                  "properties": {
+                    "source": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 240
+                    }
+                  },
+                  "required": [
+                    "source"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "scope",
+                "title",
+                "content",
+                "sourceRefs",
+                "provenance"
+              ],
+              "additionalProperties": false
+            },
+            "output": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "scope": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 1000
+                },
+                "title": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 240
+                },
+                "content": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 8192
+                },
+                "sourceRefs": {
+                  "type": "array",
+                  "maxItems": 8,
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  }
+                },
+                "provenance": {
+                  "type": "object",
+                  "properties": {
+                    "source": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 240
+                    }
+                  },
+                  "required": [
+                    "source"
+                  ],
+                  "additionalProperties": false
+                },
+                "author": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "version": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 2147483647
+                },
+                "role": {
+                  "type": "string",
+                  "const": "active"
+                },
+                "lifecycle": {
+                  "type": "string",
+                  "const": "working"
+                }
+              },
+              "required": [
+                "id",
+                "scope",
+                "title",
+                "content",
+                "sourceRefs",
+                "provenance",
+                "author",
+                "version",
+                "role",
+                "lifecycle"
+              ],
+              "additionalProperties": false
+            }
+          },
+          {
+            "name": "get",
+            "kind": "unary",
+            "idempotency": "none",
+            "input": {
+              "type": "object",
+              "properties": {
+                "scope": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 1000
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                }
+              },
+              "required": [
+                "scope",
+                "id"
+              ],
+              "additionalProperties": false
+            },
+            "output": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "scope": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 1000
+                },
+                "title": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 240
+                },
+                "content": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 8192
+                },
+                "sourceRefs": {
+                  "type": "array",
+                  "maxItems": 8,
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  }
+                },
+                "provenance": {
+                  "type": "object",
+                  "properties": {
+                    "source": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 240
+                    }
+                  },
+                  "required": [
+                    "source"
+                  ],
+                  "additionalProperties": false
+                },
+                "author": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "version": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 2147483647
+                },
+                "role": {
+                  "type": "string",
+                  "const": "active"
+                },
+                "lifecycle": {
+                  "type": "string",
+                  "const": "working"
+                }
+              },
+              "required": [
+                "id",
+                "scope",
+                "title",
+                "content",
+                "sourceRefs",
+                "provenance",
+                "author",
+                "version",
+                "role",
+                "lifecycle"
+              ],
+              "additionalProperties": false
+            }
+          },
+          {
+            "name": "search",
+            "kind": "unary",
+            "idempotency": "none",
+            "input": {
+              "type": "object",
+              "properties": {
+                "scope": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 1000
+                },
+                "query": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 500
+                },
+                "limit": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 25
+                },
+                "cursor": {
+                  "type": "string",
+                  "minLength": 0,
+                  "maxLength": 4096
+                }
+              },
+              "required": [
+                "scope",
+                "query",
+                "limit",
+                "cursor"
+              ],
+              "additionalProperties": false
+            },
+            "output": {
+              "type": "object",
+              "properties": {
+                "candidates": {
+                  "type": "array",
+                  "maxItems": 25,
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200
+                      },
+                      "scope": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 1000
+                      },
+                      "title": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 240
+                      },
+                      "content": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 8192
+                      },
+                      "sourceRefs": {
+                        "type": "array",
+                        "maxItems": 8,
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 512
+                        }
+                      },
+                      "provenance": {
+                        "type": "object",
+                        "properties": {
+                          "source": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 240
+                          }
+                        },
+                        "required": [
+                          "source"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "author": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200
+                      },
+                      "version": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 2147483647
+                      },
+                      "role": {
+                        "type": "string",
+                        "const": "active"
+                      },
+                      "lifecycle": {
+                        "type": "string",
+                        "const": "working"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "scope",
+                      "title",
+                      "content",
+                      "sourceRefs",
+                      "provenance",
+                      "author",
+                      "version",
+                      "role",
+                      "lifecycle"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "nextCursor": {
+                  "type": "string",
+                  "minLength": 0,
+                  "maxLength": 4096
+                }
+              },
+              "required": [
+                "candidates",
+                "nextCursor"
+              ],
+              "additionalProperties": false
+            }
+          }
+        ]
+      }
+    },
+    "index": {
+      "apiVersion": "catalog.alica.io/index-v1",
+      "version": "0.5.1",
+      "entries": [
+        {
+          "id": "acap://alica.io/memory/candidates@1",
+          "version": "1.0.0",
+          "maturity": "experimental",
+          "identity": "io.alica.memory.candidates",
+          "digest": "sha256:5de26137740ed9454b07de40970dfbac1af049aead5e29e29a7848ac3f33db08"
+        }
+      ]
+    },
+    "compatibility": {
+      "rules": "catalog-v1-bounded",
+      "unknown": "REVIEW_REQUIRED"
+    }
+  },
+  "digest": "sha256:dc051fbd8f2f8340516de736052afb0c7aeb93a0bdc299778f4631803f9a2b4a"
+}

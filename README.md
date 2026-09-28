@@ -1,5 +1,13 @@
 # ALICA V2
 
+## Phase5.1 MemoryV4 + ACAP — implementation candidate
+
+The later explicit owner authorization permits Phase5.1 only. Historical STOP/no-Phase5.1 statements below remain verbatim records of earlier decisions, not the current authorization.
+
+[Candidate, architecture and limitations](docs/phase5.1/README.md) | [Canonical graph exchange](docs/phase5.1/PORTABILITY.md) | [Safe public reproduction](docs/phase5.1/REPRODUCE.md).
+
+Breaking Candidates v2 has genuine independent design review and local evidence-backed EXPERIMENTAL Catalog admission. This is not a published technical release or Owner Acceptance. Final finite independent candidate review is required before publication. No Phase5.2, frozen-foundation changes or renewed live grants.
+
 ## Phase 5.0 Project Owner Acceptance
 
 **PHASE 5.0 — COMPLETE / FROZEN / OWNER ACCEPTED**

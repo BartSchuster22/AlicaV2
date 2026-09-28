@@ -1,0 +1,15 @@
+(node:887152) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ v2 public Host create/get/search; durable actor/request replay across complete Host restart (3169.821961ms)
+✔ every replay reauthorizes domain mapping, permissions, scope and frozen Host grants (1980.208538ms)
+✔ request conflicts, actor isolation, malformed/forged authority, old wire rejected (2461.450656ms)
+✔ ambiguous committed child loss; explicit retry succeeds in SAME Host without cached transport error (1212.693236ms)
+✔ at least24h retention: explicit25h-aged ledger fixture replays after full restart (not wall-clock soak) (1379.798805ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10565.985326

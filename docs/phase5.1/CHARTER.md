@@ -1,0 +1,37 @@
+# Phase5.1 charter — authorized bounded scope; execution WIP
+
+Owner authorization: 'Accept this as the proposed plan, subject to the clarifications above. The plan is authorized. Start working and complete phase 5.1.' This approves the bounded charter/scope, not agent self-acceptance. Phase5.0 STOP superseded only for Phase5.1.
+
+Governing plan: doc_a7db4b3e7f8c_ALICA_V2_Phase_5.1_MemoryV4_ACAP_Adapter_Building_Plan.md
+Exact SHA256: 90edb11b36cb008799ebebfa869fb0edeaa3024c099063cc9f4fbd222d4482c2.
+Plan (entire 558 lines) and repository/runtime assessment read. This staged charter is the bounded owner-authorized M0 scope record; install at docs/phase5.1/CHARTER.md in the isolated worktree. It is not a published gate certificate.
+
+## Frozen identities and custody
+
+Accepted Phase5.0 base 94570dd322f07e2860016b89c1e81356cc8b65cc; accepted tag object 6e0ca5a398b420294853d6acdd72acd36a07bc52. Technical base af8f2e8504207681e2b1487948293349f97e08c5; technical tag object 6f7e681cf56d771926247e610ec9073af99ff0cd. Main d3f75fa1e39c32d566e7d49427a232b5f8536ce8. Preserve Phase1–4 originals from prior public evidence; no renewed grants. Phase4 TypeSafe/Jev6: six consumed, zero remaining, CLOSED. Protected Phase3 authority CLOSED.
+Developed MemoryV4 6111107fa709826c0642651f7f256c0c7fe3116a; D0 16166412574164d3527ddb4b8d2c2414eff1900f; runtime four-file match b944a4727ab665bcf3bef870997908e991a37631, not full-image attestation. Source 0.7.0-production-qa differs from runtime 0.6.0-persistence-recovery. Production image/docs difference is classified, not repaired.
+Git/file owner alica-dev. Isolated worktree /home/alica-dev/AlicaV2-phase51, branch phase51-memoryv4, created at accepted Phase5.0; pinned Node /home/alica-dev/AlicaV2/.tools/node-v24.21.0-linux-x64/bin verified v24.21.0. Original checkouts preserved. Never edit /srv/memory-v4 or production config/data. Source may be copied selectively to isolated development after review; no production DB copies. Anonymous repository and pinned app/main.py source returned HTTP 200; source publication still needs selective content review, not whole-repository indiscriminate copying.
+
+## Adopted clarifications (binding)
+
+Owner authorization approves bounded charter/scope; evidence gates do not need repeated owner approval unless architecture/scope genuinely changes. Independent Catalog review/admission remains required per existing governance; submit finite review packet to parent when needed, don't self-review. Production references via existing metadata/diagnostics only, no live DB opening, startup/migrations or secrets. No production changes caused by work; normal unrelated production activity isn't a failed purity check. Python bridge must define transport/process ownership/framing/limits/deadlines/cancellation/trusted actor-grants/crash/stale-handle/shutdown/retry-after-ambiguous-write; no new public binding or frozen structural changes silently labelled minimal adapter. Authority from trusted execution context, never caller-supplied identity; forged authority negative tests. Canonical portable format != canonical record ROLE: import needs explicit restricted authority, no implicit promotion. Classify audit/supersession/findings/history/policy as portable or retained/excluded explicitly; distinguish artifact refs from bytes. Define consistent export, versions, unsupported formats, ID conflicts, prevalidation, interrupted import, volatile fields and integrity vs authenticity. M10 provisional until M11 shared-domain evidence. Pin finite applicable offline regressions and inherited failures; exact Catalog sequence from frozen rules. Establish repo ownership/tag/source publication and anonymous discoverability early. Do not change repo visibility without permission. Public source must be publishable within authorized scope; don't publish private unrelated content/secrets. No package registry publishing.
+
+## Mandatory acceptance and execution order
+
+M0 charter/safety; M1 three baselines reconciled; M2 governance/contracts and domain mapped; M3 public Python/ACAP neutral binding proof. No MemoryV4 product/runtime edit before all four pass. Neutral Python spike permitted for M3; failure means STOP with exact architecture blocker, never invent a platform.
+M4 requirement reuse inventory; M5 portable canonical model; M6 independently governed minimum Catalog capability; M7 structural/semantic manifest validation before runtime refactoring; M8 shared governed domain; M9 Store port; M10 HTTP peer adapter provisional until M11 public ACAP consumer evidence; M12 actual native no-container conformance; M13 deterministic export; M14 fresh empty isolated store import; M15 semantic roundtrip including restricted authority; M16 bounded governance-preserving failures; M17 independent public SDK/Catalog consumer; M18 finite applicable offline regressions/no new regression with inherited failures explicit; M19 purity audit; M20 public reproducibility. All M0–M20 mandatory, none passed merely by this list.
+
+Each substantive slice identifies unfinished criterion, task, reason, expected artifact/test and stop condition. Acceptance drives work; optional hardening goes to backlog, not loops. Reuse governed MemoryV4 behavior/tests. HTTP compatibility, rec_UUID IDs, provenance, scope/write/lifecycle/promotion/supersession/audit/retrieval evidence preserved. Canonical format, Store backup and schema migration remain distinct.
+
+## Exclusions and authority
+
+Zero Kernel/ACAP/Hermes/Decision structural changes or silent Foundation changes. No generic RPC/supervisor/registry. Offline fixtures only; no live providers or protected credential/ledger/launcher reads. No production mutation/startup/migration/deployment/cutover, PostgreSQL, advanced retrieval, Doghouse, UniUI, AInbA, Hermes provider integration or container qualification. No mandatory Docker dependence or hostile-code confinement claims. Inherited Catalog dependency-check/whitespace limitations remain explicit, not scope-creep repairs.
+Inherited enclosing exclusive lease; no reacquire/release/probe, subworkers, cron, recall or sync. Parent handles MemoryV4 sync; working checkpoints UNSYNCED pending parent readback.
+
+## Publication and STOP
+
+Independent parent substantive candidate review before final immutable publication; this is not owner acceptance. Freeze implementation, offline regressions, reconcile evidence, purity, completion/evidence documents; clean exact-path commits/push and technical tag phase5.1-memoryv4-v1.0.0. Never force/move tags. Anonymous exact refs/raw evidence/source verified; separate main README-only discoverability preserving old body/links, no code merge. Required sources/fixtures commit-pinned. No accepted tag without later explicit Owner Acceptance. STOP after technical publication. No Phase5.2.
+
+## Current gate state
+
+M0 charter and M1/M2 source/governance docs complete. M3 neutral path5/5passed; local and DEV source hashes plus saved log SHA256 independently verified. Repository installation/reconciliation is the only remaining pre-code closure step; reconcile-precode.py validates exact documents/source/log and emits evidence/precode-gates.json before any product edits. M4/M5 design dispositions and M6 draft are preparation only, not admitted contracts or product changes. Prior transfer approvals resolved; no new neutral hardening is required. M6 requires distinct independent review, not repeated owner scope approval.

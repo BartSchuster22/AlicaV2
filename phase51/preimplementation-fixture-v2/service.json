@@ -1,0 +1,88 @@
+{
+  "apiVersion": "alica.io/service/v1",
+  "kind": "Service",
+  "metadata": {
+    "id": "org.alica.memoryv4",
+    "version": "1.0.0"
+  },
+  "binding": "public-host-inproc-v1",
+  "catalog": {
+    "version": "0.5.1",
+    "digest": "sha256:fb9b81e7f0565d963642dbc0bbdfef5d1c11e608a5f447036edc54f328847889"
+  },
+  "capabilities": {
+    "provides": [
+      {
+        "uri": "acap://alica.io/memory/candidates@2",
+        "identity": "io.alica.memory.candidates",
+        "version": "2.0.0"
+      }
+    ],
+    "requires": []
+  },
+  "scopes": [
+    "application",
+    "session"
+  ],
+  "permissions": [
+    "memory.create-working",
+    "memory.read",
+    "memory.search"
+  ],
+  "configuration": {
+    "schema": "config.schema.json",
+    "version": "1.0.0",
+    "reload": "restart"
+  },
+  "secrets": [],
+  "health": {
+    "ownedBy": "service",
+    "states": [
+      "READY",
+      "DEGRADED",
+      "UNAVAILABLE"
+    ]
+  },
+  "data": {
+    "authoritative": [
+      "memory.entities",
+      "memory.records",
+      "memory.relations",
+      "memory.artifacts",
+      "memory.findings",
+      "memory.audit",
+      "memory.retrieval",
+      "memory.idempotency"
+    ],
+    "derived": [
+      "memory.fts"
+    ],
+    "external": [
+      "memory.artifact-bytes",
+      "memory.operator-authority"
+    ],
+    "rebuildable": [
+      "memory.fts"
+    ]
+  },
+  "persistence": {
+    "class": "STATEFUL",
+    "survivesNormalRestart": true,
+    "schema": "store.schema.json",
+    "version": "5.0.0"
+  },
+  "events": {
+    "emits": [],
+    "consumes": []
+  },
+  "diagnostics": "sdk-safe-log-v1",
+  "backup": {
+    "required": true,
+    "consistency": "stopped"
+  },
+  "migration": {
+    "required": true,
+    "compatibility": "same-schema-only"
+  },
+  "ui": []
+}

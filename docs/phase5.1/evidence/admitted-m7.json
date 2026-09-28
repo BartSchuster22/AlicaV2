@@ -1,0 +1,37 @@
+{
+  "synthetic": false,
+  "admission": "catalog/releases/phase51-memory-v2/admission.json",
+  "admissionSha256": "5611a284647ab5c955c280a2463603b8612a2278f5fac09404d8616069d95e95",
+  "snapshot": {
+    "version": "0.5.1",
+    "digest": "sha256:fb9b81e7f0565d963642dbc0bbdfef5d1c11e608a5f447036edc54f328847889"
+  },
+  "manifestSha256": "a2e0647949bfb40eaf78d50d57ee65df5c75d67d02dd4cf22e1a4d3de41ce3c4",
+  "validation": {
+    "structural": {
+      "level": "STRUCTURAL",
+      "status": "PASS"
+    },
+    "semantic": {
+      "level": "SEMANTIC",
+      "status": "PASS",
+      "context": "sha256:fb9b81e7f0565d963642dbc0bbdfef5d1c11e608a5f447036edc54f328847889",
+      "trustVerified": false,
+      "backup": {
+        "declaration": "VALID",
+        "execution": "NOT_TESTED"
+      },
+      "migration": {
+        "declaration": "VALID",
+        "execution": "NOT_TESTED"
+      },
+      "authority": "DECLARATION_CONSISTENCY_ONLY"
+    },
+    "executed": {
+      "level": "EXECUTED",
+      "status": "NOT_TESTED"
+    }
+  },
+  "publication": false,
+  "ownerAcceptance": false
+}

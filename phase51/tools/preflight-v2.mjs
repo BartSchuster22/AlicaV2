@@ -1,0 +1,27 @@
+import {readFileSync,writeFileSync,mkdirSync} from 'node:fs';
+import {createHash} from 'node:crypto';
+import assert from 'node:assert/strict';
+import {reviewProposal} from '@alica/catalog/governance';
+import {validateDefinition,localReader} from '@alica/catalog';
+import {createSnapshot} from '@alica/catalog/release';
+import {validate} from '../../service-foundation/tooling/validate.mjs';
+const root=new URL('../../',import.meta.url),dir=new URL('catalog/proposals/memory-candidates-v2/',root),sha=b=>createHash('sha256').update(b).digest('hex');
+const json=u=>JSON.parse(readFileSync(u));
+const reviewed=json(new URL('docs/phase5.1/evidence/domain-replay-redesign.json',root));
+for(const [p,h] of Object.entries(reviewed.packetSha256))assert.equal(sha(readFileSync(new URL(p,root))),h,p);
+const bytes=readFileSync(new URL('parent.review.json',dir));assert.equal(sha(bytes),'c022692ee0c5927663cd53b31168d8dd7a77268de770af5ecf0c124366dc66ef');
+const result=reviewProposal(json(new URL('proposal.json',dir)),JSON.parse(bytes));assert.equal(result.state,'proposed');
+writeFileSync(new URL('review-receipt.json',dir),JSON.stringify({result,reviewSha256:sha(bytes),packetSha256:reviewed.packetSha256,admitted:false,ownerAcceptance:false},null,2)+'\n');
+const definition=structuredClone(json(new URL('definition.json',dir))),policy=structuredClone(json(new URL('namespace-policy.json',dir)));
+definition.metadata.maturity='experimental';policy.release=[definition.metadata.id];
+const read=localReader(dir.pathname),entry=validateDefinition(definition,read,policy);
+const snapshot=createSnapshot({release:{version:'0.5.1'},policy,entries:[entry],read});
+const old=new URL('phase51/preimplementation-fixture/',root),out=new URL('phase51/preimplementation-fixture-v2/',root);mkdirSync(out,{recursive:true});
+const manifest=json(new URL('service.json',old));manifest.catalog.digest=snapshot.digest;manifest.capabilities.provides=[{uri:definition.metadata.id,identity:entry.descriptor.id,version:'2.0.0'}];
+assert.ok(manifest.data.authoritative.includes('memory.idempotency'));assert.ok(!manifest.data.rebuildable.includes('memory.idempotency'));
+const files=Object.fromEntries(['config.schema.json','store.schema.json','config.json'].map(n=>[n,json(new URL(n,old))]));
+const validation=validate(manifest,{snapshot,pin:snapshot.digest,configuration:files['config.json'],readJSON:p=>files[p]});
+assert.equal(validation.structural.status,'PASS');assert.equal(validation.semantic.status,'PASS');assert.equal(validation.executed.status,'NOT_TESTED');
+const hashes={};for(const [n,v] of Object.entries({...files,'service.json':manifest,'fixture-snapshot.json':snapshot})){const b=JSON.stringify(v,null,2)+'\n';writeFileSync(new URL(n,out),b);hashes[n]=sha(b);}
+const evidence={status:'V2_PREIMPLEMENTATION_FIXTURE_VALIDATION',validation,hashes,fixture:true,admittedContext:false,transitionInvoked:false,finalM7:'PENDING_REAL_ADMITTED_SNAPSHOT',reviewSha256:sha(bytes),reviewReceiptSha256:sha(readFileSync(new URL('review-receipt.json',dir)))};
+writeFileSync(new URL('docs/phase5.1/evidence/m7-preflight-v2.json',root),JSON.stringify(evidence,null,2)+'\n');console.log(JSON.stringify(evidence));

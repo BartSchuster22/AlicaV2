@@ -1,0 +1,87 @@
+{
+  "status": "PASS_WITH_INHERITED_FAILURE",
+  "baseCommit": "94570dd322f07e2860016b89c1e81356cc8b65cc",
+  "artifact": "phase51-candidate-source.tar.gz",
+  "artifactSha256": "e2a390fca4cf1cb5df85667189428f5808b46838537edf758da263dfc2d2bcda",
+  "sourceOnly": true,
+  "freshNpmInstall": true,
+  "freshPythonEnvironmentAndInstall": true,
+  "publicDependencyEndpointsOnly": true,
+  "qualificationNetworkIsolated": true,
+  "productionConfig": false,
+  "publication": false,
+  "ownerAcceptance": false,
+  "logs": [
+    {
+      "name": "npm-offline-install",
+      "exitCode": 0,
+      "sha256": "bb856c7993335b3b45deeeef42c316b2866c6d5aa49369116da682f3bb1e30a9"
+    },
+    {
+      "name": "build",
+      "exitCode": 0,
+      "sha256": "11f0fb8c99bafb4fe1c027712708c4362f10b943ec410085920ed4c84b55dc72"
+    },
+    {
+      "name": "typecheck",
+      "exitCode": 0,
+      "sha256": "3aaba24d78454f1b500b09d1f5487b6b64e6aa9ca0b4aa9b1db5f39643011ecc"
+    },
+    {
+      "name": "frozen-regression",
+      "exitCode": 0,
+      "sha256": "fbb04132a117ab1ff56801db2dcc607ee07cbb684229f61529559d5a49c2343d"
+    },
+    {
+      "name": "inherited-dependency-check",
+      "exitCode": 1,
+      "sha256": "96f89c983e233dca5373ddb6c1c9124dc4a5aedb90a1358fd986a38aea5d0a6b",
+      "classification": "INHERITED_EXPECTED_FAILURE_NOT_REPAIRED"
+    },
+    {
+      "name": "decision-offline",
+      "exitCode": 0,
+      "sha256": "588af62de70b4bdc454c06d2e4b22bb35d06e4d24d6500765135f3f03e0ff140"
+    },
+    {
+      "name": "decision-packed",
+      "exitCode": 0,
+      "sha256": "2f923ca01bb86c5ab6859f0a75d282716b076d5c3dd3e89f3a2b50a5a98514bd"
+    },
+    {
+      "name": "decision-packed-continuation",
+      "exitCode": 0,
+      "sha256": "434395f1a3c3bb9089cecf750e21aef6540493a47f5f6c1f87bdedeb7a7a3757"
+    },
+    {
+      "name": "foundation-regression",
+      "exitCode": 0,
+      "sha256": "89c9026de96a442e312d97ce54c18d4df38139efb0dce0f92f0b402147e4f6e0"
+    },
+    {
+      "name": "foundation-native",
+      "exitCode": 0,
+      "sha256": "92f7cc75fa4d72176d1cf07ae662236308c3a6ec9b5479fbbabc821dff1a20d9"
+    },
+    {
+      "name": "venv",
+      "exitCode": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "python-public-install",
+      "exitCode": 0,
+      "sha256": "c8023a3f26a226bd6f7c40ec789abbeef5882b468ccf79e9288eccfd332a4442"
+    },
+    {
+      "name": "python-regression",
+      "exitCode": 0,
+      "sha256": "fdf51464190701e326d1ff69c48e4c0232e08920acf4b858e6bdabe5df20802b"
+    },
+    {
+      "name": "integrated-public-host",
+      "exitCode": 0,
+      "sha256": "a3baf450846ce8abcf2e5a055d6448d3e514a2be568dd5f703615d7fed8b3f43"
+    }
+  ]
+}
