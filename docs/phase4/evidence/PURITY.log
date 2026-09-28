@@ -1,0 +1,65 @@
+0df9095dab900458d054dd3b7734dbfaeae9fba8
+phase1-v1.0.0 8bc5d5fa961ac0b6430a85338dde48bf14b01f27
+ab0273e8581fa70cbcf15c07f73e990b5dcc725e
+phase2-catalog-v1.0.0 6cdb59dc590766d0044c751f1cef769be6af9ed8
+736b37d03c82ca057e7a397644037ef5d1bed991
+phase3-hermes-v1.0.0 9efe206ab5914cbedcbf5790e538046830b05477
+5f3fa4670659d748042788e844081eaf9933752d
+phase3-hermes-v1.0.0-accepted bb07bbacb6e66ab45fe1623d06e7fde813aa9049
+0df9095dab900458d054dd3b7734dbfaeae9fba8
+FROZEN_DIFF_EXIT=0
+Traceback (most recent call last):
+  File "/home/alica-dev/AlicaV2-phase4/tools/check-dependencies.py", line 14, in <module>
+    assert name in {'@alica/acap-types','@alica/acap-contracts','@alica/plugin-sdk','ajv'},name
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: @alica/catalog
+DEPENDENCY_CHECK_EXIT=1
+?? catalog/proposals/decision-evaluate/SEMANTICS.md
+?? catalog/proposals/decision-evaluate/admission.json
+?? catalog/proposals/decision-evaluate/admit.mjs
+?? catalog/proposals/decision-evaluate/conformance.json
+?? catalog/proposals/decision-evaluate/definition.json
+?? catalog/proposals/decision-evaluate/descriptor.json
+?? catalog/proposals/decision-evaluate/experimental-definition.json
+?? catalog/proposals/decision-evaluate/experimental-policy.json
+?? catalog/proposals/decision-evaluate/namespace-policy.json
+?? catalog/proposals/decision-evaluate/parent.review.json
+?? catalog/proposals/decision-evaluate/prepare.mjs
+?? catalog/proposals/decision-evaluate/proposal.json
+?? catalog/proposals/decision-evaluate/review.json
+?? catalog/proposals/decision-evaluate/snapshot.json
+?? docs/phase4/CHARTER.md
+?? docs/phase4/EXTERNAL-FIXTURE.json
+?? docs/phase4/EXTERNAL-PUBLIC-HOST-FIXTURE.json
+?? docs/phase4/GOVERNING-PLAN-REV1.1.md
+?? docs/phase4/LIVE.json
+?? docs/phase4/evidence/PURITY.log
+?? docs/phase4/evidence/REGRESSION.log
+?? docs/phase4/typesafe-openapi.json
+?? examples/decision-consumer/consumer.mjs
+?? examples/decision-consumer/fixture-http.mjs
+?? examples/decision-consumer/matrix.mjs
+?? examples/decision-consumer/operator.mjs
+?? packages/catalog/schemas/capability-definition.schema.json
+?? packages/catalog/schemas/proposal.schema.json
+?? services/decision/package.json
+?? services/decision/provider/contract.d.mts
+?? services/decision/provider/contract.mjs
+?? services/decision/provider/decimal.mjs
+?? services/decision/provider/neutral.mjs
+?? services/decision/providers/typesafe-jev/index.mjs
+?? services/decision/providers/typesafe-jev/ledger.mjs
+?? services/decision/providers/typesafe-jev/mapping.mjs
+?? services/decision/providers/typesafe-jev/transport.mjs
+?? services/decision/providers/typesafe-jev/wire.mjs
+?? services/decision/service/host-link.mjs
+?? services/decision/service/index.mjs
+?? services/decision/service/public-host.mjs
+?? services/decision/tests/contract/decimal.test.mjs
+?? services/decision/tests/contract/neutral.test.mjs
+?? services/decision/tests/external/host-link.test.mjs
+?? services/decision/tests/external/public-host.test.mjs
+?? services/decision/tests/provider/jev-mapping.test.mjs
+?? services/decision/tests/provider/jev-transport.test.mjs
+?? services/decision/tools/external.mjs
+?? services/decision/tools/live-init.mjs

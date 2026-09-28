@@ -6,7 +6,21 @@ A new, lean capability-oriented substrate: **Kernel → ACAP → SDK**.
 
 **PHASE 3 — COMPLETE / FROZEN / OWNER ACCEPTED**
 
-[Owner Acceptance](https://github.com/BartSchuster22/AlicaV2/blob/phase3-hermes-v1.0.0-accepted/docs/phase3/OWNER-ACCEPTANCE.md) records the Project Owner's decision within the documented scope. The [technical release](https://github.com/BartSchuster22/AlicaV2/tree/phase3-hermes-v1.0.0) remains immutable; `phase3-hermes-v1.0.0-accepted` records governance only. Phase 1 and Phase 2 remain frozen. No Phase 4 or further implementation is authorized.
+[Owner Acceptance](https://github.com/BartSchuster22/AlicaV2/blob/phase3-hermes-v1.0.0-accepted/docs/phase3/OWNER-ACCEPTANCE.md) records the Project Owner's decision within the documented scope. The [technical release](https://github.com/BartSchuster22/AlicaV2/tree/phase3-hermes-v1.0.0) remains immutable; `phase3-hermes-v1.0.0-accepted` records governance only. Phase 1 and Phase 2 remain frozen. That acceptance did not authorize subsequent implementation; the later Phase4 authorization and candidate status are recorded below. No Phase5 is authorized.
+
+## Phase 4 Decision Service
+
+**IMPLEMENTATION / LIVE QUALIFIED — PARENT TECHNICAL REVIEW ACCEPTED; PUBLICATION PENDING**
+
+The subsequently authorized Revision1.1 Decision Service + TypeSafe Jev adapter now has genuine Noul/Choice/Score/mixed evidence through the public Host, an unchanged SDK/Catalog-only external author, and exact-source offline reproduction. The provider-neutral contract was independently admitted to an EXPERIMENTAL Catalog snapshot; frozen foundations and original release tags are unchanged.
+
+- [Acceptance matrix and pending delivery steps](docs/phase4/ACCEPTANCE.md)
+- [Actual evidence, retained failures and bounded recovery](docs/phase4/EVIDENCE.md)
+- [Safe offline reproduction — no API key or provider calls](docs/phase4/REPRODUCE.md)
+- [Decision Service entry point and architecture](services/decision/README.md)
+- [Completion/release status](docs/phase4/PHASE4-COMPLETION.md)
+
+Live authority is **CLOSED:6/6 consumed,0remaining**. Never replay the live/diagnostic/init/continuation entry points for tests or release. [Independent parent technical review](docs/phase4/FINAL-PARENT-REVIEW.md) accepted this candidate for publication, NOT owner acceptance. The intended technical tag is `phase4-jev-v1.0.0`, not yet claimed here; public delivery/readback remain pending. No Phase5 or excluded integration follows implicitly.
 
 ## Public Phase1 and Phase2
 

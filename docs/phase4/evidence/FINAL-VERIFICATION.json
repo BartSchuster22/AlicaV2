@@ -1,0 +1,90 @@
+{
+  "schema": "alica.phase4-final-offline-verification/v1",
+  "sourceDigest": "f85caf078e778a0b2b8984a4f1abff2a64088bc599709af327ecfa71e58b52ab",
+  "sourceFiles": 46,
+  "historicalLiveHashes": {
+    "LIVE.json": "a7d462fab9503e3059f4c9951ca154839b01a91bab6730d08731138918f68151",
+    "LIVE-CONTINUATION.json": "1c26cbeeb7c7b1ab0b5a9b2ebb085431a0c4237b07cac3db12625054274b054c",
+    "LIVE-EVALUATIONS.json": "bffe5fb7fbc73026cba3025f1d72be0b1a9b679a7baf30139ef91a371d4ac0ed",
+    "CONTINUATION-FIXTURE-PROOF.json": "2c13dde75a6eb73304cc1e756af682b1d4499236e2c82386b7bbfd85096631ea",
+    "CONTINUATION-TESTS.log": "0872da4fc8f6ddc00211d8a78ffbd90a8db9546f4115c8854a50a9a5157dde02",
+    "CONTINUATION-EXTERNAL-FIXTURE.json": "6fc68078b268602f59fd8e8699114844a14f768a2628fe4265e2704cd96d35fb"
+  },
+  "physicalLedgerSha256": "bb574484d56da44b655d3c6dc7a6dd7a5a49f1582f138b822ceee18f1bc1350b",
+  "liveAuthority": "CLOSED_EXHAUSTED",
+  "consumed": 6,
+  "remaining": 0,
+  "newLiveCalls": 0,
+  "cleanPath": "/home/alica-dev/phase4-final-clean-80qrc5",
+  "cleanLogSha256": "43370a359190e8b6112704a5e015964ada58f4a3b55911b8d4cf67203f389ad8",
+  "cleanCounts": {
+    "tests": 54,
+    "pass": 54,
+    "fail": 0,
+    "skipped": 0
+  },
+  "networkPolicy": "npm_config_offline=true; fixtures only; no provider network",
+  "fixtures": {
+    "FINAL-EXTERNAL-DEFAULT.json": {
+      "sha256": "375b863b6e245f1506c04c201af5abdbc54b76fa17d9b3675d43a37574a5fd5d",
+      "classification": "FIXTURE-TESTED-DEFENSIVE",
+      "authenticatedLiveRequests": 0,
+      "syntheticPhysicalRequests": 5,
+      "consumerUnchanged": true
+    },
+    "FINAL-EXTERNAL-CONTINUATION.json": {
+      "sha256": "dcdfa43fc375f88874b0ba7b2a1796ccbea54f4dd298b8b13d1d3fa70a20bd9e",
+      "classification": "FIXTURE-TESTED-DEFENSIVE",
+      "authenticatedLiveRequests": 0,
+      "syntheticPhysicalRequests": 4,
+      "consumerUnchanged": true
+    }
+  },
+  "frozenTrackedDiffExcludingReadme": 0,
+  "phase2DependencyBaselineDiff": 0,
+  "acceptedDependencyChecker": {
+    "exit": 1,
+    "output": "Traceback (most recent call last):\n  File \"/home/alica-dev/AlicaV2-phase4/tools/check-dependencies.py\", line 14, in <module>\n    assert name in {'@alica/acap-types','@alica/acap-contracts','@alica/plugin-sdk','ajv'},name\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: @alica/catalog\n",
+    "disposition": "unchanged accepted baseline FAIL; not repaired/not green"
+  },
+  "addedSources": [
+    "examples/decision-consumer/continuation-operator.mjs",
+    "services/decision/providers/typesafe-jev/continuation.mjs",
+    "services/decision/providers/typesafe-jev/discovery-diagnostic.mjs",
+    "services/decision/providers/typesafe-jev/observed-models.json",
+    "services/decision/tests/provider/jev-continuation.test.mjs",
+    "services/decision/tests/provider/jev-diagnostic.test.mjs",
+    "services/decision/tools/live-diagnostic.mjs",
+    "services/decision/tools/verify-continuation.mjs"
+  ],
+  "changedSourcesSinceOriginal38": [
+    "services/decision/package.json",
+    "services/decision/providers/typesafe-jev/ledger.mjs",
+    "services/decision/providers/typesafe-jev/mapping.mjs",
+    "services/decision/providers/typesafe-jev/transport.mjs",
+    "services/decision/tools/external.mjs"
+  ],
+  "unrelatedPreserved": [
+    "packages/catalog/schemas/capability-definition.schema.json",
+    "packages/catalog/schemas/proposal.schema.json"
+  ],
+  "outsideScope": [],
+  "frozenTags": {
+    "phase1-v1.0.0": {
+      "object": "8bc5d5fa961ac0b6430a85338dde48bf14b01f27",
+      "commit": "ab0273e8581fa70cbcf15c07f73e990b5dcc725e"
+    },
+    "phase2-catalog-v1.0.0": {
+      "object": "6cdb59dc590766d0044c751f1cef769be6af9ed8",
+      "commit": "736b37d03c82ca057e7a397644037ef5d1bed991"
+    },
+    "phase3-hermes-v1.0.0": {
+      "object": "9efe206ab5914cbedcbf5790e538046830b05477",
+      "commit": "5f3fa4670659d748042788e844081eaf9933752d"
+    },
+    "phase3-hermes-v1.0.0-accepted": {
+      "object": "bb07bbacb6e66ab45fe1623d06e7fde813aa9049",
+      "commit": "0df9095dab900458d054dd3b7734dbfaeae9fba8"
+    }
+  }
+}

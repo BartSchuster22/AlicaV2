@@ -1,0 +1,293 @@
+{
+  "schema": "alica.phase4-external/v1",
+  "runtime": "v24.21.0",
+  "level": "SDK_TESTKIT_NOT_PRODUCTION",
+  "consumerDigest": "sha256:f9326697f7c6a3998a728304285e9879311d319ffe61c4891231c303ca044167",
+  "consumerUnchanged": true,
+  "consumerHasNoKernel": true,
+  "selectedSnapshot": "sha256:6bfeb23655ddafb37c266cf11b8cd8da386d030cfd212f97cbf4decf4eddd127",
+  "trustVerified": false,
+  "reports": [
+    {
+      "provider": "neutral-reference",
+      "classification": "FIXTURE-TESTED-DEFENSIVE",
+      "results": [
+        {
+          "model": "neutral-v1",
+          "usage": {
+            "inputTokens": 0,
+            "outputTokens": 0
+          },
+          "answers": [
+            {
+              "kind": "boolean",
+              "name": "is_blue",
+              "probability": "0.5"
+            }
+          ]
+        },
+        {
+          "model": "neutral-v1",
+          "usage": {
+            "inputTokens": 0,
+            "outputTokens": 0
+          },
+          "answers": [
+            {
+              "confidence": "1",
+              "distribution": [
+                {
+                  "id": "blue",
+                  "probability": "1"
+                },
+                {
+                  "id": "red",
+                  "probability": "0"
+                }
+              ],
+              "kind": "choice",
+              "name": "color",
+              "selected": "blue"
+            }
+          ]
+        },
+        {
+          "model": "neutral-v1",
+          "usage": {
+            "inputTokens": 0,
+            "outputTokens": 0
+          },
+          "answers": [
+            {
+              "confidence": "1",
+              "distribution": [
+                {
+                  "id": "low",
+                  "probability": "1"
+                },
+                {
+                  "id": "high",
+                  "probability": "0"
+                }
+              ],
+              "expectedScore": "0",
+              "kind": "score",
+              "name": "blueness"
+            }
+          ]
+        },
+        {
+          "model": "neutral-v1",
+          "usage": {
+            "inputTokens": 0,
+            "outputTokens": 0
+          },
+          "answers": [
+            {
+              "kind": "boolean",
+              "name": "is_blue",
+              "probability": "0.5"
+            },
+            {
+              "confidence": "1",
+              "distribution": [
+                {
+                  "id": "blue",
+                  "probability": "1"
+                },
+                {
+                  "id": "red",
+                  "probability": "0"
+                }
+              ],
+              "kind": "choice",
+              "name": "color",
+              "selected": "blue"
+            },
+            {
+              "confidence": "1",
+              "distribution": [
+                {
+                  "id": "low",
+                  "probability": "1"
+                },
+                {
+                  "id": "high",
+                  "probability": "0"
+                }
+              ],
+              "expectedScore": "0",
+              "kind": "score",
+              "name": "blueness"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "provider": "typesafe-jev",
+      "classification": "FIXTURE-TESTED-DEFENSIVE",
+      "results": [
+        {
+          "model": "fixture-resolved",
+          "usage": {
+            "inputTokens": 123,
+            "outputTokens": 17
+          },
+          "answers": [
+            {
+              "kind": "boolean",
+              "name": "is_blue",
+              "probability": "0.734928"
+            }
+          ]
+        },
+        {
+          "model": "fixture-resolved",
+          "usage": {
+            "inputTokens": 123,
+            "outputTokens": 17
+          },
+          "answers": [
+            {
+              "confidence": "0.8",
+              "distribution": [
+                {
+                  "id": "blue",
+                  "probability": "0.75"
+                },
+                {
+                  "id": "red",
+                  "probability": "0.25"
+                }
+              ],
+              "kind": "choice",
+              "name": "color",
+              "selected": "blue"
+            }
+          ]
+        },
+        {
+          "model": "fixture-resolved",
+          "usage": {
+            "inputTokens": 123,
+            "outputTokens": 17
+          },
+          "answers": [
+            {
+              "confidence": "0.8",
+              "distribution": [
+                {
+                  "id": "low",
+                  "probability": "0.25"
+                },
+                {
+                  "id": "high",
+                  "probability": "0.75"
+                }
+              ],
+              "expectedScore": "0.75",
+              "kind": "score",
+              "name": "blueness"
+            }
+          ]
+        },
+        {
+          "model": "fixture-resolved",
+          "usage": {
+            "inputTokens": 123,
+            "outputTokens": 17
+          },
+          "answers": [
+            {
+              "kind": "boolean",
+              "name": "is_blue",
+              "probability": "0.734928"
+            },
+            {
+              "confidence": "0.8",
+              "distribution": [
+                {
+                  "id": "blue",
+                  "probability": "0.75"
+                },
+                {
+                  "id": "red",
+                  "probability": "0.25"
+                }
+              ],
+              "kind": "choice",
+              "name": "color",
+              "selected": "blue"
+            },
+            {
+              "confidence": "0.8",
+              "distribution": [
+                {
+                  "id": "low",
+                  "probability": "0.25"
+                },
+                {
+                  "id": "high",
+                  "probability": "0.75"
+                }
+              ],
+              "expectedScore": "0.75",
+              "kind": "score",
+              "name": "blueness"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "syntheticPhysicalRequests": 5,
+  "syntheticLedger": {
+    "schema": "alica.phase4.physical-budget/v1",
+    "max": 6,
+    "timeoutMs": 30000,
+    "retries": 0,
+    "consumed": 5,
+    "remaining": 1,
+    "attempts": [
+      {
+        "event": "reserve",
+        "kind": "discovery",
+        "slot": 1,
+        "timeMs": 1790585971142,
+        "outcome": "OK"
+      },
+      {
+        "event": "reserve",
+        "kind": "noul",
+        "slot": 2,
+        "timeMs": 1790585971228,
+        "outcome": "OK"
+      },
+      {
+        "event": "reserve",
+        "kind": "choice",
+        "slot": 3,
+        "timeMs": 1790585971235,
+        "outcome": "OK"
+      },
+      {
+        "event": "reserve",
+        "kind": "score",
+        "slot": 4,
+        "timeMs": 1790585971240,
+        "outcome": "OK"
+      },
+      {
+        "event": "reserve",
+        "kind": "mixed",
+        "slot": 5,
+        "timeMs": 1790585971247,
+        "outcome": "OK"
+      }
+    ]
+  },
+  "authenticatedLiveRequests": 0,
+  "publicPackedArtifacts": true,
+  "separateConsumerAndOperatorInstalls": true
+}

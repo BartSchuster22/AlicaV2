@@ -1,0 +1,15 @@
+# Decision Service architecture — Phase4 Revision1.1 candidate
+
+Status: implementation/live-qualified candidate, independent parent technical review accepted publication (../../../docs/phase4/FINAL-PARENT-REVIEW.md), NOT yet released/owner-accepted. Four real Jev evaluations passed after the retained initial discovery failure and one explicitly authorized diagnostic. Original budget6/6 exhausted; no more calls. See ../../../docs/phase4/ACCEPTANCE.md and ../../../docs/phase4/EVIDENCE.md. R1–R10/revised J0–J26 supersede retained v1.0 numbering. Final46-file source has fresh offline54-test and both packed-fixture reproduction; actual publication/readback remain pending.
+
+Path: separately installed SDK/Catalog-only consumer → granted public Host Decision capability → SDK Decision Service → DecisionProvider → neutral reference or TypeSafe Jev adapter. The selected EXPERIMENTAL snapshot is independent of frozen stable Catalog.
+
+`service/index.mjs` validates and freezes generic input, enforces disable/deadline/cancellation, calls one configured provider, validates/freeze-normalizes output and emits only normalized errors. Public Host remains the sole grant/scope authority. It does not implement reasoning loops, decisions about business thresholds, workflows or model orchestration.
+
+`service/public-host.mjs` is trusted operator code using the public @alica/kernel export, not Kernel source/private internals. It verifies ephemeral locally signed service/backend/caller-shell packages and binds capability/event grants. The actual author module remains unchanged external SDK/Catalog-only code activated through its public context; this does not claim a separately signed or production-sandboxed author module. Local package trust does not turn the unsigned selected Catalog snapshot into signature trust.
+
+The frozen Host plugin loader does not expose Node network imports to the plugin. `host-link.mjs` therefore implements only a Decision-specific request/reply/cancel handoff through existing public events/effects. Private inventory event descriptors reuse accepted request/response shapes; no new generic protocol or framework is introduced. Peer principal/instance/scope/generation, sequence and request-id checks supplement—not replace—Host authority. One in-flight request is supported. An effect owns and joins asynchronous backend work, rather than holding the Host's bounded event callback open for network I/O. Service unload also disposes its operator backend. Actual shutdown resources and cleanup results are recorded, not inferred.
+
+Only the operator backend imports Node HTTPS and reads the Phase4 credential reference. No key crosses the public capability/event boundary. Two interchangeable providers implement the same generic interface; the external author source digest stays f9326697f7c6a3998a728304285e9879311d319ffe61c4891231c303ca044167.
+
+No Kernel/ACAP/SDK/frozen Catalog/Hermes code changes; no Hermes consumer, UniUI, MemoryV4, Doghouse, AInbA or Phase5 integration.

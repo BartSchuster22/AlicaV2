@@ -1,0 +1,18 @@
+{
+  "name": "@alica/decision-phase4",
+  "version": "0.4.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./service": "./service/index.mjs",
+    "./public-host": "./service/public-host.mjs",
+    "./contract": { "types": "./provider/contract.d.mts", "import": "./provider/contract.mjs" },
+    "./neutral": "./provider/neutral.mjs",
+    "./jev": "./providers/typesafe-jev/index.mjs",
+    "./transport": "./providers/typesafe-jev/transport.mjs",
+    "./ledger": "./providers/typesafe-jev/ledger.mjs",
+    "./continuation": "./providers/typesafe-jev/continuation.mjs"
+  },
+  "files": ["service", "provider", "providers/typesafe-jev"],
+  "dependencies": { "@alica/plugin-sdk": "0.1.0", "@alica/acap-contracts": "0.0.0" }
+}

@@ -1,0 +1,243 @@
+{
+  "scope": [
+    "services/decision",
+    "examples/decision-consumer",
+    "catalog/proposals/decision-evaluate"
+  ],
+  "result": "PASS",
+  "priorAuditFailure": "One-off audit omitted already-used public testkit in tests; audit corrected without source edits",
+  "files": [
+    {
+      "file": "services/decision/provider/contract.d.mts",
+      "imports": []
+    },
+    {
+      "file": "services/decision/provider/contract.mjs",
+      "imports": [
+        "@alica/acap-contracts",
+        "./decimal.mjs"
+      ]
+    },
+    {
+      "file": "services/decision/provider/decimal.mjs",
+      "imports": []
+    },
+    {
+      "file": "services/decision/provider/neutral.mjs",
+      "imports": [
+        "./contract.mjs",
+        "./decimal.mjs"
+      ]
+    },
+    {
+      "file": "services/decision/providers/typesafe-jev/index.mjs",
+      "imports": [
+        "../../provider/contract.mjs",
+        "../../provider/decimal.mjs",
+        "./mapping.mjs"
+      ]
+    },
+    {
+      "file": "services/decision/providers/typesafe-jev/ledger.mjs",
+      "imports": [
+        "node:fs",
+        "node:path",
+        "../../provider/decimal.mjs"
+      ]
+    },
+    {
+      "file": "services/decision/providers/typesafe-jev/mapping.mjs",
+      "imports": [
+        "../../provider/decimal.mjs",
+        "./wire.mjs"
+      ]
+    },
+    {
+      "file": "services/decision/providers/typesafe-jev/transport.mjs",
+      "imports": [
+        "node:https",
+        "node:fs",
+        "node:path",
+        "./ledger.mjs",
+        "../../provider/decimal.mjs"
+      ]
+    },
+    {
+      "file": "services/decision/providers/typesafe-jev/wire.mjs",
+      "imports": [
+        "../../provider/decimal.mjs"
+      ]
+    },
+    {
+      "file": "services/decision/service/host-link.mjs",
+      "imports": []
+    },
+    {
+      "file": "services/decision/service/index.mjs",
+      "imports": [
+        "@alica/plugin-sdk",
+        "@alica/acap-contracts",
+        "../provider/contract.mjs",
+        "../provider/decimal.mjs"
+      ]
+    },
+    {
+      "file": "services/decision/service/public-host.mjs",
+      "imports": [
+        "@alica/kernel",
+        "@alica/acap-contracts",
+        "node:crypto",
+        "node:fs",
+        "node:path",
+        "node:os",
+        "./host-link.mjs"
+      ]
+    },
+    {
+      "file": "services/decision/tests/contract/decimal.test.mjs",
+      "imports": [
+        "node:test",
+        "node:assert/strict",
+        "../../provider/decimal.mjs"
+      ]
+    },
+    {
+      "file": "services/decision/tests/contract/neutral.test.mjs",
+      "imports": [
+        "node:test",
+        "node:assert/strict",
+        "node:fs",
+        "@alica/acap-contracts",
+        "@alica/catalog/governance",
+        "@alica/catalog",
+        "@alica/testkit",
+        "@alica/plugin-sdk",
+        "../../provider/decimal.mjs",
+        "../../provider/contract.mjs",
+        "../../provider/neutral.mjs",
+        "../../service/index.mjs"
+      ]
+    },
+    {
+      "file": "services/decision/tests/external/host-link.test.mjs",
+      "imports": [
+        "node:test",
+        "node:assert/strict",
+        "../../service/host-link.mjs"
+      ]
+    },
+    {
+      "file": "services/decision/tests/external/public-host.test.mjs",
+      "imports": [
+        "node:test",
+        "node:assert/strict",
+        "node:fs",
+        "../../service/public-host.mjs",
+        "../../provider/neutral.mjs",
+        "../../../../examples/decision-consumer/consumer.mjs",
+        "@alica/catalog/release"
+      ]
+    },
+    {
+      "file": "services/decision/tests/provider/jev-mapping.test.mjs",
+      "imports": [
+        "node:test",
+        "node:assert/strict",
+        "../../providers/typesafe-jev/mapping.mjs",
+        "../../providers/typesafe-jev/wire.mjs"
+      ]
+    },
+    {
+      "file": "services/decision/tests/provider/jev-transport.test.mjs",
+      "imports": [
+        "node:test",
+        "node:assert/strict",
+        "node:fs",
+        "node:os",
+        "node:path",
+        "node:events",
+        "../../providers/typesafe-jev/ledger.mjs",
+        "../../providers/typesafe-jev/transport.mjs"
+      ]
+    },
+    {
+      "file": "services/decision/tools/external.mjs",
+      "imports": [
+        "node:assert/strict",
+        "node:fs",
+        "node:os",
+        "node:path",
+        "node:url",
+        "node:child_process"
+      ]
+    },
+    {
+      "file": "services/decision/tools/live-init.mjs",
+      "imports": [
+        "node:assert/strict",
+        "node:fs",
+        "node:path",
+        "../providers/typesafe-jev/ledger.mjs"
+      ]
+    },
+    {
+      "file": "examples/decision-consumer/consumer.mjs",
+      "imports": [
+        "@alica/catalog/release",
+        "@alica/plugin-sdk"
+      ]
+    },
+    {
+      "file": "examples/decision-consumer/fixture-http.mjs",
+      "imports": [
+        "node:events"
+      ]
+    },
+    {
+      "file": "examples/decision-consumer/matrix.mjs",
+      "imports": [
+        "@alica/decision-phase4/contract"
+      ]
+    },
+    {
+      "file": "examples/decision-consumer/operator.mjs",
+      "imports": [
+        "node:assert/strict",
+        "node:fs",
+        "node:os",
+        "node:path",
+        "node:crypto",
+        "@alica/decision-phase4/public-host",
+        "@alica/catalog/release",
+        "@alica/decision-phase4/neutral",
+        "@alica/decision-phase4/jev",
+        "@alica/decision-phase4/transport",
+        "@alica/decision-phase4/ledger",
+        "./matrix.mjs",
+        "./fixture-http.mjs",
+        "operator-selected-consumerURL"
+      ]
+    },
+    {
+      "file": "catalog/proposals/decision-evaluate/admit.mjs",
+      "imports": [
+        "node:assert/strict",
+        "node:fs",
+        "node:crypto",
+        "@alica/acap-contracts",
+        "@alica/catalog",
+        "@alica/catalog/governance",
+        "@alica/catalog/release"
+      ]
+    },
+    {
+      "file": "catalog/proposals/decision-evaluate/prepare.mjs",
+      "imports": [
+        "node:fs",
+        "@alica/acap-contracts",
+        "@alica/catalog",
+        "@alica/catalog/governance"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "schema": "alica.phase4-final-ledger-readback/v1",
+  "classification": "LIVE-OBSERVED",
+  "ledgerSha256": "bb574484d56da44b655d3c6dc7a6dd7a5a49f1582f138b822ceee18f1bc1350b",
+  "budget": {
+    "schema": "alica.phase4.physical-budget/v1",
+    "max": 6,
+    "timeoutMs": 30000,
+    "retries": 0,
+    "consumed": 6,
+    "remaining": 0,
+    "attempts": [
+      {
+        "event": "reserve",
+        "kind": "discovery",
+        "slot": 1,
+        "timeMs": 1790587209902,
+        "outcome": "OK"
+      },
+      {
+        "event": "reserve",
+        "kind": "discovery-diagnostic",
+        "slot": 2,
+        "timeMs": 1790589529009,
+        "outcome": "OK"
+      },
+      {
+        "event": "reserve",
+        "kind": "noul",
+        "slot": 3,
+        "timeMs": 1790591146123,
+        "outcome": "OK"
+      },
+      {
+        "event": "reserve",
+        "kind": "choice",
+        "slot": 4,
+        "timeMs": 1790591146462,
+        "outcome": "OK"
+      },
+      {
+        "event": "reserve",
+        "kind": "score",
+        "slot": 5,
+        "timeMs": 1790591146813,
+        "outcome": "OK"
+      },
+      {
+        "event": "reserve",
+        "kind": "mixed",
+        "slot": 6,
+        "timeMs": 1790591147133,
+        "outcome": "OK"
+      }
+    ]
+  },
+  "authority": "CLOSED; no reset/reinit/replay",
+  "slot1SemanticOutcome": "CONTRACT_MISMATCH; HTTP transport OK is not application success"
+}

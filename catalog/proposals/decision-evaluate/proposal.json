@@ -1,0 +1,21 @@
+{
+  "apiVersion": "catalog.alica.io/proposal-v1",
+  "id": "phase4-decision-evaluate-v1",
+  "problem": "An external consumer needs typed probabilistic Boolean, Choice and Score decisions without an engine-specific protocol.",
+  "existingInsufficient": "Frozen Echo only round-trips text; Agent Execution runs agents and does not define decisions or fractional probability representation. Neither expresses named decision distributions.",
+  "abstraction": "Single unary bounded evaluate on a shared structured state with named typed questions, resolved model, exact decimal uncertainty and generic token usage.",
+  "providers": [
+    "Deterministic neutral reference provider (implemented)",
+    "TypeSafe Jev adapter (planned; public API0.2.0 pinned, not live-qualified)"
+  ],
+  "consumers": [
+    "Independent external public-SDK decision consumer"
+  ],
+  "draft": "acap://alica.io/decision/evaluate@1",
+  "alternatives": "Reuse Echo/Agent Execution rejected for semantic mismatch; provider-named capability rejected for coupling; adding floating point to frozen ACAP prohibited.",
+  "security": "Host alone grants call authority; provider selected by host configuration, no request-side provider routing. Disable switch. No secrets/state/raw provider errors logged. All live work needs separate fixed durable aggregate ledger.",
+  "scopes": "application/session, operation evaluate, permission decision.evaluate, no new Kernel scope or grant type.",
+  "compatibility": "New URI/identity, no changes to frozen entries or policies. Proposed namespace-policy release list empty pending independent maintainer review/admission.",
+  "genericRationale": "Neutral implementation imports no TypeSafe code. Arbitrary explicit Score levels and typed fractional documents do not assume any provider wire schema. Engine adapters may reject unsupported rubrics explicitly.",
+  "proposer": "Hermes Phase4 implementation worker"
+}

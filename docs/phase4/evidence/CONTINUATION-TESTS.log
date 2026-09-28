@@ -1,0 +1,336 @@
+TAP version 13
+# Subtest: canonical decimal grammar, precision and range reject rather than round
+ok 1 - canonical decimal grammar, precision and range reject rather than round
+  ---
+  duration_ms: 2.284347
+  type: 'test'
+  ...
+# Subtest: provider lexical exponent conversion uses the original token exactly
+ok 2 - provider lexical exponent conversion uses the original token exactly
+  ---
+  duration_ms: 0.585884
+  type: 'test'
+  ...
+# Subtest: wire conversion distinguishes exact numbers from ordinary literal strings
+ok 3 - wire conversion distinguishes exact numbers from ordinary literal strings
+  ---
+  duration_ms: 2.656098
+  type: 'test'
+  ...
+# Subtest: structured numeric markers and size/depth limits fail closed
+ok 4 - structured numeric markers and size/depth limits fail closed
+  ---
+  duration_ms: 0.483824
+  type: 'test'
+  ...
+# Subtest: J3 exact decimal lexical rules and frozen ACAP compatibility
+ok 5 - J3 exact decimal lexical rules and frozen ACAP compatibility
+  ---
+  duration_ms: 4.100342
+  type: 'test'
+  ...
+# Subtest: J3 structured fractions are exact numeric wire literals, never ambiguous strings
+ok 6 - J3 structured fractions are exact numeric wire literals, never ambiguous strings
+  ---
+  duration_ms: 2.024167
+  type: 'test'
+  ...
+# Subtest: J4 actual Catalog proposal/definition validation without admission or self-review
+ok 7 - J4 actual Catalog proposal/definition validation without admission or self-review
+  ---
+  duration_ms: 18.341266
+  type: 'test'
+  ...
+# Subtest: J5/J6 neutral mixed semantics and exact round-trip
+ok 8 - J5/J6 neutral mixed semantics and exact round-trip
+  ---
+  duration_ms: 5.15479
+  type: 'test'
+  ...
+# Subtest: J3/J6 malformed inputs, criteria, fractional state and limits rejected
+ok 9 - J3/J6 malformed inputs, criteria, fractional state and limits rejected
+  ---
+  duration_ms: 3.147075
+  type: 'test'
+  ...
+# Subtest: J6 exact correspondence, totals, confidence, range and legend defenses
+ok 10 - J6 exact correspondence, totals, confidence, range and legend defenses
+  ---
+  duration_ms: 5.675382
+  type: 'test'
+  ...
+# Subtest: J7 public SDK testkit vertical substitutes neutral providers, clean disposal
+ok 11 - J7 public SDK testkit vertical substitutes neutral providers, clean disposal
+  ---
+  duration_ms: 50.308145
+  type: 'test'
+  ...
+# Subtest: J7 Host permissions/revocation remain authoritative; no provider dispatch on denied calls
+ok 12 - J7 Host permissions/revocation remain authoritative; no provider dispatch on denied calls
+  ---
+  duration_ms: 14.670343
+  type: 'test'
+  ...
+# Subtest: J7 unload makes handles stale; incompatible major and descriptor mismatches fail
+ok 13 - J7 unload makes handles stale; incompatible major and descriptor mismatches fail
+  ---
+  duration_ms: 17.544994
+  type: 'test'
+  ...
+# Subtest: J7 disable switch prevents invocation
+ok 14 - J7 disable switch prevents invocation
+  ---
+  duration_ms: 20.268189
+  type: 'test'
+  ...
+# Subtest: J7 unknown model and provider errors normalized without echoed state
+ok 15 - J7 unknown model and provider errors normalized without echoed state
+  ---
+  duration_ms: 28.638272
+  type: 'test'
+  ...
+# Subtest: J7 deadline and cancellation forwarded once, no retry
+ok 16 - J7 deadline and cancellation forwarded once, no retry
+  ---
+  duration_ms: 53.54091
+  type: 'test'
+  ...
+# Subtest: handoff returns result; forged reply identity/generation/correlation ignored
+ok 17 - handoff returns result; forged reply identity/generation/correlation ignored
+  ---
+  duration_ms: 5.968304
+  type: 'test'
+  ...
+# Subtest: handoff singleflight rejects competing request with no second backend dispatch
+ok 18 - handoff singleflight rejects competing request with no second backend dispatch
+  ---
+  duration_ms: 1.984451
+  type: 'test'
+  ...
+# Subtest: handoff raw provider failure normalized without message or cause
+ok 19 - handoff raw provider failure normalized without message or cause
+  ---
+  duration_ms: 1.320981
+  type: 'test'
+  ...
+# Subtest: handoff cancel aborts and joins owned request
+ok 20 - handoff cancel aborts and joins owned request
+  ---
+  duration_ms: 2.03145
+  type: 'test'
+  ...
+# Subtest: handoff unload aborts and joins owned request
+ok 21 - handoff unload aborts and joins owned request
+  ---
+  duration_ms: 2.43398
+  type: 'test'
+  ...
+# Subtest: handoff deadline/pre-cancellation/closed state reject before dispatch
+ok 22 - handoff deadline/pre-cancellation/closed state reject before dispatch
+  ---
+  duration_ms: 0.857658
+  type: 'test'
+  ...
+# (node:864528) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: public Host signed inventory, generic neutral call, grant denial and source-preserving caller
+ok 23 - public Host signed inventory, generic neutral call, grant denial and source-preserving caller
+  ---
+  duration_ms: 355.532925
+  type: 'test'
+  ...
+# Subtest: public Host unload/restart and stale handle; fresh instance/grants only
+ok 24 - public Host unload/restart and stale handle; fresh instance/grants only
+  ---
+  duration_ms: 483.290905
+  type: 'test'
+  ...
+# Subtest: public Host disabled provider and incompatible capability version never dispatch
+ok 25 - public Host disabled provider and incompatible capability version never dispatch
+  ---
+  duration_ms: 201.976389
+  type: 'test'
+  ...
+# Subtest: public Host raw backend failure normalized; malformed request rejected before dispatch
+ok 26 - public Host raw backend failure normalized; malformed request rejected before dispatch
+  ---
+  duration_ms: 211.308366
+  type: 'test'
+  ...
+# Subtest: public Host in-flight cancel aborts effect-owned backend and joins cleanup
+ok 27 - public Host in-flight cancel aborts effect-owned backend and joins cleanup
+  ---
+  duration_ms: 182.903795
+  type: 'test'
+  ...
+# Subtest: public Host in-flight deadline aborts effect-owned backend and joins cleanup
+ok 28 - public Host in-flight deadline aborts effect-owned backend and joins cleanup
+  ---
+  duration_ms: 261.132341
+  type: 'test'
+  ...
+# Subtest: public Host in-flight unload aborts effect-owned backend and joins cleanup
+ok 29 - public Host in-flight unload aborts effect-owned backend and joins cleanup
+  ---
+  duration_ms: 191.565316
+  type: 'test'
+  ...
+# Subtest: LIVE-OBSERVED model metadata replay: exact timestamps preserved; prose date still accepted; no other validator relaxed
+ok 30 - LIVE-OBSERVED model metadata replay: exact timestamps preserved; prose date still accepted; no other validator relaxed
+  ---
+  duration_ms: 7.335932
+  type: 'test'
+  ...
+# Subtest: fresh synthetic continuation dispatches only four ordered POSTs, preserves both prefixes and refuses restart/replay
+ok 31 - fresh synthetic continuation dispatches only four ordered POSTs, preserves both prefixes and refuses restart/replay
+  ---
+  duration_ms: 60.387832
+  type: 'test'
+  ...
+# Subtest: first physical or semantic failure stops all later evaluations and keeps consumed slot/evidence
+ok 32 - first physical or semantic failure stops all later evaluations and keeps consumed slot/evidence
+  ---
+  duration_ms: 51.823592
+  type: 'test'
+  ...
+# Subtest: changed historical evidence and unexpected ledger reservation fail before dispatch
+ok 33 - changed historical evidence and unexpected ledger reservation fail before dispatch
+  ---
+  duration_ms: 48.140878
+  type: 'test'
+  ...
+# Subtest: manual diagnostic has its own one-shot path; durable slot2, original prefix, total6 and no seventh
+ok 34 - manual diagnostic has its own one-shot path; durable slot2, original prefix, total6 and no seventh
+  ---
+  duration_ms: 40.223969
+  type: 'test'
+  ...
+# Subtest: modified history, existing evaluation, stale lock and ambiguous diagnostic never dispatch
+ok 35 - modified history, existing evaluation, stale lock and ambiguous diagnostic never dispatch
+  ---
+  duration_ms: 13.47549
+  type: 'test'
+  ...
+# Subtest: diagnostic rejects guard failure before network but preserves consumed reservation
+ok 36 - diagnostic rejects guard failure before network but preserves consumed reservation
+  ---
+  duration_ms: 5.380927
+  type: 'test'
+  ...
+# Subtest: HTTP faults and decoded credential echoes are never exposed in diagnostic output
+ok 37 - HTTP faults and decoded credential echoes are never exposed in diagnostic output
+  ---
+  duration_ms: 19.389463
+  type: 'test'
+  ...
+# Subtest: diagnostic distinguishes documented shape from stricter legacy rejection without fixing mapper
+ok 38 - diagnostic distinguishes documented shape from stricter legacy rejection without fixing mapper
+  ---
+  duration_ms: 2.565277
+  type: 'test'
+  ...
+# Subtest: lexical ambiguity, invalid types, metadata bounds and CLI guards fail closed offline
+ok 39 - lexical ambiguity, invalid types, metadata bounds and CLI guards fail closed offline
+  ---
+  duration_ms: 93.427352
+  type: 'test'
+  ...
+# Subtest: J8 public request mapping: shared state, mixed named questions, exact fractional documents
+ok 40 - J8 public request mapping: shared state, mixed named questions, exact fractional documents
+  ---
+  duration_ms: 6.555311
+  type: 'test'
+  ...
+# Subtest: J9/J10/J11/J12/J17 documented response fields preserved across mixed batch
+ok 41 - J9/J10/J11/J12/J17 documented response fields preserved across mixed batch
+  ---
+  duration_ms: 4.345644
+  type: 'test'
+  ...
+# Subtest: J21 numeric strings and literal reserved marker objects cannot masquerade as wire numbers
+ok 42 - J21 numeric strings and literal reserved marker objects cannot masquerade as wire numbers
+  ---
+  duration_ms: 4.796805
+  type: 'test'
+  ...
+# Subtest: J21 duplicate question/candidate/escaped keys and malformed tokens rejected before overwrite
+ok 43 - J21 duplicate question/candidate/escaped keys and malformed tokens rejected before overwrite
+  ---
+  duration_ms: 1.05552
+  type: 'test'
+  ...
+# Subtest: J10/J11/J12 exact names/types/candidates/levels/legend and rational probability defenses
+ok 44 - J10/J11/J12 exact names/types/candidates/levels/legend and rational probability defenses
+  ---
+  duration_ms: 5.082474
+  type: 'test'
+  ...
+# Subtest: J13 model discovery maps public schema, not hard-coded aliases; malformed/duplicate IDs fail
+ok 45 - J13 model discovery maps public schema, not hard-coded aliases; malformed/duplicate IDs fail
+  ---
+  duration_ms: 0.92274
+  type: 'test'
+  ...
+# Subtest: J14/J18 ledger is explicit, fail-closed, durable before dispatch and never replenished
+ok 46 - J14/J18 ledger is explicit, fail-closed, durable before dispatch and never replenished
+  ---
+  duration_ms: 48.453507
+  type: 'test'
+  ...
+# Subtest: J18 ambiguity consumes slot, repeated matrix kind blocked; missing/corrupt ledgers fail closed
+ok 47 - J18 ambiguity consumes slot, repeated matrix kind blocked; missing/corrupt ledgers fail closed
+  ---
+  duration_ms: 15.263442
+  type: 'test'
+  ...
+# Subtest: J14/J18 singleflight retains lock during whole request; stale lock never auto-cleared
+ok 48 - J14/J18 singleflight retains lock during whole request; stale lock never auto-cleared
+  ---
+  duration_ms: 11.601385
+  type: 'test'
+  ...
+# Subtest: J14/J16/J22 exact endpoint/Bearer/JSON, key reference scoped to request, no secret/state in ledger
+ok 49 - J14/J16/J22 exact endpoint/Bearer/JSON, key reference scoped to request, no secret/state in ledger
+  ---
+  duration_ms: 17.197238
+  type: 'test'
+  ...
+# Subtest: J16 absent/insecure/symlink secret and unsafe directory fail before reservation/send
+ok 50 - J16 absent/insecure/symlink secret and unsafe directory fail before reservation/send
+  ---
+  duration_ms: 15.471203
+  type: 'test'
+  ...
+# Subtest: J14/J21/J22 auth/validation/rate/5xx/redirect responses normalized without retaining body or retry
+ok 51 - J14/J21/J22 auth/validation/rate/5xx/redirect responses normalized without retaining body or retry
+  ---
+  duration_ms: 79.280887
+  type: 'test'
+  ...
+# Subtest: J14 network/aborted response never replayed and consumes physical reservation
+ok 52 - J14 network/aborted response never replayed and consumes physical reservation
+  ---
+  duration_ms: 22.143244
+  type: 'test'
+  ...
+# Subtest: J15 shorter deadlines/cancellation bounded; pre-cancelled requests do not consume slots
+ok 53 - J15 shorter deadlines/cancellation bounded; pre-cancelled requests do not consume slots
+  ---
+  duration_ms: 41.119387
+  type: 'test'
+  ...
+# Subtest: J21 bounded bytes/content-type/UTF8 defenses; no real network in fixture suite
+ok 54 - J21 bounded bytes/content-type/UTF8 defenses; no real network in fixture suite
+  ---
+  duration_ms: 1.734551
+  type: 'test'
+  ...
+1..54
+# tests 54
+# suites 0
+# pass 54
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2404.308588

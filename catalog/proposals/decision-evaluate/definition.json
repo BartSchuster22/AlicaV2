@@ -1,0 +1,42 @@
+{
+  "apiVersion": "catalog.alica.io/v1",
+  "kind": "CapabilityDefinition",
+  "metadata": {
+    "id": "acap://alica.io/decision/evaluate@1",
+    "version": "1.0.0",
+    "maturity": "proposed",
+    "owner": "ALICA maintainers",
+    "summary": "Named typed probabilistic decisions over a bounded shared document, independent of the decision engine."
+  },
+  "contract": {
+    "descriptor": "descriptor.json",
+    "identity": "io.alica.decision.evaluate",
+    "version": "1.0.0",
+    "digest": "sha256:a1ad250e8b51e48fef526944d77fdee06d92b9128ac43a1cfd0790f5f424437f"
+  },
+  "semantics": {
+    "description": "Evaluate once without thresholding, rounding, renormalization or idempotency promise. Normative proposed SEMANTICS.md defines decimal, correspondence, limits and conditional shape. Provider-reported confidence is metadata, not calibration.",
+    "cancellation": "supported",
+    "errors": [
+      "INVALID_ARGUMENT",
+      "UNAUTHENTICATED",
+      "PERMISSION_DENIED",
+      "NOT_FOUND",
+      "CONTRACT_MISMATCH",
+      "DEADLINE_EXCEEDED",
+      "CANCELLED",
+      "UNAVAILABLE",
+      "RESOURCE_EXHAUSTED",
+      "FAILED_PRECONDITION"
+    ]
+  },
+  "scopes": [
+    "application",
+    "session"
+  ],
+  "permissions": [
+    "decision.evaluate"
+  ],
+  "dependencies": [],
+  "events": []
+}

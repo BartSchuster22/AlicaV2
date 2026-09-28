@@ -1,0 +1,85 @@
++ git clone --no-hardlinks --no-checkout /home/alica-dev/AlicaV2-phase4 /home/alica-dev/phase4-clean-krlIZm
+Cloning into '/home/alica-dev/phase4-clean-krlIZm'...
+done.
++ git -C /home/alica-dev/phase4-clean-krlIZm checkout --detach 0df9095dab900458d054dd3b7734dbfaeae9fba8
+HEAD is now at 0df9095d docs: record Phase 3 owner acceptance
++ git -C /home/alica-dev/phase4-clean-krlIZm status --short
++ mkdir -p /home/alica-dev/phase4-clean-krlIZm/services /home/alica-dev/phase4-clean-krlIZm/examples /home/alica-dev/phase4-clean-krlIZm/catalog/proposals
++ cp -a services/decision /home/alica-dev/phase4-clean-krlIZm/services/
++ cp -a examples/decision-consumer /home/alica-dev/phase4-clean-krlIZm/examples/
++ cp -a catalog/proposals/decision-evaluate /home/alica-dev/phase4-clean-krlIZm/catalog/proposals/
++ cd /home/alica-dev/phase4-clean-krlIZm
++ export PATH=/home/alica-dev/.local/share/alica/toolchains/node-v24.21.0-linux-x64/bin:/usr/bin:/bin
++ PATH=/home/alica-dev/.local/share/alica/toolchains/node-v24.21.0-linux-x64/bin:/usr/bin:/bin
++ npm ci --ignore-scripts --no-audit --no-fund
+
+added 19 packages in 793ms
++ npm run build
+
+> alica-v2@0.0.0 build
+> node tools/build.mjs
+
++ npm run typecheck
+
+> alica-v2@0.0.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
++ node --experimental-vm-modules --test services/decision/tests/contract/decimal.test.mjs services/decision/tests/contract/neutral.test.mjs services/decision/tests/provider/jev-mapping.test.mjs services/decision/tests/provider/jev-transport.test.mjs services/decision/tests/external/host-link.test.mjs services/decision/tests/external/public-host.test.mjs
+✔ canonical decimal grammar, precision and range reject rather than round (2.920738ms)
+✔ provider lexical exponent conversion uses the original token exactly (0.877864ms)
+✔ wire conversion distinguishes exact numbers from ordinary literal strings (3.639743ms)
+✔ structured numeric markers and size/depth limits fail closed (0.833442ms)
+✔ J3 exact decimal lexical rules and frozen ACAP compatibility (5.351471ms)
+✔ J3 structured fractions are exact numeric wire literals, never ambiguous strings (2.074031ms)
+✔ J4 actual Catalog proposal/definition validation without admission or self-review (18.431508ms)
+✔ J5/J6 neutral mixed semantics and exact round-trip (4.411119ms)
+✔ J3/J6 malformed inputs, criteria, fractional state and limits rejected (4.785254ms)
+✔ J6 exact correspondence, totals, confidence, range and legend defenses (8.718702ms)
+✔ J7 public SDK testkit vertical substitutes neutral providers, clean disposal (64.61491ms)
+✔ J7 Host permissions/revocation remain authoritative; no provider dispatch on denied calls (21.284567ms)
+✔ J7 unload makes handles stale; incompatible major and descriptor mismatches fail (25.460163ms)
+✔ J7 disable switch prevents invocation (14.862648ms)
+✔ J7 unknown model and provider errors normalized without echoed state (32.429545ms)
+✔ J7 deadline and cancellation forwarded once, no retry (53.544614ms)
+✔ handoff returns result; forged reply identity/generation/correlation ignored (5.770532ms)
+✔ handoff singleflight rejects competing request with no second backend dispatch (2.224184ms)
+✔ handoff raw provider failure normalized without message or cause (1.4006ms)
+✔ handoff cancel aborts and joins owned request (2.413442ms)
+✔ handoff unload aborts and joins owned request (0.934202ms)
+✔ handoff deadline/pre-cancellation/closed state reject before dispatch (0.548595ms)
+(node:863360) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ public Host signed inventory, generic neutral call, grant denial and source-preserving caller (307.188723ms)
+✔ public Host unload/restart and stale handle; fresh instance/grants only (464.832596ms)
+✔ public Host disabled provider and incompatible capability version never dispatch (201.275212ms)
+✔ public Host raw backend failure normalized; malformed request rejected before dispatch (212.01806ms)
+✔ public Host in-flight cancel aborts effect-owned backend and joins cleanup (181.548251ms)
+✔ public Host in-flight deadline aborts effect-owned backend and joins cleanup (251.120781ms)
+✔ public Host in-flight unload aborts effect-owned backend and joins cleanup (171.520001ms)
+✔ J8 public request mapping: shared state, mixed named questions, exact fractional documents (4.458367ms)
+✔ J9/J10/J11/J12/J17 documented response fields preserved across mixed batch (3.501143ms)
+✔ J21 numeric strings and literal reserved marker objects cannot masquerade as wire numbers (3.254186ms)
+✔ J21 duplicate question/candidate/escaped keys and malformed tokens rejected before overwrite (0.883757ms)
+✔ J10/J11/J12 exact names/types/candidates/levels/legend and rational probability defenses (3.681322ms)
+✔ J13 model discovery maps public schema, not hard-coded aliases; malformed/duplicate IDs fail (0.839023ms)
+✔ J14/J18 ledger is explicit, fail-closed, durable before dispatch and never replenished (41.529427ms)
+✔ J18 ambiguity consumes slot, repeated matrix kind blocked; missing/corrupt ledgers fail closed (14.331526ms)
+✔ J14/J18 singleflight retains lock during whole request; stale lock never auto-cleared (11.905982ms)
+✔ J14/J16/J22 exact endpoint/Bearer/JSON, key reference scoped to request, no secret/state in ledger (19.939271ms)
+✔ J16 absent/insecure/symlink secret and unsafe directory fail before reservation/send (11.861197ms)
+✔ J14/J21/J22 auth/validation/rate/5xx/redirect responses normalized without retaining body or retry (90.527938ms)
+✔ J14 network/aborted response never replayed and consumes physical reservation (16.52341ms)
+✔ J15 shorter deadlines/cancellation bounded; pre-cancelled requests do not consume slots (39.945668ms)
+✔ J21 bounded bytes/content-type/UTF8 defenses; no real network in fixture suite (1.997536ms)
+ℹ tests 44
+ℹ suites 0
+ℹ pass 44
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2358.504256
++ PHASE4_EXTERNAL_REPORT=/home/alica-dev/phase4-clean-krlIZm/CLEAN-EXTERNAL.json
++ node services/decision/tools/external.mjs
+{"schema":"alica.phase4-external/v1","runtime":"v24.21.0","level":"PUBLIC_HOST","classification":"FIXTURE-TESTED-DEFENSIVE","consumerDigest":"sha256:f9326697f7c6a3998a728304285e9879311d319ffe61c4891231c303ca044167","consumerUnchanged":true,"consumerHasNoKernel":true,"selectedSnapshot":"sha256:6bfeb23655ddafb37c266cf11b8cd8da386d030cfd212f97cbf4decf4eddd127","trustVerified":false,"hostLocalSignedPackages":true,"stage":"complete","reports":[{"provider":"neutral-reference","classification":"FIXTURE-TESTED-DEFENSIVE","results":[{"model":"neutral-v1","usage":{"inputTokens":0,"outputTokens":0},"answers":[{"kind":"boolean","name":"is_blue","probability":"0.5"}]},{"model":"neutral-v1","usage":{"inputTokens":0,"outputTokens":0},"answers":[{"confidence":"1","distribution":[{"id":"blue","probability":"1"},{"id":"red","probability":"0"}],"kind":"choice","name":"color","selected":"blue"}]},{"model":"neutral-v1","usage":{"inputTokens":0,"outputTokens":0},"answers":[{"confidence":"1","distribution":[{"id":"low","probability":"1"},{"id":"high","probability":"0"}],"expectedScore":"0","kind":"score","name":"blueness"}]},{"model":"neutral-v1","usage":{"inputTokens":0,"outputTokens":0},"answers":[{"kind":"boolean","name":"is_blue","probability":"0.5"},{"confidence":"1","distribution":[{"id":"blue","probability":"1"},{"id":"red","probability":"0"}],"kind":"choice","name":"color","selected":"blue"},{"confidence":"1","distribution":[{"id":"low","probability":"1"},{"id":"high","probability":"0"}],"expectedScore":"0","kind":"score","name":"blueness"}]}],"cleanup":{"resources":{"effects":0,"listeners":0,"pendingCalls":0,"registrations":0},"unsettledWork":0,"instances":[{"principal":"org.phase4.backend","completedDisposers":3,"failedDisposers":[],"restartRequired":false,"state":"DISPOSED","timedOutResources":0},{"principal":"org.phase4.service","completedDisposers":3,"failedDisposers":[],"restartRequired":false,"state":"DISPOSED","timedOutResources":0},{"principal":"org.phase4.consumer1","completedDisposers":0,"failedDisposers":[],"restartRequired":false,"state":"DISPOSED","timedOutResources":0},{"principal":"org.phase4.consumer2","completedDisposers":0,"failedDisposers":[],"restartRequired":false,"state":"FAILED","timedOutResources":0}],"backend":{"closed":true,"pending":0,"dispatched":4}}},{"provider":"typesafe-jev","classification":"FIXTURE-TESTED-DEFENSIVE","results":[{"model":"fixture-resolved","usage":{"inputTokens":123,"outputTokens":17},"answers":[{"kind":"boolean","name":"is_blue","probability":"0.734928"}]},{"model":"fixture-resolved","usage":{"inputTokens":123,"outputTokens":17},"answers":[{"confidence":"0.8","distribution":[{"id":"blue","probability":"0.75"},{"id":"red","probability":"0.25"}],"kind":"choice","name":"color","selected":"blue"}]},{"model":"fixture-resolved","usage":{"inputTokens":123,"outputTokens":17},"answers":[{"confidence":"0.8","distribution":[{"id":"low","probability":"0.25"},{"id":"high","probability":"0.75"}],"expectedScore":"0.75","kind":"score","name":"blueness"}]},{"model":"fixture-resolved","usage":{"inputTokens":123,"outputTokens":17},"answers":[{"kind":"boolean","name":"is_blue","probability":"0.734928"},{"confidence":"0.8","distribution":[{"id":"blue","probability":"0.75"},{"id":"red","probability":"0.25"}],"kind":"choice","name":"color","selected":"blue"},{"confidence":"0.8","distribution":[{"id":"low","probability":"0.25"},{"id":"high","probability":"0.75"}],"expectedScore":"0.75","kind":"score","name":"blueness"}]}],"cleanup":{"resources":{"effects":0,"listeners":0,"pendingCalls":0,"registrations":0},"unsettledWork":0,"instances":[{"principal":"org.phase4.backend","completedDisposers":3,"failedDisposers":[],"restartRequired":false,"state":"DISPOSED","timedOutResources":0},{"principal":"org.phase4.service","completedDisposers":3,"failedDisposers":[],"restartRequired":false,"state":"DISPOSED","timedOutResources":0},{"principal":"org.phase4.consumer1","completedDisposers":0,"failedDisposers":[],"restartRequired":false,"state":"DISPOSED","timedOutResources":0},{"principal":"org.phase4.consumer2","completedDisposers":0,"failedDisposers":[],"restartRequired":false,"state":"FAILED","timedOutResources":0}],"backend":{"closed":true,"pending":0,"dispatched":6}}}],"advertisedModelIds":["fixture-alias"],"configuredModel":"fixture-alias","ledger":{"schema":"alica.phase4.physical-budget/v1","max":6,"timeoutMs":30000,"retries":0,"consumed":5,"remaining":1,"attempts":[{"event":"reserve","kind":"discovery","slot":1,"timeMs":1790587587935,"outcome":"OK"},{"event":"reserve","kind":"noul","slot":2,"timeMs":1790587588148,"outcome":"OK"},{"event":"reserve","kind":"choice","slot":3,"timeMs":1790587588195,"outcome":"OK"},{"event":"reserve","kind":"score","slot":4,"timeMs":1790587588238,"outcome":"OK"},{"event":"reserve","kind":"mixed","slot":5,"timeMs":1790587588285,"outcome":"OK"}]},"authenticatedLiveRequests":0,"syntheticPhysicalRequests":5,"publicPackedArtifacts":true,"separateConsumerAndOperatorInstalls":true}
++ git diff --exit-code HEAD --

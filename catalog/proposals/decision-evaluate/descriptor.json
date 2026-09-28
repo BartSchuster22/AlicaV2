@@ -1,0 +1,362 @@
+{
+  "schemaVersion": "acap.capability/v1",
+  "id": "io.alica.decision.evaluate",
+  "version": "1.0.0",
+  "features": [],
+  "operations": [
+    {
+      "name": "evaluate",
+      "kind": "unary",
+      "idempotency": "none",
+      "input": {
+        "type": "object",
+        "properties": {
+          "state": {
+            "type": "object",
+            "properties": {
+              "json": {
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 32768
+              }
+            },
+            "required": [
+              "json"
+            ],
+            "additionalProperties": false,
+            "description": "Canonical encoded structured document; reserved singleton $decisionDecimal encodes numeric decimals. See SEMANTICS.md."
+          },
+          "model": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "questions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "kind": {
+                  "type": "string",
+                  "enum": [
+                    "boolean",
+                    "choice",
+                    "score"
+                  ]
+                },
+                "instructions": {
+                  "type": "object",
+                  "properties": {
+                    "json": {
+                      "type": "string",
+                      "minLength": 2,
+                      "maxLength": 32768
+                    }
+                  },
+                  "required": [
+                    "json"
+                  ],
+                  "additionalProperties": false,
+                  "description": "Canonical encoded structured document; reserved singleton $decisionDecimal encodes numeric decimals. See SEMANTICS.md."
+                },
+                "criteria": {
+                  "type": "object",
+                  "properties": {
+                    "true": {
+                      "type": "object",
+                      "properties": {
+                        "json": {
+                          "type": "string",
+                          "minLength": 2,
+                          "maxLength": 32768
+                        }
+                      },
+                      "required": [
+                        "json"
+                      ],
+                      "additionalProperties": false,
+                      "description": "Canonical encoded structured document; reserved singleton $decisionDecimal encodes numeric decimals. See SEMANTICS.md."
+                    },
+                    "false": {
+                      "type": "object",
+                      "properties": {
+                        "json": {
+                          "type": "string",
+                          "minLength": 2,
+                          "maxLength": 32768
+                        }
+                      },
+                      "required": [
+                        "json"
+                      ],
+                      "additionalProperties": false,
+                      "description": "Canonical encoded structured document; reserved singleton $decisionDecimal encodes numeric decimals. See SEMANTICS.md."
+                    }
+                  },
+                  "required": [],
+                  "additionalProperties": false
+                },
+                "options": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128
+                      },
+                      "description": {
+                        "type": "object",
+                        "properties": {
+                          "json": {
+                            "type": "string",
+                            "minLength": 2,
+                            "maxLength": 32768
+                          }
+                        },
+                        "required": [
+                          "json"
+                        ],
+                        "additionalProperties": false,
+                        "description": "Canonical encoded structured document; reserved singleton $decisionDecimal encodes numeric decimals. See SEMANTICS.md."
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "description"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "minItems": 1,
+                  "maxItems": 32
+                },
+                "levels": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128
+                      },
+                      "value": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 38,
+                        "description": "DecisionDecimal; exact canonical base-10, max36 digits/max18 fractional; semantic validator mandatory."
+                      },
+                      "description": {
+                        "type": "object",
+                        "properties": {
+                          "json": {
+                            "type": "string",
+                            "minLength": 2,
+                            "maxLength": 32768
+                          }
+                        },
+                        "required": [
+                          "json"
+                        ],
+                        "additionalProperties": false,
+                        "description": "Canonical encoded structured document; reserved singleton $decisionDecimal encodes numeric decimals. See SEMANTICS.md."
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "value",
+                      "description"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "minItems": 1,
+                  "maxItems": 32
+                }
+              },
+              "required": [
+                "name",
+                "kind",
+                "instructions"
+              ],
+              "additionalProperties": false
+            },
+            "minItems": 1,
+            "maxItems": 32
+          }
+        },
+        "required": [
+          "state",
+          "questions"
+        ],
+        "additionalProperties": false
+      },
+      "output": {
+        "type": "object",
+        "properties": {
+          "provider": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "model": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "answers": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "kind": {
+                  "type": "string",
+                  "enum": [
+                    "boolean",
+                    "choice",
+                    "score"
+                  ]
+                },
+                "probability": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 38,
+                  "description": "DecisionDecimal; exact canonical base-10, max36 digits/max18 fractional; semantic validator mandatory."
+                },
+                "selected": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "confidence": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 38,
+                  "description": "DecisionDecimal; exact canonical base-10, max36 digits/max18 fractional; semantic validator mandatory."
+                },
+                "expectedScore": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 38,
+                  "description": "DecisionDecimal; exact canonical base-10, max36 digits/max18 fractional; semantic validator mandatory."
+                },
+                "distribution": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128
+                      },
+                      "probability": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 38,
+                        "description": "DecisionDecimal; exact canonical base-10, max36 digits/max18 fractional; semantic validator mandatory."
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "probability"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "minItems": 1,
+                  "maxItems": 32
+                },
+                "legend": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128
+                      },
+                      "value": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 38,
+                        "description": "DecisionDecimal; exact canonical base-10, max36 digits/max18 fractional; semantic validator mandatory."
+                      },
+                      "description": {
+                        "type": "object",
+                        "properties": {
+                          "json": {
+                            "type": "string",
+                            "minLength": 2,
+                            "maxLength": 32768
+                          }
+                        },
+                        "required": [
+                          "json"
+                        ],
+                        "additionalProperties": false,
+                        "description": "Canonical encoded structured document; reserved singleton $decisionDecimal encodes numeric decimals. See SEMANTICS.md."
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "value",
+                      "description"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "minItems": 1,
+                  "maxItems": 32
+                }
+              },
+              "required": [
+                "name",
+                "kind"
+              ],
+              "additionalProperties": false
+            },
+            "minItems": 1,
+            "maxItems": 32
+          },
+          "usage": {
+            "type": "object",
+            "properties": {
+              "inputTokens": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "outputTokens": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              }
+            },
+            "required": [
+              "inputTokens",
+              "outputTokens"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "provider",
+          "model",
+          "answers",
+          "usage"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "schema": "alica.phase4.physical-budget/v1",
+  "max": 6,
+  "timeoutMs": 30000,
+  "retries": 0,
+  "consumed": 1,
+  "remaining": 5,
+  "attempts": [
+    {
+      "event": "reserve",
+      "kind": "discovery",
+      "slot": 1,
+      "timeMs": 1790587209902,
+      "outcome": "OK"
+    }
+  ]
+}
