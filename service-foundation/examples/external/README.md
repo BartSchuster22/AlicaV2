@@ -1,4 +1,4 @@
-# Separately installed native author example (qualification pending)
+# Separately installed native author example — qualified technical release
 
 The author is `provider.mjs`: SDK-only independent echo implementation. It is
 packed as @phase50/external-author and installed separately from the operator.
@@ -47,10 +47,14 @@ Reproduction from repository root on authorized DEV, pinned Node24.21.0/npm11.19
   starts a fresh operator and checks that completed record. This is a bounded test,
   not a restart supervisor or fsync/crash-durability guarantee.
 
-Current status: slice5 external install/normal stop-start/SIGKILL-restart proof
-actually PASS in native-slice5.log. The expanded candidate now consumes the
-separate experimental Catalog snapshot and validates generated reference manifests;
-that expanded path is NOT YET EXECUTED. The preceding35-test candidate result does
-not establish these new changes or committed-public reproduction. Run admission
-once under authorized local maintainer workflow, then tooling/examples.mjs before
-qualification; ordinary reproduction consumes already committed snapshot bytes.
+Current status: expanded41-test candidate and this actual installed-author path
+PASS on pinned DEV, in native isolation and from fresh anonymous public clone
+9b4ec08dac0bf41a3f6dec2e3905e788d86eb426. It consumes the actual separate experimental
+Catalog snapshot and validates generated reference manifests before business calls;
+normal stop/start, own-child SIGKILL/fresh-restart and cleanup passed. Installed CLI
+binary also passed both declaration/config validations. See docs/phase5.0/EVIDENCE.md.
+Admission and example generation have already run; public reproduction consumes
+committed snapshot/example bytes, not renewed admission. Independent parent technical
+review approved scoped publication as phase5.0-service-foundation-v1.0.0. The release
+declaration is in docs/phase5.0/PHASE5.0-COMPLETION.md; transport/readback is verified
+after push. This is not Owner Acceptance and does not authorize Phase5.1.

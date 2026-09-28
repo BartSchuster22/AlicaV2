@@ -1,10 +1,18 @@
 # Revised S0–S20 acceptance ledger
 
-Governing Rev1.1 charter frozen before implementation. This table states the fixed
-tasks, not evidence by itself. Actual slice5 pinned/native35PASS and installed-author
-proof are in EVIDENCE.md. New admission/example/dependency checks remain unexecuted;
-S19 further purity/regression verification and S20 publication gates remain pending.
-Each row states criterion / why necessary / expected artifact or test / stop.
+Governing Rev1.1 charter frozen before implementation. S0–S19 are technically
+qualified within the explicit narrow binding/limits, not owner-accepted. Evidence:
+public implementation9b4ec08dac0bf41a3f6dec2e3905e788d86eb426; actual41/41 pinned,
+41/41 native and fresh anonymous-public-source41/41 plus external author/installed
+CLI; governed experimental record; foundation170/Catalog15/controlledPhase3 17/
+Phase4offline54 and both packed fixtures; frozen original source/ref checks.
+Inherited Catalog checkerFAIL and whitespace-checkFAIL are retained, not green.
+Detailed observations/limits: EVIDENCE.md, FAILURE-MATRIX.md, STANDARD.md and raw logs.
+S20 public-source reproduction passed and independent parent review APPROVED scoped
+technical publication. PHASE5.0-COMPLETION.md declares release
+phase5.0-service-foundation-v1.0.0; tag/main transport and readback are verified after
+push, not implied by the declaration. No owner acceptance or Phase5.1.
+Each row states criterion / why necessary / artifact or test / stop.
 
 |ID|Criterion and why|Artifact/test|Stop condition|
 |---|---|---|---|

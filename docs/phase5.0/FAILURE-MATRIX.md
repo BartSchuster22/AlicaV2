@@ -1,8 +1,10 @@
 # Bounded failure matrix
 
-Slice5 observations below are actual. New completion.test.mjs cases are explicitly
-PENDING EXECUTION until the expanded candidate runs. All fixtures use fresh local
-resources, no live provider, original credential, historical ledger or daemon.
+Slice5 observations below are actual; the additional completion.test.mjs cases
+also passed in the expanded41-test pinned, isolated and fresh public-source runs.
+Public source9b4ec08dac0bf41a3f6dec2e3905e788d86eb426; EVIDENCE.md identifies raw logs.
+All fixtures use fresh local resources, no live provider, original credential,
+historical ledger or daemon.
 
 | Failure/criterion | Artifact and why | Level / actual outcome | Stop |
 |---|---|---|---|
@@ -10,9 +12,9 @@ resources, no live provider, original credential, historical ledger or daemon.
 | Unknown capability/version/identity | validation.test selected frozen context | SEMANTIC PASS | exact mismatch rejected |
 | Wrong Catalog pin/release | validation.test substantive consumeSnapshot+independent pin | SEMANTIC PASS | no trust/authenticity claim |
 | Required dependency missing | public-host.test signed package requires absent provider | PUBLIC_HOST PASS | no successful empty result |
-| Catalog dependency required/optional mismatch | completion.test uses in-memory modified-definition fault context, never released | SEMANTIC PENDING | exact declaration failure codes |
+| Catalog dependency required/optional mismatch | completion.test uses in-memory modified-definition fault context, never released | SEMANTIC PASS | exact declaration failure codes |
 | Invalid/missing config | validation.test actual JSON schema required field | SEMANTIC PASS | no activation implied |
-| Missing/ref escape schema | completion.test local missing file and real symlink escape | SEMANTIC PENDING | no fetch/resolver |
+| Missing/ref escape schema | completion.test local missing file and real symlink escape | SEMANTIC PASS | no fetch/resolver |
 | Missing/undeclared/ungranted secret | public-host.test declaration/grant/existence | PUBLIC_HOST PASS | synthetic-test reference only |
 | Capability denied | public-host.test and independent external operator | PUBLIC_HOST+EXTERNAL PASS | no handler dispatch/authority from metadata |
 | Startup failure | public-host.test signed throw | PUBLIC_HOST PASS | startup fails |
@@ -30,8 +32,8 @@ resources, no live provider, original credential, historical ledger or daemon.
 | Normal stop/start | public-host.test and separately installed operator | PUBLIC_HOST+EXTERNAL PASS | completed value survives same directory |
 | Crash/restart | external-run waits completed write, SIGKILL own child, fresh operator | EXTERNAL NATIVE PASS | completed record recovered, no fsync guarantee |
 | Cleanup | all normal publicHost/external closures | PUBLIC_HOST+EXTERNAL PASS | zero resources, no failed/timed-out disposers |
-| Manifest/data schema fits real bytes | completion.test generated stateful example vs actual fileRecords output | SEMANTIC+NATIVE PENDING | reject wrong declaration, no migration engine |
-| Existing plugin declaration match | completion.test correct identity/digest then corrupt digest | SEMANTIC PENDING | no signed-native claim |
+| Manifest/data schema fits real bytes | completion.test generated stateful example vs actual fileRecords output | SEMANTIC+NATIVE PASS | reject wrong declaration, no migration engine |
+| Existing plugin declaration match | completion.test correct identity/digest then corrupt digest | SEMANTIC PASS | no signed-native claim |
 
 A failure injected in a fixture demonstrates that tested path, not all possible
 production failures. Namespace/chroot is qualification infrastructure only; the

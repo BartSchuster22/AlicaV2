@@ -1,9 +1,21 @@
-# Phase5.0 reproduction — candidate procedure
+# Phase5.0 reproduction — actually reproduced public source
 
-Public committed-source reproduction is NOT YET EXECUTED; final commit/tag and raw
-reproduction evidence must replace that status before technical freeze. Commands
-below are for the authorized fresh Phase5.0 worktree only. Never run them in mixed
-older worktrees. Never use original credentials/ledgers, live flags or daemons.
+Exact public source `9b4ec08dac0bf41a3f6dec2e3905e788d86eb426` was anonymously cloned
+into /home/alica-dev/AlicaV2-phase50-repro-9b4ec08d with clean initial status.
+Offline pinned npm ci/build/typecheck and its own isolation launcher passed41/41
+plus actual separate public author/operator/unchanged consumer, permissions/health/
+persistence/crash-restart/cleanup. Installed alica-service binary passed both
+examples. Raw logs and PUBLIC-SOURCE-VERIFICATION.json are in evidence/.
+The runner's generic working-tree label does not attest Git origin; the separate
+actual commit/source comparison does. Independent parent technical review approved
+scoped publication; PHASE5.0-COMPLETION.md declares the immutable technical release.
+Transport/tag/main readback is verified after push. Not owner-accepted; no production
+credentials/ledgers are required.
+
+Obtain a fresh clone through anonymous HTTPS, select the exact commit above and
+check initial status before preparation. Do not apply a local source overlay.
+The concrete procedure below used only an existing pinned toolchain/public cache
+and no provider network. Never run it in mixed older worktrees.
 
 ## Prerequisites
 
@@ -68,11 +80,11 @@ For manifest validation use the digest from an independently chosen committed
 snapshot/evidence, NOT a digest merely copied from an untrusted service declaration:
 
 ```
-node service-foundation/tooling/cli.mjs validate service-foundation/examples/stateless/service.json service-foundation/examples/stateless/snapshot.json sha256:PIN service-foundation/examples/stateless/config.json
-node service-foundation/tooling/cli.mjs validate service-foundation/examples/stateful/service.json service-foundation/examples/stateful/snapshot.json sha256:PIN service-foundation/examples/stateful/config.json
+node service-foundation/tooling/cli.mjs validate service-foundation/examples/stateless/service.json service-foundation/examples/stateless/snapshot.json sha256:9ae1e21129397d88624e9c05b1d224739119d9437199c6ad423632c16da10442 service-foundation/examples/stateless/config.json
+node service-foundation/tooling/cli.mjs validate service-foundation/examples/stateful/service.json service-foundation/examples/stateful/snapshot.json sha256:6d4f62849279bfa76ee781572ebf5e73ff0a0ebb6f2073b80f3030d4cbdfce26 service-foundation/examples/stateful/config.json
 ```
 
-Replace PIN with the actual selected immutable digest. Output remains STRUCTURAL /
+These are the actually qualified snapshot pins. Output remains STRUCTURAL /
 SEMANTIC / EXECUTED:NOT_TESTED even when declarations pass. Separate raw native
 harness observations provide behavior evidence. Backup/migration execution remains
 NOT_TESTED. Package tarballs are local only; no npm registry publication.
@@ -80,7 +92,7 @@ NOT_TESTED. Package tarballs are local only; no npm registry publication.
 ## Frozen offline regressions
 
 The previously inspected foundation command is `npm test` (170PASS observed),
-plus inherited `npm run check:deps` (FAIL at @alica/catalog, accepted baseline).
+plus inherited `python3 -S tools/check-dependencies.py` (FAIL at @alica/catalog, accepted baseline).
 The inspected Phase4 command is:
 
 ```
@@ -98,12 +110,21 @@ group if timeout; remove temporary home in finally. Both actual corrected runs
 returned EXIT0 with authenticatedLiveRequests0. Original live authority remains
 permanently closed. NEVER run --live, --continue-live or initialize/reset originals.
 
-## Final committed-public reproduction gate
+## Final committed-public reproduction result / technical release
 
-After exact-path candidate commit/push and independent review process, fetch the
-actual public commit into a fresh separate worktree, verify source/tag purity,
-repeat pinned offline install/build/tests/native proof, and record exact commit,
-source hashes/raw outputs and inherited failures. Anonymous ref/tag/raw-evidence
-verification and a separate README-only main pointer follow final independent
-approval before immutable technical tag. These final gates remain PENDING; this
-procedure is not evidence that they have happened. No owner-accepted tag is allowed.
+The exact-path candidate was committed/pushed, anonymously cloned without an overlay,
+and pinned offline install/build/typecheck/native/external/installed-CLI proof passed
+as stated above. Source/tag purity and exact raw public readback passed; this is
+actual execution, not merely the recipe. Committed qualification consumes existing
+snapshot/example bytes; it does not rerun admission or regenerate originals.
+
+The one-time admission/example commands above already ran successfully during the
+authorized build. Their proof inputs and proposed source remain preserved; these
+commands are NOT consumer prerequisites for reproducing the committed candidate.
+
+Final independent parent review APPROVED scoped publication, preserved verbatim in
+FINAL-PARENT-REVIEW.md. This documentation/evidence-only release declares immutable
+tag phase5.0-service-foundation-v1.0.0. The exact technical43-file digest remains
+the qualification target across release documentation changes. Tag/main transport
+and anonymous exact-ref/raw-evidence readback are verified after push, not inferred
+from a pre-push declaration. No owner-accepted tag or Phase5.1 is permitted.

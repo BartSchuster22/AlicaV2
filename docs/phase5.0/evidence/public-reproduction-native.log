@@ -1,0 +1,62 @@
+ISOLATED_NATIVE_COMMAND ['/usr/bin/unshare', '--mount', '--net', '--pid', '--fork', '/usr/sbin/chroot', '--userspec=1000:1000', '/home/alica-dev/phase50-native-890wr_kw', '/node/bin/node', '--experimental-vm-modules', '/work/service-foundation/conformance/native-run.mjs']
+{"kind":"NATIVE_ENVIRONMENT_OBSERVATION","node":"v24.21.0","uid":1000,"docker":"UNAVAILABLE","podman":"UNAVAILABLE","socketScan":"NONE","remoteEndpoint":"ENETUNREACH","nonLoopbackInterfaces":0,"containerStartups":0,"imageDownloads":0,"containerDependency":0,"claim":"native-first only, not deployment equivalence","filesScanned":2432}
+✔ delivered stateless manifest has separate semantic/declared/not-executed results (48.985849ms)
+✔ delivered stateful manifest has separate semantic/declared/not-executed results (49.884865ms)
+✔ stateful example schema validates actual persisted reference bytes (33.388752ms)
+✔ required/optional dependency consistency checked against substantive Catalog fixture context (107.71724ms)
+✔ supplied existing plugin declaration identity/capability/secret comparison is substantive (68.836878ms)
+✔ local config references cannot escape by symlink; missing local reference fails (1.027167ms)
+(node:17) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ PUBLIC_HOST stateless native attachment, permission denial and cleanup (293.875541ms)
+✔ PUBLIC_HOST proposed records persist across normal stop/new instance; health and stale handle (444.79977ms)
+✔ PUBLIC_HOST actual required dependency absent, not successful EMPTY (24.618092ms)
+✔ PUBLIC_HOST actual signed startup failure and readiness timeout (195.827698ms)
+✔ PUBLIC_HOST actual secret reference declaration/grant/existence checks (79.549825ms)
+✔ PUBLIC_HOST actual bounded stop timeout is reported, not clean PASS (78.909737ms)
+✔ PUBLIC_HOST service-owned quota health DEGRADED and storage failure UNAVAILABLE (697.327727ms)
+✔ PUBLIC_HOST undeclared data-domain rejected by reference, not filesystem confinement (111.044875ms)
+✔ PUBLIC_HOST scope identity cannot be changed by a forged grant (101.682907ms)
+✔ stateless SDK fixture, unchanged consumer, service-owned health and cleanup (26.777083ms)
+✔ stateful SDK fixture persists across normal disposal/new instance; empty differs from absent (47.114359ms)
+✔ native resource serializes concurrent writes; quota rejects without losing records (29.237462ms)
+✔ corrupt state fails open instead of manufacturing successful EMPTY (3.06429ms)
+✔ native storage errors normalize; failed write retains prior record, never absence (25.212933ms)
+✔ corrupt JSON and malformed persisted shapes fail FAILED_PRECONDITION; IO open fails UNAVAILABLE (21.318136ms)
+✔ three levels are independent; backup/migration execution not tested (39.377708ms)
+✔ structural rejects malformed (0.844994ms)
+✔ structural rejects unsupported binding (0.428828ms)
+✔ structural rejects unknown field (0.377883ms)
+✔ structural rejects executable UI (0.388222ms)
+✔ structural rejects inline secret (0.743021ms)
+✔ structural rejects path traversal (0.373454ms)
+✔ semantic rejects unknown capability (2.593331ms)
+✔ semantic rejects unavailable version (1.69159ms)
+✔ semantic rejects URI major mismatch (1.641607ms)
+✔ semantic rejects wrong identity (4.451306ms)
+✔ semantic rejects wrong Catalog context (1.414387ms)
+✔ semantic rejects missing permission declaration (1.071531ms)
+✔ semantic rejects state hidden by stateless (0.994265ms)
+✔ semantic rejects undeclared UI permission (22.745298ms)
+✔ semantic rejects unsupported secret binding (21.105025ms)
+✔ semantic rejects unowned rebuildable data (2.020942ms)
+✔ configuration required field actually validated (20.684171ms)
+✔ snapshot pin enforced independently from self-reported digest (1.419507ms)
+✔ remote schema references never fetched (1.129241ms)
+ℹ tests 41
+ℹ suites 0
+ℹ pass 41
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2389.954982
+{"mode":"normal","publicHost":true,"clean":true,"externalAuthor":true,"operatorOwnedNative":true,"independentlySignedNative":false,"catalogRecords":"EXPERIMENTAL_LOCAL_SNAPSHOT","catalogDigest":"sha256:6d4f62849279bfa76ee781572ebf5e73ff0a0ebb6f2073b80f3030d4cbdfce26","trustVerified":false}
+RECOVERED_COMPLETED_WRITE_NO_CRASH_DURABILITY_CLAIM
+{"mode":"recover","publicHost":true,"clean":true,"externalAuthor":true,"operatorOwnedNative":true,"independentlySignedNative":false,"catalogRecords":"EXPERIMENTAL_LOCAL_SNAPSHOT","catalogDigest":"sha256:6d4f62849279bfa76ee781572ebf5e73ff0a0ebb6f2073b80f3030d4cbdfce26","trustVerified":false}
+{"kind":"EXTERNAL_AUTHOR_EXECUTED","publicPackages":true,"separateAuthorOperator":true,"authorHasNoKernel":true,"consumerModuleSHA256":"a2468c853071caa88c69944a6013f79d466e69a5d01aa021db1bed0f838515c1","registryPublishing":false,"network":"npm-offline; runtime tested separately","source":"working-tree candidate","noContainerRuntime":true,"unchangedConsumer":true,"normalStopRestart":true,"crashRestart":"SIGKILL after completed write then fresh operator; no crash durability guarantee","supervisorProduct":false,"status":"PASS"}
+(node:95) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:132) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"kind":"EXECUTED","status":"PASS","source":"working-tree candidate, not committed-public reproduction","catalogRecords":"EXPERIMENTAL_LOCAL_SNAPSHOT_CHECKED_BY_EXTERNAL_OPERATOR","externalAuthor":"PASS"}

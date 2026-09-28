@@ -24,7 +24,14 @@ The `ALICA maintainers` field names the existing namespace role; it is NOT proof
 a human maintainer signature. The record says this explicitly. No baseline policy,
 original definition/snapshot or tag is changed. Experimental is not stable.
 
-Current state of this new admission script: AUTHORED, NOT YET EXECUTED. Do not infer
-that review approval or the presence of this file means a transition has happened.
-After successful explicit execution, immutable admission.json/snapshot.json are
-the authoritative actual result; consumer verification remains trustVerified=false.
+Actual state: explicit existing transition EXECUTED successfully against those
+exact hashes and passing historical evidence, before expanded41-test qualification.
+Immutable admission.json/snapshot.json record the result; snapshot digest is
+sha256:6d4f62849279bfa76ee781572ebf5e73ff0a0ebb6f2073b80f3030d4cbdfce26.
+The expanded public operator consumes this snapshot; fresh public-source proof
+passed. Proposed original artifacts/review and historical conformance log remain
+unchanged. consumer trustVerified=false, experimental not stable, no Owner Acceptance.
+Separate final parent technical review APPROVED scoped publication; exact review is
+docs/phase5.0/FINAL-PARENT-REVIEW.md, SHA256
+3a87b65fb98d41cd8bafbc125254587cf836191944e1f064cbd9df0814b47a26.
+This does not alter experimental maturity, local namespace authority or trust.

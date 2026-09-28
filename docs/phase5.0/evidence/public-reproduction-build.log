@@ -1,0 +1,13 @@
+9b4ec08dac0bf41a3f6dec2e3905e788d86eb426
+v24.21.0
+11.19.0
+
+added 19 packages in 865ms
+
+> alica-v2@0.0.0 build
+> node tools/build.mjs
+
+
+> alica-v2@0.0.0 typecheck
+> tsc -p tsconfig.json --noEmit
+

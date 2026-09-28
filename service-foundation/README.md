@@ -1,88 +1,83 @@
-# Service Foundation v1 — implementation WIP
+# Service Foundation v1 — technically qualified release
 
-Additive standard/tooling, not a runtime service. Governing Rev1.1 and acceptance
-ledger live in docs/phase5.0. Source has not yet received pinned DEV qualification.
+Additive standard, tooling and native examples, NOT a central runtime service.
+Governing Revision1.1 / S0–S20: ../docs/phase5.0. Exact public implementation
+`9b4ec08dac0bf41a3f6dec2e3905e788d86eb426` passed pinned41/41, isolated41/41 and
+fresh anonymous-public-source41/41 plus separately installed author/operator proof.
+Independent parent technical review approved scoped publication. This release
+declaration targets immutable tag phase5.0-service-foundation-v1.0.0; post-push
+transport/readback is verified separately. See ../docs/phase5.0/PHASE5.0-COMPLETION.md.
+No Owner Acceptance or Phase5.1 is implied.
 
-## First substantive slice
+## Start here
 
-schemas/service-manifest-v1.schema.json is a closed small JSON Schema generated
-by tooling/schema-source.mjs. tooling/validate.mjs returns independent STRUCTURAL,
-SEMANTIC and EXECUTED outcomes. validate never claims executed behavior. Catalog
-snapshots are consumed through the existing public Catalog API and an independently
-provided digest pin, not a new resolver. trustVerified remains false.
+- STANDARD.md: normative meaning, existing lifecycle mapping, version/config/data/
+  health/secret/UI declarations and explicit boundary limits.
+- schemas/service-manifest-v1.schema.json: small closed versioned shape.
+- tooling/validate.mjs and tooling/cli.mjs: independent STRUCTURAL/SEMANTIC/EXECUTED
+  results; validation NEVER dispatches code, grants authority or reports execution.
+- examples/stateless and examples/stateful: concrete manifests/configs/schemas and
+  independently selected Catalog snapshots. Backup/migration declaration VALID is
+  different from execution NOT_TESTED.
+- examples/external/README.md and operator.mjs: demonstrated separately installed
+  public-author workflow, including the required bootstrap retirement ordering.
+- ../docs/phase5.0/REPRODUCE.md: actual pinned public-source commands/evidence.
 
-Service id/version are independent of capability URI/descriptor identity/version
-and Catalog version. Required vs optional dependencies are checked against supplied
-frozen definitions, then actual runtime availability remains an existing Host task.
-Manifest metadata is not a grant. Config schemas are local, no external $ref resolver.
-Optional UI is text/identity/permission metadata only; it cannot grant or execute.
+One observed binding: public-host-inproc-v1. Public Host bootstrap/discover/activate/
+context/grants/require/call/dispose/shutdown and SDK definePlugin/effect/provide/
+require are reused. No internal Kernel import or parallel engine. Native service
+health READY/DEGRADED/UNAVAILABLE is separate from Host ACTIVE and disposal state.
 
-Backup and migration declaration VALID is distinct from execution NOT_TESTED.
-No metrics backend, supervisor, secret resolver or lifecycle engine exists here.
-No Phase5.1 implementation.
+## Native attachment and authority
 
-## Existing binding and honest boundaries
+The accepted SDK has no filesystem API, and the signed in-process loader rejects
+Node builtin imports. Therefore a tiny file resource is explicitly operator-owned
+native code. The signed shell initially registers its declared provider to satisfy
+existing Host activation. An explicitly granted bootstrap call disposes that root
+registration and returns UNAVAILABLE, never a successful business result. Only after
+observing its removal does the operator provide native handlers in an owned child
+scope. Consumers require explicit ancestor and child grants. This avoids a duplicate
+visible-provider CONFLICT without changing Host behavior or adding a registry.
 
-One binding: public-host-inproc-v1. Existing public Host bootstrap/discover,
-activate/context, grant, require/call, dispose/shutdown primitives are reused.
-Plugin definitions use public SDK definePlugin, effect, provide and require.
-Health is owned by each reference and changes independently from the Host's actual
-lifecycle. Restart creates a fresh instance; it does not revive stale handles.
+The real public Host and separate external workflow passed. Shell ACTIVE is NOT
+native READY. Shell signatures do NOT authenticate native bytes; metadata does NOT
+grant filesystem authority; native code is trusted operator-owned, not hostile-code
+confinement. Existing context.secret(ref) supports only the explicit synthetic-test
+mechanism in this demonstrated binding. Missing declaration/grant/ref paths were
+actually tested; no production secret resolver or real credential use is claimed.
 
-The accepted SDK KernelContext has no filesystem API. Accepted package-loader
-permits only public SDK/contracts/types or inventoried local modules; it rejects
-Node builtin imports. The tiny file resource therefore remains explicitly operator-owned.
-The native attachment test uses a declared signed bootstrap shell. A granted
-public call disposes that temporary root registration and fails UNAVAILABLE (never
-reports a successful business operation). Only AFTER verifying root registration
-removal does the operator register native handlers through existing public
-context.createScope()/provide in an owned child scope. This ordering is required:
-the frozen Host rejects duplicate visible provider identities with CONFLICT.
-Consumers are discovered in the child scope with explicit root and child grants.
-Host activation requires declared providers to register; a no-op shell with
-provides would fail. Shell ACTIVE is not native service READY. The35-test candidate
-has passed this topology both on pinned DEV and in isolated native qualification;
-external installed-author proof also passed for slice5 (raw native-slice5.log).
-The expanded admitted-snapshot/example candidate still requires execution, so
-this is not phase completion.
-The resource is operator-owned native code, not a new public storage API.
-Its bytes and
-filesystem authority are NOT granted by ServiceManifest or sandboxed by signed
-shell packaging. This topology must be proved with actual public Host tests; the
-current SDK fixture tests cannot substitute. No hostile-code confinement claim.
+## References and conformance
 
-Existing context.secret(ref) is grant-checked. The accepted Host implementation
-supports only synthetic-test with its explicit test option, not production secret
-resolution. This binding intentionally restricts secret declarations to that ref.
-No secret value belongs in a manifest or diagnostic. Missing ref/grant behavior
-still requires actual Host qualification, not shape-only testing.
+reference/services.mjs: stateless echo, tiny records provider, unchanged consumer.
+reference/file-records.mjs: bounded single-owner serialized file resource,32keys,
+normal stop/start persistence. Completed-write SIGKILL/fresh-operator recovery was
+observed; no fsync/crash durability, concurrent multi-owner DB or supervisor promise.
 
-## References and tests
+Records were admitted by the existing governed local namespace-role transition
+using exact independent parent design review and actual prior passing conformance.
+Separate EXPERIMENTAL snapshot digest:
+sha256:6d4f62849279bfa76ee781572ebf5e73ff0a0ebb6f2073b80f3030d4cbdfce26.
+Original proposal/definition/policy and all baseline snapshots remain unchanged.
+trustVerified=false; no human-signed approval, stable promotion or Owner Acceptance.
 
-reference/services.mjs: neutral stateless echo, tiny stateful records, unchanged
-consumer. reference/file-records.mjs: single-owner bounded native file resource,
-serialized writes,32-key limit, explicit normal restart persistence. No database,
-backup, migration or generic storage subsystem. Records is a NEW Catalog proposal
-under catalog/proposals/service-records, NOT admitted, no release snapshot created.
-Do not publish it as conformant before parent review/admission and qualification.
+From a prepared source root with pinned Node24.21.0/npm11.19.0:
 
-Tests separate structural/semantic assertions and SDK fixture execution. Neither
-is no-container/public Host qualification. Remaining acceptance includes actual
-Host scope/grant/secret/failure matrix, separately installed author, native isolated
-environment excluding executable/socket/remote container access, all offline
-regression and committed-source public reproduction. Do not label WIP complete.
+```
+node --experimental-vm-modules --test --test-timeout=15000 service-foundation/tests/*.test.mjs
+```
 
-Preparation commands on DEV after source transfer and scoped ownership correction:
-  export PATH=/home/alica-dev/AlicaV2/.tools/node-v24.21.0-linux-x64/bin:$PATH
-  node service-foundation/tooling/schema-source.mjs
-  node catalog/proposals/service-records/prepare.mjs
-  node --test service-foundation/tests/*.test.mjs
+The actual bounded native/external/crash conformance launcher (root only for test
+namespace/chroot setup; runtime test UID1000) is:
 
-These require existing public package builds and pinned dependencies. Inspect the
-accepted offline build/bootstrap scripts before execution. Do not run live Phase3
-or Phase4 scripts, access protected authority, or modify frozen source to fix tests.
-CLI validation:
-  node service-foundation/tooling/cli.mjs validate MANIFEST SNAPSHOT sha256:PIN CONFIG
+```
+python3 service-foundation/conformance/isolate.py
+```
 
-Conformance command, public Host runner, external author and completed manifest
-examples are not delivered by this initial slice; no stub claims otherwise.
+It uses this script's own source root, offline tarballs/cache, no container startup,
+images, sockets or provider network, and removes test-owned temporary roots.
+Installed alica-service binary was also exercised against both reference manifests;
+it truthfully reports EXECUTED:NOT_TESTED independently of these behavioral tests.
+The package is private and never registry-published. Native-first design independence
+is proved; multiple-deployment equivalence is NOT claimed. Historical failures and
+inherited Catalog checker FAIL remain in EVIDENCE.md. No optional backend, renderer,
+backup/migration engine, MemoryV4, Doghouse, UniUI or AInbA implementation.

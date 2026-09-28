@@ -1,0 +1,57 @@
+INSTALLED_BIN stateless EXIT 0
+{
+  "structural": {
+    "level": "STRUCTURAL",
+    "status": "PASS"
+  },
+  "semantic": {
+    "level": "SEMANTIC",
+    "status": "PASS",
+    "context": "sha256:9ae1e21129397d88624e9c05b1d224739119d9437199c6ad423632c16da10442",
+    "trustVerified": false,
+    "backup": {
+      "declaration": "VALID",
+      "execution": "NOT_TESTED"
+    },
+    "migration": {
+      "declaration": "VALID",
+      "execution": "NOT_TESTED"
+    },
+    "authority": "DECLARATION_CONSISTENCY_ONLY"
+  },
+  "executed": {
+    "level": "EXECUTED",
+    "status": "NOT_TESTED"
+  }
+}
+
+
+INSTALLED_BIN stateful EXIT 0
+{
+  "structural": {
+    "level": "STRUCTURAL",
+    "status": "PASS"
+  },
+  "semantic": {
+    "level": "SEMANTIC",
+    "status": "PASS",
+    "context": "sha256:6d4f62849279bfa76ee781572ebf5e73ff0a0ebb6f2073b80f3030d4cbdfce26",
+    "trustVerified": false,
+    "backup": {
+      "declaration": "VALID",
+      "execution": "NOT_TESTED"
+    },
+    "migration": {
+      "declaration": "VALID",
+      "execution": "NOT_TESTED"
+    },
+    "authority": "DECLARATION_CONSISTENCY_ONLY"
+  },
+  "executed": {
+    "level": "EXECUTED",
+    "status": "NOT_TESTED"
+  }
+}
+
+
+EXTERNAL_CLI_TEMP_REMOVED True
