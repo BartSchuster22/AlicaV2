@@ -1,5 +1,13 @@
 # ALICA V2
 
+## Phase 5.1 Project Owner Acceptance
+
+**PHASE 5.1 — COMPLETE / FROZEN / OWNER ACCEPTED**
+
+The explicit Project Owner decision accepts the documented M0–M20 scope and limitations: [OWNER-ACCEPTANCE.md](https://github.com/BartSchuster22/AlicaV2/blob/phase5.1-memoryv4-v1.0.0-accepted/docs/phase5.1/OWNER-ACCEPTANCE.md), under the separate annotated [owner-accepted tag](https://github.com/BartSchuster22/AlicaV2/tree/phase5.1-memoryv4-v1.0.0-accepted). This is a documentation/governance event, not new qualification.
+
+The original [technical release](https://github.com/BartSchuster22/AlicaV2/tree/phase5.1-memoryv4-v1.0.0), commit `1fb169afdf2436d5fe42139685ae0b43ad29e57e`, tag object `24384aea8359f5a0c0ac5184c4c33c47136453f1` and all frozen evidence remain immutable. Earlier awaiting/no-acceptance statements below are historical and superseded only as current governance status. EXPERIMENTAL, trustVerified=false, NOT_TESTED distinctions, inherited failures and retention-soak limitations remain. No further Phase5.1 development, production adoption, renewed live authority or Phase5.2 is authorized. COMPLETE / FROZEN / OWNER ACCEPTED — STOP.
+
 ## Phase5.1 MemoryV4 + ACAP — technical release
 
 [Technical completion](docs/phase5.1/PHASE5.1-COMPLETION.md) | [Actual evidence and public-source reproduction](docs/phase5.1/EVIDENCE.md) | [Independent final review](docs/phase5.1/FINAL-INDEPENDENT-REVIEW.md).
