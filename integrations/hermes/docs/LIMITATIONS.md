@@ -1,9 +1,10 @@
 # Phase3 limitations and truthful release state
 
-The original real H12 succeeded. That is not full H0–H20 closure. The final
-annotated `phase3-hermes-v1.0.0` must not be created until remaining acceptance,
-clean committed MOCK reproduction, screened publication and discoverability are
-ready. No owner acceptance is fabricated. Stop before JEV/services at completion.
+The original real H12 succeeded on historical source. Current implementation
+has clean committed MOCK reproduction, reconciled H0–H20 evidence and screened
+public documentation/main discoverability. Release identity is annotated
+`phase3-hermes-v1.0.0`; no new live qualification or final owner acceptance is
+fabricated. FREEZE and STOP before JEV/services.
 
 ## Scope
 
@@ -53,5 +54,6 @@ Initial cleanup test without VM-modules flag failed; corrected
 `node --experimental-vm-modules --test tools/test-external-hermes-cleanup.mjs`
 passed without a source change. Both outcomes remain part of the execution history.
 
-Remaining original coverage/docs/clean reproduction and publication are closure
-work, not permission for optional hardening or frozen-foundation refactoring.
+Original coverage/docs/clean reproduction and publication are recorded in the
+acceptance/completion evidence. Release is not permission for optional hardening,
+frozen-foundation refactoring or another phase.

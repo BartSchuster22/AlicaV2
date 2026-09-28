@@ -24,7 +24,7 @@ H18 dependency disposition: frozen Phase2 and candidate both EXIT1 at the same @
 
 Parent independently reviewed and accepted the finite original three-file Host/native test slice and two-ID correction after pinned20/20 PASS. Accepted logging correction stays closed. Final delivery adds no substantive implementation beyond that reviewed/tested candidate; docs are reconciliation, not a new design. Earlier53-test failure and19PASS1FAIL are retained separately in operator evidence. No final owner acceptance is inferred.
 
-Publication/annotated tag/main discoverability remain pending; PHASE3-COMPLETION records actual release state. Original grant consumed2of3 remains closed, remaining1 NOT authority. STOP before JEV/services.
+The tested candidate and reconciled docs are published on phase3/hermes with anonymous readback. Main discovery is published and anonymously verified at03661859a93517b0450e7873e857a843db65e262. Final release identity is annotated phase3-hermes-v1.0.0; tag metadata supplies the final release-docs commit, with no self-referential SHA. PHASE3-COMPLETION records the release boundary. Original grant consumed2of3 remains closed, remaining1 NOT authority. STOP before JEV/services.
 
 ## Historical evidence below — preserve chronology, not current open-gate status
 

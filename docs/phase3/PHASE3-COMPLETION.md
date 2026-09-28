@@ -1,11 +1,13 @@
-# Phase3 completion report — tested candidate, publication pending
+# Phase3 completion report — public delivery; FREEZE and STOP
 
 ## Outcome
 
 The finite Hermes ↔ ACAP implementation is committed and clean-reproduced at
 `dd6ae75805fb7e72aa1a4b035a06c8b2c08f18e3`. Original H12 real task passed on
 historical reviewed bytes; current candidate has clean MOCK qualification only.
-No final owner acceptance is asserted. H20 public release closure is pending.
+No final owner acceptance is asserted. H20 documentation/public discovery is
+published with anonymous readback; final release identity is the annotated tag
+`phase3-hermes-v1.0.0`. Phase3 ends here: FREEZE and STOP.
 
 The adapter uses public Host/SDK/ACAP surfaces and a governed EXPERIMENTAL
 agent-execution capability. Frozen Kernel/ACAP structure and STABLE Catalog remain
@@ -27,15 +29,20 @@ including the two-ID correction after actual20/20 PASS. Previous native logging
 correction remains accepted. Final delivery adds no further product implementation.
 This report is author reconciliation, not an independent audit or owner acceptance.
 
-## Exact remaining release procedure
+## Published identities and release boundary
 
-Screen and commit only reconciled Phase3 docs/evidence; keep generated Catalog
-schema files unstaged. Push phase3/hermes under original authorization; verify
-anonymous access to the candidate and docs. Make minimal main README discovery
-change without disturbing unrelated work, and verify it anonymously. Only when
-all original rows including H20 are public/proven, create and verify annotated
-`phase3-hermes-v1.0.0`, record actual public identities, FREEZE and STOP.
-No tag or new publication is claimed by this pending report.
+- Tested implementation: `dd6ae75805fb7e72aa1a4b035a06c8b2c08f18e3`.
+- First complete documentation/evidence publication: `4f10e08fc03e22d610d5837532984162560486da`.
+- Main README discovery: `03661859a93517b0450e7873e857a843db65e262`, README-only commit from an isolated worktree; no Phase3 merge into frozen main.
+- Release documentation: [phase3/hermes](https://github.com/BartSchuster22/AlicaV2/tree/phase3/hermes).
+- Immutable release identity: [annotated phase3-hermes-v1.0.0](https://github.com/BartSchuster22/AlicaV2/tree/phase3-hermes-v1.0.0). Its peeled commit identifies the final release docs; no self-referential commit hash is embedded here.
+
+Anonymous source/docs HTTP readback and main discovery verification succeeded
+before final tagging. Exact tag-object/peeled-commit readback belongs to the
+operator publication report. Tested product bytes are unchanged by release docs.
+Generated Catalog schemas remain unstaged. All original H0–H20 evidence is mapped
+in ACCEPTANCE, with the inherited dependency checker failure retained explicitly.
+FREEZE and STOP: no optional hardening, additional inference or next-phase work.
 
 ## Preserved boundaries
 

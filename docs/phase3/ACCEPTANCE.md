@@ -26,7 +26,7 @@ Paths below are relative to repository root. Exact outputs: EVIDENCE.md.
 | H17 | Complete finite mapping below; bounded actual tests, not runner-only substitutes for Host cases. |
 | H18 | Fresh committed reproduction: foundation170, Catalog15, Phase3 JS37 (includes repeated imports), Python53 + native success + six model failure cases; external SDK/Catalog/Hermes, upstream91, boundaries/secrets PASS. Frozen dependency-checker FAIL unchanged: explicit baseline comparison, not waived or called green. Original gate is no frozen regression. |
 | H19 | git diff against frozen Phase2: packages, manifests/lock/checker and stable Catalog unchanged. Zero Kernel/ACAP structural or stable-contract mutations. Generated schema files remain unstaged. |
-| H20 | Documentation and clean committed reproduction prepared; public publication/discoverability/readback and final tag still pending. Do not claim final closure until public verification. |
+| H20 | Complete docs/evidence published on phase3/hermes; anonymous candidate/docs readback passed. Main README discovery published and anonymously verified at 03661859a93517b0450e7873e857a843db65e262. Tested implementation dd6ae758 remains unchanged. Final release identity: annotated phase3-hermes-v1.0.0; tag metadata identifies the release-docs commit, avoiding self-referential hashes. |
 
 ## H17 exact failure mapping
 
@@ -45,4 +45,4 @@ Paths below are relative to repository root. Exact outputs: EVIDENCE.md.
 
 ## Review/release boundary
 
-Parent independently read the three-file Host/native evidence slice, minimal two-ID correction and actual pinned result, accepting that slice. Accepted logging correction remains closed. This matrix is author reconciliation, not an independent review or final owner acceptance. No additional substantive product implementation was added in final delivery. Publication must follow screened docs/evidence and the original stop rule; no remaining live capacity may be consumed.
+Parent independently read the three-file Host/native evidence slice, minimal two-ID correction and actual pinned result, accepting that slice. Accepted logging correction remains closed. This matrix is author reconciliation, not an independent review or final owner acceptance. No additional substantive product implementation was added in final delivery. Screened docs/evidence and main discoverability are published. The release ends at annotated phase3-hermes-v1.0.0: FREEZE and STOP before JEV/services; no remaining live capacity may be consumed.

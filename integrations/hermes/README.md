@@ -58,7 +58,7 @@ export PYTHONPATH="$HERMES_PHASE3_SOURCE:$PWD" PYTHONDONTWRITEBYTECODE=1
 "$PHASE3_PYTHON" test_native_failures.py
 ```
 
-The exact candidate has been reproduced from a clean local Git clone, including fresh upstream installation. Public availability of that commit is a release step recorded in PHASE3-COMPLETION; do not mistake this guide for evidence of a completed push.
+The exact candidate has been reproduced from a clean Git clone, including fresh upstream installation, and is now publicly available with anonymous source/docs readback. Main discovery is published at `03661859a93517b0450e7873e857a843db65e262`. Release documentation is identified by annotated `phase3-hermes-v1.0.0`; its tag metadata identifies the final docs commit while the tested implementation remains `dd6ae758`. See [completion](../../docs/phase3/PHASE3-COMPLETION.md). Phase3 ends here: FREEZE and STOP before JEV/services; no final owner acceptance is asserted.
 
 Expected: `ALICA request-scoped fixture` from both neutral/native providers, equal consumer digest, both PHASE3_PUBLIC_EVIDENCE records, zero owned resources, closed/nonpoisoned runner. All model responses here are MOCK. The external author installs packed public SDK/Catalog artifacts without Kernel; a separate trusted operator uses packed public Host, not Kernel source. All generated temp authority is disposable; the original live grant is not touched.
 
