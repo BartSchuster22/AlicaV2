@@ -2,12 +2,18 @@
 
 A new, lean capability-oriented substrate: **Kernel → ACAP → SDK**.
 
+## Phase 3 status
+
+**PHASE 3 — COMPLETE / FROZEN / OWNER ACCEPTED**
+
+[Owner Acceptance](https://github.com/BartSchuster22/AlicaV2/blob/phase3-hermes-v1.0.0-accepted/docs/phase3/OWNER-ACCEPTANCE.md) records the Project Owner's decision within the documented scope. The [technical release](https://github.com/BartSchuster22/AlicaV2/tree/phase3-hermes-v1.0.0) remains immutable; `phase3-hermes-v1.0.0-accepted` records governance only. Phase 1 and Phase 2 remain frozen. No Phase 4 or further implementation is authorized.
+
 ## Public Phase1 and Phase2
 
 This repository is public. [Phase1 completion](https://github.com/BartSchuster22/AlicaV2/blob/phase1-v1.0.0/docs/PHASE1-COMPLETION.md) is frozen at `phase1-v1.0.0`.
 The [Phase2 Capability Catalog](https://github.com/BartSchuster22/AlicaV2/tree/phase2/catalog/docs/phase2) delivers C1–C15 independently of the frozen Kernel/ACAP.
 See its [completion status](https://github.com/BartSchuster22/AlicaV2/blob/phase2/catalog/docs/phase2/PHASE2-COMPLETION.md), [architecture](https://github.com/BartSchuster22/AlicaV2/blob/phase2/catalog/docs/phase2/ARCHITECTURE.md), [author guide](https://github.com/BartSchuster22/AlicaV2/blob/phase2/catalog/docs/phase2/AUTHOR-GUIDE.md), and [executed evidence](https://github.com/BartSchuster22/AlicaV2/blob/phase2/catalog/docs/phase2/EVIDENCE.md).
-The completion record is authoritative for release/freeze status; no Phase3 or integrations are authorized. Historical G7 acceptance is unchanged and is not resumed by Catalog work.
+The linked Phase1/Phase2 completion records remain authoritative for their frozen scope; the subsequent Phase3 owner decision is recorded above. Historical G7 acceptance is unchanged and is not resumed by Catalog work.
 
 ## Historical stage (preserved)
 
