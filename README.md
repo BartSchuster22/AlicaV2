@@ -1,5 +1,13 @@
 # ALICA V2
 
+## Phase5.1 MemoryV4 + ACAP — technically completed, awaiting Owner Acceptance
+
+The later owner authorization covered Phase5.1 technical publication only. The independently reviewed implementation `ab09af5022ea81f9088b0b940645b4314543d422` is preserved in documentation-only technical release `1fb169afdf2436d5fe42139685ae0b43ad29e57e`.
+
+[Technical release](https://github.com/BartSchuster22/AlicaV2/tree/phase5.1-memoryv4-v1.0.0) | [Completion](https://github.com/BartSchuster22/AlicaV2/blob/phase5.1-memoryv4-v1.0.0/docs/phase5.1/PHASE5.1-COMPLETION.md) | [Actual public-source evidence](https://github.com/BartSchuster22/AlicaV2/blob/phase5.1-memoryv4-v1.0.0/docs/phase5.1/EVIDENCE.md) | [Independent final review](https://github.com/BartSchuster22/AlicaV2/blob/phase5.1-memoryv4-v1.0.0/docs/phase5.1/FINAL-INDEPENDENT-REVIEW.md) | [Source reproduction](https://github.com/BartSchuster22/AlicaV2/blob/phase5.1-memoryv4-v1.0.0/docs/phase5.1/REPRODUCE.md).
+
+The public-source matrix passed with the inherited Catalog dependency-check FAILURE retained. Catalog remains experimental; NOT_TESTED/trustVerified=false and accelerated-retention-not-soak limitations remain. This is NOT Owner Acceptance. Technical release frozen; STOP for separate owner review. No Phase5.2, production adoption, Kernel/Foundation change or renewed live authority. Earlier status paragraphs below remain historical records; their body and links are preserved.
+
 ## Phase 5.0 Project Owner Acceptance
 
 **PHASE 5.0 — COMPLETE / FROZEN / OWNER ACCEPTED**
