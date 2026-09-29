@@ -1,0 +1,109 @@
+{
+  "decision": "BLOCKED",
+  "reviewType": "Independent final technical candidate review; not design-only and not Owner Acceptance",
+  "blockingFindings": [
+    {
+      "id": "K15-CURRENT-AUTHORITY-BEFORE-MUTATION",
+      "sources": [
+        "adapters/hermes-kanban/index.mjs:55-65",
+        "adapters/hermes-kanban/index.mjs:75-88",
+        "adapters/hermes-kanban/tests/conformance.test.mjs:62-64",
+        "docs/phase5k/DESIGN.md:23"
+      ],
+      "reason": "Update and comment authorize and acquire the secret before their preliminary GET, then dispatch PATCH/POST using that cached authority without rechecking after the asynchronous read. Revoking the caller mapping or secret grant while GET is outstanding therefore does not prevent a subsequent, not-yet-dispatched mutation. The final check rejects delivery but cannot undo that write. This is distinct from the documented limitation that revocation cannot roll back an already-dispatched mutation.",
+      "verification": "Executed the unchanged adapter source in an in-memory VM with synthetic SDK/context and fetch substitutes, without backend access or file writes. Separate mapping-revocation and secret-revocation cases both produced requests [GET, PATCH], one synthetic write, then PERMISSION_DENIED. Existing overload coverage combines revocation with disposal and does not establish rejection before mutation dispatch.",
+      "minimalRemediation": "Revalidate the current public secret grant and exact caller mapping immediately before each transport dispatch, including after update/comment preflight reads; reject changed authority before setting sent and dispatching the mutation. Retain conservative uncertainty after actual dispatch. Add targeted cases that revoke mapping and secret authority during a held preliminary GET and assert no PATCH/comment POST occurs, without relying on disposal."
+    },
+    {
+      "id": "K16-COMMITTED-CREATE-MISREPORTED-AS-CONFLICT",
+      "sources": [
+        "adapters/hermes-kanban/index.mjs:70-85",
+        "catalog/proposals/hermes-kanban/descriptor.json:223-254",
+        "Pinned Hermes hermes_cli/kanban_db.py:1292-1293,1323-1332,1359-1372"
+      ],
+      "reason": "The public schema accepts a title such as ' padded '. Hermes persists title.strip(), but the adapter compares the returned title against the original untrimmed input and throws CONFLICT. Its catch explicitly excludes CONFLICT from UNKNOWN conversion. A fresh, successfully committed create is consequently reported as a definite conflict, even though no replay collision occurred.",
+      "verification": "Inspected the pinned backend's actual normalization and insertion path. An in-memory execution using that normalization accepted the input through Ajv, performed one synthetic POST/write, and returned CONFLICT.",
+      "minimalRemediation": "Account for the pinned backend's title normalization before dispatch and during replay-content comparison, or reject unsupported title forms before any write. Do not classify a potentially committed response mismatch as a definite replay conflict without sufficient evidence. Add focused fresh-create and same-key replay cases for padded titles, with authoritative reconciliation."
+    },
+    {
+      "id": "K14-UNICODE-CONTRACT-ROUNDTRIP",
+      "sources": [
+        "adapters/hermes-kanban/index.mjs:7-15,70-78",
+        "catalog/proposals/hermes-kanban/descriptor.json:231-239",
+        "catalog/proposals/hermes-kanban/descriptor.json:180-189"
+      ],
+      "reason": "The descriptor's JSON Schema string bounds count Unicode code points, while taskView uses JavaScript string.length, which counts UTF-16 code units. A valid title containing 129 supplementary-plane characters passes the public 256-character limit and can be persisted, but taskView rejects it. Create returns UNKNOWN; subsequent get fails UNAVAILABLE, and the same task makes board/list normalization fail. Valid bounded public input can therefore make the selected board unreadable through this adapter.",
+      "verification": "Using installed Ajv and the actual descriptor, the 129-emoji title passed validation. In-memory execution of the unchanged adapter performed one synthetic POST/write and returned UNKNOWN; taskView on the resulting task returned UNAVAILABLE. No real backend mutation was performed.",
+      "minimalRemediation": "Align normalization length checks with the frozen JSON Schema code-point semantics, retaining the independent byte limits. Add non-BMP title/body boundary cases proving create/update/get/list round trips. Do not silently narrow the frozen descriptor."
+    }
+  ],
+  "nonblockingLimitations": [
+    "Production credential binding is explicitly unsupported. The frozen public synthetic-test reference, public Host grant checks and disposable fixture token are the qualified boundary; production credential support is not requested.",
+    "Native operator composition is trusted code, not a hostile-plugin sandbox. Qualification isolation comes from the disposable namespace/chroot enclosure.",
+    "Native WebSocket messages are buffered before the application's 256 KiB check. This is disclosed and is not a hostile-peer memory-quota guarantee.",
+    "Events are bounded unary observations with continuity always UNKNOWN. Replay duplicates, non-atomic snapshot reconciliation, uncertain retention and future/stale cursors are appropriately disclosed.",
+    "Sequential request-key replay is best effort, concurrent creation is not exactly-once, updates have no CAS, and cancellation/disposal does not prove backend rollback.",
+    "Historical attempt7 and attempt9 each report 19/19, a real backend restart and ten triage/unassigned tasks with no runs. Those results are genuine qualification evidence but do not cover the blocking cases identified here.",
+    "Dependency-checker rejection of @alica/catalog and retired MemoryV4v1 FAILED_PRECONDITION failures remain correctly labeled failures. Packed Decision proofs are offline fixtures with authenticatedLiveRequests=0, not renewed live grants.",
+    "No builds, real backend runs or artifact-writing tests were executed during this review. Independent dynamic checks were synthetic, in-memory only and are not represented as real-backend reproductions.",
+    "Technical publication, annotated tag and anonymous exact-source readback remain pending. This review does not establish Owner Acceptance, STABLE status, production adoption, operational workers/providers, deferred control/dependencies or Phase5.3 authority."
+  ],
+  "reviewedCommit": {
+    "host": "DEV 167.233.135.142",
+    "path": "/home/alica-dev/AlicaV2-phase5k",
+    "branch": "phase5k-hermes-kanban",
+    "commit": "48ab631d680cfb950f89e5233e9992161cc9cb45",
+    "designFreezeCommit": "4d0d03613683145f76c0e775a2e84cb96e7dd5c1",
+    "implementationAdmissionCommit": "61ebcdbbc5b6fc2dfb6363ceecc0e3dac55041ff",
+    "acceptedBase": "8fafa2767627694007c338df76f1d03aba080b58",
+    "hermesPin": "536802c00e4f93061fc46b134dc029ff695f364f",
+    "hashReferences": {
+      "adapters/hermes-kanban/index.mjs": "sha256:420b68d5a6b1cf1f534fee2a4565e807a7dec0d1ba9838c7619a8529fde5d5c4",
+      "adapters/hermes-kanban/tests/fixture.mjs": "sha256:a0c20a54c1f5bdf61a6cf76ca8c7c76beb96456fdfcb6e58f52f7258eae3b11d",
+      "adapters/hermes-kanban/tests/conformance.test.mjs": "sha256:2b2df59e0c30dc44a287e2fb0e9c6318f367c37548f4a5427beea596ec1a063a",
+      "catalogSnapshotDigest": "sha256:1604d129a690059330e52200181d8e3861a9189f925e01c8bdc3414a00ddf11d"
+    }
+  },
+  "reviewedChecks": [
+    {
+      "check": "Candidate identity and accepted-original preservation",
+      "result": "Verified HEAD and branch remotely; working tree clean at initial and final checks. Diff against the accepted base contains additions only, within Phase5.K adapter, proposal, documentation and consumer paths."
+    },
+    {
+      "check": "Scope, original plan and design chronology",
+      "result": "Read README, GATES, EVIDENCE, REPRODUCE, DESIGN, DESIGN-FREEZE, the complete original building plan and architecture review. Inspected independent design-closure evidence and verified all six freeze hashes. Git history places design freeze before implementation/admission."
+    },
+    {
+      "check": "Catalog admission and actual qualification",
+      "result": "Inspected admission.json, admit.mjs, conformance.json, catalog.yaml, descriptor, service manifest and validation receipt. Fixture code consumes the actual experimental snapshot and validates the manifest. Attempt9 identifies that catalog digest and reports 19/19 plus restart/no-run results; attempt7 is explicitly preadmission. Recomputed every conformance evidence hash, using the preserved historical fixture where required; all matched."
+    },
+    {
+      "check": "Authority, secrets and supported transport",
+      "result": "Read the complete adapter and fixture, public Host secret implementation, and selected pinned REST/WS backend handlers. Confirmed loopback-only configuration, explicit isolation attestation, payload identity rejection, exact-tuple resolver composition, public synthetic secret access and absence of private backend imports. Found the pre-mutation authority gap described above."
+    },
+    {
+      "check": "Mutation semantics and independent adversarial execution",
+      "result": "Inspected create/update/comment dispatch, sent/UNKNOWN classification, sequential replay, last-writer-wins behavior and reconciliation tests. Four read-only in-memory checks demonstrated mapping revocation, secret revocation, padded-title false conflict and Unicode round-trip failure. All exercised actual adapter source with explicitly synthetic transport/context substitutes."
+    },
+    {
+      "check": "Bounds and cursor behavior",
+      "result": "Inspected complete board/task/event normalization and event descriptor. Confirmed task overflow rejects rather than truncates, REST body reads are byte-bounded, active operations are capped, event batches are validated, cursor advancement stops before an omitted selected event, backend frame.cursor is not copied, and continuity remains UNKNOWN. Identified the Unicode length mismatch separately."
+    },
+    {
+      "check": "Test strength and consumer separation",
+      "result": "Read the complete conformance test, fixture, restart proof and SDK-only consumer. Distinguished real-backend cases from synthetic malformed/oversize/cursor fixtures. Inspected offline separate-consumer installation and forbidden-resolution assertions. Existing tests do not exercise the three blocking defects."
+    },
+    {
+      "check": "Isolation, lifecycle and ownership",
+      "result": "Read enclosure and qualifier source plus attempt7/9 prelaunch and post-mutation receipts. Confirmed namespace/chroot setup, capability drop, empty private state, no-route evidence, real process restart, REST no-run checks and separation between adapter disposal and backend ownership. No adapter-owned business persistence or SQL integration was found."
+    },
+    {
+      "check": "Regression classification and authority nonclaims",
+      "result": "Inspected regression2/3 result receipts, dependency and retired-memory failure logs, packed Decision receipts and the additive git diff. Failures are not presented as passes; offline proof requests are distinguished from authenticated live requests. No requirement to repair inherited failures or renew closed grants is introduced."
+    },
+    {
+      "check": "Read-only review discipline",
+      "result": "No files edited, no local source/dependency/archive copies created, no builds or artifact-writing tests run, no backend contacted by adversarial probes, no commits/pushes/tags, no lock manipulation, no MemoryV4 sync and no recursive workers."
+    }
+  ]
+}

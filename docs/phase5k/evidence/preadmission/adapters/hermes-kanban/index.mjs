@@ -4,9 +4,7 @@ import {AcapError} from '@alica/acap-contracts';
 import {createHash} from 'node:crypto';
 const MAX=262144, states=new Set(['triage','todo','scheduled','ready','running','blocked','review','done','archived']);
 const fail=c=>{throw new AcapError(c);};
-const text=(s,n,empty=false)=>typeof s==='string'&&[...s].length<=n&&(empty||s.length>0);
-// Exactly Python str.strip whitespace at the pinned backend, not JS trim's FEFF set.
-const titleView=s=>s.replace(/^[\u0009-\u000d\u001c-\u0020\u0085\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000]+|[\u0009-\u000d\u001c-\u0020\u0085\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000]+$/gu,'');
+const text=(s,n,empty=false)=>typeof s==='string'&&s.length<=(n)&& (empty||s.length>0);
 export function taskView(t,board){
  if(!t||!text(t.id,128)||!text(t.title,256)||!text(t.body??'',8192,true)||!states.has(t.status)||!(t.assignee===null||text(t.assignee,128)))fail('UNAVAILABLE');
  return {id:t.id,board,title:t.title,body:t.body??'',state:t.status.toUpperCase(),assigned:t.assignee!==null};
@@ -63,29 +61,24 @@ export function kanbanAdapter(descriptor,resolveCaller,configuration){
   const completed=new Promise(r=>{done=r;});const owned={owner,completed};inflight.add(owned);
   const mutation=['create','update','comment'].includes(operation),requestKey=operation==='create'?input.requestKey:'';let sent=false,result;
   try{
-   const dispatch=async(path,method='GET',body)=>{
-    const token=await context.secret('synthetic-test');if(typeof token!=='string'||!token)fail('UNAUTHENTICATED');
-    if(!same(a,auth(ctx,input,operation)))fail('PERMISSION_DENIED');if(closed)fail('UNAVAILABLE');if(signal.aborted)fail('CANCELLED');
-    if(method!=='GET')sent=true;return http(path,a.backendBoard,token,signal,method,body);
-   };
-   const title=['create','update'].includes(operation)?titleView(input.title):null;if(title==='')fail('INVALID_ARGUMENT');
-   const get=async id=>(await dispatch('/tasks/'+encodeURIComponent(id))).task;
+   const token=await context.secret('synthetic-test');if(typeof token!=='string'||!token)fail('UNAUTHENTICATED');
+   const get=async id=>(await http('/tasks/'+encodeURIComponent(id),a.backendBoard,token,signal)).task;
    if(operation==='board'||operation==='list'){
-    const tasks=boardView(await dispatch('/board'),input.board);result=operation==='board'?{board:input.board,taskCount:tasks.length,continuity:'UNKNOWN'}:{tasks,continuity:'UNKNOWN'};
+    const tasks=boardView(await http('/board',a.backendBoard,token,signal),input.board);result=operation==='board'?{board:input.board,taskCount:tasks.length,continuity:'UNKNOWN'}:{tasks,continuity:'UNKNOWN'};
    }else if(operation==='get')result=taskView(await get(input.id),input.board);
-   else if(operation==='events'){const token=await context.secret('synthetic-test');if(!same(a,auth(ctx,input,operation)))fail('PERMISSION_DENIED');if(closed)fail('UNAVAILABLE');if(signal.aborted)fail('CANCELLED');result=await events(input,a,token,signal,budget);}
+   else if(operation==='events')result=await events(input,a,token,signal,budget);
    else if(operation==='create'){
     const body='[origin '+a.actor+']\n'+input.body,key=createHash('sha256').update(JSON.stringify([a.backendBoard,a.actor,input.requestKey])).digest('hex');
-    const data=await dispatch('/tasks','POST',{title,body,triage:true,assignee:null,parents:[],idempotency_key:key});
-    const task=taskView(data.task,input.board);if(task.title!==title||task.body!==body||task.state!=='TRIAGE'||task.assigned)throw Error('UNCERTAIN');
+    sent=true;const data=await http('/tasks',a.backendBoard,token,signal,'POST',{title:input.title,body,triage:true,assignee:null,parents:[],idempotency_key:key});
+    const task=taskView(data.task,input.board);if(task.title!==input.title||task.body!==body||task.state!=='TRIAGE'||task.assigned)fail('CONFLICT');
     result={outcome:'APPLIED',task:[task],requestKey};
    }else if(operation==='update'){
     const task=taskView(await get(input.id),input.board);if(task.state!=='TRIAGE'||task.assigned)fail('FAILED_PRECONDITION');
-    const data=await dispatch('/tasks/'+encodeURIComponent(input.id),'PATCH',{title,body:'[origin '+a.actor+']\n'+input.body});
+    sent=true;const data=await http('/tasks/'+encodeURIComponent(input.id),a.backendBoard,token,signal,'PATCH',{title:input.title,body:'[origin '+a.actor+']\n'+input.body});
     result={outcome:'APPLIED',task:[taskView(data.task,input.board)],requestKey};
    }else if(operation==='comment'){
     // Existence read is authorized first, but this does not create a transaction.
-    taskView(await get(input.id),input.board);const data=await dispatch('/tasks/'+encodeURIComponent(input.id)+'/comments','POST',{author:a.actor,body:input.body});if(data.ok!==true)fail('UNAVAILABLE');result={outcome:'APPLIED',task:[],requestKey};
+    taskView(await get(input.id),input.board);sent=true;const data=await http('/tasks/'+encodeURIComponent(input.id)+'/comments',a.backendBoard,token,signal,'POST',{author:a.actor,body:input.body});if(data.ok!==true)fail('UNAVAILABLE');result={outcome:'APPLIED',task:[],requestKey};
    }else fail('INVALID_ARGUMENT');
    health='READY';
   }catch(e){
