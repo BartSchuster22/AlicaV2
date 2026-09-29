@@ -1,0 +1,29 @@
+{
+  "retrieval": "anonymous HTTPS git clone; credential helpers/global/system configs disabled",
+  "url": "https://github.com/BartSchuster22/AlicaV2.git",
+  "commit": "3ac1726a14343a93b1e920be8afd57b93397d443",
+  "tree": "8e43d787fb81f1ad184f16fd79b429e51b7b8e9c",
+  "filesVerifiedAgainstGitBlobs": 60387,
+  "node": "24.21.0",
+  "npm": "11.19.0",
+  "build": "PASS fresh npm ci offline ignore-scripts; pinned public cache only",
+  "native": {
+    "pass": 61,
+    "fail": 0,
+    "docker": "ENOENT",
+    "podman": "ENOENT",
+    "filesystemSockets": 0
+  },
+  "externalConsumer": {
+    "pass": 1,
+    "fail": 0
+  },
+  "qualificationHashesVerified": 90,
+  "broadD19": "reused frozen evidence; not rerun; inherited failures retained",
+  "logs": {
+    "public-candidate-native.log": "d5be3e108d74d7a455c803ef99be8b8f4892ab2ae5650be87586fa2a921a81ff",
+    "public-candidate-external.log": "9da8b2c830e166c50073a77561bca66d84f7e1c1b2c7b3b66777365273a0bbae",
+    "public-candidate-build.log": "9f825e668dbb3dfb2ff798c94be7327e7d8bdc6df000807203edad43a13abddd"
+  },
+  "ownerAcceptance": false
+}

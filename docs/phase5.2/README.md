@@ -1,4 +1,6 @@
-# Phase5.2 Doghouse + ACAP Adapter — independently cleared; publication blocked
+# Phase5.2 Doghouse + ACAP Adapter — technical release
+
+CURRENT: [Technical completion](PHASE5.2-COMPLETION.md). Independent clearance consumed, established DEV transport restored, candidate anonymously retrieved and reproduced (native61/61, external consumer1/1). Runtime/design/evidence frozen; technical release tag phase5.2-doghouse-v1.0.0. Exact final tag readback is a post-push step, never inferred from local state. NO Owner Acceptance/Phase5.3/production adoption. Earlier blocker/pending-review status below is historical and superseded by this declaration and genuine closure.
 
 LATEST: same-reviewer ACCEPT_FOR_TECHNICAL_PUBLICATION_WITH_CAVEATS for47e88349; R1/R2 CLOSED. [Genuine closure](review/final-closure.md) and referenced raw logs archived verbatim. [Release disposition](PHASE5.2-COMPLETION.md): D21 is blocked by local repository write authentication, not review. Nothing published/tagged; no Owner Acceptance. Earlier status below is historical and superseded only as stated.
 

@@ -1,5 +1,9 @@
 # ALICA V2
 
+## Phase5.2 Doghouse + ACAP — technical release
+
+[Technical completion](docs/phase5.2/PHASE5.2-COMPLETION.md) | [Independent clearance](docs/phase5.2/review/final-closure.md) | [Public-source reproduction](docs/phase5.2/publication/public-candidate-native.log). Technical tag `phase5.2-doghouse-v1.0.0` preserves reviewed runtime `47e88349ed6c0399eb2e5088b41d4b5d9ac26140`; anonymous public-candidate native61/61 and independent consumer1/1 passed. Final tag transport/readback is verified after push, not presumed here. Existing DEV publication transport restored under explicit Owner renewal; historical local-auth blocker below is superseded. Technical qualification is NOT Owner Acceptance or production adoption. Freeze/STOP for Owner Acceptance after exact release verification; no Phase5.3. Prior release/status text and links below remain historical records.
+
 ## Phase5.2 Doghouse + ACAP — independently reviewed, publication pending
 
 Current Owner instruction authorizes Phase5.2 technical completion/publication only. [Release disposition](docs/phase5.2/PHASE5.2-COMPLETION.md) | [Independent closure](docs/phase5.2/review/final-closure.md) | [Qualification](docs/phase5.2/README.md). Same-reviewer R1/R2 closure cleared exact `47e88349ed6c0399eb2e5088b41d4b5d9ac26140` WITH CAVEATS. Runtime/design/evidence frozen; local publication authentication is blocked, so no public Phase5.2 release or Owner Acceptance is claimed. No Phase5.3 or production authority. Earlier no-Phase5.2 statements below are historical only; prior accepted refs, text, links and closed grants are preserved.
