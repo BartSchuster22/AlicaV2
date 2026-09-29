@@ -1,6 +1,6 @@
 # Phase 5.K — Hermes Kanban / ACAP
 
-Technical release candidate; EXPERIMENTAL, isolated nonlaunching qualification only. NOT Owner Acceptance, STABLE admission, production adoption or Phase5.3 authorization.
+Technically qualified release; EXPERIMENTAL, isolated nonlaunching qualification only. NOT Owner Acceptance, STABLE admission, production adoption or Phase5.3 authorization.
 
 ## Delivered boundary
 `adapters/hermes-kanban/index.mjs` binds the pinned Hermes normal authenticated REST/WS server through the public ALICA SDK. Hermes alone owns tasks/runs/events; no canonical replacement, database mirror, SQL, private router or dispatcher integration. Capability `acap://alica.io/orchestration/kanban@1` provides board/list/get/create/update/comment/events. Control/dependencies/assignment/transitions/provider/model/workspace knobs remain deferred.
@@ -19,3 +19,6 @@ Health is initially UNAVAILABLE until successful backend observation, then READY
 
 ## Reading order
 DESIGN.md and DESIGN-FREEZE.json; GATES.md; EVIDENCE.md; REPRODUCE.md; original plan and architecture review. Design commit4d0d0361 preceded implementation/admission commit61ebcdbb. Prior failures are retained. Final independent review and publication receipts are separate gates, not implied by this README.
+
+## Final qualification and release
+Independent final review cleared all three blocking findings after real25/25; exact reviewed product then passed anonymous public-source build and25/25, separate SDK-only consumer, real restart and16-task no-run audit. See PHASE5K-COMPLETION.md, FINAL-REVIEW.md and publication/public-candidate.json. FREEZE/STOP for separate Owner Acceptance. Historical19-case admission remains preserved, not rewritten as25.
