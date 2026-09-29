@@ -1,5 +1,9 @@
 # ALICA V2
 
+## PHASE 5.K — COMPLETE / FROZEN / OWNER ACCEPTED
+
+[Formal Project Owner Acceptance](https://github.com/BartSchuster22/AlicaV2/blob/phase5k-hermes-kanban-v1.0.0-accepted/docs/phase5k/OWNER-ACCEPTANCE.md) | [Accepted documentary release](https://github.com/BartSchuster22/AlicaV2/tree/phase5k-hermes-kanban-v1.0.0-accepted). ACCEPTED within isolated nonlaunching durable Kanban-state integration scope only. EXPERIMENTAL, not STABLE; Hermes sole authority. Technical release `phase5k-hermes-kanban-v1.0.0` / `24ebab2bd2b7d58ec0b31642156b17cdf4982b5d` is immutable and unchanged. Technical delivery and Owner Acceptance are separate historical events. No execution orchestration, production credentials/adoption/deployment, Provider B, ALICA-owned Kanban state, closed-grant renewal or Phase5.3 authorization. All frozen limitations and inherited regression failures remain. Future capability changes require Evolutionary Capability Catalog governance and separate explicit authorization. STOP. Previous text and links below are retained byte-for-byte as historical records.
+
 ## PHASE 5.2 — COMPLETE / FROZEN / OWNER ACCEPTED
 
 [Formal Project Owner Acceptance](docs/phase5.2/OWNER-ACCEPTANCE.md) records ACCEPTED within the documented verified scope. Technical delivery `phase5.2-doghouse-v1.0.0` at `1ed8a395ae5c7ae2d6b342c10b67734000ce4c0b` remains immutable; separate documentary acceptance tag `phase5.2-doghouse-v1.0.0-accepted`. All caveats, EXPERIMENTAL/trustVerified=false and closed grants remain. No production/control/recovery authority, requalification or Phase5.3. STOP; future work needs separate authorization. Earlier pending-acceptance/status text below is retained historical record, superseded only by this formal Owner decision.
