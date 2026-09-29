@@ -1,0 +1,83 @@
+{
+  "decision": "READY_FOR_TECHNICAL_PUBLICATION",
+  "reviewType": "Same-reviewer finite blocking-only closure",
+  "closedFindings": [
+    {
+      "id": "K15-CURRENT-AUTHORITY-BEFORE-MUTATION",
+      "status": "CLOSED",
+      "sources": [
+        "adapters/hermes-kanban/index.mjs:66-69,82-88",
+        "adapters/hermes-kanban/tests/conformance.test.mjs:89-93",
+        "docs/phase5k/evidence/conformance-attempt10.log:25-28"
+      ],
+      "basis": "Each REST dispatch reacquires the public secret and then rechecks the exact current caller mapping, disposal and cancellation before setting sent or invoking transport. Update/comment no longer reuse authority across their preliminary GET.",
+      "verification": "Inspected all four actual held-GET tests: mapping and secret revocation independently prevent update and comment, with zero mutation requests asserted before disposal. Independently executed all four cases against current adapter source with in-memory substitutes; each returned PERMISSION_DENIED with requests containing only GET."
+    },
+    {
+      "id": "K16-COMMITTED-CREATE-MISREPORTED-AS-CONFLICT",
+      "status": "CLOSED",
+      "sources": [
+        "adapters/hermes-kanban/index.mjs:8-9,71,77-85,91-93",
+        "adapters/hermes-kanban/tests/conformance.test.mjs:21-24,94-96",
+        "docs/phase5k/evidence/conformance-attempt10.log:7,29"
+      ],
+      "basis": "Create/update titles are normalized using the pinned Python whitespace set, with empty normalized titles rejected before transport. Create response-content/state mismatches after possible dispatch now produce UNKNOWN rather than a definite CONFLICT. The changed collision test reconciles the original authoritative content instead of asserting an unsupported no-write conclusion.",
+      "verification": "Inspected real padded-title create/replay/update/read coverage. Independent in-memory checks passed for normalization, sequential replay, collision-to-UNKNOWN, zero transport for whitespace-only create/update, and preservation of FEFF rather than applying incompatible JavaScript trim semantics."
+    },
+    {
+      "id": "K14-UNICODE-CONTRACT-ROUNDTRIP",
+      "status": "CLOSED",
+      "sources": [
+        "adapters/hermes-kanban/index.mjs:7,10-16",
+        "adapters/hermes-kanban/tests/conformance.test.mjs:97-99",
+        "docs/phase5k/evidence/conformance-attempt10.log:30"
+      ],
+      "basis": "Text normalization now counts Unicode code points consistently with the unchanged JSON Schema. Independent transport byte limits and task-count limits remain unchanged.",
+      "verification": "Inspected actual qualification covering a 256-emoji title with an 8000-emoji body, a 129-emoji update, get/list and rejection of a 257-emoji title. Independent in-memory create/update/get/list/board checks and installed-Ajv boundary validation passed."
+    }
+  ],
+  "remainingBlockingFindings": [],
+  "reviewedCommit": {
+    "host": "DEV 167.233.135.142",
+    "path": "/home/alica-dev/AlicaV2-phase5k",
+    "branch": "phase5k-hermes-kanban",
+    "commit": "4fb39bc81c589e719faab06d495da31b79d01ad3",
+    "previousReviewedCommit": "48ab631d680cfb950f89e5233e9992161cc9cb45",
+    "historicalAdmissionCommit": "61ebcdbbc5b6fc2dfb6363ceecc0e3dac55041ff",
+    "workingTree": "CLEAN"
+  },
+  "currentSourceHashes": {
+    "algorithm": "SHA-256",
+    "adapters/hermes-kanban/index.mjs": "6636fd3ff9ab7de6f64d0c2511196e517d5331d5da58aaf4063744a35c8b8bed",
+    "adapters/hermes-kanban/tests/fixture.mjs": "aa7308d8f20b638c0c475435c30c0511d3dec59668ab2fe0ef47f3d2419c11cc",
+    "adapters/hermes-kanban/tests/conformance.test.mjs": "a11b06b0d19c1f87d76c508d80d85ca5e5277d321357d652511009f6c71efefe",
+    "adapters/hermes-kanban/tests/restart.mjs": "0e1ee1eb5aee731376ddc26509c0a48760f31f2ddd7fcad38220a610664ba589",
+    "examples/phase5k-consumer/consumer.mjs": "a90439ca58d6d9e971d6f2f678c3136d732268dbb7074ea878f29cca032c901b",
+    "catalog/proposals/hermes-kanban/descriptor.json": "8345614535d71bd7627a04bd48a57457d0e1e813856a9830ff08b08cf638c040",
+    "catalog/proposals/hermes-kanban/snapshot.json": "1e59a9c9af8eba525980e38e07127cb90b08cf78acb478daae8b038af1bbe338",
+    "catalog/proposals/hermes-kanban/service.json": "1bd7caae71d4098ac33364356d4baee8fb4619ac1017b473b6f9ecd4e473383c",
+    "docs/phase5k/proof/qualification.py": "b1c546e6cde1650d24e07c3409797a2f7717eddf8005cbb0007123ef06958e97",
+    "docs/phase5k/proof/enclose-qualification.sh": "b73f50f8cf5ddcda95e0879a39aff67ff0fb404847ab167ba4363fcfb52403a9",
+    "docs/phase5k/evidence/conformance-attempt10.log": "ffd783c66323a8d6e424bf194cb1dbb2ac1b5c06f0bc381a3a254e0ed1b76c57"
+  },
+  "reviewedChecks": [
+    "Inspected the product/test diff from 48ab631d to HEAD, current complete adapter, REVIEW-REMEDIATION.md and preserved original BLOCKED findings.",
+    "Inspected attempt10: actual experimental catalog consumption, 25 tests passed, zero failures/cancellations/skips, real backend restart, and sixteen triage/unassigned tasks passing the no-worker/no-run audit.",
+    "Recomputed every current SOURCE-SHA256.json entry and the attempt10 log hash; all matched.",
+    "Recomputed every historical admission evidence hash and verified all five archived source files byte-for-byte against commit61ebcdbb.",
+    "Inspected verify-release.mjs: historical admission hashes resolve to explicitly archived source rather than changed current implementation. Current 25-case evidence is separately identified by SOURCE-SHA256.json.",
+    "Verified no changes to the frozen catalog/proposal directory, design artifacts, DESIGN.md or DESIGN-FREEZE.json relative to the prior reviewed commit.",
+    "Verified the complete diff against the accepted base contains additions only; no accepted original files were modified.",
+    "Executed six groups of synthetic in-memory closure checks without backend access or artifact writes; all passed. No blocking regression attributable to the inspected fixes was found."
+  ],
+  "limitations": [
+    "Readiness applies to technical publication of this exact candidate and the existing isolated, nonlaunching EXPERIMENTAL scope. Publication, annotated tag and anonymous exact-source readback remain pending.",
+    "This is not Owner Acceptance, STABLE admission, production approval, operational queue/worker/provider authorization, closed-grant renewal or Phase5.3 authorization.",
+    "Production credential binding remains unsupported. Only the frozen public synthetic-test fixture binding is qualified.",
+    "Native operator composition remains trusted code, not a hostile-code sandbox. Native WebSocket buffering still precedes the application frame-size check.",
+    "Best-effort replay, last-writer-wins updates, UNKNOWN event continuity and uncertainty after possible mutation dispatch remain explicit limitations. Revocation does not imply rollback.",
+    "The recorded real-backend qualification was inspected, not rerun by this reviewer. Independent execution was synthetic and in-memory only.",
+    "Inherited regression failures remain failures as classified in the original review; this closure does not claim a newly executed or entirely green repository-wide regression run.",
+    "No files were edited, backend contacted, build or artifact-writing test run, local source/dependency/archive copy created, lock manipulated, MemoryV4 synchronized, worker spawned, or publication action performed."
+  ]
+}
