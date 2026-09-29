@@ -1,0 +1,67 @@
+✖ actual Python shared-domain create/get/search, durable restart, scope and forged authority (46.516162ms)
+✖ ambiguous committed write: actual child exit without response, explicit same-key retry (18.698181ms)
+✖ product deadline/cancellation, unavailable executable, disposal stale handle (16.846902ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 0
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 419.24662
+
+✖ failing tests:
+
+test at services/memoryv4/test-provider.mjs:29:1
+✖ actual Python shared-domain create/get/search, durable restart, scope and forged authority (46.516162ms)
+  Error [AcapError]: FAILED_PRECONDITION
+      at normalized (file:///home/herman/alica-phase52/packages/acap-contracts/dist/validation.js:41:12)
+      at #discoverVerified (file:///home/herman/alica-phase52/packages/kernel/dist/index.js:220:19)
+      at Host.discover (file:///home/herman/alica-phase52/packages/kernel/dist/index.js:201:38)
+      at Object.discover (file:///home/herman/alica-phase52/.tools/accepted-baseline/service-foundation/conformance/host-fixture.mjs:26:15)
+      at setup (file:///home/herman/alica-phase52/.tools/accepted-baseline/services/memoryv4/test-provider.mjs:17:13)
+      at TestContext.<anonymous> (file:///home/herman/alica-phase52/.tools/accepted-baseline/services/memoryv4/test-provider.mjs:30:94)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    code: 'FAILED_PRECONDITION',
+    correlationId: 'ffeadb51-3ac6-4454-b9f9-48646c703de6',
+    retryable: false
+  }
+
+test at services/memoryv4/test-provider.mjs:45:1
+✖ ambiguous committed write: actual child exit without response, explicit same-key retry (18.698181ms)
+  Error [AcapError]: FAILED_PRECONDITION
+      at normalized (file:///home/herman/alica-phase52/packages/acap-contracts/dist/validation.js:41:12)
+      at #discoverVerified (file:///home/herman/alica-phase52/packages/kernel/dist/index.js:220:19)
+      at Host.discover (file:///home/herman/alica-phase52/packages/kernel/dist/index.js:201:38)
+      at Object.discover (file:///home/herman/alica-phase52/.tools/accepted-baseline/service-foundation/conformance/host-fixture.mjs:26:15)
+      at setup (file:///home/herman/alica-phase52/.tools/accepted-baseline/services/memoryv4/test-provider.mjs:17:13)
+      at TestContext.<anonymous> (file:///home/herman/alica-phase52/.tools/accepted-baseline/services/memoryv4/test-provider.mjs:48:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19) {
+    code: 'FAILED_PRECONDITION',
+    correlationId: 'f30b6a18-f3b9-4785-b0db-5ab6ac9c4bbf',
+    retryable: false
+  }
+
+test at services/memoryv4/test-provider.mjs:51:1
+✖ product deadline/cancellation, unavailable executable, disposal stale handle (16.846902ms)
+  Error [AcapError]: FAILED_PRECONDITION
+      at normalized (file:///home/herman/alica-phase52/packages/acap-contracts/dist/validation.js:41:12)
+      at #discoverVerified (file:///home/herman/alica-phase52/packages/kernel/dist/index.js:220:19)
+      at Host.discover (file:///home/herman/alica-phase52/packages/kernel/dist/index.js:201:38)
+      at Object.discover (file:///home/herman/alica-phase52/.tools/accepted-baseline/service-foundation/conformance/host-fixture.mjs:26:15)
+      at setup (file:///home/herman/alica-phase52/.tools/accepted-baseline/services/memoryv4/test-provider.mjs:17:13)
+      at TestContext.<anonymous> (file:///home/herman/alica-phase52/.tools/accepted-baseline/services/memoryv4/test-provider.mjs:52:96)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19) {
+    code: 'FAILED_PRECONDITION',
+    correlationId: 'ef4c9e6b-2aaf-4326-a688-c3741d13a398',
+    retryable: false
+  }

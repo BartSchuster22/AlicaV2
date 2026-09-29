@@ -1,0 +1,13 @@
+file:///home/herman/alica-phase52/services/decision/tools/external.mjs:13
+  catch(e){throw new Error('EXTERNAL_STEP_FAILED '+command+' exit='+e.status);}
+                 ^
+
+Error: EXTERNAL_STEP_FAILED npm exit=1
+    at run (file:///home/herman/alica-phase52/services/decision/tools/external.mjs:13:18)
+    at install (file:///home/herman/alica-phase52/services/decision/tools/external.mjs:28:28)
+    at file:///home/herman/alica-phase52/services/decision/tools/external.mjs:29:3
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0

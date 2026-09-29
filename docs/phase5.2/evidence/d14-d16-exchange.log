@@ -1,0 +1,24 @@
+✔ D14-D16 canonical roundtrip with acknowledgements, resolutions and compatible continuation (42.331498ms)
+✔ D15 imported producer/actor history grants neither query nor duplicate ingestion (9.412117ms)
+✔ D16 unavailable historical rule preserved as HISTORICAL_ONLY, never reassessed or acknowledged (21.454163ms)
+✔ D15 rejected import is atomic: extra grants (8.359566ms)
+✔ D15 rejected import is atomic: foreign schema (8.095865ms)
+✔ D15 rejected import is atomic: count mismatch (8.167734ms)
+✔ D15 rejected import is atomic: missing reference (8.542773ms)
+✔ D15 rejected import is atomic: dedupe mismatch (8.622496ms)
+✔ D15 rejected import is atomic: duplicate observation (8.454821ms)
+✔ D15 rejected import is atomic: privileged evidence (7.49002ms)
+✔ D15 rejected import is atomic: wrong correlation (7.701521ms)
+✔ D15 rejected import is atomic: invalid timestamp (6.800914ms)
+✔ D15 rejected import is atomic: incompatible labelled current (6.603863ms)
+✔ D15 rejected import is atomic: unbacked resolution (7.619031ms)
+✔ D15 oversized/malformed import and nonempty target reject before mutation (4.365864ms)
+✔ D17 acknowledgement retry content collision is durable and actor-bound (20.1417ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 579.513063

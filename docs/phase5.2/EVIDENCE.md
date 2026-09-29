@@ -1,0 +1,36 @@
+# Executed evidence and finite qualification scope
+
+All paths below are relative to docs/phase5.2/evidence unless stated. Logs are actual outputs, including unsuccessful first attempts; none are fabricated reviews or substitute API responses. Qualification used local Node24.21.0/npm11.19.0. Python prerequisite was resolved through isolated public uv tooling under clone .tools: CPython3.11.15, satisfying the inherited >=3.11 requirement, with exact services/memoryv4/requirements-qualified.txt versions. Earlier baseline note's unresolved Python3.12 assumption is superseded by this actually executed compatible local runtime. No production Python environment was edited.
+
+## Positive execution
+
+- final-native-conformance.log: `unshare -Urn node --experimental-vm-modules --test --test-timeout=30000 services/doghouse/tests/*.test.mjs`:50 pass,0 fail. Includes all product tests, public Host and offline-packed separate consumer, fault/continuity and stopped backup.
+- d13-native.log: original23 pass native implementation/public conformance at606e1645. Catalog conformance.json preserves its exact hashes, not replaced by subsequent larger counts.
+- d13b-admission.log: actual frozen reviewProposal/transition/createSnapshot/consumeSnapshot, proposed->experimental, actual manifest structural/semantic PASS. Snapshot sha256:6cad8c7fe21bc2f93f723eff0e75677e2f4f07ffb978e0e28306f4ddb8a8397d. Same digest as development fixture because selected bytes match; ONLY actual admission/provenance advances status, digest alone never did. Validator's executed field remains NOT_TESTED; actual executed evidence is separate.
+- d14-d16-exchange.log:16 pass. qualification-native.log earlier44 pass. d18-external.log separate1 pass; all included again in final50.
+- d19-base-regression.log: network namespace `npm run build && npm run typecheck && npm test && npm run test:catalog`: build/typecheck exit0;170 base +15 Catalog pass.
+- d19-decision-foundation.log: network namespace Node test selectors services/decision/tests/{contract,provider,external}/*.test.mjs and service-foundation/tests/*.test.mjs:95 pass combined. Historical proof scripts are not live grant authority; protected launchers never invoked.
+- d19-memory-python.log: environment-cleared isolated Python `-I -m pytest -q -p no:cacheprovider tests` in services/memoryv4, temporary HOME and MEMORYV4_DB_PATH under /tmp, network namespace:78 pass, one inherited Starlette/AnyIO deprecation warning. No production MemoryV4 call or data.
+- d19-memory-acap.log: current test-v2.mjs8 pass, retired test-provider.mjs3 fail (below). Exact command selected both, no silently omitted failures.
+- d19-decision-packed-prepared.log and d19-decision-continuation-prepared.log: frozen `services/decision/tools/external.mjs` default and `--continuation-fixture`, network namespace, temporary isolated HOME/.npmrc with offline=true and isolated cache. Actual packed separate installs complete; authenticatedLiveRequests0. Synthetic fixture ledgers never renew Phase4's CLOSED6 consumed/0 remaining live grant.
+- d20-boundaries-final.log / d20-secrets-final.log: checks rerun after staging all new product/tests/docs; PASS. Frozen source diff exit0 for packages, Foundation, Decision, MemoryV4/phase51 and root package/lock/toolchain files. Exact candidate source/evidence hashes supplied in qualification.json.
+- Final proof rerun: docs/phase5.2/proof/*.test.mjs5 pass (D4 event1 + design4); existing admission hash/readback command exit0. This is worker rerun, distinct from genuine parent independent design tests.
+
+## Preserved failures and preparatory issues
+
+- d19-dependencies.log: inherited tools/check-dependencies.py exit1, `AssertionError: @alica/catalog`. Frozen checker/packages unchanged; NOT green and not repaired.
+- Retired MemoryV4 v1 test-provider.mjs:3 FAILED_PRECONDITION before activation. Independently reran same selector from git archive of exact accepted ad3df9bb with identical frozen package builds; d19-retired-v1-accepted-baseline.log reproduces3 failures at same discovery/setup stage. Current v2 remains8 pass. This additional historical selector is not a new Phase5.2 regression and was NOT repaired or counted as passing.
+- d19-decision-packed.log and d19-decision-continuation-packed.log: first attempts failed npm install because public Ajv registry metadata was not cached (ENOTCACHED). Prepared only isolated public tooling cache by installing Ajv8.20.0 plus public dependencies under .tools/regression-deps; no frozen Catalog/Decision packaging change. Rerun prepared logs PASS. No live-provider fallback.
+- domain-first.log:19 pass/1 fail, incorrect new test expectation counted active work as pending queue wait. Corrected expectation to7 expired waiters +1 already executing, with state assertion. Native implementation unchanged for that correction.
+- native-initial.log / public-second.log: new operator fixture lacked inherited parent grant then used parent/child grant expiries with different wall time. Fixed new fixture to issue exact parent grants and one fixed expiry. No Host modification. public-third.log3 pass; final50 repeats.
+- Initial D4/D8 fixture/generator failures remain alongside successful evidence from pre-code phase. No optional hardening loop.
+
+## Failure/security applicability
+
+Covered: producer/instance/generation/scope/target mismatch, unknown/secret-bearing/oversize evidence, hash/code mismatch, clock skew/age/order, duplicate-content conflict, duplicate replay under new current authorization, wrong actor mapping/Host grant, cross-scope query, request-key collision, missing manual operation, stale handle, unavailable/corrupt/single-writer store, pre-write and uncertain post-rename failure, child self-exit on either side of rename, retained history and all selected capacity bounds, explicit cancellation, postcommit uncertainty, queue timeout/overflow, incomplete shutdown retaining ownership, canonical malformed/foreign/inconsistent/nonempty import, historical-only semantics and compatible continuation.
+
+NOT_APPLICABLE: active HTTP/TCP/TLS probe SSRF/redirect/credential tests because no probe/network adapter; recovery/executor authorization because no such capability or execution path; annotations/manual-resolution authorization because absent from contract (unknown operation rejection actually tested). Do not construct an unauthorized adapter merely to make those tests applicable.
+
+Native fsync timeout injection proves cooperative postcommit outcome semantics, not kernel preemption/power-loss certification. Measured responsive shutdown test asserts1900–5000ms around the2000ms timer; no deployment latency SLO claimed. No real-time24h soak. Stopped backup copy/restore is tested separately; cross-version migration remains NOT_TESTED. Original Foundation root/chroot launcher has hardcoded DEV user/path and was not invoked locally; accepted public/native Foundation tests ran in local no-external-network namespace without operational services. This is native no-container execution, not proof that container binaries are absent from this host.
+
+Final review/publication/anonymous tagged-source verification remain pending. This evidence is not Owner Acceptance.

@@ -1,0 +1,77 @@
+✖ actual Python shared-domain create/get/search, durable restart, scope and forged authority (37.48866ms)
+✖ ambiguous committed write: actual child exit without response, explicit same-key retry (15.973838ms)
+✖ product deadline/cancellation, unavailable executable, disposal stale handle (19.449086ms)
+(node:4058075) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ real admitted Catalog snapshot pinned M7; native container absence when isolated (63.312946ms)
+✔ independent public SDK consumer runs unchanged against Catalog-selected v2 (1366.893813ms)
+✔ v2 public Host create/get/search; durable actor/request replay across complete Host restart (3167.903153ms)
+✔ every replay reauthorizes domain mapping, permissions, scope and frozen Host grants (1312.18033ms)
+✔ request conflicts, actor isolation, malformed/forged authority, old wire rejected (1626.562878ms)
+✔ ambiguous committed child loss; explicit retry succeeds in SAME Host without cached transport error (807.81442ms)
+✔ active deadline/cancellation cleanup; sanitized unavailable transport and stale handle (578.762764ms)
+✔ at least24h retention: explicit25h-aged ledger fixture replays after full restart (not wall-clock soak) (933.55783ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 8
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10418.115841
+
+✖ failing tests:
+
+test at services/memoryv4/test-provider.mjs:29:1
+✖ actual Python shared-domain create/get/search, durable restart, scope and forged authority (37.48866ms)
+  Error [AcapError]: FAILED_PRECONDITION
+      at normalized (file:///home/herman/alica-phase52/packages/acap-contracts/dist/validation.js:41:12)
+      at #discoverVerified (file:///home/herman/alica-phase52/packages/kernel/dist/index.js:220:19)
+      at Host.discover (file:///home/herman/alica-phase52/packages/kernel/dist/index.js:201:38)
+      at Object.discover (file:///home/herman/alica-phase52/service-foundation/conformance/host-fixture.mjs:26:15)
+      at setup (file:///home/herman/alica-phase52/services/memoryv4/test-provider.mjs:17:13)
+      at TestContext.<anonymous> (file:///home/herman/alica-phase52/services/memoryv4/test-provider.mjs:30:94)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    code: 'FAILED_PRECONDITION',
+    correlationId: '3710c794-894d-4b9f-a557-2ece0ac4cd33',
+    retryable: false
+  }
+
+test at services/memoryv4/test-provider.mjs:45:1
+✖ ambiguous committed write: actual child exit without response, explicit same-key retry (15.973838ms)
+  Error [AcapError]: FAILED_PRECONDITION
+      at normalized (file:///home/herman/alica-phase52/packages/acap-contracts/dist/validation.js:41:12)
+      at #discoverVerified (file:///home/herman/alica-phase52/packages/kernel/dist/index.js:220:19)
+      at Host.discover (file:///home/herman/alica-phase52/packages/kernel/dist/index.js:201:38)
+      at Object.discover (file:///home/herman/alica-phase52/service-foundation/conformance/host-fixture.mjs:26:15)
+      at setup (file:///home/herman/alica-phase52/services/memoryv4/test-provider.mjs:17:13)
+      at TestContext.<anonymous> (file:///home/herman/alica-phase52/services/memoryv4/test-provider.mjs:48:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19) {
+    code: 'FAILED_PRECONDITION',
+    correlationId: 'f806e8be-ce88-4a2b-9e91-5caf30e4d752',
+    retryable: false
+  }
+
+test at services/memoryv4/test-provider.mjs:51:1
+✖ product deadline/cancellation, unavailable executable, disposal stale handle (19.449086ms)
+  Error [AcapError]: FAILED_PRECONDITION
+      at normalized (file:///home/herman/alica-phase52/packages/acap-contracts/dist/validation.js:41:12)
+      at #discoverVerified (file:///home/herman/alica-phase52/packages/kernel/dist/index.js:220:19)
+      at Host.discover (file:///home/herman/alica-phase52/packages/kernel/dist/index.js:201:38)
+      at Object.discover (file:///home/herman/alica-phase52/service-foundation/conformance/host-fixture.mjs:26:15)
+      at setup (file:///home/herman/alica-phase52/services/memoryv4/test-provider.mjs:17:13)
+      at TestContext.<anonymous> (file:///home/herman/alica-phase52/services/memoryv4/test-provider.mjs:52:96)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19) {
+    code: 'FAILED_PRECONDITION',
+    correlationId: '0a0fcda9-71ef-4cc2-8d5d-f5e2252dfa4d',
+    retryable: false
+  }
