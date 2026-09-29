@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "tests": 23,
+  "fail": 0,
+  "implementationRevision": "606e1645",
+  "execution": "native Node24.21.0, public Host/SDK plus domain; no-container, no LLM, temporary store only",
+  "hashes": {
+    "services/doghouse/core.mjs": "8a6c66becca4ca4b2cad6e6ca30cd70d1ad39a8b63c3fc4bc769358b104d772d",
+    "services/doghouse/contracts.mjs": "d3d99a828fd2ca957b7b48040b266e43220bca1001feea13fadef70b134c4745",
+    "services/doghouse/store.mjs": "d68da687e66bbc5eec0950f1fcad5c416f30e828d696560346cbf8f27e211074",
+    "services/doghouse/adapter.mjs": "5293bafeff4a46b45e968296eea9d9aa2cd3fa753e23a91ed73523f540811039",
+    "services/doghouse/tests/domain.test.mjs": "4d2f9ccbc4628e96d852e4477dba0d5105b187c677b7d4564176fe496e22e1c1",
+    "services/doghouse/tests/public.test.mjs": "d821bce6ac60342a14b96fce9b7dda9558596cb3297a796d6061b6721600a790",
+    "services/doghouse/tests/public-fixture.mjs": "ff313ad6edd5cb2da1b92d3971d32b35404b2f09b2f226e7472cc606cdf771eb",
+    "services/doghouse/tests/fixture.mjs": "6a30dda51773f5a8d22999b861bee6ba2b6bd3d0693620e5c3896f965f800318",
+    "examples/phase52-consumer/consumer.mjs": "ccdfa21f49e31b3eb0679a4772aa44a16e672d15bd758221c98ac362d5e4ea8a",
+    "docs/phase5.2/evidence/d13-native.log": "9afc681abc996fdc2ce47697831b74a1366ad8f330adba00de1f31a6191a2fa6"
+  }
+}

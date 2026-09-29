@@ -1,0 +1,21 @@
+{
+  "apiVersion": "catalog.alica.io/proposal-v1",
+  "id": "phase52-assurance-incidents-v1",
+  "problem": "An isolated reference source must report a failure through accepted public events; an independent consumer must query and acknowledge its same-scope incident without knowing Doghouse internals.",
+  "existingInsufficient": "Echo, neutral records, decision and memory-candidates do not express assurance lifecycle or provenance; frozen contracts cannot be silently repurposed.",
+  "abstraction": "One minimal provider-neutral incident get/list/acknowledge capability with one typed signal event. No control, generic health transport, probes, import/export or administrative mutations.",
+  "providers": [
+    "Native isolated Doghouse assurance domain planned after design freeze",
+    "Independent assurance implementation satisfying the same bounded public semantics (candidate, not implemented)"
+  ],
+  "consumers": [
+    "Public SDK isolated incident reader/acknowledger, no Doghouse or store imports"
+  ],
+  "draft": "acap://alica.io/assurance/incidents@1",
+  "alternatives": "No broad doghouse family, no arbitrary HTTP probe and no private Kernel shortcut. Canonical exchange is restricted operator workflow, not this capability.",
+  "security": "Host supplies current caller and event provenance. Local current mappings separately restrict exact data scope and producer/target; imported provenance never becomes local authority. No executor, credentials or probes. Inproc binding is not hostile-code isolation.",
+  "scopes": "Existing application/session labels. Exact local data scope; no cross-scope correlation or implicit ancestry. Permissions are declarations, grants and current local mappings separately enforced.",
+  "compatibility": "Additive proposal only; original Catalog and Foundation unchanged. Distinct real review before PROPOSED, actual conformance before EXPERIMENTAL admission. Development fixture experimental metadata is not admission.",
+  "genericRationale": "Incidents, observations and acknowledgement are reusable assurance concepts; no Doghouse filesystem or deployment fields enter capability.",
+  "proposer": "Hermes Phase5.2 implementation worker"
+}
