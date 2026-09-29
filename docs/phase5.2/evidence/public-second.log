@@ -1,0 +1,63 @@
+(node:4041979) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✖ D11-D13 public Host/SDK isolated vertical slice and independent consumer (144.15966ms)
+✖ D12 independent current mapping AND Host grants both required; scope denied (99.377562ms)
+✖ D13 restart restores same IDs/lifecycle while new instance requires new mappings (87.278466ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 0
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 723.327174
+
+✖ failing tests:
+
+test at services/doghouse/tests/public.test.mjs:8:1
+✖ D11-D13 public Host/SDK isolated vertical slice and independent consumer (144.15966ms)
+  Error [AcapError]: PERMISSION_DENIED
+      at fail (file:///home/herman/alica-phase52/packages/acap-contracts/dist/validation.js:31:11)
+      at check (file:///home/herman/alica-phase52/packages/acap-contracts/dist/validation.js:35:9)
+      at Host.issueGrant (file:///home/herman/alica-phase52/packages/kernel/dist/index.js:313:13)
+      at Object.grant (file:///home/herman/alica-phase52/tools/g3-fixtures.mjs:237:10)
+      at publicFixture (file:///home/herman/alica-phase52/services/doghouse/tests/public-fixture.mjs:16:4)
+      at async TestContext.<anonymous> (file:///home/herman/alica-phase52/services/doghouse/tests/public.test.mjs:9:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    code: 'PERMISSION_DENIED',
+    correlationId: '2edb7bed-372d-4a32-9bd7-b78f760ab0f8',
+    retryable: false
+  }
+
+test at services/doghouse/tests/public.test.mjs:24:1
+✖ D12 independent current mapping AND Host grants both required; scope denied (99.377562ms)
+  Error [AcapError]: PERMISSION_DENIED
+      at fail (file:///home/herman/alica-phase52/packages/acap-contracts/dist/validation.js:31:11)
+      at check (file:///home/herman/alica-phase52/packages/acap-contracts/dist/validation.js:35:9)
+      at Host.issueGrant (file:///home/herman/alica-phase52/packages/kernel/dist/index.js:313:13)
+      at Object.grant (file:///home/herman/alica-phase52/tools/g3-fixtures.mjs:237:10)
+      at publicFixture (file:///home/herman/alica-phase52/services/doghouse/tests/public-fixture.mjs:16:4)
+      at async TestContext.<anonymous> (file:///home/herman/alica-phase52/services/doghouse/tests/public.test.mjs:25:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    code: 'PERMISSION_DENIED',
+    correlationId: '3c1fda50-fc99-4786-90f0-4458a2f1dbaa',
+    retryable: false
+  }
+
+test at services/doghouse/tests/public.test.mjs:29:1
+✖ D13 restart restores same IDs/lifecycle while new instance requires new mappings (87.278466ms)
+  Error [AcapError]: PERMISSION_DENIED
+      at fail (file:///home/herman/alica-phase52/packages/acap-contracts/dist/validation.js:31:11)
+      at check (file:///home/herman/alica-phase52/packages/acap-contracts/dist/validation.js:35:9)
+      at Host.issueGrant (file:///home/herman/alica-phase52/packages/kernel/dist/index.js:313:13)
+      at Object.grant (file:///home/herman/alica-phase52/tools/g3-fixtures.mjs:237:10)
+      at publicFixture (file:///home/herman/alica-phase52/services/doghouse/tests/public-fixture.mjs:16:4)
+      at async TestContext.<anonymous> (file:///home/herman/alica-phase52/services/doghouse/tests/public.test.mjs:30:31)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    code: 'PERMISSION_DENIED',
+    correlationId: 'ec5217d8-4587-4dd0-b888-3f12f08b9d98',
+    retryable: false
+  }

@@ -1,0 +1,47 @@
+✔ D9-D10 native lifecycle distinct occurrences, acknowledgement, recovery, recurrence and restart (46.575498ms)
+✔ duplicate old redelivery is idempotent; payload conflict rejected (15.353115ms)
+✔ D17 forged producer (1.334026ms)
+✔ D17 wrong instance (1.15015ms)
+✔ D17 wrong generation (1.133858ms)
+✔ D17 cross scope (1.014838ms)
+✔ D17 unregistered target (0.994548ms)
+✔ D17 secret-bearing extra evidence (0.976695ms)
+✔ D17 bad evidence hash (1.081808ms)
+✔ D17 future skew (1.16554ms)
+✔ D17 stale observation (0.91347ms)
+✔ D17 recovery evidence mismatch (0.876679ms)
+✔ D17 oversize (0.893563ms)
+✔ D17 out-of-order recovery cannot resolve; silence and self-health not recovery (4.453224ms)
+✔ D17 query/ack scope and unknown manual operation denied (3.397828ms)
+✔ D17 durable write failure leaves no partial state; uncertain post-rename fails closed (4.725402ms)
+✔ D17 exclusive ownership and corrupt-store fail closed (0.905364ms)
+✔ D17 occurrence capacity rejects without eviction (261.122148ms)
+✖ D17 cooperative queue wait, overload, cancellation and shutdown refusal (9.917387ms)
+✔ D17 postcommit cooperative deadline reports uncertainty, retry is duplicate (3.913657ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 19
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 854.015753
+
+✖ failing tests:
+
+test at services/doghouse/tests/domain.test.mjs:59:1
+✖ D17 cooperative queue wait, overload, cancellation and shutdown refusal (9.917387ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  7 !== 8
+  
+      at TestContext.<anonymous> (file:///home/herman/alica-phase52/services/doghouse/tests/domain.test.mjs:63:77)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 7,
+    expected: 8,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
