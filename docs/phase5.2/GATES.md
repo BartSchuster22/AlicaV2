@@ -1,4 +1,6 @@
-# Phase5.2 gates — implementation candidate for final independent review
+# Phase5.2 gates — independent review cleared; D21 authentication blocker
+
+LATEST: genuine same-reviewer closure in review/final-closure.md/.json closes R1/R2 and clears exact47e88349 for technical publication WITH CAVEATS. D13 and D10/D15/D16/D17 corrective qualification accepted within stated scope. D21 documentation package assembled; publication, tag transport, anonymous exact-doc/source verification still BLOCKED by missing local AlicaV2 write authentication. No public release/Owner Acceptance claimed. PHASE5.2-COMPLETION.md records actual disposition; previous pending-review statuses below are historical.
 
 Latest correction: independent review BLOCKED_CONCRETE_FINDINGS (review/final-blocked.md/.json) identified R1/R2. Finite corrections are implemented and re-evidenced in QUALIFICATION-SUPPLEMENT-R1-R2.md; same-reviewer closure is PENDING, publication BLOCKED. All prior receipts retained. States below are local technical qualification, not final independent approval or Owner Acceptance. Design F1 was independently closed at9120c30f; initial CHANGES_REQUIRED review remains provenance. No retrospective self-approval.
 

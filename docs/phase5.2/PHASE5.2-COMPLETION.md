@@ -1,0 +1,21 @@
+# Phase5.2 — technical release readiness and publication disposition
+
+Status: INDEPENDENT REVIEW CLEARED; D21 PUBLICATION BLOCKED BY LOCAL AUTHENTICATION. This is NOT a completed public technical release or Owner Acceptance.
+
+The same independent reviewer returned ACCEPT_FOR_TECHNICAL_PUBLICATION_WITH_CAVEATS for exact candidate47e88349ed6c0399eb2e5088b41d4b5d9ac26140, closing both R1/R2 after independent execution. Genuine closure: [MD](review/final-closure.md), [JSON](review/final-closure.json). Verbatim referenced independent logs: [native61/61](review/r1-independent.log) and [original R2 reproduction1/1](review/r2-original-repro.log). Raw SHA256 pins match the closure. Focused R2 independently12/12, as recorded by that reviewer. Earlier BLOCKED review and immutable original receipts remain preserved, not rewritten.
+
+This packaging changes documentation only; runtime, tests, approved design, Catalog admission, qualification manifests and all prior evidence remain byte-identical to the reviewed candidate. `node docs/phase5.2/verify.mjs` remains the90-entry current qualification verifier. Historical PENDING/BLOCKED review status in frozen receipts is superseded by the new closure, not erased. Tests are not reinterpreted as Owner Acceptance.
+
+## D21 transport blocker, not fabricated publication
+
+Authorized target: public repository https://github.com/BartSchuster22/AlicaV2, branch phase52-doghouse, immutable annotated technical tag phase5.2-doghouse-v1.0.0. No acceptance tag authorized.
+
+Anonymous HTTPS ref discovery succeeded. Phase5.2 branch/tag were absent; main remained4fb74c368c7d06969631e8edb713cf974034f073. HTTPS push preflight failed because no username/credential was available with terminal prompting disabled. Neither existing local user nor root GitHub CLI was authenticated. Existing GitHub SSH alias publication preflight failed with repository access denied to its deploy key. No credentials printed, credential scope altered, repository visibility changed, or DEV/production SSH used. Prior publication scripts relied on a different DEV checkout; this is not authorization to access that operational machine for credentials.
+
+No branch/tag/main publication or anonymous retrieval of Phase5.2 source occurred. A local archive is NOT public-source reproduction. Exact public tag-object/peeled-target/document-hash and published-source qualification remain NOT EXECUTED because the release is not reachable publicly. Local refs must not be promoted to public evidence. Resume only with an existing authorized AlicaV2 write credential available to the designated publisher; inspect refs again, publish non-forced branch plus new annotated technical tag, add separate main README-only discovery commit preserving prior text, then execute anonymous exact-source/document verification and scoped reproduction. STOP for Owner Acceptance only after that technical release actually completes.
+
+## Qualified scope and preserved caveats
+
+Native assurance domain/store, isolated public typed-event ingestion and public ACAP get/list/acknowledge; canonical roundtrip, compatible continuation, no imported authority, unknown-rule HISTORICAL_ONLY preservation. Native unavailable-container prerequisite and finite failures/security verified; public consumer is implementation-independent. D19 unchanged-source regression reuse is labelled; inherited Catalog dependency and retired-v1 failures remain failures. No unrelated regressions rerun for documentation packaging.
+
+EXPERIMENTAL/trustVerified=false; original admission is historical governance distinct from corrected runtime qualification. Historical semantic mapping + canonical exchange, NOT historical-format migration. Operator-trusted native composition, not hostile-code confinement. Cooperative deadlines, not preemptible fsync or power-loss certification. Cross-version migration NOT_TESTED. No active probes, recovery/control/remediation, annotations/manual resolution or public health transport. No production adoption, Phase5.3 or Owner Acceptance. All accepted Phase5.1 refs and closed Phase3/4 authorities remain unchanged; Phase4 six consumed/zero remaining. Current explicit Owner implementation/publication direction supersedes only earlier no-Phase5.2 language.

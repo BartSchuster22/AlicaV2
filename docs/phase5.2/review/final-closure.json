@@ -1,0 +1,139 @@
+{
+  "schema": "phase52.independent-review-closure/v1",
+  "reviewerSession": "20260929_064940_7d88a4",
+  "scope": "Same independent reviewer; finite R1/R2 closure only",
+  "verdict": "ACCEPT_FOR_TECHNICAL_PUBLICATION_WITH_CAVEATS",
+  "candidate": "47e88349ed6c0399eb2e5088b41d4b5d9ac26140",
+  "implementationRevision": "7a8050f1b7d3baae1de0d5b611213ca620f2b7a0",
+  "priorCandidate": "1247195c2c78c091460159c8f83e0bb790b8d90f",
+  "baseline": "ad3df9bbd0a23aedc5edcd3eae8194e04152eebd",
+  "archive": {
+    "path": "/home/herman/g7-control/phase52-r1-r2-final-review-source.tar.gz",
+    "sha256": "3cd8ead370c024c689955798df354097f6c2abd09028c791ae5aa133ba85ef7a",
+    "regularFilesComparedToGitBlobIdentities": 60382,
+    "mismatches": 0,
+    "extras": 0,
+    "missing": 0
+  },
+  "findings": [
+    {
+      "id": "R1",
+      "status": "CLOSED",
+      "criterion": "D13 native no-container prerequisite under Rev1.1",
+      "sourceReferences": [
+        "services/doghouse/tests/no-container.py:21-65",
+        "services/doghouse/tests/no-container-run.mjs:6-14"
+      ],
+      "assessment": "Inspected and independently executed disposable allowlisted regular-file runtime with fresh mount/network/PID namespaces, chroot, minimal environment and unprivileged test process. Actual inside-fixture checks establish container executable/socket unavailability before core/native public tests, rather than merely non-use.",
+      "independentExecution": {
+        "command": "sudo -n /usr/bin/python3 -I services/doghouse/tests/no-container.py",
+        "cwd": "/home/herman/alica-phase52",
+        "exitCode": 0,
+        "prerequisite": "PASS",
+        "docker": "ENOENT",
+        "podman": "ENOENT",
+        "filesystemSockets": 0,
+        "proc": false,
+        "sys": false,
+        "uid": 1001,
+        "testsPassed": 61,
+        "testsFailed": 0,
+        "copiedFiles": 1234,
+        "copiedManifestSha256": "c27b7fb64c274381b552edcc6b084b748ebb6cfc1c937b2b70840be9cdcac9b1",
+        "nodeSha256": "7fde7b8afa198da66257f42ee2001d874c7355631e6d1579a5fb5ef1f246df4c",
+        "copiedManifestMatchesWorkerEvidence": true,
+        "log": "/tmp/phase52-review-closure-9a_0rktk/r1-independent.log",
+        "logSha256": "a1f721232508b0968b9c9d014ed78d0504f4499d213cb2ee016dd2bb35a22d47"
+      },
+      "productionSocketAccess": false
+    },
+    {
+      "id": "R2",
+      "status": "CLOSED",
+      "criteria": ["D10", "D15", "D16", "D17"],
+      "sourceReferences": [
+        "services/doghouse/contracts.mjs:61-74",
+        "services/doghouse/core.mjs:92",
+        "services/doghouse/store.mjs:13,19",
+        "services/doghouse/tests/review-r2.test.mjs:15-35"
+      ],
+      "assessment": "Understood exact-correlation incident histories are sorted in separate lists and every predecessor must resolve strictly before the successor starts. Illegal overlap/equal-time/active-predecessor histories reject through the shared import/store validator. Serialized order, unknown historical semantics, authority boundaries and frozen schemas remain unchanged.",
+      "focusedIndependentTests": {
+        "selector": "services/doghouse/tests/review-r2.test.mjs",
+        "isolation": "unshare -Urn with locked Node; repeated inside R1 disposable runtime",
+        "pass": 12,
+        "fail": 0,
+        "exitCode": 0,
+        "coverage": [
+          "Resolved overlap, equal recovery/start and equal starts",
+          "OPEN and ACKNOWLEDGED predecessors",
+          "Both incident array orders",
+          "Atomic fresh import rejection",
+          "Existing store commit bytes unchanged on rejection",
+          "Invalid store open fails without rewriting bytes or retaining ownership",
+          "Valid reversed recurrence, restart and authorized continuation",
+          "Unknown-rule overlapping historical-only preservation and separate current-rule continuation"
+        ]
+      },
+      "originalReviewerReproduction": {
+        "path": "/tmp/phase52-independent-review-flX8sg/reviewer.test.mjs",
+        "unchangedSourceSha256": "2bd7fb4a7b09b1b9b50596caa9c7a994a0e0999e0e1b63c63f37cb0b89d7ebf7",
+        "selector": "REVIEW R2:",
+        "pass": 1,
+        "fail": 0,
+        "exitCode": 0,
+        "log": "/tmp/phase52-review-closure-9a_0rktk/r2-original-repro.log",
+        "logSha256": "4afadf2674c322b31dff1e5cde16be0562152b14ae90fb1c3a90c85851643813"
+      },
+      "workerCounterfactual": "Hash-bound old-validator 10 negative failures/2 positive passes; not independently rerun in closure"
+    }
+  ],
+  "remainingBlockers": [],
+  "receiptVerification": {
+    "currentSupplementEntriesVerified": 90,
+    "supplementSha256": "cec63532c8a33fe739700943e91c7d1798a4e7e401756af738fc0eca5a793e78",
+    "correctedContractsSha256": "84658e24fe25d5daca822a6e8acec26ccf267029de2198159a6f85bf441139b4",
+    "originalQualificationHashesVerifiedAgainstPriorCandidate": 46,
+    "originalAdmissionHashesVerifiedAgainst606e1645": 10,
+    "admissionAndOriginalQualificationUnchanged": true,
+    "admissionReissued": false,
+    "approvedDesignAndSchemasUnchanged": true,
+    "frozenTrackedDiffAgainstAcceptedBaseline": "EMPTY",
+    "candidateVsCorrection": "Manifest/verifier only; no product change",
+    "originalReviewPreservedVerbatim": true,
+    "originalReviewMdSha256": "67724e1a4cf6e2990f759c615d299bf822ddbd77e51538f85731811188ef05dc",
+    "originalReviewJsonSha256": "5633569c153d1a06cfa62b80e42829a2912e77aa2e0a85938d1a7fa6327cf8fd",
+    "originalArchiveSha256": "11526a9569e5f521523e0a0164968655fcb82eaddf2a62879e648562210b17af"
+  },
+  "evidenceScope": {
+    "externalConsumer": "Worker rerun 1/1 inspected and hash-verified; independent packaging not rerun in closure",
+    "D19": "Unrelated broad regressions reused with unchanged frozen source and hash-bound logs. Inherited failures remain failures, not repaired or counted green. No live authority renewed.",
+    "D20": "Frozen tracked paths unchanged; no production operations",
+    "D21": "Pending authorized technical publication/tag and anonymous exact-source verification"
+  },
+  "caveats": [
+    "EXPERIMENTAL/trustVerified=false and historical original admission are distinct from current runtime qualification",
+    "Native composition is operator-trusted, not hostile-code sandbox certification",
+    "Historical semantic mapping, not old-format migration",
+    "Cooperative deadlines, not preemptible fsync or power-loss certification",
+    "Cross-version migration remains NOT_TESTED",
+    "No probes/control/remediation/manual resolution/public health transport",
+    "No production adoption, Phase5.3 or Owner Acceptance"
+  ],
+  "boundaries": {
+    "implementationEdits": false,
+    "leaseAcquireProbeRelease": false,
+    "continuityOrMemorySync": false,
+    "productionOrSocketAccess": false,
+    "sshOrProviderTests": false,
+    "subworkersOrCron": false,
+    "publicationOrTagPerformed": false,
+    "ownerAcceptance": false,
+    "persistentWrites": [
+      "/home/herman/g7-control/phase52-review-closure.md",
+      "/home/herman/g7-control/phase52-review-closure.json"
+    ],
+    "otherWrites": "Disposable fixture state/logs only"
+  },
+  "handoff": "Independent review gate cleared for exact candidate. Parent may direct separately authorized sole publication writer through D21 and anonymous exact-tag verification, preserving source/evidence identities, then STOP for Owner Acceptance. This closure does not itself claim completed publication."
+}

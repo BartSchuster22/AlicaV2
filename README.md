@@ -1,5 +1,9 @@
 # ALICA V2
 
+## Phase5.2 Doghouse + ACAP — independently reviewed, publication pending
+
+Current Owner instruction authorizes Phase5.2 technical completion/publication only. [Release disposition](docs/phase5.2/PHASE5.2-COMPLETION.md) | [Independent closure](docs/phase5.2/review/final-closure.md) | [Qualification](docs/phase5.2/README.md). Same-reviewer R1/R2 closure cleared exact `47e88349ed6c0399eb2e5088b41d4b5d9ac26140` WITH CAVEATS. Runtime/design/evidence frozen; local publication authentication is blocked, so no public Phase5.2 release or Owner Acceptance is claimed. No Phase5.3 or production authority. Earlier no-Phase5.2 statements below are historical only; prior accepted refs, text, links and closed grants are preserved.
+
 ## Phase 5.1 Project Owner Acceptance
 
 **PHASE 5.1 — COMPLETE / FROZEN / OWNER ACCEPTED**

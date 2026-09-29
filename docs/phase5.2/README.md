@@ -1,4 +1,6 @@
-# Phase5.2 Doghouse + ACAP Adapter — frozen candidate for final independent review
+# Phase5.2 Doghouse + ACAP Adapter — independently cleared; publication blocked
+
+LATEST: same-reviewer ACCEPT_FOR_TECHNICAL_PUBLICATION_WITH_CAVEATS for47e88349; R1/R2 CLOSED. [Genuine closure](review/final-closure.md) and referenced raw logs archived verbatim. [Release disposition](PHASE5.2-COMPLETION.md): D21 is blocked by local repository write authentication, not review. Nothing published/tagged; no Owner Acceptance. Earlier status below is historical and superseded only as stated.
 
 Status: R1/R2 CORRECTED AND RE-EVIDENCED; SAME-REVIEWER CLOSURE PENDING, publication BLOCKED. See QUALIFICATION-SUPPLEMENT-R1-R2.md; original independent BLOCKED review is preserved. Historical status: IMPLEMENTED / LOCALLY QUALIFIED / EXPERIMENTAL Catalog admission. NOT technically published, NOT Owner Accepted. Final independent review is mandatory before publication/tag. This is not production adoption, hostile-code isolation, recovery authority or Phase5.3 authorization.
 
