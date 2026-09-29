@@ -1,0 +1,51 @@
+Downloading cpython-3.11.16-linux-x86_64-gnu (download) (29.4MiB)
+ Downloaded cpython-3.11.16-linux-x86_64-gnu (download)
+Installed Python 3.11.16 in 1.21s
+ + cpython-3.11.16-linux-x86_64-gnu (python3.11)
+warning: `/opt/alica-phase5k/tooling/bin` is not on your PATH. To use installed Python executables, run `export PATH="/opt/alica-phase5k/tooling/bin:$PATH"` or `uv python update-shell`.
+Using CPython 3.11.16 interpreter at: /opt/alica-phase5k/root/opt/python/cpython-3.11-linux-x86_64-gnu/bin/python3.11
+Creating virtual environment at: /opt/alica-phase5k/root/opt/memory-venv
+Activate with: source /opt/alica-phase5k/root/opt/memory-venv/bin/activate
+Using Python 3.11.16 environment at: /opt/alica-phase5k/root/opt/memory-venv
+Resolved 25 packages in 314ms
+Downloading ruff (10.7MiB)
+Downloading uvloop (3.6MiB)
+Downloading pydantic-core (1.9MiB)
+ Downloaded pydantic-core
+ Downloaded uvloop
+ Downloaded ruff
+Prepared 19 packages in 149ms
+Installed 25 packages in 11ms
+ + annotated-types==0.8.0
+ + anyio==4.15.1
+ + certifi==2026.7.22
+ + click==8.5.0
+ + fastapi==0.115.6
+ + h11==0.16.0
+ + httpcore==1.0.9
+ + httptools==0.8.0
+ + httpx==0.28.1
+ + idna==3.20
+ + iniconfig==2.3.0
+ + packaging==26.3
+ + pluggy==1.6.0
+ + pydantic==2.10.4
+ + pydantic-core==2.27.2
+ + pytest==8.3.4
+ + python-dotenv==1.2.3
+ + pyyaml==6.0.3
+ + ruff==0.8.4
+ + starlette==0.41.3
+ + typing-extensions==4.16.0
+ + uvicorn==0.34.0
+ + uvloop==0.22.1
+ + watchfiles==1.3.0
+ + websockets==17.1
+Using Python 3.14.7 environment at: /opt/alica-phase5k/root/opt/venv
+Resolved 6 packages in 87ms
+Prepared 2 packages in 45ms
+Installed 4 packages in 4ms
+ + iniconfig==2.3.0
+ + pluggy==1.6.0
+ + pytest==9.1.1
+ + pytest-asyncio==1.3.0

@@ -1,0 +1,32 @@
+PRELAUNCH_ISOLATION_PASS {"uid": 65534, "net": "net:[4026532452]", "pid": "pid:[4026532451]", "mount": "mnt:[4026532448]", "routes": "Iface\tDestination\tGateway \tFlags\tRefCnt\tUse\tMetric\tMask\t\tMTU\tWindow\tIRTT                                                       \n", "processes": ["1"]}
+(node:82) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ K14 actual supported backend board/get/list/create/update/comment; defaults and sanitized task (308.086847ms)
+✔ K15 current mapping, cross-board, forged payload, missing ID and current revocation (120.096353ms)
+✔ K16 best-effort sequential replay, content collision, current authority before replay, no native idempotency promise (113.176758ms)
+OBSERVED_CONCURRENT_CREATE_IDS [ 't_95407975', 't_95407975' ]
+✔ K16 concurrent key calls report actual outcomes, not exactly-once assertion; stale writes last-writer-wins (211.203741ms)
+✔ K17 real WS event prefix replay, limit1/32, future cursor uncertainty, reconcile and explicit no-control (1452.119027ms)
+✔ K12 explicit synthetic unit fixtures:257 task rejection and33-event prefix, unselected prefix/malformed/out-of-order (1.343935ms)
+✔ K19 adapter disposal leaves real backend task; independent adapter restart reconciles (141.221735ms)
+✔ K22 deadline and cancellation stop waiting; safe shape rejects execution knobs (50.703839ms)
+✔ K13/K15 synthetic-secret binding is real current public Host reference/grant, not injected bypass (54.732404ms)
+✔ K6 configuration refuses absent attestation or nonloopback endpoint before transport (0.58326ms)
+✔ K16/K22 actual committed mutation then lost response yields UNKNOWN; reconcile through sole authority (149.609219ms)
+✔ K22 bounded four-call overload, in-flight mapping revocation and disposal (84.599496ms)
+✔ K22 malformed backend response fails explicitly, never empty board (68.150022ms)
+✔ K22 oversize backend response fails explicitly, never empty board (56.297856ms)
+✔ K21 separately offline-installed SDK-only consumer without adapter/Kernel/testkit resolution (5608.392398ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8796.32575
+(node:306) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+K19_REAL_BACKEND_RESTART_PASS t_741f5915
+K6_POST_MUTATION_NO_WORKERS_RUNS_PASS 8
+QUALIFICATION_RESULT {"kind": "PHASE5K_REAL_NORMAL_BACKEND_CONFORMANCE", "passed": true}

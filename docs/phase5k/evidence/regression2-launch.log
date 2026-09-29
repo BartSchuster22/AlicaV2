@@ -1,0 +1,12 @@
+PRELAUNCH_ISOLATION_PASS {"uid": 65534, "net": "net:[4026532452]", "pid": "pid:[4026532451]", "mount": "mnt:[4026532448]", "routes": "Iface\tDestination\tGateway \tFlags\tRefCnt\tUse\tMetric\tMask\t\tMTU\tWindow\tIRTT                                                       \n", "processes": ["1"]}
+REGRESSION frozen 0
+REGRESSION assurance 0
+REGRESSION memory-v2 0
+REGRESSION memory-retired-v1 1
+REGRESSION typecheck 0
+REGRESSION dependencies 1
+REGRESSION boundaries 0
+REGRESSION2 memory-python 0
+REGRESSION2 decision-packed 1
+REGRESSION2 decision-continuation-packed 1
+REGRESSION2 hermes-safe 0

@@ -1,0 +1,949 @@
+PRELAUNCH_ISOLATION_PASS {"uid": 65534, "net": "net:[4026532452]", "pid": "pid:[4026532451]", "mount": "mnt:[4026532448]", "routes": "Iface\tDestination\tGateway \tFlags\tRefCnt\tUse\tMetric\tMask\t\tMTU\tWindow\tIRTT                                                       \n", "processes": ["1"]}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+... Skipped lines
+
++ [Object: null prototype] {
+- {
+    features: [],
+    id: 'io.alica.orchestration.kanban',
+    operations: [
++     [Object: null prototype] {
+-     {
+        idempotency: 'none',
++       input: [Object: null prototype] {
+-       input: {
+          additionalProperties: false,
++         properties: [Object: null prototype] {
++           board: [Object: null prototype] {
+-         properties: {
+-           board: {
+              maxLength: 128,
+              minLength: 1,
+              type: 'string'
+            }
+          },
+...
+        name: 'board',
++       output: [Object: null prototype] {
+-       output: {
+          additionalProperties: false,
++         properties: [Object: null prototype] {
++           board: [Object: null prototype] {
+-         properties: {
+-           board: {
+              maxLength: 128,
+              minLength: 1,
+              type: 'string'
+            },
++           continuity: [Object: null prototype] {
+-           continuity: {
+              enum: [
+                'UNKNOWN'
+              ],
+              type: 'string'
+            },
++           taskCount: [Object: null prototype] {
+-           taskCount: {
+              maximum: 256,
+              minimum: 0,
+              type: 'integer'
+            }
+          },
+...
+      },
++     [Object: null prototype] {
+-     {
+        idempotency: 'none',
++       input: [Object: null prototype] {
+-       input: {
+          additionalProperties: false,
++         properties: [Object: null prototype] {
++           board: [Object: null prototype] {
+-         properties: {
+-           board: {
+              maxLength: 128,
+              minLength: 1,
+              type: 'string'
+            }
+          },
+...
+        name: 'list',
++       output: [Object: null prototype] {
+-       output: {
+          additionalProperties: false,
++         properties: [Object: null prototype] {
++           continuity: [Object: null prototype] {
+-         properties: {
+-           continuity: {
+              enum: [
+                'UNKNOWN'
+              ],
+              type: 'string'
+            },
++           tasks: [Object: null prototype] {
++             items: [Object: null prototype] {
+-           tasks: {
+-             items: {
+                additionalProperties: false,
++               properties: [Object: null prototype] {
++                 assigned: [Object: null prototype] {
+-               properties: {
+-                 assigned: {
+                    type: 'boolean'
+                  },
++                 board: [Object: null prototype] {
+-                 board: {
+                    maxLength: 128,
+                    minLength: 1,
+                    type: 'string'
+                  },
++                 body: [Object: null prototype] {
+-                 body: {
+                    maxLength: 8192,
+                    minLength: 0,
+                    type: 'string'
+                  },
++                 id: [Object: null prototype] {
+-                 id: {
+                    maxLength: 128,
+                    minLength: 1,
+                    type: 'string'
+                  },
++                 state: [Object: null prototype] {
+-                 state: {
+                    enum: [
+                      'TRIAGE',
+                      'TODO',
+                      'SCHEDULED',
+                      'READY',
+...
+                  },
++                 title: [Object: null prototype] {
+-                 title: {
+                    maxLength: 256,
+                    minLength: 1,
+                    type: 'string'
+                  }
+                },
+...
+      },
++     [Object: null prototype] {
+-     {
+        idempotency: 'none',
++       input: [Object: null prototype] {
+-       input: {
+          additionalProperties: false,
++         properties: [Object: null prototype] {
++           board: [Object: null prototype] {
+-         properties: {
+-           board: {
+              maxLength: 128,
+              minLength: 1,
+              type: 'string'
+            },
++           id: [Object: null prototype] {
+-           id: {
+              maxLength: 128,
+              minLength: 1,
+              type: 'string'
+            }
+          },
+...
+        name: 'get',
++       output: [Object: null prototype] {
+-       output: {
+          additionalProperties: false,
++         properties: [Object: null prototype] {
++           assigned: [Object: null prototype] {
+-         properties: {
+-           assigned: {
+              type: 'boolean'
+            },
++           board: [Object: null prototype] {
+-           board: {
+              maxLength: 128,
+              minLength: 1,
+              type: 'string'
+            },
++           body: [Object: null prototype] {
+-           body: {
+              maxLength: 8192,
+              minLength: 0,
+              type: 'string'
+            },
++           id: [Object: null prototype] {
+-           id: {
+              maxLength: 128,
+              minLength: 1,
+              type: 'string'
+            },
++           state: [Object: null prototype] {
+-           state: {
+              enum: [
+                'TRIAGE',
+                'TODO',
+                'SCHEDULED',
+                'READY',
+...
+            },
++           title: [Object: null prototype] {
+-           title: {
+              maxLength: 256,
+              minLength: 1,
+              type: 'string'
+            }
+          },
+...
+      },
++     [Object: null prototype] {
+-     {
+        idempotency: 'none',
++       input: [Object: null prototype] {
+-       input: {
+          additionalProperties: false,
++         properties: [Object: null prototype] {
++           board: [Object: null prototype] {
+-         properties: {
+-           board: {
+              maxLength: 128,
+              minLength: 1,
+              type: 'string'
+            },
++           body: [Object: null prototype] {
+-           body: {
+              maxLength: 8000,
+              minLength: 0,
+              type: 'string'
+            },
++           requestKey: [Object: null prototype] {
+-           requestKey: {
+              maxLength: 128,
+              minLength: 1,
+              type: 'string'
+            },
++           title: [Object: null prototype] {
+-           title: {
+              maxLength: 256,
+              minLength: 1,
+              type: 'string'
+            }
+          },
+...
+        name: 'create',
++       output: [Object: null prototype] {
+-       output: {
+          additionalProperties: false,
++         properties: [Object: null prototype] {
++           outcome: [Object: null prototype] {
+-         properties: {
+-           outcome: {
+              enum: [
+                'APPLIED',
+                'UNKNOWN'
+              ],
+              type: 'string'
+            },
++           requestKey: [Object: null prototype] {
+-           requestKey: {
+              maxLength: 128,
+              minLength: 0,
+              type: 'string'
+            },
++           task: [Object: null prototype] {
++             items: [Object: null prototype] {
+-           task: {
+-             items: {
+                additionalProperties: false,
++               properties: [Object: null prototype] {
++                 assigned: [Object: null prototype] {
+-               properties: {
+-                 assigned: {
+                    type: 'boolean'
+                  },
++                 board: [Object: null prototype] {
+-                 board: {
+                    maxLength: 128,
+                    minLength: 1,
+                    type: 'string'
+                  },
++                 body: [Object: null prototype] {
+-                 body: {
+                    maxLength: 8192,
+                    minLength: 0,
+                    type: 'string'
+                  },
++                 id: [Object: null prototype] {
+-                 id: {
+                    maxLength: 128,
+                    minLength: 1,
+                    type: 'string'
+                  },
++                 state: [Object: null prototype] {
+-                 state: {
+                    enum: [
+                      'TRIAGE',
+                      'TODO',
+                      'SCHEDULED',
+                      'READY',
+...
+                  },
++                 title: [Object: null prototype] {
+-                 title: {
+                    maxLength: 256,
+                    minLength: 1,
+                    type: 'string'
+                  }
+                },
+...
+      },
++     [Object: null prototype] {
+-     {
+        idempotency: 'none',
++       input: [Object: null prototype] {
+-       input: {
+          additionalProperties: false,
++         properties: [Object: null prototype] {
++           board: [Object: null prototype] {
+-         properties: {
+-           board: {
+              maxLength: 128,
+              minLength: 1,
+              type: 'string'
+            },
++           body: [Object: null prototype] {
+-           body: {
+              maxLength: 8000,
+              minLength: 0,
+              type: 'string'
+            },
++           id: [Object: null prototype] {
+-           id: {
+              maxLength: 128,
+              minLength: 1,
+              type: 'string'
+            },
++           title: [Object: null prototype] {
+-           title: {
+              maxLength: 256,
+              minLength: 1,
+              type: 'string'
+            }
+          },
+...
+        name: 'update',
++       output: [Object: null prototype] {
+-       output: {
+          additionalProperties: false,
++         properties: [Object: null prototype] {
++           outcome: [Object: null prototype] {
+-         properties: {
+-           outcome: {
+              enum: [
+                'APPLIED',
+                'UNKNOWN'
+              ],
+              type: 'string'
+            },
++           requestKey: [Object: null prototype] {
+-           requestKey: {
+              maxLength: 128,
+              minLength: 0,
+              type: 'string'
+            },
++           task: [Object: null prototype] {
++             items: [Object: null prototype] {
+-           task: {
+-             items: {
+                additionalProperties: false,
++               properties: [Object: null prototype] {
++                 assigned: [Object: null prototype] {
+-               properties: {
+-                 assigned: {
+                    type: 'boolean'
+                  },
++                 board: [Object: null prototype] {
+-                 board: {
+                    maxLength: 128,
+                    minLength: 1,
+                    type: 'string'
+                  },
++                 body: [Object: null prototype] {
+-                 body: {
+                    maxLength: 8192,
+                    minLength: 0,
+                    type: 'string'
+                  },
++                 id: [Object: null prototype] {
+-                 id: {
+                    maxLength: 128,
+                    minLength: 1,
+                    type: 'string'
+                  },
++                 state: [Object: null prototype] {
+-                 state: {
+                    enum: [
+                      'TRIAGE',
+                      'TODO',
+                      'SCHEDULED',
+                      'READY',
+...
+                  },
++                 title: [Object: null prototype] {
+-                 title: {
+                    maxLength: 256,
+                    minLength: 1,
+                    type: 'string'
+                  }
+                },
+...
+      },
++     [Object: null prototype] {
+-     {
+        idempotency: 'none',
++       input: [Object: null prototype] {
+-       input: {
+          additionalProperties: false,
++         properties: [Object: null prototype] {
++           board: [Object: null prototype] {
+-         properties: {
+-           board: {
+              maxLength: 128,
+              minLength: 1,
+              type: 'string'
+            },
++           body: [Object: null prototype] {
+-           body: {
+              maxLength: 4000,
+              minLength: 1,
+              type: 'string'
+            },
++           id: [Object: null prototype] {
+-           id: {
+              maxLength: 128,
+              minLength: 1,
+              type: 'string'
+            }
+          },
+...
+        name: 'comment',
++       output: [Object: null prototype] {
+-       output: {
+          additionalProperties: false,
++         properties: [Object: null prototype] {
++           outcome: [Object: null prototype] {
+-         properties: {
+-           outcome: {
+              enum: [
+                'APPLIED',
+                'UNKNOWN'
+              ],
+              type: 'string'
+            },
++           requestKey: [Object: null prototype] {
+-           requestKey: {
+              maxLength: 128,
+              minLength: 0,
+              type: 'string'
+            },
++           task: [Object: null prototype] {
++             items: [Object: null prototype] {
+-           task: {
+-             items: {
+                additionalProperties: false,
++               properties: [Object: null prototype] {
++                 assigned: [Object: null prototype] {
+-               properties: {
+-                 assigned: {
+                    type: 'boolean'
+                  },
++                 board: [Object: null prototype] {
+-                 board: {
+                    maxLength: 128,
+                    minLength: 1,
+                    type: 'string'
+                  },
++                 body: [Object: null prototype] {
+-                 body: {
+                    maxLength: 8192,
+                    minLength: 0,
+                    type: 'string'
+                  },
++                 id: [Object: null prototype] {
+-                 id: {
+                    maxLength: 128,
+                    minLength: 1,
+                    type: 'string'
+                  },
++                 state: [Object: null prototype] {
+-                 state: {
+                    enum: [
+                      'TRIAGE',
+                      'TODO',
+                      'SCHEDULED',
+                      'READY',
+...
+                  },
++                 title: [Object: null prototype] {
+-                 title: {
+                    maxLength: 256,
+                    minLength: 1,
+                    type: 'string'
+                  }
+                },
+...
+      },
++     [Object: null prototype] {
+-     {
+        idempotency: 'none',
++       input: [Object: null prototype] {
+-       input: {
+          additionalProperties: false,
++         properties: [Object: null prototype] {
++           board: [Object: null prototype] {
+-         properties: {
+-           board: {
+              maxLength: 128,
+              minLength: 1,
+              type: 'string'
+            },
++           cursor: [Object: null prototype] {
+-           cursor: {
+              maxLength: 32,
+              minLength: 0,
+              type: 'string'
+            },
++           limit: [Object: null prototype] {
+-           limit: {
+              maximum: 32,
+              minimum: 1,
+              type: 'integer'
+            }
+          },
+...
+        name: 'events',
++       output: [Object: null prototype] {
+-       output: {
+          additionalProperties: false,
++         properties: [Object: null prototype] {
++           continuity: [Object: null prototype] {
+-         properties: {
+-           continuity: {
+              enum: [
+                'UNKNOWN'
+              ],
+              type: 'string'
+            },
++           cursor: [Object: null prototype] {
+-           cursor: {
+              maxLength: 32,
+              minLength: 0,
+              type: 'string'
+            },
++           events: [Object: null prototype] {
++             items: [Object: null prototype] {
+-           events: {
+-             items: {
+                additionalProperties: false,
++               properties: [Object: null prototype] {
++                 atMs: [Object: null prototype] {
+-               properties: {
+-                 atMs: {
+                    maximum: 9007199254740991,
+                    minimum: 0,
+                    type: 'integer'
+                  },
++                 board: [Object: null prototype] {
+-                 board: {
+                    maxLength: 128,
+                    minLength: 1,
+                    type: 'string'
+                  },
++                 id: [Object: null prototype] {
+-                 id: {
+                    maxLength: 32,
+                    minLength: 1,
+                    type: 'string'
+                  },
++                 kind: [Object: null prototype] {
+-                 kind: {
+                    enum: [
+                      'CREATED',
+                      'UPDATED',
+                      'COMMENTED'
+                    ],
+                    type: 'string'
+                  },
++                 taskId: [Object: null prototype] {
+-                 taskId: {
+                    maxLength: 128,
+                    minLength: 1,
+                    type: 'string'
+                  }
+                },
+
+    at file:///opt/alica/adapters/hermes-kanban/tests/fixture.mjs:9:453
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: [Object: null prototype] {
+    features: [],
+    id: 'io.alica.orchestration.kanban',
+    operations: [
+      [Object: null prototype] {
+        idempotency: 'none',
+        input: [Object: null prototype] {
+          additionalProperties: false,
+          properties: [Object: null prototype] { board: [Object: null prototype] },
+          required: [ 'board' ],
+          type: 'object'
+        },
+        kind: 'unary',
+        name: 'board',
+        output: [Object: null prototype] {
+          additionalProperties: false,
+          properties: [Object: null prototype] {
+            board: [Object: null prototype],
+            continuity: [Object: null prototype],
+            taskCount: [Object: null prototype]
+          },
+          required: [ 'board', 'taskCount', 'continuity' ],
+          type: 'object'
+        }
+      },
+      [Object: null prototype] {
+        idempotency: 'none',
+        input: [Object: null prototype] {
+          additionalProperties: false,
+          properties: [Object: null prototype] { board: [Object: null prototype] },
+          required: [ 'board' ],
+          type: 'object'
+        },
+        kind: 'unary',
+        name: 'list',
+        output: [Object: null prototype] {
+          additionalProperties: false,
+          properties: [Object: null prototype] {
+            continuity: [Object: null prototype],
+            tasks: [Object: null prototype]
+          },
+          required: [ 'tasks', 'continuity' ],
+          type: 'object'
+        }
+      },
+      [Object: null prototype] {
+        idempotency: 'none',
+        input: [Object: null prototype] {
+          additionalProperties: false,
+          properties: [Object: null prototype] {
+            board: [Object: null prototype],
+            id: [Object: null prototype]
+          },
+          required: [ 'board', 'id' ],
+          type: 'object'
+        },
+        kind: 'unary',
+        name: 'get',
+        output: [Object: null prototype] {
+          additionalProperties: false,
+          properties: [Object: null prototype] {
+            assigned: [Object: null prototype],
+            board: [Object: null prototype],
+            body: [Object: null prototype],
+            id: [Object: null prototype],
+            state: [Object: null prototype],
+            title: [Object: null prototype]
+          },
+          required: [ 'id', 'board', 'title', 'body', 'state', 'assigned' ],
+          type: 'object'
+        }
+      },
+      [Object: null prototype] {
+        idempotency: 'none',
+        input: [Object: null prototype] {
+          additionalProperties: false,
+          properties: [Object: null prototype] {
+            board: [Object: null prototype],
+            body: [Object: null prototype],
+            requestKey: [Object: null prototype],
+            title: [Object: null prototype]
+          },
+          required: [ 'board', 'title', 'body', 'requestKey' ],
+          type: 'object'
+        },
+        kind: 'unary',
+        name: 'create',
+        output: [Object: null prototype] {
+          additionalProperties: false,
+          properties: [Object: null prototype] {
+            outcome: [Object: null prototype],
+            requestKey: [Object: null prototype],
+            task: [Object: null prototype]
+          },
+          required: [ 'outcome', 'task', 'requestKey' ],
+          type: 'object'
+        }
+      },
+      [Object: null prototype] {
+        idempotency: 'none',
+        input: [Object: null prototype] {
+          additionalProperties: false,
+          properties: [Object: null prototype] {
+            board: [Object: null prototype],
+            body: [Object: null prototype],
+            id: [Object: null prototype],
+            title: [Object: null prototype]
+          },
+          required: [ 'board', 'id', 'title', 'body' ],
+          type: 'object'
+        },
+        kind: 'unary',
+        name: 'update',
+        output: [Object: null prototype] {
+          additionalProperties: false,
+          properties: [Object: null prototype] {
+            outcome: [Object: null prototype],
+            requestKey: [Object: null prototype],
+            task: [Object: null prototype]
+          },
+          required: [ 'outcome', 'task', 'requestKey' ],
+          type: 'object'
+        }
+      },
+      [Object: null prototype] {
+        idempotency: 'none',
+        input: [Object: null prototype] {
+          additionalProperties: false,
+          properties: [Object: null prototype] {
+            board: [Object: null prototype],
+            body: [Object: null prototype],
+            id: [Object: null prototype]
+          },
+          required: [ 'board', 'id', 'body' ],
+          type: 'object'
+        },
+        kind: 'unary',
+        name: 'comment',
+        output: [Object: null prototype] {
+          additionalProperties: false,
+          properties: [Object: null prototype] {
+            outcome: [Object: null prototype],
+            requestKey: [Object: null prototype],
+            task: [Object: null prototype]
+          },
+          required: [ 'outcome', 'task', 'requestKey' ],
+          type: 'object'
+        }
+      },
+      [Object: null prototype] {
+        idempotency: 'none',
+        input: [Object: null prototype] {
+          additionalProperties: false,
+          properties: [Object: null prototype] {
+            board: [Object: null prototype],
+            cursor: [Object: null prototype],
+            limit: [Object: null prototype]
+          },
+          required: [ 'board', 'cursor', 'limit' ],
+          type: 'object'
+        },
+        kind: 'unary',
+        name: 'events',
+        output: [Object: null prototype] {
+          additionalProperties: false,
+          properties: [Object: null prototype] {
+            continuity: [Object: null prototype],
+            cursor: [Object: null prototype],
+            events: [Object: null prototype]
+          },
+          required: [ 'events', 'cursor', 'continuity' ],
+          type: 'object'
+        }
+      }
+    ],
+    schemaVersion: 'acap.capability/v1',
+    version: '1.0.0'
+  },
+  expected: {
+    schemaVersion: 'acap.capability/v1',
+    id: 'io.alica.orchestration.kanban',
+    version: '1.0.0',
+    features: [],
+    operations: [
+      {
+        name: 'board',
+        kind: 'unary',
+        idempotency: 'none',
+        input: {
+          type: 'object',
+          properties: { board: [Object] },
+          required: [ 'board' ],
+          additionalProperties: false
+        },
+        output: {
+          type: 'object',
+          properties: {
+            board: [Object],
+            taskCount: [Object],
+            continuity: [Object]
+          },
+          required: [ 'board', 'taskCount', 'continuity' ],
+          additionalProperties: false
+        }
+      },
+      {
+        name: 'list',
+        kind: 'unary',
+        idempotency: 'none',
+        input: {
+          type: 'object',
+          properties: { board: [Object] },
+          required: [ 'board' ],
+          additionalProperties: false
+        },
+        output: {
+          type: 'object',
+          properties: { tasks: [Object], continuity: [Object] },
+          required: [ 'tasks', 'continuity' ],
+          additionalProperties: false
+        }
+      },
+      {
+        name: 'get',
+        kind: 'unary',
+        idempotency: 'none',
+        input: {
+          type: 'object',
+          properties: { board: [Object], id: [Object] },
+          required: [ 'board', 'id' ],
+          additionalProperties: false
+        },
+        output: {
+          type: 'object',
+          properties: {
+            id: [Object],
+            board: [Object],
+            title: [Object],
+            body: [Object],
+            state: [Object],
+            assigned: [Object]
+          },
+          required: [ 'id', 'board', 'title', 'body', 'state', 'assigned' ],
+          additionalProperties: false
+        }
+      },
+      {
+        name: 'create',
+        kind: 'unary',
+        idempotency: 'none',
+        input: {
+          type: 'object',
+          properties: {
+            board: [Object],
+            title: [Object],
+            body: [Object],
+            requestKey: [Object]
+          },
+          required: [ 'board', 'title', 'body', 'requestKey' ],
+          additionalProperties: false
+        },
+        output: {
+          type: 'object',
+          properties: { outcome: [Object], task: [Object], requestKey: [Object] },
+          required: [ 'outcome', 'task', 'requestKey' ],
+          additionalProperties: false
+        }
+      },
+      {
+        name: 'update',
+        kind: 'unary',
+        idempotency: 'none',
+        input: {
+          type: 'object',
+          properties: {
+            board: [Object],
+            id: [Object],
+            title: [Object],
+            body: [Object]
+          },
+          required: [ 'board', 'id', 'title', 'body' ],
+          additionalProperties: false
+        },
+        output: {
+          type: 'object',
+          properties: { outcome: [Object], task: [Object], requestKey: [Object] },
+          required: [ 'outcome', 'task', 'requestKey' ],
+          additionalProperties: false
+        }
+      },
+      {
+        name: 'comment',
+        kind: 'unary',
+        idempotency: 'none',
+        input: {
+          type: 'object',
+          properties: { board: [Object], id: [Object], body: [Object] },
+          required: [ 'board', 'id', 'body' ],
+          additionalProperties: false
+        },
+        output: {
+          type: 'object',
+          properties: { outcome: [Object], task: [Object], requestKey: [Object] },
+          required: [ 'outcome', 'task', 'requestKey' ],
+          additionalProperties: false
+        }
+      },
+      {
+        name: 'events',
+        kind: 'unary',
+        idempotency: 'none',
+        input: {
+          type: 'object',
+          properties: { board: [Object], cursor: [Object], limit: [Object] },
+          required: [ 'board', 'cursor', 'limit' ],
+          additionalProperties: false
+        },
+        output: {
+          type: 'object',
+          properties: { events: [Object], cursor: [Object], continuity: [Object] },
+          required: [ 'events', 'cursor', 'continuity' ],
+          additionalProperties: false
+        }
+      }
+    ]
+  },
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.21.0
+✖ adapters/hermes-kanban/tests/conformance.test.mjs (464.989227ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 474.885246
+
+✖ failing tests:
+
+test at adapters/hermes-kanban/tests/conformance.test.mjs:1:1
+✖ adapters/hermes-kanban/tests/conformance.test.mjs (464.989227ms)
+  'test failed'
+Traceback (most recent call last):
+  File "/opt/phase5k/qualification.py", line 45, in <module>
+    subprocess.run(['/opt/node/bin/node','--experimental-vm-modules','--test','--test-concurrency=1','--test-timeout=30000','adapters/hermes-kanban/tests/conformance.test.mjs'],cwd='/opt/alica',env=env,check=True,timeout=180)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/python/cpython-3.14.7-linux-x86_64-gnu/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/opt/node/bin/node', '--experimental-vm-modules', '--test', '--test-concurrency=1', '--test-timeout=30000', 'adapters/hermes-kanban/tests/conformance.test.mjs']' returned non-zero exit status 1.
+QUALIFICATION_RESULT {"kind": "PHASE5K_REAL_NORMAL_BACKEND_CONFORMANCE", "passed": false, "error": "Command '['/opt/node/bin/node', '--experimental-vm-modules', '--test', '--test-concurrency=1', '--test-timeout=30000', 'adapters/hermes-kanban/tests/conformance.test.mjs']' returned non-zero exit status 1."}

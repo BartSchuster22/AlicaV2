@@ -1,0 +1,18 @@
+# Reproduction / operator boundary
+
+Use ONLY a new, disposable, authorized host sandbox with ample disk. Never point this fixture at an operational queue. This recipe is not deployment permission.
+
+Upstream pin536802c00e4f93061fc46b134dc029ff695f364f; native Python3.14.7 (supported Hermes), Node24.21.0. Accepted ALICA base8fafa2767627694007c338df76f1d03aba080b58. Runtime pin receipt and exact qualifier/enclosure source retained in `proof/`. Download/source/tool dependencies live outside ElioHermes1. No secrets required beyond freshly generated fixture token.
+
+DEV prepared layout `/opt/alica-phase5k`: root/opt/phase5k/hermes-agent-536802c00e4f93061fc46b134dc029ff695f364f complete pinned source; root/opt/venv Hermes environment; root/opt/python private managed interpreters; root/opt/node Node; root/opt/alica built candidate with private node_modules; root/opt/npm-cache private preseeded offline cache; root/opt/phase5k/qualification.py and tooling/enclose-qualification.sh. Root also contains private/etc/passwd,/etc/group,/etc/hostname and runtime loader symlinks. The dedicated source alias `/opt/alica-phase5k/root -> /` exists only inside chroot for private absolute interpreter paths. Source/runtime mount read-only; state/tmpfs and evidence only writable. No inherited HOME, SSH, provider secrets, sockets, queues or host network.
+
+Build the candidate with pinned Node and npm ci --ignore-scripts in that dedicated DEV scratch tree, then npm run build. Do NOT change accepted source files. Assemble enclosure from the retained reviewed proof script. Root launches:
+`timeout -k 10 300 unshare --mount --net --pid --ipc --uts --fork /bin/bash /opt/alica-phase5k/tooling/enclose-qualification.sh`
+
+The qualifier enables loopback only, asserts namespace/route/uid/isolation, constructs a fresh disabled-launch configuration, generates a token, runs `python -m hermes_cli.main serve --isolated --host 127.0.0.1 --port 19119`, requires unauthenticated401 readiness, then runs:
+`node --experimental-vm-modules --test --test-concurrency=1 --test-timeout=30000 adapters/hermes-kanban/tests/conformance.test.mjs`
+It stops/restarts that same disposable backend and runs `node --experimental-vm-modules adapters/hermes-kanban/tests/restart.mjs`, verifies all proof tasks have no execution state through supported REST, then stops server and namespace. Failure exits nonzero; preserve log and never mark completion merely from environment creation.
+
+`catalog/proposals/hermes-kanban/admit.mjs --admit-experimental` is a HISTORICAL explicit admission operation, not normal startup or authority renewal. Preadmission source is61ebcdbb. For final archives use `node docs/phase5k/verify-release.mjs` (read-only); it verifies immutable admission evidence against retained preadmission fixture, actual current Catalog/manifest and final source manifests. Consumer example imports only @alica/plugin-sdk and takes the admitted descriptor supplied by operator. Production credential binding unsupported, intentionally not approximated with injected real secrets.
+
+For shutdown, stop this fixture's process and let namespace exit. No global daemon installed. Do not delete preserved evidence/accepted originals or prune unrelated caches. Detailed DEV downloads may remain for reproducibility; future cleanup needs separate scope.
