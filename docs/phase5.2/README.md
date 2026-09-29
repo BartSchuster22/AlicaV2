@@ -1,6 +1,6 @@
 # Phase5.2 Doghouse + ACAP Adapter — frozen candidate for final independent review
 
-Status: IMPLEMENTED / LOCALLY QUALIFIED / EXPERIMENTAL Catalog admission. NOT technically published, NOT Owner Accepted. Final independent review is mandatory before publication/tag. This is not production adoption, hostile-code isolation, recovery authority or Phase5.3 authorization.
+Status: R1/R2 CORRECTED AND RE-EVIDENCED; SAME-REVIEWER CLOSURE PENDING, publication BLOCKED. See QUALIFICATION-SUPPLEMENT-R1-R2.md; original independent BLOCKED review is preserved. Historical status: IMPLEMENTED / LOCALLY QUALIFIED / EXPERIMENTAL Catalog admission. NOT technically published, NOT Owner Accepted. Final independent review is mandatory before publication/tag. This is not production adoption, hostile-code isolation, recovery authority or Phase5.3 authorization.
 
 ## Contract and use
 
@@ -38,14 +38,16 @@ Self-health concerns store, local subscription registration/receipt/freshness, r
 
 Use exact toolchain.lock.json Node24.21.0/npm11.19.0, not default Node22. Install pinned dependencies with `npm ci --ignore-scripts`, then `npm run build`. Inherited build-generated Catalog schema copies stay untracked; frozen packages/Catalog/Foundation are not repaired. Source requires its included docs/phase5.2/design JSON contracts; copy the complete source tree, not just four .mjs files.
 
+For R1's mandatory unavailable-container prerequisite, run `sudo -n /usr/bin/python3 -I services/doghouse/tests/no-container.py`: disposable allowlisted filesystem, new mount/network/PID namespaces, chroot and unprivileged Node, inside-fixture absence checks, then61 core/public/continuity tests. No production sockets copied or probed. The network-only command below is NOT that prerequisite proof. Revalidate frozen admission using its original source revision; do not rerun original source-hash receipt admission against corrected runtime bytes.
+
 Run from repository root:
 
 ```sh
 unshare -Urn node --experimental-vm-modules --test --test-timeout=30000 services/doghouse/tests/*.test.mjs
 node --experimental-vm-modules --test docs/phase5.2/proof/*.test.mjs
-node catalog/proposals/assurance-incidents/admit.mjs --admit-experimental
+node docs/phase5.2/verify.mjs
 ```
 
-First command executes50 tests including independent offline-packed public-only consumer, native store, real public Host event/ACAP, restart, stopped backup, fresh canonical roundtrip/continuation, authority/negative/fault/capacity/deadline cases. The admission command verifies original hash-bound23-test D13 packet before deterministic existing-record readback; it does not manufacture a new independent review or renew any grant. Tests use fresh temporary state; no production inputs. `unshare -Urn` proved available here and denies external network. No docker/systemd invocation or binary-absence certification.
+First command selects62 tests (original50 plus12 R2 cases); current evidence executes61 core/public tests in the stronger chroot and the independent offline-packed consumer separately (1/1). The verifier checks the current supplementary hashes, including original immutable receipts. No admission reissue or grant renewal. All tests use fresh temporary state; no production inputs. Network-only unshare is not filesystem isolation; R1's separate chroot command above supplies the missing unavailable-container qualification.
 
 Read EVIDENCE.md for actual logs, regression commands, inherited failures and preparatory failures. Read GATES.md for criterion states. Design review raw JSON and initial CHANGES_REQUIRED review are preserved under review/. Final review request: FINAL-REVIEW-REQUEST.md. Public release/tag/anonymous verification remain pending; eventual authorized technical tag phase5.2-doghouse-v1.0.0 must not be confused with an unauthorized acceptance tag.

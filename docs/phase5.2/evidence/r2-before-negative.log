@@ -1,0 +1,152 @@
+✖ R2 resolved overlap, reversed=false: atomic import, store commit/open rejection (45.000408ms)
+✖ R2 resolved overlap, reversed=true: atomic import, store commit/open rejection (21.155696ms)
+✖ R2 equal recovery/start, reversed=false: atomic import, store commit/open rejection (28.121697ms)
+✖ R2 equal recovery/start, reversed=true: atomic import, store commit/open rejection (23.564647ms)
+✖ R2 equal starts, reversed=false: atomic import, store commit/open rejection (24.797319ms)
+✖ R2 equal starts, reversed=true: atomic import, store commit/open rejection (24.319401ms)
+✖ R2 active predecessor, reversed=false: atomic import, store commit/open rejection (27.372624ms)
+✖ R2 active predecessor, reversed=true: atomic import, store commit/open rejection (23.078004ms)
+✖ R2 acknowledged predecessor, reversed=false: atomic import, store commit/open rejection (25.92649ms)
+✖ R2 acknowledged predecessor, reversed=true: atomic import, store commit/open rejection (22.401932ms)
+✔ R2 valid reversed recurrence survives restart and authorized continuation (34.477265ms)
+✔ R2 unknown-rule overlapping historical-only evidence is not assigned understood semantics (30.536632ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 2
+ℹ fail 10
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 709.183861
+
+✖ failing tests:
+
+test at .tools/r2-before/services/doghouse/tests/review-r2.test.mjs:21:38
+✖ R2 resolved overlap, reversed=false: atomic import, store commit/open rejection (45.000408ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///home/herman/alica-phase52/.tools/r2-before/services/doghouse/tests/review-r2.test.mjs:24:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at .tools/r2-before/services/doghouse/tests/review-r2.test.mjs:21:38
+✖ R2 resolved overlap, reversed=true: atomic import, store commit/open rejection (21.155696ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///home/herman/alica-phase52/.tools/r2-before/services/doghouse/tests/review-r2.test.mjs:24:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at .tools/r2-before/services/doghouse/tests/review-r2.test.mjs:21:38
+✖ R2 equal recovery/start, reversed=false: atomic import, store commit/open rejection (28.121697ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///home/herman/alica-phase52/.tools/r2-before/services/doghouse/tests/review-r2.test.mjs:24:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at .tools/r2-before/services/doghouse/tests/review-r2.test.mjs:21:38
+✖ R2 equal recovery/start, reversed=true: atomic import, store commit/open rejection (23.564647ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///home/herman/alica-phase52/.tools/r2-before/services/doghouse/tests/review-r2.test.mjs:24:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at .tools/r2-before/services/doghouse/tests/review-r2.test.mjs:21:38
+✖ R2 equal starts, reversed=false: atomic import, store commit/open rejection (24.797319ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///home/herman/alica-phase52/.tools/r2-before/services/doghouse/tests/review-r2.test.mjs:24:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at .tools/r2-before/services/doghouse/tests/review-r2.test.mjs:21:38
+✖ R2 equal starts, reversed=true: atomic import, store commit/open rejection (24.319401ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///home/herman/alica-phase52/.tools/r2-before/services/doghouse/tests/review-r2.test.mjs:24:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at .tools/r2-before/services/doghouse/tests/review-r2.test.mjs:21:38
+✖ R2 active predecessor, reversed=false: atomic import, store commit/open rejection (27.372624ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///home/herman/alica-phase52/.tools/r2-before/services/doghouse/tests/review-r2.test.mjs:24:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at .tools/r2-before/services/doghouse/tests/review-r2.test.mjs:21:38
+✖ R2 active predecessor, reversed=true: atomic import, store commit/open rejection (23.078004ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///home/herman/alica-phase52/.tools/r2-before/services/doghouse/tests/review-r2.test.mjs:24:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at .tools/r2-before/services/doghouse/tests/review-r2.test.mjs:21:38
+✖ R2 acknowledged predecessor, reversed=false: atomic import, store commit/open rejection (25.92649ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///home/herman/alica-phase52/.tools/r2-before/services/doghouse/tests/review-r2.test.mjs:24:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at .tools/r2-before/services/doghouse/tests/review-r2.test.mjs:21:38
+✖ R2 acknowledged predecessor, reversed=true: atomic import, store commit/open rejection (22.401932ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///home/herman/alica-phase52/.tools/r2-before/services/doghouse/tests/review-r2.test.mjs:24:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }

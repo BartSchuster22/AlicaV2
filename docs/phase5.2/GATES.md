@@ -1,6 +1,6 @@
 # Phase5.2 gates — implementation candidate for final independent review
 
-States below are local technical qualification, not final independent approval or Owner Acceptance. Design F1 was independently closed at9120c30f; initial CHANGES_REQUIRED review remains provenance. No retrospective self-approval.
+Latest correction: independent review BLOCKED_CONCRETE_FINDINGS (review/final-blocked.md/.json) identified R1/R2. Finite corrections are implemented and re-evidenced in QUALIFICATION-SUPPLEMENT-R1-R2.md; same-reviewer closure is PENDING, publication BLOCKED. All prior receipts retained. States below are local technical qualification, not final independent approval or Owner Acceptance. Design F1 was independently closed at9120c30f; initial CHANGES_REQUIRED review remains provenance. No retrospective self-approval.
 
 |Gate|State|Concrete evidence|
 |---|---|---|
@@ -15,10 +15,10 @@ States below are local technical qualification, not final independent approval o
 |D10|IMPLEMENTED / TESTED|store.mjs; lifecycle restart, write failure, exclusive owner, corrupt store, crash-before/after-rename tests|
 |D11|IMPLEMENTED / TESTED|adapter.mjs public events; real Host producer/observer/scope/provenance tests plus forged/unregistered negatives|
 |D12|IMPLEMENTED / TESTED|public get/list/acknowledge; Host grant AND exact current local actor map; absent manual operation rejection|
-|D13|EXECUTED PASS scoped native|d13-native.log23/23; final-native-conformance.log50/50 incl explicit stopped-backup test. No-container required; no binary-absence or hostile-isolation claim; migration NOT_TESTED|
+|D13|R1 corrected / reviewer closure pending|evidence/r1-native-unavailable.log:61/61 inside disposable chroot + new mount/network/PID namespaces, unprivileged runtime; docker/podman ENOENT, zero filesystem sockets, no host socket probe/copy. Original23/50-test claims alone were insufficient. Migration NOT_TESTED|
 |D13b|EXPERIMENTAL ADMITTED|catalog/proposals/assurance-incidents/admission.json, conformance hashes, real transition and snapshot; trustVerified=false, not signed Owner approval|
 |D14|PASS|Canonical validated deterministic export; stable IDs/times/provenance and continuation preserved|
-|D15|PASS|Fresh empty import; strict shape/relationship rejection; no imported actor/producer authorization; repeated/nonempty import refused|
+|D15|R2 corrected / reviewer closure pending|Fresh empty import plus order-independent understood-correlation lifetime checks;12 focused atomic import/store/recurrence/historical-only tests, also repeated inside R1 chroot. No imported authority|
 |D16|PASS|Same canonical re-export, new current registration required for old duplicate, compatible recovery, historical-only evidence unchanged|
 |D17|PASS scoped finite matrix|domain/exchange/continuity-faults/acceptance/public tests; limits, cancellation/deadlines, current authority, failures; N/A documented in EVIDENCE.md|
 |D18|PASS|Separate offline-installed SDK-only consumer, absent Kernel/testkit/Doghouse package resolution, actual list/get/ack using admitted descriptor|

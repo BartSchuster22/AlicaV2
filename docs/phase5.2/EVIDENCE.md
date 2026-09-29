@@ -1,5 +1,7 @@
 # Executed evidence and finite qualification scope
 
+CURRENT CORRECTION: read QUALIFICATION-SUPPLEMENT-R1-R2.md and qualification-r1-r2.json first. Independent review blocked the original candidate for missing container/socket-unavailability qualification and impossible compatible imported chronology. Both now have finite changes and actual re-evidence, pending same-reviewer closure. Original logs, qualification.json and admission receipts below remain immutable historical evidence, NOT sufficient current R1/R2 proof. Baseline-to-original-candidate diff --check exits2 on four raw failure-log whitespace lines; clean-working-tree/staged checks did not cover that historical range. Raw logs are intentionally preserved.
+
 All paths below are relative to docs/phase5.2/evidence unless stated. Logs are actual outputs, including unsuccessful first attempts; none are fabricated reviews or substitute API responses. Qualification used local Node24.21.0/npm11.19.0. Python prerequisite was resolved through isolated public uv tooling under clone .tools: CPython3.11.15, satisfying the inherited >=3.11 requirement, with exact services/memoryv4/requirements-qualified.txt versions. Earlier baseline note's unresolved Python3.12 assumption is superseded by this actually executed compatible local runtime. No production Python environment was edited.
 
 ## Positive execution

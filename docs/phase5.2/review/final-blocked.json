@@ -1,0 +1,121 @@
+{
+  "schema": "phase52.independent-final-review/v1",
+  "verdict": "BLOCKED_CONCRETE_FINDINGS",
+  "candidate": "1247195c2c78c091460159c8f83e0bb790b8d90f",
+  "implementationRevision": "5d4a122797d42ef8599db7660783f8cccb0006cb",
+  "baseline": "ad3df9bbd0a23aedc5edcd3eae8194e04152eebd",
+  "archive": {
+    "path": "/home/herman/g7-control/phase52-final-review-source.tar.gz",
+    "sha256": "11526a9569e5f521523e0a0164968655fcb82eaddf2a62879e648562210b17af",
+    "regularFilesComparedWithCandidate": 60368,
+    "mismatches": 0,
+    "extraFiles": 0
+  },
+  "independence": {
+    "role": "Independent finite final reviewer, not implementer or parent design reviewer",
+    "parentDesignReviewUsedAsProvenanceOnly": true,
+    "implementationModified": false,
+    "leaseActionPerformed": false,
+    "continuityOrMemorySyncPerformed": false,
+    "operationalAccessPerformed": false,
+    "sshOrProviderTestsPerformed": false,
+    "subworkersOrCronStarted": false,
+    "publicationPerformed": false,
+    "ownerAcceptance": false
+  },
+  "blockingFindings": [
+    {
+      "id": "R1",
+      "title": "D13 native no-container prerequisite is not proven",
+      "kind": "ACCEPTANCE_EVIDENCE_GAP",
+      "criteria": ["D13", "Rev1.1 native-first prerequisite"],
+      "references": [
+        "docs/phase5.2/BUILDING-PLAN-Rev1.1.md:394-395",
+        "docs/phase5.2/BUILDING-PLAN-Rev1.1.md:745-751",
+        "docs/phase5.2/EVIDENCE.md:7,35",
+        "docs/phase5.2/README.md:44-49",
+        "docs/phase5.2/GATES.md:18",
+        "catalog/proposals/assurance-incidents/conformance.json:6",
+        "catalog/proposals/assurance-incidents/admit.mjs:21"
+      ],
+      "observed": "The packet proves native execution with unshare -Urn and admits that container binary absence is not proven. Network/user namespaces do not establish Docker/Podman or filesystem container socket unavailability.",
+      "requiredClosure": "Provide hash-bound core/native execution and safe inside-fixture prerequisite checks in disposable filesystem/runtime isolation where Docker/Podman and container sockets are unavailable. Preserve original admission history and correct/supplement claims without touching production binaries/sockets or weakening frozen semantics.",
+      "productionSocketProbeRequired": false
+    },
+    {
+      "id": "R2",
+      "title": "Canonical import accepts impossible overlapping current-rule incident histories as COMPATIBLE",
+      "kind": "REPRODUCED_DOMAIN_VALIDATION_DEFECT",
+      "criteria": ["D10", "D15", "D16", "D17"],
+      "references": [
+        "docs/phase5.2/DESIGN.md:19,37-39",
+        "services/doghouse/contracts.mjs:37-60",
+        "services/doghouse/core.mjs:73-77,92",
+        "services/doghouse/store.mjs:13,19"
+      ],
+      "reproduction": [
+        "Generate valid history for one scope/target/current-rule correlation: FAIL T, RECOVER T+10, new FAIL T+20; export.",
+        "Move the new failure to T+5 and consistently update observed time, incident first/last/window timestamps and matching dedupe content hash.",
+        "Import into a fresh empty domain. Expected FAILED_PRECONDITION without mutation; actual import succeeds as COMPATIBLE:RESOLVED,COMPATIBLE:OPEN.",
+        "Authorized RECOVER T+30 then continues and persists the impossible history, producing RESOLVED,RESOLVED."
+      ],
+      "cause": "Per-incident chronological checks reset for each incident; uniqueness tracks final active incidents only. There is no cross-incident lifecycle ordering check for a shared understood correlation key.",
+      "requiredClosure": "Reject impossible cross-incident overlap/equal-time/active-predecessor transitions for the exact understood rule, independent of array order. Add focused atomic import/store negatives and valid recurrence/continuation positives while retaining historical-only handling and current authorization.",
+      "reproduced": true
+    }
+  ],
+  "verification": {
+    "qualificationHashesVerified": 46,
+    "originalAdmissionConformanceHashesVerified": 10,
+    "qualificationJsonSha256": "afe82c64cc7e14b048d4c548e9891440be43071a81aab82e9f35cac2fd5be87f",
+    "frozenTrackedDiff": "EMPTY",
+    "candidateVsImplementation": "Five documentation/evidence/verification files only; 148 added lines; no runtime changes",
+    "baselineVsCandidate": "91 additive files",
+    "snapshotDigest": "sha256:6cad8c7fe21bc2f93f723eff0e75677e2f4f07ffb978e0e28306f4ddb8a8397d",
+    "snapshotConsumedReadOnly": true,
+    "manifestPinMatches": true,
+    "admissionWorkflowExecutedByReviewer": false,
+    "candidateFocusedTests": {
+      "selectors": [
+        "services/doghouse/tests/public.test.mjs",
+        "services/doghouse/tests/exchange.test.mjs",
+        "services/doghouse/tests/continuity-faults.test.mjs"
+      ],
+      "runtime": ".tools/node-v24.21.0-linux-x64/bin/node",
+      "isolation": "unshare -Urn; disposable state only; not D13 filesystem/socket-unavailability proof",
+      "pass": 24,
+      "fail": 0,
+      "exitCode": 0
+    },
+    "independentReviewerTests": {
+      "path": "/tmp/phase52-independent-review-flX8sg/reviewer.test.mjs",
+      "sha256": "2bd7fb4a7b09b1b9b50596caa9c7a994a0e0999e0e1b63c63f37cb0b89d7ebf7",
+      "logPath": "/tmp/phase52-independent-review-flX8sg/reviewer-final.log",
+      "logSha256": "20dc873c924ce52bcd133c5b3348b835cdca5646b18116e8c146bf75d5b80f8c",
+      "pass": 3,
+      "fail": 1,
+      "exitCode": 1,
+      "failure": "R2: expected atomic rejection of impossible overlapping current-rule history; import succeeded and continued",
+      "positiveChecks": [
+        "Current local target revocation rechecked after queue wait",
+        "Public Host grant revocation cancels waiting acknowledgement without mutation",
+        "Expired grant denies already-bound public consumer"
+      ],
+      "preparatoryFixtureErrorsDisclosed": [
+        "Existing public-fixture grant helper overwrote requested expiry; clock-shift probe returned DEADLINE_EXCEEDED rather than testing intended expiry",
+        "Reissuing same grant ID returned CONFLICT; corrected disposable fixture uses a distinct short-lived child grant and real bounded wait"
+      ]
+    },
+    "D18": "Independent offline consumer source and hash-bound execution evidence inspected; packaging not rerun",
+    "D19": "No new frozen-source regression observed. Three retired v1 FAILED_PRECONDITION discovery failures match accepted-baseline log. Current v2 eight passes and inherited Catalog dependency failure remain separately reported; not all-green and no live grants renewed.",
+    "D20": "Zero frozen tracked changes; no operational access by reviewer",
+    "D21": "Intentionally pending publication and anonymous exact-tag verification; not a blocking finding by itself"
+  },
+  "nonblockingNotes": [
+    "Baseline-to-candidate git diff --check exits 2 for trailing whitespace in four lines of preserved raw failure logs; do not rewrite raw evidence merely to green that check. Qualify clean-working-tree versus candidate-range claims.",
+    "Cooperative fsync/deadline semantics, retained ownership on incomplete shutdown, no cross-version migration qualification, historical semantic mapping rather than old-format compatibility and no public health transport remain disclosed caveats, not new blockers.",
+    "FUTURE_WORK only: readability or test naming improvements; no broad architecture/hardening request."
+  ],
+  "reportPath": "/home/herman/g7-control/phase52-final-independent-review.md",
+  "handoff": "Parent directs sole writer to close R1/R2 and obtain focused re-evidence/review for a new exact candidate. This candidate is blocked for technical publication. Preserve frozen contracts and original evidence. After actual review clearance and separately authorized D21, STOP for Owner Acceptance."
+}

@@ -58,6 +58,20 @@ export function validateRecords(data,{store=false}={}){
   requireThat(i.status!=='OPEN'||i.acknowledgements.length===0,'FAILED_PRECONDITION');
   acknowledgements+=i.acknowledgements.length;
  }
+ // Only understood rules confer continuation semantics. Check complete lifetimes,
+ // not serialized array order: every predecessor must resolve strictly before
+ // the next incident starts (including acknowledged/active predecessors).
+ const histories=new Map();
+ for(const i of data.incidents)if(compatible(i.rule)){
+  const history=histories.get(i.correlationKey)??[];history.push(i);histories.set(i.correlationKey,history);
+ }
+ for(const history of histories.values()){
+  history.sort((a,b)=>a.firstObservedAtMs-b.firstObservedAtMs);
+  for(let n=1;n<history.length;n++){
+   const predecessor=history[n-1],next=history[n];
+   requireThat(predecessor.status==='RESOLVED'&&predecessor.resolutions[0].atMs<next.firstObservedAtMs,'FAILED_PRECONDITION');
+  }
+ }
  requireThat(referenced.size===obs.size&&acknowledgements<=16,'FAILED_PRECONDITION');
  const requests=new Set();for(const a of data.ackRequests){const i=incs.get(a.incidentId),k=canonical([a.actor,a.scope,a.requestId]);requireThat(i&&i.scope===a.scope&&!requests.has(k)&&i.acknowledgements.length===1,'FAILED_PRECONDITION');requests.add(k);}
  for(const i of data.incidents)for(const a of i.acknowledgements)requireThat(data.ackRequests.some(r=>r.actor===a.actor&&r.scope===i.scope&&r.requestId===a.requestId&&r.incidentId===i.id),'FAILED_PRECONDITION');
