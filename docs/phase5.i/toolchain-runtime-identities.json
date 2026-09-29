@@ -1,0 +1,103 @@
+{
+  "osRelease": "PRETTY_NAME=\"Ubuntu 24.04.4 LTS\"\nNAME=\"Ubuntu\"\nVERSION_ID=\"24.04\"\nVERSION=\"24.04.4 LTS (Noble Numbat)\"\nVERSION_CODENAME=noble\nID=ubuntu\nID_LIKE=debian\nHOME_URL=\"https://www.ubuntu.com/\"\nSUPPORT_URL=\"https://help.ubuntu.com/\"\nBUG_REPORT_URL=\"https://bugs.launchpad.net/ubuntu/\"\nPRIVACY_POLICY_URL=\"https://www.ubuntu.com/legal/terms-and-policies/privacy-policy\"\nUBUNTU_CODENAME=noble\nLOGO=ubuntu-logo\n",
+  "kernel": "6.8.0-139-generic",
+  "nodeArchiveSha256": "fd8e59d5a511510f6a298afb548f18c7d2b1be404d8b4a27d94fbe49f56cb2d6",
+  "nodeBinarySha256": "7fde7b8afa198da66257f42ee2001d874c7355631e6d1579a5fb5ef1f246df4c",
+  "nodeVersion": "v24.21.0",
+  "memoryPython": "Python 3.12.3",
+  "hermesPython": "Python 3.14.7",
+  "H": {
+    "commit": "c04e9a1d0dfa4abbefe4b256428e645abaacfe88",
+    "uvLockSha256": "bd27ac91236fa57f9eeffea8d4a324f3ca7f9b218525d74bec14a67fc1163887"
+  },
+  "K": {
+    "commit": "536802c00e4f93061fc46b134dc029ff695f364f",
+    "uvLockSha256": "8e6ac13dc0040c0fc25ea29beab655b4d7b0820ace5aa1b294780fcdbad7b4d3"
+  },
+  "sharedPackages": {
+    "kernel": [
+      {
+        "environment": "integrated-candidate",
+        "name": "@alica/kernel",
+        "version": "0.0.0",
+        "packageJsonSha256": "3a55ea3d581a02443ca73a161803c7f10f1a5792ff414420ff31ded7cc710024"
+      },
+      {
+        "environment": "clean-reproduction-r2",
+        "name": "@alica/kernel",
+        "version": "0.0.0",
+        "packageJsonSha256": "3a55ea3d581a02443ca73a161803c7f10f1a5792ff414420ff31ded7cc710024"
+      }
+    ],
+    "acap-contracts": [
+      {
+        "environment": "integrated-candidate",
+        "name": "@alica/acap-contracts",
+        "version": "0.0.0",
+        "packageJsonSha256": "1a0454f01cbe13630c4cc24129c039b8ad45732c2694cea4e55684bea84e187a"
+      },
+      {
+        "environment": "clean-reproduction-r2",
+        "name": "@alica/acap-contracts",
+        "version": "0.0.0",
+        "packageJsonSha256": "1a0454f01cbe13630c4cc24129c039b8ad45732c2694cea4e55684bea84e187a"
+      }
+    ],
+    "acap-types": [
+      {
+        "environment": "integrated-candidate",
+        "name": "@alica/acap-types",
+        "version": "0.0.0",
+        "packageJsonSha256": "57ebfe46f2cd56d9e4a27cb165b96aeb235833b22fc7e356d26b4995826e5df9"
+      },
+      {
+        "environment": "clean-reproduction-r2",
+        "name": "@alica/acap-types",
+        "version": "0.0.0",
+        "packageJsonSha256": "57ebfe46f2cd56d9e4a27cb165b96aeb235833b22fc7e356d26b4995826e5df9"
+      }
+    ],
+    "plugin-sdk": [
+      {
+        "environment": "integrated-candidate",
+        "name": "@alica/plugin-sdk",
+        "version": "0.1.0",
+        "packageJsonSha256": "a575b651b3231def1700f7322a02ae76dda0cb4a01a12f900c7218c5d08dd7a5"
+      },
+      {
+        "environment": "clean-reproduction-r2",
+        "name": "@alica/plugin-sdk",
+        "version": "0.1.0",
+        "packageJsonSha256": "a575b651b3231def1700f7322a02ae76dda0cb4a01a12f900c7218c5d08dd7a5"
+      }
+    ],
+    "catalog": [
+      {
+        "environment": "integrated-candidate",
+        "name": "@alica/catalog",
+        "version": "0.1.0",
+        "packageJsonSha256": "ad9012474ce84ce33a6c4da0d7408022875be5135c5d8fb53bc45fad9fd3ff9a"
+      },
+      {
+        "environment": "clean-reproduction-r2",
+        "name": "@alica/catalog",
+        "version": "0.1.0",
+        "packageJsonSha256": "ad9012474ce84ce33a6c4da0d7408022875be5135c5d8fb53bc45fad9fd3ff9a"
+      }
+    ],
+    "service-foundation": [
+      {
+        "environment": "integrated-candidate",
+        "name": "@alica/service-foundation",
+        "version": "1.0.0",
+        "packageJsonSha256": "2570bf98318ee22b2c04653e69e983c383bc0ec1097b5d5b53ddd205cb1535f7"
+      },
+      {
+        "environment": "clean-reproduction-r2",
+        "name": "@alica/service-foundation",
+        "version": "1.0.0",
+        "packageJsonSha256": "2570bf98318ee22b2c04653e69e983c383bc0ec1097b5d5b53ddd205cb1535f7"
+      }
+    ]
+  }
+}

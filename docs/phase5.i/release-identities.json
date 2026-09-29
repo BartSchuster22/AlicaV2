@@ -1,0 +1,148 @@
+{
+  "base": "96359ab780dea152d7eb87736ebecb9fbceeb93c",
+  "anonymous_refs": "/home/alica-dev/phase5i/verified-refs.json",
+  "components": [
+    {
+      "component": "Kernel",
+      "technical_tag": "phase1-v1.0.0",
+      "technical_object": "8bc5d5fa961ac0b6430a85338dde48bf14b01f27",
+      "technical_commit": "ab0273e8581fa70cbcf15c07f73e990b5dcc725e",
+      "accepted_tag": null,
+      "accepted_object": null,
+      "accepted_commit": null,
+      "path": "packages/kernel",
+      "source_tree": "6fa35bdd99a5942a14a8296ffdddffcc722df2d8",
+      "candidate_source_tree": "6fa35bdd99a5942a14a8296ffdddffcc722df2d8"
+    },
+    {
+      "component": "ACAP contracts",
+      "technical_tag": "phase1-v1.0.0",
+      "technical_object": "8bc5d5fa961ac0b6430a85338dde48bf14b01f27",
+      "technical_commit": "ab0273e8581fa70cbcf15c07f73e990b5dcc725e",
+      "accepted_tag": null,
+      "accepted_object": null,
+      "accepted_commit": null,
+      "path": "packages/acap-contracts",
+      "source_tree": "f513d5e7a6d28b737ad37f6458443ada04fc1cbd",
+      "candidate_source_tree": "f513d5e7a6d28b737ad37f6458443ada04fc1cbd"
+    },
+    {
+      "component": "ACAP types",
+      "technical_tag": "phase1-v1.0.0",
+      "technical_object": "8bc5d5fa961ac0b6430a85338dde48bf14b01f27",
+      "technical_commit": "ab0273e8581fa70cbcf15c07f73e990b5dcc725e",
+      "accepted_tag": null,
+      "accepted_object": null,
+      "accepted_commit": null,
+      "path": "packages/acap-types",
+      "source_tree": "f6e57bb403f7de74c4ca6b8ce65e6c3053a3d553",
+      "candidate_source_tree": "f6e57bb403f7de74c4ca6b8ce65e6c3053a3d553"
+    },
+    {
+      "component": "SDK",
+      "technical_tag": "phase1-v1.0.0",
+      "technical_object": "8bc5d5fa961ac0b6430a85338dde48bf14b01f27",
+      "technical_commit": "ab0273e8581fa70cbcf15c07f73e990b5dcc725e",
+      "accepted_tag": null,
+      "accepted_object": null,
+      "accepted_commit": null,
+      "path": "packages/plugin-sdk",
+      "source_tree": "de9a835dc88e9879d6b0ea49a7fe74fc0ac3eb03",
+      "candidate_source_tree": "de9a835dc88e9879d6b0ea49a7fe74fc0ac3eb03"
+    },
+    {
+      "component": "Catalog",
+      "technical_tag": "phase2-catalog-v1.0.0",
+      "technical_object": "6cdb59dc590766d0044c751f1cef769be6af9ed8",
+      "technical_commit": "736b37d03c82ca057e7a397644037ef5d1bed991",
+      "accepted_tag": null,
+      "accepted_object": null,
+      "accepted_commit": null,
+      "path": "packages/catalog",
+      "source_tree": "e6b817a697acfa0aab6091b2028271547cbf9bc2",
+      "candidate_source_tree": "e6b817a697acfa0aab6091b2028271547cbf9bc2"
+    },
+    {
+      "component": "Foundation",
+      "technical_tag": "phase5.0-service-foundation-v1.0.0",
+      "technical_object": "6f7e681cf56d771926247e610ec9073af99ff0cd",
+      "technical_commit": "af8f2e8504207681e2b1487948293349f97e08c5",
+      "accepted_tag": "phase5.0-service-foundation-v1.0.0-accepted",
+      "accepted_object": "6e0ca5a398b420294853d6acdd72acd36a07bc52",
+      "accepted_commit": "94570dd322f07e2860016b89c1e81356cc8b65cc",
+      "path": "service-foundation",
+      "source_tree": "213653b89905f422c559d4778a0ebc0db84c0934",
+      "candidate_source_tree": "213653b89905f422c559d4778a0ebc0db84c0934"
+    },
+    {
+      "component": "Hermes Adapter",
+      "technical_tag": "phase3-hermes-v1.0.0",
+      "technical_object": "9efe206ab5914cbedcbf5790e538046830b05477",
+      "technical_commit": "5f3fa4670659d748042788e844081eaf9933752d",
+      "accepted_tag": "phase3-hermes-v1.0.0-accepted",
+      "accepted_object": "bb07bbacb6e66ab45fe1623d06e7fde813aa9049",
+      "accepted_commit": "0df9095dab900458d054dd3b7734dbfaeae9fba8",
+      "path": "integrations/hermes",
+      "source_tree": "c81c463abb127369aa845ea82a1eb0aa35f5d307",
+      "candidate_source_tree": "c81c463abb127369aa845ea82a1eb0aa35f5d307"
+    },
+    {
+      "component": "Decision/Jev",
+      "technical_tag": "phase4-jev-v1.0.0",
+      "technical_object": "1bb14d987b0381871337d2827b6b474484b2c56a",
+      "technical_commit": "003a9f7ce0a1e9845e7bf80d53ecb15c6aede30f",
+      "accepted_tag": "phase4-jev-v1.0.0-accepted",
+      "accepted_object": "ae0ac416e71c3335dc7b24aacdeb1706441e9ef7",
+      "accepted_commit": "396f4e1f17e0818d0905ddb888170dc784ad85bb",
+      "path": "services/decision",
+      "source_tree": "d35afdf5e8ff4a7a8d0aa0dbd5ca99b033434752",
+      "candidate_source_tree": "d35afdf5e8ff4a7a8d0aa0dbd5ca99b033434752"
+    },
+    {
+      "component": "MemoryV4 + adapter",
+      "technical_tag": "phase5.1-memoryv4-v1.0.0",
+      "technical_object": "24384aea8359f5a0c0ac5184c4c33c47136453f1",
+      "technical_commit": "1fb169afdf2436d5fe42139685ae0b43ad29e57e",
+      "accepted_tag": "phase5.1-memoryv4-v1.0.0-accepted",
+      "accepted_object": "edd40620282b557e2b8309af41616d2ef0aa8db8",
+      "accepted_commit": "ad3df9bbd0a23aedc5edcd3eae8194e04152eebd",
+      "path": "services/memoryv4",
+      "source_tree": "15d1a6a33f9a3367f9b3e026ee810f78f1f1e171",
+      "candidate_source_tree": "15d1a6a33f9a3367f9b3e026ee810f78f1f1e171"
+    },
+    {
+      "component": "Doghouse + adapter",
+      "technical_tag": "phase5.2-doghouse-v1.0.0",
+      "technical_object": "c50a626d4fff62180df791e9cc1f8b54dfaf6202",
+      "technical_commit": "1ed8a395ae5c7ae2d6b342c10b67734000ce4c0b",
+      "accepted_tag": "phase5.2-doghouse-v1.0.0-accepted",
+      "accepted_object": "d835b7892a59858ea6a142913f2658c3bfd0b0d1",
+      "accepted_commit": "8fafa2767627694007c338df76f1d03aba080b58",
+      "path": "services/doghouse",
+      "source_tree": "b0fa18b438e4b45bddd178de92f19c2afe75df05",
+      "candidate_source_tree": "b0fa18b438e4b45bddd178de92f19c2afe75df05"
+    },
+    {
+      "component": "Kanban Adapter",
+      "technical_tag": "phase5k-hermes-kanban-v1.0.0",
+      "technical_object": "2612ad977403b6c9eaa14711ebab282962d6bdd3",
+      "technical_commit": "24ebab2bd2b7d58ec0b31642156b17cdf4982b5d",
+      "accepted_tag": "phase5k-hermes-kanban-v1.0.0-accepted",
+      "accepted_object": "16586f566b6782f64c64c4b935e2574cf8d8e4e8",
+      "accepted_commit": "96359ab780dea152d7eb87736ebecb9fbceeb93c",
+      "path": "adapters/hermes-kanban",
+      "source_tree": "70a8e002aad70f6fe31b393f86bf780377b62872",
+      "candidate_source_tree": "70a8e002aad70f6fe31b393f86bf780377b62872"
+    }
+  ],
+  "lock_sha256": {
+    "toolchain.lock.json": "078cc50770b1ede31fcf4346a1ad316c97d1ffe6d0a55fe44a929d8a1fb612f6",
+    "package-lock.json": "fab3a30a19371147c4243bb2be1aff17010b9e839a9034abfba3d192ff38f103",
+    "services/memoryv4/requirements-qualified.txt": "b8e6afd1bb532117f10144b90b469b20e40e9414e4eddb36afeb48fd2afbca6d",
+    "docs/phase5k/PINNED-RUNTIME.json": "3481adeabd13863f66ab0d055a60cbfa0a4de1160370828c289042b4e7483eb6",
+    "integrations/hermes/VERSION.md": "36dc83efb45572972ff9fc76d8cf7dfc82e970811dee48a2369e3efef24a03f4"
+  },
+  "runtime_H": "c04e9a1d0dfa4abbefe4b256428e645abaacfe88",
+  "runtime_K": "536802c00e4f93061fc46b134dc029ff695f364f",
+  "integration_artifact": "Exact candidate bound by CANDIDATE-MANIFEST.json; final publication commit and annotated tag identify the immutable integration artifact."
+}

@@ -1,0 +1,15 @@
+{"stage":"H","class":"REAL_COMPONENT","capability":"io.alica.agent.execution","unchangedAdapterRegistered":true,"deniedBeforeExecuteGrant":true,"runnerAttached":false,"executeInvocations":0,"providerAttempts":0,"agentToolInvocations":0,"snapshot":"sha256:98aa324f38e7a25cbdaeb62174ad0644c1ca0dbbf2964a0f60390cbd76c43559","resources":{"effects":0,"listeners":0,"pendingCalls":0,"registrations":0}}
+✔ H6: verified in-process plugin cannot statically import child_process (109.241769ms)
+✔ H6: declared provider cannot defer registration to operator after ACTIVE (79.100532ms)
+✔ H6: public ACTIVE context cannot replace existing root handler (50.354413ms)
+✔ H6: child registration does not solve duplicate provider identity; grants still required (70.130425ms)
+(node:1) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 324.157818

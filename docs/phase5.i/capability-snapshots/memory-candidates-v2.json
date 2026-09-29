@@ -1,0 +1,475 @@
+{
+  "content": {
+    "apiVersion": "catalog.alica.io/snapshot-v1",
+    "version": "0.5.1",
+    "policy": {
+      "apiVersion": "catalog.alica.io/namespace-v1",
+      "version": "1.0.0",
+      "namespaces": [
+        {
+          "authority": "alica.io",
+          "domain": "memory",
+          "kind": "first-party",
+          "owner": "ALICA maintainers"
+        }
+      ],
+      "release": [
+        "acap://alica.io/memory/candidates@2"
+      ]
+    },
+    "definitions": [
+      {
+        "apiVersion": "catalog.alica.io/v1",
+        "contract": {
+          "descriptor": "descriptor.json",
+          "digest": "sha256:286159e1a40284cc02aa67cd2ab2cf4d1092733260c406f5a1810df2891be033",
+          "identity": "io.alica.memory.candidates",
+          "version": "2.0.0"
+        },
+        "dependencies": [],
+        "events": [],
+        "kind": "CapabilityDefinition",
+        "metadata": {
+          "id": "acap://alica.io/memory/candidates@2",
+          "maturity": "experimental",
+          "owner": "ALICA maintainers",
+          "summary": "Governed working candidates with durable domain request replay, stable IDs and bounded retrieval.",
+          "version": "2.0.0"
+        },
+        "permissions": [
+          "memory.create-working",
+          "memory.read",
+          "memory.search"
+        ],
+        "scopes": [
+          "application",
+          "session"
+        ],
+        "semantics": {
+          "cancellation": "supported",
+          "description": "Create requires payload requestKey (8–128 ASCII letters/digits/dot/underscore/hyphen, first alphanumeric). This is domain operation data, NEVER authority. Host idempotency is none: no CallOptions.idempotencyKey is accepted, no Host result/error replay cache. Domain MUST durably bind trusted actor plus operation namespace plus requestKey to normalized complete mutation payload and original result, atomically with mutation/audit, for at least 86400000ms from commit across provider/Host restart. Every attempt reauthorizes current Host grants AND trusted actor/data-root/domain permission before any replay. Same key changed payload is CONFLICT; actor namespace is isolated; original stable ID/result retained. Explicit retry after ambiguous write uses same payload key; no automatic retry or rollback claim. Get/search remain unchanged. See SEMANTICS.md and CHANGE.md. Proposed redesign, not reviewed/admitted.",
+          "errors": [
+            "INVALID_ARGUMENT",
+            "UNAUTHENTICATED",
+            "PERMISSION_DENIED",
+            "NOT_FOUND",
+            "CONFLICT",
+            "FAILED_PRECONDITION",
+            "UNAVAILABLE",
+            "RESOURCE_EXHAUSTED",
+            "CANCELLED",
+            "DEADLINE_EXCEEDED"
+          ]
+        }
+      }
+    ],
+    "files": {
+      "descriptor.json": {
+        "schemaVersion": "acap.capability/v1",
+        "id": "io.alica.memory.candidates",
+        "version": "2.0.0",
+        "features": [],
+        "operations": [
+          {
+            "name": "create",
+            "kind": "unary",
+            "idempotency": "none",
+            "input": {
+              "type": "object",
+              "properties": {
+                "scope": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 1000
+                },
+                "title": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 240
+                },
+                "content": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 8192
+                },
+                "sourceRefs": {
+                  "type": "array",
+                  "maxItems": 8,
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  }
+                },
+                "provenance": {
+                  "type": "object",
+                  "properties": {
+                    "source": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 240
+                    }
+                  },
+                  "required": [
+                    "source"
+                  ],
+                  "additionalProperties": false
+                },
+                "requestKey": {
+                  "type": "string",
+                  "minLength": 8,
+                  "maxLength": 128
+                }
+              },
+              "required": [
+                "scope",
+                "title",
+                "content",
+                "sourceRefs",
+                "provenance",
+                "requestKey"
+              ],
+              "additionalProperties": false
+            },
+            "output": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "scope": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 1000
+                },
+                "title": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 240
+                },
+                "content": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 8192
+                },
+                "sourceRefs": {
+                  "type": "array",
+                  "maxItems": 8,
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  }
+                },
+                "provenance": {
+                  "type": "object",
+                  "properties": {
+                    "source": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 240
+                    }
+                  },
+                  "required": [
+                    "source"
+                  ],
+                  "additionalProperties": false
+                },
+                "author": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "version": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 2147483647
+                },
+                "role": {
+                  "type": "string",
+                  "const": "active"
+                },
+                "lifecycle": {
+                  "type": "string",
+                  "const": "working"
+                }
+              },
+              "required": [
+                "id",
+                "scope",
+                "title",
+                "content",
+                "sourceRefs",
+                "provenance",
+                "author",
+                "version",
+                "role",
+                "lifecycle"
+              ],
+              "additionalProperties": false
+            }
+          },
+          {
+            "name": "get",
+            "kind": "unary",
+            "idempotency": "none",
+            "input": {
+              "type": "object",
+              "properties": {
+                "scope": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 1000
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                }
+              },
+              "required": [
+                "scope",
+                "id"
+              ],
+              "additionalProperties": false
+            },
+            "output": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "scope": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 1000
+                },
+                "title": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 240
+                },
+                "content": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 8192
+                },
+                "sourceRefs": {
+                  "type": "array",
+                  "maxItems": 8,
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  }
+                },
+                "provenance": {
+                  "type": "object",
+                  "properties": {
+                    "source": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 240
+                    }
+                  },
+                  "required": [
+                    "source"
+                  ],
+                  "additionalProperties": false
+                },
+                "author": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "version": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 2147483647
+                },
+                "role": {
+                  "type": "string",
+                  "const": "active"
+                },
+                "lifecycle": {
+                  "type": "string",
+                  "const": "working"
+                }
+              },
+              "required": [
+                "id",
+                "scope",
+                "title",
+                "content",
+                "sourceRefs",
+                "provenance",
+                "author",
+                "version",
+                "role",
+                "lifecycle"
+              ],
+              "additionalProperties": false
+            }
+          },
+          {
+            "name": "search",
+            "kind": "unary",
+            "idempotency": "none",
+            "input": {
+              "type": "object",
+              "properties": {
+                "scope": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 1000
+                },
+                "query": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 500
+                },
+                "limit": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 25
+                },
+                "cursor": {
+                  "type": "string",
+                  "minLength": 0,
+                  "maxLength": 4096
+                }
+              },
+              "required": [
+                "scope",
+                "query",
+                "limit",
+                "cursor"
+              ],
+              "additionalProperties": false
+            },
+            "output": {
+              "type": "object",
+              "properties": {
+                "candidates": {
+                  "type": "array",
+                  "maxItems": 25,
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200
+                      },
+                      "scope": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 1000
+                      },
+                      "title": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 240
+                      },
+                      "content": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 8192
+                      },
+                      "sourceRefs": {
+                        "type": "array",
+                        "maxItems": 8,
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 512
+                        }
+                      },
+                      "provenance": {
+                        "type": "object",
+                        "properties": {
+                          "source": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 240
+                          }
+                        },
+                        "required": [
+                          "source"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "author": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200
+                      },
+                      "version": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 2147483647
+                      },
+                      "role": {
+                        "type": "string",
+                        "const": "active"
+                      },
+                      "lifecycle": {
+                        "type": "string",
+                        "const": "working"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "scope",
+                      "title",
+                      "content",
+                      "sourceRefs",
+                      "provenance",
+                      "author",
+                      "version",
+                      "role",
+                      "lifecycle"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "nextCursor": {
+                  "type": "string",
+                  "minLength": 0,
+                  "maxLength": 4096
+                }
+              },
+              "required": [
+                "candidates",
+                "nextCursor"
+              ],
+              "additionalProperties": false
+            }
+          }
+        ]
+      }
+    },
+    "index": {
+      "apiVersion": "catalog.alica.io/index-v1",
+      "version": "0.5.1",
+      "entries": [
+        {
+          "id": "acap://alica.io/memory/candidates@2",
+          "version": "2.0.0",
+          "maturity": "experimental",
+          "identity": "io.alica.memory.candidates",
+          "digest": "sha256:286159e1a40284cc02aa67cd2ab2cf4d1092733260c406f5a1810df2891be033"
+        }
+      ]
+    },
+    "compatibility": {
+      "rules": "catalog-v1-bounded",
+      "unknown": "REVIEW_REQUIRED"
+    }
+  },
+  "digest": "sha256:fb9b81e7f0565d963642dbc0bbdfef5d1c11e608a5f447036edc54f328847889"
+}

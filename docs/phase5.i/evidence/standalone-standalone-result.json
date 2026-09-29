@@ -1,0 +1,37 @@
+{
+  "status": "PASS",
+  "base": "/home/alica-dev/phase5i-public-qualified-1",
+  "mode": "FULL_FRESH_PUBLIC_INPUTS",
+  "pins": {
+    "nodeVersion": "24.21.0",
+    "nodeArchiveSha256": "fd8e59d5a511510f6a298afb548f18c7d2b1be404d8b4a27d94fbe49f56cb2d6",
+    "uvVersion": "0.12.20",
+    "uvBinarySha256": "b8299463da6fa7da3b94464444d252d0afca8ac6c96cb229f1baf4012f365246",
+    "hermesPython": "3.14.7",
+    "memoryPython": "3.12.3",
+    "carrier": "96359ab780dea152d7eb87736ebecb9fbceeb93c"
+  },
+  "sourceFirstInstanceStateCopied": false,
+  "DSH2": false,
+  "environment": "fresh isolated root on host identified by operator; qualification execution on DEV",
+  "payloadManifestSha256": "87cfc7ce7721a9bff56f83d35dbdf1303506ad89f6c1721b5c939f656d4fdce5",
+  "reproducerFiles": {
+    "reproduce.py": "c338d5973f56ceddc00ab9b6d746b084d8f456d5109d8c35f2f3fc499dc2a9f9",
+    "reproduce/clean-public-build.py": "5f6417805272f6d501a8088f484dad1f81a559c929c1d386bd0eef82cba9580f",
+    "reproduce/clean-run.py": "743442445bcfa24109a2e2d1065ba6e3c55a10f3c4be9429aa275e71f9b21bc7",
+    "reproduce/memory-constraints.txt": "585965a52754d90a79ad83e15eb96c07a9072fe883b0244ed6eca37a528b5441",
+    "reproduce/build-expected.json": "43da1c41d5ef03da15abcd99a526a1306bdb6c827af61d38ca911a31fabe1b10",
+    "reproduce/clean-root.py": "c453cad3bf303b17844af68d08ece043ad35d8d48d9c288d69e19b1c141a80fc",
+    "reproduce/review-closures.py": "54f970b19748dba80596493b9dcd6bdf524b97307504f9115774c79bfcd39965",
+    "reproduce/clean-inputs.py": "41a9eee60e2ce25c8c14810435d6228152ac55bacadac290eacaf7f7fe6b2da1",
+    "proof/domain-cycle.mjs": "bada0d42216f9d55c08298dedd081d3af9e97b7fec3455ad586e63bd26a6f185",
+    "proof/whole-qualifier.py": "d894898d34fe39c6467ee0aa1e3c35e464273b08e3e695e823c0554bd559307c",
+    "proof/executed-whole-enclosure.py": "60cf8e0f23d798f6d43f0ee4826bbf79867b913202d37f6612135d6b3939b75f",
+    "proof/k-qualifier.py": "04f85d79560a52b1e5bfc677f7ec7654fcdd0bdd041e69bad9f22debc27c3fb4",
+    "proof/review-closures-r4.mjs": "398a632e2ec4c2b190e9520397cf6240f35e233206588d9e30b0b2c015092e06",
+    "proof/p2-cycle.mjs": "06246e1c094c8a267ef2157096176c6130a514bb429fc7df878a86b0abf591b2"
+  },
+  "closedLiveProviderCalls": 0,
+  "controlEffects": 0,
+  "ownerAcceptance": false
+}

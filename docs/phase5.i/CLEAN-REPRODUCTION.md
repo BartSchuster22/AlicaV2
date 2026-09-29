@@ -1,0 +1,9 @@
+# I10 clean isolated reproduction
+
+PASS in a freshly created isolated environment on the supported DEV host, not a second VM and not DSH2. fresh clone of the public AlicaV2 carrier at 96359ab780dea152d7eb87736ebecb9fbceeb93c, fresh npm install/build, separately fetched public H/K source pins and locked Python dependency installs, fresh MemoryV4 qualified requirements install and independently prepared public external packages. Only explicit OS/toolchain prerequisites are shared; no first-instance home, credentials or application state was copied.
+
+The clean-root payload was assembled from those fresh source/package inputs. State and tmp began empty; H received only an explicit synthetic profile YAML. Reference-owned caller code is part of this new integration artifact, not hidden production code. The first clean root exposed a public-artifact directory traverse-permission mistake; it was preserved. A second new root corrected directory mode before launch and passed K real-backend conformance plus whole write/stop/reconstruct/read. No destructive reset or partial-state reuse was used to turn the failure green.
+
+Follow-up H/D/G review witnesses also passed in both integrated and clean environments. Eleven frozen source trees, same H/K pins and locks, installed shared package metadata, immutable payload preservation and required behavioral results are the comparison criteria. Generated UUIDs, timestamps, fixture scope IDs and filesystem layout differences are not claimed equal.
+
+Evidence: clean-public-build-result.json, clean-inputs-result.json, clean-root-r2-preparation.json, clean-reproduction-result.json, clean-r2-* logs, review-closures-result.json and final-purity-result.json. REPRODUCE.md is the operator entrypoint for published reproduction; publication remains withheld until its complete artifact is reviewed.

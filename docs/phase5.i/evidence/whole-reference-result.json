@@ -1,0 +1,43 @@
+{
+  "status": "PASS",
+  "scope": "full isolated process namespace destroyed and reconstructed; unchanged native components coexist with real nonlaunching K backend",
+  "M": "same public get/search/replay record after full process-tree exit",
+  "G": "same public incident ack/lifecycle after full process-tree exit; health DEGRADED truthfully",
+  "P2": "completed put followed by clean shutdown and next-enclosure public get",
+  "H": "same separately pinned native profile list; no authority renewal",
+  "D": "native/offline conformance within both complete-enclosure rounds; wire mocks labelled separately",
+  "K": [
+    {
+      "stage": "WHOLE_REFERENCE",
+      "mode": "write",
+      "functional": true,
+      "productionCredentialRead": false,
+      "freshFixtureCredential": true,
+      "dispatch": 0,
+      "assignment": 0,
+      "workers": 0,
+      "runs": 0,
+      "termination": 0,
+      "taskCount": 16,
+      "realBackendRestart": true,
+      "continuity": "UNKNOWN"
+    },
+    {
+      "stage": "WHOLE_REFERENCE",
+      "mode": "read",
+      "functional": true,
+      "productionCredentialRead": false,
+      "freshFixtureCredential": true,
+      "dispatch": 0,
+      "assignment": 0,
+      "workers": 0,
+      "runs": 0,
+      "termination": 0,
+      "taskCount": 16,
+      "realBackendRestart": true,
+      "continuity": "UNKNOWN"
+    }
+  ],
+  "priorBaseline": "unchanged",
+  "publication": "WITHHELD"
+}

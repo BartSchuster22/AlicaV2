@@ -1,0 +1,12 @@
+[
+  {
+    "explicitNullDeviceBind": false,
+    "exit": 1,
+    "output": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import os;f=os.open('/dev/null',os.O_WRONLY);os.close(f);print('NULL_DEVICE_OPEN_PASS')\n                ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\nOSError: [Errno 30] Read-only file system: '/dev/null'\n"
+  },
+  {
+    "explicitNullDeviceBind": true,
+    "exit": 0,
+    "output": "NULL_DEVICE_OPEN_PASS\n"
+  }
+]

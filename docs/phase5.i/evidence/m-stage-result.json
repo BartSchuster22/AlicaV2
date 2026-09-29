@@ -1,0 +1,16 @@
+{
+  "stage": "M",
+  "status": "PASS",
+  "REAL_COMPONENT": "unchanged native Python MemoryV4 + SQLite + public Host + SDK consumer; scoped create/get/search, replay, reauthorization, complete Host restart and unavailable semantics",
+  "FIXTURE": "fault wrappers and explicitly 25h-aged ledger, not wall-clock soak",
+  "productionMemoryAccess": false,
+  "authenticatedExternalCalls": 0,
+  "regressions": [
+    "D",
+    "P2/P1",
+    "H native profile list"
+  ],
+  "prior_baseline": "unchanged",
+  "candidate": "/home/alica-dev/phase5i/reference/m-candidate",
+  "release": "NOT_QUALIFIED"
+}

@@ -1,0 +1,266 @@
+clean-reproduction-r2 0 ✔ H6: verified in-process plugin cannot statically import child_process (55.203851ms)
+✔ H6: declared provider cannot defer registration to operator after ACTIVE (49.117057ms)
+✔ H6: public ACTIVE context cannot replace existing root handler (66.699865ms)
+✔ H6: child registration does not solve duplicate provider identity; grants still required (156.411593ms)
+REVIEW_CLOSURES_PASS {"H":[{"round":0,"identity":{"principal":"org.phase5i.hermes","instanceId":"e5ab7722-c0c8-4090-9bcb-df8529f8973c","scope":"root","scopeGeneration":1},"registration":true,"denialBeforeExecute":true,"runnerAttached":false,"executeInvocations":0,"resources":{"effects":0,"listeners":0,"pendingCalls":0,"registrations":0},"evidenceClass":"REAL_COMPONENT"},{"round":1,"identity":{"principal":"org.phase5i.hermes","instanceId":"4a39e218-23bb-4f46-8025-7d2fbb8df648","scope":"root","scopeGeneration":1},"registration":true,"denialBeforeExecute":true,"runnerAttached":false,"executeInvocations":0,"resources":{"effects":0,"listeners":0,"pendingCalls":0,"registrations":0},"evidenceClass":"REAL_COMPONENT"}],"D":[{"round":0,"provider":"typesafe-jev","model":"fixture-model","fixtureDispatches":[{"kind":"discovery"},{"kind":"noul","body":"{\"state\":{},\"model\":\"fixture-model\",\"questions\":{\"q\":{\"type\":\"noul\",\"instructions\":{}}}}"},{"kind":"noul","body":"{\"state\":{},\"model\":\"fixture-model\",\"questions\":{\"q\":{\"type\":\"noul\",\"instructions\":{}}}}"}],"deniedWithoutDispatch":true,"mappedFailure":"CONTRACT_MISMATCH","clean":{"effects":0,"listeners":0,"pendingCalls":0,"registrations":0},"evidenceClass":"OFFLINE_PROVIDER","remoteBoundary":"MOCK","liveAuthorityRenewed":false},{"round":1,"provider":"typesafe-jev","model":"fixture-model","fixtureDispatches":[{"kind":"discovery"},{"kind":"noul","body":"{\"state\":{},\"model\":\"fixture-model\",\"questions\":{\"q\":{\"type\":\"noul\",\"instructions\":{}}}}"},{"kind":"noul","body":"{\"state\":{},\"model\":\"fixture-model\",\"questions\":{\"q\":{\"type\":\"noul\",\"instructions\":{}}}}"}],"deniedWithoutDispatch":true,"mappedFailure":"CONTRACT_MISMATCH","clean":{"effects":0,"listeners":0,"pendingCalls":0,"registrations":0},"evidenceClass":"OFFLINE_PROVIDER","remoteBoundary":"MOCK","liveAuthorityRenewed":false}],"G":[{"round":0,"observations":"two authorized synthetic service-source observations; cross-source target rejected","sources":[{"principal":"org.phase52.source","instanceId":"88e65720-60db-4983-83d2-26c9ac7b8e9b","scope":"d4c35161-840b-4a89-86d4-b3695d0b14df","scopeGeneration":1},{"principal":"org.phase5i.source.b","instanceId":"0139fa91-1f01-43a3-8b24-58d924f8913a","scope":"d4c35161-840b-4a89-86d4-b3695d0b14df","scopeGeneration":1}],"records":[{"acknowledgements":[],"classification":"unavailable","compatibility":"COMPATIBLE","firstObservedAtMs":1790720711560,"id":"49f9ec8e-a6d4-4f48-9656-c8ae7e49e8e1","lastObservedAtMs":1790720711560,"occurrenceCount":1,"rule":{"id":"availability-v1","version":"1.0.0"},"scope":"d4c35161-840b-4a89-86d4-b3695d0b14df","status":"OPEN","target":"isolated-target"},{"acknowledgements":[],"classification":"unavailable","compatibility":"COMPATIBLE","firstObservedAtMs":1790720711561,"id":"51ef236e-8e83-4352-8e34-a6bd4573c1f6","lastObservedAtMs":1790720711561,"occurrenceCount":1,"rule":{"id":"availability-v1","version":"1.0.0"},"scope":"d4c35161-840b-4a89-86d4-b3695d0b14df","status":"OPEN","target":"isolated-target-b"}],"clean":{"effects":0,"listeners":0,"pendingCalls":0,"registrations":0},"evidenceClass":"REAL_COMPONENT","inputs":"MOCK synthetic signals; NOT live telemetry","productionProbes":0,"remediation":0},{"round":1,"observations":"both persisted incidents recovered without new observations","sources":[{"principal":"org.phase52.source","instanceId":"88e65720-60db-4983-83d2-26c9ac7b8e9b","scope":"d4c35161-840b-4a89-86d4-b3695d0b14df","scopeGeneration":1},{"principal":"org.phase5i.source.b","instanceId":"0139fa91-1f01-43a3-8b24-58d924f8913a","scope":"d4c35161-840b-4a89-86d4-b3695d0b14df","scopeGeneration":1}],"records":[{"acknowledgements":[],"classification":"unavailable","compatibility":"COMPATIBLE","firstObservedAtMs":1790720711560,"id":"49f9ec8e-a6d4-4f48-9656-c8ae7e49e8e1","lastObservedAtMs":1790720711560,"occurrenceCount":1,"rule":{"id":"availability-v1","version":"1.0.0"},"scope":"d4c35161-840b-4a89-86d4-b3695d0b14df","status":"OPEN","target":"isolated-target"},{"acknowledgements":[],"classification":"unavailable","compatibility":"COMPATIBLE","firstObservedAtMs":1790720711561,"id":"51ef236e-8e83-4352-8e34-a6bd4573c1f6","lastObservedAtMs":1790720711561,"occurrenceCount":1,"rule":{"id":"availability-v1","version":"1.0.0"},"scope":"d4c35161-840b-4a89-86d4-b3695d0b14df","status":"OPEN","target":"isolated-target-b"}],"clean":{"effects":0,"listeners":0,"pendingCalls":0,"registrations":0},"evidenceClass":"REAL_COMPONENT","inputs":"MOCK synthetic signals; NOT live telemetry","productionProbes":0,"remediation":0}],"liveProviderCalls":0,"remediation":0}
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1352.136045
+
+STDERR
+(node:1) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+{
+  "status": "PASS",
+  "closes": [
+    "F1 Decision actual Jev offline composition",
+    "F2 Doghouse two authorized synthetic service sources",
+    "F3 accepted Hermes adapter reconstruction"
+  ],
+  "sourceSha256": "398a632e2ec4c2b190e9520397cf6240f35e233206588d9e30b0b2c015092e06",
+  "environments": [
+    {
+      "environment": "clean-reproduction-r2",
+      "receipt": {
+        "H": [
+          {
+            "round": 0,
+            "identity": {
+              "principal": "org.phase5i.hermes",
+              "instanceId": "e5ab7722-c0c8-4090-9bcb-df8529f8973c",
+              "scope": "root",
+              "scopeGeneration": 1
+            },
+            "registration": true,
+            "denialBeforeExecute": true,
+            "runnerAttached": false,
+            "executeInvocations": 0,
+            "resources": {
+              "effects": 0,
+              "listeners": 0,
+              "pendingCalls": 0,
+              "registrations": 0
+            },
+            "evidenceClass": "REAL_COMPONENT"
+          },
+          {
+            "round": 1,
+            "identity": {
+              "principal": "org.phase5i.hermes",
+              "instanceId": "4a39e218-23bb-4f46-8025-7d2fbb8df648",
+              "scope": "root",
+              "scopeGeneration": 1
+            },
+            "registration": true,
+            "denialBeforeExecute": true,
+            "runnerAttached": false,
+            "executeInvocations": 0,
+            "resources": {
+              "effects": 0,
+              "listeners": 0,
+              "pendingCalls": 0,
+              "registrations": 0
+            },
+            "evidenceClass": "REAL_COMPONENT"
+          }
+        ],
+        "D": [
+          {
+            "round": 0,
+            "provider": "typesafe-jev",
+            "model": "fixture-model",
+            "fixtureDispatches": [
+              {
+                "kind": "discovery"
+              },
+              {
+                "kind": "noul",
+                "body": "{\"state\":{},\"model\":\"fixture-model\",\"questions\":{\"q\":{\"type\":\"noul\",\"instructions\":{}}}}"
+              },
+              {
+                "kind": "noul",
+                "body": "{\"state\":{},\"model\":\"fixture-model\",\"questions\":{\"q\":{\"type\":\"noul\",\"instructions\":{}}}}"
+              }
+            ],
+            "deniedWithoutDispatch": true,
+            "mappedFailure": "CONTRACT_MISMATCH",
+            "clean": {
+              "effects": 0,
+              "listeners": 0,
+              "pendingCalls": 0,
+              "registrations": 0
+            },
+            "evidenceClass": "OFFLINE_PROVIDER",
+            "remoteBoundary": "MOCK",
+            "liveAuthorityRenewed": false
+          },
+          {
+            "round": 1,
+            "provider": "typesafe-jev",
+            "model": "fixture-model",
+            "fixtureDispatches": [
+              {
+                "kind": "discovery"
+              },
+              {
+                "kind": "noul",
+                "body": "{\"state\":{},\"model\":\"fixture-model\",\"questions\":{\"q\":{\"type\":\"noul\",\"instructions\":{}}}}"
+              },
+              {
+                "kind": "noul",
+                "body": "{\"state\":{},\"model\":\"fixture-model\",\"questions\":{\"q\":{\"type\":\"noul\",\"instructions\":{}}}}"
+              }
+            ],
+            "deniedWithoutDispatch": true,
+            "mappedFailure": "CONTRACT_MISMATCH",
+            "clean": {
+              "effects": 0,
+              "listeners": 0,
+              "pendingCalls": 0,
+              "registrations": 0
+            },
+            "evidenceClass": "OFFLINE_PROVIDER",
+            "remoteBoundary": "MOCK",
+            "liveAuthorityRenewed": false
+          }
+        ],
+        "G": [
+          {
+            "round": 0,
+            "observations": "two authorized synthetic service-source observations; cross-source target rejected",
+            "sources": [
+              {
+                "principal": "org.phase52.source",
+                "instanceId": "88e65720-60db-4983-83d2-26c9ac7b8e9b",
+                "scope": "d4c35161-840b-4a89-86d4-b3695d0b14df",
+                "scopeGeneration": 1
+              },
+              {
+                "principal": "org.phase5i.source.b",
+                "instanceId": "0139fa91-1f01-43a3-8b24-58d924f8913a",
+                "scope": "d4c35161-840b-4a89-86d4-b3695d0b14df",
+                "scopeGeneration": 1
+              }
+            ],
+            "records": [
+              {
+                "acknowledgements": [],
+                "classification": "unavailable",
+                "compatibility": "COMPATIBLE",
+                "firstObservedAtMs": 1790720711560,
+                "id": "49f9ec8e-a6d4-4f48-9656-c8ae7e49e8e1",
+                "lastObservedAtMs": 1790720711560,
+                "occurrenceCount": 1,
+                "rule": {
+                  "id": "availability-v1",
+                  "version": "1.0.0"
+                },
+                "scope": "d4c35161-840b-4a89-86d4-b3695d0b14df",
+                "status": "OPEN",
+                "target": "isolated-target"
+              },
+              {
+                "acknowledgements": [],
+                "classification": "unavailable",
+                "compatibility": "COMPATIBLE",
+                "firstObservedAtMs": 1790720711561,
+                "id": "51ef236e-8e83-4352-8e34-a6bd4573c1f6",
+                "lastObservedAtMs": 1790720711561,
+                "occurrenceCount": 1,
+                "rule": {
+                  "id": "availability-v1",
+                  "version": "1.0.0"
+                },
+                "scope": "d4c35161-840b-4a89-86d4-b3695d0b14df",
+                "status": "OPEN",
+                "target": "isolated-target-b"
+              }
+            ],
+            "clean": {
+              "effects": 0,
+              "listeners": 0,
+              "pendingCalls": 0,
+              "registrations": 0
+            },
+            "evidenceClass": "REAL_COMPONENT",
+            "inputs": "MOCK synthetic signals; NOT live telemetry",
+            "productionProbes": 0,
+            "remediation": 0
+          },
+          {
+            "round": 1,
+            "observations": "both persisted incidents recovered without new observations",
+            "sources": [
+              {
+                "principal": "org.phase52.source",
+                "instanceId": "88e65720-60db-4983-83d2-26c9ac7b8e9b",
+                "scope": "d4c35161-840b-4a89-86d4-b3695d0b14df",
+                "scopeGeneration": 1
+              },
+              {
+                "principal": "org.phase5i.source.b",
+                "instanceId": "0139fa91-1f01-43a3-8b24-58d924f8913a",
+                "scope": "d4c35161-840b-4a89-86d4-b3695d0b14df",
+                "scopeGeneration": 1
+              }
+            ],
+            "records": [
+              {
+                "acknowledgements": [],
+                "classification": "unavailable",
+                "compatibility": "COMPATIBLE",
+                "firstObservedAtMs": 1790720711560,
+                "id": "49f9ec8e-a6d4-4f48-9656-c8ae7e49e8e1",
+                "lastObservedAtMs": 1790720711560,
+                "occurrenceCount": 1,
+                "rule": {
+                  "id": "availability-v1",
+                  "version": "1.0.0"
+                },
+                "scope": "d4c35161-840b-4a89-86d4-b3695d0b14df",
+                "status": "OPEN",
+                "target": "isolated-target"
+              },
+              {
+                "acknowledgements": [],
+                "classification": "unavailable",
+                "compatibility": "COMPATIBLE",
+                "firstObservedAtMs": 1790720711561,
+                "id": "51ef236e-8e83-4352-8e34-a6bd4573c1f6",
+                "lastObservedAtMs": 1790720711561,
+                "occurrenceCount": 1,
+                "rule": {
+                  "id": "availability-v1",
+                  "version": "1.0.0"
+                },
+                "scope": "d4c35161-840b-4a89-86d4-b3695d0b14df",
+                "status": "OPEN",
+                "target": "isolated-target-b"
+              }
+            ],
+            "clean": {
+              "effects": 0,
+              "listeners": 0,
+              "pendingCalls": 0,
+              "registrations": 0
+            },
+            "evidenceClass": "REAL_COMPONENT",
+            "inputs": "MOCK synthetic signals; NOT live telemetry",
+            "productionProbes": 0,
+            "remediation": 0
+          }
+        ],
+        "liveProviderCalls": 0,
+        "remediation": 0
+      }
+    }
+  ],
+  "frozenSourceChanged": false,
+  "publication": "WITHHELD_PENDING_FINAL_REVIEW"
+}

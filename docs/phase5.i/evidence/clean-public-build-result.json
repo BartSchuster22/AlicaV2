@@ -1,0 +1,15 @@
+{
+  "status": "PASS_PREPARATION",
+  "anonymousCarrier": "96359ab780dea152d7eb87736ebecb9fbceeb93c",
+  "freshCheckout": "/home/alica-dev/phase5i/clean-public-source",
+  "freshSetupHome": "/home/alica-dev/phase5i/clean-setup-home",
+  "freshNpmDependencyInstall": true,
+  "firstRuntimeStateCopied": false,
+  "sharedBuildComparison": {
+    "package-lock.json": "byte-identical",
+    "packages/acap-contracts/dist": "byte-identical",
+    "packages/acap-types/dist": "byte-identical",
+    "packages/plugin-sdk/dist": "byte-identical"
+  },
+  "runtimeQualification": "NOT_EXECUTED"
+}

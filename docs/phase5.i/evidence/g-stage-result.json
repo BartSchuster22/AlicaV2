@@ -1,0 +1,19 @@
+{
+  "stage": "G",
+  "status": "PASS",
+  "REAL_COMPONENT": "unchanged Doghouse native domain, FileStore and ACAP adapter; authorized synthetic SDK observations, incident create/query/ack, public Host scopes, real restart and truthful health",
+  "FIXTURE": "synthetic source and bounded injected faults, not production observations",
+  "DoghouseRestartAuthority": 0,
+  "killAuthority": 0,
+  "remediation": 0,
+  "productionProbing": 0,
+  "regressions": [
+    "M",
+    "D",
+    "P2/P1",
+    "H native profile list"
+  ],
+  "prior_baseline": "unchanged",
+  "candidate": "/home/alica-dev/phase5i/reference/g-candidate",
+  "release": "NOT_QUALIFIED"
+}

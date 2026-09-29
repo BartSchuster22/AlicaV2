@@ -1,0 +1,63 @@
+{
+  "status": "PASS",
+  "kind": "CLEAN_INDEPENDENT_ENVIRONMENT_REPRODUCTION",
+  "samePhysicalDevHost": true,
+  "DSH2": false,
+  "freshPublicCheckout": "96359ab780dea152d7eb87736ebecb9fbceeb93c",
+  "Hpin": "c04e9a1d0dfa4abbefe4b256428e645abaacfe88",
+  "Kpin": "536802c00e4f93061fc46b134dc029ff695f364f",
+  "sourceTrackedFilesCompared": 60521,
+  "sourceManifestDigest": "ac091d9a9e8859a548d76ce8c97f831b28567e060bb8291927b637a566d68a28",
+  "firstEnvironmentStateCopied": false,
+  "firstEnvironmentHomeCopied": false,
+  "privateCredentialsCopied": false,
+  "immutablePrelaunchFilesChanged": [],
+  "K": {
+    "stage": "K",
+    "functional": true,
+    "productionCredentialRead": false,
+    "freshFixtureCredential": true,
+    "dispatch": 0,
+    "assignment": 0,
+    "workers": 0,
+    "runs": 0,
+    "termination": 0,
+    "taskCount": 16,
+    "realBackendRestart": true,
+    "continuity": "UNKNOWN"
+  },
+  "wholeRounds": [
+    {
+      "stage": "WHOLE_REFERENCE",
+      "mode": "write",
+      "functional": true,
+      "productionCredentialRead": false,
+      "freshFixtureCredential": true,
+      "dispatch": 0,
+      "assignment": 0,
+      "workers": 0,
+      "runs": 0,
+      "termination": 0,
+      "taskCount": 16,
+      "realBackendRestart": true,
+      "continuity": "UNKNOWN"
+    },
+    {
+      "stage": "WHOLE_REFERENCE",
+      "mode": "read",
+      "functional": true,
+      "productionCredentialRead": false,
+      "freshFixtureCredential": true,
+      "dispatch": 0,
+      "assignment": 0,
+      "workers": 0,
+      "runs": 0,
+      "termination": 0,
+      "taskCount": 16,
+      "realBackendRestart": true,
+      "continuity": "UNKNOWN"
+    }
+  ],
+  "comparison": "same package/contract pins and functional logical results; new synthetic IDs/timestamps legitimately differ",
+  "publication": "WITHHELD_PENDING_REVIEW"
+}

@@ -1,0 +1,44 @@
+K_PRELAUNCH_ISOLATION_PASS {"uid": 996, "routeRows": 0, "capabilities": 0, "noNewPrivileges": true, "net": "net:[4026532452]", "pid": "pid:[4026532451]", "processes": ["1"]}
+K20B_ACTUAL_EXPERIMENTAL_CATALOG sha256:1604d129a690059330e52200181d8e3861a9189f925e01c8bdc3414a00ddf11d
+(node:81) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ K14 actual supported backend board/get/list/create/update/comment; defaults and sanitized task (691.706574ms)
+✔ K15 current mapping, cross-board, forged payload, missing ID and current revocation (436.857863ms)
+✔ K16 best-effort sequential replay, content collision, current authority before replay, no native idempotency promise (352.487625ms)
+OBSERVED_CONCURRENT_CREATE_IDS [ 't_988ef5ad', 't_988ef5ad' ]
+✔ K16 concurrent key calls report actual outcomes, not exactly-once assertion; stale writes last-writer-wins (514.422793ms)
+✔ K17 real WS event prefix replay, limit1/32, future cursor uncertainty, reconcile and explicit no-control (1740.766017ms)
+✔ K12 explicit synthetic unit fixtures:257 task rejection and33-event prefix, unselected prefix/malformed/out-of-order (0.963786ms)
+✔ K19 adapter disposal leaves real backend task; independent adapter restart reconciles (403.230417ms)
+✔ K22 deadline and cancellation stop waiting; safe shape rejects execution knobs (222.137352ms)
+✔ K13/K15 synthetic-secret binding is real current public Host reference/grant, not injected bypass (199.539219ms)
+✔ K6 configuration refuses absent attestation or nonloopback endpoint before transport (0.446963ms)
+✔ K16/K22 actual committed mutation then lost response yields UNKNOWN; reconcile through sole authority (428.382134ms)
+✔ K22 bounded four-call overload, in-flight mapping revocation and disposal (274.137626ms)
+✔ K22 malformed backend response fails explicitly, never empty board (199.14653ms)
+✔ K22 oversize backend response fails explicitly, never empty board (179.259218ms)
+✔ K21 separately offline-installed SDK-only consumer without adapter/Kernel/testkit resolution (5604.891791ms)
+✔ K22 active real event poll rechecks revocation before empty observation delivery (571.202976ms)
+✔ K22 repeated comments are not idempotent; separate real event IDs preserve duplicates (973.396038ms)
+✔ K12 stale/expired history cannot be certified: explicit synthetic retained-tail fixture reports UNKNOWN (0.330874ms)
+✔ K22 actual commit then delayed response crosses internal timeout: UNKNOWN with exact task reconciliation (949.599837ms)
+✔ K15 review closure mapping revoked during real GET prevents update (390.090936ms)
+✔ K15 review closure mapping revoked during real GET prevents comment (446.661936ms)
+✔ K15 review closure secret revoked during real GET prevents update (408.113703ms)
+✔ K15 review closure secret revoked during real GET prevents comment (398.995434ms)
+✔ K16 review closure padded titles create/replay/update reconcile, whitespace-only rejected before write (388.030482ms)
+✔ K14 review closure non-BMP code-point boundaries survive create/update/get/list (352.809381ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 16661.517036
+K20B_ACTUAL_EXPERIMENTAL_CATALOG sha256:1604d129a690059330e52200181d8e3861a9189f925e01c8bdc3414a00ddf11d
+(node:371) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+K19_REAL_BACKEND_RESTART_PASS t_3c64c28f
+K_POST_MUTATION_NO_WORKERS_RUNS_PASS 16
+K_FUNCTIONAL_RESULT {"stage": "K", "functional": true, "productionCredentialRead": false, "freshFixtureCredential": true, "dispatch": 0, "assignment": 0, "workers": 0, "runs": 0, "termination": 0, "taskCount": 16, "realBackendRestart": true, "continuity": "UNKNOWN"}

@@ -1,0 +1,146 @@
+K-conformance 0 
+✔ K22 malformed backend response fails explicitly, never empty board (199.14653ms)
+✔ K22 oversize backend response fails explicitly, never empty board (179.259218ms)
+✔ K21 separately offline-installed SDK-only consumer without adapter/Kernel/testkit resolution (5604.891791ms)
+✔ K22 active real event poll rechecks revocation before empty observation delivery (571.202976ms)
+✔ K22 repeated comments are not idempotent; separate real event IDs preserve duplicates (973.396038ms)
+✔ K12 stale/expired history cannot be certified: explicit synthetic retained-tail fixture reports UNKNOWN (0.330874ms)
+✔ K22 actual commit then delayed response crosses internal timeout: UNKNOWN with exact task reconciliation (949.599837ms)
+✔ K15 review closure mapping revoked during real GET prevents update (390.090936ms)
+✔ K15 review closure mapping revoked during real GET prevents comment (446.661936ms)
+✔ K15 review closure secret revoked during real GET prevents update (408.113703ms)
+✔ K15 review closure secret revoked during real GET prevents comment (398.995434ms)
+✔ K16 review closure padded titles create/replay/update reconcile, whitespace-only rejected before write (388.030482ms)
+✔ K14 review closure non-BMP code-point boundaries survive create/update/get/list (352.809381ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 16661.517036
+K20B_ACTUAL_EXPERIMENTAL_CATALOG sha256:1604d129a690059330e52200181d8e3861a9189f925e01c8bdc3414a00ddf11d
+(node:371) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+K19_REAL_BACKEND_RESTART_PASS t_3c64c28f
+K_POST_MUTATION_NO_WORKERS_RUNS_PASS 16
+K_FUNCTIONAL_RESULT {"stage": "K", "functional": true, "productionCredentialRead": false, "freshFixtureCredential": true, "dispatch": 0, "assignment": 0, "workers": 0, "runs": 0, "termination": 0, "taskCount": 16, "realBackendRestart": true, "continuity": "UNKNOWN"}
+
+whole-write 0 te question/candidate/escaped keys and malformed tokens rejected before overwrite (0.874709ms)
+✔ J10/J11/J12 exact names/types/candidates/levels/legend and rational probability defenses (4.561221ms)
+✔ J13 model discovery maps public schema, not hard-coded aliases; malformed/duplicate IDs fail (1.402063ms)
+✔ J14/J18 ledger is explicit, fail-closed, durable before dispatch and never replenished (40.042759ms)
+✔ J18 ambiguity consumes slot, repeated matrix kind blocked; missing/corrupt ledgers fail closed (20.443691ms)
+✔ J14/J18 singleflight retains lock during whole request; stale lock never auto-cleared (7.358242ms)
+✔ J14/J16/J22 exact endpoint/Bearer/JSON, key reference scoped to request, no secret/state in ledger (18.789925ms)
+✔ J16 absent/insecure/symlink secret and unsafe directory fail before reservation/send (11.709746ms)
+✔ J14/J21/J22 auth/validation/rate/5xx/redirect responses normalized without retaining body or retry (64.257471ms)
+✔ J14 network/aborted response never replayed and consumes physical reservation (12.118197ms)
+✔ J15 shorter deadlines/cancellation bounded; pre-cancelled requests do not consume slots (34.802941ms)
+✔ J21 bounded bytes/content-type/UTF8 defenses; no real network in fixture suite (1.9948ms)
+ℹ tests 54
+ℹ suites 0
+ℹ pass 54
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2256.905575
+K20B_ACTUAL_EXPERIMENTAL_CATALOG sha256:1604d129a690059330e52200181d8e3861a9189f925e01c8bdc3414a00ddf11d
+(node:285) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+K19_REAL_BACKEND_RESTART_PASS t_3c64c28f
+K_POST_MUTATION_NO_WORKERS_RUNS_PASS 16
+K_FUNCTIONAL_RESULT {"stage": "WHOLE_REFERENCE", "mode": "write", "functional": true, "productionCredentialRead": false, "freshFixtureCredential": true, "dispatch": 0, "assignment": 0, "workers": 0, "runs": 0, "termination": 0, "taskCount": 16, "realBackendRestart": true, "continuity": "UNKNOWN"}
+
+whole-read 0 te question/candidate/escaped keys and malformed tokens rejected before overwrite (1.095004ms)
+✔ J10/J11/J12 exact names/types/candidates/levels/legend and rational probability defenses (6.933571ms)
+✔ J13 model discovery maps public schema, not hard-coded aliases; malformed/duplicate IDs fail (0.927459ms)
+✔ J14/J18 ledger is explicit, fail-closed, durable before dispatch and never replenished (42.45105ms)
+✔ J18 ambiguity consumes slot, repeated matrix kind blocked; missing/corrupt ledgers fail closed (12.229526ms)
+✔ J14/J18 singleflight retains lock during whole request; stale lock never auto-cleared (6.836099ms)
+✔ J14/J16/J22 exact endpoint/Bearer/JSON, key reference scoped to request, no secret/state in ledger (13.173384ms)
+✔ J16 absent/insecure/symlink secret and unsafe directory fail before reservation/send (11.625477ms)
+✔ J14/J21/J22 auth/validation/rate/5xx/redirect responses normalized without retaining body or retry (61.893804ms)
+✔ J14 network/aborted response never replayed and consumes physical reservation (15.986167ms)
+✔ J15 shorter deadlines/cancellation bounded; pre-cancelled requests do not consume slots (35.548128ms)
+✔ J21 bounded bytes/content-type/UTF8 defenses; no real network in fixture suite (1.353431ms)
+ℹ tests 54
+ℹ suites 0
+ℹ pass 54
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2323.849509
+K20B_ACTUAL_EXPERIMENTAL_CATALOG sha256:1604d129a690059330e52200181d8e3861a9189f925e01c8bdc3414a00ddf11d
+(node:286) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+K19_REAL_BACKEND_RESTART_PASS t_3c64c28f
+K_POST_MUTATION_NO_WORKERS_RUNS_PASS 16
+K_FUNCTIONAL_RESULT {"stage": "WHOLE_REFERENCE", "mode": "read", "functional": true, "productionCredentialRead": false, "freshFixtureCredential": true, "dispatch": 0, "assignment": 0, "workers": 0, "runs": 0, "termination": 0, "taskCount": 16, "realBackendRestart": true, "continuity": "UNKNOWN"}
+
+{
+  "status": "PASS",
+  "kind": "CLEAN_INDEPENDENT_ENVIRONMENT_REPRODUCTION",
+  "samePhysicalDevHost": true,
+  "DSH2": false,
+  "freshPublicCheckout": "96359ab780dea152d7eb87736ebecb9fbceeb93c",
+  "Hpin": "c04e9a1d0dfa4abbefe4b256428e645abaacfe88",
+  "Kpin": "536802c00e4f93061fc46b134dc029ff695f364f",
+  "sourceTrackedFilesCompared": 60521,
+  "sourceManifestDigest": "ac091d9a9e8859a548d76ce8c97f831b28567e060bb8291927b637a566d68a28",
+  "firstEnvironmentStateCopied": false,
+  "firstEnvironmentHomeCopied": false,
+  "privateCredentialsCopied": false,
+  "immutablePrelaunchFilesChanged": [],
+  "K": {
+    "stage": "K",
+    "functional": true,
+    "productionCredentialRead": false,
+    "freshFixtureCredential": true,
+    "dispatch": 0,
+    "assignment": 0,
+    "workers": 0,
+    "runs": 0,
+    "termination": 0,
+    "taskCount": 16,
+    "realBackendRestart": true,
+    "continuity": "UNKNOWN"
+  },
+  "wholeRounds": [
+    {
+      "stage": "WHOLE_REFERENCE",
+      "mode": "write",
+      "functional": true,
+      "productionCredentialRead": false,
+      "freshFixtureCredential": true,
+      "dispatch": 0,
+      "assignment": 0,
+      "workers": 0,
+      "runs": 0,
+      "termination": 0,
+      "taskCount": 16,
+      "realBackendRestart": true,
+      "continuity": "UNKNOWN"
+    },
+    {
+      "stage": "WHOLE_REFERENCE",
+      "mode": "read",
+      "functional": true,
+      "productionCredentialRead": false,
+      "freshFixtureCredential": true,
+      "dispatch": 0,
+      "assignment": 0,
+      "workers": 0,
+      "runs": 0,
+      "termination": 0,
+      "taskCount": 16,
+      "realBackendRestart": true,
+      "continuity": "UNKNOWN"
+    }
+  ],
+  "comparison": "same package/contract pins and functional logical results; new synthetic IDs/timestamps legitimately differ",
+  "publication": "WITHHELD_PENDING_REVIEW"
+}

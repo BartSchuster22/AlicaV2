@@ -1,0 +1,17 @@
+{
+  "stage": "H",
+  "status": "PASS",
+  "surfaces": {
+    "native": "REAL_COMPONENT: profile list/show/reconstruction",
+    "adapter": "REAL_COMPONENT: unchanged provider registration and no-grant denial"
+  },
+  "no_fake_discovery_API": true,
+  "no_provider_or_tool_authority": true,
+  "zero_internet_connect_sendto": true,
+  "regression": "P2 native conformance + P1 earlier component tests",
+  "prior_baseline": "unchanged",
+  "mutable_state": "fresh synthetic profile under tmp only",
+  "warning": "short-lived native CLI is namespace PID1; namespace teardown is supervised by unshare --kill-child; no persistent daemon",
+  "candidate": "/home/alica-dev/phase5i/reference/h-candidate",
+  "release": "NOT_QUALIFIED"
+}

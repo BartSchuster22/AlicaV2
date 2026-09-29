@@ -1,0 +1,392 @@
+H-init 0 hint: Using 'master' as the name for the initial branch. This default branch name
+hint: is subject to change. To configure the initial branch name to use in all
+hint: of your new repositories, which will suppress this warning, call:
+hint: 
+hint: 	git config --global init.defaultBranch <name>
+hint: 
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint: 
+hint: 	git branch -m <name>
+Initialized empty Git repository in /home/alica-dev/phase5i-public-qualified-1/clean-inputs/H/.git/
+
+H-public-fetch 0 From https://github.com/NousResearch/hermes-agent
+ * branch              c04e9a1d0dfa4abbefe4b256428e645abaacfe88 -> FETCH_HEAD
+
+H-pin 0 HEAD is now at c04e9a1d fix(desktop): honour a user-set voice.silence_duration in the voice loop
+
+H-dependencies 0 64 packages in 29ms
+ + annotated-doc==0.0.5
+ + annotated-types==0.8.0
+ + anyio==4.14.2
+ + certifi==2026.5.20
+ + cffi==2.1.1
+ + charset-normalizer==3.5.1
+ + click==8.4.2
+ + croniter==6.0.0
+ + cryptography==50.0.1
+ + distro==1.9.0
+ + fastapi==0.133.1
+ + fire==0.7.1
+ + firecrawl-anydoc==0.2.4
+ + h11==0.16.0
+ + hermes-agent==0.0.0 (from file:///home/alica-dev/phase5i-public-qualified-1/clean-inputs/H)
+ + httpcore==1.0.9
+ + httptools==0.8.0
+ + httpx==0.28.1
+ + idna==3.19
+ + jinja2==3.1.6
+ + jiter==0.16.0
+ + markdown==3.10.2
+ + markdown-it-py==4.2.0
+ + markupsafe==3.0.3
+ + mdurl==0.1.2
+ + nemo-relay==0.8.4
+ + openai==2.24.0
+ + packaging==26.0
+ + pathspec==1.1.1
+ + pillow==12.3.0
+ + pillow-heif==1.6.0
+ + prompt-toolkit==3.0.52
+ + psutil==7.2.2
+ + ptyprocess==0.7.0
+ + pycparser==3.0
+ + pydantic==2.13.4
+ + pydantic-core==2.46.4
+ + pygments==2.21.0
+ + pyjwt==2.13.0
+ + python-dateutil==2.9.0.post0
+ + python-dotenv==1.2.2
+ + python-multipart==0.0.32
+ + pytz==2026.3.post1
+ + requests==2.33.0
+ + resvg-py==0.4.0
+ + rich==14.3.3
+ + ruamel-yaml==0.18.16
+ + six==1.17.0
+ + sniffio==1.3.1
+ + snowballstemmer==3.1.1
+ + socksio==1.0.0
+ + starlette==1.3.1
+ + tenacity==9.1.4
+ + termcolor==3.3.0
+ + tomli-w==1.2.0
+ + tqdm==4.70.0
+ + truststore==0.10.4
+ + typing-extensions==4.16.0
+ + typing-inspection==0.4.4
+ + urllib3==2.7.0
+ + uvicorn==0.41.0
+ + watchfiles==1.2.0
+ + wcwidth==0.8.2
+ + websockets==15.0.1
+
+H-freeze 0 annotated-doc==0.0.5
+annotated-types==0.8.0
+anyio==4.14.2
+certifi==2026.5.20
+cffi==2.1.1
+charset-normalizer==3.5.1
+click==8.4.2
+croniter==6.0.0
+cryptography==50.0.1
+distro==1.9.0
+fastapi==0.133.1
+fire==0.7.1
+firecrawl-anydoc==0.2.4
+h11==0.16.0
+-e file:///home/alica-dev/phase5i-public-qualified-1/clean-inputs/H
+httpcore==1.0.9
+httptools==0.8.0
+httpx==0.28.1
+idna==3.19
+jinja2==3.1.6
+jiter==0.16.0
+markdown==3.10.2
+markdown-it-py==4.2.0
+markupsafe==3.0.3
+mdurl==0.1.2
+nemo-relay==0.8.4
+openai==2.24.0
+packaging==26.0
+pathspec==1.1.1
+pillow==12.3.0
+pillow-heif==1.6.0
+prompt-toolkit==3.0.52
+psutil==7.2.2
+ptyprocess==0.7.0
+pycparser==3.0
+pydantic==2.13.4
+pydantic-core==2.46.4
+pygments==2.21.0
+pyjwt==2.13.0
+python-dateutil==2.9.0.post0
+python-dotenv==1.2.2
+python-multipart==0.0.32
+pytz==2026.3.post1
+requests==2.33.0
+resvg-py==0.4.0
+rich==14.3.3
+ruamel-yaml==0.18.16
+six==1.17.0
+sniffio==1.3.1
+snowballstemmer==3.1.1
+socksio==1.0.0
+starlette==1.3.1
+tenacity==9.1.4
+termcolor==3.3.0
+tomli-w==1.2.0
+tqdm==4.70.0
+truststore==0.10.4
+typing-extensions==4.16.0
+typing-inspection==0.4.4
+urllib3==2.7.0
+uvicorn==0.41.0
+watchfiles==1.2.0
+wcwidth==0.8.2
+websockets==15.0.1
+
+K-init 0 hint: Using 'master' as the name for the initial branch. This default branch name
+hint: is subject to change. To configure the initial branch name to use in all
+hint: of your new repositories, which will suppress this warning, call:
+hint: 
+hint: 	git config --global init.defaultBranch <name>
+hint: 
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint: 
+hint: 	git branch -m <name>
+Initialized empty Git repository in /home/alica-dev/phase5i-public-qualified-1/clean-inputs/K/.git/
+
+K-public-fetch 0 From https://github.com/NousResearch/hermes-agent
+ * branch              536802c00e4f93061fc46b134dc029ff695f364f -> FETCH_HEAD
+
+K-pin 0 HEAD is now at 536802c0 fix(debug): mask every secret fallback field per agent.redact policy, not only api_key
+
+K-dependencies 0 .8.0
+ + anyio==4.14.2
+ + browser-harness==0.1.13
+ + cdp-use==1.4.5
+ + certifi==2026.5.20
+ + cffi==2.1.1
+ + charset-normalizer==3.5.1
+ + click==8.4.2
+ + croniter==6.0.0
+ + cryptography==50.0.1
+ + distro==1.9.0
+ + fastapi==0.133.1
+ + fetch-use==0.4.0
+ + fire==0.7.1
+ + firecrawl-anydoc==0.2.4
+ + h11==0.16.0
+ + hermes-agent==0.0.0 (from file:///home/alica-dev/phase5i-public-qualified-1/clean-inputs/K)
+ + httpcore==1.0.9
+ + httptools==0.8.0
+ + httpx==0.28.1
+ + idna==3.19
+ + jinja2==3.1.6
+ + jiter==0.16.0
+ + markdown==3.10.2
+ + markdown-it-py==4.2.0
+ + markupsafe==3.0.3
+ + mdurl==0.1.2
+ + nemo-relay==0.8.4
+ + openai==2.24.0
+ + packaging==26.0
+ + pathspec==1.1.1
+ + pillow==12.3.0
+ + pillow-heif==1.6.0
+ + prompt-toolkit==3.0.52
+ + psutil==7.2.2
+ + ptyprocess==0.7.0
+ + pycparser==3.0
+ + pydantic==2.13.4
+ + pydantic-core==2.46.4
+ + pygments==2.21.0
+ + pyjwt==2.13.0
+ + python-dateutil==2.9.0.post0
+ + python-dotenv==1.2.2
+ + python-multipart==0.0.32
+ + pytz==2026.3.post1
+ + requests==2.33.0
+ + resvg-py==0.4.0
+ + rich==14.3.3
+ + ruamel-yaml==0.18.16
+ + six==1.17.0
+ + sniffio==1.3.1
+ + snowballstemmer==3.1.1
+ + socksio==1.0.0
+ + starlette==1.3.1
+ + tenacity==9.1.4
+ + termcolor==3.3.0
+ + tomli-w==1.2.0
+ + tqdm==4.70.0
+ + truststore==0.10.4
+ + typing-extensions==4.16.0
+ + typing-inspection==0.4.4
+ + urllib3==2.7.0
+ + uvicorn==0.41.0
+ + watchfiles==1.2.0
+ + wcwidth==0.8.2
+ + websockets==15.0.1
+
+K-freeze 0 annotated-doc==0.0.5
+annotated-types==0.8.0
+anyio==4.14.2
+browser-harness==0.1.13
+cdp-use==1.4.5
+certifi==2026.5.20
+cffi==2.1.1
+charset-normalizer==3.5.1
+click==8.4.2
+croniter==6.0.0
+cryptography==50.0.1
+distro==1.9.0
+fastapi==0.133.1
+fetch-use==0.4.0
+fire==0.7.1
+firecrawl-anydoc==0.2.4
+h11==0.16.0
+-e file:///home/alica-dev/phase5i-public-qualified-1/clean-inputs/K
+httpcore==1.0.9
+httptools==0.8.0
+httpx==0.28.1
+idna==3.19
+jinja2==3.1.6
+jiter==0.16.0
+markdown==3.10.2
+markdown-it-py==4.2.0
+markupsafe==3.0.3
+mdurl==0.1.2
+nemo-relay==0.8.4
+openai==2.24.0
+packaging==26.0
+pathspec==1.1.1
+pillow==12.3.0
+pillow-heif==1.6.0
+prompt-toolkit==3.0.52
+psutil==7.2.2
+ptyprocess==0.7.0
+pycparser==3.0
+pydantic==2.13.4
+pydantic-core==2.46.4
+pygments==2.21.0
+pyjwt==2.13.0
+python-dateutil==2.9.0.post0
+python-dotenv==1.2.2
+python-multipart==0.0.32
+pytz==2026.3.post1
+requests==2.33.0
+resvg-py==0.4.0
+rich==14.3.3
+ruamel-yaml==0.18.16
+six==1.17.0
+sniffio==1.3.1
+snowballstemmer==3.1.1
+socksio==1.0.0
+starlette==1.3.1
+tenacity==9.1.4
+termcolor==3.3.0
+tomli-w==1.2.0
+tqdm==4.70.0
+truststore==0.10.4
+typing-extensions==4.16.0
+typing-inspection==0.4.4
+urllib3==2.7.0
+uvicorn==0.41.0
+watchfiles==1.2.0
+wcwidth==0.8.2
+websockets==15.0.1
+
+M-venv 0 Using CPython 3.12.3 interpreter at: /usr/bin/python3.12
+Creating virtual environment at: memory-python
+
+M-install 0 Using Python 3.12.3 environment at: memory-python
+Resolved 25 packages in 327ms
+Downloading pydantic-core (1.9MiB)
+Downloading uvloop (4.2MiB)
+Downloading ruff (10.7MiB)
+ Downloaded pydantic-core
+ Downloaded uvloop
+ Downloaded ruff
+Prepared 19 packages in 182ms
+Installed 25 packages in 12ms
+ + annotated-types==0.8.0
+ + anyio==4.15.1
+ + certifi==2026.7.22
+ + click==8.5.0
+ + fastapi==0.115.6
+ + h11==0.16.0
+ + httpcore==1.0.9
+ + httptools==0.8.0
+ + httpx==0.28.1
+ + idna==3.20
+ + iniconfig==2.3.0
+ + packaging==26.3
+ + pluggy==1.6.0
+ + pydantic==2.10.4
+ + pydantic-core==2.27.2
+ + pytest==8.3.4
+ + python-dotenv==1.2.3
+ + pyyaml==6.0.3
+ + ruff==0.8.4
+ + starlette==0.41.3
+ + typing-extensions==4.16.0
+ + uvicorn==0.34.0
+ + uvloop==0.22.1
+ + watchfiles==1.3.0
+ + websockets==17.1
+
+M-freeze 0 Using Python 3.12.3 environment at: memory-python
+annotated-types==0.8.0
+anyio==4.15.1
+certifi==2026.7.22
+click==8.5.0
+fastapi==0.115.6
+h11==0.16.0
+httpcore==1.0.9
+httptools==0.8.0
+httpx==0.28.1
+idna==3.20
+iniconfig==2.3.0
+packaging==26.3
+pluggy==1.6.0
+pydantic==2.10.4
+pydantic-core==2.27.2
+pytest==8.3.4
+python-dotenv==1.2.3
+pyyaml==6.0.3
+ruff==0.8.4
+starlette==0.41.3
+typing-extensions==4.16.0
+uvicorn==0.34.0
+uvloop==0.22.1
+watchfiles==1.3.0
+websockets==17.1
+
+npm-cache-@types_node@24.13.5 0 
+npm-cache-ajv@8.20.0 0 
+npm-cache-fast-deep-equal@3.1.3 0 
+npm-cache-fast-uri@3.1.8 0 
+npm-cache-json-schema-traverse@1.0.0 0 
+npm-cache-prettier@3.9.7 0 
+npm-cache-require-from-string@2.0.2 0 
+npm-cache-typescript@6.0.3 0 
+npm-cache-undici-types@7.18.2 0 
+P2-external 0 {"root":"/home/alica-dev/phase50-external-Bl6ZpM"}
+
+{
+  "status": "PASS_PREPARATION",
+  "freshSources": {
+    "H": "/home/alica-dev/phase5i-public-qualified-1/clean-inputs/H",
+    "K": "/home/alica-dev/phase5i-public-qualified-1/clean-inputs/K"
+  },
+  "pins": {
+    "H": "c04e9a1d0dfa4abbefe4b256428e645abaacfe88",
+    "K": "536802c00e4f93061fc46b134dc029ff695f364f"
+  },
+  "MemoryPython": "/home/alica-dev/phase5i-public-qualified-1/clean-inputs/memory-python",
+  "external": "/home/alica-dev/phase50-external-Bl6ZpM",
+  "runtimeHomeOrStateCopied": false,
+  "privateApplicationCredentialsCopied": false
+}

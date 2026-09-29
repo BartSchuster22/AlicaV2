@@ -1,0 +1,83 @@
+K_PRELAUNCH_ISOLATION_PASS {"uid": 996, "routeRows": 0, "capabilities": 0, "noNewPrivileges": true, "net": "net:[4026532514]", "pid": "pid:[4026532513]", "processes": ["1"]}
+(node:74) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+WHOLE_REFERENCE_DOMAIN_READ_PASS {"mode":"read","evidenceClass":"REAL_COMPONENT","memory":{"record":{"author":"worker:fixture","content":"lexical durable candidate","id":"rec_7ee71670d7f14950aa91f5d068004ae4","lifecycle":"working","provenance":{"source":"offline fixture"},"role":"active","scope":"tenant:offline/project:a","sourceRefs":["urn:offline:source"],"title":"fixture","version":1},"scope":"tenant:offline/project:a","actor":"worker:fixture","caller":"f21e31df-0e85-4166-a189-005b070626d4","replay":true},"doghouse":{"record":{"acknowledgements":[{"actor":"reader","atMs":1790716676898,"requestId":"phase5i-ack-001"}],"classification":"unavailable","compatibility":"COMPATIBLE","firstObservedAtMs":1790716676805,"id":"86457ed7-a266-4ad5-92e9-98b4532ed3d9","lastObservedAtMs":1790716676805,"occurrenceCount":1,"rule":{"id":"availability-v1","version":"1.0.0"},"scope":"04bda5f2-354b-456f-b8e3-3bfb415933e2","status":"ACKNOWLEDGED","target":"isolated-target"},"scope":"04bda5f2-354b-456f-b8e3-3bfb415933e2","health":"DEGRADED","newObservationClaim":false}}
+(node:92) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+RECOVERED_COMPLETED_WRITE_NO_CRASH_DURABILITY_CLAIM
+{"mode":"recover","publicHost":true,"clean":true,"externalAuthor":true,"operatorOwnedNative":true,"independentlySignedNative":false,"catalogRecords":"EXPERIMENTAL_LOCAL_SNAPSHOT","catalogDigest":"sha256:6d4f62849279bfa76ee781572ebf5e73ff0a0ebb6f2073b80f3030d4cbdfce26","trustVerified":false}
+
+ Profile          Model                        Gateway      Alias        Distribution
+ ───────────────    ───────────────────────────    ───────────    ───────────    ────────────────────
+ ◆default         —                            stopped      —            —
+
+✔ canonical decimal grammar, precision and range reject rather than round (2.085694ms)
+✔ provider lexical exponent conversion uses the original token exactly (0.559676ms)
+✔ wire conversion distinguishes exact numbers from ordinary literal strings (2.704149ms)
+✔ structured numeric markers and size/depth limits fail closed (0.63125ms)
+✔ J3 exact decimal lexical rules and frozen ACAP compatibility (5.984004ms)
+✔ J3 structured fractions are exact numeric wire literals, never ambiguous strings (1.497304ms)
+✔ J4 actual Catalog proposal/definition validation without admission or self-review (20.675467ms)
+✔ J5/J6 neutral mixed semantics and exact round-trip (3.756654ms)
+✔ J3/J6 malformed inputs, criteria, fractional state and limits rejected (4.122634ms)
+✔ J6 exact correspondence, totals, confidence, range and legend defenses (5.809305ms)
+✔ J7 public SDK testkit vertical substitutes neutral providers, clean disposal (48.055128ms)
+✔ J7 Host permissions/revocation remain authoritative; no provider dispatch on denied calls (20.354142ms)
+✔ J7 unload makes handles stale; incompatible major and descriptor mismatches fail (25.068261ms)
+✔ J7 disable switch prevents invocation (14.651058ms)
+✔ J7 unknown model and provider errors normalized without echoed state (27.688052ms)
+✔ J7 deadline and cancellation forwarded once, no retry (54.272432ms)
+✔ handoff returns result; forged reply identity/generation/correlation ignored (4.098338ms)
+✔ handoff singleflight rejects competing request with no second backend dispatch (1.711176ms)
+✔ handoff raw provider failure normalized without message or cause (0.777415ms)
+✔ handoff cancel aborts and joins owned request (0.926166ms)
+✔ handoff unload aborts and joins owned request (0.581216ms)
+✔ handoff deadline/pre-cancellation/closed state reject before dispatch (0.767226ms)
+(node:151) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ public Host signed inventory, generic neutral call, grant denial and source-preserving caller (323.152152ms)
+✔ public Host unload/restart and stale handle; fresh instance/grants only (361.452013ms)
+✔ public Host disabled provider and incompatible capability version never dispatch (182.25425ms)
+✔ public Host raw backend failure normalized; malformed request rejected before dispatch (184.914315ms)
+✔ public Host in-flight cancel aborts effect-owned backend and joins cleanup (169.512862ms)
+✔ public Host in-flight deadline aborts effect-owned backend and joins cleanup (256.076837ms)
+✔ public Host in-flight unload aborts effect-owned backend and joins cleanup (165.41773ms)
+✔ LIVE-OBSERVED model metadata replay: exact timestamps preserved; prose date still accepted; no other validator relaxed (5.354296ms)
+✔ fresh synthetic continuation dispatches only four ordered POSTs, preserves both prefixes and refuses restart/replay (71.958523ms)
+✔ first physical or semantic failure stops all later evaluations and keeps consumed slot/evidence (48.385602ms)
+✔ changed historical evidence and unexpected ledger reservation fail before dispatch (35.831127ms)
+✔ manual diagnostic has its own one-shot path; durable slot2, original prefix, total6 and no seventh (63.697887ms)
+✔ modified history, existing evaluation, stale lock and ambiguous diagnostic never dispatch (21.218321ms)
+✔ diagnostic rejects guard failure before network but preserves consumed reservation (7.409172ms)
+✔ HTTP faults and decoded credential echoes are never exposed in diagnostic output (24.123931ms)
+✔ diagnostic distinguishes documented shape from stricter legacy rejection without fixing mapper (3.555334ms)
+✔ lexical ambiguity, invalid types, metadata bounds and CLI guards fail closed offline (70.300547ms)
+✔ J8 public request mapping: shared state, mixed named questions, exact fractional documents (4.102526ms)
+✔ J9/J10/J11/J12/J17 documented response fields preserved across mixed batch (2.670005ms)
+✔ J21 numeric strings and literal reserved marker objects cannot masquerade as wire numbers (4.774413ms)
+✔ J21 duplicate question/candidate/escaped keys and malformed tokens rejected before overwrite (0.820347ms)
+✔ J10/J11/J12 exact names/types/candidates/levels/legend and rational probability defenses (3.486464ms)
+✔ J13 model discovery maps public schema, not hard-coded aliases; malformed/duplicate IDs fail (0.679121ms)
+✔ J14/J18 ledger is explicit, fail-closed, durable before dispatch and never replenished (36.597021ms)
+✔ J18 ambiguity consumes slot, repeated matrix kind blocked; missing/corrupt ledgers fail closed (14.539126ms)
+✔ J14/J18 singleflight retains lock during whole request; stale lock never auto-cleared (6.465302ms)
+✔ J14/J16/J22 exact endpoint/Bearer/JSON, key reference scoped to request, no secret/state in ledger (11.378537ms)
+✔ J16 absent/insecure/symlink secret and unsafe directory fail before reservation/send (9.407019ms)
+✔ J14/J21/J22 auth/validation/rate/5xx/redirect responses normalized without retaining body or retry (58.591868ms)
+✔ J14 network/aborted response never replayed and consumes physical reservation (14.609889ms)
+✔ J15 shorter deadlines/cancellation bounded; pre-cancelled requests do not consume slots (32.976674ms)
+✔ J21 bounded bytes/content-type/UTF8 defenses; no real network in fixture suite (1.466546ms)
+ℹ tests 54
+ℹ suites 0
+ℹ pass 54
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2135.537917
+K20B_ACTUAL_EXPERIMENTAL_CATALOG sha256:1604d129a690059330e52200181d8e3861a9189f925e01c8bdc3414a00ddf11d
+(node:285) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+K19_REAL_BACKEND_RESTART_PASS t_6c77fe59
+K_POST_MUTATION_NO_WORKERS_RUNS_PASS 16
+K_FUNCTIONAL_RESULT {"stage": "WHOLE_REFERENCE", "mode": "read", "functional": true, "productionCredentialRead": false, "freshFixtureCredential": true, "dispatch": 0, "assignment": 0, "workers": 0, "runs": 0, "termination": 0, "taskCount": 16, "realBackendRestart": true, "continuity": "UNKNOWN"}

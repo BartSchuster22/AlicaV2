@@ -1,0 +1,123 @@
+[
+  {
+    "source": "catalog/proposals/agent-execution/snapshot.json",
+    "sha256": "5e409664c4938a39b297ed4caf860924d5d69538f8e5f89384ae41ab911c74f2",
+    "snapshotDigest": "sha256:98aa324f38e7a25cbdaeb62174ad0644c1ca0dbbf2964a0f60390cbd76c43559",
+    "definitions": [
+      {
+        "id": "acap://alica.io/agent/execution@1",
+        "capabilityId": "io.alica.agent.execution",
+        "version": "1.0.0",
+        "operations": [
+          "execute"
+        ]
+      },
+      {
+        "id": "acap://alica.io/example/echo@1",
+        "capabilityId": "io.alica.example.echo",
+        "version": "1.0.0",
+        "operations": [
+          "echo"
+        ]
+      }
+    ],
+    "trustVerified": false,
+    "trust": "snapshot integrity/selection is not independent trust approval; no self admission"
+  },
+  {
+    "source": "catalog/proposals/decision-evaluate/snapshot.json",
+    "sha256": "1c2ea7183454335967529eb502d82feb4dc5414dfbde298a53f7eeedae62c0e5",
+    "snapshotDigest": "sha256:6bfeb23655ddafb37c266cf11b8cd8da386d030cfd212f97cbf4decf4eddd127",
+    "definitions": [
+      {
+        "id": "acap://alica.io/decision/evaluate@1",
+        "capabilityId": "io.alica.decision.evaluate",
+        "version": "1.0.0",
+        "operations": [
+          "evaluate"
+        ]
+      }
+    ],
+    "trustVerified": false,
+    "trust": "snapshot integrity/selection is not independent trust approval; no self admission"
+  },
+  {
+    "source": "catalog/proposals/assurance-incidents/snapshot.json",
+    "sha256": "7a359281e12f1b7fd2b39ca0bed12ac97ee7ea877e52dbd9d5ee82baffb840bf",
+    "snapshotDigest": "sha256:6cad8c7fe21bc2f93f723eff0e75677e2f4f07ffb978e0e28306f4ddb8a8397d",
+    "definitions": [
+      {
+        "id": "acap://alica.io/assurance/incidents@1",
+        "capabilityId": "io.alica.assurance.incidents",
+        "version": "1.0.0",
+        "operations": [
+          "get",
+          "list",
+          "acknowledge"
+        ]
+      }
+    ],
+    "trustVerified": false,
+    "trust": "snapshot integrity/selection is not independent trust approval; no self admission"
+  },
+  {
+    "source": "catalog/proposals/hermes-kanban/snapshot.json",
+    "sha256": "1e59a9c9af8eba525980e38e07127cb90b08cf78acb478daae8b038af1bbe338",
+    "snapshotDigest": "sha256:1604d129a690059330e52200181d8e3861a9189f925e01c8bdc3414a00ddf11d",
+    "definitions": [
+      {
+        "id": "acap://alica.io/orchestration/kanban@1",
+        "capabilityId": "io.alica.orchestration.kanban",
+        "version": "1.0.0",
+        "operations": [
+          "board",
+          "list",
+          "get",
+          "create",
+          "update",
+          "comment",
+          "events"
+        ]
+      }
+    ],
+    "trustVerified": false,
+    "trust": "snapshot integrity/selection is not independent trust approval; no self admission"
+  },
+  {
+    "source": "catalog/proposals/service-records/snapshot.json",
+    "sha256": "53e6f66d3b8b9f64f3abd0bdf12d3d5c3585e314d2019bd4db0db1a9520cc6f3",
+    "snapshotDigest": "sha256:6d4f62849279bfa76ee781572ebf5e73ff0a0ebb6f2073b80f3030d4cbdfce26",
+    "definitions": [
+      {
+        "id": "acap://alica.io/example/records@1",
+        "capabilityId": "io.alica.example.records",
+        "version": "1.0.0",
+        "operations": [
+          "put",
+          "get"
+        ]
+      }
+    ],
+    "trustVerified": false,
+    "trust": "snapshot integrity/selection is not independent trust approval; no self admission"
+  },
+  {
+    "source": "catalog/releases/phase51-memory-v2/snapshot.json",
+    "sha256": "efa4850c122c6a2c528b91be08acbdfcd909e1b9dc3cdbd9c471f3ae7f044f13",
+    "snapshotDigest": "sha256:fb9b81e7f0565d963642dbc0bbdfef5d1c11e608a5f447036edc54f328847889",
+    "definitions": [
+      {
+        "id": "acap://alica.io/memory/candidates@2",
+        "capabilityId": "io.alica.memory.candidates",
+        "version": "2.0.0",
+        "operations": [
+          "create",
+          "get",
+          "search"
+        ]
+      }
+    ],
+    "trustVerified": false,
+    "trust": "snapshot integrity/selection is not independent trust approval; no self admission"
+  }
+]

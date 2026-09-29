@@ -1,0 +1,19 @@
+{
+  "stage": "P2",
+  "status": "PASS",
+  "class": "REAL_COMPONENT",
+  "native": "p2-native-r2.log",
+  "external_author": "frozen public packages and unchanged consumer",
+  "persistence": "completed writes survive reconstruction and reference-child SIGKILL; no crash durability claim",
+  "regression": "p2-p1-regression.log",
+  "prior_baseline_hashes": "unchanged",
+  "candidate": "/home/alica-dev/phase5i/reference/p2-candidate",
+  "corrections": [
+    "added missing frozen testkit qualification tooling",
+    "purity checker incorrectly treated documented mutable crash residue as frozen-source mutation; no old file changed or removed"
+  ],
+  "candidate_mutable_crash_residue": {
+    "tmp/phase50-host-ZB9XlS/trust.json": "809675e2160f7946a17f827003bf11920604d01dba1d1bf20d7c7675b5e491fd"
+  },
+  "scope": "internal reference service baseline, not Owner Acceptance"
+}

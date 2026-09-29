@@ -1,0 +1,183 @@
+{
+  "status": "PASS",
+  "frozenComponents": {
+    "Kernel": {
+      "tree": "6fa35bdd99a5942a14a8296ffdddffcc722df2d8",
+      "unchanged": true
+    },
+    "ACAP contracts": {
+      "tree": "f513d5e7a6d28b737ad37f6458443ada04fc1cbd",
+      "unchanged": true
+    },
+    "ACAP types": {
+      "tree": "f6e57bb403f7de74c4ca6b8ce65e6c3053a3d553",
+      "unchanged": true
+    },
+    "SDK": {
+      "tree": "de9a835dc88e9879d6b0ea49a7fe74fc0ac3eb03",
+      "unchanged": true
+    },
+    "Catalog": {
+      "tree": "e6b817a697acfa0aab6091b2028271547cbf9bc2",
+      "unchanged": true
+    },
+    "Foundation": {
+      "tree": "213653b89905f422c559d4778a0ebc0db84c0934",
+      "unchanged": true
+    },
+    "Hermes Adapter": {
+      "tree": "c81c463abb127369aa845ea82a1eb0aa35f5d307",
+      "unchanged": true
+    },
+    "Decision/Jev": {
+      "tree": "d35afdf5e8ff4a7a8d0aa0dbd5ca99b033434752",
+      "unchanged": true
+    },
+    "MemoryV4 + adapter": {
+      "tree": "15d1a6a33f9a3367f9b3e026ee810f78f1f1e171",
+      "unchanged": true
+    },
+    "Doghouse + adapter": {
+      "tree": "b0fa18b438e4b45bddd178de92f19c2afe75df05",
+      "unchanged": true
+    },
+    "Kanban Adapter": {
+      "tree": "70a8e002aad70f6fe31b393f86bf780377b62872",
+      "unchanged": true
+    }
+  },
+  "allPriorBaselines": {
+    "p1-candidate": {
+      "files": 759,
+      "unchanged": true,
+      "manifestSha256": "c48e53e5c8f39c1a411d274c35a622fa2a2e329e2d33379fd9521f55b7457576"
+    },
+    "p2-candidate": {
+      "files": 2143,
+      "unchanged": true,
+      "manifestSha256": "da5f8a4ff91e3b5a7e098a2a8782cfcaa9b001fd1913355a946ef2bdf640fb5a"
+    },
+    "h-candidate": {
+      "files": 31735,
+      "unchanged": true,
+      "manifestSha256": "61b7ac1b6d927d4027b29ee83e5b12b327b9cc88773a020ab19adae63450008e"
+    },
+    "d-candidate": {
+      "files": 31775,
+      "unchanged": true,
+      "manifestSha256": "98fcf06aff61290858a5d08f28631861a7641e17a110b663dc9190dda073dafa"
+    },
+    "m-candidate": {
+      "files": 34959,
+      "unchanged": true,
+      "manifestSha256": "e577cdbb30291b794b87c924db7d7ae1a8458034faaf32879c324099d6e114dc"
+    },
+    "g-candidate": {
+      "files": 35588,
+      "unchanged": true,
+      "manifestSha256": "9a807c722ce031b905ff114d575dfa7d5a91169b109c04bd55a14e1a54d0f8f0"
+    },
+    "k-candidate-r2": {
+      "files": 67315,
+      "unchanged": true,
+      "manifestSha256": "7bcdf0fa1fdc11a2f154a48310bccfa1f5f158acd8ad96d06091b5500d481bf0"
+    }
+  },
+  "sharedInstalledPackageIdentities": {
+    "kernel": [
+      {
+        "environment": "integrated-candidate",
+        "name": "@alica/kernel",
+        "version": "0.0.0",
+        "packageJsonSha256": "3a55ea3d581a02443ca73a161803c7f10f1a5792ff414420ff31ded7cc710024"
+      },
+      {
+        "environment": "clean-reproduction-r2",
+        "name": "@alica/kernel",
+        "version": "0.0.0",
+        "packageJsonSha256": "3a55ea3d581a02443ca73a161803c7f10f1a5792ff414420ff31ded7cc710024"
+      }
+    ],
+    "acap-contracts": [
+      {
+        "environment": "integrated-candidate",
+        "name": "@alica/acap-contracts",
+        "version": "0.0.0",
+        "packageJsonSha256": "1a0454f01cbe13630c4cc24129c039b8ad45732c2694cea4e55684bea84e187a"
+      },
+      {
+        "environment": "clean-reproduction-r2",
+        "name": "@alica/acap-contracts",
+        "version": "0.0.0",
+        "packageJsonSha256": "1a0454f01cbe13630c4cc24129c039b8ad45732c2694cea4e55684bea84e187a"
+      }
+    ],
+    "acap-types": [
+      {
+        "environment": "integrated-candidate",
+        "name": "@alica/acap-types",
+        "version": "0.0.0",
+        "packageJsonSha256": "57ebfe46f2cd56d9e4a27cb165b96aeb235833b22fc7e356d26b4995826e5df9"
+      },
+      {
+        "environment": "clean-reproduction-r2",
+        "name": "@alica/acap-types",
+        "version": "0.0.0",
+        "packageJsonSha256": "57ebfe46f2cd56d9e4a27cb165b96aeb235833b22fc7e356d26b4995826e5df9"
+      }
+    ],
+    "plugin-sdk": [
+      {
+        "environment": "integrated-candidate",
+        "name": "@alica/plugin-sdk",
+        "version": "0.1.0",
+        "packageJsonSha256": "a575b651b3231def1700f7322a02ae76dda0cb4a01a12f900c7218c5d08dd7a5"
+      },
+      {
+        "environment": "clean-reproduction-r2",
+        "name": "@alica/plugin-sdk",
+        "version": "0.1.0",
+        "packageJsonSha256": "a575b651b3231def1700f7322a02ae76dda0cb4a01a12f900c7218c5d08dd7a5"
+      }
+    ],
+    "catalog": [
+      {
+        "environment": "integrated-candidate",
+        "name": "@alica/catalog",
+        "version": "0.1.0",
+        "packageJsonSha256": "ad9012474ce84ce33a6c4da0d7408022875be5135c5d8fb53bc45fad9fd3ff9a"
+      },
+      {
+        "environment": "clean-reproduction-r2",
+        "name": "@alica/catalog",
+        "version": "0.1.0",
+        "packageJsonSha256": "ad9012474ce84ce33a6c4da0d7408022875be5135c5d8fb53bc45fad9fd3ff9a"
+      }
+    ],
+    "service-foundation": [
+      {
+        "environment": "integrated-candidate",
+        "name": "@alica/service-foundation",
+        "version": "1.0.0",
+        "packageJsonSha256": "2570bf98318ee22b2c04653e69e983c383bc0ec1097b5d5b53ddd205cb1535f7"
+      },
+      {
+        "environment": "clean-reproduction-r2",
+        "name": "@alica/service-foundation",
+        "version": "1.0.0",
+        "packageJsonSha256": "2570bf98318ee22b2c04653e69e983c383bc0ec1097b5d5b53ddd205cb1535f7"
+      }
+    ]
+  },
+  "publicHistoricalTagsUnchanged": true,
+  "runtimeUidProcessesRemaining": 0,
+  "hostReferenceMountsRemaining": 0,
+  "frozenProductChanges": 0,
+  "newDomainAuthority": 0,
+  "newGatewayRegistryTelemetryAuthority": 0,
+  "productionCredentialsOrDataUsed": false,
+  "KanbanControls": 0,
+  "DoghouseRemediation": 0,
+  "closedLiveProviderCalls": 0,
+  "limits": "source/hash/configuration/owned-process inspection; not an omniscient transient host audit; inherited accepted failures remain failures"
+}

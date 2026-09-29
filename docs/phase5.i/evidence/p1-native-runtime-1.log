@@ -1,0 +1,998 @@
+{
+  "schemaVersion": "alica.g3-evidence/v1",
+  "kind": "synthetic-local-execution",
+  "providers": [
+    {
+      "provider": "a",
+      "consumerResults": [
+        {
+          "inputLength": 0,
+          "passed": true
+        },
+        {
+          "inputLength": 5,
+          "passed": true
+        },
+        {
+          "inputLength": 6,
+          "passed": true
+        },
+        {
+          "inputLength": 1,
+          "passed": true
+        },
+        {
+          "inputLength": 4096,
+          "passed": true
+        }
+      ],
+      "resolution": {
+        "candidates": [
+          {
+            "artifact": "sha256:77112ee0ab9dff7cdd8b0c91fe4e17587bfd770695573c6a967a49ec4019182b",
+            "descriptorDigest": "sha256:58ee9f01fb4948faf71ed7a3468d55563f3117faccecb8a3b1ebc81ff0aee649",
+            "exclusion": null,
+            "instanceId": "91da0d34-10d8-4419-a93e-4658a408e924",
+            "providerId": "org.alica.echoa",
+            "version": "1.0.0"
+          }
+        ],
+        "selected": {
+          "artifact": "sha256:77112ee0ab9dff7cdd8b0c91fe4e17587bfd770695573c6a967a49ec4019182b",
+          "descriptorDigest": "sha256:58ee9f01fb4948faf71ed7a3468d55563f3117faccecb8a3b1ebc81ff0aee649",
+          "exclusion": null,
+          "instanceId": "91da0d34-10d8-4419-a93e-4658a408e924",
+          "providerId": "org.alica.echoa",
+          "version": "1.0.0"
+        },
+        "tieBreak": "contract-version DESC, provider-id ASCII ASC, artifact-digest ASCII ASC; qualified explicit pin wins"
+      },
+      "registry": [
+        {
+          "capability": "org.alica.echo",
+          "owner": "91da0d34-10d8-4419-a93e-4658a408e924",
+          "packageDigest": "sha256:77112ee0ab9dff7cdd8b0c91fe4e17587bfd770695573c6a967a49ec4019182b",
+          "scope": "root",
+          "version": "1.0.0"
+        },
+        {
+          "capability": "org.alica.consumer",
+          "owner": "f52e68ee-2551-49d1-bcf3-22c15ca55f5b",
+          "packageDigest": "sha256:5df8d49530e5146c305f79bee3f18b62430267c6f46bfc56a87611624ff22b01",
+          "scope": "root",
+          "version": "1.0.0"
+        }
+      ],
+      "grants": [
+        {
+          "id": "a49420be-2c74-474a-b9e4-0774ce0aa498",
+          "instanceId": "f52e68ee-2551-49d1-bcf3-22c15ca55f5b",
+          "principal": "org.alica.consumer",
+          "revision": 0,
+          "revoked": false,
+          "scope": "root",
+          "valid": true
+        },
+        {
+          "id": "18956c6d-5b4d-4dad-96e6-5fe29fc16490",
+          "instanceId": "370b9756-2b6b-4dd5-bab0-55c8b3f10f60",
+          "principal": "org.alica.client",
+          "revision": 0,
+          "revoked": false,
+          "scope": "root",
+          "valid": true
+        }
+      ],
+      "lifecycle": [
+        {
+          "principal": "org.alica.echoa",
+          "history": [
+            "DISCOVERED",
+            "VERIFIED",
+            "RESOLVED",
+            "ACTIVATING",
+            "ACTIVE",
+            "QUIESCING",
+            "DISPOSED"
+          ],
+          "cleanup": {
+            "completedDisposers": 1,
+            "failedDisposers": [],
+            "restartRequired": false,
+            "state": "DISPOSED",
+            "timedOutResources": 0
+          }
+        },
+        {
+          "principal": "org.alica.consumer",
+          "history": [
+            "DISCOVERED",
+            "VERIFIED",
+            "RESOLVED",
+            "ACTIVATING",
+            "ACTIVE",
+            "QUIESCING",
+            "DISPOSED"
+          ],
+          "cleanup": {
+            "completedDisposers": 1,
+            "failedDisposers": [],
+            "restartRequired": false,
+            "state": "DISPOSED",
+            "timedOutResources": 0
+          }
+        },
+        {
+          "principal": "org.alica.client",
+          "history": [
+            "DISCOVERED",
+            "VERIFIED",
+            "RESOLVED",
+            "ACTIVATING",
+            "ACTIVE",
+            "QUIESCING",
+            "DISPOSED"
+          ],
+          "cleanup": {
+            "completedDisposers": 0,
+            "failedDisposers": [],
+            "restartRequired": false,
+            "state": "DISPOSED",
+            "timedOutResources": 0
+          }
+        }
+      ],
+      "afterShutdown": {
+        "resources": {
+          "effects": 0,
+          "listeners": 0,
+          "pendingCalls": 0,
+          "registrations": 0
+        },
+        "scopes": [],
+        "unsettledWork": 0
+      },
+      "audit": [
+        {
+          "actor": "operator",
+          "correlationId": "59f371ee-e87f-435a-b674-e6704b4dd20b",
+          "outcome": "ALLOW",
+          "reason": "CREATE_SCOPE",
+          "scope": "root",
+          "target": "root",
+          "timestamp": 1790712950729
+        },
+        {
+          "actor": "operator",
+          "correlationId": "b0ed1f9c-f29d-43b9-b78a-7b1e8d41cb9d",
+          "outcome": "ATTEMPT",
+          "reason": "VERIFY",
+          "scope": "root",
+          "target": "package",
+          "timestamp": 1790712950733
+        },
+        {
+          "actor": "kernel",
+          "correlationId": "103ef754-339b-4a8f-80ef-3f60a3d3f3f7",
+          "outcome": "VERIFIED",
+          "reason": "LIFECYCLE",
+          "scope": "root",
+          "target": "91da0d34-10d8-4419-a93e-4658a408e924",
+          "timestamp": 1790712950750
+        },
+        {
+          "actor": "operator",
+          "correlationId": "c4748f9d-2671-4f35-bcd9-98cc5216fff3",
+          "outcome": "ATTEMPT",
+          "reason": "VERIFY",
+          "scope": "root",
+          "target": "package",
+          "timestamp": 1790712950753
+        },
+        {
+          "actor": "kernel",
+          "correlationId": "ee833447-be3f-47bd-85ae-010a5ec55b18",
+          "outcome": "VERIFIED",
+          "reason": "LIFECYCLE",
+          "scope": "root",
+          "target": "f52e68ee-2551-49d1-bcf3-22c15ca55f5b",
+          "timestamp": 1790712950763
+        },
+        {
+          "actor": "operator",
+          "correlationId": "d73e9637-88b7-4138-98b7-0502e999583e",
+          "outcome": "ATTEMPT",
+          "reason": "VERIFY",
+          "scope": "root",
+          "target": "package",
+          "timestamp": 1790712950766
+        },
+        {
+          "actor": "kernel",
+          "correlationId": "874d77d8-4af3-44f0-b2cf-8187754bce44",
+          "outcome": "VERIFIED",
+          "reason": "LIFECYCLE",
+          "scope": "root",
+          "target": "370b9756-2b6b-4dd5-bab0-55c8b3f10f60",
+          "timestamp": 1790712950774
+        },
+        {
+          "actor": "operator",
+          "correlationId": "ef30be09-500d-4656-8407-54d069d9ce8e",
+          "outcome": "ALLOW",
+          "reason": "ISSUE_GRANT",
+          "scope": "root",
+          "target": "a49420be-2c74-474a-b9e4-0774ce0aa498",
+          "timestamp": 1790712950778
+        },
+        {
+          "actor": "operator",
+          "correlationId": "5f8c2130-cd71-498d-b848-392f7816ed44",
+          "outcome": "ALLOW",
+          "reason": "ISSUE_GRANT",
+          "scope": "root",
+          "target": "18956c6d-5b4d-4dad-96e6-5fe29fc16490",
+          "timestamp": 1790712950780
+        },
+        {
+          "actor": "kernel",
+          "correlationId": "c62ee524-d5db-4e8a-bc32-bfb19b3d4bba",
+          "outcome": "RESOLVED",
+          "reason": "LIFECYCLE",
+          "scope": "root",
+          "target": "91da0d34-10d8-4419-a93e-4658a408e924",
+          "timestamp": 1790712950782
+        },
+        {
+          "actor": "kernel",
+          "correlationId": "fe88bf82-1745-4b50-9659-74d16a1c668d",
+          "outcome": "ACTIVATING",
+          "reason": "LIFECYCLE",
+          "scope": "root",
+          "target": "91da0d34-10d8-4419-a93e-4658a408e924",
+          "timestamp": 1790712950782
+        },
+        {
+          "actor": "kernel",
+          "correlationId": "1af988b2-63e9-4ef5-ada6-51d4a365e43c",
+          "outcome": "ALLOW",
+          "reason": "PUBLISH",
+          "scope": "root",
+          "target": "91da0d34-10d8-4419-a93e-4658a408e924",
+          "timestamp": 1790712950793
+        },
+        {
+          "actor": "kernel",
+          "correlationId": "7fa0983a-72f1-4b2b-ac50-a822ade53202",
+          "outcome": "ACTIVE",
+          "reason": "LIFECYCLE",
+          "scope": "root",
+          "target": "91da0d34-10d8-4419-a93e-4658a408e924",
+          "timestamp": 1790712950793
+        },
+        {
+          "actor": "kernel",
+          "correlationId": "7439b0c4-40b7-45ed-85de-445b9313c615",
+          "outcome": "RESOLVED",
+          "reason": "LIFECYCLE",
+          "scope": "root",
+          "target": "f52e68ee-2551-49d1-bcf3-22c15ca55f5b",
+          "timestamp": 1790712950810
+        },
+        {
+          "actor": "kernel",
+          "correlationId": "f4350bce-3ed0-4b0d-9209-d39b29a04eed",
+          "outcome": "ACTIVATING",
+          "reason": "LIFECYCLE",
+          "scope": "root",
+          "target": "f52e68ee-2551-49d1-bcf3-22c15ca55f5b",
+          "timestamp": 1790712950810
+        },
+        {
+          "actor": "kernel",
+          "correlationId": "2876bd6e-b4b0-4e59-ae81-d503c8c486e5",
+          "outcome": "ALLOW",
+          "reason": "PUBLISH",
+          "scope": "root",
+          "target": "f52e68ee-2551-49d1-bcf3-22c15ca55f5b",
+          "timestamp": 1790712950826
+        },
+        {
+          "actor": "kernel",
+          "correlationId": "9a712e41-40c2-4b8d-b51d-24b4460e85b9",
+          "outcome": "ACTIVE",
+          "reason": "LIFECYCLE",
+          "scope": "root",
+          "target": "f52e68ee-2551-49d1-bcf3-22c15ca55f5b",
+          "timestamp": 1790712950826
+        },
+        {
+          "actor": "kernel",
+          "correlationId": "92f63cdb-0d38-439c-9879-e73e73209a3e",
+          "outcome": "RESOLVED",
+          "reason": "LIFECYCLE",
+          "scope": "root",
+          "target": "370b9756-2b6b-4dd5-bab0-55c8b3f10f60",
+          "timestamp": 1790712950830
+        },
+        {
+          "actor": "kernel",
+          "correlationId": "3e23fc2d-c203-4d2f-837b-ab1c9819259f",
+          "outcome": "ACTIVATING",
+          "reason": "LIFECYCLE",
+          "scope": "root",
+          "target": "370b9756-2b6b-4dd5-bab0-55c8b3f10f60",
+          "timestamp": 1790712950830
+        },
+        {
+          "actor": "kernel",
+          "correlationId": "32faa3e4-1820-48df-8c6e-9ca3ceeea2bf",
+          "outcome": "ALLOW",
+          "reason": "PUBLISH",
+          "scope": "root",
+          "target": "370b9756-2b6b-4dd5-bab0-55c8b3f10f60",
+          "timestamp": 1790712950835
+        },
+        {
+          "actor": "kernel",
+          "correlationId": "30754c1c-8a62-46a8-a925-08ee3bc70691",
+          "outcome": "ACTIVE",
+          "reason": "LIFECYCLE",
+          "scope": "root",
+          "target": "370b9756-2b6b-4dd5-bab0-55c8b3f10f60",
+          "timestamp": 1790712950835
+        },
+        {
+          "actor": "org.alica.client",
+          "correlationId": "c06cbd8c-ac62-47da-9a78-203e70636405",
+          "outcome": "ALLOW",
+          "reason": "CALL",
+          "scope": "root",
+          "target": "org.alica.consumer",
+          "timestamp": 1790712950853
+        },
+        {
+          "actor": "org.alica.consumer",
+          "correlationId": "4bd5d84d-9f30-4149-85f5-fa9a1880d456",
+          "outcome": "ALLOW",
+          "reason": "CALL",
+          "scope": "root",
+          "target": "org.alica.echo",
+          "timestamp": 1790712950866
+        },
+        {
+          "actor": "org.alica.client",
+          "correlationId": "f659df39-2f5e-476e-a26c-cf47173d030d",
+          "outcome": "ALLOW",
+          "reason": "CALL",
+          "scope": "root",
+          "target": "org.alica.consumer",
+          "timestamp": 1790712950887
+        },
+        {
+          "actor": "org.alica.consumer",
+          "correlationId": "1db5b042-c130-44ff-9fd0-a5b6dff43cab",
+          "outcome": "ALLOW",
+          "reason": "CALL",
+          "scope": "root",
+          "target": "org.alica.echo",
+          "timestamp": 1790712950901
+        },
+        {
+          "actor": "org.alica.client",
+          "correlationId": "ffaf89e1-b5e7-4b9a-92da-a82c7252949f",
+          "outcome": "ALLOW",
+          "reason": "CALL",
+          "scope": "root",
+          "target": "org.alica.consumer",
+          "timestamp": 1790712950921
+        },
+        {
+          "actor": "org.alica.consumer",
+          "correlationId": "00ea7de5-a42b-43f2-b845-8aeff8ff1caa",
+          "outcome": "ALLOW",
+          "reason": "CALL",
+          "scope": "root",
+          "target": "org.alica.echo",
+          "timestamp": 1790712950933
+        },
+        {
+          "actor": "org.alica.client",
+          "correlationId": "9a2adc04-62e1-4266-a0c0-a41efdf77888",
+          "outcome": "ALLOW",
+          "reason": "CALL",
+          "scope": "root",
+          "target": "org.alica.consumer",
+          "timestamp": 1790712950952
+        },
+        {
+          "actor": "org.alica.consumer",
+          "correlationId": "d906b08e-f63b-4dfe-a8b6-4753e3d96b4c",
+          "outcome": "ALLOW",
+          "reason": "CALL",
+          "scope": "root",
+          "target": "org.alica.echo",
+          "timestamp": 1790712950962
+        },
+        {
+          "actor": "org.alica.client",
+          "correlationId": "451505e9-272f-435e-8283-307423c28e0c",
+          "outcome": "ALLOW",
+          "reason": "CALL",
+          "scope": "root",
+          "target": "org.alica.consumer",
+          "timestamp": 1790712950984
+        },
+        {
+          "actor": "org.alica.consumer",
+          "correlationId": "4c30ed62-7514-4681-acfc-6ed65398f415",
+          "outcome": "ALLOW",
+          "reason": "CALL",
+          "scope": "root",
+          "target": "org.alica.echo",
+          "timestamp": 1790712950996
+        },
+        {
+          "actor": "operator",
+          "correlationId": "d43a8bde-6b9f-470e-81d3-7821414301fb",
+          "outcome": "CLOSE",
+          "reason": "SCOPE_DESTROY",
+          "scope": "root",
+          "target": "root",
+          "timestamp": 1790712951016
+        },
+        {
+          "actor": "kernel",
+          "correlationId": "775b8f98-e4ee-4a7c-a421-1acfae3edcb7",
+          "outcome": "QUIESCING",
+          "reason": "LIFECYCLE",
+          "scope": "root",
+          "target": "91da0d34-10d8-4419-a93e-4658a408e924",
+          "timestamp": 1790712951016
+        },
+        {
+          "actor": "kernel",
+          "correlationId": "a87971f8-869b-48ee-8234-c11343f44bf6",
+          "outcome": "QUIESCING",
+          "reason": "LIFECYCLE",
+          "scope": "root",
+          "target": "f52e68ee-2551-49d1-bcf3-22c15ca55f5b",
+          "timestamp": 1790712951016
+        },
+        {
+          "actor": "kernel",
+          "correlationId": "be710e61-4507-4992-a492-ac875cf09f7e",
+          "outcome": "QUIESCING",
+          "reason": "LIFECYCLE",
+          "scope": "root",
+          "target": "370b9756-2b6b-4dd5-bab0-55c8b3f10f60",
+          "timestamp": 1790712951016
+        },
+        {
+          "actor": "kernel",
+          "correlationId": "88ec293c-82ec-43c7-a047-4b5e3e98d5de",
+          "outcome": "DISPOSED",
+          "reason": "LIFECYCLE",
+          "scope": "root",
+          "target": "370b9756-2b6b-4dd5-bab0-55c8b3f10f60",
+          "timestamp": 1790712951016
+        },
+        {
+          "actor": "kernel",
+          "correlationId": "2adc43df-a2b7-4289-8b23-db40bb92391d",
+          "outcome": "DISPOSED",
+          "reason": "LIFECYCLE",
+          "scope": "root",
+          "target": "f52e68ee-2551-49d1-bcf3-22c15ca55f5b",
+          "timestamp": 1790712951017
+        },
+        {
+          "actor": "kernel",
+          "correlationId": "bca88be6-147d-4b57-8ef4-94f69aa3f999",
+          "outcome": "DISPOSED",
+          "reason": "LIFECYCLE",
+          "scope": "root",
+          "target": "91da0d34-10d8-4419-a93e-4658a408e924",
+          "timestamp": 1790712951017
+        }
+      ]
+    },
+    {
+      "provider": "b",
+      "consumerResults": [
+        {
+          "inputLength": 0,
+          "passed": true
+        },
+        {
+          "inputLength": 5,
+          "passed": true
+        },
+        {
+          "inputLength": 6,
+          "passed": true
+        },
+        {
+          "inputLength": 1,
+          "passed": true
+        },
+        {
+          "inputLength": 4096,
+          "passed": true
+        }
+      ],
+      "resolution": {
+        "candidates": [
+          {
+            "artifact": "sha256:2d6b455cf0ac060882c2b10c1b372a654997cf3d82ea3d7aa55d0b239a6991be",
+            "descriptorDigest": "sha256:58ee9f01fb4948faf71ed7a3468d55563f3117faccecb8a3b1ebc81ff0aee649",
+            "exclusion": null,
+            "instanceId": "b3549ecc-d046-4db6-9b3d-b6fa2fd25f70",
+            "providerId": "org.alica.echob",
+            "version": "1.0.0"
+          }
+        ],
+        "selected": {
+          "artifact": "sha256:2d6b455cf0ac060882c2b10c1b372a654997cf3d82ea3d7aa55d0b239a6991be",
+          "descriptorDigest": "sha256:58ee9f01fb4948faf71ed7a3468d55563f3117faccecb8a3b1ebc81ff0aee649",
+          "exclusion": null,
+          "instanceId": "b3549ecc-d046-4db6-9b3d-b6fa2fd25f70",
+          "providerId": "org.alica.echob",
+          "version": "1.0.0"
+        },
+        "tieBreak": "contract-version DESC, provider-id ASCII ASC, artifact-digest ASCII ASC; qualified explicit pin wins"
+      },
+      "registry": [
+        {
+          "capability": "org.alica.echo",
+          "owner": "b3549ecc-d046-4db6-9b3d-b6fa2fd25f70",
+          "packageDigest": "sha256:2d6b455cf0ac060882c2b10c1b372a654997cf3d82ea3d7aa55d0b239a6991be",
+          "scope": "root",
+          "version": "1.0.0"
+        },
+        {
+          "capability": "org.alica.consumer",
+          "owner": "7107742b-bf11-4974-894d-3644d3ed1abc",
+          "packageDigest": "sha256:5df8d49530e5146c305f79bee3f18b62430267c6f46bfc56a87611624ff22b01",
+          "scope": "root",
+          "version": "1.0.0"
+        }
+      ],
+      "grants": [
+        {
+          "id": "3067c00e-5224-4d06-b6cd-eff8c5be5a7d",
+          "instanceId": "7107742b-bf11-4974-894d-3644d3ed1abc",
+          "principal": "org.alica.consumer",
+          "revision": 0,
+          "revoked": false,
+          "scope": "root",
+          "valid": true
+        },
+        {
+          "id": "dea45336-9e0c-4f8f-8254-d6d88b0a2e30",
+          "instanceId": "5e86ffcf-32ad-47f9-a8b9-29b328673258",
+          "principal": "org.alica.client",
+          "revision": 0,
+          "revoked": false,
+          "scope": "root",
+          "valid": true
+        }
+      ],
+      "lifecycle": [
+        {
+          "principal": "org.alica.echob",
+          "history": [
+            "DISCOVERED",
+            "VERIFIED",
+            "RESOLVED",
+            "ACTIVATING",
+            "ACTIVE",
+            "QUIESCING",
+            "DISPOSED"
+          ],
+          "cleanup": {
+            "completedDisposers": 1,
+            "failedDisposers": [],
+            "restartRequired": false,
+            "state": "DISPOSED",
+            "timedOutResources": 0
+          }
+        },
+        {
+          "principal": "org.alica.consumer",
+          "history": [
+            "DISCOVERED",
+            "VERIFIED",
+            "RESOLVED",
+            "ACTIVATING",
+            "ACTIVE",
+            "QUIESCING",
+            "DISPOSED"
+          ],
+          "cleanup": {
+            "completedDisposers": 1,
+            "failedDisposers": [],
+            "restartRequired": false,
+            "state": "DISPOSED",
+            "timedOutResources": 0
+          }
+        },
+        {
+          "principal": "org.alica.client",
+          "history": [
+            "DISCOVERED",
+            "VERIFIED",
+            "RESOLVED",
+            "ACTIVATING",
+            "ACTIVE",
+            "QUIESCING",
+            "DISPOSED"
+          ],
+          "cleanup": {
+            "completedDisposers": 0,
+            "failedDisposers": [],
+            "restartRequired": false,
+            "state": "DISPOSED",
+            "timedOutResources": 0
+          }
+        }
+      ],
+      "afterShutdown": {
+        "resources": {
+          "effects": 0,
+          "listeners": 0,
+          "pendingCalls": 0,
+          "registrations": 0
+        },
+        "scopes": [],
+        "unsettledWork": 0
+      },
+      "audit": [
+        {
+          "actor": "operator",
+          "correlationId": "df831cab-9ed5-44a7-9da5-92a4a6afdd58",
+          "outcome": "ALLOW",
+          "reason": "CREATE_SCOPE",
+          "scope": "root",
+          "target": "root",
+          "timestamp": 1790712951027
+        },
+        {
+          "actor": "operator",
+          "correlationId": "e3756861-7bd4-4c68-a41a-1b686123ecd4",
+          "outcome": "ATTEMPT",
+          "reason": "VERIFY",
+          "scope": "root",
+          "target": "package",
+          "timestamp": 1790712951030
+        },
+        {
+          "actor": "kernel",
+          "correlationId": "ea26b6b6-b111-4e2d-a29f-a9d333ff935c",
+          "outcome": "VERIFIED",
+          "reason": "LIFECYCLE",
+          "scope": "root",
+          "target": "b3549ecc-d046-4db6-9b3d-b6fa2fd25f70",
+          "timestamp": 1790712951041
+        },
+        {
+          "actor": "operator",
+          "correlationId": "dc4d6ec0-d3a9-4bba-864b-8c0dd9273b1e",
+          "outcome": "ATTEMPT",
+          "reason": "VERIFY",
+          "scope": "root",
+          "target": "package",
+          "timestamp": 1790712951043
+        },
+        {
+          "actor": "kernel",
+          "correlationId": "508bffff-1f0e-4c84-866e-5b7cc0d2d7d7",
+          "outcome": "VERIFIED",
+          "reason": "LIFECYCLE",
+          "scope": "root",
+          "target": "7107742b-bf11-4974-894d-3644d3ed1abc",
+          "timestamp": 1790712951053
+        },
+        {
+          "actor": "operator",
+          "correlationId": "b95aa828-957e-4c4a-b43b-2c37d8c0be52",
+          "outcome": "ATTEMPT",
+          "reason": "VERIFY",
+          "scope": "root",
+          "target": "package",
+          "timestamp": 1790712951055
+        },
+        {
+          "actor": "kernel",
+          "correlationId": "4cfd52ca-010f-4e8a-9020-03c84da3ab72",
+          "outcome": "VERIFIED",
+          "reason": "LIFECYCLE",
+          "scope": "root",
+          "target": "5e86ffcf-32ad-47f9-a8b9-29b328673258",
+          "timestamp": 1790712951064
+        },
+        {
+          "actor": "operator",
+          "correlationId": "e7ed2fd5-2d9f-4deb-8cdf-27bec96909e5",
+          "outcome": "ALLOW",
+          "reason": "ISSUE_GRANT",
+          "scope": "root",
+          "target": "3067c00e-5224-4d06-b6cd-eff8c5be5a7d",
+          "timestamp": 1790712951066
+        },
+        {
+          "actor": "operator",
+          "correlationId": "e8c3a2a5-bbc7-490a-bf7d-982a0ff31d07",
+          "outcome": "ALLOW",
+          "reason": "ISSUE_GRANT",
+          "scope": "root",
+          "target": "dea45336-9e0c-4f8f-8254-d6d88b0a2e30",
+          "timestamp": 1790712951068
+        },
+        {
+          "actor": "kernel",
+          "correlationId": "8daa4473-00b4-4a74-8f62-498d5c12b41a",
+          "outcome": "RESOLVED",
+          "reason": "LIFECYCLE",
+          "scope": "root",
+          "target": "b3549ecc-d046-4db6-9b3d-b6fa2fd25f70",
+          "timestamp": 1790712951071
+        },
+        {
+          "actor": "kernel",
+          "correlationId": "5c3140df-e7c4-454b-914d-a53fdfed2f91",
+          "outcome": "ACTIVATING",
+          "reason": "LIFECYCLE",
+          "scope": "root",
+          "target": "b3549ecc-d046-4db6-9b3d-b6fa2fd25f70",
+          "timestamp": 1790712951071
+        },
+        {
+          "actor": "kernel",
+          "correlationId": "5c135541-d859-4152-b817-341ff9facb39",
+          "outcome": "ALLOW",
+          "reason": "PUBLISH",
+          "scope": "root",
+          "target": "b3549ecc-d046-4db6-9b3d-b6fa2fd25f70",
+          "timestamp": 1790712951080
+        },
+        {
+          "actor": "kernel",
+          "correlationId": "94307543-18bd-433b-b453-4a173679041d",
+          "outcome": "ACTIVE",
+          "reason": "LIFECYCLE",
+          "scope": "root",
+          "target": "b3549ecc-d046-4db6-9b3d-b6fa2fd25f70",
+          "timestamp": 1790712951080
+        },
+        {
+          "actor": "kernel",
+          "correlationId": "a2f60ed2-1d4a-4666-93c4-8c19efb08f9f",
+          "outcome": "RESOLVED",
+          "reason": "LIFECYCLE",
+          "scope": "root",
+          "target": "7107742b-bf11-4974-894d-3644d3ed1abc",
+          "timestamp": 1790712951095
+        },
+        {
+          "actor": "kernel",
+          "correlationId": "6f987cdd-2158-493d-8716-76087cd2c026",
+          "outcome": "ACTIVATING",
+          "reason": "LIFECYCLE",
+          "scope": "root",
+          "target": "7107742b-bf11-4974-894d-3644d3ed1abc",
+          "timestamp": 1790712951095
+        },
+        {
+          "actor": "kernel",
+          "correlationId": "871b64cd-5dff-402e-9930-c33d8d664456",
+          "outcome": "ALLOW",
+          "reason": "PUBLISH",
+          "scope": "root",
+          "target": "7107742b-bf11-4974-894d-3644d3ed1abc",
+          "timestamp": 1790712951112
+        },
+        {
+          "actor": "kernel",
+          "correlationId": "d20f566f-b8ed-41fd-8384-4d69b9cd9e82",
+          "outcome": "ACTIVE",
+          "reason": "LIFECYCLE",
+          "scope": "root",
+          "target": "7107742b-bf11-4974-894d-3644d3ed1abc",
+          "timestamp": 1790712951112
+        },
+        {
+          "actor": "kernel",
+          "correlationId": "ee1d4e5c-0fc8-4395-ad71-51db86083d59",
+          "outcome": "RESOLVED",
+          "reason": "LIFECYCLE",
+          "scope": "root",
+          "target": "5e86ffcf-32ad-47f9-a8b9-29b328673258",
+          "timestamp": 1790712951115
+        },
+        {
+          "actor": "kernel",
+          "correlationId": "f8eb29f9-18a0-4506-a6cc-7276d8743349",
+          "outcome": "ACTIVATING",
+          "reason": "LIFECYCLE",
+          "scope": "root",
+          "target": "5e86ffcf-32ad-47f9-a8b9-29b328673258",
+          "timestamp": 1790712951115
+        },
+        {
+          "actor": "kernel",
+          "correlationId": "73dc2c8c-49c1-46ca-bbdf-1419227dd85e",
+          "outcome": "ALLOW",
+          "reason": "PUBLISH",
+          "scope": "root",
+          "target": "5e86ffcf-32ad-47f9-a8b9-29b328673258",
+          "timestamp": 1790712951120
+        },
+        {
+          "actor": "kernel",
+          "correlationId": "3229a463-bbda-423e-8be9-4ce473904292",
+          "outcome": "ACTIVE",
+          "reason": "LIFECYCLE",
+          "scope": "root",
+          "target": "5e86ffcf-32ad-47f9-a8b9-29b328673258",
+          "timestamp": 1790712951120
+        },
+        {
+          "actor": "org.alica.client",
+          "correlationId": "71d99874-d99c-4622-934f-1b6518ba4dc2",
+          "outcome": "ALLOW",
+          "reason": "CALL",
+          "scope": "root",
+          "target": "org.alica.consumer",
+          "timestamp": 1790712951137
+        },
+        {
+          "actor": "org.alica.consumer",
+          "correlationId": "60c1af91-ad74-45e2-b64e-62f9215fba96",
+          "outcome": "ALLOW",
+          "reason": "CALL",
+          "scope": "root",
+          "target": "org.alica.echo",
+          "timestamp": 1790712951148
+        },
+        {
+          "actor": "org.alica.client",
+          "correlationId": "096261c8-9925-47a1-9602-f3fcb9b7e509",
+          "outcome": "ALLOW",
+          "reason": "CALL",
+          "scope": "root",
+          "target": "org.alica.consumer",
+          "timestamp": 1790712951166
+        },
+        {
+          "actor": "org.alica.consumer",
+          "correlationId": "252d82e0-6a3a-490b-9472-611403ec0176",
+          "outcome": "ALLOW",
+          "reason": "CALL",
+          "scope": "root",
+          "target": "org.alica.echo",
+          "timestamp": 1790712951176
+        },
+        {
+          "actor": "org.alica.client",
+          "correlationId": "56220211-6887-4e26-88f4-f3e3a9a5e7a8",
+          "outcome": "ALLOW",
+          "reason": "CALL",
+          "scope": "root",
+          "target": "org.alica.consumer",
+          "timestamp": 1790712951193
+        },
+        {
+          "actor": "org.alica.consumer",
+          "correlationId": "9c68b323-898e-4b0d-bf74-9014d85c9204",
+          "outcome": "ALLOW",
+          "reason": "CALL",
+          "scope": "root",
+          "target": "org.alica.echo",
+          "timestamp": 1790712951203
+        },
+        {
+          "actor": "org.alica.client",
+          "correlationId": "5ed64732-899f-4e1b-babf-1993f0abb2cf",
+          "outcome": "ALLOW",
+          "reason": "CALL",
+          "scope": "root",
+          "target": "org.alica.consumer",
+          "timestamp": 1790712951221
+        },
+        {
+          "actor": "org.alica.consumer",
+          "correlationId": "8b92011d-6ae8-420a-bdb3-e774a9f417e2",
+          "outcome": "ALLOW",
+          "reason": "CALL",
+          "scope": "root",
+          "target": "org.alica.echo",
+          "timestamp": 1790712951231
+        },
+        {
+          "actor": "org.alica.client",
+          "correlationId": "e8a70c6c-a3be-43f6-a1de-2bfb128d283e",
+          "outcome": "ALLOW",
+          "reason": "CALL",
+          "scope": "root",
+          "target": "org.alica.consumer",
+          "timestamp": 1790712951251
+        },
+        {
+          "actor": "org.alica.consumer",
+          "correlationId": "95fa5d17-b7ba-4c42-8955-2f38e033c0b4",
+          "outcome": "ALLOW",
+          "reason": "CALL",
+          "scope": "root",
+          "target": "org.alica.echo",
+          "timestamp": 1790712951261
+        },
+        {
+          "actor": "operator",
+          "correlationId": "e1a28579-a745-4ecc-ae75-a71f3e5b6875",
+          "outcome": "CLOSE",
+          "reason": "SCOPE_DESTROY",
+          "scope": "root",
+          "target": "root",
+          "timestamp": 1790712951280
+        },
+        {
+          "actor": "kernel",
+          "correlationId": "d9813840-1ea7-435e-8c6a-e906bcceef4d",
+          "outcome": "QUIESCING",
+          "reason": "LIFECYCLE",
+          "scope": "root",
+          "target": "b3549ecc-d046-4db6-9b3d-b6fa2fd25f70",
+          "timestamp": 1790712951280
+        },
+        {
+          "actor": "kernel",
+          "correlationId": "d9569908-6610-46cd-8130-0ce976381cec",
+          "outcome": "QUIESCING",
+          "reason": "LIFECYCLE",
+          "scope": "root",
+          "target": "7107742b-bf11-4974-894d-3644d3ed1abc",
+          "timestamp": 1790712951280
+        },
+        {
+          "actor": "kernel",
+          "correlationId": "163433ba-b58b-4e06-9a57-680682aca3de",
+          "outcome": "QUIESCING",
+          "reason": "LIFECYCLE",
+          "scope": "root",
+          "target": "5e86ffcf-32ad-47f9-a8b9-29b328673258",
+          "timestamp": 1790712951280
+        },
+        {
+          "actor": "kernel",
+          "correlationId": "de8a4bb3-af22-4219-a3a1-03fb2381f9f6",
+          "outcome": "DISPOSED",
+          "reason": "LIFECYCLE",
+          "scope": "root",
+          "target": "5e86ffcf-32ad-47f9-a8b9-29b328673258",
+          "timestamp": 1790712951280
+        },
+        {
+          "actor": "kernel",
+          "correlationId": "51b6c440-285e-4f7e-a034-bd7b593fb96f",
+          "outcome": "DISPOSED",
+          "reason": "LIFECYCLE",
+          "scope": "root",
+          "target": "7107742b-bf11-4974-894d-3644d3ed1abc",
+          "timestamp": 1790712951280
+        },
+        {
+          "actor": "kernel",
+          "correlationId": "bf494722-ae16-4a9d-95f5-6209794d833d",
+          "outcome": "DISPOSED",
+          "reason": "LIFECYCLE",
+          "scope": "root",
+          "target": "b3549ecc-d046-4db6-9b3d-b6fa2fd25f70",
+          "timestamp": 1790712951280
+        }
+      ]
+    }
+  ]
+}
+(node:1) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)

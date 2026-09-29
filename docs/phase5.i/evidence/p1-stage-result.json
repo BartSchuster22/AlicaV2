@@ -1,0 +1,16 @@
+{
+  "stage": "P1",
+  "status": "PASS",
+  "evidence_class": "REAL_COMPONENT",
+  "candidate": "/home/alica-dev/phase5i/reference/p1-candidate",
+  "external_sdk_evidence": "p1-external-sdk-r2.json",
+  "catalog": "p1-native-catalog.log",
+  "runtime_rounds": [
+    "p1-native-runtime-0.log",
+    "p1-native-runtime-1.log"
+  ],
+  "purity": "exact file membership and hashes unchanged after runtime",
+  "persistence": "NOT_APPLICABLE stateless",
+  "events": "query-only echo; no new event promises",
+  "scope": "platform baseline only; not Owner Acceptance"
+}

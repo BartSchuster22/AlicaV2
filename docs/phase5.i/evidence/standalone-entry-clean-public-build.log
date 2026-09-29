@@ -1,0 +1,24 @@
+clone 0 Cloning into '/home/alica-dev/phase5i-public-qualified-1/clean-public-source'...
+
+checkout 0 HEAD is now at 96359ab7 docs: record Phase 5.K owner acceptance
+
+npm-ci 0 
+added 19 packages in 1s
+
+build 0 
+source-diff 0 
+{
+  "status": "PASS_PREPARATION",
+  "anonymousCarrier": "96359ab780dea152d7eb87736ebecb9fbceeb93c",
+  "freshCheckout": "/home/alica-dev/phase5i-public-qualified-1/clean-public-source",
+  "freshSetupHome": "/home/alica-dev/phase5i-public-qualified-1/clean-setup-home",
+  "freshNpmDependencyInstall": true,
+  "firstRuntimeStateCopied": false,
+  "sharedBuildComparison": {
+    "package-lock.json": "byte-identical to published qualification",
+    "packages/acap-contracts/dist": "byte-identical to published qualification",
+    "packages/acap-types/dist": "byte-identical to published qualification",
+    "packages/plugin-sdk/dist": "byte-identical to published qualification"
+  },
+  "runtimeQualification": "NOT_EXECUTED"
+}

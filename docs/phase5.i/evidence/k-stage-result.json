@@ -1,0 +1,28 @@
+{
+  "stage": "K",
+  "functional": true,
+  "productionCredentialRead": false,
+  "freshFixtureCredential": true,
+  "dispatch": 0,
+  "assignment": 0,
+  "workers": 0,
+  "runs": 0,
+  "termination": 0,
+  "taskCount": 16,
+  "realBackendRestart": true,
+  "continuity": "UNKNOWN",
+  "status": "PASS",
+  "candidate": "/home/alica-dev/phase5i/reference/k-candidate-r2",
+  "prior_baseline": "unchanged",
+  "regressions": [
+    "G",
+    "M",
+    "D",
+    "P2/P1",
+    "H native"
+  ],
+  "backendPin": "536802c00e4f93061fc46b134dc029ff695f364f",
+  "Hpin": "c04e9a1d0dfa4abbefe4b256428e645abaacfe88",
+  "realConformance": "25/25; real normal authenticated REST/WS and independent offline SDK consumer",
+  "publication": "WITHHELD; final qualification incomplete"
+}
