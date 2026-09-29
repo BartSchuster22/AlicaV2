@@ -1,0 +1,32 @@
+(node:3957939) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✖ D4 authorized synthetic source -> accepted SDK typed events -> isolated signal sink (98.615395ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 532.313444
+
+✖ failing tests:
+
+test at docs/phase5.2/proof/public-event.test.mjs:7:1
+✖ D4 authorized synthetic source -> accepted SDK typed events -> isolated signal sink (98.615395ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'root'
+  
+      at TestContext.<anonymous> (file:///home/herman/alica-phase52/docs/phase5.2/proof/public-event.test.mjs:24:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'root',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
