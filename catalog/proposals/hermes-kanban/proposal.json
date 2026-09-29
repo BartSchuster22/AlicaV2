@@ -1,0 +1,21 @@
+{
+  "apiVersion": "catalog.alica.io/proposal-v1",
+  "id": "phase5k-kanban-v1",
+  "problem": "Public consumers need durable board/task documentary state through sole Hermes authority, not a duplicate database.",
+  "existingInsufficient": "Echo, records, memory and assurance lack Kanban task and event semantics.",
+  "abstraction": "One method-specific orchestration/kanban capability with board/get/list/create/update/comment/events; no generic work service.",
+  "providers": [
+    "Hermes supported REST/WS pinned candidate",
+    "Independent Kanban backend future candidate only, not required"
+  ],
+  "consumers": [
+    "Separate public SDK consumer without Hermes or adapter internals"
+  ],
+  "draft": "acap://alica.io/orchestration/kanban@1",
+  "alternatives": "No direct SQL/private router/dashboard scraping, no new state service or execution control.",
+  "security": "Host operation grants and exact trusted caller mapping; isolated backend/no credentials inheritance; payload cannot supply authority; service credential is broad so adapter is trusted enforcement.",
+  "scopes": "Application/session labels plus exact public board mapping, no implicit ancestry or cross-board lookup.",
+  "compatibility": "Purely additive; original Catalog/Kernel/ACAP/Foundation unchanged. Weak concurrency and UNKNOWN outcomes explicit.",
+  "genericRationale": "Kanban task documentary states and bounded event replay without provider filesystem, PID, profile or schema.",
+  "proposer": "Phase5.K sole implementation writer"
+}
