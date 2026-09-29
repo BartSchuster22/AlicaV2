@@ -1,0 +1,50 @@
+{
+  "apiVersion": "catalog.alica.io/v1",
+  "kind": "CapabilityDefinition",
+  "metadata": {
+    "id": "acap://alica.io/assurance/incidents@1",
+    "version": "1.0.0",
+    "maturity": "proposed",
+    "owner": "ALICA maintainers",
+    "summary": "Scoped assurance incident queries and attributable acknowledgement; no remediation authority."
+  },
+  "contract": {
+    "descriptor": "descriptor.json",
+    "identity": "io.alica.assurance.incidents",
+    "version": "1.0.0",
+    "digest": "sha256:8c37310f1ce17c4e87b4ff4da291fe64ce0d30e89ea05737302aeef904bb04e0"
+  },
+  "semantics": {
+    "description": "get/list/acknowledge only same-scope incidents under Host grants plus independently mapped local identity. Explicit acknowledge requestId retries are durable actor+scope bound; collisions conflict. Evidence-backed resolution only; no manual resolve or annotations. Signals are best-effort public typed events, broker provenance plus local target authorization required. Historical provenance confers no current authority. See ../DESIGN.md. Draft metadata is not review approval.",
+    "cancellation": "supported",
+    "errors": [
+      "INVALID_ARGUMENT",
+      "UNAUTHENTICATED",
+      "PERMISSION_DENIED",
+      "NOT_FOUND",
+      "CONFLICT",
+      "FAILED_PRECONDITION",
+      "UNAVAILABLE",
+      "RESOURCE_EXHAUSTED",
+      "CANCELLED",
+      "DEADLINE_EXCEEDED"
+    ]
+  },
+  "scopes": [
+    "application",
+    "session"
+  ],
+  "permissions": [
+    "assurance.read",
+    "assurance.acknowledge"
+  ],
+  "dependencies": [],
+  "events": [
+    {
+      "descriptor": "signal.json",
+      "identity": "io.alica.assurance.signal",
+      "version": "1.0.0",
+      "digest": "sha256:46c8322abf84cf0c3a1259cfa345dc60568ff63dfebd868ea10ccd58ce1b1a92"
+    }
+  ]
+}

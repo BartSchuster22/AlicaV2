@@ -1,0 +1,471 @@
+{
+  "type": "object",
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "doghouse.store/v1"
+    },
+    "generation": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "observations": {
+      "type": "array",
+      "maxItems": 256,
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "sourceObservationId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "producer": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "observer": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "target": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "scope": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "occurredAtMs": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "observedAtMs": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "receivedAtMs": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "provenance": {
+            "type": "object",
+            "properties": {
+              "sourceProvider": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "sourceInstanceId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "sourceScope": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "scopeGeneration": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "eventId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "sequence": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "timeMs": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              }
+            },
+            "required": [
+              "sourceProvider",
+              "sourceInstanceId",
+              "sourceScope",
+              "scopeGeneration",
+              "eventId",
+              "sequence",
+              "timeMs"
+            ],
+            "additionalProperties": false
+          },
+          "signal": {
+            "type": "string",
+            "enum": [
+              "FAIL",
+              "RECOVER"
+            ]
+          },
+          "rule": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 64
+              },
+              "version": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 32
+              }
+            },
+            "required": [
+              "id",
+              "version"
+            ],
+            "additionalProperties": false
+          },
+          "evidence": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "enum": [
+                  "CHECK_FAILED",
+                  "CHECK_RECOVERED",
+                  "HISTORICAL_CLASSIFICATION"
+                ]
+              },
+              "sha256": {
+                "type": "string",
+                "minLength": 64,
+                "maxLength": 64
+              }
+            },
+            "required": [
+              "code",
+              "sha256"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "id",
+          "sourceObservationId",
+          "producer",
+          "observer",
+          "target",
+          "scope",
+          "occurredAtMs",
+          "observedAtMs",
+          "receivedAtMs",
+          "provenance",
+          "signal",
+          "rule",
+          "evidence"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "incidents": {
+      "type": "array",
+      "maxItems": 64,
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "scope": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "target": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "classification": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "OPEN",
+              "ACKNOWLEDGED",
+              "RESOLVED"
+            ]
+          },
+          "occurrenceCount": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 32
+          },
+          "firstObservedAtMs": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "lastObservedAtMs": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "rule": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 64
+              },
+              "version": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 32
+              }
+            },
+            "required": [
+              "id",
+              "version"
+            ],
+            "additionalProperties": false
+          },
+          "compatibility": {
+            "type": "string",
+            "enum": [
+              "COMPATIBLE",
+              "HISTORICAL_ONLY"
+            ]
+          },
+          "acknowledgements": {
+            "type": "array",
+            "maxItems": 1,
+            "items": {
+              "type": "object",
+              "properties": {
+                "actor": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "requestId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 64
+                },
+                "atMs": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                }
+              },
+              "required": [
+                "actor",
+                "requestId",
+                "atMs"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "type": {
+            "type": "string",
+            "const": "availability"
+          },
+          "occurrences": {
+            "type": "array",
+            "maxItems": 32,
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 64
+            }
+          },
+          "resolutions": {
+            "type": "array",
+            "maxItems": 1,
+            "items": {
+              "type": "object",
+              "properties": {
+                "observationId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 64
+                },
+                "atMs": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "rule": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 64
+                    },
+                    "version": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 32
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "version"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "observationId",
+                "atMs",
+                "rule"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "correlationKey": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512
+          },
+          "windowStartMs": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "lastDistinctObservationId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "dedupeKeys": {
+            "type": "array",
+            "maxItems": 256,
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 512
+            }
+          }
+        },
+        "required": [
+          "id",
+          "scope",
+          "target",
+          "classification",
+          "status",
+          "occurrenceCount",
+          "firstObservedAtMs",
+          "lastObservedAtMs",
+          "rule",
+          "compatibility",
+          "acknowledgements",
+          "type",
+          "occurrences",
+          "resolutions",
+          "correlationKey",
+          "windowStartMs",
+          "lastDistinctObservationId",
+          "dedupeKeys"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "dedupe": {
+      "type": "array",
+      "maxItems": 256,
+      "items": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512
+          },
+          "contentHash": {
+            "type": "string",
+            "minLength": 64,
+            "maxLength": 64
+          },
+          "observationId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          }
+        },
+        "required": [
+          "key",
+          "contentHash",
+          "observationId"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "ackRequests": {
+      "type": "array",
+      "maxItems": 16,
+      "items": {
+        "type": "object",
+        "properties": {
+          "actor": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "scope": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "requestId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "incidentId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          }
+        },
+        "required": [
+          "actor",
+          "scope",
+          "requestId",
+          "incidentId"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "schema",
+    "generation",
+    "observations",
+    "incidents",
+    "dedupe",
+    "ackRequests"
+  ],
+  "additionalProperties": false
+}

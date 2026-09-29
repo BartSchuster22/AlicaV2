@@ -1,0 +1,77 @@
+{
+  "apiVersion": "alica.io/service/v1",
+  "kind": "Service",
+  "metadata": {
+    "id": "org.alica.doghouse",
+    "version": "1.0.0"
+  },
+  "binding": "public-host-inproc-v1",
+  "catalog": {
+    "version": "0.5.2",
+    "digest": "sha256:6cad8c7fe21bc2f93f723eff0e75677e2f4f07ffb978e0e28306f4ddb8a8397d"
+  },
+  "capabilities": {
+    "provides": [
+      {
+        "uri": "acap://alica.io/assurance/incidents@1",
+        "identity": "io.alica.assurance.incidents",
+        "version": "1.0.0"
+      }
+    ],
+    "requires": []
+  },
+  "scopes": [
+    "application"
+  ],
+  "permissions": [
+    "assurance.read",
+    "assurance.acknowledge"
+  ],
+  "configuration": {
+    "schema": "config.schema.json",
+    "version": "1.0.0",
+    "reload": "restart"
+  },
+  "secrets": [],
+  "health": {
+    "ownedBy": "service",
+    "states": [
+      "READY",
+      "DEGRADED",
+      "UNAVAILABLE"
+    ]
+  },
+  "data": {
+    "authoritative": [
+      "assurance.records"
+    ],
+    "derived": [],
+    "external": [],
+    "rebuildable": []
+  },
+  "persistence": {
+    "class": "STATEFUL",
+    "survivesNormalRestart": true,
+    "schema": "store.schema.json",
+    "version": "1.0.0"
+  },
+  "events": {
+    "emits": [],
+    "consumes": [
+      {
+        "identity": "io.alica.assurance.signal",
+        "version": "1.0.0"
+      }
+    ]
+  },
+  "diagnostics": "sdk-safe-log-v1",
+  "backup": {
+    "required": true,
+    "consistency": "stopped"
+  },
+  "migration": {
+    "required": false,
+    "compatibility": "same-schema-only"
+  },
+  "ui": []
+}
