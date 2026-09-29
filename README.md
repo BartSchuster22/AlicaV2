@@ -1,5 +1,9 @@
 # ALICA V2
 
+## PHASE 5.2 — COMPLETE / FROZEN / OWNER ACCEPTED
+
+[Formal Project Owner Acceptance](docs/phase5.2/OWNER-ACCEPTANCE.md) records ACCEPTED within the documented verified scope. Technical delivery `phase5.2-doghouse-v1.0.0` at `1ed8a395ae5c7ae2d6b342c10b67734000ce4c0b` remains immutable; separate documentary acceptance tag `phase5.2-doghouse-v1.0.0-accepted`. All caveats, EXPERIMENTAL/trustVerified=false and closed grants remain. No production/control/recovery authority, requalification or Phase5.3. STOP; future work needs separate authorization. Earlier pending-acceptance/status text below is retained historical record, superseded only by this formal Owner decision.
+
 ## Phase5.2 Doghouse + ACAP — technical release
 
 [Technical completion](docs/phase5.2/PHASE5.2-COMPLETION.md) | [Independent clearance](docs/phase5.2/review/final-closure.md) | [Public-source reproduction](docs/phase5.2/publication/public-candidate-native.log). Technical tag `phase5.2-doghouse-v1.0.0` preserves reviewed runtime `47e88349ed6c0399eb2e5088b41d4b5d9ac26140`; anonymous public-candidate native61/61 and independent consumer1/1 passed. Final tag transport/readback is verified after push, not presumed here. Existing DEV publication transport restored under explicit Owner renewal; historical local-auth blocker below is superseded. Technical qualification is NOT Owner Acceptance or production adoption. Freeze/STOP for Owner Acceptance after exact release verification; no Phase5.3. Prior release/status text and links below remain historical records.
