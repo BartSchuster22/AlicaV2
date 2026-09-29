@@ -1,5 +1,9 @@
 # ALICA V2
 
+## Phase5.2 Doghouse + ACAP — technical release, Owner Acceptance pending
+
+[Technical release](https://github.com/BartSchuster22/AlicaV2/tree/phase5.2-doghouse-v1.0.0) | [Completion](https://github.com/BartSchuster22/AlicaV2/blob/phase5.2-doghouse-v1.0.0/docs/phase5.2/PHASE5.2-COMPLETION.md) | [Independent clearance](https://github.com/BartSchuster22/AlicaV2/blob/phase5.2-doghouse-v1.0.0/docs/phase5.2/review/final-closure.md) | [Anonymous public-source qualification](https://github.com/BartSchuster22/AlicaV2/blob/phase5.2-doghouse-v1.0.0/docs/phase5.2/publication/public-source.json). Technical commit `1ed8a395ae5c7ae2d6b342c10b67734000ce4c0b` preserves reviewed runtime `47e88349ed6c0399eb2e5088b41d4b5d9ac26140`. Native61/61 and separate public consumer1/1 passed from anonymous public source. EXPERIMENTAL/trustVerified=false, inherited failures and documented limitations remain. NOT Owner Acceptance or production adoption; FREEZE/STOP for separate Owner Acceptance, no Phase5.3 or renewed closed grants. Prior status text and links below remain historical and byte-preserved.
+
 ## Phase 5.1 Project Owner Acceptance
 
 **PHASE 5.1 — COMPLETE / FROZEN / OWNER ACCEPTED**
