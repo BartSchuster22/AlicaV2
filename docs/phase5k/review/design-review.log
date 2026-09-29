@@ -1,0 +1,55 @@
+G7_WORKER_POLICY {"provider": "openai-codex", "model": "gpt-6-astra", "fallbacks": [], "event_silence_seconds": 180, "first_event_seconds": 120, "strict_first_event_bound": true, "auxiliary_routes": "main/Astra only", "watchdog_policy": "first-event-and-event-idle; no legacy wall-clock override", "watchdog_module": "/home/herman/.hermes/hermes-agent-live-lane-clean/venv/lib/python3.11/site-packages/agent/chat_completion_helpers.py"}
+{
+  "verdict": "revise",
+  "scope": "Independent read-only K8–K13 DESIGN review only",
+  "review": {
+    "proposal": "phase5k-kanban-v1",
+    "reviewer": "Phase5.K independent read-only K8-K13 reviewer; distinct from sole implementation writer",
+    "decision": "rejected",
+    "rationale": "The bounded DEV-only architecture and existing public synthetic-secret binding are acceptable in principle. Design freeze is blocked by the mutation-result contradiction and incomplete bounded-read overflow semantics described below. This is not a rejection of the selected architecture or authorization to expand scope.",
+    "checks": {
+      "abstraction": true,
+      "security": true,
+      "scopes": true,
+      "compatibility": true
+    }
+  },
+  "checksMeaning": "The four governance review dimensions were examined. They do not override the rejected decision or assert executed conformance.",
+  "blockingFindings": [
+    {
+      "id": "K9-RESULT-SHAPE",
+      "citations": [
+        "docs/phase5k/DESIGN.md:17",
+        "docs/phase5k/prepare-design.mjs:16-17"
+      ],
+      "finding": "The normative UNKNOWN example returns task:null, but the generated mutation schema accepts only [] or [task]. The shared result also requires requestKey for update/comment, although those operations do not accept a requestKey. Implementers and consumers cannot follow both the prose and schema without choosing undocumented result semantics.",
+      "requiredRevision": "Correct the UNKNOWN example to task:[] and explicitly freeze task cardinality for APPLIED and UNKNOWN across create/update/comment. Define requestKey as the original create key, and specify its value for update/comment, for example an empty string. No nullable-schema expansion is required."
+    },
+    {
+      "id": "K12-BOUNDED-READ-SEMANTICS",
+      "citations": [
+        "docs/phase5k/DESIGN.md:17,26",
+        "docs/phase5k/prepare-design.mjs:17",
+        "docs/phase5k/design/descriptor.json:33-36,54-76",
+        "Hermes plugins/kanban/dashboard/plugin_api.py:1726-1740"
+      ],
+      "finding": "The design bounds board taskCount and list results at 256 without defining behavior when the authoritative board exceeds that size; list has neither pagination nor an explicit truncation indicator. Events similarly accepts a caller limit and a backend batch of up to 200, but does not explicitly stop cursor advancement before selected events omitted by the caller limit. The backend batch cursor points to its final row. Always returning continuity:UNKNOWN does not distinguish intentional adapter omission from uncertain backend history, and does not resolve the promised prohibition on silent truncation.",
+      "requiredRevision": "Freeze a bounded policy rather than adding scope: reject oversized board/list results with RESOURCE_EXHAUSTED, without clamping counts or returning an unexplained subset. For events, honor the caller limit and advance only through the inspected prefix whose selected events were all returned; stop before the first selected event that cannot be emitted. Alternatively specify an explicit failure policy that does not advance the cursor. Document these policies and include their boundary cases in the existing planned qualification."
+    }
+  ],
+  "secretBindingAssessment": {
+    "decision": "accepted_for_isolated_reference_design",
+    "evidence": [
+      "docs/phase5k/DESIGN.md:29",
+      "docs/phase5k/design/service.json:35-37",
+      "service-foundation/tooling/validate.mjs:63",
+      "packages/kernel/src/index.ts:1568-1577",
+      "service-foundation/tests/public-host.test.mjs:41-45"
+    ],
+    "rationale": "The existing public Host supports supplying syntheticSecret and resolving synthetic-test through declared references, current secret-read authorization and liveness rechecks. A fresh disposable Hermes token under that existing path presents no identified binding blocker for this isolated reference scope. The reviewed test source supports the mechanism; this review did not execute it. No production resolver, bypass, production credential authority or production qualification is implied."
+  },
+  "disposition": "Not accepted for K8–K13 design freeze as currently written. Resolve only the blocking contract clarifications above. Any subsequent acceptance is DESIGN ONLY and permits at most the governed PROPOSED stage; actual conformance, maintainer EXPERIMENTAL admission, final independent review, technical publication and separate Owner Acceptance STOP remain required.",
+  "executionBoundary": "Read-only source inspection only. No implementation, builds, provider tests, production-service actions, DSH2 access, lock operations, governance invocation, file edits or git publication performed."
+}
+
+session_id: 20260929_123711_b65ffc

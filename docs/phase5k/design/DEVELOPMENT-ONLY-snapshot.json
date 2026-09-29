@@ -1,0 +1,743 @@
+{
+  "content": {
+    "apiVersion": "catalog.alica.io/snapshot-v1",
+    "version": "0.5.20",
+    "policy": {
+      "apiVersion": "catalog.alica.io/namespace-v1",
+      "version": "1.0.0",
+      "namespaces": [
+        {
+          "authority": "alica.io",
+          "domain": "orchestration",
+          "kind": "first-party",
+          "owner": "ALICA maintainers"
+        }
+      ],
+      "release": [
+        "acap://alica.io/orchestration/kanban@1"
+      ]
+    },
+    "definitions": [
+      {
+        "apiVersion": "catalog.alica.io/v1",
+        "contract": {
+          "descriptor": "descriptor.json",
+          "digest": "sha256:9f63a34884f1d10b025f732e27003605b19aa7e59c40eeec97ebec64334eb2c3",
+          "identity": "io.alica.orchestration.kanban",
+          "version": "1.0.0"
+        },
+        "dependencies": [],
+        "events": [],
+        "kind": "CapabilityDefinition",
+        "metadata": {
+          "id": "acap://alica.io/orchestration/kanban@1",
+          "maturity": "experimental",
+          "owner": "ALICA maintainers",
+          "summary": "Bounded Kanban documentary state and conservative lifecycle-event polling; no execution control.",
+          "version": "1.0.0"
+        },
+        "permissions": [
+          "kanban.read",
+          "kanban.mutate"
+        ],
+        "scopes": [
+          "application",
+          "session"
+        ],
+        "semantics": {
+          "cancellation": "supported",
+          "description": "See ../DESIGN.md. Sole backend authority, public board mapping and trusted exact caller enforcement. Documentary triage create/title-body edit/comments only. Last-writer-wins, best-effort requestKey not native idempotency. Unknown writes never retried automatically; broker timeout/cancel also UNKNOWN mutation outcome. Events always continuity UNKNOWN, bounded pull, replay duplicates expected. No dispatch/control/dependencies or production adoption.",
+          "errors": [
+            "INVALID_ARGUMENT",
+            "UNAUTHENTICATED",
+            "PERMISSION_DENIED",
+            "NOT_FOUND",
+            "CONFLICT",
+            "FAILED_PRECONDITION",
+            "UNAVAILABLE",
+            "RESOURCE_EXHAUSTED",
+            "CANCELLED",
+            "DEADLINE_EXCEEDED"
+          ]
+        }
+      }
+    ],
+    "files": {
+      "descriptor.json": {
+        "schemaVersion": "acap.capability/v1",
+        "id": "io.alica.orchestration.kanban",
+        "version": "1.0.0",
+        "features": [],
+        "operations": [
+          {
+            "name": "board",
+            "kind": "unary",
+            "idempotency": "none",
+            "input": {
+              "type": "object",
+              "properties": {
+                "board": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                }
+              },
+              "required": [
+                "board"
+              ],
+              "additionalProperties": false
+            },
+            "output": {
+              "type": "object",
+              "properties": {
+                "board": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "taskCount": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 256
+                },
+                "continuity": {
+                  "type": "string",
+                  "enum": [
+                    "UNKNOWN"
+                  ]
+                }
+              },
+              "required": [
+                "board",
+                "taskCount",
+                "continuity"
+              ],
+              "additionalProperties": false
+            }
+          },
+          {
+            "name": "list",
+            "kind": "unary",
+            "idempotency": "none",
+            "input": {
+              "type": "object",
+              "properties": {
+                "board": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                }
+              },
+              "required": [
+                "board"
+              ],
+              "additionalProperties": false
+            },
+            "output": {
+              "type": "object",
+              "properties": {
+                "tasks": {
+                  "type": "array",
+                  "maxItems": 256,
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128
+                      },
+                      "board": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128
+                      },
+                      "title": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                      },
+                      "body": {
+                        "type": "string",
+                        "minLength": 0,
+                        "maxLength": 8192
+                      },
+                      "state": {
+                        "type": "string",
+                        "enum": [
+                          "TRIAGE",
+                          "TODO",
+                          "SCHEDULED",
+                          "READY",
+                          "RUNNING",
+                          "BLOCKED",
+                          "REVIEW",
+                          "DONE",
+                          "ARCHIVED"
+                        ]
+                      },
+                      "assigned": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "board",
+                      "title",
+                      "body",
+                      "state",
+                      "assigned"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "continuity": {
+                  "type": "string",
+                  "enum": [
+                    "UNKNOWN"
+                  ]
+                }
+              },
+              "required": [
+                "tasks",
+                "continuity"
+              ],
+              "additionalProperties": false
+            }
+          },
+          {
+            "name": "get",
+            "kind": "unary",
+            "idempotency": "none",
+            "input": {
+              "type": "object",
+              "properties": {
+                "board": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                }
+              },
+              "required": [
+                "board",
+                "id"
+              ],
+              "additionalProperties": false
+            },
+            "output": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "board": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "title": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "body": {
+                  "type": "string",
+                  "minLength": 0,
+                  "maxLength": 8192
+                },
+                "state": {
+                  "type": "string",
+                  "enum": [
+                    "TRIAGE",
+                    "TODO",
+                    "SCHEDULED",
+                    "READY",
+                    "RUNNING",
+                    "BLOCKED",
+                    "REVIEW",
+                    "DONE",
+                    "ARCHIVED"
+                  ]
+                },
+                "assigned": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "id",
+                "board",
+                "title",
+                "body",
+                "state",
+                "assigned"
+              ],
+              "additionalProperties": false
+            }
+          },
+          {
+            "name": "create",
+            "kind": "unary",
+            "idempotency": "none",
+            "input": {
+              "type": "object",
+              "properties": {
+                "board": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "title": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "body": {
+                  "type": "string",
+                  "minLength": 0,
+                  "maxLength": 8000
+                },
+                "requestKey": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                }
+              },
+              "required": [
+                "board",
+                "title",
+                "body",
+                "requestKey"
+              ],
+              "additionalProperties": false
+            },
+            "output": {
+              "type": "object",
+              "properties": {
+                "outcome": {
+                  "type": "string",
+                  "enum": [
+                    "APPLIED",
+                    "UNKNOWN"
+                  ]
+                },
+                "task": {
+                  "type": "array",
+                  "maxItems": 1,
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128
+                      },
+                      "board": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128
+                      },
+                      "title": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                      },
+                      "body": {
+                        "type": "string",
+                        "minLength": 0,
+                        "maxLength": 8192
+                      },
+                      "state": {
+                        "type": "string",
+                        "enum": [
+                          "TRIAGE",
+                          "TODO",
+                          "SCHEDULED",
+                          "READY",
+                          "RUNNING",
+                          "BLOCKED",
+                          "REVIEW",
+                          "DONE",
+                          "ARCHIVED"
+                        ]
+                      },
+                      "assigned": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "board",
+                      "title",
+                      "body",
+                      "state",
+                      "assigned"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "requestKey": {
+                  "type": "string",
+                  "minLength": 0,
+                  "maxLength": 128
+                }
+              },
+              "required": [
+                "outcome",
+                "task",
+                "requestKey"
+              ],
+              "additionalProperties": false
+            }
+          },
+          {
+            "name": "update",
+            "kind": "unary",
+            "idempotency": "none",
+            "input": {
+              "type": "object",
+              "properties": {
+                "board": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "title": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "body": {
+                  "type": "string",
+                  "minLength": 0,
+                  "maxLength": 8000
+                }
+              },
+              "required": [
+                "board",
+                "id",
+                "title",
+                "body"
+              ],
+              "additionalProperties": false
+            },
+            "output": {
+              "type": "object",
+              "properties": {
+                "outcome": {
+                  "type": "string",
+                  "enum": [
+                    "APPLIED",
+                    "UNKNOWN"
+                  ]
+                },
+                "task": {
+                  "type": "array",
+                  "maxItems": 1,
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128
+                      },
+                      "board": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128
+                      },
+                      "title": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                      },
+                      "body": {
+                        "type": "string",
+                        "minLength": 0,
+                        "maxLength": 8192
+                      },
+                      "state": {
+                        "type": "string",
+                        "enum": [
+                          "TRIAGE",
+                          "TODO",
+                          "SCHEDULED",
+                          "READY",
+                          "RUNNING",
+                          "BLOCKED",
+                          "REVIEW",
+                          "DONE",
+                          "ARCHIVED"
+                        ]
+                      },
+                      "assigned": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "board",
+                      "title",
+                      "body",
+                      "state",
+                      "assigned"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "requestKey": {
+                  "type": "string",
+                  "minLength": 0,
+                  "maxLength": 128
+                }
+              },
+              "required": [
+                "outcome",
+                "task",
+                "requestKey"
+              ],
+              "additionalProperties": false
+            }
+          },
+          {
+            "name": "comment",
+            "kind": "unary",
+            "idempotency": "none",
+            "input": {
+              "type": "object",
+              "properties": {
+                "board": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "body": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4000
+                }
+              },
+              "required": [
+                "board",
+                "id",
+                "body"
+              ],
+              "additionalProperties": false
+            },
+            "output": {
+              "type": "object",
+              "properties": {
+                "outcome": {
+                  "type": "string",
+                  "enum": [
+                    "APPLIED",
+                    "UNKNOWN"
+                  ]
+                },
+                "task": {
+                  "type": "array",
+                  "maxItems": 1,
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128
+                      },
+                      "board": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128
+                      },
+                      "title": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                      },
+                      "body": {
+                        "type": "string",
+                        "minLength": 0,
+                        "maxLength": 8192
+                      },
+                      "state": {
+                        "type": "string",
+                        "enum": [
+                          "TRIAGE",
+                          "TODO",
+                          "SCHEDULED",
+                          "READY",
+                          "RUNNING",
+                          "BLOCKED",
+                          "REVIEW",
+                          "DONE",
+                          "ARCHIVED"
+                        ]
+                      },
+                      "assigned": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "board",
+                      "title",
+                      "body",
+                      "state",
+                      "assigned"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "requestKey": {
+                  "type": "string",
+                  "minLength": 0,
+                  "maxLength": 128
+                }
+              },
+              "required": [
+                "outcome",
+                "task",
+                "requestKey"
+              ],
+              "additionalProperties": false
+            }
+          },
+          {
+            "name": "events",
+            "kind": "unary",
+            "idempotency": "none",
+            "input": {
+              "type": "object",
+              "properties": {
+                "board": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "cursor": {
+                  "type": "string",
+                  "minLength": 0,
+                  "maxLength": 32
+                },
+                "limit": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 32
+                }
+              },
+              "required": [
+                "board",
+                "cursor",
+                "limit"
+              ],
+              "additionalProperties": false
+            },
+            "output": {
+              "type": "object",
+              "properties": {
+                "events": {
+                  "type": "array",
+                  "maxItems": 32,
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 32
+                      },
+                      "taskId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128
+                      },
+                      "board": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128
+                      },
+                      "kind": {
+                        "type": "string",
+                        "enum": [
+                          "CREATED",
+                          "UPDATED",
+                          "COMMENTED"
+                        ]
+                      },
+                      "atMs": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "taskId",
+                      "board",
+                      "kind",
+                      "atMs"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "cursor": {
+                  "type": "string",
+                  "minLength": 0,
+                  "maxLength": 32
+                },
+                "continuity": {
+                  "type": "string",
+                  "enum": [
+                    "UNKNOWN"
+                  ]
+                }
+              },
+              "required": [
+                "events",
+                "cursor",
+                "continuity"
+              ],
+              "additionalProperties": false
+            }
+          }
+        ]
+      }
+    },
+    "index": {
+      "apiVersion": "catalog.alica.io/index-v1",
+      "version": "0.5.20",
+      "entries": [
+        {
+          "id": "acap://alica.io/orchestration/kanban@1",
+          "version": "1.0.0",
+          "maturity": "experimental",
+          "identity": "io.alica.orchestration.kanban",
+          "digest": "sha256:9f63a34884f1d10b025f732e27003605b19aa7e59c40eeec97ebec64334eb2c3"
+        }
+      ]
+    },
+    "compatibility": {
+      "rules": "catalog-v1-bounded",
+      "unknown": "REVIEW_REQUIRED"
+    }
+  },
+  "digest": "sha256:1604d129a690059330e52200181d8e3861a9189f925e01c8bdc3414a00ddf11d"
+}

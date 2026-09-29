@@ -1,0 +1,25 @@
+# Phase 5.K — K0 charter / safety freeze
+
+Authority: Owner's latest instruction: Start working with Phase 5.K and continue until completed; supplied comprehensive K0–K25 including K20b plan and mandatory clarifications. Fresh phase, not Phase5.2 implementation.
+
+Frozen identifier: 5.K. Reserved technical release tag: phase5k-hermes-kanban-v1.0.0. Reservation is not tag creation or qualification. No accepted tag without separate Owner Acceptance.
+
+Accepted base: 8fafa2767627694007c338df76f1d03aba080b58. Separate DEV branch phase5k-hermes-kanban and worktree /home/alica-dev/AlicaV2-phase5k. Existing main 84dddbbda54f551002d9650cd53c49bf0338803c and Phase5.2 technical/accepted annotated objects and peels verified live unchanged before work. Preserve ALL prior accepted code/contracts/tags/evidence; inherited accepted failures remain failures, never repair to green this phase.
+
+Hermes Kanban alone owns domain state. Minimal candidate state slice: authorized board read, task create/read/list, selected nonlaunching update/comment/handoff, events/reconnect/gap/retry or explicit UNKNOWN, backend-owned persistence after restart, authorization denial and adapter disposal leaving backend work untouched. Candidates are not admitted. Dependencies deferred unless proven and necessary. Worker/run read only if required. No operation may launch workers.
+
+CONTROL deferred: dispatch/claim/spawn/provision/terminate/execution retries/real workers/calls/ProviderB/production/UniUI/Doghouse are excluded. K5/K7 only narrow authority. PUBLIC CONTRACTS ONLY; no canonical exchange/migration or control without explicit new Owner decision. Phase4 TypeSafe/Jev 6/6 consumed, 0 remaining CLOSED; Phase3 protected grants CLOSED. No real providers or new protected authority.
+
+K1–K4 static/read-only first. No initialization of operational profiles/state/watchers by discovery. Latest official Hermes docs authoritative; verify pinned actual source. Importable private functions are not proof of a supported public boundary. No SQL/private module/dashboard shortcut. A required boundary gap blocks dependent implementation; optional candidates may defer, material requirement removal requires Owner decision.
+
+Before ANY executable feasibility proof satisfy applicable K6 isolation: disposable state/board/identities/config/environment, no operational roots/queues/workers, dispatcher omission/disable ONLY isolated instance. Minimal disposable feasibility fixtures permitted before design freeze, not product implementation, admission or qualification. Freeze no implementation until K0–K7 and K8–K13 pass. Prove actual accepted public ALICA registration/invocation/grants/events/lifecycle/errors; no private Kernel or consumer testkit.
+
+K8–K12 contracts + minimum capabilities + authority mapping require finite genuinely independent K13 design review before freeze. PROPOSED != admitted. Preimplementation manifest fixture only if unchanged frozen tooling allows, clearly labelled. After K20b validate actual admitted pinned Catalog snapshot and exact adapter contract. No frozen tooling modifications. Exact generic identifiers from Catalog, not invented nomenclature.
+
+Claim only backend-proven concurrency/idempotency. Local locks/cache != cross-writer atomicity/exactly once. Uncertain commit is UNKNOWN with supported reconciliation, not forced safe retry. Missing minimum safety is a governed blocker. Event metadata bounded with explicit loss semantics and no domain authority. Distinguish actually executed adapter vs backend restart. Purity requires zero silent Foundation/backend changes.
+
+Acceptance matrix is exactly supplied K0–K25 including K20b, plus independent design/final review, pinned isolated public consumer reproduction and publication. Each task must map to an unfinished criterion and finite artifact/test/stop condition. Regression commands pre-audited safe offline, pinned, never unrestricted historical tests or operational configs. Reuse established safe caches/toolchains.
+
+Release only after evidence: finite independent final review, blocking fixes only, final freeze, commit/tag/publication/anonymous exact reproduction, STOP for separate Owner Acceptance. No reviewer impersonation; child read-only independent reviewer may be used under sole writer, never competing implementation workers. Genuine blocker: preserve exact evidence and STOP, do not invent proof or build endless governance.
+
+Continuous parent outer flock inherited; no reacquire/probe/release, cron or recursive implementation worker. Parent performs governed sync after exit. Recovery used parent-provided actual recall current366 matches accepted; workflow38 remote stale pending acceptance superseded by recorded formal acceptance and verified refs. Do not overwrite local with stale remote. Material checkpoint CURRENT/DELIVERY with concise outcomes, scope, consumed grants, next action, publication. End block write phase5k-execution-result.md/json. This charter itself is K0 documentary freeze, not design freeze or implementation approval past gates.

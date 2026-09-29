@@ -1,0 +1,72 @@
+{
+  "apiVersion": "alica.io/service/v1",
+  "kind": "Service",
+  "metadata": {
+    "id": "org.alica.hermeskanban",
+    "version": "1.0.0"
+  },
+  "binding": "public-host-inproc-v1",
+  "catalog": {
+    "version": "0.5.20",
+    "digest": "sha256:1604d129a690059330e52200181d8e3861a9189f925e01c8bdc3414a00ddf11d"
+  },
+  "capabilities": {
+    "provides": [
+      {
+        "uri": "acap://alica.io/orchestration/kanban@1",
+        "identity": "io.alica.orchestration.kanban",
+        "version": "1.0.0"
+      }
+    ],
+    "requires": []
+  },
+  "scopes": [
+    "application"
+  ],
+  "permissions": [
+    "kanban.read",
+    "kanban.mutate"
+  ],
+  "configuration": {
+    "schema": "config.schema.json",
+    "version": "1.0.0",
+    "reload": "restart"
+  },
+  "secrets": [
+    "synthetic-test"
+  ],
+  "health": {
+    "ownedBy": "service",
+    "states": [
+      "READY",
+      "DEGRADED",
+      "UNAVAILABLE"
+    ]
+  },
+  "data": {
+    "authoritative": [],
+    "derived": [],
+    "external": [
+      "hermes.kanban"
+    ],
+    "rebuildable": []
+  },
+  "persistence": {
+    "class": "EXTERNAL_STATE_AUTHORITY",
+    "survivesNormalRestart": true
+  },
+  "events": {
+    "emits": [],
+    "consumes": []
+  },
+  "diagnostics": "sdk-safe-log-v1",
+  "backup": {
+    "required": false,
+    "consistency": "none"
+  },
+  "migration": {
+    "required": false,
+    "compatibility": "no-data"
+  },
+  "ui": []
+}

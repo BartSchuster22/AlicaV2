@@ -1,0 +1,31 @@
+{
+  "gate": "K13",
+  "status": "DESIGN_FROZEN_PROPOSED_ONLY",
+  "review": {
+    "proposal": "phase5k-kanban-v1",
+    "state": "proposed",
+    "review": {
+      "proposal": "phase5k-kanban-v1",
+      "reviewer": "Phase5.K independent read-only K8-K13 reviewer; distinct from sole implementation writer",
+      "decision": "accepted",
+      "rationale": "DESIGN ONLY. Same-reviewer finite closure of the two previously blocking findings: K9-RESULT-SHAPE and K12-BOUNDED-READ-SEMANTICS. Both are resolved in the inspected DEV amendment. No review expansion, executed-conformance claim, production permission or Catalog admission is implied.",
+      "checks": {
+        "abstraction": true,
+        "security": true,
+        "scopes": true,
+        "compatibility": true
+      }
+    }
+  },
+  "hashes": {
+    "DESIGN.md": "547f71d1eface23533eeaf630042b99d27466e299da5eef40fb3d8fb22458b5e",
+    "prepare-design.mjs": "dbb3c514bf10fd4d09e34fef869e1c6d0ad40f7e1c9b0c88bb6695f12c425be4",
+    "design/descriptor.json": "8345614535d71bd7627a04bd48a57457d0e1e813856a9830ff08b08cf638c040",
+    "design/service.json": "c065a34c56a9bd01d8a562d658a9106bfb3eec5c85035ee965f92e1958ebaaa8",
+    "design/definition.json": "d89d666a90c0143b8be49d7fd3562c16a152209e2c629c134ddabeaad0400be2",
+    "review/review.json": "3df12ff9be8357aa4f62cea03c0c09e0fe68284b916733e92e38b71dd9da5b5e"
+  },
+  "conformance": "NOT_RUN",
+  "admission": "NOT_ADMITTED",
+  "ownerAcceptance": false
+}

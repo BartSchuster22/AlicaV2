@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "properties": {
+    "baseURL": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "isolatedNonlaunching": {
+      "type": "boolean",
+      "const": true
+    }
+  },
+  "required": [
+    "baseURL",
+    "isolatedNonlaunching"
+  ],
+  "additionalProperties": false
+}
