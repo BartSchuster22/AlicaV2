@@ -1,3 +1,6 @@
+import { nativeBindings, freshNative, verifyNativeArtifacts } from './native-activation.js';
+import type { NativeImplementation, NativeBinding } from './native-activation.js';
+export type { NativeAdmission, NativeImplementation } from './native-activation.js';
 import { randomUUID } from 'node:crypto';
 import { SourceTextModule, SyntheticModule } from 'node:vm';
 import { posix, dirname } from 'node:path';
@@ -78,6 +81,7 @@ export interface BootstrapOptions {
   trust: TrustMaterial;
   statePath: string;
   initialize: boolean;
+  nativeImplementations?: readonly NativeImplementation[];
   syntheticSecret?: string;
   now?: () => number;
 }
@@ -103,6 +107,7 @@ interface RecoveryLineage {
   timer?: ReturnType<typeof setTimeout>;
 }
 interface Instance {
+  native?: NativeBinding;
   lineage: RecoveryLineage;
   recovering?: boolean;
   remote?: HostIPC;
@@ -206,6 +211,7 @@ export function bootstrap(configText: string, options: BootstrapOptions): Host {
   return new Host(configText, options);
 }
 export class Host {
+  #native: Map<string, NativeBinding>;
   #config: Config;
   #trust: Trust;
   #now: () => number;
@@ -262,6 +268,7 @@ export class Host {
       options.syntheticSecret === undefined ||
         typeof options.syntheticSecret === 'string',
     );
+    this.#native = nativeBindings(options.nativeImplementations ?? []);
     this.#config = freeze(c);
     this.#now = options.now ?? Date.now;
     this.#secret = options.syntheticSecret;
@@ -317,16 +324,25 @@ export class Host {
   private scheduleTrust(): void {
     if (this.#trustTimer) clearTimeout(this.#trustTimer);
     if (this.#closed) return;
+    const nativeInstances = () => [...this.#instances.values()].filter(i => i.native && ['VERIFIED','RESOLVED','ACTIVATING','ACTIVE'].includes(i.state));
+    const nextExpiry = Math.min(this.#trust.expiry, ...nativeInstances().map(i => i.native!.admission.expiresAtMs));
     this.#trustTimer = setTimeout(
       () => {
         try {
           this.#trust.fresh();
+          for (const i of nativeInstances()) {
+            if (this.#now() >= i.native!.admission.expiresAtMs) {
+              i.native!.revoked = true;
+              this.record('kernel', i.id, i.scope.id, 'DENY', 'NATIVE_EXPIRED:' + digest(i.native!.admission), true);
+              void this.dispose(i.id);
+            }
+          }
           this.scheduleTrust();
         } catch {
           for (const i of this.#instances.values()) void this.dispose(i.id);
         }
       },
-      Math.max(1, Math.min(1000, this.#trust.expiry - this.#now())),
+      Math.max(1, Math.min(1000, nextExpiry - this.#now())),
     );
     this.#trustTimer.unref();
   }
@@ -337,6 +353,10 @@ export class Host {
     } catch (e) {
       for (const x of this.#instances.values()) void this.dispose(x.id);
       throw normalized(e);
+    }
+    if (i?.native) {
+      try { freshNative(i.native, this.#now()); }
+      catch (e) { void this.dispose(i.id); throw normalized(e); }
     }
   }
   private instance(id: string): Instance {
@@ -1111,6 +1131,29 @@ export class Host {
       this.queueRecovery(next ?? prior);
     }
   }
+  /** Operator-only opt-in. Ordinary activate/package loading remains unchanged. */
+  activateNative(id: string, implementationId: string): Promise<void> {
+    check(!this.#profileIds || this.#profileIds.has(id), 'PERMISSION_DENIED');
+    const i = this.instance(id);
+    const binding = this.#native.get(implementationId);
+    check(binding && binding.admission.packageDigest === i.pkg.digest && i.pkg.manifest.execution === 'inproc', 'PERMISSION_DENIED');
+    this.fresh(i);
+    freshNative(binding, this.#now());
+    if (i.native === binding && i.activation) return i.activation;
+    check(i.state === 'VERIFIED' && !i.activation && !i.native, 'FAILED_PRECONDITION');
+    verifyNativeArtifacts(binding);
+    this.record('operator', i.id, i.scope.id, 'ALLOW', 'NATIVE_ADMISSION:' + digest(binding.admission));
+    i.native = binding;
+    this.scheduleTrust();
+    return this.activate(id);
+  }
+  async revokeNative(implementationId: string): Promise<void> {
+    const binding = this.#native.get(implementationId);
+    check(binding, 'NOT_FOUND');
+    binding.revoked = true;
+    this.record('operator', implementationId, this.#config.rootScope, 'DENY', 'NATIVE_REVOKED:' + digest(binding.admission), true);
+    await Promise.all([...this.#instances.values()].filter(i => i.native === binding).map(i => this.dispose(i.id)));
+  }
   activate(id: string): Promise<void> {
     check(!this.#profileIds || this.#profileIds.has(id), 'PERMISSION_DENIED');
     const i = this.instance(id);
@@ -1142,7 +1185,17 @@ export class Host {
       }
       this.transition(i, 'RESOLVED');
       this.transition(i, 'ACTIVATING');
-      if (i.pkg.manifest.execution === 'ipc') {
+      if (i.native) {
+        freshNative(i.native, this.#now());
+        verifyNativeArtifacts(i.native);
+        await this.bounded(
+          () => this.track(i, Promise.resolve().then(() => {
+            this.live(i, i.scope, true);
+            return i.native!.activate(this.contextFor(i, i.scope), i.native!.configuration);
+          })),
+          this.#config.activationMs,
+        );
+      } else if (i.pkg.manifest.execution === 'ipc') {
         const { HostIPC } = await import('./g6/host-adapter.js');
         i.remote = new HostIPC({
           config: this.#config,
@@ -1926,6 +1979,7 @@ export class Host {
           state: i.state,
           history: i.history,
           packageDigest: i.pkg.digest,
+          ...(i.native ? {nativeAdmission: {digest: digest(i.native.admission),implementationId:i.native.admission.implementationId,expiresAtMs:i.native.admission.expiresAtMs,revoked:i.native.revoked}} : {}),
           cleanup: i.report,
         })),
         scopes: [...this.#scopes.values()],
