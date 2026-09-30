@@ -1,5 +1,10 @@
 # ALICA V2
 
+## Phase 5.A native bootstrap — owner accepted, published and DEV-pinned
+
+The [accepted native-bootstrap revision](https://github.com/BartSchuster22/AlicaV2/tree/phase5a-native-bootstrap-v1.0.0-accepted) is pinned by [APPLICATION-PIN.json](docs/phase5a-native/APPLICATION-PIN.json). [Owner Acceptance](docs/phase5a-native/OWNER-ACCEPTANCE.md) is limited to this candidate. [Anonymous readback and public-source DEV replay](docs/phase5a-native/READBACK.md) passed 23 read/security checks, 15 native controls and 170 regressions. **Foundation CI is not green:** formatting failures include two new and three inherited files; no waiver is claimed. Browser authentication implementation and production deployment remain **HOLD**. Main carries discovery/pin/evidence only; earlier frozen product code and tags are preserved.
+
+
 ## Phase 5.I — TECHNICALLY COMPLETE / FROZEN — Owner Acceptance pending
 
 [Immutable technical reference artifact](https://github.com/BartSchuster22/AlicaV2/tree/phase5i-reference-instance-v1.0.0/docs/phase5.i) | [Anonymous publication/reproduction readback](docs/phase5.i-publication/READBACK.md). Technical tag `phase5i-reference-instance-v1.0.0` → `2f4373c513599d59014232e6c3ca7ad6e7864ff6`. Independent execution and final artifact review passed; standalone fresh public-input reproduction and anonymous exact retrieval/bounded public-source replay passed on DEV. DSH2 was not installed. No frozen product changes, renewed provider authority, production adoption/credentials, execution control, remediation, Owner Acceptance, Current Reference Baseline declaration or Phase5.3 authorization. Separate H/K pins and all inherited limitations remain. STOP for separate Owner Acceptance. Prior discovery/history below is retained byte-for-byte.

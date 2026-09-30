@@ -1,0 +1,51 @@
+{
+  "githubRun": "https://github.com/BartSchuster22/AlicaV2/actions/runs/36701508250",
+  "githubConclusion": "failure",
+  "githubFailedStep": "Build and validate",
+  "anonymousJobLogs": "HTTP403",
+  "localReproduction": {
+    "published": [
+      {
+        "command": [
+          "node",
+          "tools/check-toolchain.mjs"
+        ],
+        "exitCode": 0,
+        "stdout": "Pinned Node/npm verified\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "npm",
+          "run",
+          "format:check"
+        ],
+        "exitCode": 1,
+        "stdout": "\n> alica-v2@0.0.0 format:check\n> prettier --check package.json package-lock.json tsconfig*.json packages tools/*.mjs tests/foundation tests/kernel tests/contracts .github/workflows tests/sdk tests/ipc tests/g7\n\nChecking formatting...\n",
+        "stderr": "[warn] packages/kernel/src/index.ts\n[warn] packages/kernel/src/native-activation.ts\n[warn] tools/test-external-hermes-cleanup.mjs\n[warn] tools/test-external-hermes.mjs\n[warn] tools/test-external-operator.mjs\n[warn] Code style issues found in 5 files. Run Prettier with --write to fix.\nnpm notice\nnpm notice New major version of npm available! 11.19.0 -> 12.1.0\nnpm notice Changelog: https://github.com/npm/cli/releases/tag/v12.1.0\nnpm notice To update run: npm install -g npm@12.1.0\nnpm notice\n"
+      }
+    ],
+    "frozenBaseline": [
+      {
+        "command": [
+          "node",
+          "tools/check-toolchain.mjs"
+        ],
+        "exitCode": 0,
+        "stdout": "Pinned Node/npm verified\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "npm",
+          "run",
+          "format:check"
+        ],
+        "exitCode": 1,
+        "stdout": "\n> alica-v2@0.0.0 format:check\n> prettier --check package.json package-lock.json tsconfig*.json packages tools/*.mjs tests/foundation tests/kernel tests/contracts .github/workflows tests/sdk tests/ipc tests/g7\n\nChecking formatting...\n",
+        "stderr": "[warn] tools/test-external-hermes-cleanup.mjs\n[warn] tools/test-external-hermes.mjs\n[warn] tools/test-external-operator.mjs\n[warn] Code style issues found in 3 files. Run Prettier with --write to fix.\n"
+      }
+    ]
+  },
+  "ciWaiver": false
+}

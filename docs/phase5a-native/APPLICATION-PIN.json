@@ -1,0 +1,18 @@
+{
+  "schemaVersion": "alica.phase5a.application-pin/v1",
+  "repository": "https://github.com/BartSchuster22/AlicaV2.git",
+  "tag": "phase5a-native-bootstrap-v1.0.0-accepted",
+  "tagObject": "c7c70862ba63e9ce04fbed9f13f424183eac8ff7",
+  "commit": "3f161818bb919affdc9e90caa9195aeb0d98fcd2",
+  "tree": "18f0d4ba1ff772be1f386df6d1ea7d4c610902ee",
+  "compositionModule": "service-foundation/tooling/native-memory-composition.mjs",
+  "compositionExport": "startMemoryReadComposition",
+  "readBinding": "qualification/phase5a-native/binding.mjs",
+  "profile": "isolated bearer-only read/search",
+  "ownerAccepted": true,
+  "integrationStatus": "DEV_PIN_VERIFIED_FUNCTIONALLY; CI_NOT_GREEN",
+  "serviceStarted": false,
+  "browserAuthenticationImplementation": "HOLD",
+  "productionDeployment": "HOLD",
+  "ciWaiver": false
+}

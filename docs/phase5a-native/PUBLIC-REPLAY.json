@@ -1,0 +1,283 @@
+{
+  "status": "PASS_PUBLIC_SOURCE_BOUNDED_DEV_REPLAY",
+  "build": [
+    {
+      "command": [
+        "/home/alica-dev/phase5i/tools/node-v24.21.0-linux-x64/bin/node",
+        "tools/build.mjs"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/home/alica-dev/phase5i/tools/node-v24.21.0-linux-x64/bin/node",
+        "node_modules/typescript/bin/tsc",
+        "-p",
+        "tsconfig.json",
+        "--noEmit"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/home/alica-dev/phase5i/tools/node-v24.21.0-linux-x64/bin/node",
+        "tools/check-boundaries.mjs"
+      ],
+      "exitCode": 0,
+      "stdout": "Public import boundaries passed\n",
+      "stderr": ""
+    }
+  ],
+  "coreRegression": {
+    "command": [
+      "unshare",
+      "--net",
+      "--",
+      "setpriv",
+      "--reuid=1000",
+      "--regid=1000",
+      "--clear-groups",
+      "--no-new-privs",
+      "/home/alica-dev/phase5i/tools/node-v24.21.0-linux-x64/bin/node",
+      "--experimental-vm-modules",
+      "--test",
+      "tests/foundation/foundation.test.mjs",
+      "tests/kernel/adversarial.test.mjs",
+      "tests/kernel/kernel.test.mjs",
+      "tests/kernel/vectors.test.mjs",
+      "tests/contracts/cli.test.mjs",
+      "tests/contracts/runtime.test.mjs",
+      "tests/sdk/kernel-sdk.test.mjs",
+      "tests/sdk/sdk.test.mjs"
+    ],
+    "exitCode": 0,
+    "stdout": "\u2714 CLI init/validate/generators run and preserve existing operator files (2430.41716ms)\n\u2714 CLI rejects invalid syntax/unknown flags, duplicate JSON, and redacts diagnostics (957.603742ms)\n\u2714 CLI plugin/bundle/profile validation checks linked artifacts and raw inventory (1380.30273ms)\n\u2714 CLI plugin validation denies symlink escape even for a syntactically valid path (363.331637ms)\n\u2714 CLI conformance has human and machine reports and nonzero exit for wrong behavior (927.640489ms)\n\u2714 CLI validates expected descriptor digest before running conformance (301.359987ms)\n\u2714 stream-only provider passes conformance without unary assumptions (351.128366ms)\n\u2714 generated descriptor preserves prototype-named keys as JSON data (347.214826ms)\n\u2714 public descriptor schema and canonical digest reject semantic and unknown-field violations (14.353277ms)\n\u2714 required versus optional features, version range and digest negotiation (15.07615ms)\n\u2714 closed wire protocol validates digest, unknown operations, payloads and spoofed identity (4.870275ms)\n\u2714 authentication runs before revealing malformed contract details (1.391054ms)\n\u2714 wire behavior survives JSON round trips and non-local plain exceptions (5.375998ms)\n\u2714 invalid provider output has normalized contract mismatch (6.389609ms)\n\u2714 absolute expiration causes zero provider invocations and maximum budget clamps (1.904782ms)\n\u2714 cancellation before completion is terminal exactly once (31.006108ms)\n\u2714 cancellation during completion is terminal exactly once (27.869113ms)\n\u2714 cancellation after completion is terminal exactly once (47.820506ms)\n\u2714 request IDs are unique while outstanding; explicit cancel is idempotent (1.770818ms)\n\u2714 parent cancellation and deadlines propagate across sessions (61.734203ms)\n\u2714 instance idempotency: replay, conflict, in-flight duplicate and scope isolation (35.147448ms)\n\u2714 idempotency retention, reset and finite capacity never silently evict live keys (26.97634ms)\n\u2714 none rejects keys; stream idempotency is invalid; durable claim is not faked (6.920719ms)\n\u2714 stream yields detached validated items and exactly one iterator completion (3.517685ms)\n\u2714 stream invalid item and explicit cancellation terminate without late items (4.016693ms)\n(node:984713) ExperimentalWarning: VM Modules is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n\u2714 stream rechecks authority before each item delivery (2.290578ms)\n\u2714 bounded event primitive terminates on overflow and never leaks subsequent queued data (0.453755ms)\n\u2714 event envelope validates exact descriptor and broker identity fields (2.146287ms)\n\u2714 generation is byte deterministic and descriptor changes change generated bindings (9.414013ms)\n\u2714 profile validation rejects duplicate roots, cycles, and unknown pins (3.052937ms)\n\u2714 conformance fails an incorrect provider instead of just validating descriptor (4.915899ms)\n\u2714 Kernel dispatch supports stream and revocation without Kernel imports in provider (158.203866ms)\n\u2714 Kernel instance-idempotency cache is shared across consumer handles (175.974376ms)\n\u2714 monotonic budget prevents late success when wall clock does not advance (14.032311ms)\n\u2714 terminal release callback runs once on both success and cancellation (29.166388ms)\n\u2714 wire diagnostic correlation is preserved without exception identity (0.693067ms)\n\u2714 closed provider refuses both unary and streaming execution (2.308313ms)\n\u2714 conformance does not confuse its own oracle mismatch with a provider error (3.60048ms)\n\u2714 credit starts at zero, bounds grants, and cancellation releases waiting producer (2.062059ms)\n\u2714 slow stream reader applies backpressure rather than consuming unseen items (11.739067ms)\n\u2714 stream values and terminal errors cross JSON without local exception identity (3.215544ms)\n\u2714 stream decoder rejects missing terminal, bad sequence, and unknown fields (0.51983ms)\n\u2714 prototype-named JSON properties remain data through descriptor and invocation (1.809322ms)\n\u2714 finite payload interpreter enforces all G1 type constraints without coercion (0.617305ms)\n\u2714 boundary CLI fails on planted source violation (399.792844ms)\n\u2714 Cell/admin Ajv declaration is limited to exact host importers and target (13.169304ms)\n\u2714 built public entry has no accidental runtime implementation (0.246556ms)\n\u2714 reject deep import (0.490245ms)\n\u2714 reject cross-package relative (0.756275ms)\n\u2714 reject V1 absolute (0.714558ms)\n\u2714 reject dynamic computed (2.28077ms)\n\u2714 reject undeclared external (0.445479ms)\n\u2714 reject developer tooling from package (0.839933ms)\n\u2714 reject host dependency from package (0.55716ms)\n\u2714 reject escape to repo tools (1.180256ms)\n\u2714 accept public type import (0.434107ms)\n\u2714 package exports reject deep runtime import (44.706503ms)\n\u2714 planted synthetic token is rejected without leaking its value (59.495823ms)\n\u2714 ordinary public data passes secret scanner (66.910994ms)\n(node:984770) ExperimentalWarning: VM Modules is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n\u2714 same capability/version with different digest is rejected before activation (77.804396ms)\n\u2714 duplicate visible provider identity is conflict, not load-order selection (101.752115ms)\n\u2714 version/feature exclusions explain deterministic ranking and optional negotiation (219.184949ms)\n\u2714 planning is registry/lifecycle read-only; profile pin controls real calls and lock (638.132132ms)\n\u2714 invalid profile pin fails before evaluating any module (26.847738ms)\n\u2714 cancellation first terminal outcome wins over immediate provider success (114.881033ms)\n\u2714 call values are detached in both directions, not live objects (134.555012ms)\n\u2714 pending uncooperative call is reported instead of falsely clean disposal (133.168969ms)\n\u2714 expired trust stops new calls and quiesces all live instances (163.963749ms)\n\u2714 secret grant rechecked immediately before result delivery (62.93601ms)\n\u2714 nested scopes destroyed before parent owner and stale contexts never revive (51.70429ms)\n\u2714 nested calls cannot extend inherited deadline (190.355906ms)\n\u2714 same-version altered trust metadata and corrupted durable state are rejected (14.367614ms)\n(node:984780) ExperimentalWarning: VM Modules is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n\u2714 independent Echo A passes unchanged consumer suite (542.497182ms)\n\u2714 independent Echo B passes unchanged consumer suite (511.83948ms)\n\u2714 selection invariant under order a,b (274.348291ms)\n\u2714 selection invariant under order b,a (221.228823ms)\n\u2714 strict parser rejects {\"a\":1,\"a\":2} (0.351333ms)\n\u2714 strict parser rejects {\"a\":1e0} (0.201562ms)\n\u2714 strict parser rejects {\"a\":1.0} (0.153109ms)\n\u2714 strict parser rejects {\"a\":9007199254740992} (0.113814ms)\n\u2714 strict parser rejects {\"a\":\"\\ud800\"} (0.202902ms)\n\u2714 strict parser rejects {\"\u00e9\":1} (0.218572ms)\n\u2714 strict parser rejects [1,] (0.124725ms)\n\u2714 strict parser rejects {\"a\":true}x (0.120478ms)\n\u2714 bounded parsing/canonicalization rejects deep, cyclic, accessor, sparse and oversized values (1.405922ms)\n\u2714 runtime canonical digest matches G1 descriptor and Unicode/control rules (0.528166ms)\n\u2714 configuration is closed and secrets cannot be placed in config (13.606991ms)\n\u2714 verification rejects signature before evaluation (27.103048ms)\n\u2714 verification rejects file before evaluation (21.660004ms)\n\u2714 verification rejects unknown-manifest before evaluation (16.245935ms)\n\u2714 verification rejects duplicate-json before evaluation (26.943127ms)\n\u2714 verification rejects untrusted-key before evaluation (19.739302ms)\n\u2714 verification rejects invalid-stream-idempotency before evaluation (20.35876ms)\n\u2714 loaded bytes are immutable after verification (37.231338ms)\n\u2714 unverified module imports cannot be linked or evaluated (29.849256ms)\n\u2714 missing mandatory dependency blocks ACTIVE (29.75016ms)\n\u2714 incompatible mandatory dependency blocks ACTIVE (50.415589ms)\n\u2714 denied mandatory dependency blocks ACTIVE (50.076421ms)\n\u2714 mandatory cycles rejected; no participant becomes ACTIVE (49.649916ms)\n\u2714 partial activation never publishes; effects clean in reverse order; disposal idempotent (36.227284ms)\n\u2714 staged registration invisible while activation awaits (53.599313ms)\n\u2714 cleanup failures remain FAILED, remaining disposers still execute (31.455846ms)\n\u2714 uncooperative disposer times out and requires restart (40.272612ms)\n\u2714 capability denial and optional absence are distinct (54.445799ms)\n\u2714 revoked grant invalidates retained handle (88.623658ms)\n\u2714 expired grant invalidates retained handle (89.326714ms)\n\u2714 wrong principal/instance/scope generation and widened child grants rejected (76.399799ms)\n\u2714 child scope teardown invalidates handles and removes only owned resources (93.743053ms)\n\u2714 parent cannot see child registrations (59.688174ms)\n\u2714 mandatory provider loss quiesces consumer transitively without rebinding (169.801867ms)\n\u2714 revocation during call prevents result delivery (126.187812ms)\n\u2714 unload during call cancels delivery and cleans call tracking (87.143556ms)\n\u2714 deadline, cancellation, input/output validation and no idempotent replay (145.326664ms)\n\u2714 provider errors and invalid output normalized without value leakage (96.517574ms)\n\u2714 secret access requires declaration and separate grant; inspection redacts values (42.097405ms)\n\u2714 events deliver FIFO broker identity; disposer removes listener (102.797667ms)\n\u2714 event rechecks revoked subscription and publisher; handler failures isolated (92.976958ms)\n\u2714 bounded event overflow terminates affected subscription and cleanup reclaims listener (119.076633ms)\n\u2714 audit exhaustion blocks mutation but never emergency revocation (37.225546ms)\n\u2714 expired trust and backward clock fail closed (25.465821ms)\n\u2714 trust revocation quiesces running providers (143.23497ms)\n\u2714 persistent trust state rejects rollback and missing-state recovery (16.255592ms)\n\u2714 root rotation requires both old and new signatures plus exact next policy (43.68651ms)\n(node:984872) ExperimentalWarning: VM Modules is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n\u2714 runtime matches frozen Python/OpenSSL vector C-00 (2.37009ms)\n\u2714 runtime matches frozen Python/OpenSSL vector C-01 (0.236375ms)\n\u2714 runtime matches frozen Python/OpenSSL vector C-02 (0.146456ms)\n\u2714 runtime matches frozen Python/OpenSSL vector C-03 (0.218441ms)\n\u2714 runtime matches frozen Python/OpenSSL vector C-04 (0.263947ms)\n\u2714 runtime matches frozen Python/OpenSSL vector C-05 (0.193234ms)\n\u2714 runtime matches frozen Python/OpenSSL vector C-06 (0.178416ms)\n\u2714 runtime matches frozen Python/OpenSSL vector C-07 (0.224182ms)\n\u2714 runtime matches frozen Python/OpenSSL vector C-08 (0.257275ms)\n\u2714 runtime matches frozen Python/OpenSSL vector C-09 (0.260782ms)\n\u2714 runtime matches frozen Python/OpenSSL vector C-10 (0.239032ms)\n\u2714 runtime matches frozen Python/OpenSSL vector C-11 (0.140746ms)\n\u2714 runtime matches frozen Python/OpenSSL vector C-12 (0.125968ms)\n\u2714 runtime matches frozen Python/OpenSSL vector C-13 (0.166394ms)\n\u2714 runtime matches frozen Python/OpenSSL vector C-14 (0.143581ms)\n\u2714 runtime matches frozen Python/OpenSSL vector C-15 (0.358896ms)\n\u2714 runtime matches frozen Python/OpenSSL vector C-16 (0.202483ms)\n\u2714 runtime matches frozen Python/OpenSSL vector C-17 (1.662316ms)\n\u2714 mandatory activation binding cannot silently switch after catalog changes (215.739291ms)\n\u2714 plugin log admits only fixed safe metadata and quiesce is idempotent (47.548363ms)\n(node:984907) ExperimentalWarning: VM Modules is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n\u2714 real Kernel verifies and activates SDK-only signed relative module graph (142.887464ms)\n\u2714 real Kernel rejects tampered dependent module before evaluation (15.110003ms)\n\u2714 production linker rejects @alica/kernel before evaluation (26.939871ms)\n\u2714 production linker rejects @alica/testkit before evaluation (32.037243ms)\n\u2714 production linker rejects node:fs before evaluation (29.779576ms)\n\u2714 production linker rejects ../../escape.js before evaluation (25.037825ms)\n\u2714 production linker rejects ./missing.js before evaluation (27.777189ms)\n\u2714 production linker rejects @alica/plugin-sdk/dist/index.js before evaluation (25.029569ms)\n\u2714 real SDK optional cannot turn a denied capability into absence (60.840527ms)\n\u2714 public SDK provides, resolves, and bridges generated endpoints (22.873122ms)\n\u2714 independently implemented provider substitutes without consumer changes (7.771265ms)\n\u2714 missing optional returns null but denied optional does not hide permissions (2.562604ms)\n\u2714 optional does not hide incompatible present provider (3.951341ms)\n\u2714 idempotent disposer shares result and rejection without executing twice (0.489735ms)\n\u2714 owned effects clean in reverse order and partial acquisition cleans immediately (2.394585ms)\n\u2714 activation injection rolls back staged providers and acquired effects (1.992457ms)\n\u2714 revocation injection rejects existing handle before provider dispatch (4.826371ms)\n\u2714 timeout injection is deterministic, one-shot, and not elapsed-time simulation (3.268603ms)\n\u2714 cleanup injection is reported while remaining cleanups continue (1.119822ms)\n\u2714 cleanup timeout is visible and does not hang disposal (8.064427ms)\n\u2714 destroyed child handles cannot escape their owning scope (5.761255ms)\n\u2714 provider disposal invalidates old handles instead of rebinding (6.829107ms)\n\u2714 typed events validate payloads and deliver immutable broker envelopes (5.420903ms)\n\u2714 secret references are scoped and logs refuse arbitrary data fields (1.290333ms)\n\u2714 invalid input and unknown operation retain exact ACAP rejection codes (3.184945ms)\n\u2714 uncooperative event handler is reported as incomplete cleanup (7.199736ms)\n\u2714 optional validates malformed requirement before reporting absence (1.303027ms)\n\u2139 tests 170\n\u2139 suites 0\n\u2139 pass 170\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 7437.539857\n",
+    "stderr": ""
+  },
+  "replay": {
+    "command": [
+      "unshare",
+      "--mount",
+      "--net",
+      "--propagation",
+      "private",
+      "--",
+      "/bin/sh",
+      "-c",
+      "set -eu; ip link set lo up; mount --bind /home/alica-dev/phase5a-publication/public-source /home/alica-dev/AlicaV2-native-candidate; mount -o remount,bind,ro /home/alica-dev/AlicaV2-native-candidate; mount --bind /home/alica-dev/phase5i/memory-python-r2 /home/alica-dev/phase5i/memory-python-r2; mount -o remount,bind,ro /home/alica-dev/phase5i/memory-python-r2; setpriv --reuid=996 --regid=1000 --clear-groups --no-new-privs env -i PATH=/usr/bin:/bin HOME=/home/alica-dev/phase5a-publication/replay-001/home TMPDIR=/home/alica-dev/phase5a-publication/replay-001/tmp /home/alica-dev/phase5i/tools/node-v24.21.0-linux-x64/bin/node --experimental-vm-modules /home/alica-dev/phase5a-publication/replay-001/controls.mjs; exec setpriv --reuid=996 --regid=1000 --clear-groups --no-new-privs env -i PATH=/usr/bin:/bin HOME=/home/alica-dev/phase5a-publication/replay-001/home TMPDIR=/home/alica-dev/phase5a-publication/replay-001/tmp /home/alica-dev/phase5i/tools/node-v24.21.0-linux-x64/bin/node --experimental-vm-modules /home/alica-dev/phase5a-publication/replay-001/probe.mjs"
+    ],
+    "exitCode": 0,
+    "stdout": "PASS missing operator admission denies before activation\nPASS wrong signed package binding denied before native callback\nPASS wrong configuration digest rejected at bootstrap\nPASS changed approved file denied before callback\nPASS expired native admission denied\nPASS not-yet-valid native admission denied\nPASS admission/configuration copied and frozen against caller mutation\nPASS ordinary plugin linker unchanged; no automatic native fallback\nPASS native callback cannot register undeclared descriptor\nPASS declared capability completeness enforced for native activation\nPASS partial native failure kills owned child and publishes no authority\nPASS bounded native timeout kills owned child; restartRequired truthful\nPASS idle native admission expiry proactively cleans without a call\nPASS explicit native revocation cleans and prevents reactivation\nPASS artifact enumeration includes cache bytes and package metadata; directory cycles bounded\nCONTROL_RESULT 15\nPASS real HTTPS + verified certificate -> SDK/Host -> real Memory search\nPASS actual Memory detail matches search stable ID\nPASS B cannot retrieve A record through trusted scope mapping\nPASS B search is successful empty scoped result, not copied A cache\nPASS no credentials / forged token / expired session / unknown subject denied\nPASS forged scope/principal/actor rejected before provider dispatch\nPASS create/update/control/upload/download/issuer endpoints absent\nPASS browser origin/cookie rejected; selected profile is bearer-only headless\nPASS invalid JSON, unknown fields and pagination bounds rejected\nPASS overlarge request rejected without provider dispatch\nPASS session revoked after real read: response body suppressed\nPASS policy scope downgrade during read: late body suppressed\nPASS expired session after real read suppressed (controlled verifier clock)\nPASS domain authority removed after real read: late result suppressed\nPASS TLS peer without trusted certificate fails closed\nPASS four-query session bound rejects fifth with no extra dispatch\nPASS current Host grant revoked after read: no protected delivery\nPASS domain permission removal independently denies B reads\nPASS new session cannot revive revoked Host authority\nPASS clean shutdown rejects previously live old handle\nPASS reconstructed composition rejects old bearer session\nPASS new authorized session reads original record after reconstruction\nPASS native approval revocation suppresses pending real result\nRESULT {\"tests\":23,\"providerReads\":17,\"providerMutationCalls\":0,\"applicationCalls\":3}\n",
+    "stderr": "(node:985037) ExperimentalWarning: VM Modules is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:985031) ExperimentalWarning: VM Modules is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+  },
+  "readResult": {
+    "status": "PASS_NATIVE_CANDIDATE_READ_RECONSTRUCTION",
+    "tests": [
+      {
+        "name": "real HTTPS + verified certificate -> SDK/Host -> real Memory search",
+        "status": "PASS"
+      },
+      {
+        "name": "actual Memory detail matches search stable ID",
+        "status": "PASS"
+      },
+      {
+        "name": "B cannot retrieve A record through trusted scope mapping",
+        "status": "PASS"
+      },
+      {
+        "name": "B search is successful empty scoped result, not copied A cache",
+        "status": "PASS"
+      },
+      {
+        "name": "no credentials / forged token / expired session / unknown subject denied",
+        "status": "PASS"
+      },
+      {
+        "name": "forged scope/principal/actor rejected before provider dispatch",
+        "status": "PASS"
+      },
+      {
+        "name": "create/update/control/upload/download/issuer endpoints absent",
+        "status": "PASS"
+      },
+      {
+        "name": "browser origin/cookie rejected; selected profile is bearer-only headless",
+        "status": "PASS"
+      },
+      {
+        "name": "invalid JSON, unknown fields and pagination bounds rejected",
+        "status": "PASS"
+      },
+      {
+        "name": "overlarge request rejected without provider dispatch",
+        "status": "PASS"
+      },
+      {
+        "name": "session revoked after real read: response body suppressed",
+        "status": "PASS"
+      },
+      {
+        "name": "policy scope downgrade during read: late body suppressed",
+        "status": "PASS"
+      },
+      {
+        "name": "expired session after real read suppressed (controlled verifier clock)",
+        "status": "PASS"
+      },
+      {
+        "name": "domain authority removed after real read: late result suppressed",
+        "status": "PASS"
+      },
+      {
+        "name": "TLS peer without trusted certificate fails closed",
+        "status": "PASS"
+      },
+      {
+        "name": "four-query session bound rejects fifth with no extra dispatch",
+        "status": "PASS"
+      },
+      {
+        "name": "current Host grant revoked after read: no protected delivery",
+        "status": "PASS"
+      },
+      {
+        "name": "domain permission removal independently denies B reads",
+        "status": "PASS"
+      },
+      {
+        "name": "new session cannot revive revoked Host authority",
+        "status": "PASS"
+      },
+      {
+        "name": "clean shutdown rejects previously live old handle",
+        "status": "PASS"
+      },
+      {
+        "name": "reconstructed composition rejects old bearer session",
+        "status": "PASS"
+      },
+      {
+        "name": "new authorized session reads original record after reconstruction",
+        "status": "PASS"
+      },
+      {
+        "name": "native approval revocation suppresses pending real result",
+        "status": "PASS"
+      }
+    ],
+    "providerReads": 17,
+    "providerMutationCalls": 0,
+    "cleanup": {
+      "effects": 0,
+      "listeners": 0,
+      "pendingCalls": 0,
+      "registrations": 0
+    },
+    "limitations": [
+      "Operator signing keys are ephemeral qualification authority, not production key custody",
+      "Bearer-only isolated verifier; no browser login/SSO",
+      "Trusted native in-process activation is not an OS sandbox",
+      "No UI, production rollout, live inference or domain mutations"
+    ],
+    "G01": "fixture-free public native admission and real read composition exercised",
+    "G02": "isolated bearer profile retained"
+  },
+  "nativeControls": {
+    "status": "PASS",
+    "tests": [
+      {
+        "name": "missing operator admission denies before activation",
+        "status": "PASS"
+      },
+      {
+        "name": "wrong signed package binding denied before native callback",
+        "status": "PASS"
+      },
+      {
+        "name": "wrong configuration digest rejected at bootstrap",
+        "status": "PASS"
+      },
+      {
+        "name": "changed approved file denied before callback",
+        "status": "PASS"
+      },
+      {
+        "name": "expired native admission denied",
+        "status": "PASS"
+      },
+      {
+        "name": "not-yet-valid native admission denied",
+        "status": "PASS"
+      },
+      {
+        "name": "admission/configuration copied and frozen against caller mutation",
+        "status": "PASS"
+      },
+      {
+        "name": "ordinary plugin linker unchanged; no automatic native fallback",
+        "status": "PASS"
+      },
+      {
+        "name": "native callback cannot register undeclared descriptor",
+        "status": "PASS"
+      },
+      {
+        "name": "declared capability completeness enforced for native activation",
+        "status": "PASS"
+      },
+      {
+        "name": "partial native failure kills owned child and publishes no authority",
+        "status": "PASS"
+      },
+      {
+        "name": "bounded native timeout kills owned child; restartRequired truthful",
+        "status": "PASS"
+      },
+      {
+        "name": "idle native admission expiry proactively cleans without a call",
+        "status": "PASS"
+      },
+      {
+        "name": "explicit native revocation cleans and prevents reactivation",
+        "status": "PASS"
+      },
+      {
+        "name": "artifact enumeration includes cache bytes and package metadata; directory cycles bounded",
+        "status": "PASS"
+      }
+    ]
+  },
+  "runtimeBoundary": {
+    "kernel": "file:///home/alica-dev/AlicaV2-native-candidate/packages/kernel/dist/index.js",
+    "mounts": [
+      "465 424 8:1 /home/alica-dev/phase5a-publication/public-source /home/alica-dev/AlicaV2-native-candidate ro,relatime - ext4 /dev/sda1 rw",
+      "466 424 8:1 /home/alica-dev/phase5i/memory-python-r2 /home/alica-dev/phase5i/memory-python-r2 ro,relatime - ext4 /dev/sda1 rw"
+    ]
+  },
+  "publicSource": "/home/alica-dev/phase5a-publication/public-source",
+  "namespaceAlias": "/home/alica-dev/AlicaV2-native-candidate",
+  "originalCandidateNotModified": true,
+  "dependencyMode": "reused hash-verified qualified node_modules and Python venv; not a clean install",
+  "verifiedAdmissionArtifacts": 1438,
+  "changedPrivateTables": {
+    "retrieval_events": {
+      "before": {
+        "rows": 2,
+        "sha256": "ff6d0152210bacd9e341ac27b17bf83b8bac1f2c027421a77a8420e4191da33b"
+      },
+      "after": {
+        "rows": 14,
+        "sha256": "03f37d88a999fdb6c635db0764d2d0842e32e7c106c4838887020f18f2c5686b"
+      }
+    }
+  },
+  "originalDatabaseSHA256": "47e2901e6e53c1d5a6fecbc47167ee6ff6a11b0a23f5d2364dc29355ecba6fc2",
+  "uid996ProcessesRemaining": 0,
+  "browserAuthenticationImplementation": "HOLD",
+  "productionDeployment": "HOLD"
+}
